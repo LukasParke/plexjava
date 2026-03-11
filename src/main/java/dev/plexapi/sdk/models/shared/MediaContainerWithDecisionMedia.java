@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
+import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Boolean;
 import java.lang.Float;
@@ -70,10 +72,13 @@ public class MediaContainerWithDecisionMedia {
     @JsonProperty("has64bitOffsets")
     private Optional<Boolean> has64bitOffsets;
 
-
+    /**
+     * Voice activity detection availability flag returned by PMS.
+     * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("hasVoiceActivity")
-    private Optional<Boolean> hasVoiceActivity;
+    private Optional<? extends MediaContainerWithDecisionHasVoiceActivity> hasVoiceActivity;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -148,7 +153,7 @@ public class MediaContainerWithDecisionMedia {
             @JsonProperty("container") Optional<String> container,
             @JsonProperty("duration") Optional<Integer> duration,
             @JsonProperty("has64bitOffsets") Optional<Boolean> has64bitOffsets,
-            @JsonProperty("hasVoiceActivity") Optional<Boolean> hasVoiceActivity,
+            @JsonProperty("hasVoiceActivity") Optional<? extends MediaContainerWithDecisionHasVoiceActivity> hasVoiceActivity,
             @JsonProperty("height") Optional<Integer> height,
             @JsonProperty("id") long id,
             @JsonProperty("optimizedForStreaming") Optional<Boolean> optimizedForStreaming,
@@ -257,9 +262,14 @@ public class MediaContainerWithDecisionMedia {
         return has64bitOffsets;
     }
 
+    /**
+     * Voice activity detection availability flag returned by PMS.
+     * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+     */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> hasVoiceActivity() {
-        return hasVoiceActivity;
+    public Optional<MediaContainerWithDecisionHasVoiceActivity> hasVoiceActivity() {
+        return (Optional<MediaContainerWithDecisionHasVoiceActivity>) hasVoiceActivity;
     }
 
     @JsonIgnore
@@ -437,14 +447,22 @@ public class MediaContainerWithDecisionMedia {
         return this;
     }
 
-    public MediaContainerWithDecisionMedia withHasVoiceActivity(boolean hasVoiceActivity) {
+    /**
+     * Voice activity detection availability flag returned by PMS.
+     * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+     */
+    public MediaContainerWithDecisionMedia withHasVoiceActivity(MediaContainerWithDecisionHasVoiceActivity hasVoiceActivity) {
         Utils.checkNotNull(hasVoiceActivity, "hasVoiceActivity");
         this.hasVoiceActivity = Optional.ofNullable(hasVoiceActivity);
         return this;
     }
 
 
-    public MediaContainerWithDecisionMedia withHasVoiceActivity(Optional<Boolean> hasVoiceActivity) {
+    /**
+     * Voice activity detection availability flag returned by PMS.
+     * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+     */
+    public MediaContainerWithDecisionMedia withHasVoiceActivity(Optional<? extends MediaContainerWithDecisionHasVoiceActivity> hasVoiceActivity) {
         Utils.checkNotNull(hasVoiceActivity, "hasVoiceActivity");
         this.hasVoiceActivity = hasVoiceActivity;
         return this;
@@ -705,7 +723,7 @@ public class MediaContainerWithDecisionMedia {
 
         private Optional<Boolean> has64bitOffsets = Optional.empty();
 
-        private Optional<Boolean> hasVoiceActivity = Optional.empty();
+        private Optional<? extends MediaContainerWithDecisionHasVoiceActivity> hasVoiceActivity;
 
         private Optional<Integer> height = Optional.empty();
 
@@ -842,13 +860,21 @@ public class MediaContainerWithDecisionMedia {
         }
 
 
-        public Builder hasVoiceActivity(boolean hasVoiceActivity) {
+        /**
+         * Voice activity detection availability flag returned by PMS.
+         * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+         */
+        public Builder hasVoiceActivity(MediaContainerWithDecisionHasVoiceActivity hasVoiceActivity) {
             Utils.checkNotNull(hasVoiceActivity, "hasVoiceActivity");
             this.hasVoiceActivity = Optional.ofNullable(hasVoiceActivity);
             return this;
         }
 
-        public Builder hasVoiceActivity(Optional<Boolean> hasVoiceActivity) {
+        /**
+         * Voice activity detection availability flag returned by PMS.
+         * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+         */
+        public Builder hasVoiceActivity(Optional<? extends MediaContainerWithDecisionHasVoiceActivity> hasVoiceActivity) {
             Utils.checkNotNull(hasVoiceActivity, "hasVoiceActivity");
             this.hasVoiceActivity = hasVoiceActivity;
             return this;
@@ -1021,6 +1047,9 @@ public class MediaContainerWithDecisionMedia {
         }
 
         public MediaContainerWithDecisionMedia build() {
+            if (hasVoiceActivity == null) {
+                hasVoiceActivity = _SINGLETON_VALUE_HasVoiceActivity.value();
+            }
 
             return new MediaContainerWithDecisionMedia(
                 aspectRatio, audioChannels, audioCodec,
@@ -1033,5 +1062,11 @@ public class MediaContainerWithDecisionMedia {
                 .withAdditionalProperties(additionalProperties);
         }
 
+
+        private static final LazySingletonValue<Optional<? extends MediaContainerWithDecisionHasVoiceActivity>> _SINGLETON_VALUE_HasVoiceActivity =
+                new LazySingletonValue<>(
+                        "hasVoiceActivity",
+                        "0",
+                        new TypeReference<Optional<? extends MediaContainerWithDecisionHasVoiceActivity>>() {});
     }
 }

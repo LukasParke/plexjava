@@ -13,6 +13,8 @@ generation:
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
     sharedErrorComponentsApr2025: false
+    nameOverrideFeb2026: false
+    sharedNestedComponentsJan2026: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
@@ -25,8 +27,9 @@ generation:
   requestBodyFieldName: ""
   schemas:
     allOfMergeStrategy: shallowMerge
+  versioningStrategy: automatic
 java:
-  version: 0.22.3
+  version: 0.22.4
   additionalDependencies: []
   additionalPlugins: []
   artifactID: plexapi
@@ -38,12 +41,16 @@ java:
   companyURL: plexapi.dev
   defaultErrorName: SDKError
   enableCustomCodeRegions: false
+  enableFormatting: false
   enableSlf4jLogging: false
   enableStreamingUploads: false
+  explicitDocImports: false
   flattenGlobalSecurity: true
   forwardCompatibleEnumsByDefault: false
+  forwardCompatibleUnionsByDefault: false
   generateOptionalUnionAccessors: false
   generateSpringBootStarter: true
+  generateUnionDocs: false
   githubURL: github.com/LukeHagar/plexjava
   groupID: dev.plexapi
   imports:
@@ -64,10 +71,12 @@ java:
   maxMethodParams: 4
   multipartArrayFormat: legacy
   nullFriendlyParameters: false
-  openUnions: true
   operationScopedParams: true
   outputModelSuffix: output
   packageName: dev.plexapi.sdk
+  prefixModeMethodNames: false
   projectName: plexapi
+  respectTitlesForPrimitiveUnionMembers: false
+  showSetterGetterTypesInDocs: false
   templateVersion: v2
   unionStrategy: populated-fields

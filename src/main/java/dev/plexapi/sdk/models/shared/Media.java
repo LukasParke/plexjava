@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
+import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Boolean;
 import java.lang.Float;
@@ -70,10 +72,13 @@ public class Media {
     @JsonProperty("has64bitOffsets")
     private Optional<Boolean> has64bitOffsets;
 
-
+    /**
+     * Voice activity detection availability flag returned by PMS.
+     * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("hasVoiceActivity")
-    private Optional<Boolean> hasVoiceActivity;
+    private Optional<? extends HasVoiceActivity> hasVoiceActivity;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -133,7 +138,7 @@ public class Media {
             @JsonProperty("container") Optional<String> container,
             @JsonProperty("duration") Optional<Integer> duration,
             @JsonProperty("has64bitOffsets") Optional<Boolean> has64bitOffsets,
-            @JsonProperty("hasVoiceActivity") Optional<Boolean> hasVoiceActivity,
+            @JsonProperty("hasVoiceActivity") Optional<? extends HasVoiceActivity> hasVoiceActivity,
             @JsonProperty("height") Optional<Integer> height,
             @JsonProperty("id") long id,
             @JsonProperty("optimizedForStreaming") Optional<Boolean> optimizedForStreaming,
@@ -232,9 +237,14 @@ public class Media {
         return has64bitOffsets;
     }
 
+    /**
+     * Voice activity detection availability flag returned by PMS.
+     * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+     */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> hasVoiceActivity() {
-        return hasVoiceActivity;
+    public Optional<HasVoiceActivity> hasVoiceActivity() {
+        return (Optional<HasVoiceActivity>) hasVoiceActivity;
     }
 
     @JsonIgnore
@@ -397,14 +407,22 @@ public class Media {
         return this;
     }
 
-    public Media withHasVoiceActivity(boolean hasVoiceActivity) {
+    /**
+     * Voice activity detection availability flag returned by PMS.
+     * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+     */
+    public Media withHasVoiceActivity(HasVoiceActivity hasVoiceActivity) {
         Utils.checkNotNull(hasVoiceActivity, "hasVoiceActivity");
         this.hasVoiceActivity = Optional.ofNullable(hasVoiceActivity);
         return this;
     }
 
 
-    public Media withHasVoiceActivity(Optional<Boolean> hasVoiceActivity) {
+    /**
+     * Voice activity detection availability flag returned by PMS.
+     * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+     */
+    public Media withHasVoiceActivity(Optional<? extends HasVoiceActivity> hasVoiceActivity) {
         Utils.checkNotNull(hasVoiceActivity, "hasVoiceActivity");
         this.hasVoiceActivity = hasVoiceActivity;
         return this;
@@ -619,7 +637,7 @@ public class Media {
 
         private Optional<Boolean> has64bitOffsets = Optional.empty();
 
-        private Optional<Boolean> hasVoiceActivity = Optional.empty();
+        private Optional<? extends HasVoiceActivity> hasVoiceActivity;
 
         private Optional<Integer> height = Optional.empty();
 
@@ -750,13 +768,21 @@ public class Media {
         }
 
 
-        public Builder hasVoiceActivity(boolean hasVoiceActivity) {
+        /**
+         * Voice activity detection availability flag returned by PMS.
+         * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+         */
+        public Builder hasVoiceActivity(HasVoiceActivity hasVoiceActivity) {
             Utils.checkNotNull(hasVoiceActivity, "hasVoiceActivity");
             this.hasVoiceActivity = Optional.ofNullable(hasVoiceActivity);
             return this;
         }
 
-        public Builder hasVoiceActivity(Optional<Boolean> hasVoiceActivity) {
+        /**
+         * Voice activity detection availability flag returned by PMS.
+         * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+         */
+        public Builder hasVoiceActivity(Optional<? extends HasVoiceActivity> hasVoiceActivity) {
             Utils.checkNotNull(hasVoiceActivity, "hasVoiceActivity");
             this.hasVoiceActivity = hasVoiceActivity;
             return this;
@@ -890,6 +916,9 @@ public class Media {
         }
 
         public Media build() {
+            if (hasVoiceActivity == null) {
+                hasVoiceActivity = _SINGLETON_VALUE_HasVoiceActivity.value();
+            }
 
             return new Media(
                 aspectRatio, audioChannels, audioCodec,
@@ -901,5 +930,11 @@ public class Media {
                 .withAdditionalProperties(additionalProperties);
         }
 
+
+        private static final LazySingletonValue<Optional<? extends HasVoiceActivity>> _SINGLETON_VALUE_HasVoiceActivity =
+                new LazySingletonValue<>(
+                        "hasVoiceActivity",
+                        "0",
+                        new TypeReference<Optional<? extends HasVoiceActivity>>() {});
     }
 }

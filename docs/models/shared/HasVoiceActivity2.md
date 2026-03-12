@@ -1,0 +1,9 @@
+# HasVoiceActivity2
+
+
+## Values
+
+| Name   | Value  |
+| ------ | ------ |
+| `ZERO` | 0      |
+| `ONE`  | 1      |

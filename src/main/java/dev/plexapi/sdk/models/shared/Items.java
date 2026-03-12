@@ -394,14 +394,14 @@ public class Items {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("skipChildren")
-    private Optional<Boolean> skipChildren;
+    private Optional<? extends ItemsSkipChildren> skipChildren;
 
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("skipParent")
-    private Optional<Boolean> skipParent;
+    private Optional<? extends ItemsSkipParent> skipParent;
 
     /**
      * Typically only seen in metadata at a library's top level
@@ -571,8 +571,8 @@ public class Items {
             @JsonProperty("Role") Optional<? extends List<Tag>> role,
             @JsonProperty("search") Optional<Boolean> search,
             @JsonProperty("secondary") Optional<Boolean> secondary,
-            @JsonProperty("skipChildren") Optional<Boolean> skipChildren,
-            @JsonProperty("skipParent") Optional<Boolean> skipParent,
+            @JsonProperty("skipChildren") Optional<? extends ItemsSkipChildren> skipChildren,
+            @JsonProperty("skipParent") Optional<? extends ItemsSkipParent> skipParent,
             @JsonProperty("Sort") Optional<? extends List<Sort>> sort,
             @JsonProperty("studio") Optional<String> studio,
             @JsonProperty("subtype") Optional<String> subtype,
@@ -1182,17 +1182,19 @@ public class Items {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> skipChildren() {
-        return skipChildren;
+    public Optional<ItemsSkipChildren> skipChildren() {
+        return (Optional<ItemsSkipChildren>) skipChildren;
     }
 
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> skipParent() {
-        return skipParent;
+    public Optional<ItemsSkipParent> skipParent() {
+        return (Optional<ItemsSkipParent>) skipParent;
     }
 
     /**
@@ -2259,7 +2261,7 @@ public class Items {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
-    public Items withSkipChildren(boolean skipChildren) {
+    public Items withSkipChildren(ItemsSkipChildren skipChildren) {
         Utils.checkNotNull(skipChildren, "skipChildren");
         this.skipChildren = Optional.ofNullable(skipChildren);
         return this;
@@ -2269,7 +2271,7 @@ public class Items {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
-    public Items withSkipChildren(Optional<Boolean> skipChildren) {
+    public Items withSkipChildren(Optional<? extends ItemsSkipChildren> skipChildren) {
         Utils.checkNotNull(skipChildren, "skipChildren");
         this.skipChildren = skipChildren;
         return this;
@@ -2278,7 +2280,7 @@ public class Items {
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
-    public Items withSkipParent(boolean skipParent) {
+    public Items withSkipParent(ItemsSkipParent skipParent) {
         Utils.checkNotNull(skipParent, "skipParent");
         this.skipParent = Optional.ofNullable(skipParent);
         return this;
@@ -2288,7 +2290,7 @@ public class Items {
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
-    public Items withSkipParent(Optional<Boolean> skipParent) {
+    public Items withSkipParent(Optional<? extends ItemsSkipParent> skipParent) {
         Utils.checkNotNull(skipParent, "skipParent");
         this.skipParent = skipParent;
         return this;
@@ -2903,9 +2905,9 @@ public class Items {
 
         private Optional<Boolean> secondary = Optional.empty();
 
-        private Optional<Boolean> skipChildren = Optional.empty();
+        private Optional<? extends ItemsSkipChildren> skipChildren = Optional.empty();
 
-        private Optional<Boolean> skipParent = Optional.empty();
+        private Optional<? extends ItemsSkipParent> skipParent = Optional.empty();
 
         private Optional<? extends List<Sort>> sort = Optional.empty();
 
@@ -3879,7 +3881,7 @@ public class Items {
         /**
          * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
          */
-        public Builder skipChildren(boolean skipChildren) {
+        public Builder skipChildren(ItemsSkipChildren skipChildren) {
             Utils.checkNotNull(skipChildren, "skipChildren");
             this.skipChildren = Optional.ofNullable(skipChildren);
             return this;
@@ -3888,7 +3890,7 @@ public class Items {
         /**
          * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
          */
-        public Builder skipChildren(Optional<Boolean> skipChildren) {
+        public Builder skipChildren(Optional<? extends ItemsSkipChildren> skipChildren) {
             Utils.checkNotNull(skipChildren, "skipChildren");
             this.skipChildren = skipChildren;
             return this;
@@ -3898,7 +3900,7 @@ public class Items {
         /**
          * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
          */
-        public Builder skipParent(boolean skipParent) {
+        public Builder skipParent(ItemsSkipParent skipParent) {
             Utils.checkNotNull(skipParent, "skipParent");
             this.skipParent = Optional.ofNullable(skipParent);
             return this;
@@ -3907,7 +3909,7 @@ public class Items {
         /**
          * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
          */
-        public Builder skipParent(Optional<Boolean> skipParent) {
+        public Builder skipParent(Optional<? extends ItemsSkipParent> skipParent) {
             Utils.checkNotNull(skipParent, "skipParent");
             this.skipParent = skipParent;
             return this;

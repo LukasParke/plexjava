@@ -4,37 +4,98 @@
 package dev.plexapi.sdk.models.shared;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Objects;
-import java.util.Optional;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import dev.plexapi.sdk.utils.OneOfDeserializer;
+import dev.plexapi.sdk.utils.TypedObject;
+import dev.plexapi.sdk.utils.Utils.JsonShape;
+import dev.plexapi.sdk.utils.Utils.TypeReferenceWithShape;
+import dev.plexapi.sdk.utils.Utils;
+import java.lang.Boolean;
+import java.lang.Override;
+import java.lang.String;
+import java.lang.SuppressWarnings;
 
 /**
  * HasVoiceActivity
  * 
  * <p>Voice activity detection availability flag returned by PMS.
- * PMS returns this as string values (`"0"` or `"1"`) instead of a JSON boolean.
+ * PMS may return this as a boolean or as string values (`"0"` or `"1"`).
  */
-public enum HasVoiceActivity {
-    False(0),
-    True(1);
+@JsonDeserialize(using = HasVoiceActivity._Deserializer.class)
+public class HasVoiceActivity {
 
     @JsonValue
-    private final int value;
-
-    HasVoiceActivity(int value) {
+    private TypedObject value;
+    
+    private HasVoiceActivity(TypedObject value) {
         this.value = value;
     }
-    
-    public int value() {
-        return value;
+
+    public static HasVoiceActivity of(boolean value) {
+        Utils.checkNotNull(value, "value");
+        return new HasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+    }
+
+    public static HasVoiceActivity of(Two value) {
+        Utils.checkNotNull(value, "value");
+        return new HasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Two>(){}));
     }
     
-    public static Optional<HasVoiceActivity> fromValue(int value) {
-        for (HasVoiceActivity o: HasVoiceActivity.values()) {
-            if (Objects.deepEquals(o.value, value)) {
-                return Optional.of(o);
-            }
+    /**
+     * Returns an instance of one of these types:
+     * <ul>
+     * <li>{@code boolean}</li>
+     * <li>{@code dev.plexapi.sdk.models.shared.Two}</li>
+     * </ul>
+     * 
+     * <p>Use {@code instanceof} to determine what type is returned. For example:
+     * 
+     * <pre>
+     * if (obj.value() instanceof String) {
+     *     String answer = (String) obj.value();
+     *     System.out.println("answer=" + answer);
+     * }
+     * </pre>
+     * 
+     * @return value of oneOf type
+     **/ 
+    public java.lang.Object value() {
+        return value.value();
+    }    
+    
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
         }
-        return Optional.empty();
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        HasVoiceActivity other = (HasVoiceActivity) o;
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
     }
+    
+    @Override
+    public int hashCode() {
+        return Utils.enhancedHash(value.value());
+    }
+    
+    @SuppressWarnings("serial")
+    public static final class _Deserializer extends OneOfDeserializer<HasVoiceActivity> {
+
+        public _Deserializer() {
+            super(HasVoiceActivity.class, false,
+                  TypeReferenceWithShape.of(new TypeReference<Two>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return Utils.toString(HasVoiceActivity.class,
+                "value", value);
+    }
+ 
 }
 

@@ -399,14 +399,14 @@ public class GetPlaylistGeneratorItemsMetadata {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("skipChildren")
-    private Optional<Boolean> skipChildren;
+    private Optional<? extends GetPlaylistGeneratorItemsSkipChildren> skipChildren;
 
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("skipParent")
-    private Optional<Boolean> skipParent;
+    private Optional<? extends GetPlaylistGeneratorItemsSkipParent> skipParent;
 
     /**
      * Typically only seen in metadata at a library's top level
@@ -585,8 +585,8 @@ public class GetPlaylistGeneratorItemsMetadata {
             @JsonProperty("Role") Optional<? extends List<Tag>> role,
             @JsonProperty("search") Optional<Boolean> search,
             @JsonProperty("secondary") Optional<Boolean> secondary,
-            @JsonProperty("skipChildren") Optional<Boolean> skipChildren,
-            @JsonProperty("skipParent") Optional<Boolean> skipParent,
+            @JsonProperty("skipChildren") Optional<? extends GetPlaylistGeneratorItemsSkipChildren> skipChildren,
+            @JsonProperty("skipParent") Optional<? extends GetPlaylistGeneratorItemsSkipParent> skipParent,
             @JsonProperty("Sort") Optional<? extends List<Sort>> sort,
             @JsonProperty("studio") Optional<String> studio,
             @JsonProperty("subtype") Optional<String> subtype,
@@ -1200,17 +1200,19 @@ public class GetPlaylistGeneratorItemsMetadata {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> skipChildren() {
-        return skipChildren;
+    public Optional<GetPlaylistGeneratorItemsSkipChildren> skipChildren() {
+        return (Optional<GetPlaylistGeneratorItemsSkipChildren>) skipChildren;
     }
 
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> skipParent() {
-        return skipParent;
+    public Optional<GetPlaylistGeneratorItemsSkipParent> skipParent() {
+        return (Optional<GetPlaylistGeneratorItemsSkipParent>) skipParent;
     }
 
     /**
@@ -2289,7 +2291,7 @@ public class GetPlaylistGeneratorItemsMetadata {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
-    public GetPlaylistGeneratorItemsMetadata withSkipChildren(boolean skipChildren) {
+    public GetPlaylistGeneratorItemsMetadata withSkipChildren(GetPlaylistGeneratorItemsSkipChildren skipChildren) {
         Utils.checkNotNull(skipChildren, "skipChildren");
         this.skipChildren = Optional.ofNullable(skipChildren);
         return this;
@@ -2299,7 +2301,7 @@ public class GetPlaylistGeneratorItemsMetadata {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
-    public GetPlaylistGeneratorItemsMetadata withSkipChildren(Optional<Boolean> skipChildren) {
+    public GetPlaylistGeneratorItemsMetadata withSkipChildren(Optional<? extends GetPlaylistGeneratorItemsSkipChildren> skipChildren) {
         Utils.checkNotNull(skipChildren, "skipChildren");
         this.skipChildren = skipChildren;
         return this;
@@ -2308,7 +2310,7 @@ public class GetPlaylistGeneratorItemsMetadata {
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
-    public GetPlaylistGeneratorItemsMetadata withSkipParent(boolean skipParent) {
+    public GetPlaylistGeneratorItemsMetadata withSkipParent(GetPlaylistGeneratorItemsSkipParent skipParent) {
         Utils.checkNotNull(skipParent, "skipParent");
         this.skipParent = Optional.ofNullable(skipParent);
         return this;
@@ -2318,7 +2320,7 @@ public class GetPlaylistGeneratorItemsMetadata {
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
-    public GetPlaylistGeneratorItemsMetadata withSkipParent(Optional<Boolean> skipParent) {
+    public GetPlaylistGeneratorItemsMetadata withSkipParent(Optional<? extends GetPlaylistGeneratorItemsSkipParent> skipParent) {
         Utils.checkNotNull(skipParent, "skipParent");
         this.skipParent = skipParent;
         return this;
@@ -2960,9 +2962,9 @@ public class GetPlaylistGeneratorItemsMetadata {
 
         private Optional<Boolean> secondary = Optional.empty();
 
-        private Optional<Boolean> skipChildren = Optional.empty();
+        private Optional<? extends GetPlaylistGeneratorItemsSkipChildren> skipChildren = Optional.empty();
 
-        private Optional<Boolean> skipParent = Optional.empty();
+        private Optional<? extends GetPlaylistGeneratorItemsSkipParent> skipParent = Optional.empty();
 
         private Optional<? extends List<Sort>> sort = Optional.empty();
 
@@ -3938,7 +3940,7 @@ public class GetPlaylistGeneratorItemsMetadata {
         /**
          * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
          */
-        public Builder skipChildren(boolean skipChildren) {
+        public Builder skipChildren(GetPlaylistGeneratorItemsSkipChildren skipChildren) {
             Utils.checkNotNull(skipChildren, "skipChildren");
             this.skipChildren = Optional.ofNullable(skipChildren);
             return this;
@@ -3947,7 +3949,7 @@ public class GetPlaylistGeneratorItemsMetadata {
         /**
          * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
          */
-        public Builder skipChildren(Optional<Boolean> skipChildren) {
+        public Builder skipChildren(Optional<? extends GetPlaylistGeneratorItemsSkipChildren> skipChildren) {
             Utils.checkNotNull(skipChildren, "skipChildren");
             this.skipChildren = skipChildren;
             return this;
@@ -3957,7 +3959,7 @@ public class GetPlaylistGeneratorItemsMetadata {
         /**
          * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
          */
-        public Builder skipParent(boolean skipParent) {
+        public Builder skipParent(GetPlaylistGeneratorItemsSkipParent skipParent) {
             Utils.checkNotNull(skipParent, "skipParent");
             this.skipParent = Optional.ofNullable(skipParent);
             return this;
@@ -3966,7 +3968,7 @@ public class GetPlaylistGeneratorItemsMetadata {
         /**
          * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
          */
-        public Builder skipParent(Optional<Boolean> skipParent) {
+        public Builder skipParent(Optional<? extends GetPlaylistGeneratorItemsSkipParent> skipParent) {
             Utils.checkNotNull(skipParent, "skipParent");
             this.skipParent = skipParent;
             return this;

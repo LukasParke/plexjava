@@ -394,14 +394,14 @@ public class MetadataItem {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("skipChildren")
-    private Optional<Boolean> skipChildren;
+    private Optional<? extends MediaContainerWithNestedMetadataSkipChildren> skipChildren;
 
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("skipParent")
-    private Optional<Boolean> skipParent;
+    private Optional<? extends MediaContainerWithNestedMetadataSkipParent> skipParent;
 
     /**
      * Typically only seen in metadata at a library's top level
@@ -571,8 +571,8 @@ public class MetadataItem {
             @JsonProperty("Role") Optional<? extends List<Tag>> role,
             @JsonProperty("search") Optional<Boolean> search,
             @JsonProperty("secondary") Optional<Boolean> secondary,
-            @JsonProperty("skipChildren") Optional<Boolean> skipChildren,
-            @JsonProperty("skipParent") Optional<Boolean> skipParent,
+            @JsonProperty("skipChildren") Optional<? extends MediaContainerWithNestedMetadataSkipChildren> skipChildren,
+            @JsonProperty("skipParent") Optional<? extends MediaContainerWithNestedMetadataSkipParent> skipParent,
             @JsonProperty("Sort") Optional<? extends List<Sort>> sort,
             @JsonProperty("studio") Optional<String> studio,
             @JsonProperty("subtype") Optional<String> subtype,
@@ -1182,17 +1182,19 @@ public class MetadataItem {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> skipChildren() {
-        return skipChildren;
+    public Optional<MediaContainerWithNestedMetadataSkipChildren> skipChildren() {
+        return (Optional<MediaContainerWithNestedMetadataSkipChildren>) skipChildren;
     }
 
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> skipParent() {
-        return skipParent;
+    public Optional<MediaContainerWithNestedMetadataSkipParent> skipParent() {
+        return (Optional<MediaContainerWithNestedMetadataSkipParent>) skipParent;
     }
 
     /**
@@ -2259,7 +2261,7 @@ public class MetadataItem {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
-    public MetadataItem withSkipChildren(boolean skipChildren) {
+    public MetadataItem withSkipChildren(MediaContainerWithNestedMetadataSkipChildren skipChildren) {
         Utils.checkNotNull(skipChildren, "skipChildren");
         this.skipChildren = Optional.ofNullable(skipChildren);
         return this;
@@ -2269,7 +2271,7 @@ public class MetadataItem {
     /**
      * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
      */
-    public MetadataItem withSkipChildren(Optional<Boolean> skipChildren) {
+    public MetadataItem withSkipChildren(Optional<? extends MediaContainerWithNestedMetadataSkipChildren> skipChildren) {
         Utils.checkNotNull(skipChildren, "skipChildren");
         this.skipChildren = skipChildren;
         return this;
@@ -2278,7 +2280,7 @@ public class MetadataItem {
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
-    public MetadataItem withSkipParent(boolean skipParent) {
+    public MetadataItem withSkipParent(MediaContainerWithNestedMetadataSkipParent skipParent) {
         Utils.checkNotNull(skipParent, "skipParent");
         this.skipParent = Optional.ofNullable(skipParent);
         return this;
@@ -2288,7 +2290,7 @@ public class MetadataItem {
     /**
      * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
      */
-    public MetadataItem withSkipParent(Optional<Boolean> skipParent) {
+    public MetadataItem withSkipParent(Optional<? extends MediaContainerWithNestedMetadataSkipParent> skipParent) {
         Utils.checkNotNull(skipParent, "skipParent");
         this.skipParent = skipParent;
         return this;
@@ -2903,9 +2905,9 @@ public class MetadataItem {
 
         private Optional<Boolean> secondary = Optional.empty();
 
-        private Optional<Boolean> skipChildren = Optional.empty();
+        private Optional<? extends MediaContainerWithNestedMetadataSkipChildren> skipChildren = Optional.empty();
 
-        private Optional<Boolean> skipParent = Optional.empty();
+        private Optional<? extends MediaContainerWithNestedMetadataSkipParent> skipParent = Optional.empty();
 
         private Optional<? extends List<Sort>> sort = Optional.empty();
 
@@ -3879,7 +3881,7 @@ public class MetadataItem {
         /**
          * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
          */
-        public Builder skipChildren(boolean skipChildren) {
+        public Builder skipChildren(MediaContainerWithNestedMetadataSkipChildren skipChildren) {
             Utils.checkNotNull(skipChildren, "skipChildren");
             this.skipChildren = Optional.ofNullable(skipChildren);
             return this;
@@ -3888,7 +3890,7 @@ public class MetadataItem {
         /**
          * When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
          */
-        public Builder skipChildren(Optional<Boolean> skipChildren) {
+        public Builder skipChildren(Optional<? extends MediaContainerWithNestedMetadataSkipChildren> skipChildren) {
             Utils.checkNotNull(skipChildren, "skipChildren");
             this.skipChildren = skipChildren;
             return this;
@@ -3898,7 +3900,7 @@ public class MetadataItem {
         /**
          * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
          */
-        public Builder skipParent(boolean skipParent) {
+        public Builder skipParent(MediaContainerWithNestedMetadataSkipParent skipParent) {
             Utils.checkNotNull(skipParent, "skipParent");
             this.skipParent = Optional.ofNullable(skipParent);
             return this;
@@ -3907,7 +3909,7 @@ public class MetadataItem {
         /**
          * When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
          */
-        public Builder skipParent(Optional<Boolean> skipParent) {
+        public Builder skipParent(Optional<? extends MediaContainerWithNestedMetadataSkipParent> skipParent) {
             Utils.checkNotNull(skipParent, "skipParent");
             this.skipParent = skipParent;
             return this;

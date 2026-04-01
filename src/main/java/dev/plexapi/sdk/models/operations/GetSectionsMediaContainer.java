@@ -8,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.AllowSync;
 import dev.plexapi.sdk.models.shared.LibrarySection;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Boolean;
 import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
@@ -53,7 +53,7 @@ public class GetSectionsMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("allowSync")
-    private Optional<Boolean> allowSync;
+    private Optional<? extends AllowSync> allowSync;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -73,7 +73,7 @@ public class GetSectionsMediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("allowSync") Optional<Boolean> allowSync,
+            @JsonProperty("allowSync") Optional<? extends AllowSync> allowSync,
             @JsonProperty("Directory") Optional<? extends List<LibrarySection>> directory,
             @JsonProperty("title1") Optional<String> title1) {
         Utils.checkNotNull(identifier, "identifier");
@@ -124,9 +124,10 @@ public class GetSectionsMediaContainer {
         return totalSize;
     }
 
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> allowSync() {
-        return allowSync;
+    public Optional<AllowSync> allowSync() {
+        return (Optional<AllowSync>) allowSync;
     }
 
     @SuppressWarnings("unchecked")
@@ -212,14 +213,14 @@ public class GetSectionsMediaContainer {
         return this;
     }
 
-    public GetSectionsMediaContainer withAllowSync(boolean allowSync) {
+    public GetSectionsMediaContainer withAllowSync(AllowSync allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = Optional.ofNullable(allowSync);
         return this;
     }
 
 
-    public GetSectionsMediaContainer withAllowSync(Optional<Boolean> allowSync) {
+    public GetSectionsMediaContainer withAllowSync(Optional<? extends AllowSync> allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = allowSync;
         return this;
@@ -307,7 +308,7 @@ public class GetSectionsMediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<Boolean> allowSync = Optional.empty();
+        private Optional<? extends AllowSync> allowSync = Optional.empty();
 
         private Optional<? extends List<LibrarySection>> directory = Optional.empty();
 
@@ -382,13 +383,13 @@ public class GetSectionsMediaContainer {
         }
 
 
-        public Builder allowSync(boolean allowSync) {
+        public Builder allowSync(AllowSync allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = Optional.ofNullable(allowSync);
             return this;
         }
 
-        public Builder allowSync(Optional<Boolean> allowSync) {
+        public Builder allowSync(Optional<? extends AllowSync> allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = allowSync;
             return this;

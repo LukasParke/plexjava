@@ -124,7 +124,7 @@ public class MediaContainerWithDecisionStream {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("canAutoSync")
-    private Optional<Boolean> canAutoSync;
+    private Optional<? extends MediaContainerWithDecisionCanAutoSync> canAutoSync;
 
     /**
      * Chroma sample location.
@@ -402,7 +402,7 @@ public class MediaContainerWithDecisionStream {
             @JsonProperty("DOVIRPUPresent") Optional<Boolean> dovirpuPresent,
             @JsonProperty("DOVIVersion") Optional<String> doviVersion,
             @JsonProperty("bitrate") Optional<Integer> bitrate,
-            @JsonProperty("canAutoSync") Optional<Boolean> canAutoSync,
+            @JsonProperty("canAutoSync") Optional<? extends MediaContainerWithDecisionCanAutoSync> canAutoSync,
             @JsonProperty("chromaLocation") Optional<String> chromaLocation,
             @JsonProperty("chromaSubsampling") Optional<String> chromaSubsampling,
             @JsonProperty("codedHeight") Optional<Integer> codedHeight,
@@ -687,9 +687,10 @@ public class MediaContainerWithDecisionStream {
     /**
      * Indicates if the stream can auto-sync.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> canAutoSync() {
-        return canAutoSync;
+    public Optional<MediaContainerWithDecisionCanAutoSync> canAutoSync() {
+        return (Optional<MediaContainerWithDecisionCanAutoSync>) canAutoSync;
     }
 
     /**
@@ -1247,7 +1248,7 @@ public class MediaContainerWithDecisionStream {
     /**
      * Indicates if the stream can auto-sync.
      */
-    public MediaContainerWithDecisionStream withCanAutoSync(boolean canAutoSync) {
+    public MediaContainerWithDecisionStream withCanAutoSync(MediaContainerWithDecisionCanAutoSync canAutoSync) {
         Utils.checkNotNull(canAutoSync, "canAutoSync");
         this.canAutoSync = Optional.ofNullable(canAutoSync);
         return this;
@@ -1257,7 +1258,7 @@ public class MediaContainerWithDecisionStream {
     /**
      * Indicates if the stream can auto-sync.
      */
-    public MediaContainerWithDecisionStream withCanAutoSync(Optional<Boolean> canAutoSync) {
+    public MediaContainerWithDecisionStream withCanAutoSync(Optional<? extends MediaContainerWithDecisionCanAutoSync> canAutoSync) {
         Utils.checkNotNull(canAutoSync, "canAutoSync");
         this.canAutoSync = canAutoSync;
         return this;
@@ -2115,7 +2116,7 @@ public class MediaContainerWithDecisionStream {
 
         private Optional<Integer> bitrate = Optional.empty();
 
-        private Optional<Boolean> canAutoSync = Optional.empty();
+        private Optional<? extends MediaContainerWithDecisionCanAutoSync> canAutoSync = Optional.empty();
 
         private Optional<String> chromaLocation = Optional.empty();
 
@@ -2454,7 +2455,7 @@ public class MediaContainerWithDecisionStream {
         /**
          * Indicates if the stream can auto-sync.
          */
-        public Builder canAutoSync(boolean canAutoSync) {
+        public Builder canAutoSync(MediaContainerWithDecisionCanAutoSync canAutoSync) {
             Utils.checkNotNull(canAutoSync, "canAutoSync");
             this.canAutoSync = Optional.ofNullable(canAutoSync);
             return this;
@@ -2463,7 +2464,7 @@ public class MediaContainerWithDecisionStream {
         /**
          * Indicates if the stream can auto-sync.
          */
-        public Builder canAutoSync(Optional<Boolean> canAutoSync) {
+        public Builder canAutoSync(Optional<? extends MediaContainerWithDecisionCanAutoSync> canAutoSync) {
             Utils.checkNotNull(canAutoSync, "canAutoSync");
             this.canAutoSync = canAutoSync;
             return this;

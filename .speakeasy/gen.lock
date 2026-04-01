@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 1732900d-e173-47c1-a90d-d45182eb35d9
 management:
-  docChecksum: 43eb2d324c55d223ea6829eb45c8bd64
+  docChecksum: 70783ee9ae32040a49d5ce65ac99db1c
   docVersion: 1.1.1
   speakeasyVersion: 1.615.2
   generationVersion: 2.698.4
-  releaseVersion: 0.22.5
-  configChecksum: af06bdb14dd0a1bdb15a9f4f166e92e2
+  releaseVersion: 0.22.6
+  configChecksum: befc28fd9a8d82ece71cc9d614626b9f
   repoURL: https://github.com/LukasParke/plexjava.git
   installationURL: https://github.com/LukasParke/plexjava
   published: true
@@ -406,6 +406,7 @@ generatedFiles:
   - docs/models/operations/GetPlaylistGeneratorItemsResponse.md
   - docs/models/operations/GetPlaylistGeneratorItemsResponseBody.md
   - docs/models/operations/GetPlaylistGeneratorItemsSkipChildren.md
+  - docs/models/operations/GetPlaylistGeneratorItemsSkipChildren2.md
   - docs/models/operations/GetPlaylistGeneratorItemsSkipParent.md
   - docs/models/operations/GetPlaylistGeneratorItemsSkipParent2.md
   - docs/models/operations/GetPlaylistGeneratorLocation.md
@@ -514,6 +515,7 @@ generatedFiles:
   - docs/models/operations/GetUpdatesStatusResponse.md
   - docs/models/operations/GetUpdatesStatusResponseBody.md
   - docs/models/operations/GetUpdatesStatusState.md
+  - docs/models/operations/GetUsersAllowSync.md
   - docs/models/operations/GetUsersMediaContainer.md
   - docs/models/operations/GetUsersRequest.md
   - docs/models/operations/GetUsersResponse.md
@@ -790,8 +792,13 @@ generatedFiles:
   - docs/models/shared/Accepts.md
   - docs/models/shared/AdvancedSubtitles.md
   - docs/models/shared/AiringsType.md
+  - docs/models/shared/AllowSync.md
+  - docs/models/shared/AllowSync2.md
+  - docs/models/shared/AllowSync3.md
   - docs/models/shared/AutoSelectSubtitle.md
   - docs/models/shared/BoolInt.md
+  - docs/models/shared/CanAutoSync.md
+  - docs/models/shared/CanAutoSync2.md
   - docs/models/shared/Channel.md
   - docs/models/shared/ChannelMapping.md
   - docs/models/shared/Composite.md
@@ -833,6 +840,7 @@ generatedFiles:
   - docs/models/shared/ItemsSkipParent.md
   - docs/models/shared/ItemsSkipParent2.md
   - docs/models/shared/LibrarySection.md
+  - docs/models/shared/LibrarySectionAllowSync.md
   - docs/models/shared/LibrarySectionLocation.md
   - docs/models/shared/LibrarySections.md
   - docs/models/shared/LibrarySectionsDirectory.md
@@ -848,6 +856,8 @@ generatedFiles:
   - docs/models/shared/MediaContainerWithArtworkMetadata.md
   - docs/models/shared/MediaContainerWithArtworkType.md
   - docs/models/shared/MediaContainerWithDecision.md
+  - docs/models/shared/MediaContainerWithDecisionCanAutoSync.md
+  - docs/models/shared/MediaContainerWithDecisionCanAutoSync2.md
   - docs/models/shared/MediaContainerWithDecisionDecision.md
   - docs/models/shared/MediaContainerWithDecisionGuids.md
   - docs/models/shared/MediaContainerWithDecisionHasVoiceActivity.md
@@ -921,6 +931,8 @@ generatedFiles:
   - docs/models/shared/SkipParent.md
   - docs/models/shared/SkipParent2.md
   - docs/models/shared/SlashGetResponses200.md
+  - docs/models/shared/SlashGetResponses200AllowSync.md
+  - docs/models/shared/SlashGetResponses200AllowSync2.md
   - docs/models/shared/SlashGetResponses200MediaContainer.md
   - docs/models/shared/Sort.md
   - docs/models/shared/SortDefault.md
@@ -1786,6 +1798,7 @@ generatedFiles:
   - src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsResponse.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsResponseBody.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsSkipChildren.java
+  - src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsSkipChildren2.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsSkipParent.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsSkipParent2.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorLocation.java
@@ -1930,6 +1943,7 @@ generatedFiles:
   - src/main/java/dev/plexapi/sdk/models/operations/GetUpdatesStatusResponse.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetUpdatesStatusResponseBody.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetUpdatesStatusState.java
+  - src/main/java/dev/plexapi/sdk/models/operations/GetUsersAllowSync.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetUsersMediaContainer.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetUsersRequest.java
   - src/main/java/dev/plexapi/sdk/models/operations/GetUsersRequestBuilder.java
@@ -2531,8 +2545,13 @@ generatedFiles:
   - src/main/java/dev/plexapi/sdk/models/shared/Accepts.java
   - src/main/java/dev/plexapi/sdk/models/shared/AdvancedSubtitles.java
   - src/main/java/dev/plexapi/sdk/models/shared/AiringsType.java
+  - src/main/java/dev/plexapi/sdk/models/shared/AllowSync.java
+  - src/main/java/dev/plexapi/sdk/models/shared/AllowSync2.java
+  - src/main/java/dev/plexapi/sdk/models/shared/AllowSync3.java
   - src/main/java/dev/plexapi/sdk/models/shared/AutoSelectSubtitle.java
   - src/main/java/dev/plexapi/sdk/models/shared/BoolInt.java
+  - src/main/java/dev/plexapi/sdk/models/shared/CanAutoSync.java
+  - src/main/java/dev/plexapi/sdk/models/shared/CanAutoSync2.java
   - src/main/java/dev/plexapi/sdk/models/shared/Channel.java
   - src/main/java/dev/plexapi/sdk/models/shared/ChannelMapping.java
   - src/main/java/dev/plexapi/sdk/models/shared/Composite.java
@@ -2574,6 +2593,7 @@ generatedFiles:
   - src/main/java/dev/plexapi/sdk/models/shared/ItemsSkipParent.java
   - src/main/java/dev/plexapi/sdk/models/shared/ItemsSkipParent2.java
   - src/main/java/dev/plexapi/sdk/models/shared/LibrarySection.java
+  - src/main/java/dev/plexapi/sdk/models/shared/LibrarySectionAllowSync.java
   - src/main/java/dev/plexapi/sdk/models/shared/LibrarySectionLocation.java
   - src/main/java/dev/plexapi/sdk/models/shared/LibrarySections.java
   - src/main/java/dev/plexapi/sdk/models/shared/LibrarySectionsDirectory.java
@@ -2589,6 +2609,8 @@ generatedFiles:
   - src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithArtworkMetadata.java
   - src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithArtworkType.java
   - src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecision.java
+  - src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionCanAutoSync.java
+  - src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionCanAutoSync2.java
   - src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionDecision.java
   - src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionGuids.java
   - src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionHasVoiceActivity.java
@@ -2662,6 +2684,8 @@ generatedFiles:
   - src/main/java/dev/plexapi/sdk/models/shared/SkipParent.java
   - src/main/java/dev/plexapi/sdk/models/shared/SkipParent2.java
   - src/main/java/dev/plexapi/sdk/models/shared/SlashGetResponses200.java
+  - src/main/java/dev/plexapi/sdk/models/shared/SlashGetResponses200AllowSync.java
+  - src/main/java/dev/plexapi/sdk/models/shared/SlashGetResponses200AllowSync2.java
   - src/main/java/dev/plexapi/sdk/models/shared/SlashGetResponses200MediaContainer.java
   - src/main/java/dev/plexapi/sdk/models/shared/Sort.java
   - src/main/java/dev/plexapi/sdk/models/shared/SortDefault.java
@@ -8720,72 +8744,73 @@ examplesVersion: 1.0.2
 generatedTests: {}
 releaseNotes: |
   ## Java SDK Changes Detected:
-  * `plex-api.downloadQueue.getItemDecision()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.hubs.getAllHubs()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.hubs.getContinueWatching()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.hubs.getPromotedHubs()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.hubs.getMetadataHubs()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.hubs.getPostplayHubs()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.hubs.getRelatedHubs()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.hubs.getSectionHubs()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.search.searchHubs()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.search.voiceSearchHubs()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getLibraryItems()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.ingestTransientItem()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getLibraryMatches()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.addSection()`:  `response.mediacontainer.directory.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getAllItemLeaves()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getExtras()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.listMatches()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.listSonicallySimilar()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getRelatedItems()`:  `response.mediacontainer.hub.[].metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.listSimilar()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getItemTree()`:  `response.mediacontainer.metadataItem.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.listPersonMedia()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getLibraryDetails()`:  `response.mediacontainer.directory.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.autocomplete()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getCollections()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.library.getCommon()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.collections.createCollection()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.dvRs.tuneChannel()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.liveTv.getSessions()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.liveTv.getLiveTvSession()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.subscriptions.getAllSubscriptions()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata` **Changed** **Breaking** :warning:
-  * `plex-api.subscriptions.createSubscription()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata` **Changed** **Breaking** :warning:
-  * `plex-api.subscriptions.getScheduledRecordings()`:  `response.mediacontainer.mediaGrabOperation.[].metadata` **Changed** **Breaking** :warning:
-  * `plex-api.subscriptions.getTemplate()`:  `response.mediacontainer.subscriptionTemplate.[].mediaSubscription.[].mediaGrabOperation.[].metadata` **Changed** **Breaking** :warning:
-  * `plex-api.subscriptions.getSubscription()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata` **Changed** **Breaking** :warning:
-  * `plex-api.subscriptions.editSubscriptionPreferences()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata` **Changed** **Breaking** :warning:
-  * `plex-api.subscriptions.reorderSubscription()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata` **Changed** **Breaking** :warning:
-  * `plex-api.transcoder.makeDecision()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playlist.listPlaylists()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playlist.getPlaylist()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playlist.getPlaylistItems()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.libraryPlaylists.createPlaylist()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.libraryPlaylists.clearPlaylistItems()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.libraryPlaylists.addPlaylistItems()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.libraryPlaylists.deletePlaylistItem()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.libraryPlaylists.getPlaylistGeneratorItems()`:  `response.mediacontainer.metadata` **Changed** **Breaking** :warning:
-  * `plex-api.libraryPlaylists.movePlaylistItem()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playQueue.getPlayQueue()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playQueue.addToPlayQueue()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playQueue.clearPlayQueue()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playQueue.resetPlayQueue()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playQueue.shuffle()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playQueue.unshuffle()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playQueue.deletePlayQueueItem()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.playQueue.movePlayQueueItem()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.status.listSessions()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.content.getCollectionItems()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.content.getMetadataItem()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.content.getAlbums()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.content.listContent()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.content.getAllLeaves()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.content.getSonicPath()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.content.getSonicallySimilar()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.libraryCollections.addCollectionItems()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.libraryCollections.deleteCollectionItem()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
-  * `plex-api.libraryCollections.moveCollectionItem()`:  `response.mediacontainer.metadata.[]` **Changed** **Breaking** :warning:
+  * `plex-api.downloadQueue.getItemDecision()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.hubs.getAllHubs()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.hubs.getContinueWatching()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.hubs.getPromotedHubs()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.hubs.getMetadataHubs()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.hubs.getPostplayHubs()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.hubs.getRelatedHubs()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.hubs.getSectionHubs()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.search.searchHubs()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.search.voiceSearchHubs()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getLibraryItems()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.ingestTransientItem()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getLibraryMatches()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getSections()`:  `response.mediacontainer` **Changed** **Breaking** :warning:
+  * `plex-api.library.addSection()`:  `response.mediacontainer` **Changed** **Breaking** :warning:
+  * `plex-api.library.getAllItemLeaves()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getExtras()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.listMatches()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.listSonicallySimilar()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getRelatedItems()`:  `response.mediacontainer.hub.[].metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.listSimilar()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getItemTree()`:  `response.mediacontainer.metadataItem.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.listPersonMedia()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getLibraryDetails()`:  `response.mediacontainer` **Changed** **Breaking** :warning:
+  * `plex-api.library.autocomplete()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getCollections()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.library.getCommon()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.collections.createCollection()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.dvRs.tuneChannel()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.liveTv.getSessions()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.liveTv.getLiveTvSession()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.subscriptions.getAllSubscriptions()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata.media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.subscriptions.createSubscription()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata.media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.subscriptions.getScheduledRecordings()`:  `response.mediacontainer.mediaGrabOperation.[].metadata.media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.subscriptions.getTemplate()`:  `response.mediacontainer.subscriptionTemplate.[].mediaSubscription.[].mediaGrabOperation.[].metadata.media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.subscriptions.getSubscription()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata.media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.subscriptions.editSubscriptionPreferences()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata.media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.subscriptions.reorderSubscription()`:  `response.mediacontainer.mediaSubscription.[].mediaGrabOperation.[].metadata.media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.transcoder.makeDecision()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playlist.listPlaylists()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playlist.getPlaylist()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playlist.getPlaylistItems()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryPlaylists.createPlaylist()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryPlaylists.clearPlaylistItems()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryPlaylists.addPlaylistItems()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryPlaylists.deletePlaylistItem()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryPlaylists.getPlaylistGeneratorItems()`:  `response.mediacontainer.metadata.media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryPlaylists.movePlaylistItem()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playQueue.getPlayQueue()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playQueue.addToPlayQueue()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playQueue.clearPlayQueue()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playQueue.resetPlayQueue()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playQueue.shuffle()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playQueue.unshuffle()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playQueue.deletePlayQueueItem()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.playQueue.movePlayQueueItem()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.status.listSessions()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.content.getCollectionItems()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.content.getMetadataItem()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.content.getAlbums()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.content.listContent()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.content.getAllLeaves()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.content.getSonicPath()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.content.getSonicallySimilar()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryCollections.addCollectionItems()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryCollections.deleteCollectionItem()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
+  * `plex-api.libraryCollections.moveCollectionItem()`:  `response.mediacontainer.metadata.[].media.[].part.[].stream.[].canAutoSync` **Changed** **Breaking** :warning:
 trackedFiles:
   .gitattributes:
     last_write_checksum: sha1:2b27a763ec2b5c70648554e408dc254181222d09
@@ -8904,7 +8929,7 @@ trackedFiles:
   docs/models/operations/AllowSubtitleAdmin.md:
     last_write_checksum: sha1:16312ed8cc757f9623dee1f7408bb940cdde6dd9
   docs/models/operations/AllowSync.md:
-    last_write_checksum: sha1:77d69af4dc9a94530c646f0669ef63efc0b0162e
+    last_write_checksum: sha1:5d704cdd4fe9e5792bc4c10f80fef2f1e9bc2e1b
   docs/models/operations/AllowTuners.md:
     last_write_checksum: sha1:c2be905a9e4544c76613249b042557242fa124bc
   docs/models/operations/AnalyzeMetadataRequest.md:
@@ -9450,7 +9475,7 @@ trackedFiles:
   docs/models/operations/GetItemTreeResponse.md:
     last_write_checksum: sha1:636a46b0301816ae5d962c18d7630d84ab007219
   docs/models/operations/GetLibraryDetailsMediaContainer.md:
-    last_write_checksum: sha1:422c66979479381b27ce80c27b6b9b842c2610c0
+    last_write_checksum: sha1:8686e1320644efb33dff08e81c73a6d4e8f2e2ab
   docs/models/operations/GetLibraryDetailsRequest.md:
     last_write_checksum: sha1:afacdcd43caa3a3aca207dd3afb72a620d5e1add
   docs/models/operations/GetLibraryDetailsResponse.md:
@@ -9529,6 +9554,8 @@ trackedFiles:
     last_write_checksum: sha1:397d50956a97bc5749b03baf794504e8190cc0af
   docs/models/operations/GetPlaylistGeneratorItemsSkipChildren.md:
     last_write_checksum: sha1:1fecfa80bd84f9a5e40b6a257ff528ed2604bba8
+  docs/models/operations/GetPlaylistGeneratorItemsSkipChildren2.md:
+    last_write_checksum: sha1:d5613b9929c570508df5362f52cefb4f06a4e826
   docs/models/operations/GetPlaylistGeneratorItemsSkipParent.md:
     last_write_checksum: sha1:f437b18fccf051d3521529af56dfb174c0e249aa
   docs/models/operations/GetPlaylistGeneratorItemsSkipParent2.md:
@@ -9634,7 +9661,7 @@ trackedFiles:
   docs/models/operations/GetSectionPreferencesResponse.md:
     last_write_checksum: sha1:2f7a6ad891195c1a1752f71cf73b0e287bfec937
   docs/models/operations/GetSectionsMediaContainer.md:
-    last_write_checksum: sha1:6957937d56f1e254a624caafc185e21c821aa3d5
+    last_write_checksum: sha1:de87e0b40aafdf085507ae8a90456c7b61b5db8f
   docs/models/operations/GetSectionsPrefsRequest.md:
     last_write_checksum: sha1:13b7736f65a640ba532d03523aa255326d79ce4f
   docs/models/operations/GetSectionsPrefsResponse.md:
@@ -9745,6 +9772,8 @@ trackedFiles:
     last_write_checksum: sha1:66b12f4577c8b87c4202c663136f926feb98d809
   docs/models/operations/GetUpdatesStatusState.md:
     last_write_checksum: sha1:9c90c0c13cb87ce6df5ecbb8a8fd7f7cdb1f232d
+  docs/models/operations/GetUsersAllowSync.md:
+    last_write_checksum: sha1:f071c5fdfb7c03f9ce71a843ea64354b273d2fb4
   docs/models/operations/GetUsersMediaContainer.md:
     last_write_checksum: sha1:84bb7810e40fdef6dacea966d020d9fe5b694027
   docs/models/operations/GetUsersRequest.md:
@@ -10276,7 +10305,7 @@ trackedFiles:
   docs/models/operations/UploadPlaylistResponse.md:
     last_write_checksum: sha1:fa7bab68a11eb85a562afa02577076c5e8e26bba
   docs/models/operations/User.md:
-    last_write_checksum: sha1:a914d9ba5261d209a187b9a4d1f40974e8aacc2e
+    last_write_checksum: sha1:c998be0830bc2f6ce3215972d1f48aed3ba768ad
   docs/models/operations/VoiceSearchHubsMediaContainer.md:
     last_write_checksum: sha1:575b22ece8a9e0bf7cba542ab9187c2592be2150
   docs/models/operations/VoiceSearchHubsRequest.md:
@@ -10297,10 +10326,20 @@ trackedFiles:
     last_write_checksum: sha1:a29502587a65738166e5f05c62790831e1236ebe
   docs/models/shared/AiringsType.md:
     last_write_checksum: sha1:3eda575742000d3a26ac6aee194bba0430ad0c69
+  docs/models/shared/AllowSync.md:
+    last_write_checksum: sha1:5d704cdd4fe9e5792bc4c10f80fef2f1e9bc2e1b
+  docs/models/shared/AllowSync2.md:
+    last_write_checksum: sha1:f6687f343b3a3ba2d430f4bd9af940a42c45eb1c
+  docs/models/shared/AllowSync3.md:
+    last_write_checksum: sha1:6fe522ba942761ea679796c711f78bff30440c2f
   docs/models/shared/AutoSelectSubtitle.md:
     last_write_checksum: sha1:eeb4c196d04a5c50796156c9c0255fc4b8c84099
   docs/models/shared/BoolInt.md:
     last_write_checksum: sha1:862308e0ae5b2a3b3b306e476bf33624e45bd383
+  docs/models/shared/CanAutoSync.md:
+    last_write_checksum: sha1:f334cb0631234705dc14a1eb70555833d4f08d69
+  docs/models/shared/CanAutoSync2.md:
+    last_write_checksum: sha1:402d394eb914eaed751f1b59ddd9ae24b9388073
   docs/models/shared/Channel.md:
     last_write_checksum: sha1:5dc25748c9e7bed1a8ab1d1bd807964e33b2a81e
   docs/models/shared/ChannelMapping.md:
@@ -10382,7 +10421,9 @@ trackedFiles:
   docs/models/shared/ItemsSkipParent2.md:
     last_write_checksum: sha1:a3a56d22d0c2791b38d8238290e27023ff57402d
   docs/models/shared/LibrarySection.md:
-    last_write_checksum: sha1:8d0d29214d805e0bbdc9f7dbfc92ff2468914c43
+    last_write_checksum: sha1:7787a8b8c60b5998b7e0ea83ff6ae31bd3adaebe
+  docs/models/shared/LibrarySectionAllowSync.md:
+    last_write_checksum: sha1:e1b27b0c57089edb3a2f492348479d53e2ca8e6f
   docs/models/shared/LibrarySectionLocation.md:
     last_write_checksum: sha1:d719786fef958fb1ff798f0701742068b58d08b6
   docs/models/shared/LibrarySections.md:
@@ -10413,6 +10454,10 @@ trackedFiles:
     last_write_checksum: sha1:95305b34512fdc243b20670cd41ac1a387f6de1f
   docs/models/shared/MediaContainerWithDecision.md:
     last_write_checksum: sha1:a809404d01a366c0fd5969d65c944b0371cb670f
+  docs/models/shared/MediaContainerWithDecisionCanAutoSync.md:
+    last_write_checksum: sha1:786bc9406ec0dab044d132329fcea81f085c0917
+  docs/models/shared/MediaContainerWithDecisionCanAutoSync2.md:
+    last_write_checksum: sha1:5e8f4ceaa50bfa21c45b7f7cf81ca6fefc4823ed
   docs/models/shared/MediaContainerWithDecisionDecision.md:
     last_write_checksum: sha1:65279163fb9fbb84a5966bdf077bf8083c9ede38
   docs/models/shared/MediaContainerWithDecisionGuids.md:
@@ -10438,7 +10483,7 @@ trackedFiles:
   docs/models/shared/MediaContainerWithDecisionSkipParent2.md:
     last_write_checksum: sha1:3ae29f15b5fabdeb3a9bd8e49372c7faa681468c
   docs/models/shared/MediaContainerWithDecisionStream.md:
-    last_write_checksum: sha1:e047cf12e2e95c0d9bb6dc46d8b6d42051d2d457
+    last_write_checksum: sha1:5463a48cb13668ee47c5d985b64b0d85ed0b4e55
   docs/models/shared/MediaContainerWithDecisionStreamType.md:
     last_write_checksum: sha1:5b7af8894b94d2eb9c71b3ccc8ae12fa53d6cc1b
   docs/models/shared/MediaContainerWithDevice.md:
@@ -10557,8 +10602,12 @@ trackedFiles:
     last_write_checksum: sha1:3595ebaadffdc4f598023d4ebac179abf6f02b00
   docs/models/shared/SkipParent2.md:
     last_write_checksum: sha1:888212060ea539ab5e44882c1177d0eab73910d0
+  docs/models/shared/SlashGetResponses200AllowSync.md:
+    last_write_checksum: sha1:ffe46bdf90ea3fa2eed0a75698de59d40e84bac5
+  docs/models/shared/SlashGetResponses200AllowSync2.md:
+    last_write_checksum: sha1:b1d11c25807040c6e5e618951a0bcf7c489b6501
   docs/models/shared/SlashGetResponses200MediaContainer.md:
-    last_write_checksum: sha1:f98aff69075e20f6a2d8a70d71d9230660aa6896
+    last_write_checksum: sha1:bdf1adb2ccb9bd6724aaa3cc5211a1fcbbcec0b0
   docs/models/shared/SlashGetResponses200.md:
     last_write_checksum: sha1:ccf262c9fe319a529ad5e384c78ba219a17746f9
   docs/models/shared/Sort.md:
@@ -10570,7 +10619,7 @@ trackedFiles:
   docs/models/shared/Status.md:
     last_write_checksum: sha1:bdf64c18c121592662222bf8fa09b7fdea4aa0b5
   docs/models/shared/Stream.md:
-    last_write_checksum: sha1:7524a70fb74a4ce2712bc0d97732711026a40649
+    last_write_checksum: sha1:224d21873af4314b7c4e772be31ef4c7bf5351eb
   docs/models/shared/StreamType.md:
     last_write_checksum: sha1:19ef0a9435d6e039c5bca9aa89c6f959532628df
   docs/models/shared/Subscription.md:
@@ -10698,21 +10747,21 @@ trackedFiles:
   spring/plexapi-spring-boot-starter/build.gradle:
     last_write_checksum: sha1:9747e32cf412277aecef2e30bada47f094435c9a
   src/main/java/dev/plexapi/sdk/Activities.java:
-    last_write_checksum: sha1:533a969aa8d3046e2e31503f24bd611f375cebc5
+    last_write_checksum: sha1:2a40ab7a36c44809347ea3887ac13461fd1f5487
   src/main/java/dev/plexapi/sdk/AsyncActivities.java:
-    last_write_checksum: sha1:7982e815d2eb0e1f7ed92de78274f0e30eb9e709
+    last_write_checksum: sha1:4b44165f58e1beaeba622dcfa5e406d1dc73ea82
   src/main/java/dev/plexapi/sdk/AsyncAuthentication.java:
-    last_write_checksum: sha1:d1952fac124c27d98b032ecd49a5c77d1d779938
+    last_write_checksum: sha1:73b2524f098f1569ba6deebaaeb869a7aff3bff7
   src/main/java/dev/plexapi/sdk/AsyncButler.java:
-    last_write_checksum: sha1:02a1cd39c97db75539c4d94ba7d0a011f7b35070
+    last_write_checksum: sha1:2ebcbe01888e82a516baf5d245cabf0167cdc832
   src/main/java/dev/plexapi/sdk/AsyncCollections.java:
     last_write_checksum: sha1:8f48e9f2863ef5504d6ce1eae5340568206ffd07
   src/main/java/dev/plexapi/sdk/AsyncContent.java:
     last_write_checksum: sha1:1d680e52aede12965913af2e151ae0022aa06d85
   src/main/java/dev/plexapi/sdk/AsyncDVRs.java:
-    last_write_checksum: sha1:cdd3d83c54f4a172733a2d529b9bd573ce5c657c
+    last_write_checksum: sha1:ab9fd183a66e18465477b34917338c79a5f46039
   src/main/java/dev/plexapi/sdk/AsyncDevices.java:
-    last_write_checksum: sha1:a3852ef0820a81826aa6f7b9c58d2b2126b54315
+    last_write_checksum: sha1:792fe7022995077faf4f8b47e006dc98e2bb457d
   src/main/java/dev/plexapi/sdk/AsyncDownloadQueue.java:
     last_write_checksum: sha1:0ab91ecc423c990b9200d956dd855b5d67d1129a
   src/main/java/dev/plexapi/sdk/AsyncEpg.java:
@@ -10722,23 +10771,23 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/AsyncGeneral.java:
     last_write_checksum: sha1:cb23b304718710bb3032e49c91c02c85e584a101
   src/main/java/dev/plexapi/sdk/AsyncHubs.java:
-    last_write_checksum: sha1:2aa1994dc57ef8ae2e044648c8507354f3d7e8fb
+    last_write_checksum: sha1:56121a754472689ca6b21e5ff742a08c95ad7c76
   src/main/java/dev/plexapi/sdk/AsyncLibrary.java:
-    last_write_checksum: sha1:8a83e64aa1609c332338c23254665ae43f851831
+    last_write_checksum: sha1:a51b76a8b0c8580f8c1656a69eb9d1aec860562d
   src/main/java/dev/plexapi/sdk/AsyncLibraryCollections.java:
-    last_write_checksum: sha1:83d1e2b66cadfb0832436d7bb43c658311d1f927
+    last_write_checksum: sha1:08fcc52197c47447af7842ebd4b91b4f32d9817b
   src/main/java/dev/plexapi/sdk/AsyncLibraryPlaylists.java:
-    last_write_checksum: sha1:dd93b97e74df6fe7017db34f7a4ae8b3942d0a94
+    last_write_checksum: sha1:fabef8b4a34c175a2622987cc5eb76c982de4ebd
   src/main/java/dev/plexapi/sdk/AsyncLiveTV.java:
     last_write_checksum: sha1:1d4552ae3fc7277aeeb34723e8e0499fae49cd32
   src/main/java/dev/plexapi/sdk/AsyncLog.java:
-    last_write_checksum: sha1:e849c09b05426fb2d3699895323f8661479baa5b
+    last_write_checksum: sha1:5a94b0c41f4fa30853f6835ba1d57636bab3b405
   src/main/java/dev/plexapi/sdk/AsyncPlayQueue.java:
     last_write_checksum: sha1:1d9dde59af84ba4de839a845f1183762d40dd27b
   src/main/java/dev/plexapi/sdk/AsyncPlaylist.java:
     last_write_checksum: sha1:874eff832b08669f081bff63d9d0e4b4d0e7f6f2
   src/main/java/dev/plexapi/sdk/AsyncPlex.java:
-    last_write_checksum: sha1:0030b83828d32da38d36d6c6d47b8ca0fd08d765
+    last_write_checksum: sha1:3048fad9ade4138f102a3994c5f3230b016cfe56
   src/main/java/dev/plexapi/sdk/AsyncPlexAPI.java:
     last_write_checksum: sha1:46965fbbb501fb11c392363abf9b17126266454d
   src/main/java/dev/plexapi/sdk/AsyncPreferences.java:
@@ -10750,9 +10799,9 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/AsyncSearch.java:
     last_write_checksum: sha1:f06c785a67aa3797fa88ed4ad9ae49c1f0834ea9
   src/main/java/dev/plexapi/sdk/AsyncStatus.java:
-    last_write_checksum: sha1:6e3464601cc57bca7f85ab528c1160026046fb20
+    last_write_checksum: sha1:7e6a1a344270b5dd2f0cecdf9666155335e584f7
   src/main/java/dev/plexapi/sdk/AsyncSubscriptions.java:
-    last_write_checksum: sha1:2a17be7e004c0c5d4ebf747715a4913ff81b5f46
+    last_write_checksum: sha1:94f329c2ed1dcf01d7ed702b22aab2e81f1fb3d2
   src/main/java/dev/plexapi/sdk/AsyncTimeline.java:
     last_write_checksum: sha1:2520d826d9b037fb9e4d80d74d1c6595bfb46dd6
   src/main/java/dev/plexapi/sdk/AsyncTranscoder.java:
@@ -10760,21 +10809,21 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/AsyncUltraBlur.java:
     last_write_checksum: sha1:8668c0c8e8a10ea363191dc1678bd7b95877e063
   src/main/java/dev/plexapi/sdk/AsyncUpdater.java:
-    last_write_checksum: sha1:8c3bb8b353cce66c0c67eaa0de53e26920dd247f
+    last_write_checksum: sha1:9266b97089fe6d43209aeb320181133d566132d4
   src/main/java/dev/plexapi/sdk/AsyncUsers.java:
-    last_write_checksum: sha1:df3a27e52089398884bca262123d2ac955cf0fbf
+    last_write_checksum: sha1:db88acc8883b1dc4746bc4549ed51069845d4c93
   src/main/java/dev/plexapi/sdk/Authentication.java:
-    last_write_checksum: sha1:61963de68205b5e8ca418a165bcf868a970b64d3
+    last_write_checksum: sha1:04ff355fce352d8ab26282add49836f4a0877124
   src/main/java/dev/plexapi/sdk/Butler.java:
-    last_write_checksum: sha1:1adb743470b40987a6e1363d9c195c3727ad3ecc
+    last_write_checksum: sha1:18478d7c92879e474f6de56e899efa6faf27ca7b
   src/main/java/dev/plexapi/sdk/Collections.java:
     last_write_checksum: sha1:79a021fee4ef63e79ee6fe6ee92cb6433361a0cc
   src/main/java/dev/plexapi/sdk/Content.java:
     last_write_checksum: sha1:41ebefc792135c77244e85fa2c36a19ba6731f40
   src/main/java/dev/plexapi/sdk/DVRs.java:
-    last_write_checksum: sha1:4c53707026d942c4d4e132f310f65d3348ed2ae0
+    last_write_checksum: sha1:4481c68ab8a21d98687b853fea278e73d7c06980
   src/main/java/dev/plexapi/sdk/Devices.java:
-    last_write_checksum: sha1:e6e1705a93afa95b41db967cd2a188edb54c0641
+    last_write_checksum: sha1:5946160a895f598f9fe0cf79a9e79549ac72f297
   src/main/java/dev/plexapi/sdk/DownloadQueue.java:
     last_write_checksum: sha1:49e9387c6b94565e525404a21b776fb1a88d07c1
   src/main/java/dev/plexapi/sdk/Epg.java:
@@ -10784,23 +10833,23 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/General.java:
     last_write_checksum: sha1:24c2deee6ebcfa1413f6507f0d51ffe730f11ef0
   src/main/java/dev/plexapi/sdk/Hubs.java:
-    last_write_checksum: sha1:72741c8bc5f89dee98c9102b7e8d691320fd5acc
+    last_write_checksum: sha1:49ed21c3aea39ded84dfa79838ad698f1b2e4b5f
   src/main/java/dev/plexapi/sdk/Library.java:
-    last_write_checksum: sha1:f7d8a411cb4aab88b17e28ccddc19dcf6f73c302
+    last_write_checksum: sha1:8d5fd052953624e1dcd51b8c7a410d978ad6fa16
   src/main/java/dev/plexapi/sdk/LibraryCollections.java:
-    last_write_checksum: sha1:f41b21ba6bf7c0de3f6e5f0985708dc7e9df57c2
+    last_write_checksum: sha1:c5a42a79364ecdb5a64d713f59bbb61b74081346
   src/main/java/dev/plexapi/sdk/LibraryPlaylists.java:
-    last_write_checksum: sha1:e697c2801dd01ba764770eca933e61c31d405480
+    last_write_checksum: sha1:36038bae8d05a317e96edd55166eb38395964063
   src/main/java/dev/plexapi/sdk/LiveTV.java:
     last_write_checksum: sha1:ffc3f30810516985d5bf6393008b5add63ddcd3a
   src/main/java/dev/plexapi/sdk/Log.java:
-    last_write_checksum: sha1:aa02c0355c9d4ee310ee1141a8949f157e8db4b5
+    last_write_checksum: sha1:7498f262fd1e7c35117c98dfd21f625c87589f2f
   src/main/java/dev/plexapi/sdk/PlayQueue.java:
     last_write_checksum: sha1:dcab93d09da707c928abc75d5b0b26094f9ecadf
   src/main/java/dev/plexapi/sdk/Playlist.java:
     last_write_checksum: sha1:bee150648e7222a6e720cff305d0ed1d25d41b1f
   src/main/java/dev/plexapi/sdk/Plex.java:
-    last_write_checksum: sha1:cf9493e38d246d53b4c52c150e9d3eb76022f18d
+    last_write_checksum: sha1:139eb0d2bda995f5fc0e1162ed5e40952c6bc70c
   src/main/java/dev/plexapi/sdk/PlexAPI.java:
     last_write_checksum: sha1:d32f7541769e2ab99cd81a1766794a5e0ead8eb7
   src/main/java/dev/plexapi/sdk/Preferences.java:
@@ -10810,15 +10859,15 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/Rate.java:
     last_write_checksum: sha1:a319837ed701027f6ca98ab99cf5c95178c7f6fe
   src/main/java/dev/plexapi/sdk/SDKConfiguration.java:
-    last_write_checksum: sha1:b8066cff6e87c5fa1cb419f76c2b7fba832b20a4
+    last_write_checksum: sha1:b6fcdaa50374e7e7cadd5583d7bcf9b255aa22e8
   src/main/java/dev/plexapi/sdk/Search.java:
     last_write_checksum: sha1:9b51d3d7f225844414ce2b48127f94e378eba6b1
   src/main/java/dev/plexapi/sdk/SecuritySource.java:
     last_write_checksum: sha1:0ede988a833fb86bb9f99403d53db6eb51d27b9c
   src/main/java/dev/plexapi/sdk/Status.java:
-    last_write_checksum: sha1:5830ff4016a7feb0ba757417ace8be66ff311ead
+    last_write_checksum: sha1:67c8c0d34234ef3846a59eb1c46db9f92e3c2a8a
   src/main/java/dev/plexapi/sdk/Subscriptions.java:
-    last_write_checksum: sha1:ce83f23220ff794842705127193a91a71fa9fbb9
+    last_write_checksum: sha1:822237601965e8fe6d4dfb9c2a306721824631f7
   src/main/java/dev/plexapi/sdk/Timeline.java:
     last_write_checksum: sha1:7192e0a0b551f182b859dd60e43123079401fbae
   src/main/java/dev/plexapi/sdk/Transcoder.java:
@@ -10826,9 +10875,9 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/UltraBlur.java:
     last_write_checksum: sha1:c3fa60d47c046228b0abc3bc059440b2c673c805
   src/main/java/dev/plexapi/sdk/Updater.java:
-    last_write_checksum: sha1:1a1dabb287d07a12caa49b4d2a2807bdc7f02f77
+    last_write_checksum: sha1:0675e23d2be3663825f57c31aebe6743c78d61f8
   src/main/java/dev/plexapi/sdk/Users.java:
-    last_write_checksum: sha1:5f5f69306b0630ef595044f3712dcad5972dd544
+    last_write_checksum: sha1:3c249c379fc895c77db55ea730536a1b8b593312
   src/main/java/dev/plexapi/sdk/models/errors/AsyncSDKError.java:
     last_write_checksum: sha1:1f871e00df8385eff13a43ff843e0eb005dfa3e1
   src/main/java/dev/plexapi/sdk/models/errors/AuthException.java:
@@ -11450,7 +11499,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/operations/AllowSubtitleAdmin.java:
     last_write_checksum: sha1:d98f996af3b1c7d903090482be8c6a73a92efd91
   src/main/java/dev/plexapi/sdk/models/operations/AllowSync.java:
-    last_write_checksum: sha1:d0ec34814251a704954a66469e82b5f08cdd6e00
+    last_write_checksum: sha1:4d9741c6337af6c1324929b6c69165fe8ea4d84f
   src/main/java/dev/plexapi/sdk/models/operations/AllowTuners.java:
     last_write_checksum: sha1:0f19a6953037cf28e2ba0be1b9392557a27bf43b
   src/main/java/dev/plexapi/sdk/models/operations/AnalyzeMetadataRequest.java:
@@ -12184,7 +12233,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/operations/GetItemTreeResponse.java:
     last_write_checksum: sha1:0be3ddf30566e72472cf08faa0a02b91241601d2
   src/main/java/dev/plexapi/sdk/models/operations/GetLibraryDetailsMediaContainer.java:
-    last_write_checksum: sha1:e0769776cb2ff111a695f02af57f4619081e5437
+    last_write_checksum: sha1:b94cfd3f7d5a51cfc9ffd444a9d2d424dfd9b752
   src/main/java/dev/plexapi/sdk/models/operations/GetLibraryDetailsRequest.java:
     last_write_checksum: sha1:336efc20a2cf98370473cd8d9d0418c589b07762
   src/main/java/dev/plexapi/sdk/models/operations/GetLibraryDetailsRequestBuilder.java:
@@ -12290,7 +12339,9 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsResponseBody.java:
     last_write_checksum: sha1:0968450848bf6bfc6c8b82089127f4a7e8dfd8dd
   src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsSkipChildren.java:
-    last_write_checksum: sha1:cd973e1be1cf7b7270c1f71acd101b79df198e09
+    last_write_checksum: sha1:a065f767c19d4c3ca8431127c62c72d2e73245a3
+  src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsSkipChildren2.java:
+    last_write_checksum: sha1:68d3eb20295894202c166594c82b75f23401c0b2
   src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsSkipParent.java:
     last_write_checksum: sha1:80d2e3700e00d662cceca6404080aa51fc6f57af
   src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsSkipParent2.java:
@@ -12426,7 +12477,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/operations/GetSectionPreferencesResponse.java:
     last_write_checksum: sha1:bca7d0cfdcc4f189be58cbac5e234f5b0fd46e28
   src/main/java/dev/plexapi/sdk/models/operations/GetSectionsMediaContainer.java:
-    last_write_checksum: sha1:5d5506c63740d568f885b178f5909ecddf3cae99
+    last_write_checksum: sha1:aa43102a6cc2400f5823de602ddebfb0d7f7c354
   src/main/java/dev/plexapi/sdk/models/operations/GetSectionsPrefsRequest.java:
     last_write_checksum: sha1:230ae158eefedcc2b9b91d87734498d3508cfed5
   src/main/java/dev/plexapi/sdk/models/operations/GetSectionsPrefsRequestBuilder.java:
@@ -12579,6 +12630,8 @@ trackedFiles:
     last_write_checksum: sha1:75903c23c55097e714c38f83e74288e95ec37935
   src/main/java/dev/plexapi/sdk/models/operations/GetUpdatesStatusState.java:
     last_write_checksum: sha1:233492037f86cf9a997946c8fc86110710b20a5c
+  src/main/java/dev/plexapi/sdk/models/operations/GetUsersAllowSync.java:
+    last_write_checksum: sha1:dcd73d363ab2e6509101854624a4bffcce9391d2
   src/main/java/dev/plexapi/sdk/models/operations/GetUsersMediaContainer.java:
     last_write_checksum: sha1:96348ebdbef43a7c29c4ad65321464d71f451a9e
   src/main/java/dev/plexapi/sdk/models/operations/GetUsersRequest.java:
@@ -13100,7 +13153,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/operations/ShuffleResponse.java:
     last_write_checksum: sha1:a89a8a89b5c44c3ffc7c045b1331c59af8baf864
   src/main/java/dev/plexapi/sdk/models/operations/SkipChildren.java:
-    last_write_checksum: sha1:27a3ff437585b00394441525c979660872de4c4b
+    last_write_checksum: sha1:9f1b57e1630587fe99ad3d8b25a33ddbc23ee269
   src/main/java/dev/plexapi/sdk/models/operations/SkipChildren2.java:
     last_write_checksum: sha1:aa9acf79ccc46ad458b058f2a1140ebfda9fe53c
   src/main/java/dev/plexapi/sdk/models/operations/SkipParent.java:
@@ -13274,7 +13327,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/operations/UploadPlaylistResponse.java:
     last_write_checksum: sha1:c4dd56285ca7a9974ba5dbf986d62ecf44513284
   src/main/java/dev/plexapi/sdk/models/operations/User.java:
-    last_write_checksum: sha1:b89e6d436a63dcd02eab3e739ce3e759d6f4d0c1
+    last_write_checksum: sha1:7b8048f39c8d0624a9e9ccbc7af6db3e345ba5ae
   src/main/java/dev/plexapi/sdk/models/operations/VoiceSearchHubsMediaContainer.java:
     last_write_checksum: sha1:5724d84cb410fef01939c18c1f27063eb6b437ec
   src/main/java/dev/plexapi/sdk/models/operations/VoiceSearchHubsRequest.java:
@@ -13781,10 +13834,20 @@ trackedFiles:
     last_write_checksum: sha1:99ec652bad9febcb33bddc2e45063a8c05c42a07
   src/main/java/dev/plexapi/sdk/models/shared/AiringsType.java:
     last_write_checksum: sha1:d50b4a69b13fde42c82436d2690a8a6bc7e7746f
+  src/main/java/dev/plexapi/sdk/models/shared/AllowSync.java:
+    last_write_checksum: sha1:4d00680be960fc971f789cd34b15d552b8fc5917
+  src/main/java/dev/plexapi/sdk/models/shared/AllowSync2.java:
+    last_write_checksum: sha1:e8ff2e10b2cdcac4fe3fa916195fb488cb48eebb
+  src/main/java/dev/plexapi/sdk/models/shared/AllowSync3.java:
+    last_write_checksum: sha1:71cbef40d4908312a55859b8ce511ec47884b3dd
   src/main/java/dev/plexapi/sdk/models/shared/AutoSelectSubtitle.java:
     last_write_checksum: sha1:5211a4033cc6fe6595a8d76d57e5637381b70ce4
   src/main/java/dev/plexapi/sdk/models/shared/BoolInt.java:
     last_write_checksum: sha1:5677aed233f9b53fc827bd310759d97b9cf7ba09
+  src/main/java/dev/plexapi/sdk/models/shared/CanAutoSync.java:
+    last_write_checksum: sha1:2eb98b9c8142546d1aa2c6c200bc212288f06205
+  src/main/java/dev/plexapi/sdk/models/shared/CanAutoSync2.java:
+    last_write_checksum: sha1:81e72b8873956e4aac80df8bad84f9a6c4c82532
   src/main/java/dev/plexapi/sdk/models/shared/Channel.java:
     last_write_checksum: sha1:a0a5d04dc2d02e26d7511d741a25ce6c0f921efe
   src/main/java/dev/plexapi/sdk/models/shared/ChannelMapping.java:
@@ -13866,7 +13929,9 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/shared/ItemsSkipParent2.java:
     last_write_checksum: sha1:6eb7a1bcc9b079533da35e25f3af471f620cec6d
   src/main/java/dev/plexapi/sdk/models/shared/LibrarySection.java:
-    last_write_checksum: sha1:3b2640bbc4758571e2496692186a37366af98968
+    last_write_checksum: sha1:3520217ca2f1c921cf7f7416a74dbb8667fb317b
+  src/main/java/dev/plexapi/sdk/models/shared/LibrarySectionAllowSync.java:
+    last_write_checksum: sha1:f17137c93c2518ca4682a376bddbe117ba2437a9
   src/main/java/dev/plexapi/sdk/models/shared/LibrarySectionLocation.java:
     last_write_checksum: sha1:287e86f164a2ac5a8b6403260dcaab6f8f1ee275
   src/main/java/dev/plexapi/sdk/models/shared/LibrarySections.java:
@@ -13897,6 +13962,10 @@ trackedFiles:
     last_write_checksum: sha1:0347d9b03f7357c023ab8a83ea16c13dd00db7c5
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecision.java:
     last_write_checksum: sha1:daeb4b99dd5fe72bc7c0c77c30e36822b9b319de
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionCanAutoSync.java:
+    last_write_checksum: sha1:20f464e02bc1f27290821fd1977d3732e9c06caa
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionCanAutoSync2.java:
+    last_write_checksum: sha1:701430db6cf9883a9d45d426afefa01dbbc06109
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionDecision.java:
     last_write_checksum: sha1:07b419fc5948cbebcc839800461fe992a6cff934
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionGuids.java:
@@ -13922,7 +13991,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionSkipParent2.java:
     last_write_checksum: sha1:52f06b7d576e450a5f06a80e70932bb907346781
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionStream.java:
-    last_write_checksum: sha1:967f4445a6f95dbb4bd9075c0a0a5a3e269bab2a
+    last_write_checksum: sha1:224f470c11b214dceca927e737b1e2662da10e0a
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionStreamType.java:
     last_write_checksum: sha1:eba24bd912e2a8b5df412ac2b9282423a8df3275
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDevice.java:
@@ -14041,8 +14110,12 @@ trackedFiles:
     last_write_checksum: sha1:b81a21bd208378da587f5e0d7533ab193cf5d32c
   src/main/java/dev/plexapi/sdk/models/shared/SkipParent2.java:
     last_write_checksum: sha1:5d3d2f4570dd8948bd428b0f9d68c7429911f9a6
+  src/main/java/dev/plexapi/sdk/models/shared/SlashGetResponses200AllowSync.java:
+    last_write_checksum: sha1:6b3a41ebaca3033d51512e6209906594be000d2e
+  src/main/java/dev/plexapi/sdk/models/shared/SlashGetResponses200AllowSync2.java:
+    last_write_checksum: sha1:834e964f8f5880ea4600a392e1d3f6762d59740d
   src/main/java/dev/plexapi/sdk/models/shared/SlashGetResponses200MediaContainer.java:
-    last_write_checksum: sha1:72e1b7c2f93bd7d017bb32abfdbea561950fe34f
+    last_write_checksum: sha1:cabf89599b97c6b84f87dee8eb8b0fef50f52a39
   src/main/java/dev/plexapi/sdk/models/shared/SlashGetResponses200.java:
     last_write_checksum: sha1:1f77896fd67f0ef84be42cc6b58f4596b518d7da
   src/main/java/dev/plexapi/sdk/models/shared/Sort.java:
@@ -14054,7 +14127,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/shared/Status.java:
     last_write_checksum: sha1:f5b9f736634e89e41db07e3f2219f7e9255c366c
   src/main/java/dev/plexapi/sdk/models/shared/Stream.java:
-    last_write_checksum: sha1:efb0ddde36b730ca1db17ff28f5ad9f2c563e754
+    last_write_checksum: sha1:d40ce877dbefb4bea3728860e9a50aa662a1e4da
   src/main/java/dev/plexapi/sdk/models/shared/StreamType.java:
     last_write_checksum: sha1:dd30c71fb3cb3c08f64b9db15e91865f48913580
   src/main/java/dev/plexapi/sdk/models/shared/Subscription.java:
@@ -14090,43 +14163,43 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/models/shared/WatchedIndicator.java:
     last_write_checksum: sha1:cacdf2ea1e4a442aac3500661d81b8d511a9cef0
   src/main/java/dev/plexapi/sdk/operations/AddCollectionItems.java:
-    last_write_checksum: sha1:36b94aef02880aec18113f6188cf63548479a15c
+    last_write_checksum: sha1:9c65edba4057936c4165997b8cb12d0ac1c1473b
   src/main/java/dev/plexapi/sdk/operations/AddDevice.java:
-    last_write_checksum: sha1:027ef350322daf278d50d3d09c9105e96fcf4436
+    last_write_checksum: sha1:fce388a498726e38e65fe4ef91481ac7ffc1a829
   src/main/java/dev/plexapi/sdk/operations/AddDeviceToDVR.java:
-    last_write_checksum: sha1:98eefd722c41ddcbdd84b882b09408ed6621dbfb
+    last_write_checksum: sha1:a8ac487f98398ca0319791ccc1d23d69238ef9b8
   src/main/java/dev/plexapi/sdk/operations/AddDownloadQueueItems.java:
     last_write_checksum: sha1:576a504c19c15623b6241f5a9b6d722d52b972fd
   src/main/java/dev/plexapi/sdk/operations/AddExtras.java:
     last_write_checksum: sha1:ff5674c81b754fdd2e3f6e1975a9fbb0a97e2a24
   src/main/java/dev/plexapi/sdk/operations/AddLineup.java:
-    last_write_checksum: sha1:c29cba92efce9af447551aee07bddcdb1aa69f51
+    last_write_checksum: sha1:e0e943d06b519e730251c7f52160b225bf93d8f1
   src/main/java/dev/plexapi/sdk/operations/AddPlaylistItems.java:
     last_write_checksum: sha1:f5ce08c59cdf805435c14b2150be430d6d6305d9
   src/main/java/dev/plexapi/sdk/operations/AddProvider.java:
     last_write_checksum: sha1:0390687fa60486f130b486f2be3aa63963f54fdc
   src/main/java/dev/plexapi/sdk/operations/AddSection.java:
-    last_write_checksum: sha1:3489f462a6926793a083830fc9bceb34d230048f
+    last_write_checksum: sha1:622605346f9d652acb09207981e1f4fb47bb006e
   src/main/java/dev/plexapi/sdk/operations/AddSubtitles.java:
-    last_write_checksum: sha1:5a42a59ea9ae8756bc5837fdb6017dfb5247911c
+    last_write_checksum: sha1:abc272ea35f1c518e9eedfffbe219bfb58da663d
   src/main/java/dev/plexapi/sdk/operations/AddToPlayQueue.java:
     last_write_checksum: sha1:eafe3c1be05897d6548fccbffb6abba0c77d435c
   src/main/java/dev/plexapi/sdk/operations/AnalyzeMetadata.java:
-    last_write_checksum: sha1:ba7b941cb2a497fc8803b3dcab4972da3dff59ec
+    last_write_checksum: sha1:574ea397a84105b50dbbfca03cfe44e1b9dbfafd
   src/main/java/dev/plexapi/sdk/operations/ApplyUpdates.java:
-    last_write_checksum: sha1:880548ae9b31b443ae26fbaf5c7406f8216fc287
+    last_write_checksum: sha1:11377def6e6167eb5445320139921850f4be4443
   src/main/java/dev/plexapi/sdk/operations/Autocomplete.java:
     last_write_checksum: sha1:ff3a4f05cebfce2e96165a55329017043d4ea35e
   src/main/java/dev/plexapi/sdk/operations/CancelActivity.java:
-    last_write_checksum: sha1:f93194296ec44c6c41a2421fcac942cb4083a44f
+    last_write_checksum: sha1:05a667b6ee6db14aa5026427a2999e318ccf65e2
   src/main/java/dev/plexapi/sdk/operations/CancelGrab.java:
     last_write_checksum: sha1:e5b41106ef0e796e80833af73e86e615567fc042
   src/main/java/dev/plexapi/sdk/operations/CancelRefresh.java:
-    last_write_checksum: sha1:01c3481c6c8c019ef76b87f1b19cafbb42148904
+    last_write_checksum: sha1:8c05bf20e121aff09526f78bd0b6efa5d164408f
   src/main/java/dev/plexapi/sdk/operations/CheckUpdates.java:
-    last_write_checksum: sha1:4041b5afa2cac0e15a270478b490a5df15f0a409
+    last_write_checksum: sha1:b3803d63a98385fde24c274c11f78a7dbd6b7f50
   src/main/java/dev/plexapi/sdk/operations/CleanBundles.java:
-    last_write_checksum: sha1:6e86fc4a4d614b3f61c7f680d44ae3d5aece7f81
+    last_write_checksum: sha1:4ab561be936aa32ed9501c859815be9332ae62c7
   src/main/java/dev/plexapi/sdk/operations/ClearPlayQueue.java:
     last_write_checksum: sha1:fff6401503d8a21c1e57384dd74e84fa3aea3d5b
   src/main/java/dev/plexapi/sdk/operations/ClearPlaylistItems.java:
@@ -14138,9 +14211,9 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/CreateCollection.java:
     last_write_checksum: sha1:9dd08d55e36d850646892a757c48f79e0d0e20b3
   src/main/java/dev/plexapi/sdk/operations/CreateCustomHub.java:
-    last_write_checksum: sha1:e4cf11d054737bf03c9965f500ee0e765884ac6f
+    last_write_checksum: sha1:762720ff432f38bd5cc76c7b9395bd3369c43c16
   src/main/java/dev/plexapi/sdk/operations/CreateDVR.java:
-    last_write_checksum: sha1:d9aa5b79237adefc40ac27de4f2a61b34d91026e
+    last_write_checksum: sha1:9fba89c78c0eae8741de11866eee98b29d648159
   src/main/java/dev/plexapi/sdk/operations/CreateDownloadQueue.java:
     last_write_checksum: sha1:85bb469d1901dd8d013850d9161ca2d0f08bba3f
   src/main/java/dev/plexapi/sdk/operations/CreateMarker.java:
@@ -14152,33 +14225,33 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/CreateSubscription.java:
     last_write_checksum: sha1:ca0122ba78e086a84f2326563da7d3ec4c9ff6a9
   src/main/java/dev/plexapi/sdk/operations/DeleteCaches.java:
-    last_write_checksum: sha1:391c39d9cc519403809c8dc0ef95fc6709e1f4a5
+    last_write_checksum: sha1:fc664b285e1ea7536a81c651f7fde85991564744
   src/main/java/dev/plexapi/sdk/operations/DeleteCollection.java:
-    last_write_checksum: sha1:81774b975f8ccf63a1d43f8675696cc99d0f3f48
+    last_write_checksum: sha1:e7a4496c218fec3e1aa9a456c565bbd4b44db3e3
   src/main/java/dev/plexapi/sdk/operations/DeleteCollectionItem.java:
-    last_write_checksum: sha1:3b1fa43134dc24a01d5c3e0074d3fecf23cb05ba
+    last_write_checksum: sha1:98f51578fbeebc21a65465ad49aba658ab8dd26f
   src/main/java/dev/plexapi/sdk/operations/DeleteCustomHub.java:
-    last_write_checksum: sha1:6cb15bf23c0acb2045c6fd8856807a43a177a50c
+    last_write_checksum: sha1:253815c26dc6d0cf0a0069548ac99782d5e1f056
   src/main/java/dev/plexapi/sdk/operations/DeleteDVR.java:
-    last_write_checksum: sha1:e8c3ab058b7b17e1d25758ed31a40445ca2fc9e1
+    last_write_checksum: sha1:efb1eaa0a05e932f0de818905fc646e7a2d34b82
   src/main/java/dev/plexapi/sdk/operations/DeleteHistory.java:
-    last_write_checksum: sha1:7bd9775e16acb96aca2ce072ae44b4201e61cc19
+    last_write_checksum: sha1:2e9d3ebd907a3b68790e1f9bcb44dc27f245056a
   src/main/java/dev/plexapi/sdk/operations/DeleteIndexes.java:
-    last_write_checksum: sha1:255121c5d32124d1e0227cb471667973b5e2f0b4
+    last_write_checksum: sha1:9c607b9e8ac845c0ce9807adaaa304e13f07b8e1
   src/main/java/dev/plexapi/sdk/operations/DeleteIntros.java:
-    last_write_checksum: sha1:e8962719edd63af0653e65f354bac434c94a75e6
+    last_write_checksum: sha1:c60c30d6ad184b1e1ef900ffda0ba234ee866f6c
   src/main/java/dev/plexapi/sdk/operations/DeleteLibrarySection.java:
-    last_write_checksum: sha1:205ad376acd817954f5aac7161d6f9c652d6835f
+    last_write_checksum: sha1:489eb875061eab401b44486c94048a71bd34171f
   src/main/java/dev/plexapi/sdk/operations/DeleteLineup.java:
-    last_write_checksum: sha1:c44c03775311fce8e659e35433ca0b953d0e6203
+    last_write_checksum: sha1:cec0f393c243355434f6443d7590afe0b7fe5aeb
   src/main/java/dev/plexapi/sdk/operations/DeleteMarker.java:
     last_write_checksum: sha1:24c602b815a12f46c4f5dd7241109e72ce806a6c
   src/main/java/dev/plexapi/sdk/operations/DeleteMediaItem.java:
-    last_write_checksum: sha1:02dd4f848bb9ce386ae00a004de08783f6eb5082
+    last_write_checksum: sha1:86eca33969b67240c5732faf472066d7a3adbe2c
   src/main/java/dev/plexapi/sdk/operations/DeleteMediaProvider.java:
     last_write_checksum: sha1:4fbdd25f89096df26a5a1295f0fbf9372bb860cd
   src/main/java/dev/plexapi/sdk/operations/DeleteMetadataItem.java:
-    last_write_checksum: sha1:ea80f996d2a72e21ed201544c831452120433ebb
+    last_write_checksum: sha1:4c4210792aa7498cdc8d68f397ab4c29d7224b0a
   src/main/java/dev/plexapi/sdk/operations/DeletePlayQueueItem.java:
     last_write_checksum: sha1:946d7e38c02ff76f3926fd3cbc5cf9c7fdcbee49
   src/main/java/dev/plexapi/sdk/operations/DeletePlaylist.java:
@@ -14190,29 +14263,29 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/DeleteSubscription.java:
     last_write_checksum: sha1:2a4e9545ae7fbd30b0bfa91b5efad864441940c8
   src/main/java/dev/plexapi/sdk/operations/DetectAds.java:
-    last_write_checksum: sha1:4e5784273fae76dfe7b214975880affb5ab1d58d
+    last_write_checksum: sha1:c3d39a6f7978bbc3dce5c3eeba0ded45a321b730
   src/main/java/dev/plexapi/sdk/operations/DetectCredits.java:
-    last_write_checksum: sha1:8484638d8c14184fb74e8fb6ece3a10a2c1e2ec5
+    last_write_checksum: sha1:de5a325bd640735311cccc57a95372d6be930c78
   src/main/java/dev/plexapi/sdk/operations/DetectIntros.java:
-    last_write_checksum: sha1:fa50b4e8fbc7288f0b7d4a3af44cb9b348981153
+    last_write_checksum: sha1:d114d606c451ba8e75a9d81fac19cde067552efd
   src/main/java/dev/plexapi/sdk/operations/DetectVoiceActivity.java:
-    last_write_checksum: sha1:f800b700af89fabb97f8b91d2ddb4af81a295273
+    last_write_checksum: sha1:e656a0d63f2e9bf824921258766d0032b26bd929
   src/main/java/dev/plexapi/sdk/operations/DiscoverDevices.java:
-    last_write_checksum: sha1:932e9455fdac7476e59a81fefb7b955e9aa8e0d7
+    last_write_checksum: sha1:252cbc01418b72750c8e0aceca8e0cf35d1a045b
   src/main/java/dev/plexapi/sdk/operations/EditMarker.java:
     last_write_checksum: sha1:54217f9545680481319759128071474775fe2c98
   src/main/java/dev/plexapi/sdk/operations/EditMetadataItem.java:
-    last_write_checksum: sha1:d3c47ac88445ec588f5dbcb5e270007bffd149dc
+    last_write_checksum: sha1:09606916303ab8e3dc34b72e47b93cf46d3f9b2e
   src/main/java/dev/plexapi/sdk/operations/EditSection.java:
-    last_write_checksum: sha1:eb7b7ec7b3201f797b437218e080b287c8a86fb1
+    last_write_checksum: sha1:1d26d42ad8732287c5c24662f1fc545f784b49a9
   src/main/java/dev/plexapi/sdk/operations/EditSubscriptionPreferences.java:
     last_write_checksum: sha1:abc4429cafab566918f528ee4d687656eafe2865
   src/main/java/dev/plexapi/sdk/operations/EmptyTrash.java:
-    last_write_checksum: sha1:473b8793ccf5a1ad608b8f5188a943ee636ff066
+    last_write_checksum: sha1:18d77f2ff05b0f761166be16bff405fdf53dd74e
   src/main/java/dev/plexapi/sdk/operations/EnablePapertrail.java:
-    last_write_checksum: sha1:cfc65478f85bb4d5b5ff3039cb14092c802b3a41
+    last_write_checksum: sha1:bb3e70bbe6001133cf766eec384f340fbf2d9fec
   src/main/java/dev/plexapi/sdk/operations/GenerateThumbs.java:
-    last_write_checksum: sha1:ff32d15f5883e517c70a7e0c32f7e5edccc736e8
+    last_write_checksum: sha1:581c6d83a17df6b1bb33b997e1492cc66a883860
   src/main/java/dev/plexapi/sdk/operations/GetAlbums.java:
     last_write_checksum: sha1:c201e5d5824a3ad3bb59d1042def50bc37889a18
   src/main/java/dev/plexapi/sdk/operations/GetAllHubs.java:
@@ -14236,7 +14309,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/GetAvailableSorts.java:
     last_write_checksum: sha1:989d912ec35dbbaf6a1bd6adb26c77d0a1613766
   src/main/java/dev/plexapi/sdk/operations/GetBackgroundTasks.java:
-    last_write_checksum: sha1:50d6d8fb3708c838eb3b2c6c3c280baf9c105908
+    last_write_checksum: sha1:134151a77c7b26510019dbfcc2e6ac8aee4749e5
   src/main/java/dev/plexapi/sdk/operations/GetCategories.java:
     last_write_checksum: sha1:bb71847fbddbb21c361d6194a00ca0b74a15bcc3
   src/main/java/dev/plexapi/sdk/operations/GetChannels.java:
@@ -14266,9 +14339,9 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/GetDVR.java:
     last_write_checksum: sha1:9f3350f114facf4faa925865af7ef9aeb9bc8a8b
   src/main/java/dev/plexapi/sdk/operations/GetDeviceDetails.java:
-    last_write_checksum: sha1:07d84831bfd2cb8267d20258575dfbf6d589c214
+    last_write_checksum: sha1:9c6f4aa93ead292cf3089a292004aa58311cdc9f
   src/main/java/dev/plexapi/sdk/operations/GetDevicesChannels.java:
-    last_write_checksum: sha1:f8635002644b56233021bdeb50e4978045f300d7
+    last_write_checksum: sha1:729dc525b59f1cb8c157292c9e1ed7876706fe6b
   src/main/java/dev/plexapi/sdk/operations/GetDownloadQueue.java:
     last_write_checksum: sha1:fc1f3946c3f9661eafef13395557dfebd36e8fe9
   src/main/java/dev/plexapi/sdk/operations/GetDownloadQueueItems.java:
@@ -14284,7 +14357,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/GetFolders.java:
     last_write_checksum: sha1:8d19c6dcddeb6a77171a2de7ca62dbaeec8ac1db
   src/main/java/dev/plexapi/sdk/operations/GetHistoryItem.java:
-    last_write_checksum: sha1:f794143cc51a4f8abe7ce6eac296f159ff1945a1
+    last_write_checksum: sha1:e6581c283f680d9d59a4491507784c49570295fa
   src/main/java/dev/plexapi/sdk/operations/GetHubItems.java:
     last_write_checksum: sha1:348a5133db9522eb445d8cf89a024673371cd00d
   src/main/java/dev/plexapi/sdk/operations/GetIdentity.java:
@@ -14350,21 +14423,21 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/GetScheduledRecordings.java:
     last_write_checksum: sha1:be82bcc3952e658227d92cb2f000aeaf8bbcabf6
   src/main/java/dev/plexapi/sdk/operations/GetSectionFilters.java:
-    last_write_checksum: sha1:f9c186f03f14baa244a372e308db898d430bac78
+    last_write_checksum: sha1:5ef89c0df3e3a23ad6c45fe99af3b2ade881a4d9
   src/main/java/dev/plexapi/sdk/operations/GetSectionHubs.java:
     last_write_checksum: sha1:c32078477618fcfe6ba24b6736efe24882e31d16
   src/main/java/dev/plexapi/sdk/operations/GetSectionImage.java:
-    last_write_checksum: sha1:a1f9569d3766576cdcdc73f25c8056e1e555bf1b
+    last_write_checksum: sha1:3016ddb22cd65e857488a755ab334e30efe0b0f2
   src/main/java/dev/plexapi/sdk/operations/GetSectionPreferences.java:
     last_write_checksum: sha1:fe1c9ba9bcffab5b3d19f5885ad4f5e1f1d6abc1
   src/main/java/dev/plexapi/sdk/operations/GetSections.java:
     last_write_checksum: sha1:a71898362d42559e20cdc70b1b3ddf8b002a6ff9
   src/main/java/dev/plexapi/sdk/operations/GetSectionsPrefs.java:
-    last_write_checksum: sha1:9a6e30f11bf27181ca1235e95c02d28ed4682e89
+    last_write_checksum: sha1:48645bfc9da242211ea42c4cfaac68ffd68e2f53
   src/main/java/dev/plexapi/sdk/operations/GetServerInfo.java:
     last_write_checksum: sha1:2b4f411d2108d419f6afed66ebb8fa48b2982a8b
   src/main/java/dev/plexapi/sdk/operations/GetServerResources.java:
-    last_write_checksum: sha1:aa11e430e7117b194b19bc5b16d47979ac2d47eb
+    last_write_checksum: sha1:f0a5dc2350d757a228caae297154bf20760ae119
   src/main/java/dev/plexapi/sdk/operations/GetSessionPlaylistIndex.java:
     last_write_checksum: sha1:1b33414c754e3634fcb59b0a651e7207236706f5
   src/main/java/dev/plexapi/sdk/operations/GetSessionSegment.java:
@@ -14388,19 +14461,19 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/GetTags.java:
     last_write_checksum: sha1:0e5ea6bec13ac7033ae6125fdc331e356c3c743b
   src/main/java/dev/plexapi/sdk/operations/GetTasks.java:
-    last_write_checksum: sha1:3de7e1305c64fb0a3195c9a84b0fdde865dce9f6
+    last_write_checksum: sha1:245323f3096edbfad0a6b7519ba998db25f807ac
   src/main/java/dev/plexapi/sdk/operations/GetTemplate.java:
     last_write_checksum: sha1:e464448d53a1bae1d23b3805be912d7d23f9728e
   src/main/java/dev/plexapi/sdk/operations/GetThumb.java:
-    last_write_checksum: sha1:5c04699963f63f6c276f4859367b57965a323e81
+    last_write_checksum: sha1:e7b89e5141b0e2fa1d69df13c9a9abc5fa4d30c4
   src/main/java/dev/plexapi/sdk/operations/GetTokenDetails.java:
-    last_write_checksum: sha1:845ec6284e60a768a6d397649eaab208afde8eed
+    last_write_checksum: sha1:a985db41362eba129fd2ef7eba1ce47a7b8df3f0
   src/main/java/dev/plexapi/sdk/operations/GetTransientToken.java:
     last_write_checksum: sha1:79f89cc1ca786df5e7c245f2a09ff1c740f19559
   src/main/java/dev/plexapi/sdk/operations/GetUpdatesStatus.java:
-    last_write_checksum: sha1:6f2ca8d1d84e5b07c7110328d4f847526dfee2b1
+    last_write_checksum: sha1:e9b4ef132f69d65eeb99bdc5186f47699920e91b
   src/main/java/dev/plexapi/sdk/operations/GetUsers.java:
-    last_write_checksum: sha1:34d154c649893bbc8e34b0ea285a502d6f11ace3
+    last_write_checksum: sha1:81a988693bf9eae21ae20275b3be4cda9ca7528f
   src/main/java/dev/plexapi/sdk/operations/IngestTransientItem.java:
     last_write_checksum: sha1:d304c18530d3044d97cdc22526072c71fd57f068
   src/main/java/dev/plexapi/sdk/operations/ListActivities.java:
@@ -14410,15 +14483,15 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/ListDVRs.java:
     last_write_checksum: sha1:1827af81bf108ac06ee8a9dfc1c81ce034af3912
   src/main/java/dev/plexapi/sdk/operations/ListDevices.java:
-    last_write_checksum: sha1:8233f4302c995c03e59c2e05dd0749da2a3ae5a3
+    last_write_checksum: sha1:51ecdc0aa0a69416777f3160acdd470cfb982e43
   src/main/java/dev/plexapi/sdk/operations/ListDownloadQueueItems.java:
     last_write_checksum: sha1:c5afb7cc9cb7c4fbf86440174b9a7470cc042987
   src/main/java/dev/plexapi/sdk/operations/ListHubs.java:
-    last_write_checksum: sha1:a8d02a2bc7e94954e3f72040441cf52185853ff5
+    last_write_checksum: sha1:fa09e132d68ddeb0fd99295e8ac4da367bbc44a8
   src/main/java/dev/plexapi/sdk/operations/ListLineups.java:
     last_write_checksum: sha1:ca4ae379610982c5162baf81a0012232a2fae00c
   src/main/java/dev/plexapi/sdk/operations/ListMatches.java:
-    last_write_checksum: sha1:2da0a13867410613d6bbe3052623c0b806b41883
+    last_write_checksum: sha1:445a72a022a7b7258e3bcc3382ca108f7b7c7285
   src/main/java/dev/plexapi/sdk/operations/ListMoments.java:
     last_write_checksum: sha1:ac2ecdc63375a3a8800f48561fa15a1d3e08ebcd
   src/main/java/dev/plexapi/sdk/operations/ListPersonMedia.java:
@@ -14430,27 +14503,27 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/ListProviders.java:
     last_write_checksum: sha1:8f4364d51f07f1e34c9846233036b1d8b24db4e5
   src/main/java/dev/plexapi/sdk/operations/ListSessions.java:
-    last_write_checksum: sha1:85fed86ffaa0c5ac0b1d4241ac3b80953cbb36cb
+    last_write_checksum: sha1:b21dad3558db7d380e32c269813a8cd35667f9bb
   src/main/java/dev/plexapi/sdk/operations/ListSimilar.java:
     last_write_checksum: sha1:e6480f8685730c0cfa16db6b1a07ad078f72de55
   src/main/java/dev/plexapi/sdk/operations/ListSonicallySimilar.java:
     last_write_checksum: sha1:6bfff9b60c48574b8d6b03adb614611225e1333a
   src/main/java/dev/plexapi/sdk/operations/ListTopUsers.java:
-    last_write_checksum: sha1:b85e1781629beb3a2b0e8cd33ad1855c9eb7b9ae
+    last_write_checksum: sha1:ece99a680eb14bdb9172dae681653d6da0774447
   src/main/java/dev/plexapi/sdk/operations/MakeDecision.java:
     last_write_checksum: sha1:9de6154b0bcf307ee14a8cc2967502e87c71d29f
   src/main/java/dev/plexapi/sdk/operations/MarkPlayed.java:
     last_write_checksum: sha1:773edf0627cf7b7613e41e658e006e0df70cfb71
   src/main/java/dev/plexapi/sdk/operations/MatchItem.java:
-    last_write_checksum: sha1:b8a3039ee62672e3d813d924188f3addc23bf32f
+    last_write_checksum: sha1:ad31b68006e3d8e2344e69e55fea09fa5adde04d
   src/main/java/dev/plexapi/sdk/operations/MergeItems.java:
-    last_write_checksum: sha1:8ab15ee2ac4e1c944f8ab22a36132316c5719fa4
+    last_write_checksum: sha1:bd34c26bb2730a367ed86d46db7f7fca247b0695
   src/main/java/dev/plexapi/sdk/operations/ModifyDevice.java:
-    last_write_checksum: sha1:5f7692465d051542515d28dbcb080fe20e8d47cd
+    last_write_checksum: sha1:464663b1f2dce11264cbc2529bd0016ae805f89a
   src/main/java/dev/plexapi/sdk/operations/MoveCollectionItem.java:
-    last_write_checksum: sha1:265f63ac8eaae6cca7e24a7cc539f50ae709bf33
+    last_write_checksum: sha1:f3f224515f96ddee7018aea4c1bc6c5a6d3dabd7
   src/main/java/dev/plexapi/sdk/operations/MoveHub.java:
-    last_write_checksum: sha1:051669ab46880fa64933ca41accf6548738db75a
+    last_write_checksum: sha1:02335d5556e88071f202e88e67a3729b971bf0c4
   src/main/java/dev/plexapi/sdk/operations/MovePlayQueueItem.java:
     last_write_checksum: sha1:8241c33944cd85a25215c905686f06207ffafc82
   src/main/java/dev/plexapi/sdk/operations/MovePlaylistItem.java:
@@ -14458,37 +14531,37 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/Operations.java:
     last_write_checksum: sha1:e73c382c38b8e110a2d170db4b1d440a31db5918
   src/main/java/dev/plexapi/sdk/operations/OptimizeDatabase.java:
-    last_write_checksum: sha1:8ae32d680ee09203191aa4524dd53ecd40332eaf
+    last_write_checksum: sha1:269570643062d1e13d55c57b1ffe6006e8e3a963
   src/main/java/dev/plexapi/sdk/operations/PostUsersSignInData.java:
     last_write_checksum: sha1:7a87694854ea65739e4787404e95b4983a443bdd
   src/main/java/dev/plexapi/sdk/operations/ProcessSubscriptions.java:
     last_write_checksum: sha1:78adcd50d7967624e9ff71e1438d1f260f82221d
   src/main/java/dev/plexapi/sdk/operations/RefreshItemsMetadata.java:
-    last_write_checksum: sha1:5eaefa92bc445204f7fa3bca34f739f151fac9d9
+    last_write_checksum: sha1:eafd6d39b3f259878ca469dd4bee4607b692c5b1
   src/main/java/dev/plexapi/sdk/operations/RefreshPlaylist.java:
     last_write_checksum: sha1:4aaf216af7a24cb4675655b5e2131b8fa6647a10
   src/main/java/dev/plexapi/sdk/operations/RefreshProviders.java:
     last_write_checksum: sha1:43e207c3ac2be075c7549d47118402ee996de2a8
   src/main/java/dev/plexapi/sdk/operations/RefreshSection.java:
-    last_write_checksum: sha1:89523d70049b573ec781f97f7393bed11a137d20
+    last_write_checksum: sha1:0bdd3000b527009bcee985555501d5894f0c9bae
   src/main/java/dev/plexapi/sdk/operations/RefreshSectionsMetadata.java:
-    last_write_checksum: sha1:e1f1a95f672791046de8f287ce923000a869a118
+    last_write_checksum: sha1:5031e80a709d401e60956e82bdfc44fed7a43280
   src/main/java/dev/plexapi/sdk/operations/ReloadGuide.java:
-    last_write_checksum: sha1:66c9824b2a3c0cd327999b40a22c8b6ae6dc0929
+    last_write_checksum: sha1:112d843b0f81bec67a70acfc13a401579ad5a8ce
   src/main/java/dev/plexapi/sdk/operations/RemoveDevice.java:
-    last_write_checksum: sha1:d9216ca37db791dbda673663983658060822b823
+    last_write_checksum: sha1:0744a650556ebc9fbf4ac582d77ff9e157103ac0
   src/main/java/dev/plexapi/sdk/operations/RemoveDeviceFromDVR.java:
-    last_write_checksum: sha1:56f91ba4ccc3e1756b3227557ddcda7f5faf8138
+    last_write_checksum: sha1:c2085ae4440ed86875cc913b77581703f24808e2
   src/main/java/dev/plexapi/sdk/operations/RemoveDownloadQueueItems.java:
     last_write_checksum: sha1:e095df68922b8728e2a4dbc27c7800eeb18d8501
   src/main/java/dev/plexapi/sdk/operations/ReorderSubscription.java:
-    last_write_checksum: sha1:e90af72be010f752167b1b126d739c22aa17e80b
+    last_write_checksum: sha1:242b5ae75a1434899afe0f6b1283b8905a083b94
   src/main/java/dev/plexapi/sdk/operations/Report.java:
     last_write_checksum: sha1:a67e1e4f3b873d98ce33a4f28b3a54fe959bb218
   src/main/java/dev/plexapi/sdk/operations/ResetPlayQueue.java:
     last_write_checksum: sha1:a919dc258b079aa67c1772579aca30c90e3d626a
   src/main/java/dev/plexapi/sdk/operations/ResetSectionDefaults.java:
-    last_write_checksum: sha1:ddd9bbfbb1bc558fb3b86955d3cda4d0b651fb58
+    last_write_checksum: sha1:50d76f8648884d661655ade5e7523f1ad79e4dff
   src/main/java/dev/plexapi/sdk/operations/RestartProcessingDownloadQueueItems.java:
     last_write_checksum: sha1:4682a121f06d0b85dde04c40bace3173741f0ead
   src/main/java/dev/plexapi/sdk/operations/Scan.java:
@@ -14498,19 +14571,19 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/SetChannelmap.java:
     last_write_checksum: sha1:9789900c3d76229a4e1b8ebff042bdda3d2a25d7
   src/main/java/dev/plexapi/sdk/operations/SetDVRPreferences.java:
-    last_write_checksum: sha1:1f207db0f0c902492648b6f5b3666b35512f28d9
+    last_write_checksum: sha1:1cddfa305c14e45be5dcc650e7930e31c2f77065
   src/main/java/dev/plexapi/sdk/operations/SetDevicePreferences.java:
-    last_write_checksum: sha1:48afe74e321bf280b7d408e84e6368cb6e767095
+    last_write_checksum: sha1:88dec2f59819f32bb6a63c0e132cf783edcc4a2f
   src/main/java/dev/plexapi/sdk/operations/SetItemArtwork.java:
     last_write_checksum: sha1:c4aa2ae42fa073654d631473cf56770926dae5d5
   src/main/java/dev/plexapi/sdk/operations/SetItemPreferences.java:
-    last_write_checksum: sha1:239e01ba50b8f4bee6f7c2b77cc0a253b1d4125b
+    last_write_checksum: sha1:11ca3c5bf0f040cc5883be6eb8c7e9fc4b78ed80
   src/main/java/dev/plexapi/sdk/operations/SetPreferences.java:
     last_write_checksum: sha1:cd675b00ad7c245fad89843e89ed373a0c900282
   src/main/java/dev/plexapi/sdk/operations/SetRating.java:
     last_write_checksum: sha1:b6c874d0e0b14ae1478e21b11a66bb5d03ca05dd
   src/main/java/dev/plexapi/sdk/operations/SetSectionPreferences.java:
-    last_write_checksum: sha1:83d9254fd8dd0545c352d7e01d310350ddc499ec
+    last_write_checksum: sha1:f8872d4e1ca2fa6de767642701966b5783e77c2f
   src/main/java/dev/plexapi/sdk/operations/SetStreamOffset.java:
     last_write_checksum: sha1:aeab4677dc25db978fd0ffcc1526de5f4a2677ab
   src/main/java/dev/plexapi/sdk/operations/SetStreamSelection.java:
@@ -14518,29 +14591,29 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/Shuffle.java:
     last_write_checksum: sha1:6f9719634c532d96c0cbcf3c433ba103c7a01693
   src/main/java/dev/plexapi/sdk/operations/SplitItem.java:
-    last_write_checksum: sha1:b80b51ff4fd02f6818a86cdd41e07861e2a5ecff
+    last_write_checksum: sha1:6bc08f2ee53e7c694822ee98f92d740b4e79f937
   src/main/java/dev/plexapi/sdk/operations/StartAnalysis.java:
-    last_write_checksum: sha1:5cd6111db23336000c8b2fff0c0351ea5b459700
+    last_write_checksum: sha1:61a23f4d059132b14c741d1a28d0196682059edb
   src/main/java/dev/plexapi/sdk/operations/StartBifGeneration.java:
-    last_write_checksum: sha1:d9eeec5d8519dfe2bff9c98d4e009f11002ee9ea
+    last_write_checksum: sha1:946dcdf1306857ab05e121f8ad4485b9ae080a11
   src/main/java/dev/plexapi/sdk/operations/StartTask.java:
-    last_write_checksum: sha1:306012eefbe9748e87cbc9fe97d7f0614f7a4767
+    last_write_checksum: sha1:caa6f582cce1253d0f1e07d0d7ef309c174a61ca
   src/main/java/dev/plexapi/sdk/operations/StartTasks.java:
-    last_write_checksum: sha1:1c583de4d45151add213d26e5ab0ae579a40671e
+    last_write_checksum: sha1:5ad63a16a801c7dba25d5b4a435b98f7a804f408
   src/main/java/dev/plexapi/sdk/operations/StartTranscodeSession.java:
     last_write_checksum: sha1:fa2c1434c56c0a1f7eec20964aebbce07b623d26
   src/main/java/dev/plexapi/sdk/operations/StopAllRefreshes.java:
-    last_write_checksum: sha1:96db703ebe0ea0d6f965b0eab7bf94074d3c20d3
+    last_write_checksum: sha1:4a1bd24117b3eab8593331923af02fddca666327
   src/main/java/dev/plexapi/sdk/operations/StopDVRReload.java:
-    last_write_checksum: sha1:b4f24b7ace78f4a02e4a2a5d20375330051fc51d
+    last_write_checksum: sha1:a7a6827b2bb09b90ec091768f98bff2e39953ffd
   src/main/java/dev/plexapi/sdk/operations/StopScan.java:
     last_write_checksum: sha1:7ee251b87d7b8443a7062b74d0f27186f607f7e9
   src/main/java/dev/plexapi/sdk/operations/StopTask.java:
-    last_write_checksum: sha1:919d3122822e07996cc6c6bdbe0e7b2334fe337e
+    last_write_checksum: sha1:19bcd088954562166157b2e8704430d81563e626
   src/main/java/dev/plexapi/sdk/operations/StopTasks.java:
-    last_write_checksum: sha1:edaea3021912314979ec76ae1f25d5af783b16e2
+    last_write_checksum: sha1:5afecd96469e1681da9c69b72061ebd45edc68ff
   src/main/java/dev/plexapi/sdk/operations/TerminateSession.java:
-    last_write_checksum: sha1:67b3e02671180f0988e64cc2974ac36987c07966
+    last_write_checksum: sha1:982be546071a0d694d2955b49020bc78013a2afc
   src/main/java/dev/plexapi/sdk/operations/TranscodeImage.java:
     last_write_checksum: sha1:c700ecd65f9ca0b4254932ae3aa43faa9252737b
   src/main/java/dev/plexapi/sdk/operations/TranscodeSubtitles.java:
@@ -14550,13 +14623,13 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/TuneChannel.java:
     last_write_checksum: sha1:44b98253b114fdc34ce5dd304cf5c0d8d7b7226a
   src/main/java/dev/plexapi/sdk/operations/Unmatch.java:
-    last_write_checksum: sha1:f8c2ee13b07c0a45b1fab6aab420d2cf6f904b20
+    last_write_checksum: sha1:7c94a9de35bf6f696c3ca408fae1f9ec75e2a3b8
   src/main/java/dev/plexapi/sdk/operations/Unscrobble.java:
     last_write_checksum: sha1:7898b55901f0e0f2b8968199273844be292d4979
   src/main/java/dev/plexapi/sdk/operations/Unshuffle.java:
     last_write_checksum: sha1:f870af950987fea5edab8712a8256c2b13b587c7
   src/main/java/dev/plexapi/sdk/operations/UpdateHubVisibility.java:
-    last_write_checksum: sha1:2d80765f61e23e113c810ce30806d53b217f8429
+    last_write_checksum: sha1:5d7f183aec0649a972e4d5da74e146090738cab8
   src/main/java/dev/plexapi/sdk/operations/UpdateItemArtwork.java:
     last_write_checksum: sha1:a18b0372a7b84389f650769f277be42cc7f6a9c0
   src/main/java/dev/plexapi/sdk/operations/UpdateItems.java:
@@ -14564,13 +14637,13 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/operations/UpdatePlaylist.java:
     last_write_checksum: sha1:43ad114f40bf617f0424750b1b67ba507245549d
   src/main/java/dev/plexapi/sdk/operations/UploadPlaylist.java:
-    last_write_checksum: sha1:bdd66efa0b89f356608c2a4336ef6421fa30db4f
+    last_write_checksum: sha1:c2580138ad84eed3e083fa340e4f102b1f430cfd
   src/main/java/dev/plexapi/sdk/operations/VoiceSearchHubs.java:
     last_write_checksum: sha1:30458f2e94ff8ff7bc8f60b3be4719281f0512ff
   src/main/java/dev/plexapi/sdk/operations/WriteLog.java:
-    last_write_checksum: sha1:d2995514037862600c104028aa02a242ac767787
+    last_write_checksum: sha1:31e116e2a1058b725c6b1ee4fa040b1a809262b9
   src/main/java/dev/plexapi/sdk/operations/WriteMessage.java:
-    last_write_checksum: sha1:31bcc4bddabc188e3dae7db04a1b98202b2ffdc6
+    last_write_checksum: sha1:cc2f43f1e775146027d5d301da29302f2b1f87c2
   src/main/java/dev/plexapi/sdk/utils/AsyncHook.java:
     last_write_checksum: sha1:fd25ed11e09ad73f09b1990e6dcbeec17e17ef2b
   src/main/java/dev/plexapi/sdk/utils/AsyncHooks.java:
@@ -14676,9 +14749,9 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/utils/RetryableException.java:
     last_write_checksum: sha1:3907c6b361414830781ee9e93ec3cf9914be3fcf
   src/main/java/dev/plexapi/sdk/utils/Security.java:
-    last_write_checksum: sha1:004b179203124d315c761b38cbe4768959ecab4b
+    last_write_checksum: sha1:bc6930fea8db978b11cce88ed451f644e3d755ed
   src/main/java/dev/plexapi/sdk/utils/SecurityMetadata.java:
-    last_write_checksum: sha1:53317dcdabb08a5ebb5c5c3f0a92be342de5baea
+    last_write_checksum: sha1:1151ecba448a6fb7ce0492e7b55b9834bead8ddb
   src/main/java/dev/plexapi/sdk/utils/SerializedBody.java:
     last_write_checksum: sha1:dd34a8d7ce638bd426fdf648884b37747a849b68
   src/main/java/dev/plexapi/sdk/utils/SessionManager.java:
@@ -14700,7 +14773,7 @@ trackedFiles:
   src/main/java/dev/plexapi/sdk/utils/Utf8UrlEncoder.java:
     last_write_checksum: sha1:c54f34b3b66faaf1b2cfbf1abb95fe9ffa5334b7
   src/main/java/dev/plexapi/sdk/utils/Utils.java:
-    last_write_checksum: sha1:8572379e9bd28a81b2f21d281585bd6ed1a886ff
+    last_write_checksum: sha1:ff06f1a74ec2fd34b1522a90f01026a5ba69b136
   src/main/java/dev/plexapi/sdk/utils/reactive/EventStream.java:
     last_write_checksum: sha1:11d88948cda2e50c744ee5311fadf281843f11d3
   src/main/java/dev/plexapi/sdk/utils/reactive/ReactiveUtils.java:

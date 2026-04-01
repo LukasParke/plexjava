@@ -4,36 +4,92 @@
 package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Objects;
-import java.util.Optional;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import dev.plexapi.sdk.utils.OneOfDeserializer;
+import dev.plexapi.sdk.utils.TypedObject;
+import dev.plexapi.sdk.utils.Utils.JsonShape;
+import dev.plexapi.sdk.utils.Utils.TypeReferenceWithShape;
+import dev.plexapi.sdk.utils.Utils;
+import java.lang.Boolean;
+import java.lang.Override;
+import java.lang.String;
+import java.lang.SuppressWarnings;
 
-/**
- * AllowSync
- * 
- * <p>Indicates if the user is allowed to sync media.
- */
-public enum AllowSync {
-    Disable(0),
-    Enable(1);
+@JsonDeserialize(using = AllowSync._Deserializer.class)
+public class AllowSync {
 
     @JsonValue
-    private final int value;
-
-    AllowSync(int value) {
+    private TypedObject value;
+    
+    private AllowSync(TypedObject value) {
         this.value = value;
     }
-    
-    public int value() {
-        return value;
+
+    public static AllowSync of(boolean value) {
+        Utils.checkNotNull(value, "value");
+        return new AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+    }
+
+    public static AllowSync of(Two value) {
+        Utils.checkNotNull(value, "value");
+        return new AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Two>(){}));
     }
     
-    public static Optional<AllowSync> fromValue(int value) {
-        for (AllowSync o: AllowSync.values()) {
-            if (Objects.deepEquals(o.value, value)) {
-                return Optional.of(o);
-            }
+    /**
+     * Returns an instance of one of these types:
+     * <ul>
+     * <li>{@code boolean}</li>
+     * <li>{@code dev.plexapi.sdk.models.operations.Two}</li>
+     * </ul>
+     * 
+     * <p>Use {@code instanceof} to determine what type is returned. For example:
+     * 
+     * <pre>
+     * if (obj.value() instanceof String) {
+     *     String answer = (String) obj.value();
+     *     System.out.println("answer=" + answer);
+     * }
+     * </pre>
+     * 
+     * @return value of oneOf type
+     **/ 
+    public java.lang.Object value() {
+        return value.value();
+    }    
+    
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
         }
-        return Optional.empty();
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        AllowSync other = (AllowSync) o;
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
     }
+    
+    @Override
+    public int hashCode() {
+        return Utils.enhancedHash(value.value());
+    }
+    
+    @SuppressWarnings("serial")
+    public static final class _Deserializer extends OneOfDeserializer<AllowSync> {
+
+        public _Deserializer() {
+            super(AllowSync.class, false,
+                  TypeReferenceWithShape.of(new TypeReference<Two>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return Utils.toString(AllowSync.class,
+                "value", value);
+    }
+ 
 }
 

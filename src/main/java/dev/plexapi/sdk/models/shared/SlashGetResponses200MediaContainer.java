@@ -32,7 +32,7 @@ public class SlashGetResponses200MediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("allowSync")
-    private Optional<Boolean> allowSync;
+    private Optional<? extends SlashGetResponses200AllowSync> allowSync;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -97,7 +97,7 @@ public class SlashGetResponses200MediaContainer {
     @JsonCreator
     public SlashGetResponses200MediaContainer(
             @JsonProperty("content") Optional<String> content,
-            @JsonProperty("allowSync") Optional<Boolean> allowSync,
+            @JsonProperty("allowSync") Optional<? extends SlashGetResponses200AllowSync> allowSync,
             @JsonProperty("art") Optional<String> art,
             @JsonProperty("Directory") Optional<? extends List<Metadata>> directory,
             @JsonProperty("identifier") Optional<String> identifier,
@@ -159,9 +159,10 @@ public class SlashGetResponses200MediaContainer {
         return content;
     }
 
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> allowSync() {
-        return allowSync;
+    public Optional<SlashGetResponses200AllowSync> allowSync() {
+        return (Optional<SlashGetResponses200AllowSync>) allowSync;
     }
 
     @JsonIgnore
@@ -255,14 +256,14 @@ public class SlashGetResponses200MediaContainer {
         return this;
     }
 
-    public SlashGetResponses200MediaContainer withAllowSync(boolean allowSync) {
+    public SlashGetResponses200MediaContainer withAllowSync(SlashGetResponses200AllowSync allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = Optional.ofNullable(allowSync);
         return this;
     }
 
 
-    public SlashGetResponses200MediaContainer withAllowSync(Optional<Boolean> allowSync) {
+    public SlashGetResponses200MediaContainer withAllowSync(Optional<? extends SlashGetResponses200AllowSync> allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = allowSync;
         return this;
@@ -484,7 +485,7 @@ public class SlashGetResponses200MediaContainer {
 
         private Optional<String> content = Optional.empty();
 
-        private Optional<Boolean> allowSync = Optional.empty();
+        private Optional<? extends SlashGetResponses200AllowSync> allowSync = Optional.empty();
 
         private Optional<String> art = Optional.empty();
 
@@ -540,13 +541,13 @@ public class SlashGetResponses200MediaContainer {
         }
 
 
-        public Builder allowSync(boolean allowSync) {
+        public Builder allowSync(SlashGetResponses200AllowSync allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = Optional.ofNullable(allowSync);
             return this;
         }
 
-        public Builder allowSync(Optional<Boolean> allowSync) {
+        public Builder allowSync(Optional<? extends SlashGetResponses200AllowSync> allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = allowSync;
             return this;

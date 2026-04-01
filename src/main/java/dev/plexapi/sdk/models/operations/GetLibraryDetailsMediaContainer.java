@@ -33,7 +33,7 @@ public class GetLibraryDetailsMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("allowSync")
-    private Optional<Boolean> allowSync;
+    private Optional<? extends AllowSync> allowSync;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -98,7 +98,7 @@ public class GetLibraryDetailsMediaContainer {
     @JsonCreator
     public GetLibraryDetailsMediaContainer(
             @JsonProperty("content") Optional<String> content,
-            @JsonProperty("allowSync") Optional<Boolean> allowSync,
+            @JsonProperty("allowSync") Optional<? extends AllowSync> allowSync,
             @JsonProperty("art") Optional<String> art,
             @JsonProperty("Directory") Optional<? extends List<Metadata>> directory,
             @JsonProperty("identifier") Optional<String> identifier,
@@ -160,9 +160,10 @@ public class GetLibraryDetailsMediaContainer {
         return content;
     }
 
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> allowSync() {
-        return allowSync;
+    public Optional<AllowSync> allowSync() {
+        return (Optional<AllowSync>) allowSync;
     }
 
     @JsonIgnore
@@ -256,14 +257,14 @@ public class GetLibraryDetailsMediaContainer {
         return this;
     }
 
-    public GetLibraryDetailsMediaContainer withAllowSync(boolean allowSync) {
+    public GetLibraryDetailsMediaContainer withAllowSync(AllowSync allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = Optional.ofNullable(allowSync);
         return this;
     }
 
 
-    public GetLibraryDetailsMediaContainer withAllowSync(Optional<Boolean> allowSync) {
+    public GetLibraryDetailsMediaContainer withAllowSync(Optional<? extends AllowSync> allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = allowSync;
         return this;
@@ -485,7 +486,7 @@ public class GetLibraryDetailsMediaContainer {
 
         private Optional<String> content = Optional.empty();
 
-        private Optional<Boolean> allowSync = Optional.empty();
+        private Optional<? extends AllowSync> allowSync = Optional.empty();
 
         private Optional<String> art = Optional.empty();
 
@@ -541,13 +542,13 @@ public class GetLibraryDetailsMediaContainer {
         }
 
 
-        public Builder allowSync(boolean allowSync) {
+        public Builder allowSync(AllowSync allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = Optional.ofNullable(allowSync);
             return this;
         }
 
-        public Builder allowSync(Optional<Boolean> allowSync) {
+        public Builder allowSync(Optional<? extends AllowSync> allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = allowSync;
             return this;

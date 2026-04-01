@@ -17,6 +17,7 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -123,7 +124,7 @@ public class Stream {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("canAutoSync")
-    private Optional<Boolean> canAutoSync;
+    private Optional<? extends CanAutoSync> canAutoSync;
 
     /**
      * Chroma sample location.
@@ -391,7 +392,7 @@ public class Stream {
             @JsonProperty("DOVIRPUPresent") Optional<Boolean> dovirpuPresent,
             @JsonProperty("DOVIVersion") Optional<String> doviVersion,
             @JsonProperty("bitrate") Optional<Integer> bitrate,
-            @JsonProperty("canAutoSync") Optional<Boolean> canAutoSync,
+            @JsonProperty("canAutoSync") Optional<? extends CanAutoSync> canAutoSync,
             @JsonProperty("chromaLocation") Optional<String> chromaLocation,
             @JsonProperty("chromaSubsampling") Optional<String> chromaSubsampling,
             @JsonProperty("codedHeight") Optional<Integer> codedHeight,
@@ -670,9 +671,10 @@ public class Stream {
     /**
      * Indicates if the stream can auto-sync.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> canAutoSync() {
-        return canAutoSync;
+    public Optional<CanAutoSync> canAutoSync() {
+        return (Optional<CanAutoSync>) canAutoSync;
     }
 
     /**
@@ -1218,7 +1220,7 @@ public class Stream {
     /**
      * Indicates if the stream can auto-sync.
      */
-    public Stream withCanAutoSync(boolean canAutoSync) {
+    public Stream withCanAutoSync(CanAutoSync canAutoSync) {
         Utils.checkNotNull(canAutoSync, "canAutoSync");
         this.canAutoSync = Optional.ofNullable(canAutoSync);
         return this;
@@ -1228,7 +1230,7 @@ public class Stream {
     /**
      * Indicates if the stream can auto-sync.
      */
-    public Stream withCanAutoSync(Optional<Boolean> canAutoSync) {
+    public Stream withCanAutoSync(Optional<? extends CanAutoSync> canAutoSync) {
         Utils.checkNotNull(canAutoSync, "canAutoSync");
         this.canAutoSync = canAutoSync;
         return this;
@@ -2055,7 +2057,7 @@ public class Stream {
 
         private Optional<Integer> bitrate = Optional.empty();
 
-        private Optional<Boolean> canAutoSync = Optional.empty();
+        private Optional<? extends CanAutoSync> canAutoSync = Optional.empty();
 
         private Optional<String> chromaLocation = Optional.empty();
 
@@ -2390,7 +2392,7 @@ public class Stream {
         /**
          * Indicates if the stream can auto-sync.
          */
-        public Builder canAutoSync(boolean canAutoSync) {
+        public Builder canAutoSync(CanAutoSync canAutoSync) {
             Utils.checkNotNull(canAutoSync, "canAutoSync");
             this.canAutoSync = Optional.ofNullable(canAutoSync);
             return this;
@@ -2399,7 +2401,7 @@ public class Stream {
         /**
          * Indicates if the stream can auto-sync.
          */
-        public Builder canAutoSync(Optional<Boolean> canAutoSync) {
+        public Builder canAutoSync(Optional<? extends CanAutoSync> canAutoSync) {
             Utils.checkNotNull(canAutoSync, "canAutoSync");
             this.canAutoSync = canAutoSync;
             return this;

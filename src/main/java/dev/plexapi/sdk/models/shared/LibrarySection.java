@@ -40,7 +40,7 @@ public class LibrarySection {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("allowSync")
-    private Optional<Boolean> allowSync;
+    private Optional<? extends LibrarySectionAllowSync> allowSync;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -136,7 +136,7 @@ public class LibrarySection {
             @JsonProperty("title") Optional<String> title,
             @JsonProperty("type") MediaTypeString type,
             @JsonProperty("agent") Optional<String> agent,
-            @JsonProperty("allowSync") Optional<Boolean> allowSync,
+            @JsonProperty("allowSync") Optional<? extends LibrarySectionAllowSync> allowSync,
             @JsonProperty("art") Optional<String> art,
             @JsonProperty("composite") Optional<String> composite,
             @JsonProperty("content") Optional<Boolean> content,
@@ -232,9 +232,10 @@ public class LibrarySection {
         return agent;
     }
 
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> allowSync() {
-        return allowSync;
+    public Optional<LibrarySectionAllowSync> allowSync() {
+        return (Optional<LibrarySectionAllowSync>) allowSync;
     }
 
     @JsonIgnore
@@ -378,14 +379,14 @@ public class LibrarySection {
         return this;
     }
 
-    public LibrarySection withAllowSync(boolean allowSync) {
+    public LibrarySection withAllowSync(LibrarySectionAllowSync allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = Optional.ofNullable(allowSync);
         return this;
     }
 
 
-    public LibrarySection withAllowSync(Optional<Boolean> allowSync) {
+    public LibrarySection withAllowSync(Optional<? extends LibrarySectionAllowSync> allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = allowSync;
         return this;
@@ -693,7 +694,7 @@ public class LibrarySection {
 
         private Optional<String> agent = Optional.empty();
 
-        private Optional<Boolean> allowSync = Optional.empty();
+        private Optional<? extends LibrarySectionAllowSync> allowSync = Optional.empty();
 
         private Optional<String> art = Optional.empty();
 
@@ -776,13 +777,13 @@ public class LibrarySection {
         }
 
 
-        public Builder allowSync(boolean allowSync) {
+        public Builder allowSync(LibrarySectionAllowSync allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = Optional.ofNullable(allowSync);
             return this;
         }
 
-        public Builder allowSync(Optional<Boolean> allowSync) {
+        public Builder allowSync(Optional<? extends LibrarySectionAllowSync> allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = allowSync;
             return this;

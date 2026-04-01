@@ -76,7 +76,7 @@ public class User {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("allowSync")
-    private Optional<? extends AllowSync> allowSync;
+    private Optional<? extends GetUsersAllowSync> allowSync;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -150,7 +150,7 @@ public class User {
             @JsonProperty("protected") Optional<? extends Protected> protected_,
             @JsonProperty("home") Optional<? extends Home> home,
             @JsonProperty("allowTuners") Optional<? extends AllowTuners> allowTuners,
-            @JsonProperty("allowSync") Optional<? extends AllowSync> allowSync,
+            @JsonProperty("allowSync") Optional<? extends GetUsersAllowSync> allowSync,
             @JsonProperty("allowCameraUpload") Optional<? extends AllowCameraUpload> allowCameraUpload,
             @JsonProperty("allowChannels") Optional<? extends AllowChannels> allowChannels,
             @JsonProperty("allowSubtitleAdmin") Optional<? extends AllowSubtitleAdmin> allowSubtitleAdmin,
@@ -287,8 +287,8 @@ public class User {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<AllowSync> allowSync() {
-        return (Optional<AllowSync>) allowSync;
+    public Optional<GetUsersAllowSync> allowSync() {
+        return (Optional<GetUsersAllowSync>) allowSync;
     }
 
     @SuppressWarnings("unchecked")
@@ -470,14 +470,14 @@ public class User {
         return this;
     }
 
-    public User withAllowSync(AllowSync allowSync) {
+    public User withAllowSync(GetUsersAllowSync allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = Optional.ofNullable(allowSync);
         return this;
     }
 
 
-    public User withAllowSync(Optional<? extends AllowSync> allowSync) {
+    public User withAllowSync(Optional<? extends GetUsersAllowSync> allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = allowSync;
         return this;
@@ -725,7 +725,7 @@ public class User {
 
         private Optional<? extends AllowTuners> allowTuners;
 
-        private Optional<? extends AllowSync> allowSync;
+        private Optional<? extends GetUsersAllowSync> allowSync;
 
         private Optional<? extends AllowCameraUpload> allowCameraUpload;
 
@@ -860,13 +860,13 @@ public class User {
         }
 
 
-        public Builder allowSync(AllowSync allowSync) {
+        public Builder allowSync(GetUsersAllowSync allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = Optional.ofNullable(allowSync);
             return this;
         }
 
-        public Builder allowSync(Optional<? extends AllowSync> allowSync) {
+        public Builder allowSync(Optional<? extends GetUsersAllowSync> allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = allowSync;
             return this;
@@ -1084,11 +1084,11 @@ public class User {
                         "0",
                         new TypeReference<Optional<? extends AllowTuners>>() {});
 
-        private static final LazySingletonValue<Optional<? extends AllowSync>> _SINGLETON_VALUE_AllowSync =
+        private static final LazySingletonValue<Optional<? extends GetUsersAllowSync>> _SINGLETON_VALUE_AllowSync =
                 new LazySingletonValue<>(
                         "allowSync",
                         "0",
-                        new TypeReference<Optional<? extends AllowSync>>() {});
+                        new TypeReference<Optional<? extends GetUsersAllowSync>>() {});
 
         private static final LazySingletonValue<Optional<? extends AllowCameraUpload>> _SINGLETON_VALUE_AllowCameraUpload =
                 new LazySingletonValue<>(

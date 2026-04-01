@@ -36,16 +36,16 @@ public class GetPlaylistGeneratorItemsSkipChildren {
         return new GetPlaylistGeneratorItemsSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
     }
 
-    public static GetPlaylistGeneratorItemsSkipChildren of(SkipChildren2 value) {
+    public static GetPlaylistGeneratorItemsSkipChildren of(GetPlaylistGeneratorItemsSkipChildren2 value) {
         Utils.checkNotNull(value, "value");
-        return new GetPlaylistGeneratorItemsSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<SkipChildren2>(){}));
+        return new GetPlaylistGeneratorItemsSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<GetPlaylistGeneratorItemsSkipChildren2>(){}));
     }
     
     /**
      * Returns an instance of one of these types:
      * <ul>
      * <li>{@code boolean}</li>
-     * <li>{@code dev.plexapi.sdk.models.operations.SkipChildren2}</li>
+     * <li>{@code dev.plexapi.sdk.models.operations.GetPlaylistGeneratorItemsSkipChildren2}</li>
      * </ul>
      * 
      * <p>Use {@code instanceof} to determine what type is returned. For example:
@@ -85,7 +85,7 @@ public class GetPlaylistGeneratorItemsSkipChildren {
 
         public _Deserializer() {
             super(GetPlaylistGeneratorItemsSkipChildren.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<SkipChildren2>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<GetPlaylistGeneratorItemsSkipChildren2>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
         }
     }

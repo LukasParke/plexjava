@@ -90,7 +90,7 @@ public class Media {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("optimizedForStreaming")
-    private Optional<Boolean> optimizedForStreaming;
+    private Optional<? extends OptimizedForStreaming> optimizedForStreaming;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -139,7 +139,7 @@ public class Media {
             @JsonProperty("hasVoiceActivity") Optional<? extends HasVoiceActivity> hasVoiceActivity,
             @JsonProperty("height") Optional<Integer> height,
             @JsonProperty("id") long id,
-            @JsonProperty("optimizedForStreaming") Optional<Boolean> optimizedForStreaming,
+            @JsonProperty("optimizedForStreaming") Optional<? extends OptimizedForStreaming> optimizedForStreaming,
             @JsonProperty("Part") Optional<? extends List<Part>> part,
             @JsonProperty("videoCodec") Optional<String> videoCodec,
             @JsonProperty("videoFrameRate") Optional<String> videoFrameRate,
@@ -255,9 +255,10 @@ public class Media {
         return id;
     }
 
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> optimizedForStreaming() {
-        return optimizedForStreaming;
+    public Optional<OptimizedForStreaming> optimizedForStreaming() {
+        return (Optional<OptimizedForStreaming>) optimizedForStreaming;
     }
 
     @SuppressWarnings("unchecked")
@@ -445,14 +446,14 @@ public class Media {
         return this;
     }
 
-    public Media withOptimizedForStreaming(boolean optimizedForStreaming) {
+    public Media withOptimizedForStreaming(OptimizedForStreaming optimizedForStreaming) {
         Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
         this.optimizedForStreaming = Optional.ofNullable(optimizedForStreaming);
         return this;
     }
 
 
-    public Media withOptimizedForStreaming(Optional<Boolean> optimizedForStreaming) {
+    public Media withOptimizedForStreaming(Optional<? extends OptimizedForStreaming> optimizedForStreaming) {
         Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
         this.optimizedForStreaming = optimizedForStreaming;
         return this;
@@ -641,7 +642,7 @@ public class Media {
 
         private Long id;
 
-        private Optional<Boolean> optimizedForStreaming = Optional.empty();
+        private Optional<? extends OptimizedForStreaming> optimizedForStreaming = Optional.empty();
 
         private Optional<? extends List<Part>> part = Optional.empty();
 
@@ -807,13 +808,13 @@ public class Media {
         }
 
 
-        public Builder optimizedForStreaming(boolean optimizedForStreaming) {
+        public Builder optimizedForStreaming(OptimizedForStreaming optimizedForStreaming) {
             Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
             this.optimizedForStreaming = Optional.ofNullable(optimizedForStreaming);
             return this;
         }
 
-        public Builder optimizedForStreaming(Optional<Boolean> optimizedForStreaming) {
+        public Builder optimizedForStreaming(Optional<? extends OptimizedForStreaming> optimizedForStreaming) {
             Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
             this.optimizedForStreaming = optimizedForStreaming;
             return this;

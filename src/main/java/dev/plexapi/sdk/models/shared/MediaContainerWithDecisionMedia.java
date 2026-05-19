@@ -90,7 +90,7 @@ public class MediaContainerWithDecisionMedia {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("optimizedForStreaming")
-    private Optional<Boolean> optimizedForStreaming;
+    private Optional<? extends MediaContainerWithDecisionOptimizedForStreaming> optimizedForStreaming;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -154,7 +154,7 @@ public class MediaContainerWithDecisionMedia {
             @JsonProperty("hasVoiceActivity") Optional<? extends MediaContainerWithDecisionHasVoiceActivity> hasVoiceActivity,
             @JsonProperty("height") Optional<Integer> height,
             @JsonProperty("id") long id,
-            @JsonProperty("optimizedForStreaming") Optional<Boolean> optimizedForStreaming,
+            @JsonProperty("optimizedForStreaming") Optional<? extends MediaContainerWithDecisionOptimizedForStreaming> optimizedForStreaming,
             @JsonProperty("Part") Optional<? extends List<MediaContainerWithDecisionPart>> part,
             @JsonProperty("videoCodec") Optional<String> videoCodec,
             @JsonProperty("videoFrameRate") Optional<String> videoFrameRate,
@@ -280,9 +280,10 @@ public class MediaContainerWithDecisionMedia {
         return id;
     }
 
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> optimizedForStreaming() {
-        return optimizedForStreaming;
+    public Optional<MediaContainerWithDecisionOptimizedForStreaming> optimizedForStreaming() {
+        return (Optional<MediaContainerWithDecisionOptimizedForStreaming>) optimizedForStreaming;
     }
 
     @SuppressWarnings("unchecked")
@@ -485,14 +486,14 @@ public class MediaContainerWithDecisionMedia {
         return this;
     }
 
-    public MediaContainerWithDecisionMedia withOptimizedForStreaming(boolean optimizedForStreaming) {
+    public MediaContainerWithDecisionMedia withOptimizedForStreaming(MediaContainerWithDecisionOptimizedForStreaming optimizedForStreaming) {
         Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
         this.optimizedForStreaming = Optional.ofNullable(optimizedForStreaming);
         return this;
     }
 
 
-    public MediaContainerWithDecisionMedia withOptimizedForStreaming(Optional<Boolean> optimizedForStreaming) {
+    public MediaContainerWithDecisionMedia withOptimizedForStreaming(Optional<? extends MediaContainerWithDecisionOptimizedForStreaming> optimizedForStreaming) {
         Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
         this.optimizedForStreaming = optimizedForStreaming;
         return this;
@@ -727,7 +728,7 @@ public class MediaContainerWithDecisionMedia {
 
         private Long id;
 
-        private Optional<Boolean> optimizedForStreaming = Optional.empty();
+        private Optional<? extends MediaContainerWithDecisionOptimizedForStreaming> optimizedForStreaming = Optional.empty();
 
         private Optional<? extends List<MediaContainerWithDecisionPart>> part = Optional.empty();
 
@@ -899,13 +900,13 @@ public class MediaContainerWithDecisionMedia {
         }
 
 
-        public Builder optimizedForStreaming(boolean optimizedForStreaming) {
+        public Builder optimizedForStreaming(MediaContainerWithDecisionOptimizedForStreaming optimizedForStreaming) {
             Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
             this.optimizedForStreaming = Optional.ofNullable(optimizedForStreaming);
             return this;
         }
 
-        public Builder optimizedForStreaming(Optional<Boolean> optimizedForStreaming) {
+        public Builder optimizedForStreaming(Optional<? extends MediaContainerWithDecisionOptimizedForStreaming> optimizedForStreaming) {
             Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
             this.optimizedForStreaming = optimizedForStreaming;
             return this;

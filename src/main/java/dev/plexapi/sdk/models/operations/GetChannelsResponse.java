@@ -5,6 +5,7 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.ChannelResponse;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -37,7 +38,7 @@ public class GetChannelsResponse implements Response {
     /**
      * OK
      */
-    private Optional<? extends GetChannelsResponseBody> object;
+    private Optional<? extends ChannelResponse> channelResponse;
 
 
     private Map<String, List<String>> headers;
@@ -47,18 +48,18 @@ public class GetChannelsResponse implements Response {
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends GetChannelsResponseBody> object,
+            Optional<? extends ChannelResponse> channelResponse,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(channelResponse, "channelResponse");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.channelResponse = channelResponse;
         this.headers = headers;
     }
     
@@ -100,8 +101,8 @@ public class GetChannelsResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetChannelsResponseBody> object() {
-        return (Optional<GetChannelsResponseBody>) object;
+    public Optional<ChannelResponse> channelResponse() {
+        return (Optional<ChannelResponse>) channelResponse;
     }
 
     @JsonIgnore
@@ -144,9 +145,9 @@ public class GetChannelsResponse implements Response {
     /**
      * OK
      */
-    public GetChannelsResponse withObject(GetChannelsResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public GetChannelsResponse withChannelResponse(ChannelResponse channelResponse) {
+        Utils.checkNotNull(channelResponse, "channelResponse");
+        this.channelResponse = Optional.ofNullable(channelResponse);
         return this;
     }
 
@@ -154,9 +155,9 @@ public class GetChannelsResponse implements Response {
     /**
      * OK
      */
-    public GetChannelsResponse withObject(Optional<? extends GetChannelsResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public GetChannelsResponse withChannelResponse(Optional<? extends ChannelResponse> channelResponse) {
+        Utils.checkNotNull(channelResponse, "channelResponse");
+        this.channelResponse = channelResponse;
         return this;
     }
 
@@ -179,7 +180,7 @@ public class GetChannelsResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
+            Utils.enhancedDeepEquals(this.channelResponse, other.channelResponse) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -187,7 +188,7 @@ public class GetChannelsResponse implements Response {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object, headers);
+            channelResponse, headers);
     }
     
     @Override
@@ -196,7 +197,7 @@ public class GetChannelsResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object,
+                "channelResponse", channelResponse,
                 "headers", headers);
     }
 
@@ -209,7 +210,7 @@ public class GetChannelsResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends GetChannelsResponseBody> object = Optional.empty();
+        private Optional<? extends ChannelResponse> channelResponse = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -251,18 +252,18 @@ public class GetChannelsResponse implements Response {
         /**
          * OK
          */
-        public Builder object(GetChannelsResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder channelResponse(ChannelResponse channelResponse) {
+            Utils.checkNotNull(channelResponse, "channelResponse");
+            this.channelResponse = Optional.ofNullable(channelResponse);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends GetChannelsResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder channelResponse(Optional<? extends ChannelResponse> channelResponse) {
+            Utils.checkNotNull(channelResponse, "channelResponse");
+            this.channelResponse = channelResponse;
             return this;
         }
 
@@ -277,7 +278,7 @@ public class GetChannelsResponse implements Response {
 
             return new GetChannelsResponse(
                 contentType, statusCode, rawResponse,
-                object, headers);
+                channelResponse, headers);
         }
 
     }

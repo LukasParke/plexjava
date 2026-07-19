@@ -99,28 +99,11 @@ public class GetLibraryMatchesRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
     private Optional<? extends MediaType> type;
-
-
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeFullMetadata")
-    private Optional<? extends BoolInt> includeFullMetadata;
-
-
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeAncestorMetadata")
-    private Optional<? extends BoolInt> includeAncestorMetadata;
-
-
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeAlternateMetadataSources")
-    private Optional<? extends BoolInt> includeAlternateMetadataSources;
-
-    /**
-     * Used for movies, shows, artists, albums, and tracks.  Allowed for various URI schemes, to be defined.
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=guid")
-    private Optional<String> guid;
 
     /**
      * The title to filter by or assign
@@ -129,43 +112,68 @@ public class GetLibraryMatchesRequest {
     private Optional<String> title;
 
     /**
-     * Used for movies shows, and albums.  Optional.
+     * Include full metadata in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeFullMetadata")
+    private Optional<? extends BoolInt> includeFullMetadata;
+
+    /**
+     * Include ancestor metadata in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeAncestorMetadata")
+    private Optional<? extends BoolInt> includeAncestorMetadata;
+
+    /**
+     * Include alternate metadata sources in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeAlternateMetadataSources")
+    private Optional<? extends BoolInt> includeAlternateMetadataSources;
+
+    /**
+     * Used for movies, shows, artists, albums, and tracks. Allowed for various URI schemes, to be defined.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=guid")
+    private Optional<String> guid;
+
+    /**
+     * Used for movies shows, and albums. Optional.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=year")
     private Optional<Long> year;
 
     /**
-     * Used for movies, episodes, and tracks.  The full path to the media file, used for "cloud-scanning" an item.
+     * Used for movies, episodes, and tracks. The full path to the media file, used for "cloud-scanning" an
+     * item.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=path")
     private Optional<String> path;
 
     /**
-     * Used for episodes and tracks.  The title of the show/artist. Required if `path` isn't passed.
+     * Used for episodes and tracks. The title of the show/artist. Required if `path` isn't passed.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=grandparentTitle")
     private Optional<String> grandparentTitle;
 
     /**
-     * Used for episodes.  The year of the show.
+     * Used for episodes. The year of the show.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=grandparentYear")
     private Optional<Long> grandparentYear;
 
     /**
-     * Used for episodes and tracks.  The season/album number.
+     * Used for episodes and tracks. The season/album number.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=parentIndex")
     private Optional<Long> parentIndex;
 
     /**
-     * Used for episodes and tracks.  The episode/tracks number in the season/album.
+     * Used for episodes and tracks. The episode/tracks number in the season/album.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=index")
     private Optional<Long> index;
 
     /**
-     * Used for episodes.  In the format `YYYY-MM-DD`.
+     * Used for episodes. In the format `YYYY-MM-DD`.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=originallyAvailableAt")
     private Optional<String> originallyAvailableAt;
@@ -190,11 +198,11 @@ public class GetLibraryMatchesRequest {
             Optional<String> deviceName,
             Optional<String> marketplace,
             Optional<? extends MediaType> type,
+            Optional<String> title,
             Optional<? extends BoolInt> includeFullMetadata,
             Optional<? extends BoolInt> includeAncestorMetadata,
             Optional<? extends BoolInt> includeAlternateMetadataSources,
             Optional<String> guid,
-            Optional<String> title,
             Optional<Long> year,
             Optional<String> path,
             Optional<String> grandparentTitle,
@@ -215,11 +223,11 @@ public class GetLibraryMatchesRequest {
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
         Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
         Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
         Utils.checkNotNull(guid, "guid");
-        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(year, "year");
         Utils.checkNotNull(path, "path");
         Utils.checkNotNull(grandparentTitle, "grandparentTitle");
@@ -240,11 +248,11 @@ public class GetLibraryMatchesRequest {
         this.deviceName = deviceName;
         this.marketplace = marketplace;
         this.type = type;
+        this.title = title;
         this.includeFullMetadata = includeFullMetadata;
         this.includeAncestorMetadata = includeAncestorMetadata;
         this.includeAlternateMetadataSources = includeAlternateMetadataSources;
         this.guid = guid;
-        this.title = title;
         this.year = year;
         this.path = path;
         this.grandparentTitle = grandparentTitle;
@@ -369,38 +377,13 @@ public class GetLibraryMatchesRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<MediaType> type() {
         return (Optional<MediaType>) type;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<BoolInt> includeFullMetadata() {
-        return (Optional<BoolInt>) includeFullMetadata;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<BoolInt> includeAncestorMetadata() {
-        return (Optional<BoolInt>) includeAncestorMetadata;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<BoolInt> includeAlternateMetadataSources() {
-        return (Optional<BoolInt>) includeAlternateMetadataSources;
-    }
-
-    /**
-     * Used for movies, shows, artists, albums, and tracks.  Allowed for various URI schemes, to be defined.
-     */
-    @JsonIgnore
-    public Optional<String> guid() {
-        return guid;
     }
 
     /**
@@ -412,7 +395,42 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for movies shows, and albums.  Optional.
+     * Include full metadata in the response
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeFullMetadata() {
+        return (Optional<BoolInt>) includeFullMetadata;
+    }
+
+    /**
+     * Include ancestor metadata in the response
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeAncestorMetadata() {
+        return (Optional<BoolInt>) includeAncestorMetadata;
+    }
+
+    /**
+     * Include alternate metadata sources in the response
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeAlternateMetadataSources() {
+        return (Optional<BoolInt>) includeAlternateMetadataSources;
+    }
+
+    /**
+     * Used for movies, shows, artists, albums, and tracks. Allowed for various URI schemes, to be defined.
+     */
+    @JsonIgnore
+    public Optional<String> guid() {
+        return guid;
+    }
+
+    /**
+     * Used for movies shows, and albums. Optional.
      */
     @JsonIgnore
     public Optional<Long> year() {
@@ -420,7 +438,8 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for movies, episodes, and tracks.  The full path to the media file, used for "cloud-scanning" an item.
+     * Used for movies, episodes, and tracks. The full path to the media file, used for "cloud-scanning" an
+     * item.
      */
     @JsonIgnore
     public Optional<String> path() {
@@ -428,7 +447,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes and tracks.  The title of the show/artist. Required if `path` isn't passed.
+     * Used for episodes and tracks. The title of the show/artist. Required if `path` isn't passed.
      */
     @JsonIgnore
     public Optional<String> grandparentTitle() {
@@ -436,7 +455,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes.  The year of the show.
+     * Used for episodes. The year of the show.
      */
     @JsonIgnore
     public Optional<Long> grandparentYear() {
@@ -444,7 +463,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes and tracks.  The season/album number.
+     * Used for episodes and tracks. The season/album number.
      */
     @JsonIgnore
     public Optional<Long> parentIndex() {
@@ -452,7 +471,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes and tracks.  The episode/tracks number in the season/album.
+     * Used for episodes and tracks. The episode/tracks number in the season/album.
      */
     @JsonIgnore
     public Optional<Long> index() {
@@ -460,7 +479,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes.  In the format `YYYY-MM-DD`.
+     * Used for episodes. In the format `YYYY-MM-DD`.
      */
     @JsonIgnore
     public Optional<String> originallyAvailableAt() {
@@ -702,7 +721,8 @@ public class GetLibraryMatchesRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public GetLibraryMatchesRequest withType(MediaType type) {
         Utils.checkNotNull(type, "type");
@@ -724,69 +744,12 @@ public class GetLibraryMatchesRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public GetLibraryMatchesRequest withType(Optional<? extends MediaType> type) {
         Utils.checkNotNull(type, "type");
         this.type = type;
-        return this;
-    }
-
-    public GetLibraryMatchesRequest withIncludeFullMetadata(BoolInt includeFullMetadata) {
-        Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
-        this.includeFullMetadata = Optional.ofNullable(includeFullMetadata);
-        return this;
-    }
-
-
-    public GetLibraryMatchesRequest withIncludeFullMetadata(Optional<? extends BoolInt> includeFullMetadata) {
-        Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
-        this.includeFullMetadata = includeFullMetadata;
-        return this;
-    }
-
-    public GetLibraryMatchesRequest withIncludeAncestorMetadata(BoolInt includeAncestorMetadata) {
-        Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
-        this.includeAncestorMetadata = Optional.ofNullable(includeAncestorMetadata);
-        return this;
-    }
-
-
-    public GetLibraryMatchesRequest withIncludeAncestorMetadata(Optional<? extends BoolInt> includeAncestorMetadata) {
-        Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
-        this.includeAncestorMetadata = includeAncestorMetadata;
-        return this;
-    }
-
-    public GetLibraryMatchesRequest withIncludeAlternateMetadataSources(BoolInt includeAlternateMetadataSources) {
-        Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
-        this.includeAlternateMetadataSources = Optional.ofNullable(includeAlternateMetadataSources);
-        return this;
-    }
-
-
-    public GetLibraryMatchesRequest withIncludeAlternateMetadataSources(Optional<? extends BoolInt> includeAlternateMetadataSources) {
-        Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
-        this.includeAlternateMetadataSources = includeAlternateMetadataSources;
-        return this;
-    }
-
-    /**
-     * Used for movies, shows, artists, albums, and tracks.  Allowed for various URI schemes, to be defined.
-     */
-    public GetLibraryMatchesRequest withGuid(String guid) {
-        Utils.checkNotNull(guid, "guid");
-        this.guid = Optional.ofNullable(guid);
-        return this;
-    }
-
-
-    /**
-     * Used for movies, shows, artists, albums, and tracks.  Allowed for various URI schemes, to be defined.
-     */
-    public GetLibraryMatchesRequest withGuid(Optional<String> guid) {
-        Utils.checkNotNull(guid, "guid");
-        this.guid = guid;
         return this;
     }
 
@@ -810,7 +773,83 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for movies shows, and albums.  Optional.
+     * Include full metadata in the response
+     */
+    public GetLibraryMatchesRequest withIncludeFullMetadata(BoolInt includeFullMetadata) {
+        Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
+        this.includeFullMetadata = Optional.ofNullable(includeFullMetadata);
+        return this;
+    }
+
+
+    /**
+     * Include full metadata in the response
+     */
+    public GetLibraryMatchesRequest withIncludeFullMetadata(Optional<? extends BoolInt> includeFullMetadata) {
+        Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
+        this.includeFullMetadata = includeFullMetadata;
+        return this;
+    }
+
+    /**
+     * Include ancestor metadata in the response
+     */
+    public GetLibraryMatchesRequest withIncludeAncestorMetadata(BoolInt includeAncestorMetadata) {
+        Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
+        this.includeAncestorMetadata = Optional.ofNullable(includeAncestorMetadata);
+        return this;
+    }
+
+
+    /**
+     * Include ancestor metadata in the response
+     */
+    public GetLibraryMatchesRequest withIncludeAncestorMetadata(Optional<? extends BoolInt> includeAncestorMetadata) {
+        Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
+        this.includeAncestorMetadata = includeAncestorMetadata;
+        return this;
+    }
+
+    /**
+     * Include alternate metadata sources in the response
+     */
+    public GetLibraryMatchesRequest withIncludeAlternateMetadataSources(BoolInt includeAlternateMetadataSources) {
+        Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
+        this.includeAlternateMetadataSources = Optional.ofNullable(includeAlternateMetadataSources);
+        return this;
+    }
+
+
+    /**
+     * Include alternate metadata sources in the response
+     */
+    public GetLibraryMatchesRequest withIncludeAlternateMetadataSources(Optional<? extends BoolInt> includeAlternateMetadataSources) {
+        Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
+        this.includeAlternateMetadataSources = includeAlternateMetadataSources;
+        return this;
+    }
+
+    /**
+     * Used for movies, shows, artists, albums, and tracks. Allowed for various URI schemes, to be defined.
+     */
+    public GetLibraryMatchesRequest withGuid(String guid) {
+        Utils.checkNotNull(guid, "guid");
+        this.guid = Optional.ofNullable(guid);
+        return this;
+    }
+
+
+    /**
+     * Used for movies, shows, artists, albums, and tracks. Allowed for various URI schemes, to be defined.
+     */
+    public GetLibraryMatchesRequest withGuid(Optional<String> guid) {
+        Utils.checkNotNull(guid, "guid");
+        this.guid = guid;
+        return this;
+    }
+
+    /**
+     * Used for movies shows, and albums. Optional.
      */
     public GetLibraryMatchesRequest withYear(long year) {
         Utils.checkNotNull(year, "year");
@@ -820,7 +859,7 @@ public class GetLibraryMatchesRequest {
 
 
     /**
-     * Used for movies shows, and albums.  Optional.
+     * Used for movies shows, and albums. Optional.
      */
     public GetLibraryMatchesRequest withYear(Optional<Long> year) {
         Utils.checkNotNull(year, "year");
@@ -829,7 +868,8 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for movies, episodes, and tracks.  The full path to the media file, used for "cloud-scanning" an item.
+     * Used for movies, episodes, and tracks. The full path to the media file, used for "cloud-scanning" an
+     * item.
      */
     public GetLibraryMatchesRequest withPath(String path) {
         Utils.checkNotNull(path, "path");
@@ -839,7 +879,8 @@ public class GetLibraryMatchesRequest {
 
 
     /**
-     * Used for movies, episodes, and tracks.  The full path to the media file, used for "cloud-scanning" an item.
+     * Used for movies, episodes, and tracks. The full path to the media file, used for "cloud-scanning" an
+     * item.
      */
     public GetLibraryMatchesRequest withPath(Optional<String> path) {
         Utils.checkNotNull(path, "path");
@@ -848,7 +889,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes and tracks.  The title of the show/artist. Required if `path` isn't passed.
+     * Used for episodes and tracks. The title of the show/artist. Required if `path` isn't passed.
      */
     public GetLibraryMatchesRequest withGrandparentTitle(String grandparentTitle) {
         Utils.checkNotNull(grandparentTitle, "grandparentTitle");
@@ -858,7 +899,7 @@ public class GetLibraryMatchesRequest {
 
 
     /**
-     * Used for episodes and tracks.  The title of the show/artist. Required if `path` isn't passed.
+     * Used for episodes and tracks. The title of the show/artist. Required if `path` isn't passed.
      */
     public GetLibraryMatchesRequest withGrandparentTitle(Optional<String> grandparentTitle) {
         Utils.checkNotNull(grandparentTitle, "grandparentTitle");
@@ -867,7 +908,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes.  The year of the show.
+     * Used for episodes. The year of the show.
      */
     public GetLibraryMatchesRequest withGrandparentYear(long grandparentYear) {
         Utils.checkNotNull(grandparentYear, "grandparentYear");
@@ -877,7 +918,7 @@ public class GetLibraryMatchesRequest {
 
 
     /**
-     * Used for episodes.  The year of the show.
+     * Used for episodes. The year of the show.
      */
     public GetLibraryMatchesRequest withGrandparentYear(Optional<Long> grandparentYear) {
         Utils.checkNotNull(grandparentYear, "grandparentYear");
@@ -886,7 +927,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes and tracks.  The season/album number.
+     * Used for episodes and tracks. The season/album number.
      */
     public GetLibraryMatchesRequest withParentIndex(long parentIndex) {
         Utils.checkNotNull(parentIndex, "parentIndex");
@@ -896,7 +937,7 @@ public class GetLibraryMatchesRequest {
 
 
     /**
-     * Used for episodes and tracks.  The season/album number.
+     * Used for episodes and tracks. The season/album number.
      */
     public GetLibraryMatchesRequest withParentIndex(Optional<Long> parentIndex) {
         Utils.checkNotNull(parentIndex, "parentIndex");
@@ -905,7 +946,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes and tracks.  The episode/tracks number in the season/album.
+     * Used for episodes and tracks. The episode/tracks number in the season/album.
      */
     public GetLibraryMatchesRequest withIndex(long index) {
         Utils.checkNotNull(index, "index");
@@ -915,7 +956,7 @@ public class GetLibraryMatchesRequest {
 
 
     /**
-     * Used for episodes and tracks.  The episode/tracks number in the season/album.
+     * Used for episodes and tracks. The episode/tracks number in the season/album.
      */
     public GetLibraryMatchesRequest withIndex(Optional<Long> index) {
         Utils.checkNotNull(index, "index");
@@ -924,7 +965,7 @@ public class GetLibraryMatchesRequest {
     }
 
     /**
-     * Used for episodes.  In the format `YYYY-MM-DD`.
+     * Used for episodes. In the format `YYYY-MM-DD`.
      */
     public GetLibraryMatchesRequest withOriginallyAvailableAt(String originallyAvailableAt) {
         Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
@@ -934,7 +975,7 @@ public class GetLibraryMatchesRequest {
 
 
     /**
-     * Used for episodes.  In the format `YYYY-MM-DD`.
+     * Used for episodes. In the format `YYYY-MM-DD`.
      */
     public GetLibraryMatchesRequest withOriginallyAvailableAt(Optional<String> originallyAvailableAt) {
         Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
@@ -983,11 +1024,11 @@ public class GetLibraryMatchesRequest {
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.includeFullMetadata, other.includeFullMetadata) &&
             Utils.enhancedDeepEquals(this.includeAncestorMetadata, other.includeAncestorMetadata) &&
             Utils.enhancedDeepEquals(this.includeAlternateMetadataSources, other.includeAlternateMetadataSources) &&
             Utils.enhancedDeepEquals(this.guid, other.guid) &&
-            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.year, other.year) &&
             Utils.enhancedDeepEquals(this.path, other.path) &&
             Utils.enhancedDeepEquals(this.grandparentTitle, other.grandparentTitle) &&
@@ -1005,8 +1046,8 @@ public class GetLibraryMatchesRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, type,
-            includeFullMetadata, includeAncestorMetadata, includeAlternateMetadataSources,
-            guid, title, year,
+            title, includeFullMetadata, includeAncestorMetadata,
+            includeAlternateMetadataSources, guid, year,
             path, grandparentTitle, grandparentYear,
             parentIndex, index, originallyAvailableAt,
             parentTitle);
@@ -1027,11 +1068,11 @@ public class GetLibraryMatchesRequest {
                 "deviceName", deviceName,
                 "marketplace", marketplace,
                 "type", type,
+                "title", title,
                 "includeFullMetadata", includeFullMetadata,
                 "includeAncestorMetadata", includeAncestorMetadata,
                 "includeAlternateMetadataSources", includeAlternateMetadataSources,
                 "guid", guid,
-                "title", title,
                 "year", year,
                 "path", path,
                 "grandparentTitle", grandparentTitle,
@@ -1069,6 +1110,8 @@ public class GetLibraryMatchesRequest {
 
         private Optional<? extends MediaType> type = Optional.empty();
 
+        private Optional<String> title = Optional.empty();
+
         private Optional<? extends BoolInt> includeFullMetadata;
 
         private Optional<? extends BoolInt> includeAncestorMetadata;
@@ -1076,8 +1119,6 @@ public class GetLibraryMatchesRequest {
         private Optional<? extends BoolInt> includeAlternateMetadataSources;
 
         private Optional<String> guid = Optional.empty();
-
-        private Optional<String> title = Optional.empty();
 
         private Optional<Long> year = Optional.empty();
 
@@ -1322,7 +1363,8 @@ public class GetLibraryMatchesRequest {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(MediaType type) {
             Utils.checkNotNull(type, "type");
@@ -1343,69 +1385,12 @@ public class GetLibraryMatchesRequest {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(Optional<? extends MediaType> type) {
             Utils.checkNotNull(type, "type");
             this.type = type;
-            return this;
-        }
-
-
-        public Builder includeFullMetadata(BoolInt includeFullMetadata) {
-            Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
-            this.includeFullMetadata = Optional.ofNullable(includeFullMetadata);
-            return this;
-        }
-
-        public Builder includeFullMetadata(Optional<? extends BoolInt> includeFullMetadata) {
-            Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
-            this.includeFullMetadata = includeFullMetadata;
-            return this;
-        }
-
-
-        public Builder includeAncestorMetadata(BoolInt includeAncestorMetadata) {
-            Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
-            this.includeAncestorMetadata = Optional.ofNullable(includeAncestorMetadata);
-            return this;
-        }
-
-        public Builder includeAncestorMetadata(Optional<? extends BoolInt> includeAncestorMetadata) {
-            Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
-            this.includeAncestorMetadata = includeAncestorMetadata;
-            return this;
-        }
-
-
-        public Builder includeAlternateMetadataSources(BoolInt includeAlternateMetadataSources) {
-            Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
-            this.includeAlternateMetadataSources = Optional.ofNullable(includeAlternateMetadataSources);
-            return this;
-        }
-
-        public Builder includeAlternateMetadataSources(Optional<? extends BoolInt> includeAlternateMetadataSources) {
-            Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
-            this.includeAlternateMetadataSources = includeAlternateMetadataSources;
-            return this;
-        }
-
-
-        /**
-         * Used for movies, shows, artists, albums, and tracks.  Allowed for various URI schemes, to be defined.
-         */
-        public Builder guid(String guid) {
-            Utils.checkNotNull(guid, "guid");
-            this.guid = Optional.ofNullable(guid);
-            return this;
-        }
-
-        /**
-         * Used for movies, shows, artists, albums, and tracks.  Allowed for various URI schemes, to be defined.
-         */
-        public Builder guid(Optional<String> guid) {
-            Utils.checkNotNull(guid, "guid");
-            this.guid = guid;
             return this;
         }
 
@@ -1430,7 +1415,83 @@ public class GetLibraryMatchesRequest {
 
 
         /**
-         * Used for movies shows, and albums.  Optional.
+         * Include full metadata in the response
+         */
+        public Builder includeFullMetadata(BoolInt includeFullMetadata) {
+            Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
+            this.includeFullMetadata = Optional.ofNullable(includeFullMetadata);
+            return this;
+        }
+
+        /**
+         * Include full metadata in the response
+         */
+        public Builder includeFullMetadata(Optional<? extends BoolInt> includeFullMetadata) {
+            Utils.checkNotNull(includeFullMetadata, "includeFullMetadata");
+            this.includeFullMetadata = includeFullMetadata;
+            return this;
+        }
+
+
+        /**
+         * Include ancestor metadata in the response
+         */
+        public Builder includeAncestorMetadata(BoolInt includeAncestorMetadata) {
+            Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
+            this.includeAncestorMetadata = Optional.ofNullable(includeAncestorMetadata);
+            return this;
+        }
+
+        /**
+         * Include ancestor metadata in the response
+         */
+        public Builder includeAncestorMetadata(Optional<? extends BoolInt> includeAncestorMetadata) {
+            Utils.checkNotNull(includeAncestorMetadata, "includeAncestorMetadata");
+            this.includeAncestorMetadata = includeAncestorMetadata;
+            return this;
+        }
+
+
+        /**
+         * Include alternate metadata sources in the response
+         */
+        public Builder includeAlternateMetadataSources(BoolInt includeAlternateMetadataSources) {
+            Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
+            this.includeAlternateMetadataSources = Optional.ofNullable(includeAlternateMetadataSources);
+            return this;
+        }
+
+        /**
+         * Include alternate metadata sources in the response
+         */
+        public Builder includeAlternateMetadataSources(Optional<? extends BoolInt> includeAlternateMetadataSources) {
+            Utils.checkNotNull(includeAlternateMetadataSources, "includeAlternateMetadataSources");
+            this.includeAlternateMetadataSources = includeAlternateMetadataSources;
+            return this;
+        }
+
+
+        /**
+         * Used for movies, shows, artists, albums, and tracks. Allowed for various URI schemes, to be defined.
+         */
+        public Builder guid(String guid) {
+            Utils.checkNotNull(guid, "guid");
+            this.guid = Optional.ofNullable(guid);
+            return this;
+        }
+
+        /**
+         * Used for movies, shows, artists, albums, and tracks. Allowed for various URI schemes, to be defined.
+         */
+        public Builder guid(Optional<String> guid) {
+            Utils.checkNotNull(guid, "guid");
+            this.guid = guid;
+            return this;
+        }
+
+
+        /**
+         * Used for movies shows, and albums. Optional.
          */
         public Builder year(long year) {
             Utils.checkNotNull(year, "year");
@@ -1439,7 +1500,7 @@ public class GetLibraryMatchesRequest {
         }
 
         /**
-         * Used for movies shows, and albums.  Optional.
+         * Used for movies shows, and albums. Optional.
          */
         public Builder year(Optional<Long> year) {
             Utils.checkNotNull(year, "year");
@@ -1449,7 +1510,8 @@ public class GetLibraryMatchesRequest {
 
 
         /**
-         * Used for movies, episodes, and tracks.  The full path to the media file, used for "cloud-scanning" an item.
+         * Used for movies, episodes, and tracks. The full path to the media file, used for "cloud-scanning" an
+         * item.
          */
         public Builder path(String path) {
             Utils.checkNotNull(path, "path");
@@ -1458,7 +1520,8 @@ public class GetLibraryMatchesRequest {
         }
 
         /**
-         * Used for movies, episodes, and tracks.  The full path to the media file, used for "cloud-scanning" an item.
+         * Used for movies, episodes, and tracks. The full path to the media file, used for "cloud-scanning" an
+         * item.
          */
         public Builder path(Optional<String> path) {
             Utils.checkNotNull(path, "path");
@@ -1468,7 +1531,7 @@ public class GetLibraryMatchesRequest {
 
 
         /**
-         * Used for episodes and tracks.  The title of the show/artist. Required if `path` isn't passed.
+         * Used for episodes and tracks. The title of the show/artist. Required if `path` isn't passed.
          */
         public Builder grandparentTitle(String grandparentTitle) {
             Utils.checkNotNull(grandparentTitle, "grandparentTitle");
@@ -1477,7 +1540,7 @@ public class GetLibraryMatchesRequest {
         }
 
         /**
-         * Used for episodes and tracks.  The title of the show/artist. Required if `path` isn't passed.
+         * Used for episodes and tracks. The title of the show/artist. Required if `path` isn't passed.
          */
         public Builder grandparentTitle(Optional<String> grandparentTitle) {
             Utils.checkNotNull(grandparentTitle, "grandparentTitle");
@@ -1487,7 +1550,7 @@ public class GetLibraryMatchesRequest {
 
 
         /**
-         * Used for episodes.  The year of the show.
+         * Used for episodes. The year of the show.
          */
         public Builder grandparentYear(long grandparentYear) {
             Utils.checkNotNull(grandparentYear, "grandparentYear");
@@ -1496,7 +1559,7 @@ public class GetLibraryMatchesRequest {
         }
 
         /**
-         * Used for episodes.  The year of the show.
+         * Used for episodes. The year of the show.
          */
         public Builder grandparentYear(Optional<Long> grandparentYear) {
             Utils.checkNotNull(grandparentYear, "grandparentYear");
@@ -1506,7 +1569,7 @@ public class GetLibraryMatchesRequest {
 
 
         /**
-         * Used for episodes and tracks.  The season/album number.
+         * Used for episodes and tracks. The season/album number.
          */
         public Builder parentIndex(long parentIndex) {
             Utils.checkNotNull(parentIndex, "parentIndex");
@@ -1515,7 +1578,7 @@ public class GetLibraryMatchesRequest {
         }
 
         /**
-         * Used for episodes and tracks.  The season/album number.
+         * Used for episodes and tracks. The season/album number.
          */
         public Builder parentIndex(Optional<Long> parentIndex) {
             Utils.checkNotNull(parentIndex, "parentIndex");
@@ -1525,7 +1588,7 @@ public class GetLibraryMatchesRequest {
 
 
         /**
-         * Used for episodes and tracks.  The episode/tracks number in the season/album.
+         * Used for episodes and tracks. The episode/tracks number in the season/album.
          */
         public Builder index(long index) {
             Utils.checkNotNull(index, "index");
@@ -1534,7 +1597,7 @@ public class GetLibraryMatchesRequest {
         }
 
         /**
-         * Used for episodes and tracks.  The episode/tracks number in the season/album.
+         * Used for episodes and tracks. The episode/tracks number in the season/album.
          */
         public Builder index(Optional<Long> index) {
             Utils.checkNotNull(index, "index");
@@ -1544,7 +1607,7 @@ public class GetLibraryMatchesRequest {
 
 
         /**
-         * Used for episodes.  In the format `YYYY-MM-DD`.
+         * Used for episodes. In the format `YYYY-MM-DD`.
          */
         public Builder originallyAvailableAt(String originallyAvailableAt) {
             Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
@@ -1553,7 +1616,7 @@ public class GetLibraryMatchesRequest {
         }
 
         /**
-         * Used for episodes.  In the format `YYYY-MM-DD`.
+         * Used for episodes. In the format `YYYY-MM-DD`.
          */
         public Builder originallyAvailableAt(Optional<String> originallyAvailableAt) {
             Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
@@ -1599,8 +1662,8 @@ public class GetLibraryMatchesRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, type,
-                includeFullMetadata, includeAncestorMetadata, includeAlternateMetadataSources,
-                guid, title, year,
+                title, includeFullMetadata, includeAncestorMetadata,
+                includeAlternateMetadataSources, guid, year,
                 path, grandparentTitle, grandparentYear,
                 parentIndex, index, originallyAvailableAt,
                 parentTitle);

@@ -8,14 +8,19 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.models.operations.GetAllLeavesRequest;
 import dev.plexapi.sdk.operations.GetAllLeaves;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class GetAllLeavesRequestBuilder {
 
     private GetAllLeavesRequest request;
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public GetAllLeavesRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -26,11 +31,28 @@ public class GetAllLeavesRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public GetAllLeavesRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public CompletableFuture<GetAllLeavesResponse> call() throws Exception {
-        
+    public GetAllLeavesRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public CompletableFuture<GetAllLeavesResponse> call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         AsyncRequestOperation<GetAllLeavesRequest, GetAllLeavesResponse> operation
-              = new GetAllLeaves.Async(sdkConfiguration);
+              = new GetAllLeaves.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
 
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);

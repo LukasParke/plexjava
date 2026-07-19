@@ -7,11 +7,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 
 public class StartTaskResponse implements Response {
@@ -30,17 +33,39 @@ public class StartTaskResponse implements Response {
      */
     private HttpResponse<InputStream> rawResponse;
 
+
+    private Optional<byte[]> body;
+
+    /**
+     * Task is already running
+     */
+    private Optional<String> res;
+
     @JsonCreator
     public StartTaskResponse(
             String contentType,
             int statusCode,
-            HttpResponse<InputStream> rawResponse) {
+            HttpResponse<InputStream> rawResponse,
+            Optional<byte[]> body,
+            Optional<String> res) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(body, "body");
+        Utils.checkNotNull(res, "res");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.body = body;
+        this.res = res;
+    }
+    
+    public StartTaskResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -65,6 +90,27 @@ public class StartTaskResponse implements Response {
     @JsonIgnore
     public HttpResponse<InputStream> rawResponse() {
         return rawResponse;
+    }
+
+    @JsonIgnore
+    public Optional<byte[]> body() {
+        this.body = body
+            .or(() -> {
+                try {
+                    return Optional.of(Utils.extractByteArrayFromBody(rawResponse));
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
+        return  this.body;
+    }
+
+    /**
+     * Task is already running
+     */
+    @JsonIgnore
+    public Optional<String> res() {
+        return res;
     }
 
     public static Builder builder() {
@@ -99,6 +145,38 @@ public class StartTaskResponse implements Response {
         return this;
     }
 
+    public StartTaskResponse withBody(byte[] body) {
+        Utils.checkNotNull(body, "body");
+        this.body = Optional.ofNullable(body);
+        return this;
+    }
+
+
+    public StartTaskResponse withBody(Optional<byte[]> body) {
+        Utils.checkNotNull(body, "body");
+        this.body = body;
+        return this;
+    }
+
+    /**
+     * Task is already running
+     */
+    public StartTaskResponse withRes(String res) {
+        Utils.checkNotNull(res, "res");
+        this.res = Optional.ofNullable(res);
+        return this;
+    }
+
+
+    /**
+     * Task is already running
+     */
+    public StartTaskResponse withRes(Optional<String> res) {
+        Utils.checkNotNull(res, "res");
+        this.res = res;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,13 +189,16 @@ public class StartTaskResponse implements Response {
         return 
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse);
+            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.body, other.body) &&
+            Utils.enhancedDeepEquals(this.res, other.res);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            contentType, statusCode, rawResponse);
+            contentType, statusCode, rawResponse,
+            body, res);
     }
     
     @Override
@@ -125,7 +206,9 @@ public class StartTaskResponse implements Response {
         return Utils.toString(StartTaskResponse.class,
                 "contentType", contentType,
                 "statusCode", statusCode,
-                "rawResponse", rawResponse);
+                "rawResponse", rawResponse,
+                "body", body,
+                "res", res);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -136,6 +219,10 @@ public class StartTaskResponse implements Response {
         private Integer statusCode;
 
         private HttpResponse<InputStream> rawResponse;
+
+        private Optional<byte[]> body = Optional.empty();
+
+        private Optional<String> res = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -171,10 +258,43 @@ public class StartTaskResponse implements Response {
             return this;
         }
 
+
+        public Builder body(byte[] body) {
+            Utils.checkNotNull(body, "body");
+            this.body = Optional.ofNullable(body);
+            return this;
+        }
+
+        public Builder body(Optional<byte[]> body) {
+            Utils.checkNotNull(body, "body");
+            this.body = body;
+            return this;
+        }
+
+
+        /**
+         * Task is already running
+         */
+        public Builder res(String res) {
+            Utils.checkNotNull(res, "res");
+            this.res = Optional.ofNullable(res);
+            return this;
+        }
+
+        /**
+         * Task is already running
+         */
+        public Builder res(Optional<String> res) {
+            Utils.checkNotNull(res, "res");
+            this.res = res;
+            return this;
+        }
+
         public StartTaskResponse build() {
 
             return new StartTaskResponse(
-                contentType, statusCode, rawResponse);
+                contentType, statusCode, rawResponse,
+                body, res);
         }
 
     }

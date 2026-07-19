@@ -8,16 +8,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.Release;
 import dev.plexapi.sdk.utils.Utils;
+import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * GetUpdatesStatusResponseBody
  * 
- * <p>OK
+ * <p>Status of the PMS updater.
  */
 public class GetUpdatesStatusResponseBody {
 
@@ -25,21 +28,90 @@ public class GetUpdatesStatusResponseBody {
     @JsonProperty("MediaContainer")
     private Optional<? extends GetUpdatesStatusMediaContainer> mediaContainer;
 
+    /**
+     * Timestamp of the last update check.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("checkedAt")
+    private Optional<Long> checkedAt;
+
+    /**
+     * The URL where the update is available.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("downloadURL")
+    private Optional<String> downloadURL;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("Release")
+    private Optional<? extends List<Release>> release;
+
+    /**
+     * The current error code (0 means no error).
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("status")
+    private Optional<Long> status;
+
     @JsonCreator
     public GetUpdatesStatusResponseBody(
-            @JsonProperty("MediaContainer") Optional<? extends GetUpdatesStatusMediaContainer> mediaContainer) {
+            @JsonProperty("MediaContainer") Optional<? extends GetUpdatesStatusMediaContainer> mediaContainer,
+            @JsonProperty("checkedAt") Optional<Long> checkedAt,
+            @JsonProperty("downloadURL") Optional<String> downloadURL,
+            @JsonProperty("Release") Optional<? extends List<Release>> release,
+            @JsonProperty("status") Optional<Long> status) {
         Utils.checkNotNull(mediaContainer, "mediaContainer");
+        Utils.checkNotNull(checkedAt, "checkedAt");
+        Utils.checkNotNull(downloadURL, "downloadURL");
+        Utils.checkNotNull(release, "release");
+        Utils.checkNotNull(status, "status");
         this.mediaContainer = mediaContainer;
+        this.checkedAt = checkedAt;
+        this.downloadURL = downloadURL;
+        this.release = release;
+        this.status = status;
     }
     
     public GetUpdatesStatusResponseBody() {
-        this(Optional.empty());
+        this(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty());
     }
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<GetUpdatesStatusMediaContainer> mediaContainer() {
         return (Optional<GetUpdatesStatusMediaContainer>) mediaContainer;
+    }
+
+    /**
+     * Timestamp of the last update check.
+     */
+    @JsonIgnore
+    public Optional<Long> checkedAt() {
+        return checkedAt;
+    }
+
+    /**
+     * The URL where the update is available.
+     */
+    @JsonIgnore
+    public Optional<String> downloadURL() {
+        return downloadURL;
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<Release>> release() {
+        return (Optional<List<Release>>) release;
+    }
+
+    /**
+     * The current error code (0 means no error).
+     */
+    @JsonIgnore
+    public Optional<Long> status() {
+        return status;
     }
 
     public static Builder builder() {
@@ -60,6 +132,76 @@ public class GetUpdatesStatusResponseBody {
         return this;
     }
 
+    /**
+     * Timestamp of the last update check.
+     */
+    public GetUpdatesStatusResponseBody withCheckedAt(long checkedAt) {
+        Utils.checkNotNull(checkedAt, "checkedAt");
+        this.checkedAt = Optional.ofNullable(checkedAt);
+        return this;
+    }
+
+
+    /**
+     * Timestamp of the last update check.
+     */
+    public GetUpdatesStatusResponseBody withCheckedAt(Optional<Long> checkedAt) {
+        Utils.checkNotNull(checkedAt, "checkedAt");
+        this.checkedAt = checkedAt;
+        return this;
+    }
+
+    /**
+     * The URL where the update is available.
+     */
+    public GetUpdatesStatusResponseBody withDownloadURL(String downloadURL) {
+        Utils.checkNotNull(downloadURL, "downloadURL");
+        this.downloadURL = Optional.ofNullable(downloadURL);
+        return this;
+    }
+
+
+    /**
+     * The URL where the update is available.
+     */
+    public GetUpdatesStatusResponseBody withDownloadURL(Optional<String> downloadURL) {
+        Utils.checkNotNull(downloadURL, "downloadURL");
+        this.downloadURL = downloadURL;
+        return this;
+    }
+
+    public GetUpdatesStatusResponseBody withRelease(List<Release> release) {
+        Utils.checkNotNull(release, "release");
+        this.release = Optional.ofNullable(release);
+        return this;
+    }
+
+
+    public GetUpdatesStatusResponseBody withRelease(Optional<? extends List<Release>> release) {
+        Utils.checkNotNull(release, "release");
+        this.release = release;
+        return this;
+    }
+
+    /**
+     * The current error code (0 means no error).
+     */
+    public GetUpdatesStatusResponseBody withStatus(long status) {
+        Utils.checkNotNull(status, "status");
+        this.status = Optional.ofNullable(status);
+        return this;
+    }
+
+
+    /**
+     * The current error code (0 means no error).
+     */
+    public GetUpdatesStatusResponseBody withStatus(Optional<Long> status) {
+        Utils.checkNotNull(status, "status");
+        this.status = status;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -70,25 +212,42 @@ public class GetUpdatesStatusResponseBody {
         }
         GetUpdatesStatusResponseBody other = (GetUpdatesStatusResponseBody) o;
         return 
-            Utils.enhancedDeepEquals(this.mediaContainer, other.mediaContainer);
+            Utils.enhancedDeepEquals(this.mediaContainer, other.mediaContainer) &&
+            Utils.enhancedDeepEquals(this.checkedAt, other.checkedAt) &&
+            Utils.enhancedDeepEquals(this.downloadURL, other.downloadURL) &&
+            Utils.enhancedDeepEquals(this.release, other.release) &&
+            Utils.enhancedDeepEquals(this.status, other.status);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            mediaContainer);
+            mediaContainer, checkedAt, downloadURL,
+            release, status);
     }
     
     @Override
     public String toString() {
         return Utils.toString(GetUpdatesStatusResponseBody.class,
-                "mediaContainer", mediaContainer);
+                "mediaContainer", mediaContainer,
+                "checkedAt", checkedAt,
+                "downloadURL", downloadURL,
+                "release", release,
+                "status", status);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
         private Optional<? extends GetUpdatesStatusMediaContainer> mediaContainer = Optional.empty();
+
+        private Optional<Long> checkedAt = Optional.empty();
+
+        private Optional<String> downloadURL = Optional.empty();
+
+        private Optional<? extends List<Release>> release = Optional.empty();
+
+        private Optional<Long> status = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -107,10 +266,81 @@ public class GetUpdatesStatusResponseBody {
             return this;
         }
 
+
+        /**
+         * Timestamp of the last update check.
+         */
+        public Builder checkedAt(long checkedAt) {
+            Utils.checkNotNull(checkedAt, "checkedAt");
+            this.checkedAt = Optional.ofNullable(checkedAt);
+            return this;
+        }
+
+        /**
+         * Timestamp of the last update check.
+         */
+        public Builder checkedAt(Optional<Long> checkedAt) {
+            Utils.checkNotNull(checkedAt, "checkedAt");
+            this.checkedAt = checkedAt;
+            return this;
+        }
+
+
+        /**
+         * The URL where the update is available.
+         */
+        public Builder downloadURL(String downloadURL) {
+            Utils.checkNotNull(downloadURL, "downloadURL");
+            this.downloadURL = Optional.ofNullable(downloadURL);
+            return this;
+        }
+
+        /**
+         * The URL where the update is available.
+         */
+        public Builder downloadURL(Optional<String> downloadURL) {
+            Utils.checkNotNull(downloadURL, "downloadURL");
+            this.downloadURL = downloadURL;
+            return this;
+        }
+
+
+        public Builder release(List<Release> release) {
+            Utils.checkNotNull(release, "release");
+            this.release = Optional.ofNullable(release);
+            return this;
+        }
+
+        public Builder release(Optional<? extends List<Release>> release) {
+            Utils.checkNotNull(release, "release");
+            this.release = release;
+            return this;
+        }
+
+
+        /**
+         * The current error code (0 means no error).
+         */
+        public Builder status(long status) {
+            Utils.checkNotNull(status, "status");
+            this.status = Optional.ofNullable(status);
+            return this;
+        }
+
+        /**
+         * The current error code (0 means no error).
+         */
+        public Builder status(Optional<Long> status) {
+            Utils.checkNotNull(status, "status");
+            this.status = status;
+            return this;
+        }
+
         public GetUpdatesStatusResponseBody build() {
 
             return new GetUpdatesStatusResponseBody(
-                mediaContainer);
+                mediaContainer, checkedAt, downloadURL,
+                release, status);
         }
 
     }

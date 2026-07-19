@@ -7,13 +7,18 @@ import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.RemoveDeviceFromDVR;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
+import java.util.Optional;
 
 public class RemoveDeviceFromDVRRequestBuilder {
 
     private RemoveDeviceFromDVRRequest request;
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public RemoveDeviceFromDVRRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -24,11 +29,26 @@ public class RemoveDeviceFromDVRRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public RemoveDeviceFromDVRRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public RemoveDeviceFromDVRResponse call() throws Exception {
-        
+    public RemoveDeviceFromDVRRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public RemoveDeviceFromDVRResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         RequestOperation<RemoveDeviceFromDVRRequest, RemoveDeviceFromDVRResponse> operation
-              = new RemoveDeviceFromDVR.Sync(sdkConfiguration);
+              = new RemoveDeviceFromDVR.Sync(sdkConfiguration, options, _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

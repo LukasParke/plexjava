@@ -7,13 +7,18 @@ import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.GetDevicesChannels;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
+import java.util.Optional;
 
 public class GetDevicesChannelsRequestBuilder {
 
     private GetDevicesChannelsRequest request;
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public GetDevicesChannelsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -24,11 +29,26 @@ public class GetDevicesChannelsRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public GetDevicesChannelsRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public GetDevicesChannelsResponse call() throws Exception {
-        
+    public GetDevicesChannelsRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public GetDevicesChannelsResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         RequestOperation<GetDevicesChannelsRequest, GetDevicesChannelsResponse> operation
-              = new GetDevicesChannels.Sync(sdkConfiguration);
+              = new GetDevicesChannels.Sync(sdkConfiguration, options, _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

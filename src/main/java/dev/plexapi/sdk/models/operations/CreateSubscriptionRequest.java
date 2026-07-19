@@ -85,7 +85,8 @@ public class CreateSubscriptionRequest {
     private Optional<String> marketplace;
 
     /**
-     * The library section into which we'll grab the media.  Not actually required when the subscription is to a playlist.
+     * The library section into which we'll grab the media. Not actually required when the subscription is
+     * to a playlist.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=targetLibrarySectionID")
     private Optional<Long> targetLibrarySectionID;
@@ -100,10 +101,11 @@ public class CreateSubscriptionRequest {
      * The type of the thing we're subscribing too (e.g. show, season).
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private Optional<Long> type;
+    private Optional<Long> mediaType;
 
     /**
-     * Hints describing what we're looking for.  Note: The hint `ratingKey` is required for downloading from a PMS remote.
+     * Hints describing what we're looking for. Note: The hint `ratingKey` is required for downloading from
+     * a PMS remote.
      */
     @SpeakeasyMetadata("queryParam:style=deepObject,explode=true,name=hints")
     private Optional<? extends Hints> hints;
@@ -116,8 +118,8 @@ public class CreateSubscriptionRequest {
 
     /**
      * Subscription parameters.
-     *   - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
-     *   - `source`: Required for downloads to indicate the source of the downloaded content.
+     * - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
+     * - `source`: Required for downloads to indicate the source of the downloaded content.
      */
     @SpeakeasyMetadata("queryParam:style=deepObject,explode=true,name=params")
     private Optional<? extends Params> params;
@@ -137,7 +139,7 @@ public class CreateSubscriptionRequest {
             Optional<String> marketplace,
             Optional<Long> targetLibrarySectionID,
             Optional<Long> targetSectionLocationID,
-            Optional<Long> type,
+            Optional<Long> mediaType,
             Optional<? extends Hints> hints,
             Optional<? extends CreateSubscriptionQueryParamPrefs> prefs,
             Optional<? extends Params> params) {
@@ -154,7 +156,7 @@ public class CreateSubscriptionRequest {
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
         Utils.checkNotNull(targetSectionLocationID, "targetSectionLocationID");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         Utils.checkNotNull(hints, "hints");
         Utils.checkNotNull(prefs, "prefs");
         Utils.checkNotNull(params, "params");
@@ -171,7 +173,7 @@ public class CreateSubscriptionRequest {
         this.marketplace = marketplace;
         this.targetLibrarySectionID = targetLibrarySectionID;
         this.targetSectionLocationID = targetSectionLocationID;
-        this.type = type;
+        this.mediaType = mediaType;
         this.hints = hints;
         this.prefs = prefs;
         this.params = params;
@@ -276,7 +278,8 @@ public class CreateSubscriptionRequest {
     }
 
     /**
-     * The library section into which we'll grab the media.  Not actually required when the subscription is to a playlist.
+     * The library section into which we'll grab the media. Not actually required when the subscription is
+     * to a playlist.
      */
     @JsonIgnore
     public Optional<Long> targetLibrarySectionID() {
@@ -295,12 +298,13 @@ public class CreateSubscriptionRequest {
      * The type of the thing we're subscribing too (e.g. show, season).
      */
     @JsonIgnore
-    public Optional<Long> type() {
-        return type;
+    public Optional<Long> mediaType() {
+        return mediaType;
     }
 
     /**
-     * Hints describing what we're looking for.  Note: The hint `ratingKey` is required for downloading from a PMS remote.
+     * Hints describing what we're looking for. Note: The hint `ratingKey` is required for downloading from
+     * a PMS remote.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -319,8 +323,8 @@ public class CreateSubscriptionRequest {
 
     /**
      * Subscription parameters.
-     *   - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
-     *   - `source`: Required for downloads to indicate the source of the downloaded content.
+     * - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
+     * - `source`: Required for downloads to indicate the source of the downloaded content.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -543,7 +547,8 @@ public class CreateSubscriptionRequest {
     }
 
     /**
-     * The library section into which we'll grab the media.  Not actually required when the subscription is to a playlist.
+     * The library section into which we'll grab the media. Not actually required when the subscription is
+     * to a playlist.
      */
     public CreateSubscriptionRequest withTargetLibrarySectionID(long targetLibrarySectionID) {
         Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
@@ -553,7 +558,8 @@ public class CreateSubscriptionRequest {
 
 
     /**
-     * The library section into which we'll grab the media.  Not actually required when the subscription is to a playlist.
+     * The library section into which we'll grab the media. Not actually required when the subscription is
+     * to a playlist.
      */
     public CreateSubscriptionRequest withTargetLibrarySectionID(Optional<Long> targetLibrarySectionID) {
         Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
@@ -583,9 +589,9 @@ public class CreateSubscriptionRequest {
     /**
      * The type of the thing we're subscribing too (e.g. show, season).
      */
-    public CreateSubscriptionRequest withType(long type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
+    public CreateSubscriptionRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
         return this;
     }
 
@@ -593,14 +599,15 @@ public class CreateSubscriptionRequest {
     /**
      * The type of the thing we're subscribing too (e.g. show, season).
      */
-    public CreateSubscriptionRequest withType(Optional<Long> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public CreateSubscriptionRequest withMediaType(Optional<Long> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
     /**
-     * Hints describing what we're looking for.  Note: The hint `ratingKey` is required for downloading from a PMS remote.
+     * Hints describing what we're looking for. Note: The hint `ratingKey` is required for downloading from
+     * a PMS remote.
      */
     public CreateSubscriptionRequest withHints(Hints hints) {
         Utils.checkNotNull(hints, "hints");
@@ -610,7 +617,8 @@ public class CreateSubscriptionRequest {
 
 
     /**
-     * Hints describing what we're looking for.  Note: The hint `ratingKey` is required for downloading from a PMS remote.
+     * Hints describing what we're looking for. Note: The hint `ratingKey` is required for downloading from
+     * a PMS remote.
      */
     public CreateSubscriptionRequest withHints(Optional<? extends Hints> hints) {
         Utils.checkNotNull(hints, "hints");
@@ -639,8 +647,8 @@ public class CreateSubscriptionRequest {
 
     /**
      * Subscription parameters.
-     *   - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
-     *   - `source`: Required for downloads to indicate the source of the downloaded content.
+     * - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
+     * - `source`: Required for downloads to indicate the source of the downloaded content.
      */
     public CreateSubscriptionRequest withParams(Params params) {
         Utils.checkNotNull(params, "params");
@@ -651,8 +659,8 @@ public class CreateSubscriptionRequest {
 
     /**
      * Subscription parameters.
-     *   - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
-     *   - `source`: Required for downloads to indicate the source of the downloaded content.
+     * - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
+     * - `source`: Required for downloads to indicate the source of the downloaded content.
      */
     public CreateSubscriptionRequest withParams(Optional<? extends Params> params) {
         Utils.checkNotNull(params, "params");
@@ -683,7 +691,7 @@ public class CreateSubscriptionRequest {
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.targetLibrarySectionID, other.targetLibrarySectionID) &&
             Utils.enhancedDeepEquals(this.targetSectionLocationID, other.targetSectionLocationID) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
             Utils.enhancedDeepEquals(this.hints, other.hints) &&
             Utils.enhancedDeepEquals(this.prefs, other.prefs) &&
             Utils.enhancedDeepEquals(this.params, other.params);
@@ -696,7 +704,7 @@ public class CreateSubscriptionRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, targetLibrarySectionID,
-            targetSectionLocationID, type, hints,
+            targetSectionLocationID, mediaType, hints,
             prefs, params);
     }
     
@@ -716,7 +724,7 @@ public class CreateSubscriptionRequest {
                 "marketplace", marketplace,
                 "targetLibrarySectionID", targetLibrarySectionID,
                 "targetSectionLocationID", targetSectionLocationID,
-                "type", type,
+                "mediaType", mediaType,
                 "hints", hints,
                 "prefs", prefs,
                 "params", params);
@@ -751,7 +759,7 @@ public class CreateSubscriptionRequest {
 
         private Optional<Long> targetSectionLocationID = Optional.empty();
 
-        private Optional<Long> type = Optional.empty();
+        private Optional<Long> mediaType = Optional.empty();
 
         private Optional<? extends Hints> hints = Optional.empty();
 
@@ -974,7 +982,8 @@ public class CreateSubscriptionRequest {
 
 
         /**
-         * The library section into which we'll grab the media.  Not actually required when the subscription is to a playlist.
+         * The library section into which we'll grab the media. Not actually required when the subscription is
+         * to a playlist.
          */
         public Builder targetLibrarySectionID(long targetLibrarySectionID) {
             Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
@@ -983,7 +992,8 @@ public class CreateSubscriptionRequest {
         }
 
         /**
-         * The library section into which we'll grab the media.  Not actually required when the subscription is to a playlist.
+         * The library section into which we'll grab the media. Not actually required when the subscription is
+         * to a playlist.
          */
         public Builder targetLibrarySectionID(Optional<Long> targetLibrarySectionID) {
             Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
@@ -1014,24 +1024,25 @@ public class CreateSubscriptionRequest {
         /**
          * The type of the thing we're subscribing too (e.g. show, season).
          */
-        public Builder type(long type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
             return this;
         }
 
         /**
          * The type of the thing we're subscribing too (e.g. show, season).
          */
-        public Builder type(Optional<Long> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(Optional<Long> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
 
         /**
-         * Hints describing what we're looking for.  Note: The hint `ratingKey` is required for downloading from a PMS remote.
+         * Hints describing what we're looking for. Note: The hint `ratingKey` is required for downloading from
+         * a PMS remote.
          */
         public Builder hints(Hints hints) {
             Utils.checkNotNull(hints, "hints");
@@ -1040,7 +1051,8 @@ public class CreateSubscriptionRequest {
         }
 
         /**
-         * Hints describing what we're looking for.  Note: The hint `ratingKey` is required for downloading from a PMS remote.
+         * Hints describing what we're looking for. Note: The hint `ratingKey` is required for downloading from
+         * a PMS remote.
          */
         public Builder hints(Optional<? extends Hints> hints) {
             Utils.checkNotNull(hints, "hints");
@@ -1070,8 +1082,8 @@ public class CreateSubscriptionRequest {
 
         /**
          * Subscription parameters.
-         *   - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
-         *   - `source`: Required for downloads to indicate the source of the downloaded content.
+         * - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
+         * - `source`: Required for downloads to indicate the source of the downloaded content.
          */
         public Builder params(Params params) {
             Utils.checkNotNull(params, "params");
@@ -1081,8 +1093,8 @@ public class CreateSubscriptionRequest {
 
         /**
          * Subscription parameters.
-         *   - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
-         *   - `source`: Required for downloads to indicate the source of the downloaded content.
+         * - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
+         * - `source`: Required for downloads to indicate the source of the downloaded content.
          */
         public Builder params(Optional<? extends Params> params) {
             Utils.checkNotNull(params, "params");
@@ -1100,7 +1112,7 @@ public class CreateSubscriptionRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, targetLibrarySectionID,
-                targetSectionLocationID, type, hints,
+                targetSectionLocationID, mediaType, hints,
                 prefs, params);
         }
 

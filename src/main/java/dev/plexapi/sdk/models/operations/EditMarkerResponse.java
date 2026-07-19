@@ -34,7 +34,7 @@ public class EditMarkerResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * OK
+     * Successfully updated edit a marker
      */
     private Optional<? extends PostResponses200> postResponses200;
 
@@ -87,7 +87,7 @@ public class EditMarkerResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully updated edit a marker
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -128,7 +128,7 @@ public class EditMarkerResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully updated edit a marker
      */
     public EditMarkerResponse withPostResponses200(PostResponses200 postResponses200) {
         Utils.checkNotNull(postResponses200, "postResponses200");
@@ -138,7 +138,7 @@ public class EditMarkerResponse implements Response {
 
 
     /**
-     * OK
+     * Successfully updated edit a marker
      */
     public EditMarkerResponse withPostResponses200(Optional<? extends PostResponses200> postResponses200) {
         Utils.checkNotNull(postResponses200, "postResponses200");
@@ -225,7 +225,7 @@ public class EditMarkerResponse implements Response {
 
 
         /**
-         * OK
+         * Successfully updated edit a marker
          */
         public Builder postResponses200(PostResponses200 postResponses200) {
             Utils.checkNotNull(postResponses200, "postResponses200");
@@ -234,7 +234,7 @@ public class EditMarkerResponse implements Response {
         }
 
         /**
-         * OK
+         * Successfully updated edit a marker
          */
         public Builder postResponses200(Optional<? extends PostResponses200> postResponses200) {
             Utils.checkNotNull(postResponses200, "postResponses200");

@@ -8,14 +8,19 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.models.operations.EditSubscriptionPreferencesRequest;
 import dev.plexapi.sdk.operations.EditSubscriptionPreferences;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class EditSubscriptionPreferencesRequestBuilder {
 
     private EditSubscriptionPreferencesRequest request;
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public EditSubscriptionPreferencesRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -26,11 +31,28 @@ public class EditSubscriptionPreferencesRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public EditSubscriptionPreferencesRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public CompletableFuture<EditSubscriptionPreferencesResponse> call() throws Exception {
-        
+    public EditSubscriptionPreferencesRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public CompletableFuture<EditSubscriptionPreferencesResponse> call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         AsyncRequestOperation<EditSubscriptionPreferencesRequest, EditSubscriptionPreferencesResponse> operation
-              = new EditSubscriptionPreferences.Async(sdkConfiguration);
+              = new EditSubscriptionPreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
 
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);

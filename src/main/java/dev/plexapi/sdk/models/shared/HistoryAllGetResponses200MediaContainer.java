@@ -19,9 +19,15 @@ import java.util.Optional;
 /**
  * HistoryAllGetResponses200MediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class HistoryAllGetResponses200MediaContainer {
 
@@ -30,7 +36,8 @@ public class HistoryAllGetResponses200MediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -51,7 +58,7 @@ public class HistoryAllGetResponses200MediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Metadata")
-    private Optional<? extends List<HistoryAllGetResponses200Metadata>> metadata;
+    private Optional<? extends List<PlaybackHistoryMetadata>> metadata;
 
     @JsonCreator
     public HistoryAllGetResponses200MediaContainer(
@@ -59,7 +66,7 @@ public class HistoryAllGetResponses200MediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("Metadata") Optional<? extends List<HistoryAllGetResponses200Metadata>> metadata) {
+            @JsonProperty("Metadata") Optional<? extends List<PlaybackHistoryMetadata>> metadata) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
@@ -83,7 +90,8 @@ public class HistoryAllGetResponses200MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -105,8 +113,8 @@ public class HistoryAllGetResponses200MediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<HistoryAllGetResponses200Metadata>> metadata() {
-        return (Optional<List<HistoryAllGetResponses200Metadata>>) metadata;
+    public Optional<List<PlaybackHistoryMetadata>> metadata() {
+        return (Optional<List<PlaybackHistoryMetadata>>) metadata;
     }
 
     public static Builder builder() {
@@ -128,7 +136,8 @@ public class HistoryAllGetResponses200MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public HistoryAllGetResponses200MediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -138,7 +147,8 @@ public class HistoryAllGetResponses200MediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public HistoryAllGetResponses200MediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -178,14 +188,14 @@ public class HistoryAllGetResponses200MediaContainer {
         return this;
     }
 
-    public HistoryAllGetResponses200MediaContainer withMetadata(List<HistoryAllGetResponses200Metadata> metadata) {
+    public HistoryAllGetResponses200MediaContainer withMetadata(List<PlaybackHistoryMetadata> metadata) {
         Utils.checkNotNull(metadata, "metadata");
         this.metadata = Optional.ofNullable(metadata);
         return this;
     }
 
 
-    public HistoryAllGetResponses200MediaContainer withMetadata(Optional<? extends List<HistoryAllGetResponses200Metadata>> metadata) {
+    public HistoryAllGetResponses200MediaContainer withMetadata(Optional<? extends List<PlaybackHistoryMetadata>> metadata) {
         Utils.checkNotNull(metadata, "metadata");
         this.metadata = metadata;
         return this;
@@ -236,7 +246,7 @@ public class HistoryAllGetResponses200MediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<? extends List<HistoryAllGetResponses200Metadata>> metadata = Optional.empty();
+        private Optional<? extends List<PlaybackHistoryMetadata>> metadata = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -257,7 +267,8 @@ public class HistoryAllGetResponses200MediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -266,7 +277,8 @@ public class HistoryAllGetResponses200MediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -307,13 +319,13 @@ public class HistoryAllGetResponses200MediaContainer {
         }
 
 
-        public Builder metadata(List<HistoryAllGetResponses200Metadata> metadata) {
+        public Builder metadata(List<PlaybackHistoryMetadata> metadata) {
             Utils.checkNotNull(metadata, "metadata");
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
-        public Builder metadata(Optional<? extends List<HistoryAllGetResponses200Metadata>> metadata) {
+        public Builder metadata(Optional<? extends List<PlaybackHistoryMetadata>> metadata) {
             Utils.checkNotNull(metadata, "metadata");
             this.metadata = metadata;
             return this;

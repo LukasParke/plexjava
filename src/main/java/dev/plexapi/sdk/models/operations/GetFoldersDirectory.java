@@ -17,6 +17,11 @@ import java.util.Optional;
 public class GetFoldersDirectory {
 
     @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("title")
+    private Optional<String> title;
+
+
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("fastKey")
     private Optional<String> fastKey;
 
@@ -25,26 +30,26 @@ public class GetFoldersDirectory {
     @JsonProperty("key")
     private Optional<String> key;
 
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("title")
-    private Optional<String> title;
-
     @JsonCreator
     public GetFoldersDirectory(
+            @JsonProperty("title") Optional<String> title,
             @JsonProperty("fastKey") Optional<String> fastKey,
-            @JsonProperty("key") Optional<String> key,
-            @JsonProperty("title") Optional<String> title) {
+            @JsonProperty("key") Optional<String> key) {
+        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(fastKey, "fastKey");
         Utils.checkNotNull(key, "key");
-        Utils.checkNotNull(title, "title");
+        this.title = title;
         this.fastKey = fastKey;
         this.key = key;
-        this.title = title;
     }
     
     public GetFoldersDirectory() {
         this(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    @JsonIgnore
+    public Optional<String> title() {
+        return title;
     }
 
     @JsonIgnore
@@ -57,15 +62,23 @@ public class GetFoldersDirectory {
         return key;
     }
 
-    @JsonIgnore
-    public Optional<String> title() {
-        return title;
-    }
-
     public static Builder builder() {
         return new Builder();
     }
 
+
+    public GetFoldersDirectory withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = Optional.ofNullable(title);
+        return this;
+    }
+
+
+    public GetFoldersDirectory withTitle(Optional<String> title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
+    }
 
     public GetFoldersDirectory withFastKey(String fastKey) {
         Utils.checkNotNull(fastKey, "fastKey");
@@ -93,19 +106,6 @@ public class GetFoldersDirectory {
         return this;
     }
 
-    public GetFoldersDirectory withTitle(String title) {
-        Utils.checkNotNull(title, "title");
-        this.title = Optional.ofNullable(title);
-        return this;
-    }
-
-
-    public GetFoldersDirectory withTitle(Optional<String> title) {
-        Utils.checkNotNull(title, "title");
-        this.title = title;
-        return this;
-    }
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -116,36 +116,49 @@ public class GetFoldersDirectory {
         }
         GetFoldersDirectory other = (GetFoldersDirectory) o;
         return 
+            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.fastKey, other.fastKey) &&
-            Utils.enhancedDeepEquals(this.key, other.key) &&
-            Utils.enhancedDeepEquals(this.title, other.title);
+            Utils.enhancedDeepEquals(this.key, other.key);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            fastKey, key, title);
+            title, fastKey, key);
     }
     
     @Override
     public String toString() {
         return Utils.toString(GetFoldersDirectory.class,
+                "title", title,
                 "fastKey", fastKey,
-                "key", key,
-                "title", title);
+                "key", key);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private Optional<String> title = Optional.empty();
+
         private Optional<String> fastKey = Optional.empty();
 
         private Optional<String> key = Optional.empty();
 
-        private Optional<String> title = Optional.empty();
-
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = Optional.ofNullable(title);
+            return this;
+        }
+
+        public Builder title(Optional<String> title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
         }
 
 
@@ -174,23 +187,10 @@ public class GetFoldersDirectory {
             return this;
         }
 
-
-        public Builder title(String title) {
-            Utils.checkNotNull(title, "title");
-            this.title = Optional.ofNullable(title);
-            return this;
-        }
-
-        public Builder title(Optional<String> title) {
-            Utils.checkNotNull(title, "title");
-            this.title = title;
-            return this;
-        }
-
         public GetFoldersDirectory build() {
 
             return new GetFoldersDirectory(
-                fastKey, key, title);
+                title, fastKey, key);
         }
 
     }

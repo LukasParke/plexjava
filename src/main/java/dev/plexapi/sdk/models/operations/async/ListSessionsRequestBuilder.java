@@ -7,21 +7,44 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.ListSessions;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
+import dev.plexapi.sdk.utils.Utils;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ListSessionsRequestBuilder {
 
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public ListSessionsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
     }
+                
+    public ListSessionsRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public CompletableFuture<ListSessionsResponse> call() throws Exception {
-        
+    public ListSessionsRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public CompletableFuture<ListSessionsResponse> call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         AsyncRequestlessOperation<ListSessionsResponse> operation
-            = new ListSessions.Async(sdkConfiguration);
+            = new ListSessions.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
 
         return operation.doRequest()
             .thenCompose(operation::handleResponse);

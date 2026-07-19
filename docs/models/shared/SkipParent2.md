@@ -1,5 +1,13 @@
 # SkipParent2
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.SkipParent2;
+
+SkipParent2 value = SkipParent2.ZERO;
+```
+
 
 ## Values
 

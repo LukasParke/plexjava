@@ -36,7 +36,7 @@ public class GetMetadataHubsResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * OK
+     * Successfully retrieved get hubs for section by metadata item
      */
     private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs;
 
@@ -97,7 +97,7 @@ public class GetMetadataHubsResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully retrieved get hubs for section by metadata item
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -143,7 +143,7 @@ public class GetMetadataHubsResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully retrieved get hubs for section by metadata item
      */
     public GetMetadataHubsResponse withMediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
         Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -153,7 +153,7 @@ public class GetMetadataHubsResponse implements Response {
 
 
     /**
-     * OK
+     * Successfully retrieved get hubs for section by metadata item
      */
     public GetMetadataHubsResponse withMediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
         Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -250,7 +250,7 @@ public class GetMetadataHubsResponse implements Response {
 
 
         /**
-         * OK
+         * Successfully retrieved get hubs for section by metadata item
          */
         public Builder mediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
             Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -259,7 +259,7 @@ public class GetMetadataHubsResponse implements Response {
         }
 
         /**
-         * OK
+         * Successfully retrieved get hubs for section by metadata item
          */
         public Builder mediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
             Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");

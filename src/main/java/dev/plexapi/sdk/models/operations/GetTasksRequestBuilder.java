@@ -7,20 +7,41 @@ import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.GetTasks;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
+import dev.plexapi.sdk.utils.Utils;
+import java.util.Optional;
 
 public class GetTasksRequestBuilder {
 
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public GetTasksRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
     }
+                
+    public GetTasksRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public GetTasksResponse call() throws Exception {
-        
+    public GetTasksRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public GetTasksResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         RequestlessOperation<GetTasksResponse> operation
-            = new GetTasks.Sync(sdkConfiguration);
+            = new GetTasks.Sync(sdkConfiguration, options, _headers);
 
         return operation.handleResponse(operation.doRequest());
     }

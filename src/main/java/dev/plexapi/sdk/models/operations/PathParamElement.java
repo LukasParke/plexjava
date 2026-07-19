@@ -10,6 +10,8 @@ import java.util.Optional;
 
 /**
  * PathParamElement
+ * 
+ * <p>The type of artwork element (e.g., art, poster, thumb)
  */
 public enum PathParamElement {
     THUMB("thumb"),

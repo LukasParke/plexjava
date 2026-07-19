@@ -6,8 +6,6 @@ package dev.plexapi.sdk.utils;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Generic streaming parser that handles byte buffer management and delegates
@@ -178,18 +176,25 @@ public final class StreamingParser<T> {
         private static final byte[] CRLF = {CR, LF}; // \r\n
         private static final byte[] LF_ONLY = {LF}; // \n
 
+        // Next unexamined offset; preserved across reads to avoid rescanning.
+        private int scanPos = 0;
+
         @Override
         public BoundaryInfo findBoundary(byte[] data, int limit) {
-            for (int i = 0; i < limit; i++) {
+            // Resume one byte early so a trailing CR can complete to CRLF.
+            for (int i = Math.max(0, scanPos - 1); i < limit; i++) {
                 // Check for CRLF first (longer pattern)
                 if (matchesPattern(data, i, limit, CRLF)) {
+                    scanPos = 0;
                     return new BoundaryInfo(i, CRLF.length);
                 }
                 // Check for LF only
                 if (matchesPattern(data, i, limit, LF_ONLY)) {
+                    scanPos = 0;
                     return new BoundaryInfo(i, LF_ONLY.length);
                 }
             }
+            scanPos = limit;
             return new BoundaryInfo(-1, 0);
         }
 
@@ -208,37 +213,60 @@ public final class StreamingParser<T> {
      */
     private static class SSEContentProcessor implements StreamContentProcessor<EventStreamMessage> {
         private static final String BYTE_ORDER_MARK = "\uFEFF";
-        private static final Pattern LINE_PATTERN = Pattern.compile("^([a-zA-Z]+): ?(.*)$");
         private static final char LINEFEED = '\n';
-        // Message boundary patterns
         private static final byte CR = '\r';
         private static final byte LF = '\n';
-        private static final byte[] CRLF_CRLF = {CR, LF, CR, LF}; // \r\n\r\n
-        private static final byte[] CRLF_LF = {CR, LF, LF}; // \r\n\n
-        private static final byte[] LF_CRLF = {LF, CR, LF}; // \n\r\n
-        private static final byte[] LF_LF = {LF, LF}; // \n\n
+        private static final byte[][] BOUNDARY_PATTERNS = {
+            {CR, LF},
+            {LF},
+            {CR}
+        };
+
+        private Optional<String> eventId = Optional.empty();
+
+        // Scan state preserved across reads; offsets stay valid because the
+        // parser compacts and resets this state after each boundary.
+        private int scanPos = 0;
+        private int lineStart = 0;
+        // A trailing CR may complete to CRLF on the next read; in that case
+        // the LF belongs to the same line ending, not a new empty line.
+        private boolean pendingCRLF = false;
 
         @Override
         public BoundaryInfo findBoundary(byte[] data, int limit) {
-            for (int i = 0; i < limit; i++) {
-                // Need at least 2 bytes for any boundary pattern
-                if (i + 1 >= limit) {
-                    continue;
-                }
-                // Check longest patterns first to avoid partial matches
-                if (matchesPattern(data, i, limit, CRLF_CRLF)) {
-                    return new BoundaryInfo(i, CRLF_CRLF.length);
-                }
-                if (matchesPattern(data, i, limit, CRLF_LF)) {
-                    return new BoundaryInfo(i, CRLF_LF.length);
-                }
-                if (matchesPattern(data, i, limit, LF_CRLF)) {
-                    return new BoundaryInfo(i, LF_CRLF.length);
-                }
-                if (matchesPattern(data, i, limit, LF_LF)) {
-                    return new BoundaryInfo(i, LF_LF.length);
+            int i = scanPos;
+            if (pendingCRLF) {
+                pendingCRLF = false;
+                if (i < limit && data[i] == LF && i == lineStart) {
+                    lineStart = i + 1;
+                    i = i + 1;
                 }
             }
+            while (i < limit) {
+                for (byte[] pattern : BOUNDARY_PATTERNS) {
+                    if (matchesPattern(data, i, limit, pattern)) {
+                        if (i == lineStart) { // empty line
+                            int boundStart = i;
+                            while (boundStart > 0 && (data[boundStart - 1] == CR || data[boundStart - 1] == LF)) {
+                                boundStart--;
+                            }
+                            int boundLength = (lineStart - boundStart) + pattern.length;
+                            scanPos = 0;
+                            lineStart = 0;
+                            pendingCRLF = false;
+                            return new BoundaryInfo(boundStart, boundLength);
+                        }
+                        if (pattern.length == 1 && data[i] == CR && i == limit - 1) {
+                            pendingCRLF = true;
+                        }
+                        lineStart = i + pattern.length;
+                        i = lineStart - 1;
+                        break;
+                    }
+                }
+                i++;
+            }
+            scanPos = i;
             return new BoundaryInfo(-1, 0);
         }
 
@@ -262,45 +290,52 @@ public final class StreamingParser<T> {
         private EventStreamMessage parseMessage(String text) {
             String[] lines = text.split("\n");
             Optional<String> event = Optional.empty();
-            Optional<String> id = Optional.empty();
             Optional<Integer> retryMs = Optional.empty();
-            StringBuilder data = new StringBuilder();
-            boolean firstData = true;
+            Optional<StringBuilder> data = Optional.empty();
             for (String line : lines) {
-                // Skip comment lines
                 if (line.startsWith(":")) {
                     continue;
                 }
-                Matcher m = LINE_PATTERN.matcher(line);
-                if (m.find()) {
-                    String key = m.group(1).toLowerCase();
-                    String value = m.group(2);
-                    switch (key) {
-                        case "event":
-                            event = Optional.of(value);
-                            break;
-                        case "id":
-                            id = Optional.of(value);
-                            break;
-                        case "retry":
-                            try {
-                                retryMs = Optional.of(Integer.parseInt(value));
-                            } catch (NumberFormatException e) {
-                                // ignore invalid retry values
-                            }
-                            break;
-                        case "data":
-                            if (!firstData) {
-                                data.append(LINEFEED);
-                            }
-                            firstData = false;
-                            data.append(value);
-                            break;
-                        // ignore unknown fields
+                String key;
+                String value;
+                int colonIndex = line.indexOf(':');
+                if (colonIndex >= 0) {
+                    key = line.substring(0, colonIndex);
+                    value = line.substring(colonIndex + 1);
+                    if (value.startsWith(" ")) {
+                        value = value.substring(1);
                     }
+                } else {
+                    key = line;
+                    value = "";
+                }
+                switch (key) {
+                    case "event":
+                        event = Optional.of(value);
+                        break;
+                    case "id":
+                        if (value.indexOf('\0') < 0) {
+                            eventId = Optional.of(value);
+                        }
+                        break;
+                    case "retry":
+                        try {
+                            retryMs = Optional.of(Integer.parseInt(value));
+                        } catch (NumberFormatException e) {
+                            // ignore invalid retry values
+                        }
+                        break;
+                    case "data":
+                        if (data.isEmpty()) {
+                            data = Optional.of(new StringBuilder());
+                        } else {
+                            data.get().append(LINEFEED);
+                        }
+                        data.get().append(value);
+                        break;
                 }
             }
-            return new EventStreamMessage(event, id, retryMs, data.toString());
+            return new EventStreamMessage(event, eventId, retryMs, data.map(StringBuilder::toString));
         }
     }
 

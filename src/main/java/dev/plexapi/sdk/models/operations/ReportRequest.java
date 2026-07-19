@@ -122,25 +122,28 @@ public class ReportRequest {
     private Optional<Long> duration;
 
     /**
-     * When state is `stopped`, a flag indicating whether or not the client is going to continue playing anothe item.
+     * When state is `stopped`, a flag indicating whether or not the client is going to continue playing
+     * anothe item.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=continuing")
     private Optional<? extends BoolInt> continuing;
 
     /**
-     * Used when a sync client comes online and is syncing media timelines, holds the time at which the playback state was last updated.
+     * Used when a sync client comes online and is syncing media timelines, holds the time at which the
+     * playback state was last updated.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=updated")
     private Optional<Long> updated;
 
     /**
-     * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as opposed to being "live".
+     * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as
+     * opposed to being "live".
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=offline")
     private Optional<? extends BoolInt> offline;
 
     /**
-     * Time in seconds till first frame is displayed.  Sent only on the first playing timeline request.
+     * Time in seconds till first frame is displayed. Sent only on the first playing timeline request.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=timeToFirstFrame")
     private Optional<Long> timeToFirstFrame;
@@ -158,19 +161,44 @@ public class ReportRequest {
     private Optional<Long> bandwidth;
 
     /**
-     * Amount of time in seconds buffered by client.  Omit if computed by `bufferedSize` below.
+     * Amount of time in seconds buffered by client. Omit if computed by `bufferedSize` below.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=bufferedTime")
     private Optional<Long> bufferedTime;
 
     /**
-     * Size in kilobytes of data buffered by client.  Omit if computed by `bufferedTime` above
+     * Size in kilobytes of data buffered by client. Omit if computed by `bufferedTime` above
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=bufferedSize")
     private Optional<Long> bufferedSize;
 
     /**
-     * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+     * Groups timeline reports (e.g. /playQueues/123).
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=containerKey")
+    private Optional<String> containerKey;
+
+    /**
+     * Global unique identifier for the item.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=guid")
+    private Optional<String> guid;
+
+    /**
+     * Identifies the play queue itself (distinct from playQueueItemID).
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=playQueueID")
+    private Optional<Long> playQueueID;
+
+    /**
+     * Alternative to key/ratingKey (legacy).
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=url")
+    private Optional<String> url;
+
+    /**
+     * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+     * a browser with multiple tabs)
      */
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Session-Identifier")
     private Optional<String> xPlexSessionIdentifier;
@@ -202,6 +230,10 @@ public class ReportRequest {
             Optional<Long> bandwidth,
             Optional<Long> bufferedTime,
             Optional<Long> bufferedSize,
+            Optional<String> containerKey,
+            Optional<String> guid,
+            Optional<Long> playQueueID,
+            Optional<String> url,
             Optional<String> xPlexSessionIdentifier) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
@@ -228,6 +260,10 @@ public class ReportRequest {
         Utils.checkNotNull(bandwidth, "bandwidth");
         Utils.checkNotNull(bufferedTime, "bufferedTime");
         Utils.checkNotNull(bufferedSize, "bufferedSize");
+        Utils.checkNotNull(containerKey, "containerKey");
+        Utils.checkNotNull(guid, "guid");
+        Utils.checkNotNull(playQueueID, "playQueueID");
+        Utils.checkNotNull(url, "url");
         Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
@@ -254,6 +290,10 @@ public class ReportRequest {
         this.bandwidth = bandwidth;
         this.bufferedTime = bufferedTime;
         this.bufferedSize = bufferedSize;
+        this.containerKey = containerKey;
+        this.guid = guid;
+        this.playQueueID = playQueueID;
+        this.url = url;
         this.xPlexSessionIdentifier = xPlexSessionIdentifier;
     }
     
@@ -266,7 +306,8 @@ public class ReportRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     /**
@@ -408,7 +449,8 @@ public class ReportRequest {
     }
 
     /**
-     * When state is `stopped`, a flag indicating whether or not the client is going to continue playing anothe item.
+     * When state is `stopped`, a flag indicating whether or not the client is going to continue playing
+     * anothe item.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -417,7 +459,8 @@ public class ReportRequest {
     }
 
     /**
-     * Used when a sync client comes online and is syncing media timelines, holds the time at which the playback state was last updated.
+     * Used when a sync client comes online and is syncing media timelines, holds the time at which the
+     * playback state was last updated.
      */
     @JsonIgnore
     public Optional<Long> updated() {
@@ -425,7 +468,8 @@ public class ReportRequest {
     }
 
     /**
-     * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as opposed to being "live".
+     * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as
+     * opposed to being "live".
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -434,7 +478,7 @@ public class ReportRequest {
     }
 
     /**
-     * Time in seconds till first frame is displayed.  Sent only on the first playing timeline request.
+     * Time in seconds till first frame is displayed. Sent only on the first playing timeline request.
      */
     @JsonIgnore
     public Optional<Long> timeToFirstFrame() {
@@ -458,7 +502,7 @@ public class ReportRequest {
     }
 
     /**
-     * Amount of time in seconds buffered by client.  Omit if computed by `bufferedSize` below.
+     * Amount of time in seconds buffered by client. Omit if computed by `bufferedSize` below.
      */
     @JsonIgnore
     public Optional<Long> bufferedTime() {
@@ -466,7 +510,7 @@ public class ReportRequest {
     }
 
     /**
-     * Size in kilobytes of data buffered by client.  Omit if computed by `bufferedTime` above
+     * Size in kilobytes of data buffered by client. Omit if computed by `bufferedTime` above
      */
     @JsonIgnore
     public Optional<Long> bufferedSize() {
@@ -474,7 +518,40 @@ public class ReportRequest {
     }
 
     /**
-     * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+     * Groups timeline reports (e.g. /playQueues/123).
+     */
+    @JsonIgnore
+    public Optional<String> containerKey() {
+        return containerKey;
+    }
+
+    /**
+     * Global unique identifier for the item.
+     */
+    @JsonIgnore
+    public Optional<String> guid() {
+        return guid;
+    }
+
+    /**
+     * Identifies the play queue itself (distinct from playQueueItemID).
+     */
+    @JsonIgnore
+    public Optional<Long> playQueueID() {
+        return playQueueID;
+    }
+
+    /**
+     * Alternative to key/ratingKey (legacy).
+     */
+    @JsonIgnore
+    public Optional<String> url() {
+        return url;
+    }
+
+    /**
+     * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+     * a browser with multiple tabs)
      */
     @JsonIgnore
     public Optional<String> xPlexSessionIdentifier() {
@@ -810,7 +887,8 @@ public class ReportRequest {
     }
 
     /**
-     * When state is `stopped`, a flag indicating whether or not the client is going to continue playing anothe item.
+     * When state is `stopped`, a flag indicating whether or not the client is going to continue playing
+     * anothe item.
      */
     public ReportRequest withContinuing(BoolInt continuing) {
         Utils.checkNotNull(continuing, "continuing");
@@ -820,7 +898,8 @@ public class ReportRequest {
 
 
     /**
-     * When state is `stopped`, a flag indicating whether or not the client is going to continue playing anothe item.
+     * When state is `stopped`, a flag indicating whether or not the client is going to continue playing
+     * anothe item.
      */
     public ReportRequest withContinuing(Optional<? extends BoolInt> continuing) {
         Utils.checkNotNull(continuing, "continuing");
@@ -829,7 +908,8 @@ public class ReportRequest {
     }
 
     /**
-     * Used when a sync client comes online and is syncing media timelines, holds the time at which the playback state was last updated.
+     * Used when a sync client comes online and is syncing media timelines, holds the time at which the
+     * playback state was last updated.
      */
     public ReportRequest withUpdated(long updated) {
         Utils.checkNotNull(updated, "updated");
@@ -839,7 +919,8 @@ public class ReportRequest {
 
 
     /**
-     * Used when a sync client comes online and is syncing media timelines, holds the time at which the playback state was last updated.
+     * Used when a sync client comes online and is syncing media timelines, holds the time at which the
+     * playback state was last updated.
      */
     public ReportRequest withUpdated(Optional<Long> updated) {
         Utils.checkNotNull(updated, "updated");
@@ -848,7 +929,8 @@ public class ReportRequest {
     }
 
     /**
-     * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as opposed to being "live".
+     * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as
+     * opposed to being "live".
      */
     public ReportRequest withOffline(BoolInt offline) {
         Utils.checkNotNull(offline, "offline");
@@ -858,7 +940,8 @@ public class ReportRequest {
 
 
     /**
-     * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as opposed to being "live".
+     * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as
+     * opposed to being "live".
      */
     public ReportRequest withOffline(Optional<? extends BoolInt> offline) {
         Utils.checkNotNull(offline, "offline");
@@ -867,7 +950,7 @@ public class ReportRequest {
     }
 
     /**
-     * Time in seconds till first frame is displayed.  Sent only on the first playing timeline request.
+     * Time in seconds till first frame is displayed. Sent only on the first playing timeline request.
      */
     public ReportRequest withTimeToFirstFrame(long timeToFirstFrame) {
         Utils.checkNotNull(timeToFirstFrame, "timeToFirstFrame");
@@ -877,7 +960,7 @@ public class ReportRequest {
 
 
     /**
-     * Time in seconds till first frame is displayed.  Sent only on the first playing timeline request.
+     * Time in seconds till first frame is displayed. Sent only on the first playing timeline request.
      */
     public ReportRequest withTimeToFirstFrame(Optional<Long> timeToFirstFrame) {
         Utils.checkNotNull(timeToFirstFrame, "timeToFirstFrame");
@@ -924,7 +1007,7 @@ public class ReportRequest {
     }
 
     /**
-     * Amount of time in seconds buffered by client.  Omit if computed by `bufferedSize` below.
+     * Amount of time in seconds buffered by client. Omit if computed by `bufferedSize` below.
      */
     public ReportRequest withBufferedTime(long bufferedTime) {
         Utils.checkNotNull(bufferedTime, "bufferedTime");
@@ -934,7 +1017,7 @@ public class ReportRequest {
 
 
     /**
-     * Amount of time in seconds buffered by client.  Omit if computed by `bufferedSize` below.
+     * Amount of time in seconds buffered by client. Omit if computed by `bufferedSize` below.
      */
     public ReportRequest withBufferedTime(Optional<Long> bufferedTime) {
         Utils.checkNotNull(bufferedTime, "bufferedTime");
@@ -943,7 +1026,7 @@ public class ReportRequest {
     }
 
     /**
-     * Size in kilobytes of data buffered by client.  Omit if computed by `bufferedTime` above
+     * Size in kilobytes of data buffered by client. Omit if computed by `bufferedTime` above
      */
     public ReportRequest withBufferedSize(long bufferedSize) {
         Utils.checkNotNull(bufferedSize, "bufferedSize");
@@ -953,7 +1036,7 @@ public class ReportRequest {
 
 
     /**
-     * Size in kilobytes of data buffered by client.  Omit if computed by `bufferedTime` above
+     * Size in kilobytes of data buffered by client. Omit if computed by `bufferedTime` above
      */
     public ReportRequest withBufferedSize(Optional<Long> bufferedSize) {
         Utils.checkNotNull(bufferedSize, "bufferedSize");
@@ -962,7 +1045,84 @@ public class ReportRequest {
     }
 
     /**
-     * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+     * Groups timeline reports (e.g. /playQueues/123).
+     */
+    public ReportRequest withContainerKey(String containerKey) {
+        Utils.checkNotNull(containerKey, "containerKey");
+        this.containerKey = Optional.ofNullable(containerKey);
+        return this;
+    }
+
+
+    /**
+     * Groups timeline reports (e.g. /playQueues/123).
+     */
+    public ReportRequest withContainerKey(Optional<String> containerKey) {
+        Utils.checkNotNull(containerKey, "containerKey");
+        this.containerKey = containerKey;
+        return this;
+    }
+
+    /**
+     * Global unique identifier for the item.
+     */
+    public ReportRequest withGuid(String guid) {
+        Utils.checkNotNull(guid, "guid");
+        this.guid = Optional.ofNullable(guid);
+        return this;
+    }
+
+
+    /**
+     * Global unique identifier for the item.
+     */
+    public ReportRequest withGuid(Optional<String> guid) {
+        Utils.checkNotNull(guid, "guid");
+        this.guid = guid;
+        return this;
+    }
+
+    /**
+     * Identifies the play queue itself (distinct from playQueueItemID).
+     */
+    public ReportRequest withPlayQueueID(long playQueueID) {
+        Utils.checkNotNull(playQueueID, "playQueueID");
+        this.playQueueID = Optional.ofNullable(playQueueID);
+        return this;
+    }
+
+
+    /**
+     * Identifies the play queue itself (distinct from playQueueItemID).
+     */
+    public ReportRequest withPlayQueueID(Optional<Long> playQueueID) {
+        Utils.checkNotNull(playQueueID, "playQueueID");
+        this.playQueueID = playQueueID;
+        return this;
+    }
+
+    /**
+     * Alternative to key/ratingKey (legacy).
+     */
+    public ReportRequest withUrl(String url) {
+        Utils.checkNotNull(url, "url");
+        this.url = Optional.ofNullable(url);
+        return this;
+    }
+
+
+    /**
+     * Alternative to key/ratingKey (legacy).
+     */
+    public ReportRequest withUrl(Optional<String> url) {
+        Utils.checkNotNull(url, "url");
+        this.url = url;
+        return this;
+    }
+
+    /**
+     * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+     * a browser with multiple tabs)
      */
     public ReportRequest withXPlexSessionIdentifier(String xPlexSessionIdentifier) {
         Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -972,7 +1132,8 @@ public class ReportRequest {
 
 
     /**
-     * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+     * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+     * a browser with multiple tabs)
      */
     public ReportRequest withXPlexSessionIdentifier(Optional<String> xPlexSessionIdentifier) {
         Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -1015,6 +1176,10 @@ public class ReportRequest {
             Utils.enhancedDeepEquals(this.bandwidth, other.bandwidth) &&
             Utils.enhancedDeepEquals(this.bufferedTime, other.bufferedTime) &&
             Utils.enhancedDeepEquals(this.bufferedSize, other.bufferedSize) &&
+            Utils.enhancedDeepEquals(this.containerKey, other.containerKey) &&
+            Utils.enhancedDeepEquals(this.guid, other.guid) &&
+            Utils.enhancedDeepEquals(this.playQueueID, other.playQueueID) &&
+            Utils.enhancedDeepEquals(this.url, other.url) &&
             Utils.enhancedDeepEquals(this.xPlexSessionIdentifier, other.xPlexSessionIdentifier);
     }
     
@@ -1029,7 +1194,8 @@ public class ReportRequest {
             time, duration, continuing,
             updated, offline, timeToFirstFrame,
             timeStalled, bandwidth, bufferedTime,
-            bufferedSize, xPlexSessionIdentifier);
+            bufferedSize, containerKey, guid,
+            playQueueID, url, xPlexSessionIdentifier);
     }
     
     @Override
@@ -1060,6 +1226,10 @@ public class ReportRequest {
                 "bandwidth", bandwidth,
                 "bufferedTime", bufferedTime,
                 "bufferedSize", bufferedSize,
+                "containerKey", containerKey,
+                "guid", guid,
+                "playQueueID", playQueueID,
+                "url", url,
                 "xPlexSessionIdentifier", xPlexSessionIdentifier);
     }
 
@@ -1115,6 +1285,14 @@ public class ReportRequest {
         private Optional<Long> bufferedTime = Optional.empty();
 
         private Optional<Long> bufferedSize = Optional.empty();
+
+        private Optional<String> containerKey = Optional.empty();
+
+        private Optional<String> guid = Optional.empty();
+
+        private Optional<Long> playQueueID = Optional.empty();
+
+        private Optional<String> url = Optional.empty();
 
         private Optional<String> xPlexSessionIdentifier = Optional.empty();
 
@@ -1447,7 +1625,8 @@ public class ReportRequest {
 
 
         /**
-         * When state is `stopped`, a flag indicating whether or not the client is going to continue playing anothe item.
+         * When state is `stopped`, a flag indicating whether or not the client is going to continue playing
+         * anothe item.
          */
         public Builder continuing(BoolInt continuing) {
             Utils.checkNotNull(continuing, "continuing");
@@ -1456,7 +1635,8 @@ public class ReportRequest {
         }
 
         /**
-         * When state is `stopped`, a flag indicating whether or not the client is going to continue playing anothe item.
+         * When state is `stopped`, a flag indicating whether or not the client is going to continue playing
+         * anothe item.
          */
         public Builder continuing(Optional<? extends BoolInt> continuing) {
             Utils.checkNotNull(continuing, "continuing");
@@ -1466,7 +1646,8 @@ public class ReportRequest {
 
 
         /**
-         * Used when a sync client comes online and is syncing media timelines, holds the time at which the playback state was last updated.
+         * Used when a sync client comes online and is syncing media timelines, holds the time at which the
+         * playback state was last updated.
          */
         public Builder updated(long updated) {
             Utils.checkNotNull(updated, "updated");
@@ -1475,7 +1656,8 @@ public class ReportRequest {
         }
 
         /**
-         * Used when a sync client comes online and is syncing media timelines, holds the time at which the playback state was last updated.
+         * Used when a sync client comes online and is syncing media timelines, holds the time at which the
+         * playback state was last updated.
          */
         public Builder updated(Optional<Long> updated) {
             Utils.checkNotNull(updated, "updated");
@@ -1485,7 +1667,8 @@ public class ReportRequest {
 
 
         /**
-         * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as opposed to being "live".
+         * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as
+         * opposed to being "live".
          */
         public Builder offline(BoolInt offline) {
             Utils.checkNotNull(offline, "offline");
@@ -1494,7 +1677,8 @@ public class ReportRequest {
         }
 
         /**
-         * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as opposed to being "live".
+         * Also used by sync clients, used to indicate that a timeline is being synced from being offline, as
+         * opposed to being "live".
          */
         public Builder offline(Optional<? extends BoolInt> offline) {
             Utils.checkNotNull(offline, "offline");
@@ -1504,7 +1688,7 @@ public class ReportRequest {
 
 
         /**
-         * Time in seconds till first frame is displayed.  Sent only on the first playing timeline request.
+         * Time in seconds till first frame is displayed. Sent only on the first playing timeline request.
          */
         public Builder timeToFirstFrame(long timeToFirstFrame) {
             Utils.checkNotNull(timeToFirstFrame, "timeToFirstFrame");
@@ -1513,7 +1697,7 @@ public class ReportRequest {
         }
 
         /**
-         * Time in seconds till first frame is displayed.  Sent only on the first playing timeline request.
+         * Time in seconds till first frame is displayed. Sent only on the first playing timeline request.
          */
         public Builder timeToFirstFrame(Optional<Long> timeToFirstFrame) {
             Utils.checkNotNull(timeToFirstFrame, "timeToFirstFrame");
@@ -1561,7 +1745,7 @@ public class ReportRequest {
 
 
         /**
-         * Amount of time in seconds buffered by client.  Omit if computed by `bufferedSize` below.
+         * Amount of time in seconds buffered by client. Omit if computed by `bufferedSize` below.
          */
         public Builder bufferedTime(long bufferedTime) {
             Utils.checkNotNull(bufferedTime, "bufferedTime");
@@ -1570,7 +1754,7 @@ public class ReportRequest {
         }
 
         /**
-         * Amount of time in seconds buffered by client.  Omit if computed by `bufferedSize` below.
+         * Amount of time in seconds buffered by client. Omit if computed by `bufferedSize` below.
          */
         public Builder bufferedTime(Optional<Long> bufferedTime) {
             Utils.checkNotNull(bufferedTime, "bufferedTime");
@@ -1580,7 +1764,7 @@ public class ReportRequest {
 
 
         /**
-         * Size in kilobytes of data buffered by client.  Omit if computed by `bufferedTime` above
+         * Size in kilobytes of data buffered by client. Omit if computed by `bufferedTime` above
          */
         public Builder bufferedSize(long bufferedSize) {
             Utils.checkNotNull(bufferedSize, "bufferedSize");
@@ -1589,7 +1773,7 @@ public class ReportRequest {
         }
 
         /**
-         * Size in kilobytes of data buffered by client.  Omit if computed by `bufferedTime` above
+         * Size in kilobytes of data buffered by client. Omit if computed by `bufferedTime` above
          */
         public Builder bufferedSize(Optional<Long> bufferedSize) {
             Utils.checkNotNull(bufferedSize, "bufferedSize");
@@ -1599,7 +1783,84 @@ public class ReportRequest {
 
 
         /**
-         * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+         * Groups timeline reports (e.g. /playQueues/123).
+         */
+        public Builder containerKey(String containerKey) {
+            Utils.checkNotNull(containerKey, "containerKey");
+            this.containerKey = Optional.ofNullable(containerKey);
+            return this;
+        }
+
+        /**
+         * Groups timeline reports (e.g. /playQueues/123).
+         */
+        public Builder containerKey(Optional<String> containerKey) {
+            Utils.checkNotNull(containerKey, "containerKey");
+            this.containerKey = containerKey;
+            return this;
+        }
+
+
+        /**
+         * Global unique identifier for the item.
+         */
+        public Builder guid(String guid) {
+            Utils.checkNotNull(guid, "guid");
+            this.guid = Optional.ofNullable(guid);
+            return this;
+        }
+
+        /**
+         * Global unique identifier for the item.
+         */
+        public Builder guid(Optional<String> guid) {
+            Utils.checkNotNull(guid, "guid");
+            this.guid = guid;
+            return this;
+        }
+
+
+        /**
+         * Identifies the play queue itself (distinct from playQueueItemID).
+         */
+        public Builder playQueueID(long playQueueID) {
+            Utils.checkNotNull(playQueueID, "playQueueID");
+            this.playQueueID = Optional.ofNullable(playQueueID);
+            return this;
+        }
+
+        /**
+         * Identifies the play queue itself (distinct from playQueueItemID).
+         */
+        public Builder playQueueID(Optional<Long> playQueueID) {
+            Utils.checkNotNull(playQueueID, "playQueueID");
+            this.playQueueID = playQueueID;
+            return this;
+        }
+
+
+        /**
+         * Alternative to key/ratingKey (legacy).
+         */
+        public Builder url(String url) {
+            Utils.checkNotNull(url, "url");
+            this.url = Optional.ofNullable(url);
+            return this;
+        }
+
+        /**
+         * Alternative to key/ratingKey (legacy).
+         */
+        public Builder url(Optional<String> url) {
+            Utils.checkNotNull(url, "url");
+            this.url = url;
+            return this;
+        }
+
+
+        /**
+         * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+         * a browser with multiple tabs)
          */
         public Builder xPlexSessionIdentifier(String xPlexSessionIdentifier) {
             Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -1608,7 +1869,8 @@ public class ReportRequest {
         }
 
         /**
-         * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+         * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+         * a browser with multiple tabs)
          */
         public Builder xPlexSessionIdentifier(Optional<String> xPlexSessionIdentifier) {
             Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -1636,7 +1898,8 @@ public class ReportRequest {
                 time, duration, continuing,
                 updated, offline, timeToFirstFrame,
                 timeStalled, bandwidth, bufferedTime,
-                bufferedSize, xPlexSessionIdentifier);
+                bufferedSize, containerKey, guid,
+                playQueueID, url, xPlexSessionIdentifier);
         }
 
 

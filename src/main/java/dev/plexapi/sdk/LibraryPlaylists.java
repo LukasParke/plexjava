@@ -53,12 +53,15 @@ import dev.plexapi.sdk.operations.MovePlaylistItem;
 import dev.plexapi.sdk.operations.RefreshPlaylist;
 import dev.plexapi.sdk.operations.UpdatePlaylist;
 import dev.plexapi.sdk.operations.UploadPlaylist;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * Endpoints for manipulating playlists.
  */
 public class LibraryPlaylists {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncLibraryPlaylists asyncSDK;
 
@@ -94,18 +97,35 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreatePlaylistResponse createPlaylist(CreatePlaylistRequest request) throws Exception {
+    public CreatePlaylistResponse createPlaylist(CreatePlaylistRequest request) {
+        return createPlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Create a Playlist
+     * 
+     * <p>Create a new playlist. By default the playlist is blank.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreatePlaylistResponse createPlaylist(CreatePlaylistRequest request, Optional<Options> options) {
         RequestOperation<CreatePlaylistRequest, CreatePlaylistResponse> operation
-              = new CreatePlaylist.Sync(sdkConfiguration);
+              = new CreatePlaylist.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
-     * Upload
+     * Upload media art
      * 
-     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a path to a single playlist file.
+     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a
+     * path to a single playlist file.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -114,17 +134,37 @@ public class LibraryPlaylists {
     }
 
     /**
-     * Upload
+     * Upload media art
      * 
-     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a path to a single playlist file.
+     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a
+     * path to a single playlist file.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public UploadPlaylistResponse uploadPlaylist(UploadPlaylistRequest request) throws Exception {
+    public UploadPlaylistResponse uploadPlaylist(UploadPlaylistRequest request) {
+        return uploadPlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Upload media art
+     * 
+     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a
+     * path to a single playlist file.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UploadPlaylistResponse uploadPlaylist(UploadPlaylistRequest request, Optional<Options> options) {
         RequestOperation<UploadPlaylistRequest, UploadPlaylistResponse> operation
-              = new UploadPlaylist.Sync(sdkConfiguration);
+              = new UploadPlaylist.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -146,11 +186,25 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeletePlaylistResponse deletePlaylist(DeletePlaylistRequest request) throws Exception {
+    public DeletePlaylistResponse deletePlaylist(DeletePlaylistRequest request) {
+        return deletePlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Delete a Playlist
+     * 
+     * <p>Deletes a playlist by provided id
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeletePlaylistResponse deletePlaylist(DeletePlaylistRequest request, Optional<Options> options) {
         RequestOperation<DeletePlaylistRequest, DeletePlaylistResponse> operation
-              = new DeletePlaylist.Sync(sdkConfiguration);
+              = new DeletePlaylist.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -172,11 +226,25 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public UpdatePlaylistResponse updatePlaylist(UpdatePlaylistRequest request) throws Exception {
+    public UpdatePlaylistResponse updatePlaylist(UpdatePlaylistRequest request) {
+        return updatePlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Editing a Playlist
+     * 
+     * <p>Edits a playlist in the same manner as [editing metadata](#tag/Provider/operation/metadataPutItem)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdatePlaylistResponse updatePlaylist(UpdatePlaylistRequest request, Optional<Options> options) {
         RequestOperation<UpdatePlaylistRequest, UpdatePlaylistResponse> operation
-              = new UpdatePlaylist.Sync(sdkConfiguration);
+              = new UpdatePlaylist.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -198,11 +266,25 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPlaylistGeneratorsResponse getPlaylistGenerators(GetPlaylistGeneratorsRequest request) throws Exception {
+    public GetPlaylistGeneratorsResponse getPlaylistGenerators(GetPlaylistGeneratorsRequest request) {
+        return getPlaylistGenerators(request, Optional.empty());
+    }
+
+    /**
+     * Get a playlist's generators
+     * 
+     * <p>Get all the generators in a playlist
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPlaylistGeneratorsResponse getPlaylistGenerators(GetPlaylistGeneratorsRequest request, Optional<Options> options) {
         RequestOperation<GetPlaylistGeneratorsRequest, GetPlaylistGeneratorsResponse> operation
-              = new GetPlaylistGenerators.Sync(sdkConfiguration);
+              = new GetPlaylistGenerators.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -224,18 +306,36 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ClearPlaylistItemsResponse clearPlaylistItems(ClearPlaylistItemsRequest request) throws Exception {
+    public ClearPlaylistItemsResponse clearPlaylistItems(ClearPlaylistItemsRequest request) {
+        return clearPlaylistItems(request, Optional.empty());
+    }
+
+    /**
+     * Clearing a playlist
+     * 
+     * <p>Clears a playlist, only works with dumb playlists. Returns the playlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ClearPlaylistItemsResponse clearPlaylistItems(ClearPlaylistItemsRequest request, Optional<Options> options) {
         RequestOperation<ClearPlaylistItemsRequest, ClearPlaylistItemsResponse> operation
-              = new ClearPlaylistItems.Sync(sdkConfiguration);
+              = new ClearPlaylistItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Adding to  a Playlist
      * 
-     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces the rules for the playlist. Returns the playlist.
+     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds
+     * the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces
+     * the rules for the playlist.
+     * 
+     * <p>Returns the playlist.
      * 
      * @return The call builder
      */
@@ -246,15 +346,37 @@ public class LibraryPlaylists {
     /**
      * Adding to  a Playlist
      * 
-     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces the rules for the playlist. Returns the playlist.
+     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds
+     * the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces
+     * the rules for the playlist.
+     * 
+     * <p>Returns the playlist.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddPlaylistItemsResponse addPlaylistItems(AddPlaylistItemsRequest request) throws Exception {
+    public AddPlaylistItemsResponse addPlaylistItems(AddPlaylistItemsRequest request) {
+        return addPlaylistItems(request, Optional.empty());
+    }
+
+    /**
+     * Adding to  a Playlist
+     * 
+     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds
+     * the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces
+     * the rules for the playlist.
+     * 
+     * <p>Returns the playlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddPlaylistItemsResponse addPlaylistItems(AddPlaylistItemsRequest request, Optional<Options> options) {
         RequestOperation<AddPlaylistItemsRequest, AddPlaylistItemsResponse> operation
-              = new AddPlaylistItems.Sync(sdkConfiguration);
+              = new AddPlaylistItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -276,18 +398,32 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeletePlaylistItemResponse deletePlaylistItem(DeletePlaylistItemRequest request) throws Exception {
+    public DeletePlaylistItemResponse deletePlaylistItem(DeletePlaylistItemRequest request) {
+        return deletePlaylistItem(request, Optional.empty());
+    }
+
+    /**
+     * Delete a Generator
+     * 
+     * <p>Deletes an item from a playlist. Only works with dumb playlists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeletePlaylistItemResponse deletePlaylistItem(DeletePlaylistItemRequest request, Optional<Options> options) {
         RequestOperation<DeletePlaylistItemRequest, DeletePlaylistItemResponse> operation
-              = new DeletePlaylistItem.Sync(sdkConfiguration);
+              = new DeletePlaylistItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get a playlist generator
      * 
-     * <p>Get a playlist's generator.  Only used for optimized versions
+     * <p>Get a playlist's generator. Only used for optimized versions
      * 
      * @return The call builder
      */
@@ -298,15 +434,29 @@ public class LibraryPlaylists {
     /**
      * Get a playlist generator
      * 
-     * <p>Get a playlist's generator.  Only used for optimized versions
+     * <p>Get a playlist's generator. Only used for optimized versions
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPlaylistGeneratorResponse getPlaylistGenerator(GetPlaylistGeneratorRequest request) throws Exception {
+    public GetPlaylistGeneratorResponse getPlaylistGenerator(GetPlaylistGeneratorRequest request) {
+        return getPlaylistGenerator(request, Optional.empty());
+    }
+
+    /**
+     * Get a playlist generator
+     * 
+     * <p>Get a playlist's generator. Only used for optimized versions
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPlaylistGeneratorResponse getPlaylistGenerator(GetPlaylistGeneratorRequest request, Optional<Options> options) {
         RequestOperation<GetPlaylistGeneratorRequest, GetPlaylistGeneratorResponse> operation
-              = new GetPlaylistGenerator.Sync(sdkConfiguration);
+              = new GetPlaylistGenerator.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -328,11 +478,25 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPlaylistGeneratorItemsResponse getPlaylistGeneratorItems(GetPlaylistGeneratorItemsRequest request) throws Exception {
+    public GetPlaylistGeneratorItemsResponse getPlaylistGeneratorItems(GetPlaylistGeneratorItemsRequest request) {
+        return getPlaylistGeneratorItems(request, Optional.empty());
+    }
+
+    /**
+     * Get a playlist generator's items
+     * 
+     * <p>Get a playlist generator's items
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPlaylistGeneratorItemsResponse getPlaylistGeneratorItems(GetPlaylistGeneratorItemsRequest request, Optional<Options> options) {
         RequestOperation<GetPlaylistGeneratorItemsRequest, GetPlaylistGeneratorItemsResponse> operation
-              = new GetPlaylistGeneratorItems.Sync(sdkConfiguration);
+              = new GetPlaylistGeneratorItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -354,11 +518,25 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public MovePlaylistItemResponse movePlaylistItem(MovePlaylistItemRequest request) throws Exception {
+    public MovePlaylistItemResponse movePlaylistItem(MovePlaylistItemRequest request) {
+        return movePlaylistItem(request, Optional.empty());
+    }
+
+    /**
+     * Moving items in a playlist
+     * 
+     * <p>Moves an item in a playlist. Only works with dumb playlists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MovePlaylistItemResponse movePlaylistItem(MovePlaylistItemRequest request, Optional<Options> options) {
         RequestOperation<MovePlaylistItemRequest, MovePlaylistItemResponse> operation
-              = new MovePlaylistItem.Sync(sdkConfiguration);
+              = new MovePlaylistItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -380,11 +558,25 @@ public class LibraryPlaylists {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RefreshPlaylistResponse refreshPlaylist(RefreshPlaylistRequest request) throws Exception {
+    public RefreshPlaylistResponse refreshPlaylist(RefreshPlaylistRequest request) {
+        return refreshPlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Reprocess a generator
+     * 
+     * <p>Make a generator reprocess (refresh)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshPlaylistResponse refreshPlaylist(RefreshPlaylistRequest request, Optional<Options> options) {
         RequestOperation<RefreshPlaylistRequest, RefreshPlaylistResponse> operation
-              = new RefreshPlaylist.Sync(sdkConfiguration);
+              = new RefreshPlaylist.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

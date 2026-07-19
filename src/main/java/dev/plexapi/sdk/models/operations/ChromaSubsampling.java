@@ -11,10 +11,10 @@ import java.util.Optional;
  * ChromaSubsampling
  * 
  * <p>Use the specified chroma subsambling.
- *   - 0: 411
- *   - 1: 420
- *   - 2: 422
- *   - 3: 444
+ * - 0: 411
+ * - 1: 420
+ * - 2: 422
+ * - 3: 444
  * Defaults to 3 (444)
  */
 public enum ChromaSubsampling {

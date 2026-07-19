@@ -17,6 +17,16 @@ import java.util.Optional;
 
 
 public class PlayQueueGenerator {
+    /**
+     * The type of playlist generator.
+     * 
+     * <p>- -1: A smart playlist generator
+     * - 42: A optimized version generator
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("type")
+    private Optional<? extends GetPlaylistGeneratorsType> type;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("changedAt")
@@ -37,16 +47,6 @@ public class PlayQueueGenerator {
     @JsonProperty("playlistID")
     private Optional<Long> playlistID;
 
-    /**
-     * The type of playlist generator.
-     * 
-     * <p>  - -1: A smart playlist generator
-     *   - 42: A optimized version generator
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("type")
-    private Optional<? extends GetPlaylistGeneratorsType> type;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("updatedAt")
@@ -61,25 +61,25 @@ public class PlayQueueGenerator {
 
     @JsonCreator
     public PlayQueueGenerator(
+            @JsonProperty("type") Optional<? extends GetPlaylistGeneratorsType> type,
             @JsonProperty("changedAt") Optional<Long> changedAt,
             @JsonProperty("createdAt") Optional<Long> createdAt,
             @JsonProperty("id") Optional<Long> id,
             @JsonProperty("playlistID") Optional<Long> playlistID,
-            @JsonProperty("type") Optional<? extends GetPlaylistGeneratorsType> type,
             @JsonProperty("updatedAt") Optional<Long> updatedAt,
             @JsonProperty("uri") Optional<String> uri) {
+        Utils.checkNotNull(type, "type");
         Utils.checkNotNull(changedAt, "changedAt");
         Utils.checkNotNull(createdAt, "createdAt");
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(playlistID, "playlistID");
-        Utils.checkNotNull(type, "type");
         Utils.checkNotNull(updatedAt, "updatedAt");
         Utils.checkNotNull(uri, "uri");
+        this.type = type;
         this.changedAt = changedAt;
         this.createdAt = createdAt;
         this.id = id;
         this.playlistID = playlistID;
-        this.type = type;
         this.updatedAt = updatedAt;
         this.uri = uri;
     }
@@ -88,6 +88,18 @@ public class PlayQueueGenerator {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty());
+    }
+
+    /**
+     * The type of playlist generator.
+     * 
+     * <p>- -1: A smart playlist generator
+     * - 42: A optimized version generator
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<GetPlaylistGeneratorsType> type() {
+        return (Optional<GetPlaylistGeneratorsType>) type;
     }
 
     @JsonIgnore
@@ -110,18 +122,6 @@ public class PlayQueueGenerator {
         return playlistID;
     }
 
-    /**
-     * The type of playlist generator.
-     * 
-     * <p>  - -1: A smart playlist generator
-     *   - 42: A optimized version generator
-     */
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<GetPlaylistGeneratorsType> type() {
-        return (Optional<GetPlaylistGeneratorsType>) type;
-    }
-
     @JsonIgnore
     public Optional<Long> updatedAt() {
         return updatedAt;
@@ -139,6 +139,31 @@ public class PlayQueueGenerator {
         return new Builder();
     }
 
+
+    /**
+     * The type of playlist generator.
+     * 
+     * <p>- -1: A smart playlist generator
+     * - 42: A optimized version generator
+     */
+    public PlayQueueGenerator withType(GetPlaylistGeneratorsType type) {
+        Utils.checkNotNull(type, "type");
+        this.type = Optional.ofNullable(type);
+        return this;
+    }
+
+
+    /**
+     * The type of playlist generator.
+     * 
+     * <p>- -1: A smart playlist generator
+     * - 42: A optimized version generator
+     */
+    public PlayQueueGenerator withType(Optional<? extends GetPlaylistGeneratorsType> type) {
+        Utils.checkNotNull(type, "type");
+        this.type = type;
+        return this;
+    }
 
     public PlayQueueGenerator withChangedAt(long changedAt) {
         Utils.checkNotNull(changedAt, "changedAt");
@@ -192,31 +217,6 @@ public class PlayQueueGenerator {
         return this;
     }
 
-    /**
-     * The type of playlist generator.
-     * 
-     * <p>  - -1: A smart playlist generator
-     *   - 42: A optimized version generator
-     */
-    public PlayQueueGenerator withType(GetPlaylistGeneratorsType type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
-        return this;
-    }
-
-
-    /**
-     * The type of playlist generator.
-     * 
-     * <p>  - -1: A smart playlist generator
-     *   - 42: A optimized version generator
-     */
-    public PlayQueueGenerator withType(Optional<? extends GetPlaylistGeneratorsType> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
-        return this;
-    }
-
     public PlayQueueGenerator withUpdatedAt(long updatedAt) {
         Utils.checkNotNull(updatedAt, "updatedAt");
         this.updatedAt = Optional.ofNullable(updatedAt);
@@ -259,11 +259,11 @@ public class PlayQueueGenerator {
         }
         PlayQueueGenerator other = (PlayQueueGenerator) o;
         return 
+            Utils.enhancedDeepEquals(this.type, other.type) &&
             Utils.enhancedDeepEquals(this.changedAt, other.changedAt) &&
             Utils.enhancedDeepEquals(this.createdAt, other.createdAt) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.playlistID, other.playlistID) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
             Utils.enhancedDeepEquals(this.updatedAt, other.updatedAt) &&
             Utils.enhancedDeepEquals(this.uri, other.uri);
     }
@@ -271,25 +271,27 @@ public class PlayQueueGenerator {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            changedAt, createdAt, id,
-            playlistID, type, updatedAt,
+            type, changedAt, createdAt,
+            id, playlistID, updatedAt,
             uri);
     }
     
     @Override
     public String toString() {
         return Utils.toString(PlayQueueGenerator.class,
+                "type", type,
                 "changedAt", changedAt,
                 "createdAt", createdAt,
                 "id", id,
                 "playlistID", playlistID,
-                "type", type,
                 "updatedAt", updatedAt,
                 "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
+
+        private Optional<? extends GetPlaylistGeneratorsType> type = Optional.empty();
 
         private Optional<Long> changedAt = Optional.empty();
 
@@ -299,14 +301,37 @@ public class PlayQueueGenerator {
 
         private Optional<Long> playlistID = Optional.empty();
 
-        private Optional<? extends GetPlaylistGeneratorsType> type = Optional.empty();
-
         private Optional<Long> updatedAt = Optional.empty();
 
         private Optional<String> uri = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        /**
+         * The type of playlist generator.
+         * 
+         * <p>- -1: A smart playlist generator
+         * - 42: A optimized version generator
+         */
+        public Builder type(GetPlaylistGeneratorsType type) {
+            Utils.checkNotNull(type, "type");
+            this.type = Optional.ofNullable(type);
+            return this;
+        }
+
+        /**
+         * The type of playlist generator.
+         * 
+         * <p>- -1: A smart playlist generator
+         * - 42: A optimized version generator
+         */
+        public Builder type(Optional<? extends GetPlaylistGeneratorsType> type) {
+            Utils.checkNotNull(type, "type");
+            this.type = type;
+            return this;
         }
 
 
@@ -362,31 +387,6 @@ public class PlayQueueGenerator {
         }
 
 
-        /**
-         * The type of playlist generator.
-         * 
-         * <p>  - -1: A smart playlist generator
-         *   - 42: A optimized version generator
-         */
-        public Builder type(GetPlaylistGeneratorsType type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
-            return this;
-        }
-
-        /**
-         * The type of playlist generator.
-         * 
-         * <p>  - -1: A smart playlist generator
-         *   - 42: A optimized version generator
-         */
-        public Builder type(Optional<? extends GetPlaylistGeneratorsType> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
-            return this;
-        }
-
-
         public Builder updatedAt(long updatedAt) {
             Utils.checkNotNull(updatedAt, "updatedAt");
             this.updatedAt = Optional.ofNullable(updatedAt);
@@ -421,8 +421,8 @@ public class PlayQueueGenerator {
         public PlayQueueGenerator build() {
 
             return new PlayQueueGenerator(
-                changedAt, createdAt, id,
-                playlistID, type, updatedAt,
+                type, changedAt, createdAt,
+                id, playlistID, updatedAt,
                 uri);
         }
 

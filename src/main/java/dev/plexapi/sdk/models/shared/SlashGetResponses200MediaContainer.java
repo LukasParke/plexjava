@@ -21,9 +21,14 @@ import java.util.Optional;
 public class SlashGetResponses200MediaContainer {
     /**
      * The flavors of directory found here:
-     *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-     *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-     *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
+     * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+     * subsets of media. However, with the exception of On Deck, all of them can be created by media
+     * queries, and the desire is to allow these to be customized by users.
+     * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+     * nested menus allowing for primative (but structured) navigation.
+     * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+     * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+     * allow clients to build search dialogs on the fly.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("content")
@@ -150,9 +155,14 @@ public class SlashGetResponses200MediaContainer {
 
     /**
      * The flavors of directory found here:
-     *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-     *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-     *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
+     * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+     * subsets of media. However, with the exception of On Deck, all of them can be created by media
+     * queries, and the desire is to allow these to be customized by users.
+     * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+     * nested menus allowing for primative (but structured) navigation.
+     * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+     * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+     * allow clients to build search dialogs on the fly.
      */
     @JsonIgnore
     public Optional<String> content() {
@@ -233,9 +243,14 @@ public class SlashGetResponses200MediaContainer {
 
     /**
      * The flavors of directory found here:
-     *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-     *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-     *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
+     * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+     * subsets of media. However, with the exception of On Deck, all of them can be created by media
+     * queries, and the desire is to allow these to be customized by users.
+     * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+     * nested menus allowing for primative (but structured) navigation.
+     * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+     * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+     * allow clients to build search dialogs on the fly.
      */
     public SlashGetResponses200MediaContainer withContent(String content) {
         Utils.checkNotNull(content, "content");
@@ -246,9 +261,14 @@ public class SlashGetResponses200MediaContainer {
 
     /**
      * The flavors of directory found here:
-     *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-     *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-     *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
+     * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+     * subsets of media. However, with the exception of On Deck, all of them can be created by media
+     * queries, and the desire is to allow these to be customized by users.
+     * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+     * nested menus allowing for primative (but structured) navigation.
+     * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+     * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+     * allow clients to build search dialogs on the fly.
      */
     public SlashGetResponses200MediaContainer withContent(Optional<String> content) {
         Utils.checkNotNull(content, "content");
@@ -518,9 +538,14 @@ public class SlashGetResponses200MediaContainer {
 
         /**
          * The flavors of directory found here:
-         *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-         *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-         *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
+         * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+         * subsets of media. However, with the exception of On Deck, all of them can be created by media
+         * queries, and the desire is to allow these to be customized by users.
+         * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+         * nested menus allowing for primative (but structured) navigation.
+         * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+         * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+         * allow clients to build search dialogs on the fly.
          */
         public Builder content(String content) {
             Utils.checkNotNull(content, "content");
@@ -530,9 +555,14 @@ public class SlashGetResponses200MediaContainer {
 
         /**
          * The flavors of directory found here:
-         *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-         *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-         *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
+         * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+         * subsets of media. However, with the exception of On Deck, all of them can be created by media
+         * queries, and the desire is to allow these to be customized by users.
+         * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+         * nested menus allowing for primative (but structured) navigation.
+         * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+         * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+         * allow clients to build search dialogs on the fly.
          */
         public Builder content(Optional<String> content) {
             Utils.checkNotNull(content, "content");

@@ -6,6 +6,13 @@ The visibility of this hub in recommendations:
   - admin: Visible to only admin users
   - shared: Visible to shared users
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.RecommendationsVisibility;
+
+RecommendationsVisibility value = RecommendationsVisibility.ALL;
+```
 
 
 ## Values

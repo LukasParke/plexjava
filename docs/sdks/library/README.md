@@ -1,5 +1,4 @@
 # Library
-(*library()*)
 
 ## Overview
 
@@ -7,19 +6,34 @@ Library endpoints which are outside of the Media Provider API.  Typically this i
 
 ### Available Operations
 
+* [getRootLibrary](#getrootlibrary) - Get Root Library
 * [getLibraryItems](#getlibraryitems) - Get all items in library
 * [deleteCaches](#deletecaches) - Delete library caches
 * [cleanBundles](#cleanbundles) - Clean bundles
 * [ingestTransientItem](#ingesttransientitem) - Ingest a transient item
 * [getLibraryMatches](#getlibrarymatches) - Get library matches
+* [optimizeLibrary](#optimizelibrary) - Get Optimize Library
+* [optimizeLibraryPost](#optimizelibrarypost) - Optimize Library
 * [optimizeDatabase](#optimizedatabase) - Optimize the Database
 * [getRandomArtwork](#getrandomartwork) - Get random artwork
+* [getRecentlyAddedGlobal](#getrecentlyaddedglobal) - Get Global Recently Added
+* [getLibrarySectionsFallback](#getlibrarysectionsfallback) - Get Library Sections (Fallback)
 * [getSections](#getsections) - Get library sections (main Media Provider Only)
 * [addSection](#addsection) - Add a library section
 * [stopAllRefreshes](#stopallrefreshes) - Stop refresh
 * [getSectionsPrefs](#getsectionsprefs) - Get section prefs
 * [refreshSectionsMetadata](#refreshsectionsmetadata) - Refresh all sections
 * [getTags](#gettags) - Get all library tags of a type
+* [uploadArt](#uploadart) - Upload media art Art
+* [getMetadataChildren](#getmetadatachildren) - Get Metadata Children
+* [computeSonicPath](#computesonicpath) - Compute Sonic Path
+* [getMetadataGrandchildren](#getmetadatagrandchildren) - Get Metadata Grandchildren
+* [getMetadataGrandparent](#getmetadatagrandparent) - Get Metadata Grandparent
+* [getNearestMetadata](#getnearestmetadata) - Get Nearest Metadata
+* [getMetadataOnDeck](#getmetadataondeck) - Get Metadata On Deck
+* [getMetadataParent](#getmetadataparent) - Get Metadata Parent
+* [uploadPoster](#uploadposter) - Upload media art Poster
+* [getMetadataReviews](#getmetadatareviews) - Get Metadata Reviews
 * [deleteMetadataItem](#deletemetadataitem) - Delete a metadata item
 * [editMetadataItem](#editmetadataitem) - Edit a metadata item
 * [detectAds](#detectads) - Ad-detect an item
@@ -36,13 +50,12 @@ Library endpoints which are outside of the Media Provider API.  Typically this i
 * [matchItem](#matchitem) - Match a metadata item
 * [listMatches](#listmatches) - Get metadata matches for an item
 * [mergeItems](#mergeitems) - Merge a metadata item
-* [listSonicallySimilar](#listsonicallysimilar) - Get nearest tracks to metadata item
 * [setItemPreferences](#setitempreferences) - Set metadata preferences
 * [refreshItemsMetadata](#refreshitemsmetadata) - Refresh a metadata item
 * [getRelatedItems](#getrelateditems) - Get related items
 * [listSimilar](#listsimilar) - Get similar items
 * [splitItem](#splititem) - Split a metadata item
-* [addSubtitles](#addsubtitles) - Add subtitles
+* [getSubtitles](#getsubtitles) - Get subtitles
 * [getItemTree](#getitemtree) - Get metadata items as a tree
 * [unmatch](#unmatch) - Unmatch a metadata item
 * [listTopUsers](#listtopusers) - Get metadata top users
@@ -54,21 +67,54 @@ Library endpoints which are outside of the Media Provider API.  Typically this i
 * [deleteLibrarySection](#deletelibrarysection) - Delete a library section
 * [getLibraryDetails](#getlibrarydetails) - Get a library section by id
 * [editSection](#editsection) - Edit a library section
+* [getSectionAgents](#getsectionagents) - Get Section Agents
 * [updateItems](#updateitems) - Set the fields of the filtered items
 * [startAnalysis](#startanalysis) - Analyze a section
+* [getSectionArtists](#getsectionartists) - Get Section Artists
 * [autocomplete](#autocomplete) - Get autocompletions for search
+* [getByContentRating](#getbycontentrating) - Get By Content Rating
+* [getByDecade](#getbydecade) - Get By Decade
+* [getByFolder](#getbyfolder) - Get By Folder
+* [getByResolution](#getbyresolution) - Get By Resolution
+* [getByYear](#getbyyear) - Get By Year
+* [getSectionClips](#getsectionclips) - Get Section Clips
 * [getCollections](#getcollections) - Get collections in a section
 * [getCommon](#getcommon) - Get common fields for items
-* [emptyTrash](#emptytrash) - Empty section trash
+* [getSectionEdit](#getsectionedit) - Edit Section
+* [editLibrarySection](#editlibrarysection) - Edit Section
+* [emptyTrash](#emptytrash) - Get Empty Trash
+* [emptyTrashPost](#emptytrashpost) - Empty Trash
+* [emptyTrashPut](#emptytrashput) - Empty section trash
+* [getSectionEpisodes](#getsectionepisodes) - Get Section Episodes
 * [getSectionFilters](#getsectionfilters) - Get section filters
 * [getFirstCharacters](#getfirstcharacters) - Get list of first characters
+* [getLibrarySectionHubs](#getlibrarysectionhubs) - Get Section Hubs
 * [deleteIndexes](#deleteindexes) - Delete section indexes
 * [deleteIntros](#deleteintros) - Delete section intro markers
+* [getSectionLabels](#getsectionlabels) - Get Section Labels
+* [matchSectionItems](#matchsectionitems) - Match Section Items
+* [moveSection](#movesection) - Move Section
+* [getSectionMovies](#getsectionmovies) - Get Section Movies
+* [getNewestForSection](#getnewestforsection) - Get Newest for Section
+* [getOnDeckForSection](#getondeckforsection) - Get On Deck for Section
+* [optimizeSection](#optimizesection) - Get Optimize Section
+* [optimizeSectionPost](#optimizesectionpost) - Optimize Section
+* [getSectionPhotos](#getsectionphotos) - Get Section Photos
+* [getSectionPlaylists](#getsectionplaylists) - Get Section Playlists
 * [getSectionPreferences](#getsectionpreferences) - Get section prefs
 * [setSectionPreferences](#setsectionpreferences) - Set section prefs
+* [getRecentlyAddedForSection](#getrecentlyaddedforsection) - Get Recently Added for Section
 * [cancelRefresh](#cancelrefresh) - Cancel section refresh
-* [refreshSection](#refreshsection) - Refresh section
+* [refreshSection](#refreshsection) - Get Refresh Section
+* [refreshSectionPost](#refreshsectionpost) - Refresh Section
+* [searchSection](#searchsection) - Search Section
+* [getSectionSettings](#getsectionsettings) - Get Section Settings
+* [getSectionShows](#getsectionshows) - Get Section Shows
 * [getAvailableSorts](#getavailablesorts) - Get a section sorts
+* [getSectionTags](#getsectiontags) - Get Section Tags
+* [getSectionTimeline](#getsectiontimeline) - Get Section Timeline
+* [unmatchSectionItems](#unmatchsectionitems) - Unmatch Section Items
+* [getUnwatchedForSection](#getunwatchedforsection) - Get Unwatched for Section
 * [getStreamLevels](#getstreamlevels) - Get loudness about a stream in json
 * [getStreamLoudness](#getstreamloudness) - Get loudness about a stream
 * [getChapterImage](#getchapterimage) - Get a chapter image
@@ -87,6 +133,50 @@ Library endpoints which are outside of the Media Provider API.  Typically this i
 * [getMediaPart](#getmediapart) - Get a media part
 * [getImageFromBif](#getimagefrombif) - Get an image from part BIF
 
+## getRootLibrary
+
+Get the root library object.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getRootLibrary" method="get" path="/library" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetRootLibraryResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetRootLibraryResponse res = sdk.library().getRootLibrary()
+                .call();
+
+        if (res.mediaContainerWithDirectory().isPresent()) {
+            System.out.println(res.mediaContainerWithDirectory().get());
+        }
+    }
+}
+```
+
+### Response
+
+**[GetRootLibraryResponse](../../models/operations/GetRootLibraryResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
 ## getLibraryItems
 
 Request all metadata items according to a query.
@@ -98,6 +188,7 @@ Request all metadata items according to a query.
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetLibraryItemsRequest;
 import dev.plexapi.sdk.models.operations.GetLibraryItemsResponse;
 import dev.plexapi.sdk.models.shared.*;
@@ -105,7 +196,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -125,8 +216,8 @@ public class Application {
         GetLibraryItemsRequest req = GetLibraryItemsRequest.builder()
                 .mediaQuery(MediaQuery.builder()
                     .type(MediaType.Episode)
-                    .sourceType(2L)
                     .sort("duration:desc,index")
+                    .sourceType(2L)
                     .build())
                 .build();
 
@@ -135,7 +226,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -155,6 +246,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## deleteCaches
@@ -168,12 +260,13 @@ Delete the hub caches so they are recomputed on next request
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DeleteCachesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -195,6 +288,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## cleanBundles
@@ -208,12 +302,13 @@ Clean out any now unused bundles. Bundles can become unused when media is delete
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.CleanBundlesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -235,6 +330,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## ingestTransientItem
@@ -249,6 +345,7 @@ Note that any of the parameters passed to the metadata details endpoint (e.g. `i
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.IngestTransientItemRequest;
 import dev.plexapi.sdk.models.operations.IngestTransientItemResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -257,7 +354,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -286,7 +383,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -306,6 +403,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getLibraryMatches
@@ -323,6 +421,7 @@ Episodes require either a season/episode pair, or an air date (or both). Either 
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetLibraryMatchesRequest;
 import dev.plexapi.sdk.models.operations.GetLibraryMatchesResponse;
 import dev.plexapi.sdk.models.shared.*;
@@ -330,7 +429,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -359,7 +458,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -379,6 +478,141 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## optimizeLibrary
+
+Optimize the database globally across all library sections.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="optimizeLibrary" method="get" path="/library/optimize" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryRequest;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        OptimizeLibraryRequest req = OptimizeLibraryRequest.builder()
+                .build();
+
+        OptimizeLibraryResponse res = sdk.library().optimizeLibrary()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [OptimizeLibraryRequest](../../models/operations/OptimizeLibraryRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+
+### Response
+
+**[OptimizeLibraryResponse](../../models/operations/OptimizeLibraryResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## optimizeLibraryPost
+
+Optimize the database globally across all library sections.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="optimizeLibraryPost" method="post" path="/library/optimize" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryPostRequest;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryPostResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        OptimizeLibraryPostRequest req = OptimizeLibraryPostRequest.builder()
+                .build();
+
+        OptimizeLibraryPostResponse res = sdk.library().optimizeLibraryPost()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [OptimizeLibraryPostRequest](../../models/operations/OptimizeLibraryPostRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[OptimizeLibraryPostResponse](../../models/operations/OptimizeLibraryPostResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## optimizeDatabase
@@ -392,6 +626,7 @@ Initiate optimize on the database.
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.OptimizeDatabaseRequest;
 import dev.plexapi.sdk.models.operations.OptimizeDatabaseResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -400,7 +635,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -444,6 +679,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getRandomArtwork
@@ -452,7 +688,6 @@ Get random artwork across sections.  This is commonly used for a screensaver.
 
 This retrieves 100 random artwork paths in the specified sections and returns them.  Restrictions are put in place to not return artwork for items the user is not allowed to access.  Artwork will be for Movies, Shows, and Artists only.
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="getRandomArtwork" method="get" path="/library/randomArtwork" -->
@@ -460,6 +695,7 @@ This retrieves 100 random artwork paths in the specified sections and returns th
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetRandomArtworkRequest;
 import dev.plexapi.sdk.models.operations.GetRandomArtworkResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -468,7 +704,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -496,7 +732,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithArtwork().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithArtwork().get());
         }
     }
 }
@@ -516,6 +752,118 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getRecentlyAddedGlobal
+
+Get recently added items across all library sections.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getRecentlyAddedGlobal" method="get" path="/library/recentlyAdded" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedGlobalRequest;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedGlobalResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetRecentlyAddedGlobalRequest req = GetRecentlyAddedGlobalRequest.builder()
+                .build();
+
+        GetRecentlyAddedGlobalResponse res = sdk.library().getRecentlyAddedGlobal()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [GetRecentlyAddedGlobalRequest](../../models/operations/GetRecentlyAddedGlobalRequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+
+### Response
+
+**[GetRecentlyAddedGlobalResponse](../../models/operations/GetRecentlyAddedGlobalResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getLibrarySectionsFallback
+
+Fallback for non-owners to list library sections.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getLibrarySectionsFallback" method="get" path="/library/sections/" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionsFallbackResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetLibrarySectionsFallbackResponse res = sdk.library().getLibrarySectionsFallback()
+                .call();
+
+        if (res.mediaContainerWithDirectory().isPresent()) {
+            System.out.println(res.mediaContainerWithDirectory().get());
+        }
+    }
+}
+```
+
+### Response
+
+**[GetLibrarySectionsFallbackResponse](../../models/operations/GetLibrarySectionsFallbackResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getSections
@@ -530,12 +878,13 @@ Libraries have features beyond just being a collection of media; for starters, t
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetSectionsResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -545,7 +894,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -559,6 +908,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## addSection
@@ -599,12 +949,12 @@ public class Application {
 
         AddSectionRequest req = AddSectionRequest.builder()
                 .name("<value>")
-                .type(39544L)
+                .mediaType(39544L)
                 .agent("<value>")
                 .language("<value>")
                 .locations(List.of(
-                    "O:\fatboy\\Media\\Ripped\\Music",
-                    "O:\fatboy\\Media\\My Music"))
+                    "O:\\fatboy\\Media\\Ripped\\Music",
+                    "O:\\fatboy\\Media\\My Music"))
                 .prefs(QueryParamPrefs.builder()
                     .build())
                 .relative(BoolInt.True)
@@ -616,7 +966,7 @@ public class Application {
                 .call();
 
         if (res.slashGetResponses200().isPresent()) {
-            // handle response
+            System.out.println(res.slashGetResponses200().get());
         }
     }
 }
@@ -649,12 +999,13 @@ Stop all refreshes across all sections
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.StopAllRefreshesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -664,7 +1015,7 @@ public class Application {
                 .call();
 
         if (res.librarySections().isPresent()) {
-            // handle response
+            System.out.println(res.librarySections().get());
         }
     }
 }
@@ -678,6 +1029,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getSectionsPrefs
@@ -716,7 +1068,7 @@ public class Application {
             .build();
 
         GetSectionsPrefsRequest req = GetSectionsPrefsRequest.builder()
-                .type(460221L)
+                .mediaType(460221L)
                 .build();
 
         GetSectionsPrefsResponse res = sdk.library().getSectionsPrefs()
@@ -724,7 +1076,7 @@ public class Application {
                 .call();
 
         if (res.librarySections().isPresent()) {
-            // handle response
+            System.out.println(res.librarySections().get());
         }
     }
 }
@@ -820,6 +1172,7 @@ Get all library tags of a type
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetTagsRequest;
 import dev.plexapi.sdk.models.operations.GetTagsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -828,7 +1181,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -854,7 +1207,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -874,6 +1227,787 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## uploadArt
+
+Upload custom background art for a metadata item.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="uploadArt" method="post" path="/library/metadata/{id}/arts" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.*;
+import dev.plexapi.sdk.models.shared.Accepts;
+import dev.plexapi.sdk.utils.Utils;
+import java.io.FileInputStream;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        UploadArtRequest req = UploadArtRequest.builder()
+                .id(996758L)
+                .requestBody(UploadArtRequestBody.builder()
+                    .file(File.builder()
+                        .fileName("example.file")
+                        .content(Utils.readBytesAndClose(new FileInputStream("example.file")))
+                        .build())
+                    .build())
+                .build();
+
+        UploadArtResponse res = sdk.library().uploadArt()
+                .request(req)
+                .call();
+
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `request`                                                       | [UploadArtRequest](../../models/operations/UploadArtRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
+
+### Response
+
+**[UploadArtResponse](../../models/operations/UploadArtResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getMetadataChildren
+
+Get children of a show, season, artist, or album.
+
+### Example Usage: include-stream
+
+<!-- UsageSnippet language="java" operationID="getMetadataChildren" method="get" path="/library/metadata/{id}/children" example="include-stream" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetMetadataChildrenRequest req = GetMetadataChildrenRequest.builder()
+                .id(240367L)
+                .build();
+
+        GetMetadataChildrenResponse res = sdk.library().getMetadataChildren()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+### Example Usage: include-stream-otheritem
+
+<!-- UsageSnippet language="java" operationID="getMetadataChildren" method="get" path="/library/metadata/{id}/children" example="include-stream-otheritem" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetMetadataChildrenRequest req = GetMetadataChildrenRequest.builder()
+                .id(240367L)
+                .build();
+
+        GetMetadataChildrenResponse res = sdk.library().getMetadataChildren()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+### Example Usage: include-stream-otheritem-anotheritem
+
+<!-- UsageSnippet language="java" operationID="getMetadataChildren" method="get" path="/library/metadata/{id}/children" example="include-stream-otheritem-anotheritem" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetMetadataChildrenRequest req = GetMetadataChildrenRequest.builder()
+                .id(240367L)
+                .build();
+
+        GetMetadataChildrenResponse res = sdk.library().getMetadataChildren()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [GetMetadataChildrenRequest](../../models/operations/GetMetadataChildrenRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[GetMetadataChildrenResponse](../../models/operations/GetMetadataChildrenResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## computeSonicPath
+
+Compute a sonic adventure path from a starting track.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="computeSonicPath" method="get" path="/library/metadata/{id}/computePath" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.ComputeSonicPathRequest;
+import dev.plexapi.sdk.models.operations.ComputeSonicPathResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        ComputeSonicPathRequest req = ComputeSonicPathRequest.builder()
+                .id(622554L)
+                .build();
+
+        ComputeSonicPathResponse res = sdk.library().computeSonicPath()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [ComputeSonicPathRequest](../../models/operations/ComputeSonicPathRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[ComputeSonicPathResponse](../../models/operations/ComputeSonicPathResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getMetadataGrandchildren
+
+Get grandchildren (e.g. episodes under a show).
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getMetadataGrandchildren" method="get" path="/library/metadata/{id}/grandchildren" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandchildrenRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandchildrenResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetMetadataGrandchildrenRequest req = GetMetadataGrandchildrenRequest.builder()
+                .id(679910L)
+                .build();
+
+        GetMetadataGrandchildrenResponse res = sdk.library().getMetadataGrandchildren()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `request`                                                                                     | [GetMetadataGrandchildrenRequest](../../models/operations/GetMetadataGrandchildrenRequest.md) | :heavy_check_mark:                                                                            | The request object to use for the request.                                                    |
+
+### Response
+
+**[GetMetadataGrandchildrenResponse](../../models/operations/GetMetadataGrandchildrenResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getMetadataGrandparent
+
+Get grandparent metadata shortcut.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getMetadataGrandparent" method="get" path="/library/metadata/{id}/grandparent" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandparentRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandparentResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetMetadataGrandparentRequest req = GetMetadataGrandparentRequest.builder()
+                .id(191152L)
+                .build();
+
+        GetMetadataGrandparentResponse res = sdk.library().getMetadataGrandparent()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [GetMetadataGrandparentRequest](../../models/operations/GetMetadataGrandparentRequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+
+### Response
+
+**[GetMetadataGrandparentResponse](../../models/operations/GetMetadataGrandparentResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getNearestMetadata
+
+Get sonically similar items for a music track.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getNearestMetadata" method="get" path="/library/metadata/{id}/nearest" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetNearestMetadataRequest;
+import dev.plexapi.sdk.models.operations.GetNearestMetadataResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetNearestMetadataRequest req = GetNearestMetadataRequest.builder()
+                .id(62697L)
+                .build();
+
+        GetNearestMetadataResponse res = sdk.library().getNearestMetadata()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetNearestMetadataRequest](../../models/operations/GetNearestMetadataRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[GetNearestMetadataResponse](../../models/operations/GetNearestMetadataResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getMetadataOnDeck
+
+Get On Deck status for a show or season.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getMetadataOnDeck" method="get" path="/library/metadata/{id}/onDeck" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetMetadataOnDeckRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataOnDeckResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetMetadataOnDeckRequest req = GetMetadataOnDeckRequest.builder()
+                .id(883975L)
+                .build();
+
+        GetMetadataOnDeckResponse res = sdk.library().getMetadataOnDeck()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [GetMetadataOnDeckRequest](../../models/operations/GetMetadataOnDeckRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+
+### Response
+
+**[GetMetadataOnDeckResponse](../../models/operations/GetMetadataOnDeckResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getMetadataParent
+
+Get parent metadata shortcut.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getMetadataParent" method="get" path="/library/metadata/{id}/parent" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetMetadataParentRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataParentResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetMetadataParentRequest req = GetMetadataParentRequest.builder()
+                .id(352555L)
+                .build();
+
+        GetMetadataParentResponse res = sdk.library().getMetadataParent()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [GetMetadataParentRequest](../../models/operations/GetMetadataParentRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+
+### Response
+
+**[GetMetadataParentResponse](../../models/operations/GetMetadataParentResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## uploadPoster
+
+Upload a custom poster image for a metadata item.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="uploadPoster" method="post" path="/library/metadata/{id}/posters" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.*;
+import dev.plexapi.sdk.models.shared.Accepts;
+import dev.plexapi.sdk.utils.Utils;
+import java.io.FileInputStream;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        UploadPosterRequest req = UploadPosterRequest.builder()
+                .id(316927L)
+                .requestBody(UploadPosterRequestBody.builder()
+                    .file(UploadPosterFile.builder()
+                        .fileName("example.file")
+                        .content(Utils.readBytesAndClose(new FileInputStream("example.file")))
+                        .build())
+                    .build())
+                .build();
+
+        UploadPosterResponse res = sdk.library().uploadPoster()
+                .request(req)
+                .call();
+
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `request`                                                             | [UploadPosterRequest](../../models/operations/UploadPosterRequest.md) | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+
+### Response
+
+**[UploadPosterResponse](../../models/operations/UploadPosterResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getMetadataReviews
+
+Get user reviews for a metadata item.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getMetadataReviews" method="get" path="/library/metadata/{id}/reviews" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetMetadataReviewsRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataReviewsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetMetadataReviewsRequest req = GetMetadataReviewsRequest.builder()
+                .id(146091L)
+                .build();
+
+        GetMetadataReviewsResponse res = sdk.library().getMetadataReviews()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetMetadataReviewsRequest](../../models/operations/GetMetadataReviewsRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[GetMetadataReviewsResponse](../../models/operations/GetMetadataReviewsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## deleteMetadataItem
@@ -1020,6 +2154,7 @@ Start the detection of ads in a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DetectAdsRequest;
 import dev.plexapi.sdk.models.operations.DetectAdsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1027,7 +2162,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1071,6 +2206,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getAllItemLeaves
@@ -1084,6 +2220,7 @@ Get the leaves for a metadata item such as the episodes in a show
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetAllItemLeavesRequest;
 import dev.plexapi.sdk.models.operations.GetAllItemLeavesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1091,7 +2228,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1117,7 +2254,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -1137,6 +2274,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## analyzeMetadata
@@ -1150,6 +2288,7 @@ Start the analysis of a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.AnalyzeMetadataRequest;
 import dev.plexapi.sdk.models.operations.AnalyzeMetadataResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1157,7 +2296,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1201,6 +2340,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## generateThumbs
@@ -1214,6 +2354,7 @@ Start the chapter thumb generation for an item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GenerateThumbsRequest;
 import dev.plexapi.sdk.models.operations.GenerateThumbsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1222,7 +2363,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1267,6 +2408,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## detectCredits
@@ -1280,6 +2422,7 @@ Start credit detection on a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DetectCreditsRequest;
 import dev.plexapi.sdk.models.operations.DetectCreditsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1288,7 +2431,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1334,6 +2477,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getExtras
@@ -1347,6 +2491,7 @@ Get the extras for a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetExtrasRequest;
 import dev.plexapi.sdk.models.operations.GetExtrasResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1354,7 +2499,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1380,7 +2525,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -1400,6 +2545,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## addExtras
@@ -1478,6 +2624,7 @@ Get a bundle file for a metadata or media item.  This is either an image or a mp
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetFileRequest;
 import dev.plexapi.sdk.models.operations.GetFileResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1485,7 +2632,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1531,6 +2678,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## startBifGeneration
@@ -1544,6 +2692,7 @@ Start the indexing (BIF generation) of an item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.StartBifGenerationRequest;
 import dev.plexapi.sdk.models.operations.StartBifGenerationResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1552,7 +2701,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1597,6 +2746,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## detectIntros
@@ -1610,6 +2760,7 @@ Start the detection of intros in a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DetectIntrosRequest;
 import dev.plexapi.sdk.models.operations.DetectIntrosResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1618,7 +2769,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1663,6 +2814,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## createMarker
@@ -1701,7 +2853,7 @@ public class Application {
 
         CreateMarkerRequest req = CreateMarkerRequest.builder()
                 .ids("<value>")
-                .type(248391L)
+                .mediaType(248391L)
                 .startTimeOffset(535191L)
                 .attributes(Attributes.builder()
                     .build())
@@ -1712,7 +2864,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -1745,6 +2897,7 @@ Match a metadata item to a guid
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.MatchItemRequest;
 import dev.plexapi.sdk.models.operations.MatchItemResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1752,7 +2905,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1796,6 +2949,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## listMatches
@@ -1809,6 +2963,7 @@ Get the list of metadata matches for a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListMatchesRequest;
 import dev.plexapi.sdk.models.operations.ListMatchesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1817,7 +2972,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1844,7 +2999,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -1864,6 +3019,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## mergeItems
@@ -1877,6 +3033,7 @@ Merge a metadata item with other items
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.MergeItemsRequest;
 import dev.plexapi.sdk.models.operations.MergeItemsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -1885,7 +3042,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -1937,72 +3094,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
-| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
-
-## listSonicallySimilar
-
-Get the nearest tracks, sonically, to the provided track
-
-### Example Usage
-
-<!-- UsageSnippet language="java" operationID="listSonicallySimilar" method="get" path="/library/metadata/{ids}/nearest" -->
-```java
-package hello.world;
-
-import dev.plexapi.sdk.PlexAPI;
-import dev.plexapi.sdk.models.operations.ListSonicallySimilarRequest;
-import dev.plexapi.sdk.models.operations.ListSonicallySimilarResponse;
-import dev.plexapi.sdk.models.shared.Accepts;
-import java.lang.Exception;
-
-public class Application {
-
-    public static void main(String[] args) throws Exception {
-
-        PlexAPI sdk = PlexAPI.builder()
-                .accepts(Accepts.APPLICATION_XML)
-                .clientIdentifier("abc123")
-                .product("Plex for Roku")
-                .version("2.4.1")
-                .platform("Roku")
-                .platformVersion("4.3 build 1057")
-                .device("Roku 3")
-                .model("4200X")
-                .deviceVendor("Roku")
-                .deviceName("Living Room TV")
-                .marketplace("googlePlay")
-                .token(System.getenv().getOrDefault("TOKEN", ""))
-            .build();
-
-        ListSonicallySimilarRequest req = ListSonicallySimilarRequest.builder()
-                .ids("<value>")
-                .build();
-
-        ListSonicallySimilarResponse res = sdk.library().listSonicallySimilar()
-                .request(req)
-                .call();
-
-        if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
-        }
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `request`                                                                             | [ListSonicallySimilarRequest](../../models/operations/ListSonicallySimilarRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
-
-### Response
-
-**[ListSonicallySimilarResponse](../../models/operations/ListSonicallySimilarResponse.md)**
-
-### Errors
-
-| Error Type             | Status Code            | Content Type           |
-| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## setItemPreferences
@@ -2016,6 +3108,7 @@ Set the preferences on a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.SetItemPreferencesRequest;
 import dev.plexapi.sdk.models.operations.SetItemPreferencesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2023,7 +3116,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2067,6 +3160,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## refreshItemsMetadata
@@ -2080,6 +3174,7 @@ Refresh a metadata item from the agent
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.RefreshItemsMetadataRequest;
 import dev.plexapi.sdk.models.operations.RefreshItemsMetadataResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2088,7 +3183,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2108,6 +3203,7 @@ public class Application {
         RefreshItemsMetadataRequest req = RefreshItemsMetadataRequest.builder()
                 .ids("<value>")
                 .markUpdated(BoolInt.True)
+                .skipRefresh(BoolInt.True)
                 .build();
 
         RefreshItemsMetadataResponse res = sdk.library().refreshItemsMetadata()
@@ -2133,6 +3229,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getRelatedItems
@@ -2146,6 +3243,7 @@ Get a hub of related items to a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetRelatedItemsRequest;
 import dev.plexapi.sdk.models.operations.GetRelatedItemsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2153,7 +3251,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2178,8 +3276,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -2199,6 +3297,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## listSimilar
@@ -2212,6 +3311,7 @@ Get a list of similar items to a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListSimilarRequest;
 import dev.plexapi.sdk.models.operations.ListSimilarResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2219,7 +3319,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2245,7 +3345,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -2265,6 +3365,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## splitItem
@@ -2278,6 +3379,7 @@ Split a metadata item into multiple items
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.SplitItemRequest;
 import dev.plexapi.sdk.models.operations.SplitItemResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2285,7 +3387,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2329,28 +3431,30 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
-## addSubtitles
+## getSubtitles
 
 Add a subtitle to a metadata item
 
 ### Example Usage
 
-<!-- UsageSnippet language="java" operationID="addSubtitles" method="get" path="/library/metadata/{ids}/subtitles" -->
+<!-- UsageSnippet language="java" operationID="getSubtitles" method="get" path="/library/metadata/{ids}/subtitles" -->
 ```java
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
-import dev.plexapi.sdk.models.operations.AddSubtitlesRequest;
-import dev.plexapi.sdk.models.operations.AddSubtitlesResponse;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSubtitlesRequest;
+import dev.plexapi.sdk.models.operations.GetSubtitlesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
 import dev.plexapi.sdk.models.shared.BoolInt;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2367,13 +3471,13 @@ public class Application {
                 .token(System.getenv().getOrDefault("TOKEN", ""))
             .build();
 
-        AddSubtitlesRequest req = AddSubtitlesRequest.builder()
+        GetSubtitlesRequest req = GetSubtitlesRequest.builder()
                 .ids("<value>")
                 .forced(BoolInt.True)
                 .hearingImpaired(BoolInt.True)
                 .build();
 
-        AddSubtitlesResponse res = sdk.library().addSubtitles()
+        GetSubtitlesResponse res = sdk.library().getSubtitles()
                 .request(req)
                 .call();
 
@@ -2386,16 +3490,17 @@ public class Application {
 
 | Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
 | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `request`                                                             | [AddSubtitlesRequest](../../models/operations/AddSubtitlesRequest.md) | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+| `request`                                                             | [GetSubtitlesRequest](../../models/operations/GetSubtitlesRequest.md) | :heavy_check_mark:                                                    | The request object to use for the request.                            |
 
 ### Response
 
-**[AddSubtitlesResponse](../../models/operations/AddSubtitlesResponse.md)**
+**[GetSubtitlesResponse](../../models/operations/GetSubtitlesResponse.md)**
 
 ### Errors
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getItemTree
@@ -2409,6 +3514,7 @@ Get a tree of metadata items, such as the seasons/episodes of a show
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetItemTreeRequest;
 import dev.plexapi.sdk.models.operations.GetItemTreeResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2416,7 +3522,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2442,7 +3548,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithNestedMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithNestedMetadata().get());
         }
     }
 }
@@ -2462,6 +3568,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## unmatch
@@ -2475,6 +3582,7 @@ Unmatch a metadata item to info fetched from the agent
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.UnmatchRequest;
 import dev.plexapi.sdk.models.operations.UnmatchResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2482,7 +3590,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2526,6 +3634,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## listTopUsers
@@ -2539,6 +3648,7 @@ Get the list of users which have played this item starting with the most
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListTopUsersRequest;
 import dev.plexapi.sdk.models.operations.ListTopUsersResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2546,7 +3656,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2572,7 +3682,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -2592,6 +3702,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## detectVoiceActivity
@@ -2605,6 +3716,7 @@ Start the detection of voice in a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DetectVoiceActivityRequest;
 import dev.plexapi.sdk.models.operations.DetectVoiceActivityResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2613,7 +3725,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2659,6 +3771,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getAugmentationStatus
@@ -2836,8 +3949,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithTags().isPresent()) {
+            System.out.println(res.mediaContainerWithTags().get());
         }
     }
 }
@@ -2903,7 +4016,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -2936,6 +4049,7 @@ Delete a library section by id
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DeleteLibrarySectionRequest;
 import dev.plexapi.sdk.models.operations.DeleteLibrarySectionResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -2944,7 +4058,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -2989,6 +4103,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getLibraryDetails
@@ -3002,6 +4117,7 @@ Returns details for the library. This can be thought of as an interstitial endpo
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetLibraryDetailsRequest;
 import dev.plexapi.sdk.models.operations.GetLibraryDetailsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -3010,7 +4126,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3037,7 +4153,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -3057,6 +4173,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## editSection
@@ -3098,8 +4215,8 @@ public class Application {
                 .sectionId("<id>")
                 .agent("<value>")
                 .locations(List.of(
-                    "O:\fatboy\\Media\\Ripped\\Music",
-                    "O:\fatboy\\Media\\My Music"))
+                    "O:\\fatboy\\Media\\Ripped\\Music",
+                    "O:\\fatboy\\Media\\My Music"))
                 .prefs(EditSectionQueryParamPrefs.builder()
                     .build())
                 .build();
@@ -3127,6 +4244,74 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionAgents
+
+Get available metadata agents for a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionAgents" method="get" path="/library/sections/{sectionId}/agents" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionAgentsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionAgentsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionAgentsRequest req = GetSectionAgentsRequest.builder()
+                .sectionId(757906L)
+                .build();
+
+        GetSectionAgentsResponse res = sdk.library().getSectionAgents()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithDirectory().isPresent()) {
+            System.out.println(res.mediaContainerWithDirectory().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [GetSectionAgentsRequest](../../models/operations/GetSectionAgentsRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[GetSectionAgentsResponse](../../models/operations/GetSectionAgentsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## updateItems
@@ -3250,6 +4435,7 @@ Start analysis of all items in a section.  If BIF generation is enabled, this wi
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.StartAnalysisRequest;
 import dev.plexapi.sdk.models.operations.StartAnalysisResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -3257,7 +4443,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3301,6 +4487,75 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionArtists
+
+Get artists for a music library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionArtists" method="get" path="/library/sections/{sectionId}/artists" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionArtistsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionArtistsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionArtistsRequest req = GetSectionArtistsRequest.builder()
+                .sectionId(716398L)
+                .build();
+
+        GetSectionArtistsResponse res = sdk.library().getSectionArtists()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [GetSectionArtistsRequest](../../models/operations/GetSectionArtistsRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+
+### Response
+
+**[GetSectionArtistsResponse](../../models/operations/GetSectionArtistsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## autocomplete
@@ -3343,8 +4598,8 @@ public class Application {
                 .sectionId(942007L)
                 .mediaQuery(MediaQuery.builder()
                     .type(MediaType.Episode)
-                    .sourceType(2L)
                     .sort("duration:desc,index")
+                    .sourceType(2L)
                     .build())
                 .build();
 
@@ -3353,7 +4608,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -3375,6 +4630,414 @@ public class Application {
 | ---------------------- | ---------------------- | ---------------------- |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
+## getByContentRating
+
+Browse items in a library section grouped by content rating.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getByContentRating" method="get" path="/library/sections/{sectionId}/byContentRating" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetByContentRatingRequest;
+import dev.plexapi.sdk.models.operations.GetByContentRatingResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetByContentRatingRequest req = GetByContentRatingRequest.builder()
+                .sectionId(586837L)
+                .build();
+
+        GetByContentRatingResponse res = sdk.library().getByContentRating()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetByContentRatingRequest](../../models/operations/GetByContentRatingRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[GetByContentRatingResponse](../../models/operations/GetByContentRatingResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getByDecade
+
+Browse items in a library section grouped by decade.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getByDecade" method="get" path="/library/sections/{sectionId}/byDecade" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetByDecadeRequest;
+import dev.plexapi.sdk.models.operations.GetByDecadeResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetByDecadeRequest req = GetByDecadeRequest.builder()
+                .sectionId(212187L)
+                .build();
+
+        GetByDecadeResponse res = sdk.library().getByDecade()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [GetByDecadeRequest](../../models/operations/GetByDecadeRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+
+### Response
+
+**[GetByDecadeResponse](../../models/operations/GetByDecadeResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getByFolder
+
+Browse items in a library section by underlying filesystem folder.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getByFolder" method="get" path="/library/sections/{sectionId}/byFolder" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetByFolderRequest;
+import dev.plexapi.sdk.models.operations.GetByFolderResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetByFolderRequest req = GetByFolderRequest.builder()
+                .sectionId(352088L)
+                .build();
+
+        GetByFolderResponse res = sdk.library().getByFolder()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [GetByFolderRequest](../../models/operations/GetByFolderRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+
+### Response
+
+**[GetByFolderResponse](../../models/operations/GetByFolderResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getByResolution
+
+Browse items in a library section grouped by resolution.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getByResolution" method="get" path="/library/sections/{sectionId}/byResolution" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetByResolutionRequest;
+import dev.plexapi.sdk.models.operations.GetByResolutionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetByResolutionRequest req = GetByResolutionRequest.builder()
+                .sectionId(139174L)
+                .build();
+
+        GetByResolutionResponse res = sdk.library().getByResolution()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [GetByResolutionRequest](../../models/operations/GetByResolutionRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+
+### Response
+
+**[GetByResolutionResponse](../../models/operations/GetByResolutionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getByYear
+
+Browse items in a library section grouped by year.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getByYear" method="get" path="/library/sections/{sectionId}/byYear" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetByYearRequest;
+import dev.plexapi.sdk.models.operations.GetByYearResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetByYearRequest req = GetByYearRequest.builder()
+                .sectionId(14634L)
+                .build();
+
+        GetByYearResponse res = sdk.library().getByYear()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `request`                                                       | [GetByYearRequest](../../models/operations/GetByYearRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
+
+### Response
+
+**[GetByYearResponse](../../models/operations/GetByYearResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionClips
+
+Get clips for a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionClips" method="get" path="/library/sections/{sectionId}/clips" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionClipsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionClipsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionClipsRequest req = GetSectionClipsRequest.builder()
+                .sectionId(407860L)
+                .build();
+
+        GetSectionClipsResponse res = sdk.library().getSectionClips()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [GetSectionClipsRequest](../../models/operations/GetSectionClipsRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+
+### Response
+
+**[GetSectionClipsResponse](../../models/operations/GetSectionClipsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
 ## getCollections
 
 Get all collections in a section
@@ -3386,6 +5049,7 @@ Get all collections in a section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetCollectionsRequest;
 import dev.plexapi.sdk.models.operations.GetCollectionsResponse;
 import dev.plexapi.sdk.models.shared.*;
@@ -3393,7 +5057,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3414,8 +5078,8 @@ public class Application {
                 .sectionId(348838L)
                 .mediaQuery(MediaQuery.builder()
                     .type(MediaType.Episode)
-                    .sourceType(2L)
                     .sort("duration:desc,index")
+                    .sourceType(2L)
                     .build())
                 .build();
 
@@ -3424,7 +5088,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -3444,6 +5108,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getCommon
@@ -3486,8 +5151,8 @@ public class Application {
                 .sectionId(298154L)
                 .mediaQuery(MediaQuery.builder()
                     .type(MediaType.Episode)
-                    .sourceType(2L)
                     .sort("duration:desc,index")
+                    .sourceType(2L)
                     .build())
                 .build();
 
@@ -3496,7 +5161,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -3518,17 +5183,154 @@ public class Application {
 | ---------------------- | ---------------------- | ---------------------- |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
-## emptyTrash
+## getSectionEdit
 
-Empty trash in the section, permanently deleting media/metadata for missing media
+Get library section metadata.
 
 ### Example Usage
 
-<!-- UsageSnippet language="java" operationID="emptyTrash" method="put" path="/library/sections/{sectionId}/emptyTrash" -->
+<!-- UsageSnippet language="java" operationID="getSectionEdit" method="get" path="/library/sections/{sectionId}/edit" -->
 ```java
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionEditRequest;
+import dev.plexapi.sdk.models.operations.GetSectionEditResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionEditRequest req = GetSectionEditRequest.builder()
+                .sectionId(223075L)
+                .build();
+
+        GetSectionEditResponse res = sdk.library().getSectionEdit()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [GetSectionEditRequest](../../models/operations/GetSectionEditRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+
+### Response
+
+**[GetSectionEditResponse](../../models/operations/GetSectionEditResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## editLibrarySection
+
+Update library section metadata.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="editLibrarySection" method="put" path="/library/sections/{sectionId}/edit" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.EditLibrarySectionRequest;
+import dev.plexapi.sdk.models.operations.EditLibrarySectionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        EditLibrarySectionRequest req = EditLibrarySectionRequest.builder()
+                .sectionId(834094L)
+                .build();
+
+        EditLibrarySectionResponse res = sdk.library().editLibrarySection()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [EditLibrarySectionRequest](../../models/operations/EditLibrarySectionRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[EditLibrarySectionResponse](../../models/operations/EditLibrarySectionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## emptyTrash
+
+Permanently remove items from the trash for a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="emptyTrash" method="get" path="/library/sections/{sectionId}/emptyTrash" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.EmptyTrashRequest;
 import dev.plexapi.sdk.models.operations.EmptyTrashResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -3536,7 +5338,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3561,7 +5363,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
     }
 }
 ```
@@ -3580,6 +5384,209 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## emptyTrashPost
+
+Permanently remove items from the trash for a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="emptyTrashPost" method="post" path="/library/sections/{sectionId}/emptyTrash" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.EmptyTrashPostRequest;
+import dev.plexapi.sdk.models.operations.EmptyTrashPostResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        EmptyTrashPostRequest req = EmptyTrashPostRequest.builder()
+                .sectionId(537157L)
+                .build();
+
+        EmptyTrashPostResponse res = sdk.library().emptyTrashPost()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [EmptyTrashPostRequest](../../models/operations/EmptyTrashPostRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+
+### Response
+
+**[EmptyTrashPostResponse](../../models/operations/EmptyTrashPostResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## emptyTrashPut
+
+Empty trash in the section, permanently deleting media/metadata for missing media
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="emptyTrashPut" method="put" path="/library/sections/{sectionId}/emptyTrash" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.EmptyTrashPutRequest;
+import dev.plexapi.sdk.models.operations.EmptyTrashPutResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        EmptyTrashPutRequest req = EmptyTrashPutRequest.builder()
+                .sectionId(642296L)
+                .build();
+
+        EmptyTrashPutResponse res = sdk.library().emptyTrashPut()
+                .request(req)
+                .call();
+
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `request`                                                               | [EmptyTrashPutRequest](../../models/operations/EmptyTrashPutRequest.md) | :heavy_check_mark:                                                      | The request object to use for the request.                              |
+
+### Response
+
+**[EmptyTrashPutResponse](../../models/operations/EmptyTrashPutResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionEpisodes
+
+Get episodes for a TV library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionEpisodes" method="get" path="/library/sections/{sectionId}/episodes" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionEpisodesRequest;
+import dev.plexapi.sdk.models.operations.GetSectionEpisodesResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionEpisodesRequest req = GetSectionEpisodesRequest.builder()
+                .sectionId(229495L)
+                .build();
+
+        GetSectionEpisodesResponse res = sdk.library().getSectionEpisodes()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetSectionEpisodesRequest](../../models/operations/GetSectionEpisodesRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[GetSectionEpisodesResponse](../../models/operations/GetSectionEpisodesResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getSectionFilters
@@ -3593,6 +5600,7 @@ Get common filters on a section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersRequest;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -3600,7 +5608,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3625,8 +5633,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithDirectory().isPresent()) {
+            System.out.println(res.mediaContainerWithDirectory().get());
         }
     }
 }
@@ -3646,6 +5654,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getFirstCharacters
@@ -3659,6 +5668,7 @@ Get list of first characters in this section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetFirstCharactersRequest;
 import dev.plexapi.sdk.models.operations.GetFirstCharactersResponse;
 import dev.plexapi.sdk.models.shared.*;
@@ -3666,7 +5676,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3687,8 +5697,8 @@ public class Application {
                 .sectionId(3947L)
                 .mediaQuery(MediaQuery.builder()
                     .type(MediaType.Episode)
-                    .sourceType(2L)
                     .sort("duration:desc,index")
+                    .sourceType(2L)
                     .build())
                 .build();
 
@@ -3697,7 +5707,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -3717,6 +5727,75 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getLibrarySectionHubs
+
+Get hubs for a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getLibrarySectionHubs" method="get" path="/library/sections/{sectionId}/hubs" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionHubsRequest;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionHubsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetLibrarySectionHubsRequest req = GetLibrarySectionHubsRequest.builder()
+                .sectionId(426468L)
+                .build();
+
+        GetLibrarySectionHubsResponse res = sdk.library().getLibrarySectionHubs()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `request`                                                                               | [GetLibrarySectionHubsRequest](../../models/operations/GetLibrarySectionHubsRequest.md) | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
+
+### Response
+
+**[GetLibrarySectionHubsResponse](../../models/operations/GetLibrarySectionHubsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## deleteIndexes
@@ -3730,6 +5809,7 @@ Delete all the indexes in a section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DeleteIndexesRequest;
 import dev.plexapi.sdk.models.operations.DeleteIndexesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -3737,7 +5817,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3781,6 +5861,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## deleteIntros
@@ -3794,6 +5875,7 @@ Delete all the intro markers in a section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DeleteIntrosRequest;
 import dev.plexapi.sdk.models.operations.DeleteIntrosResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -3801,7 +5883,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3845,6 +5927,687 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionLabels
+
+Get labels for a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionLabels" method="get" path="/library/sections/{sectionId}/label" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionLabelsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionLabelsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionLabelsRequest req = GetSectionLabelsRequest.builder()
+                .sectionId(705342L)
+                .build();
+
+        GetSectionLabelsResponse res = sdk.library().getSectionLabels()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithTags().isPresent()) {
+            System.out.println(res.mediaContainerWithTags().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [GetSectionLabelsRequest](../../models/operations/GetSectionLabelsRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[GetSectionLabelsResponse](../../models/operations/GetSectionLabelsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## matchSectionItems
+
+Match items in a library section against metadata providers.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="matchSectionItems" method="get" path="/library/sections/{sectionId}/match" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.MatchSectionItemsRequest;
+import dev.plexapi.sdk.models.operations.MatchSectionItemsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        MatchSectionItemsRequest req = MatchSectionItemsRequest.builder()
+                .sectionId(31032L)
+                .build();
+
+        MatchSectionItemsResponse res = sdk.library().matchSectionItems()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [MatchSectionItemsRequest](../../models/operations/MatchSectionItemsRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+
+### Response
+
+**[MatchSectionItemsResponse](../../models/operations/MatchSectionItemsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## moveSection
+
+Move library section paths.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="moveSection" method="put" path="/library/sections/{sectionId}/move" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.MoveSectionRequest;
+import dev.plexapi.sdk.models.operations.MoveSectionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        MoveSectionRequest req = MoveSectionRequest.builder()
+                .sectionId(483061L)
+                .build();
+
+        MoveSectionResponse res = sdk.library().moveSection()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [MoveSectionRequest](../../models/operations/MoveSectionRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+
+### Response
+
+**[MoveSectionResponse](../../models/operations/MoveSectionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionMovies
+
+Get movies for a movie library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionMovies" method="get" path="/library/sections/{sectionId}/movies" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionMoviesRequest;
+import dev.plexapi.sdk.models.operations.GetSectionMoviesResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionMoviesRequest req = GetSectionMoviesRequest.builder()
+                .sectionId(530892L)
+                .build();
+
+        GetSectionMoviesResponse res = sdk.library().getSectionMovies()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [GetSectionMoviesRequest](../../models/operations/GetSectionMoviesRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[GetSectionMoviesResponse](../../models/operations/GetSectionMoviesResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getNewestForSection
+
+Get the newest additions for a specific library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getNewestForSection" method="get" path="/library/sections/{sectionId}/newest" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetNewestForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetNewestForSectionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetNewestForSectionRequest req = GetNewestForSectionRequest.builder()
+                .sectionId(73900L)
+                .build();
+
+        GetNewestForSectionResponse res = sdk.library().getNewestForSection()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [GetNewestForSectionRequest](../../models/operations/GetNewestForSectionRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[GetNewestForSectionResponse](../../models/operations/GetNewestForSectionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getOnDeckForSection
+
+Get the On Deck items for a specific library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getOnDeckForSection" method="get" path="/library/sections/{sectionId}/onDeck" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetOnDeckForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetOnDeckForSectionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetOnDeckForSectionRequest req = GetOnDeckForSectionRequest.builder()
+                .sectionId(331089L)
+                .build();
+
+        GetOnDeckForSectionResponse res = sdk.library().getOnDeckForSection()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [GetOnDeckForSectionRequest](../../models/operations/GetOnDeckForSectionRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[GetOnDeckForSectionResponse](../../models/operations/GetOnDeckForSectionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## optimizeSection
+
+Optimize the database for a specific library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="optimizeSection" method="get" path="/library/sections/{sectionId}/optimize" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.OptimizeSectionRequest;
+import dev.plexapi.sdk.models.operations.OptimizeSectionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        OptimizeSectionRequest req = OptimizeSectionRequest.builder()
+                .sectionId(721290L)
+                .build();
+
+        OptimizeSectionResponse res = sdk.library().optimizeSection()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [OptimizeSectionRequest](../../models/operations/OptimizeSectionRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+
+### Response
+
+**[OptimizeSectionResponse](../../models/operations/OptimizeSectionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## optimizeSectionPost
+
+Optimize the database for a specific library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="optimizeSectionPost" method="post" path="/library/sections/{sectionId}/optimize" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.OptimizeSectionPostRequest;
+import dev.plexapi.sdk.models.operations.OptimizeSectionPostResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        OptimizeSectionPostRequest req = OptimizeSectionPostRequest.builder()
+                .sectionId(876391L)
+                .build();
+
+        OptimizeSectionPostResponse res = sdk.library().optimizeSectionPost()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [OptimizeSectionPostRequest](../../models/operations/OptimizeSectionPostRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[OptimizeSectionPostResponse](../../models/operations/OptimizeSectionPostResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionPhotos
+
+Get photos for a photo library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionPhotos" method="get" path="/library/sections/{sectionId}/photos" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionPhotosRequest;
+import dev.plexapi.sdk.models.operations.GetSectionPhotosResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionPhotosRequest req = GetSectionPhotosRequest.builder()
+                .sectionId(622466L)
+                .build();
+
+        GetSectionPhotosResponse res = sdk.library().getSectionPhotos()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [GetSectionPhotosRequest](../../models/operations/GetSectionPhotosRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[GetSectionPhotosResponse](../../models/operations/GetSectionPhotosResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionPlaylists
+
+Get playlists belonging to a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionPlaylists" method="get" path="/library/sections/{sectionId}/playlists" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionPlaylistsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionPlaylistsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionPlaylistsRequest req = GetSectionPlaylistsRequest.builder()
+                .sectionId(826184L)
+                .build();
+
+        GetSectionPlaylistsResponse res = sdk.library().getSectionPlaylists()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [GetSectionPlaylistsRequest](../../models/operations/GetSectionPlaylistsRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[GetSectionPlaylistsResponse](../../models/operations/GetSectionPlaylistsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getSectionPreferences
@@ -3858,6 +6621,7 @@ Get the prefs for a section by id and potentially overriding the agent
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetSectionPreferencesRequest;
 import dev.plexapi.sdk.models.operations.GetSectionPreferencesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -3865,7 +6629,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3891,7 +6655,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithSettings().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithSettings().get());
         }
     }
 }
@@ -3911,6 +6675,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## setSectionPreferences
@@ -3924,13 +6689,14 @@ Set the prefs for a section by id
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.*;
 import dev.plexapi.sdk.models.shared.Accepts;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -3976,6 +6742,75 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getRecentlyAddedForSection
+
+Get recently added items for a specific library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getRecentlyAddedForSection" method="get" path="/library/sections/{sectionId}/recentlyAdded" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedForSectionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetRecentlyAddedForSectionRequest req = GetRecentlyAddedForSectionRequest.builder()
+                .sectionId(46283L)
+                .build();
+
+        GetRecentlyAddedForSectionResponse res = sdk.library().getRecentlyAddedForSection()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `request`                                                                                         | [GetRecentlyAddedForSectionRequest](../../models/operations/GetRecentlyAddedForSectionRequest.md) | :heavy_check_mark:                                                                                | The request object to use for the request.                                                        |
+
+### Response
+
+**[GetRecentlyAddedForSectionResponse](../../models/operations/GetRecentlyAddedForSectionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## cancelRefresh
@@ -3989,6 +6824,7 @@ Cancel the refresh of a section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.CancelRefreshRequest;
 import dev.plexapi.sdk.models.operations.CancelRefreshResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -3996,7 +6832,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -4040,28 +6876,29 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## refreshSection
 
-Start a refresh of this section
+Trigger a metadata refresh for a library section.
 
 ### Example Usage
 
-<!-- UsageSnippet language="java" operationID="refreshSection" method="post" path="/library/sections/{sectionId}/refresh" -->
+<!-- UsageSnippet language="java" operationID="refreshSection" method="get" path="/library/sections/{sectionId}/refresh" -->
 ```java
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.RefreshSectionRequest;
 import dev.plexapi.sdk.models.operations.RefreshSectionResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
-import dev.plexapi.sdk.models.shared.BoolInt;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -4080,14 +6917,15 @@ public class Application {
 
         RefreshSectionRequest req = RefreshSectionRequest.builder()
                 .sectionId(450300L)
-                .force(BoolInt.True)
                 .build();
 
         RefreshSectionResponse res = sdk.library().refreshSection()
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
     }
 }
 ```
@@ -4106,6 +6944,279 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## refreshSectionPost
+
+Trigger a metadata refresh for a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="refreshSectionPost" method="post" path="/library/sections/{sectionId}/refresh" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.RefreshSectionPostRequest;
+import dev.plexapi.sdk.models.operations.RefreshSectionPostResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import dev.plexapi.sdk.models.shared.BoolInt;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        RefreshSectionPostRequest req = RefreshSectionPostRequest.builder()
+                .sectionId(848668L)
+                .force(BoolInt.True)
+                .build();
+
+        RefreshSectionPostResponse res = sdk.library().refreshSectionPost()
+                .request(req)
+                .call();
+
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [RefreshSectionPostRequest](../../models/operations/RefreshSectionPostRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[RefreshSectionPostResponse](../../models/operations/RefreshSectionPostResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## searchSection
+
+Search within a specific library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="searchSection" method="get" path="/library/sections/{sectionId}/search" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.SearchSectionRequest;
+import dev.plexapi.sdk.models.operations.SearchSectionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        SearchSectionRequest req = SearchSectionRequest.builder()
+                .sectionId(925380L)
+                .build();
+
+        SearchSectionResponse res = sdk.library().searchSection()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `request`                                                               | [SearchSectionRequest](../../models/operations/SearchSectionRequest.md) | :heavy_check_mark:                                                      | The request object to use for the request.                              |
+
+### Response
+
+**[SearchSectionResponse](../../models/operations/SearchSectionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionSettings
+
+Get section-specific settings.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionSettings" method="get" path="/library/sections/{sectionId}/settings" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionSettingsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionSettingsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionSettingsRequest req = GetSectionSettingsRequest.builder()
+                .sectionId(100390L)
+                .build();
+
+        GetSectionSettingsResponse res = sdk.library().getSectionSettings()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetSectionSettingsRequest](../../models/operations/GetSectionSettingsRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[GetSectionSettingsResponse](../../models/operations/GetSectionSettingsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionShows
+
+Get shows for a TV library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionShows" method="get" path="/library/sections/{sectionId}/shows" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionShowsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionShowsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionShowsRequest req = GetSectionShowsRequest.builder()
+                .sectionId(9583L)
+                .build();
+
+        GetSectionShowsResponse res = sdk.library().getSectionShows()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [GetSectionShowsRequest](../../models/operations/GetSectionShowsRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+
+### Response
+
+**[GetSectionShowsResponse](../../models/operations/GetSectionShowsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getAvailableSorts
@@ -4119,6 +7230,7 @@ Get the sort mechanisms available in a section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetAvailableSortsRequest;
 import dev.plexapi.sdk.models.operations.GetAvailableSortsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -4126,7 +7238,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -4151,8 +7263,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithSorts().isPresent()) {
+            System.out.println(res.mediaContainerWithSorts().get());
         }
     }
 }
@@ -4172,6 +7284,279 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionTags
+
+Get tags in a library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionTags" method="get" path="/library/sections/{sectionId}/tags" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionTagsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionTagsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionTagsRequest req = GetSectionTagsRequest.builder()
+                .sectionId(787543L)
+                .build();
+
+        GetSectionTagsResponse res = sdk.library().getSectionTags()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithTags().isPresent()) {
+            System.out.println(res.mediaContainerWithTags().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [GetSectionTagsRequest](../../models/operations/GetSectionTagsRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+
+### Response
+
+**[GetSectionTagsResponse](../../models/operations/GetSectionTagsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionTimeline
+
+Get section timeline data.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionTimeline" method="get" path="/library/sections/{sectionId}/timeline" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionTimelineRequest;
+import dev.plexapi.sdk.models.operations.GetSectionTimelineResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionTimelineRequest req = GetSectionTimelineRequest.builder()
+                .sectionId(670370L)
+                .build();
+
+        GetSectionTimelineResponse res = sdk.library().getSectionTimeline()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithDirectory().isPresent()) {
+            System.out.println(res.mediaContainerWithDirectory().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetSectionTimelineRequest](../../models/operations/GetSectionTimelineRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[GetSectionTimelineResponse](../../models/operations/GetSectionTimelineResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## unmatchSectionItems
+
+Unmatch items in a library section from metadata providers.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="unmatchSectionItems" method="get" path="/library/sections/{sectionId}/unmatch" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.UnmatchSectionItemsRequest;
+import dev.plexapi.sdk.models.operations.UnmatchSectionItemsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        UnmatchSectionItemsRequest req = UnmatchSectionItemsRequest.builder()
+                .sectionId(209342L)
+                .build();
+
+        UnmatchSectionItemsResponse res = sdk.library().unmatchSectionItems()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [UnmatchSectionItemsRequest](../../models/operations/UnmatchSectionItemsRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[UnmatchSectionItemsResponse](../../models/operations/UnmatchSectionItemsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getUnwatchedForSection
+
+Get unwatched items for a specific library section.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getUnwatchedForSection" method="get" path="/library/sections/{sectionId}/unwatched" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetUnwatchedForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetUnwatchedForSectionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetUnwatchedForSectionRequest req = GetUnwatchedForSectionRequest.builder()
+                .sectionId(483590L)
+                .build();
+
+        GetUnwatchedForSectionResponse res = sdk.library().getUnwatchedForSection()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [GetUnwatchedForSectionRequest](../../models/operations/GetUnwatchedForSectionRequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+
+### Response
+
+**[GetUnwatchedForSectionResponse](../../models/operations/GetUnwatchedForSectionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getStreamLevels
@@ -4218,7 +7603,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -4284,7 +7669,7 @@ public class Application {
                 .call();
 
         if (res.res().isPresent()) {
-            // handle response
+            System.out.println(res.res().get());
         }
     }
 }
@@ -4385,13 +7770,14 @@ Generally only the admin can perform this action.  The exception is if the metad
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.*;
 import dev.plexapi.sdk.models.shared.Accepts;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -4436,6 +7822,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## updateItemArtwork
@@ -4450,13 +7837,14 @@ Generally only the admin can perform this action.  The exception is if the metad
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.*;
 import dev.plexapi.sdk.models.shared.Accepts;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -4501,6 +7889,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## deleteMarker
@@ -4605,7 +7994,7 @@ public class Application {
         EditMarkerRequest req = EditMarkerRequest.builder()
                 .ids("<value>")
                 .marker("<value>")
-                .type(884347L)
+                .mediaType(884347L)
                 .startTimeOffset(517251L)
                 .attributes(QueryParamAttributes.builder()
                     .build())
@@ -4616,7 +8005,7 @@ public class Application {
                 .call();
 
         if (res.postResponses200().isPresent()) {
-            // handle response
+            System.out.println(res.postResponses200().get());
         }
     }
 }
@@ -4847,6 +8236,7 @@ Get a composite image of images in this section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetSectionImageRequest;
 import dev.plexapi.sdk.models.operations.GetSectionImageResponse;
 import dev.plexapi.sdk.models.shared.*;
@@ -4854,7 +8244,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -4876,8 +8266,8 @@ public class Application {
                 .updatedAt(117413L)
                 .mediaQuery(MediaQuery.builder()
                     .type(MediaType.Episode)
-                    .sourceType(2L)
                     .sort("duration:desc,index")
+                    .sourceType(2L)
                     .build())
                 .build();
 
@@ -4904,6 +8294,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## deleteStream
@@ -5017,7 +8408,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.binaryResponse().isPresent()) {
+            // handle response
+        }
     }
 }
 ```
@@ -5082,7 +8475,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.binaryResponse().isPresent()) {
+            // handle response
+        }
     }
 }
 ```
@@ -5114,13 +8509,14 @@ Get the artwork, thumb, element for a metadata item
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.*;
 import dev.plexapi.sdk.models.shared.Accepts;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -5168,6 +8564,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getMediaPart
@@ -5175,7 +8572,6 @@ public class Application {
 Get a media part for streaming or download.
   - streaming: This is the default scenario.  Bandwidth usage on this endpoint will be guaranteed (on the server's end) to be at least the bandwidth reservation given in the decision.  If no decision exists, an ad-hoc decision will be created if sufficient bandwidth exists.  Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
   - download: Indicated if the query parameter indicates this is a download.  Bandwidth will be prioritized behind playbacks and will get a fair share of what remains.
-
 
 ### Example Usage
 
@@ -5220,7 +8616,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.binaryResponse().isPresent()) {
+            // handle response
+        }
     }
 }
 ```

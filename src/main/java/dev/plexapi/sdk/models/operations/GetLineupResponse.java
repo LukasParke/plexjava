@@ -5,15 +5,18 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.MediaContainerWithLineup;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class GetLineupResponse implements Response {
@@ -32,6 +35,11 @@ public class GetLineupResponse implements Response {
      */
     private HttpResponse<InputStream> rawResponse;
 
+    /**
+     * OK
+     */
+    private Optional<? extends MediaContainerWithLineup> mediaContainerWithLineup;
+
 
     private Map<String, List<String>> headers;
 
@@ -40,16 +48,28 @@ public class GetLineupResponse implements Response {
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
+            Optional<? extends MediaContainerWithLineup> mediaContainerWithLineup,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(mediaContainerWithLineup, "mediaContainerWithLineup");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.mediaContainerWithLineup = mediaContainerWithLineup;
         this.headers = headers;
+    }
+    
+    public GetLineupResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<InputStream> rawResponse,
+            Map<String, List<String>> headers) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty(), headers);
     }
 
     /**
@@ -74,6 +94,15 @@ public class GetLineupResponse implements Response {
     @JsonIgnore
     public HttpResponse<InputStream> rawResponse() {
         return rawResponse;
+    }
+
+    /**
+     * OK
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<MediaContainerWithLineup> mediaContainerWithLineup() {
+        return (Optional<MediaContainerWithLineup>) mediaContainerWithLineup;
     }
 
     @JsonIgnore
@@ -113,6 +142,25 @@ public class GetLineupResponse implements Response {
         return this;
     }
 
+    /**
+     * OK
+     */
+    public GetLineupResponse withMediaContainerWithLineup(MediaContainerWithLineup mediaContainerWithLineup) {
+        Utils.checkNotNull(mediaContainerWithLineup, "mediaContainerWithLineup");
+        this.mediaContainerWithLineup = Optional.ofNullable(mediaContainerWithLineup);
+        return this;
+    }
+
+
+    /**
+     * OK
+     */
+    public GetLineupResponse withMediaContainerWithLineup(Optional<? extends MediaContainerWithLineup> mediaContainerWithLineup) {
+        Utils.checkNotNull(mediaContainerWithLineup, "mediaContainerWithLineup");
+        this.mediaContainerWithLineup = mediaContainerWithLineup;
+        return this;
+    }
+
     public GetLineupResponse withHeaders(Map<String, List<String>> headers) {
         Utils.checkNotNull(headers, "headers");
         this.headers = headers;
@@ -132,6 +180,7 @@ public class GetLineupResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.mediaContainerWithLineup, other.mediaContainerWithLineup) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -139,7 +188,7 @@ public class GetLineupResponse implements Response {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            headers);
+            mediaContainerWithLineup, headers);
     }
     
     @Override
@@ -148,6 +197,7 @@ public class GetLineupResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
+                "mediaContainerWithLineup", mediaContainerWithLineup,
                 "headers", headers);
     }
 
@@ -159,6 +209,8 @@ public class GetLineupResponse implements Response {
         private Integer statusCode;
 
         private HttpResponse<InputStream> rawResponse;
+
+        private Optional<? extends MediaContainerWithLineup> mediaContainerWithLineup = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -197,6 +249,25 @@ public class GetLineupResponse implements Response {
         }
 
 
+        /**
+         * OK
+         */
+        public Builder mediaContainerWithLineup(MediaContainerWithLineup mediaContainerWithLineup) {
+            Utils.checkNotNull(mediaContainerWithLineup, "mediaContainerWithLineup");
+            this.mediaContainerWithLineup = Optional.ofNullable(mediaContainerWithLineup);
+            return this;
+        }
+
+        /**
+         * OK
+         */
+        public Builder mediaContainerWithLineup(Optional<? extends MediaContainerWithLineup> mediaContainerWithLineup) {
+            Utils.checkNotNull(mediaContainerWithLineup, "mediaContainerWithLineup");
+            this.mediaContainerWithLineup = mediaContainerWithLineup;
+            return this;
+        }
+
+
         public Builder headers(Map<String, List<String>> headers) {
             Utils.checkNotNull(headers, "headers");
             this.headers = headers;
@@ -207,7 +278,7 @@ public class GetLineupResponse implements Response {
 
             return new GetLineupResponse(
                 contentType, statusCode, rawResponse,
-                headers);
+                mediaContainerWithLineup, headers);
         }
 
     }

@@ -2,6 +2,14 @@
 
 The image type
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.Format;
+
+Format value = Format.JPG;
+```
+
 
 ## Values
 

@@ -3,27 +3,88 @@
  */
 package dev.plexapi.sdk.models.operations.async;
 
-import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
+import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
+import dev.plexapi.sdk.models.operations.GetSessionsRequest;
 import dev.plexapi.sdk.operations.GetSessions;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
+import dev.plexapi.sdk.utils.Utils;
+import java.lang.Long;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class GetSessionsRequestBuilder {
 
+    private Optional<Long> dvrId = Optional.empty();
+    private Optional<Long> channel = Optional.empty();
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public GetSessionsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
     }
+                
+    public GetSessionsRequestBuilder dvrId(long dvrId) {
+        Utils.checkNotNull(dvrId, "dvrId");
+        this.dvrId = Optional.of(dvrId);
+        return this;
+    }
 
-    public CompletableFuture<GetSessionsResponse> call() throws Exception {
-        
-        AsyncRequestlessOperation<GetSessionsResponse> operation
-            = new GetSessions.Async(sdkConfiguration);
+    public GetSessionsRequestBuilder dvrId(Optional<Long> dvrId) {
+        Utils.checkNotNull(dvrId, "dvrId");
+        this.dvrId = dvrId;
+        return this;
+    }
+                
+    public GetSessionsRequestBuilder channel(long channel) {
+        Utils.checkNotNull(channel, "channel");
+        this.channel = Optional.of(channel);
+        return this;
+    }
 
-        return operation.doRequest()
+    public GetSessionsRequestBuilder channel(Optional<Long> channel) {
+        Utils.checkNotNull(channel, "channel");
+        this.channel = channel;
+        return this;
+    }
+                
+    public GetSessionsRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
+
+    public GetSessionsRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+
+    private GetSessionsRequest buildRequest() {
+
+        GetSessionsRequest request = new GetSessionsRequest(dvrId,
+            channel);
+
+        return request;
+    }
+
+    public CompletableFuture<GetSessionsResponse> call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
+        AsyncRequestOperation<GetSessionsRequest, GetSessionsResponse> operation
+              = new GetSessions.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        GetSessionsRequest request = buildRequest();
+
+        return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 }

@@ -92,7 +92,7 @@ public class GetStreamRequest {
     private long streamId;
 
     /**
-     * The extension of the stream.  Required to fetch the `sub` portion of `idx`/`sub` subtitles
+     * The extension of the stream. Required to fetch the `sub` portion of `idx`/`sub` subtitles
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ext")
     private String ext;
@@ -276,7 +276,7 @@ public class GetStreamRequest {
     }
 
     /**
-     * The extension of the stream.  Required to fetch the `sub` portion of `idx`/`sub` subtitles
+     * The extension of the stream. Required to fetch the `sub` portion of `idx`/`sub` subtitles
      */
     @JsonIgnore
     public String ext() {
@@ -532,7 +532,7 @@ public class GetStreamRequest {
     }
 
     /**
-     * The extension of the stream.  Required to fetch the `sub` portion of `idx`/`sub` subtitles
+     * The extension of the stream. Required to fetch the `sub` portion of `idx`/`sub` subtitles
      */
     public GetStreamRequest withExt(String ext) {
         Utils.checkNotNull(ext, "ext");
@@ -917,7 +917,7 @@ public class GetStreamRequest {
 
 
         /**
-         * The extension of the stream.  Required to fetch the `sub` portion of `idx`/`sub` subtitles
+         * The extension of the stream. Required to fetch the `sub` portion of `idx`/`sub` subtitles
          */
         public Builder ext(String ext) {
             Utils.checkNotNull(ext, "ext");

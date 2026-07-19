@@ -84,15 +84,21 @@ public class DetectCreditsRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * Force the operation even if conditions are not met
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=force")
     private Optional<? extends BoolInt> force;
 
-
+    /**
+     * Whether to perform the operation manually
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=manual")
     private Optional<? extends BoolInt> manual;
 
@@ -240,17 +246,26 @@ public class DetectCreditsRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * Force the operation even if conditions are not met
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<BoolInt> force() {
         return (Optional<BoolInt>) force;
     }
 
+    /**
+     * Whether to perform the operation manually
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<BoolInt> manual() {
@@ -471,12 +486,18 @@ public class DetectCreditsRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public DetectCreditsRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * Force the operation even if conditions are not met
+     */
     public DetectCreditsRequest withForce(BoolInt force) {
         Utils.checkNotNull(force, "force");
         this.force = Optional.ofNullable(force);
@@ -484,12 +505,18 @@ public class DetectCreditsRequest {
     }
 
 
+    /**
+     * Force the operation even if conditions are not met
+     */
     public DetectCreditsRequest withForce(Optional<? extends BoolInt> force) {
         Utils.checkNotNull(force, "force");
         this.force = force;
         return this;
     }
 
+    /**
+     * Whether to perform the operation manually
+     */
     public DetectCreditsRequest withManual(BoolInt manual) {
         Utils.checkNotNull(manual, "manual");
         this.manual = Optional.ofNullable(manual);
@@ -497,6 +524,9 @@ public class DetectCreditsRequest {
     }
 
 
+    /**
+     * Whether to perform the operation manually
+     */
     public DetectCreditsRequest withManual(Optional<? extends BoolInt> manual) {
         Utils.checkNotNull(manual, "manual");
         this.manual = manual;
@@ -803,6 +833,9 @@ public class DetectCreditsRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -810,12 +843,18 @@ public class DetectCreditsRequest {
         }
 
 
+        /**
+         * Force the operation even if conditions are not met
+         */
         public Builder force(BoolInt force) {
             Utils.checkNotNull(force, "force");
             this.force = Optional.ofNullable(force);
             return this;
         }
 
+        /**
+         * Force the operation even if conditions are not met
+         */
         public Builder force(Optional<? extends BoolInt> force) {
             Utils.checkNotNull(force, "force");
             this.force = force;
@@ -823,12 +862,18 @@ public class DetectCreditsRequest {
         }
 
 
+        /**
+         * Whether to perform the operation manually
+         */
         public Builder manual(BoolInt manual) {
             Utils.checkNotNull(manual, "manual");
             this.manual = Optional.ofNullable(manual);
             return this;
         }
 
+        /**
+         * Whether to perform the operation manually
+         */
         public Builder manual(Optional<? extends BoolInt> manual) {
             Utils.checkNotNull(manual, "manual");
             this.manual = manual;

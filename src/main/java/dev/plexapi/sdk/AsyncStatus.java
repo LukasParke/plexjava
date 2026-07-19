@@ -28,12 +28,17 @@ import dev.plexapi.sdk.operations.GetHistoryItem;
 import dev.plexapi.sdk.operations.ListPlaybackHistory;
 import dev.plexapi.sdk.operations.ListSessions;
 import dev.plexapi.sdk.operations.TerminateSession;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The status endpoints give you information about current playbacks, play history, and even terminating sessions.
+ * The status endpoints give you information about current playbacks, play history, and even
+ * terminating sessions.
  */
 public class AsyncStatus {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Status syncSDK;
 
@@ -57,6 +62,8 @@ public class AsyncStatus {
      * 
      * <p>List all current playbacks on this server
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The async call builder
      */
     public ListSessionsRequestBuilder listSessions() {
@@ -68,11 +75,29 @@ public class AsyncStatus {
      * 
      * <p>List all current playbacks on this server
      * 
-     * @return CompletableFuture&lt;ListSessionsResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<ListSessionsResponse>} - The async response
      */
     public CompletableFuture<ListSessionsResponse> listSessionsDirect() {
+        return listSessions(Optional.empty());
+    }
+
+    /**
+     * List Sessions
+     * 
+     * <p>List all current playbacks on this server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<ListSessionsResponse>} - The async response
+     */
+    public CompletableFuture<ListSessionsResponse> listSessions(Optional<Options> options) {
         AsyncRequestlessOperation<ListSessionsResponse> operation
-            = new ListSessions.Async(sdkConfiguration);
+            = new ListSessions.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -82,6 +107,8 @@ public class AsyncStatus {
      * Get background tasks
      * 
      * <p>Get the list of all background tasks
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -94,11 +121,29 @@ public class AsyncStatus {
      * 
      * <p>Get the list of all background tasks
      * 
-     * @return CompletableFuture&lt;GetBackgroundTasksResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<GetBackgroundTasksResponse>} - The async response
      */
     public CompletableFuture<GetBackgroundTasksResponse> getBackgroundTasksDirect() {
+        return getBackgroundTasks(Optional.empty());
+    }
+
+    /**
+     * Get background tasks
+     * 
+     * <p>Get the list of all background tasks
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetBackgroundTasksResponse>} - The async response
+     */
+    public CompletableFuture<GetBackgroundTasksResponse> getBackgroundTasks(Optional<Options> options) {
         AsyncRequestlessOperation<GetBackgroundTasksResponse> operation
-            = new GetBackgroundTasks.Async(sdkConfiguration);
+            = new GetBackgroundTasks.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -108,7 +153,8 @@ public class AsyncStatus {
      * List Playback History
      * 
      * <p>List all playback history (Admin can see all users, others can only see their own).
-     * Pagination should be used on this endpoint.  Additionally this endpoint supports `includeFields`, `excludeFields`, `includeElements`, and `excludeElements` parameters.
+     * Pagination should be used on this endpoint. Additionally this endpoint supports `includeFields`,
+     * `excludeFields`, `includeElements`, and `excludeElements` parameters.
      * 
      * @return The async call builder
      */
@@ -120,14 +166,32 @@ public class AsyncStatus {
      * List Playback History
      * 
      * <p>List all playback history (Admin can see all users, others can only see their own).
-     * Pagination should be used on this endpoint.  Additionally this endpoint supports `includeFields`, `excludeFields`, `includeElements`, and `excludeElements` parameters.
+     * Pagination should be used on this endpoint. Additionally this endpoint supports `includeFields`,
+     * `excludeFields`, `includeElements`, and `excludeElements` parameters.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListPlaybackHistoryResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListPlaybackHistoryResponse>} - The async response
      */
     public CompletableFuture<ListPlaybackHistoryResponse> listPlaybackHistory(ListPlaybackHistoryRequest request) {
+        return listPlaybackHistory(request, Optional.empty());
+    }
+
+    /**
+     * List Playback History
+     * 
+     * <p>List all playback history (Admin can see all users, others can only see their own).
+     * Pagination should be used on this endpoint. Additionally this endpoint supports `includeFields`,
+     * `excludeFields`, `includeElements`, and `excludeElements` parameters.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListPlaybackHistoryResponse>} - The async response
+     */
+    public CompletableFuture<ListPlaybackHistoryResponse> listPlaybackHistory(ListPlaybackHistoryRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListPlaybackHistoryRequest, ListPlaybackHistoryResponse> operation
-              = new ListPlaybackHistory.Async(sdkConfiguration);
+              = new ListPlaybackHistory.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -137,6 +201,8 @@ public class AsyncStatus {
      * Terminate a session
      * 
      * <p>Terminate a playback session kicking off the user
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -149,12 +215,31 @@ public class AsyncStatus {
      * 
      * <p>Terminate a playback session kicking off the user
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;TerminateSessionResponse&gt; - The async response
+     * @return {@code CompletableFuture<TerminateSessionResponse>} - The async response
      */
     public CompletableFuture<TerminateSessionResponse> terminateSession(TerminateSessionRequest request) {
+        return terminateSession(request, Optional.empty());
+    }
+
+    /**
+     * Terminate a session
+     * 
+     * <p>Terminate a playback session kicking off the user
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<TerminateSessionResponse>} - The async response
+     */
+    public CompletableFuture<TerminateSessionResponse> terminateSession(TerminateSessionRequest request, Optional<Options> options) {
         AsyncRequestOperation<TerminateSessionRequest, TerminateSessionResponse> operation
-              = new TerminateSession.Async(sdkConfiguration);
+              = new TerminateSession.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -164,6 +249,8 @@ public class AsyncStatus {
      * Delete Single History Item
      * 
      * <p>Delete a single history item by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -176,12 +263,31 @@ public class AsyncStatus {
      * 
      * <p>Delete a single history item by id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteHistoryResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteHistoryResponse>} - The async response
      */
     public CompletableFuture<DeleteHistoryResponse> deleteHistory(DeleteHistoryRequest request) {
+        return deleteHistory(request, Optional.empty());
+    }
+
+    /**
+     * Delete Single History Item
+     * 
+     * <p>Delete a single history item by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteHistoryResponse>} - The async response
+     */
+    public CompletableFuture<DeleteHistoryResponse> deleteHistory(DeleteHistoryRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteHistoryRequest, DeleteHistoryResponse> operation
-              = new DeleteHistory.Async(sdkConfiguration);
+              = new DeleteHistory.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -191,6 +297,8 @@ public class AsyncStatus {
      * Get Single History Item
      * 
      * <p>Get a single history item by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -203,12 +311,31 @@ public class AsyncStatus {
      * 
      * <p>Get a single history item by id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetHistoryItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetHistoryItemResponse>} - The async response
      */
     public CompletableFuture<GetHistoryItemResponse> getHistoryItem(GetHistoryItemRequest request) {
+        return getHistoryItem(request, Optional.empty());
+    }
+
+    /**
+     * Get Single History Item
+     * 
+     * <p>Get a single history item by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetHistoryItemResponse>} - The async response
+     */
+    public CompletableFuture<GetHistoryItemResponse> getHistoryItem(GetHistoryItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetHistoryItemRequest, GetHistoryItemResponse> operation
-              = new GetHistoryItem.Async(sdkConfiguration);
+              = new GetHistoryItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

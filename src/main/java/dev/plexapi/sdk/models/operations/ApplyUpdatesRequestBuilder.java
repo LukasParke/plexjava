@@ -7,13 +7,18 @@ import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.ApplyUpdates;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
+import java.util.Optional;
 
 public class ApplyUpdatesRequestBuilder {
 
     private ApplyUpdatesRequest request;
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public ApplyUpdatesRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -24,11 +29,26 @@ public class ApplyUpdatesRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public ApplyUpdatesRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public ApplyUpdatesResponse call() throws Exception {
-        
+    public ApplyUpdatesRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public ApplyUpdatesResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         RequestOperation<ApplyUpdatesRequest, ApplyUpdatesResponse> operation
-              = new ApplyUpdates.Sync(sdkConfiguration);
+              = new ApplyUpdates.Sync(sdkConfiguration, options, _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

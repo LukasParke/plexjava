@@ -7,13 +7,18 @@ import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.OptimizeDatabase;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
+import java.util.Optional;
 
 public class OptimizeDatabaseRequestBuilder {
 
     private OptimizeDatabaseRequest request;
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public OptimizeDatabaseRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -24,11 +29,26 @@ public class OptimizeDatabaseRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public OptimizeDatabaseRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public OptimizeDatabaseResponse call() throws Exception {
-        
+    public OptimizeDatabaseRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public OptimizeDatabaseResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         RequestOperation<OptimizeDatabaseRequest, OptimizeDatabaseResponse> operation
-              = new OptimizeDatabase.Sync(sdkConfiguration);
+              = new OptimizeDatabase.Sync(sdkConfiguration, options, _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

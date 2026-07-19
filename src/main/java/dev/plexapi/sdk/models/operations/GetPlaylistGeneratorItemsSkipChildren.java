@@ -19,26 +19,26 @@ import java.lang.SuppressWarnings;
 /**
  * GetPlaylistGeneratorItemsSkipChildren
  * 
- * <p>When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
+ * <p>When found on a show item, indicates that the children (seasons) should be skipped in favor of the
+ * grandchildren (episodes). Useful for mini-series, etc.
  */
 @JsonDeserialize(using = GetPlaylistGeneratorItemsSkipChildren._Deserializer.class)
 public class GetPlaylistGeneratorItemsSkipChildren {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private GetPlaylistGeneratorItemsSkipChildren(TypedObject value) {
         this.value = value;
     }
 
     public static GetPlaylistGeneratorItemsSkipChildren of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new GetPlaylistGeneratorItemsSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new GetPlaylistGeneratorItemsSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static GetPlaylistGeneratorItemsSkipChildren of(GetPlaylistGeneratorItemsSkipChildren2 value) {
         Utils.checkNotNull(value, "value");
-        return new GetPlaylistGeneratorItemsSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<GetPlaylistGeneratorItemsSkipChildren2>(){}));
+        return new GetPlaylistGeneratorItemsSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +61,7 @@ public class GetPlaylistGeneratorItemsSkipChildren {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +72,7 @@ public class GetPlaylistGeneratorItemsSkipChildren {
             return false;
         }
         GetPlaylistGeneratorItemsSkipChildren other = (GetPlaylistGeneratorItemsSkipChildren) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +85,8 @@ public class GetPlaylistGeneratorItemsSkipChildren {
 
         public _Deserializer() {
             super(GetPlaylistGeneratorItemsSkipChildren.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<GetPlaylistGeneratorItemsSkipChildren2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<GetPlaylistGeneratorItemsSkipChildren2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +95,6 @@ public class GetPlaylistGeneratorItemsSkipChildren {
         return Utils.toString(GetPlaylistGeneratorItemsSkipChildren.class,
                 "value", value);
     }
- 
+
 }
 

@@ -84,11 +84,15 @@ public class EditSubscriptionPreferencesRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * The unique identifier of the subscription
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=subscriptionId")
     private long subscriptionId;
 
-
+    /**
+     * The preference key to retrieve or set
+     */
     @SpeakeasyMetadata("queryParam:style=deepObject,explode=true,name=prefs")
     private Optional<? extends EditSubscriptionPreferencesQueryParamPrefs> prefs;
 
@@ -233,11 +237,17 @@ public class EditSubscriptionPreferencesRequest {
         return marketplace;
     }
 
+    /**
+     * The unique identifier of the subscription
+     */
     @JsonIgnore
     public long subscriptionId() {
         return subscriptionId;
     }
 
+    /**
+     * The preference key to retrieve or set
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<EditSubscriptionPreferencesQueryParamPrefs> prefs() {
@@ -458,12 +468,18 @@ public class EditSubscriptionPreferencesRequest {
         return this;
     }
 
+    /**
+     * The unique identifier of the subscription
+     */
     public EditSubscriptionPreferencesRequest withSubscriptionId(long subscriptionId) {
         Utils.checkNotNull(subscriptionId, "subscriptionId");
         this.subscriptionId = subscriptionId;
         return this;
     }
 
+    /**
+     * The preference key to retrieve or set
+     */
     public EditSubscriptionPreferencesRequest withPrefs(EditSubscriptionPreferencesQueryParamPrefs prefs) {
         Utils.checkNotNull(prefs, "prefs");
         this.prefs = Optional.ofNullable(prefs);
@@ -471,6 +487,9 @@ public class EditSubscriptionPreferencesRequest {
     }
 
 
+    /**
+     * The preference key to retrieve or set
+     */
     public EditSubscriptionPreferencesRequest withPrefs(Optional<? extends EditSubscriptionPreferencesQueryParamPrefs> prefs) {
         Utils.checkNotNull(prefs, "prefs");
         this.prefs = prefs;
@@ -773,6 +792,9 @@ public class EditSubscriptionPreferencesRequest {
         }
 
 
+        /**
+         * The unique identifier of the subscription
+         */
         public Builder subscriptionId(long subscriptionId) {
             Utils.checkNotNull(subscriptionId, "subscriptionId");
             this.subscriptionId = subscriptionId;
@@ -780,12 +802,18 @@ public class EditSubscriptionPreferencesRequest {
         }
 
 
+        /**
+         * The preference key to retrieve or set
+         */
         public Builder prefs(EditSubscriptionPreferencesQueryParamPrefs prefs) {
             Utils.checkNotNull(prefs, "prefs");
             this.prefs = Optional.ofNullable(prefs);
             return this;
         }
 
+        /**
+         * The preference key to retrieve or set
+         */
         public Builder prefs(Optional<? extends EditSubscriptionPreferencesQueryParamPrefs> prefs) {
             Utils.checkNotNull(prefs, "prefs");
             this.prefs = prefs;

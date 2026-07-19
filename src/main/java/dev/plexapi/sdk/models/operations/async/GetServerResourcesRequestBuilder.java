@@ -8,8 +8,10 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.models.operations.GetServerResourcesRequest;
 import dev.plexapi.sdk.operations.GetServerResources;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
 import java.lang.String;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -18,7 +20,9 @@ public class GetServerResourcesRequestBuilder {
 
     private GetServerResourcesRequest request;
     private Optional<String> serverURL = Optional.empty();
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public GetServerResourcesRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -41,11 +45,28 @@ public class GetServerResourcesRequestBuilder {
         this.serverURL = serverURL;
         return this;
     }
+                
+    public GetServerResourcesRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public CompletableFuture<GetServerResourcesResponse> call() throws Exception {
-        
+    public GetServerResourcesRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public CompletableFuture<GetServerResourcesResponse> call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         AsyncRequestOperation<GetServerResourcesRequest, GetServerResourcesResponse> operation
-              = new GetServerResources.Async(sdkConfiguration, serverURL);
+              = new GetServerResources.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
 
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);

@@ -85,13 +85,15 @@ public class ApplyUpdatesRequest {
     private Optional<String> marketplace;
 
     /**
-     * Indicate that you want the update to run during the next Butler execution. Omitting this or setting it to false indicates that the update should install immediately.
+     * Indicate that you want the update to run during the next Butler execution. Omitting this or setting
+     * it to false indicates that the update should install immediately.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=tonight")
     private Optional<? extends BoolInt> tonight;
 
     /**
-     * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this version will have the `state` set to `skipped`.
+     * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this
+     * version will have the `state` set to `skipped`.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=skip")
     private Optional<? extends BoolInt> skip;
@@ -237,7 +239,8 @@ public class ApplyUpdatesRequest {
     }
 
     /**
-     * Indicate that you want the update to run during the next Butler execution. Omitting this or setting it to false indicates that the update should install immediately.
+     * Indicate that you want the update to run during the next Butler execution. Omitting this or setting
+     * it to false indicates that the update should install immediately.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -246,7 +249,8 @@ public class ApplyUpdatesRequest {
     }
 
     /**
-     * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this version will have the `state` set to `skipped`.
+     * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this
+     * version will have the `state` set to `skipped`.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -469,7 +473,8 @@ public class ApplyUpdatesRequest {
     }
 
     /**
-     * Indicate that you want the update to run during the next Butler execution. Omitting this or setting it to false indicates that the update should install immediately.
+     * Indicate that you want the update to run during the next Butler execution. Omitting this or setting
+     * it to false indicates that the update should install immediately.
      */
     public ApplyUpdatesRequest withTonight(BoolInt tonight) {
         Utils.checkNotNull(tonight, "tonight");
@@ -479,7 +484,8 @@ public class ApplyUpdatesRequest {
 
 
     /**
-     * Indicate that you want the update to run during the next Butler execution. Omitting this or setting it to false indicates that the update should install immediately.
+     * Indicate that you want the update to run during the next Butler execution. Omitting this or setting
+     * it to false indicates that the update should install immediately.
      */
     public ApplyUpdatesRequest withTonight(Optional<? extends BoolInt> tonight) {
         Utils.checkNotNull(tonight, "tonight");
@@ -488,7 +494,8 @@ public class ApplyUpdatesRequest {
     }
 
     /**
-     * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this version will have the `state` set to `skipped`.
+     * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this
+     * version will have the `state` set to `skipped`.
      */
     public ApplyUpdatesRequest withSkip(BoolInt skip) {
         Utils.checkNotNull(skip, "skip");
@@ -498,7 +505,8 @@ public class ApplyUpdatesRequest {
 
 
     /**
-     * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this version will have the `state` set to `skipped`.
+     * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this
+     * version will have the `state` set to `skipped`.
      */
     public ApplyUpdatesRequest withSkip(Optional<? extends BoolInt> skip) {
         Utils.checkNotNull(skip, "skip");
@@ -803,7 +811,8 @@ public class ApplyUpdatesRequest {
 
 
         /**
-         * Indicate that you want the update to run during the next Butler execution. Omitting this or setting it to false indicates that the update should install immediately.
+         * Indicate that you want the update to run during the next Butler execution. Omitting this or setting
+         * it to false indicates that the update should install immediately.
          */
         public Builder tonight(BoolInt tonight) {
             Utils.checkNotNull(tonight, "tonight");
@@ -812,7 +821,8 @@ public class ApplyUpdatesRequest {
         }
 
         /**
-         * Indicate that you want the update to run during the next Butler execution. Omitting this or setting it to false indicates that the update should install immediately.
+         * Indicate that you want the update to run during the next Butler execution. Omitting this or setting
+         * it to false indicates that the update should install immediately.
          */
         public Builder tonight(Optional<? extends BoolInt> tonight) {
             Utils.checkNotNull(tonight, "tonight");
@@ -822,7 +832,8 @@ public class ApplyUpdatesRequest {
 
 
         /**
-         * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this version will have the `state` set to `skipped`.
+         * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this
+         * version will have the `state` set to `skipped`.
          */
         public Builder skip(BoolInt skip) {
             Utils.checkNotNull(skip, "skip");
@@ -831,7 +842,8 @@ public class ApplyUpdatesRequest {
         }
 
         /**
-         * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this version will have the `state` set to `skipped`.
+         * Indicate that the latest version should be marked as skipped. The &lt;Release&gt; entry for this
+         * version will have the `state` set to `skipped`.
          */
         public Builder skip(Optional<? extends BoolInt> skip) {
             Utils.checkNotNull(skip, "skip");

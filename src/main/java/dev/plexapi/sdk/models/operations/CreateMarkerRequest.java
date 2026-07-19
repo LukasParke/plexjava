@@ -84,7 +84,9 @@ public class CreateMarkerRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
@@ -92,7 +94,7 @@ public class CreateMarkerRequest {
      * The type of marker to edit/create
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private long type;
+    private long mediaType;
 
     /**
      * The start time of the marker
@@ -126,7 +128,7 @@ public class CreateMarkerRequest {
             Optional<String> deviceName,
             Optional<String> marketplace,
             String ids,
-            long type,
+            long mediaType,
             long startTimeOffset,
             Optional<Long> endTimeOffset,
             Optional<? extends Attributes> attributes) {
@@ -142,7 +144,7 @@ public class CreateMarkerRequest {
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(ids, "ids");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         Utils.checkNotNull(startTimeOffset, "startTimeOffset");
         Utils.checkNotNull(endTimeOffset, "endTimeOffset");
         Utils.checkNotNull(attributes, "attributes");
@@ -158,7 +160,7 @@ public class CreateMarkerRequest {
         this.deviceName = deviceName;
         this.marketplace = marketplace;
         this.ids = ids;
-        this.type = type;
+        this.mediaType = mediaType;
         this.startTimeOffset = startTimeOffset;
         this.endTimeOffset = endTimeOffset;
         this.attributes = attributes;
@@ -166,13 +168,13 @@ public class CreateMarkerRequest {
     
     public CreateMarkerRequest(
             String ids,
-            long type,
+            long mediaType,
             long startTimeOffset) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), ids,
-            type, startTimeOffset, Optional.empty(),
+            mediaType, startTimeOffset, Optional.empty(),
             Optional.empty());
     }
 
@@ -265,6 +267,9 @@ public class CreateMarkerRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
@@ -274,8 +279,8 @@ public class CreateMarkerRequest {
      * The type of marker to edit/create
      */
     @JsonIgnore
-    public long type() {
-        return type;
+    public long mediaType() {
+        return mediaType;
     }
 
     /**
@@ -517,6 +522,9 @@ public class CreateMarkerRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public CreateMarkerRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
@@ -526,9 +534,9 @@ public class CreateMarkerRequest {
     /**
      * The type of marker to edit/create
      */
-    public CreateMarkerRequest withType(long type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public CreateMarkerRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -601,7 +609,7 @@ public class CreateMarkerRequest {
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.ids, other.ids) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
             Utils.enhancedDeepEquals(this.startTimeOffset, other.startTimeOffset) &&
             Utils.enhancedDeepEquals(this.endTimeOffset, other.endTimeOffset) &&
             Utils.enhancedDeepEquals(this.attributes, other.attributes);
@@ -614,7 +622,7 @@ public class CreateMarkerRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, ids,
-            type, startTimeOffset, endTimeOffset,
+            mediaType, startTimeOffset, endTimeOffset,
             attributes);
     }
     
@@ -633,7 +641,7 @@ public class CreateMarkerRequest {
                 "deviceName", deviceName,
                 "marketplace", marketplace,
                 "ids", ids,
-                "type", type,
+                "mediaType", mediaType,
                 "startTimeOffset", startTimeOffset,
                 "endTimeOffset", endTimeOffset,
                 "attributes", attributes);
@@ -666,7 +674,7 @@ public class CreateMarkerRequest {
 
         private String ids;
 
-        private Long type;
+        private Long mediaType;
 
         private Long startTimeOffset;
 
@@ -888,6 +896,9 @@ public class CreateMarkerRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -898,9 +909,9 @@ public class CreateMarkerRequest {
         /**
          * The type of marker to edit/create
          */
-        public Builder type(long type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -962,7 +973,7 @@ public class CreateMarkerRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, ids,
-                type, startTimeOffset, endTimeOffset,
+                mediaType, startTimeOffset, endTimeOffset,
                 attributes);
         }
 

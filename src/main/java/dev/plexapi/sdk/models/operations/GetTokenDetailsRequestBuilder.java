@@ -7,8 +7,10 @@ import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.GetTokenDetails;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
 import java.lang.String;
 import java.util.Optional;
 
@@ -16,7 +18,9 @@ public class GetTokenDetailsRequestBuilder {
 
     private GetTokenDetailsRequest request;
     private Optional<String> serverURL = Optional.empty();
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public GetTokenDetailsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -39,11 +43,28 @@ public class GetTokenDetailsRequestBuilder {
         this.serverURL = serverURL;
         return this;
     }
+                
+    public GetTokenDetailsRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public GetTokenDetailsResponse call() throws Exception {
-        
+    public GetTokenDetailsRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public GetTokenDetailsResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         RequestOperation<GetTokenDetailsRequest, GetTokenDetailsResponse> operation
-              = new GetTokenDetails.Sync(sdkConfiguration, serverURL);
+              = new GetTokenDetails.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

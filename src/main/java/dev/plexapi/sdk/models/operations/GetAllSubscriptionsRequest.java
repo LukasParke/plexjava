@@ -11,6 +11,7 @@ import dev.plexapi.sdk.models.shared.BoolInt;
 import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
+import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -96,6 +97,18 @@ public class GetAllSubscriptionsRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeStorage")
     private Optional<? extends BoolInt> includeStorage;
 
+    /**
+     * Pagination start offset.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=X-Plex-Container-Start")
+    private Optional<Long> xPlexContainerStart;
+
+    /**
+     * Pagination page size.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=X-Plex-Container-Size")
+    private Optional<Long> xPlexContainerSize;
+
     @JsonCreator
     public GetAllSubscriptionsRequest(
             Optional<? extends Accepts> accepts,
@@ -110,7 +123,9 @@ public class GetAllSubscriptionsRequest {
             Optional<String> deviceName,
             Optional<String> marketplace,
             Optional<? extends BoolInt> includeGrabs,
-            Optional<? extends BoolInt> includeStorage) {
+            Optional<? extends BoolInt> includeStorage,
+            Optional<Long> xPlexContainerStart,
+            Optional<Long> xPlexContainerSize) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -124,6 +139,8 @@ public class GetAllSubscriptionsRequest {
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(includeGrabs, "includeGrabs");
         Utils.checkNotNull(includeStorage, "includeStorage");
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -137,6 +154,8 @@ public class GetAllSubscriptionsRequest {
         this.marketplace = marketplace;
         this.includeGrabs = includeGrabs;
         this.includeStorage = includeStorage;
+        this.xPlexContainerStart = xPlexContainerStart;
+        this.xPlexContainerSize = xPlexContainerSize;
     }
     
     public GetAllSubscriptionsRequest() {
@@ -144,7 +163,7 @@ public class GetAllSubscriptionsRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     /**
@@ -252,6 +271,22 @@ public class GetAllSubscriptionsRequest {
     @JsonIgnore
     public Optional<BoolInt> includeStorage() {
         return (Optional<BoolInt>) includeStorage;
+    }
+
+    /**
+     * Pagination start offset.
+     */
+    @JsonIgnore
+    public Optional<Long> xPlexContainerStart() {
+        return xPlexContainerStart;
+    }
+
+    /**
+     * Pagination page size.
+     */
+    @JsonIgnore
+    public Optional<Long> xPlexContainerSize() {
+        return xPlexContainerSize;
     }
 
     public static Builder builder() {
@@ -506,6 +541,44 @@ public class GetAllSubscriptionsRequest {
         return this;
     }
 
+    /**
+     * Pagination start offset.
+     */
+    public GetAllSubscriptionsRequest withXPlexContainerStart(long xPlexContainerStart) {
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        this.xPlexContainerStart = Optional.ofNullable(xPlexContainerStart);
+        return this;
+    }
+
+
+    /**
+     * Pagination start offset.
+     */
+    public GetAllSubscriptionsRequest withXPlexContainerStart(Optional<Long> xPlexContainerStart) {
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        this.xPlexContainerStart = xPlexContainerStart;
+        return this;
+    }
+
+    /**
+     * Pagination page size.
+     */
+    public GetAllSubscriptionsRequest withXPlexContainerSize(long xPlexContainerSize) {
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+        this.xPlexContainerSize = Optional.ofNullable(xPlexContainerSize);
+        return this;
+    }
+
+
+    /**
+     * Pagination page size.
+     */
+    public GetAllSubscriptionsRequest withXPlexContainerSize(Optional<Long> xPlexContainerSize) {
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+        this.xPlexContainerSize = xPlexContainerSize;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -528,7 +601,9 @@ public class GetAllSubscriptionsRequest {
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.includeGrabs, other.includeGrabs) &&
-            Utils.enhancedDeepEquals(this.includeStorage, other.includeStorage);
+            Utils.enhancedDeepEquals(this.includeStorage, other.includeStorage) &&
+            Utils.enhancedDeepEquals(this.xPlexContainerStart, other.xPlexContainerStart) &&
+            Utils.enhancedDeepEquals(this.xPlexContainerSize, other.xPlexContainerSize);
     }
     
     @Override
@@ -538,7 +613,7 @@ public class GetAllSubscriptionsRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, includeGrabs,
-            includeStorage);
+            includeStorage, xPlexContainerStart, xPlexContainerSize);
     }
     
     @Override
@@ -556,7 +631,9 @@ public class GetAllSubscriptionsRequest {
                 "deviceName", deviceName,
                 "marketplace", marketplace,
                 "includeGrabs", includeGrabs,
-                "includeStorage", includeStorage);
+                "includeStorage", includeStorage,
+                "xPlexContainerStart", xPlexContainerStart,
+                "xPlexContainerSize", xPlexContainerSize);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -587,6 +664,10 @@ public class GetAllSubscriptionsRequest {
         private Optional<? extends BoolInt> includeGrabs;
 
         private Optional<? extends BoolInt> includeStorage;
+
+        private Optional<Long> xPlexContainerStart = Optional.empty();
+
+        private Optional<Long> xPlexContainerSize = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -839,6 +920,44 @@ public class GetAllSubscriptionsRequest {
             return this;
         }
 
+
+        /**
+         * Pagination start offset.
+         */
+        public Builder xPlexContainerStart(long xPlexContainerStart) {
+            Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+            this.xPlexContainerStart = Optional.ofNullable(xPlexContainerStart);
+            return this;
+        }
+
+        /**
+         * Pagination start offset.
+         */
+        public Builder xPlexContainerStart(Optional<Long> xPlexContainerStart) {
+            Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+            this.xPlexContainerStart = xPlexContainerStart;
+            return this;
+        }
+
+
+        /**
+         * Pagination page size.
+         */
+        public Builder xPlexContainerSize(long xPlexContainerSize) {
+            Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+            this.xPlexContainerSize = Optional.ofNullable(xPlexContainerSize);
+            return this;
+        }
+
+        /**
+         * Pagination page size.
+         */
+        public Builder xPlexContainerSize(Optional<Long> xPlexContainerSize) {
+            Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+            this.xPlexContainerSize = xPlexContainerSize;
+            return this;
+        }
+
         public GetAllSubscriptionsRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -855,7 +974,7 @@ public class GetAllSubscriptionsRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, includeGrabs,
-                includeStorage);
+                includeStorage, xPlexContainerStart, xPlexContainerSize);
         }
 
 

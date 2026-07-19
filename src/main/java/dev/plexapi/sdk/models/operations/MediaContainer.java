@@ -10,19 +10,27 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * MediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class MediaContainer {
 
@@ -31,7 +39,8 @@ public class MediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -99,10 +108,12 @@ public class MediaContainer {
     @JsonProperty("countryCode")
     private Optional<String> countryCode;
 
-
+    /**
+     * Comma-separated list of enabled diagnostics modules.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("diagnostics")
-    private Optional<String> diagnostics;
+    private Optional<? extends List<String>> diagnostics;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -174,17 +185,19 @@ public class MediaContainer {
     @JsonProperty("myPlexUsername")
     private Optional<String> myPlexUsername;
 
-
+    /**
+     * Whether offline transcoding is enabled.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offlineTranscode")
-    private Optional<? extends Object> offlineTranscode;
+    private Optional<Integer> offlineTranscode;
 
     /**
-     * A comma-separated list of features which are enabled for the server owner
+     * List of enabled owner features.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("ownerFeatures")
-    private Optional<String> ownerFeatures;
+    private Optional<? extends List<String>> ownerFeatures;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -257,23 +270,25 @@ public class MediaContainer {
     private Optional<Boolean> transcoderVideo;
 
     /**
-     * The suggested video quality bitrates to present to the user
+     * List of supported transcoder video bitrates.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("transcoderVideoBitrates")
-    private Optional<? extends Object> transcoderVideoBitrates;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("transcoderVideoQualities")
-    private Optional<String> transcoderVideoQualities;
+    private Optional<? extends List<String>> transcoderVideoBitrates;
 
     /**
-     * The suggested video resolutions to the above quality bitrates
+     * List of supported transcoder video qualities.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("transcoderVideoQualities")
+    private Optional<? extends List<String>> transcoderVideoQualities;
+
+    /**
+     * List of supported transcoder video resolutions.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("transcoderVideoResolutions")
-    private Optional<? extends Object> transcoderVideoResolutions;
+    private Optional<? extends List<String>> transcoderVideoResolutions;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -301,6 +316,13 @@ public class MediaContainer {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Bandwidths")
     private Optional<? extends Bandwidths> bandwidths;
+
+    /**
+     * The play queue ID when playback originates from a queue.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("playQueueID")
+    private Optional<Long> playQueueID;
 
     /**
      * A code describing why the session was terminated by the server.
@@ -332,7 +354,7 @@ public class MediaContainer {
             @JsonProperty("certificate") Optional<Boolean> certificate,
             @JsonProperty("companionProxy") Optional<Boolean> companionProxy,
             @JsonProperty("countryCode") Optional<String> countryCode,
-            @JsonProperty("diagnostics") Optional<String> diagnostics,
+            @JsonProperty("diagnostics") Optional<? extends List<String>> diagnostics,
             @JsonProperty("eventStream") Optional<Boolean> eventStream,
             @JsonProperty("friendlyName") Optional<String> friendlyName,
             @JsonProperty("hubSearch") Optional<Boolean> hubSearch,
@@ -347,8 +369,8 @@ public class MediaContainer {
             @JsonProperty("myPlexSigninState") Optional<? extends Object> myPlexSigninState,
             @JsonProperty("myPlexSubscription") Optional<Boolean> myPlexSubscription,
             @JsonProperty("myPlexUsername") Optional<String> myPlexUsername,
-            @JsonProperty("offlineTranscode") Optional<? extends Object> offlineTranscode,
-            @JsonProperty("ownerFeatures") Optional<String> ownerFeatures,
+            @JsonProperty("offlineTranscode") Optional<Integer> offlineTranscode,
+            @JsonProperty("ownerFeatures") Optional<? extends List<String>> ownerFeatures,
             @JsonProperty("platform") Optional<String> platform,
             @JsonProperty("platformVersion") Optional<String> platformVersion,
             @JsonProperty("pluginHost") Optional<Boolean> pluginHost,
@@ -363,14 +385,15 @@ public class MediaContainer {
             @JsonProperty("transcoderPhoto") Optional<Boolean> transcoderPhoto,
             @JsonProperty("transcoderSubtitles") Optional<Boolean> transcoderSubtitles,
             @JsonProperty("transcoderVideo") Optional<Boolean> transcoderVideo,
-            @JsonProperty("transcoderVideoBitrates") Optional<? extends Object> transcoderVideoBitrates,
-            @JsonProperty("transcoderVideoQualities") Optional<String> transcoderVideoQualities,
-            @JsonProperty("transcoderVideoResolutions") Optional<? extends Object> transcoderVideoResolutions,
+            @JsonProperty("transcoderVideoBitrates") Optional<? extends List<String>> transcoderVideoBitrates,
+            @JsonProperty("transcoderVideoQualities") Optional<? extends List<String>> transcoderVideoQualities,
+            @JsonProperty("transcoderVideoResolutions") Optional<? extends List<String>> transcoderVideoResolutions,
             @JsonProperty("updatedAt") Optional<Long> updatedAt,
             @JsonProperty("updater") Optional<Boolean> updater,
             @JsonProperty("version") Optional<String> version,
             @JsonProperty("voiceSearch") Optional<Boolean> voiceSearch,
             @JsonProperty("Bandwidths") Optional<? extends Bandwidths> bandwidths,
+            @JsonProperty("playQueueID") Optional<Long> playQueueID,
             @JsonProperty("terminationCode") Optional<Long> terminationCode,
             @JsonProperty("terminationText") Optional<String> terminationText) {
         Utils.checkNotNull(identifier, "identifier");
@@ -426,6 +449,7 @@ public class MediaContainer {
         Utils.checkNotNull(version, "version");
         Utils.checkNotNull(voiceSearch, "voiceSearch");
         Utils.checkNotNull(bandwidths, "bandwidths");
+        Utils.checkNotNull(playQueueID, "playQueueID");
         Utils.checkNotNull(terminationCode, "terminationCode");
         Utils.checkNotNull(terminationText, "terminationText");
         this.identifier = identifier;
@@ -481,6 +505,7 @@ public class MediaContainer {
         this.version = version;
         this.voiceSearch = voiceSearch;
         this.bandwidths = bandwidths;
+        this.playQueueID = playQueueID;
         this.terminationCode = terminationCode;
         this.terminationText = terminationText;
     }
@@ -504,7 +529,7 @@ public class MediaContainer {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     @JsonIgnore
@@ -513,7 +538,8 @@ public class MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -583,9 +609,13 @@ public class MediaContainer {
         return countryCode;
     }
 
+    /**
+     * Comma-separated list of enabled diagnostics modules.
+     */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<String> diagnostics() {
-        return diagnostics;
+    public Optional<List<String>> diagnostics() {
+        return (Optional<List<String>>) diagnostics;
     }
 
     @JsonIgnore
@@ -661,18 +691,21 @@ public class MediaContainer {
         return myPlexUsername;
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * Whether offline transcoding is enabled.
+     */
     @JsonIgnore
-    public Optional<Object> offlineTranscode() {
-        return (Optional<Object>) offlineTranscode;
+    public Optional<Integer> offlineTranscode() {
+        return offlineTranscode;
     }
 
     /**
-     * A comma-separated list of features which are enabled for the server owner
+     * List of enabled owner features.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<String> ownerFeatures() {
-        return ownerFeatures;
+    public Optional<List<String>> ownerFeatures() {
+        return (Optional<List<String>>) ownerFeatures;
     }
 
     @JsonIgnore
@@ -746,26 +779,30 @@ public class MediaContainer {
     }
 
     /**
-     * The suggested video quality bitrates to present to the user
+     * List of supported transcoder video bitrates.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Object> transcoderVideoBitrates() {
-        return (Optional<Object>) transcoderVideoBitrates;
-    }
-
-    @JsonIgnore
-    public Optional<String> transcoderVideoQualities() {
-        return transcoderVideoQualities;
+    public Optional<List<String>> transcoderVideoBitrates() {
+        return (Optional<List<String>>) transcoderVideoBitrates;
     }
 
     /**
-     * The suggested video resolutions to the above quality bitrates
+     * List of supported transcoder video qualities.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Object> transcoderVideoResolutions() {
-        return (Optional<Object>) transcoderVideoResolutions;
+    public Optional<List<String>> transcoderVideoQualities() {
+        return (Optional<List<String>>) transcoderVideoQualities;
+    }
+
+    /**
+     * List of supported transcoder video resolutions.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> transcoderVideoResolutions() {
+        return (Optional<List<String>>) transcoderVideoResolutions;
     }
 
     @JsonIgnore
@@ -795,6 +832,14 @@ public class MediaContainer {
     @JsonIgnore
     public Optional<Bandwidths> bandwidths() {
         return (Optional<Bandwidths>) bandwidths;
+    }
+
+    /**
+     * The play queue ID when playback originates from a queue.
+     */
+    @JsonIgnore
+    public Optional<Long> playQueueID() {
+        return playQueueID;
     }
 
     /**
@@ -832,7 +877,8 @@ public class MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public MediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -842,7 +888,8 @@ public class MediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public MediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -1012,14 +1059,20 @@ public class MediaContainer {
         return this;
     }
 
-    public MediaContainer withDiagnostics(String diagnostics) {
+    /**
+     * Comma-separated list of enabled diagnostics modules.
+     */
+    public MediaContainer withDiagnostics(List<String> diagnostics) {
         Utils.checkNotNull(diagnostics, "diagnostics");
         this.diagnostics = Optional.ofNullable(diagnostics);
         return this;
     }
 
 
-    public MediaContainer withDiagnostics(Optional<String> diagnostics) {
+    /**
+     * Comma-separated list of enabled diagnostics modules.
+     */
+    public MediaContainer withDiagnostics(Optional<? extends List<String>> diagnostics) {
         Utils.checkNotNull(diagnostics, "diagnostics");
         this.diagnostics = diagnostics;
         return this;
@@ -1207,23 +1260,29 @@ public class MediaContainer {
         return this;
     }
 
-    public MediaContainer withOfflineTranscode(Object offlineTranscode) {
+    /**
+     * Whether offline transcoding is enabled.
+     */
+    public MediaContainer withOfflineTranscode(int offlineTranscode) {
         Utils.checkNotNull(offlineTranscode, "offlineTranscode");
         this.offlineTranscode = Optional.ofNullable(offlineTranscode);
         return this;
     }
 
 
-    public MediaContainer withOfflineTranscode(Optional<? extends Object> offlineTranscode) {
+    /**
+     * Whether offline transcoding is enabled.
+     */
+    public MediaContainer withOfflineTranscode(Optional<Integer> offlineTranscode) {
         Utils.checkNotNull(offlineTranscode, "offlineTranscode");
         this.offlineTranscode = offlineTranscode;
         return this;
     }
 
     /**
-     * A comma-separated list of features which are enabled for the server owner
+     * List of enabled owner features.
      */
-    public MediaContainer withOwnerFeatures(String ownerFeatures) {
+    public MediaContainer withOwnerFeatures(List<String> ownerFeatures) {
         Utils.checkNotNull(ownerFeatures, "ownerFeatures");
         this.ownerFeatures = Optional.ofNullable(ownerFeatures);
         return this;
@@ -1231,9 +1290,9 @@ public class MediaContainer {
 
 
     /**
-     * A comma-separated list of features which are enabled for the server owner
+     * List of enabled owner features.
      */
-    public MediaContainer withOwnerFeatures(Optional<String> ownerFeatures) {
+    public MediaContainer withOwnerFeatures(Optional<? extends List<String>> ownerFeatures) {
         Utils.checkNotNull(ownerFeatures, "ownerFeatures");
         this.ownerFeatures = ownerFeatures;
         return this;
@@ -1422,9 +1481,9 @@ public class MediaContainer {
     }
 
     /**
-     * The suggested video quality bitrates to present to the user
+     * List of supported transcoder video bitrates.
      */
-    public MediaContainer withTranscoderVideoBitrates(Object transcoderVideoBitrates) {
+    public MediaContainer withTranscoderVideoBitrates(List<String> transcoderVideoBitrates) {
         Utils.checkNotNull(transcoderVideoBitrates, "transcoderVideoBitrates");
         this.transcoderVideoBitrates = Optional.ofNullable(transcoderVideoBitrates);
         return this;
@@ -1432,31 +1491,37 @@ public class MediaContainer {
 
 
     /**
-     * The suggested video quality bitrates to present to the user
+     * List of supported transcoder video bitrates.
      */
-    public MediaContainer withTranscoderVideoBitrates(Optional<? extends Object> transcoderVideoBitrates) {
+    public MediaContainer withTranscoderVideoBitrates(Optional<? extends List<String>> transcoderVideoBitrates) {
         Utils.checkNotNull(transcoderVideoBitrates, "transcoderVideoBitrates");
         this.transcoderVideoBitrates = transcoderVideoBitrates;
         return this;
     }
 
-    public MediaContainer withTranscoderVideoQualities(String transcoderVideoQualities) {
+    /**
+     * List of supported transcoder video qualities.
+     */
+    public MediaContainer withTranscoderVideoQualities(List<String> transcoderVideoQualities) {
         Utils.checkNotNull(transcoderVideoQualities, "transcoderVideoQualities");
         this.transcoderVideoQualities = Optional.ofNullable(transcoderVideoQualities);
         return this;
     }
 
 
-    public MediaContainer withTranscoderVideoQualities(Optional<String> transcoderVideoQualities) {
+    /**
+     * List of supported transcoder video qualities.
+     */
+    public MediaContainer withTranscoderVideoQualities(Optional<? extends List<String>> transcoderVideoQualities) {
         Utils.checkNotNull(transcoderVideoQualities, "transcoderVideoQualities");
         this.transcoderVideoQualities = transcoderVideoQualities;
         return this;
     }
 
     /**
-     * The suggested video resolutions to the above quality bitrates
+     * List of supported transcoder video resolutions.
      */
-    public MediaContainer withTranscoderVideoResolutions(Object transcoderVideoResolutions) {
+    public MediaContainer withTranscoderVideoResolutions(List<String> transcoderVideoResolutions) {
         Utils.checkNotNull(transcoderVideoResolutions, "transcoderVideoResolutions");
         this.transcoderVideoResolutions = Optional.ofNullable(transcoderVideoResolutions);
         return this;
@@ -1464,9 +1529,9 @@ public class MediaContainer {
 
 
     /**
-     * The suggested video resolutions to the above quality bitrates
+     * List of supported transcoder video resolutions.
      */
-    public MediaContainer withTranscoderVideoResolutions(Optional<? extends Object> transcoderVideoResolutions) {
+    public MediaContainer withTranscoderVideoResolutions(Optional<? extends List<String>> transcoderVideoResolutions) {
         Utils.checkNotNull(transcoderVideoResolutions, "transcoderVideoResolutions");
         this.transcoderVideoResolutions = transcoderVideoResolutions;
         return this;
@@ -1540,6 +1605,25 @@ public class MediaContainer {
     public MediaContainer withBandwidths(Optional<? extends Bandwidths> bandwidths) {
         Utils.checkNotNull(bandwidths, "bandwidths");
         this.bandwidths = bandwidths;
+        return this;
+    }
+
+    /**
+     * The play queue ID when playback originates from a queue.
+     */
+    public MediaContainer withPlayQueueID(long playQueueID) {
+        Utils.checkNotNull(playQueueID, "playQueueID");
+        this.playQueueID = Optional.ofNullable(playQueueID);
+        return this;
+    }
+
+
+    /**
+     * The play queue ID when playback originates from a queue.
+     */
+    public MediaContainer withPlayQueueID(Optional<Long> playQueueID) {
+        Utils.checkNotNull(playQueueID, "playQueueID");
+        this.playQueueID = playQueueID;
         return this;
     }
 
@@ -1644,6 +1728,7 @@ public class MediaContainer {
             Utils.enhancedDeepEquals(this.version, other.version) &&
             Utils.enhancedDeepEquals(this.voiceSearch, other.voiceSearch) &&
             Utils.enhancedDeepEquals(this.bandwidths, other.bandwidths) &&
+            Utils.enhancedDeepEquals(this.playQueueID, other.playQueueID) &&
             Utils.enhancedDeepEquals(this.terminationCode, other.terminationCode) &&
             Utils.enhancedDeepEquals(this.terminationText, other.terminationText);
     }
@@ -1668,8 +1753,8 @@ public class MediaContainer {
             transcoderPhoto, transcoderSubtitles, transcoderVideo,
             transcoderVideoBitrates, transcoderVideoQualities, transcoderVideoResolutions,
             updatedAt, updater, version,
-            voiceSearch, bandwidths, terminationCode,
-            terminationText);
+            voiceSearch, bandwidths, playQueueID,
+            terminationCode, terminationText);
     }
     
     @Override
@@ -1728,6 +1813,7 @@ public class MediaContainer {
                 "version", version,
                 "voiceSearch", voiceSearch,
                 "bandwidths", bandwidths,
+                "playQueueID", playQueueID,
                 "terminationCode", terminationCode,
                 "terminationText", terminationText);
     }
@@ -1763,7 +1849,7 @@ public class MediaContainer {
 
         private Optional<String> countryCode = Optional.empty();
 
-        private Optional<String> diagnostics = Optional.empty();
+        private Optional<? extends List<String>> diagnostics = Optional.empty();
 
         private Optional<Boolean> eventStream = Optional.empty();
 
@@ -1793,9 +1879,9 @@ public class MediaContainer {
 
         private Optional<String> myPlexUsername = Optional.empty();
 
-        private Optional<? extends Object> offlineTranscode = Optional.empty();
+        private Optional<Integer> offlineTranscode = Optional.empty();
 
-        private Optional<String> ownerFeatures = Optional.empty();
+        private Optional<? extends List<String>> ownerFeatures = Optional.empty();
 
         private Optional<String> platform = Optional.empty();
 
@@ -1825,11 +1911,11 @@ public class MediaContainer {
 
         private Optional<Boolean> transcoderVideo = Optional.empty();
 
-        private Optional<? extends Object> transcoderVideoBitrates = Optional.empty();
+        private Optional<? extends List<String>> transcoderVideoBitrates = Optional.empty();
 
-        private Optional<String> transcoderVideoQualities = Optional.empty();
+        private Optional<? extends List<String>> transcoderVideoQualities = Optional.empty();
 
-        private Optional<? extends Object> transcoderVideoResolutions = Optional.empty();
+        private Optional<? extends List<String>> transcoderVideoResolutions = Optional.empty();
 
         private Optional<Long> updatedAt = Optional.empty();
 
@@ -1840,6 +1926,8 @@ public class MediaContainer {
         private Optional<Boolean> voiceSearch = Optional.empty();
 
         private Optional<? extends Bandwidths> bandwidths = Optional.empty();
+
+        private Optional<Long> playQueueID = Optional.empty();
 
         private Optional<Long> terminationCode = Optional.empty();
 
@@ -1864,7 +1952,8 @@ public class MediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -1873,7 +1962,8 @@ public class MediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -2044,13 +2134,19 @@ public class MediaContainer {
         }
 
 
-        public Builder diagnostics(String diagnostics) {
+        /**
+         * Comma-separated list of enabled diagnostics modules.
+         */
+        public Builder diagnostics(List<String> diagnostics) {
             Utils.checkNotNull(diagnostics, "diagnostics");
             this.diagnostics = Optional.ofNullable(diagnostics);
             return this;
         }
 
-        public Builder diagnostics(Optional<String> diagnostics) {
+        /**
+         * Comma-separated list of enabled diagnostics modules.
+         */
+        public Builder diagnostics(Optional<? extends List<String>> diagnostics) {
             Utils.checkNotNull(diagnostics, "diagnostics");
             this.diagnostics = diagnostics;
             return this;
@@ -2239,13 +2335,19 @@ public class MediaContainer {
         }
 
 
-        public Builder offlineTranscode(Object offlineTranscode) {
+        /**
+         * Whether offline transcoding is enabled.
+         */
+        public Builder offlineTranscode(int offlineTranscode) {
             Utils.checkNotNull(offlineTranscode, "offlineTranscode");
             this.offlineTranscode = Optional.ofNullable(offlineTranscode);
             return this;
         }
 
-        public Builder offlineTranscode(Optional<? extends Object> offlineTranscode) {
+        /**
+         * Whether offline transcoding is enabled.
+         */
+        public Builder offlineTranscode(Optional<Integer> offlineTranscode) {
             Utils.checkNotNull(offlineTranscode, "offlineTranscode");
             this.offlineTranscode = offlineTranscode;
             return this;
@@ -2253,18 +2355,18 @@ public class MediaContainer {
 
 
         /**
-         * A comma-separated list of features which are enabled for the server owner
+         * List of enabled owner features.
          */
-        public Builder ownerFeatures(String ownerFeatures) {
+        public Builder ownerFeatures(List<String> ownerFeatures) {
             Utils.checkNotNull(ownerFeatures, "ownerFeatures");
             this.ownerFeatures = Optional.ofNullable(ownerFeatures);
             return this;
         }
 
         /**
-         * A comma-separated list of features which are enabled for the server owner
+         * List of enabled owner features.
          */
-        public Builder ownerFeatures(Optional<String> ownerFeatures) {
+        public Builder ownerFeatures(Optional<? extends List<String>> ownerFeatures) {
             Utils.checkNotNull(ownerFeatures, "ownerFeatures");
             this.ownerFeatures = ownerFeatures;
             return this;
@@ -2454,31 +2556,37 @@ public class MediaContainer {
 
 
         /**
-         * The suggested video quality bitrates to present to the user
+         * List of supported transcoder video bitrates.
          */
-        public Builder transcoderVideoBitrates(Object transcoderVideoBitrates) {
+        public Builder transcoderVideoBitrates(List<String> transcoderVideoBitrates) {
             Utils.checkNotNull(transcoderVideoBitrates, "transcoderVideoBitrates");
             this.transcoderVideoBitrates = Optional.ofNullable(transcoderVideoBitrates);
             return this;
         }
 
         /**
-         * The suggested video quality bitrates to present to the user
+         * List of supported transcoder video bitrates.
          */
-        public Builder transcoderVideoBitrates(Optional<? extends Object> transcoderVideoBitrates) {
+        public Builder transcoderVideoBitrates(Optional<? extends List<String>> transcoderVideoBitrates) {
             Utils.checkNotNull(transcoderVideoBitrates, "transcoderVideoBitrates");
             this.transcoderVideoBitrates = transcoderVideoBitrates;
             return this;
         }
 
 
-        public Builder transcoderVideoQualities(String transcoderVideoQualities) {
+        /**
+         * List of supported transcoder video qualities.
+         */
+        public Builder transcoderVideoQualities(List<String> transcoderVideoQualities) {
             Utils.checkNotNull(transcoderVideoQualities, "transcoderVideoQualities");
             this.transcoderVideoQualities = Optional.ofNullable(transcoderVideoQualities);
             return this;
         }
 
-        public Builder transcoderVideoQualities(Optional<String> transcoderVideoQualities) {
+        /**
+         * List of supported transcoder video qualities.
+         */
+        public Builder transcoderVideoQualities(Optional<? extends List<String>> transcoderVideoQualities) {
             Utils.checkNotNull(transcoderVideoQualities, "transcoderVideoQualities");
             this.transcoderVideoQualities = transcoderVideoQualities;
             return this;
@@ -2486,18 +2594,18 @@ public class MediaContainer {
 
 
         /**
-         * The suggested video resolutions to the above quality bitrates
+         * List of supported transcoder video resolutions.
          */
-        public Builder transcoderVideoResolutions(Object transcoderVideoResolutions) {
+        public Builder transcoderVideoResolutions(List<String> transcoderVideoResolutions) {
             Utils.checkNotNull(transcoderVideoResolutions, "transcoderVideoResolutions");
             this.transcoderVideoResolutions = Optional.ofNullable(transcoderVideoResolutions);
             return this;
         }
 
         /**
-         * The suggested video resolutions to the above quality bitrates
+         * List of supported transcoder video resolutions.
          */
-        public Builder transcoderVideoResolutions(Optional<? extends Object> transcoderVideoResolutions) {
+        public Builder transcoderVideoResolutions(Optional<? extends List<String>> transcoderVideoResolutions) {
             Utils.checkNotNull(transcoderVideoResolutions, "transcoderVideoResolutions");
             this.transcoderVideoResolutions = transcoderVideoResolutions;
             return this;
@@ -2576,6 +2684,25 @@ public class MediaContainer {
 
 
         /**
+         * The play queue ID when playback originates from a queue.
+         */
+        public Builder playQueueID(long playQueueID) {
+            Utils.checkNotNull(playQueueID, "playQueueID");
+            this.playQueueID = Optional.ofNullable(playQueueID);
+            return this;
+        }
+
+        /**
+         * The play queue ID when playback originates from a queue.
+         */
+        public Builder playQueueID(Optional<Long> playQueueID) {
+            Utils.checkNotNull(playQueueID, "playQueueID");
+            this.playQueueID = playQueueID;
+            return this;
+        }
+
+
+        /**
          * A code describing why the session was terminated by the server.
          */
         public Builder terminationCode(long terminationCode) {
@@ -2632,8 +2759,8 @@ public class MediaContainer {
                 transcoderPhoto, transcoderSubtitles, transcoderVideo,
                 transcoderVideoBitrates, transcoderVideoQualities, transcoderVideoResolutions,
                 updatedAt, updater, version,
-                voiceSearch, bandwidths, terminationCode,
-                terminationText);
+                voiceSearch, bandwidths, playQueueID,
+                terminationCode, terminationText);
         }
 
     }

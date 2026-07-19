@@ -5,6 +5,7 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.MediaContainerWithTags;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -35,22 +36,22 @@ public class GetPersonResponse implements Response {
     /**
      * OK
      */
-    private Optional<? extends GetPersonResponseBody> object;
+    private Optional<? extends MediaContainerWithTags> mediaContainerWithTags;
 
     @JsonCreator
     public GetPersonResponse(
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends GetPersonResponseBody> object) {
+            Optional<? extends MediaContainerWithTags> mediaContainerWithTags) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithTags, "mediaContainerWithTags");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithTags = mediaContainerWithTags;
     }
     
     public GetPersonResponse(
@@ -90,8 +91,8 @@ public class GetPersonResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetPersonResponseBody> object() {
-        return (Optional<GetPersonResponseBody>) object;
+    public Optional<MediaContainerWithTags> mediaContainerWithTags() {
+        return (Optional<MediaContainerWithTags>) mediaContainerWithTags;
     }
 
     public static Builder builder() {
@@ -129,9 +130,9 @@ public class GetPersonResponse implements Response {
     /**
      * OK
      */
-    public GetPersonResponse withObject(GetPersonResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public GetPersonResponse withMediaContainerWithTags(MediaContainerWithTags mediaContainerWithTags) {
+        Utils.checkNotNull(mediaContainerWithTags, "mediaContainerWithTags");
+        this.mediaContainerWithTags = Optional.ofNullable(mediaContainerWithTags);
         return this;
     }
 
@@ -139,9 +140,9 @@ public class GetPersonResponse implements Response {
     /**
      * OK
      */
-    public GetPersonResponse withObject(Optional<? extends GetPersonResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public GetPersonResponse withMediaContainerWithTags(Optional<? extends MediaContainerWithTags> mediaContainerWithTags) {
+        Utils.checkNotNull(mediaContainerWithTags, "mediaContainerWithTags");
+        this.mediaContainerWithTags = mediaContainerWithTags;
         return this;
     }
 
@@ -158,14 +159,14 @@ public class GetPersonResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object);
+            Utils.enhancedDeepEquals(this.mediaContainerWithTags, other.mediaContainerWithTags);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object);
+            mediaContainerWithTags);
     }
     
     @Override
@@ -174,7 +175,7 @@ public class GetPersonResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object);
+                "mediaContainerWithTags", mediaContainerWithTags);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -186,7 +187,7 @@ public class GetPersonResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends GetPersonResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithTags> mediaContainerWithTags = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -226,18 +227,18 @@ public class GetPersonResponse implements Response {
         /**
          * OK
          */
-        public Builder object(GetPersonResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithTags(MediaContainerWithTags mediaContainerWithTags) {
+            Utils.checkNotNull(mediaContainerWithTags, "mediaContainerWithTags");
+            this.mediaContainerWithTags = Optional.ofNullable(mediaContainerWithTags);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends GetPersonResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithTags(Optional<? extends MediaContainerWithTags> mediaContainerWithTags) {
+            Utils.checkNotNull(mediaContainerWithTags, "mediaContainerWithTags");
+            this.mediaContainerWithTags = mediaContainerWithTags;
             return this;
         }
 
@@ -245,7 +246,7 @@ public class GetPersonResponse implements Response {
 
             return new GetPersonResponse(
                 contentType, statusCode, rawResponse,
-                object);
+                mediaContainerWithTags);
         }
 
     }

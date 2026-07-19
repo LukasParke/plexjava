@@ -11,7 +11,9 @@ import dev.plexapi.sdk.utils.Utils;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 
 public class GetStreamResponse implements AsyncResponse {
@@ -30,17 +32,33 @@ public class GetStreamResponse implements AsyncResponse {
      */
     private HttpResponse<Blob> rawResponse;
 
+    /**
+     * The stream in the requested format.
+     */
+    private Optional<? extends Blob> binaryResponse;
+
     @JsonCreator
     public GetStreamResponse(
             String contentType,
             int statusCode,
-            HttpResponse<Blob> rawResponse) {
+            HttpResponse<Blob> rawResponse,
+            Optional<? extends Blob> binaryResponse) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.binaryResponse = binaryResponse;
+    }
+    
+    public GetStreamResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<Blob> rawResponse) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty());
     }
 
     /**
@@ -65,6 +83,15 @@ public class GetStreamResponse implements AsyncResponse {
     @JsonIgnore
     public HttpResponse<Blob> rawResponse() {
         return rawResponse;
+    }
+
+    /**
+     * The stream in the requested format.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<Blob> binaryResponse() {
+        return (Optional<Blob>) binaryResponse;
     }
 
     public static Builder builder() {
@@ -99,6 +126,25 @@ public class GetStreamResponse implements AsyncResponse {
         return this;
     }
 
+    /**
+     * The stream in the requested format.
+     */
+    public GetStreamResponse withBinaryResponse(Blob binaryResponse) {
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        this.binaryResponse = Optional.ofNullable(binaryResponse);
+        return this;
+    }
+
+
+    /**
+     * The stream in the requested format.
+     */
+    public GetStreamResponse withBinaryResponse(Optional<? extends Blob> binaryResponse) {
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        this.binaryResponse = binaryResponse;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,13 +157,15 @@ public class GetStreamResponse implements AsyncResponse {
         return 
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse);
+            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.binaryResponse, other.binaryResponse);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            contentType, statusCode, rawResponse);
+            contentType, statusCode, rawResponse,
+            binaryResponse);
     }
     
     @Override
@@ -125,7 +173,8 @@ public class GetStreamResponse implements AsyncResponse {
         return Utils.toString(GetStreamResponse.class,
                 "contentType", contentType,
                 "statusCode", statusCode,
-                "rawResponse", rawResponse);
+                "rawResponse", rawResponse,
+                "binaryResponse", binaryResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -136,6 +185,8 @@ public class GetStreamResponse implements AsyncResponse {
         private Integer statusCode;
 
         private HttpResponse<Blob> rawResponse;
+
+        private Optional<? extends Blob> binaryResponse = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -171,10 +222,30 @@ public class GetStreamResponse implements AsyncResponse {
             return this;
         }
 
+
+        /**
+         * The stream in the requested format.
+         */
+        public Builder binaryResponse(Blob binaryResponse) {
+            Utils.checkNotNull(binaryResponse, "binaryResponse");
+            this.binaryResponse = Optional.ofNullable(binaryResponse);
+            return this;
+        }
+
+        /**
+         * The stream in the requested format.
+         */
+        public Builder binaryResponse(Optional<? extends Blob> binaryResponse) {
+            Utils.checkNotNull(binaryResponse, "binaryResponse");
+            this.binaryResponse = binaryResponse;
+            return this;
+        }
+
         public GetStreamResponse build() {
 
             return new GetStreamResponse(
-                contentType, statusCode, rawResponse);
+                contentType, statusCode, rawResponse,
+                binaryResponse);
         }
 
     }

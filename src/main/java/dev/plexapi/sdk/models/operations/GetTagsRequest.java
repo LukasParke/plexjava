@@ -97,7 +97,8 @@ public class GetTagsRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
     private Optional<? extends MediaType> type;
@@ -251,7 +252,8 @@ public class GetTagsRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -486,7 +488,8 @@ public class GetTagsRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public GetTagsRequest withType(MediaType type) {
         Utils.checkNotNull(type, "type");
@@ -508,7 +511,8 @@ public class GetTagsRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public GetTagsRequest withType(Optional<? extends MediaType> type) {
         Utils.checkNotNull(type, "type");
@@ -820,7 +824,8 @@ public class GetTagsRequest {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(MediaType type) {
             Utils.checkNotNull(type, "type");
@@ -841,7 +846,8 @@ public class GetTagsRequest {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(Optional<? extends MediaType> type) {
             Utils.checkNotNull(type, "type");

@@ -101,7 +101,7 @@ public class CreatePlayQueueRequest {
      * The type of play queue to create
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private Type type;
+    private Type mediaType;
 
     /**
      * The key of the first item to play, defaults to the first in the play queue.
@@ -128,19 +128,23 @@ public class CreatePlayQueueRequest {
     private Optional<? extends BoolInt> continuous;
 
     /**
-     * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a parameter instead of passing 0.
+     * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will
+     * not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a
+     * parameter instead of passing 0.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=extrasPrefixCount")
     private Optional<Long> extrasPrefixCount;
 
     /**
-     * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or section, defaults to 1.
+     * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or
+     * section, defaults to 1.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=recursive")
     private Optional<? extends BoolInt> recursive;
 
     /**
-     * Only applies to queues of type show or seasons, whether to return a queue that is started on the On Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
+     * Only applies to queues of type show or seasons, whether to return a queue that is started on the On
+     * Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=onDeck")
     private Optional<? extends BoolInt> onDeck;
@@ -160,7 +164,7 @@ public class CreatePlayQueueRequest {
             Optional<String> marketplace,
             Optional<String> uri,
             Optional<Long> playlistID,
-            Type type,
+            Type mediaType,
             Optional<String> key,
             Optional<? extends BoolInt> shuffle,
             Optional<? extends BoolInt> repeat,
@@ -181,7 +185,7 @@ public class CreatePlayQueueRequest {
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(uri, "uri");
         Utils.checkNotNull(playlistID, "playlistID");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         Utils.checkNotNull(key, "key");
         Utils.checkNotNull(shuffle, "shuffle");
         Utils.checkNotNull(repeat, "repeat");
@@ -202,7 +206,7 @@ public class CreatePlayQueueRequest {
         this.marketplace = marketplace;
         this.uri = uri;
         this.playlistID = playlistID;
-        this.type = type;
+        this.mediaType = mediaType;
         this.key = key;
         this.shuffle = shuffle;
         this.repeat = repeat;
@@ -213,12 +217,12 @@ public class CreatePlayQueueRequest {
     }
     
     public CreatePlayQueueRequest(
-            Type type) {
+            Type mediaType) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), type, Optional.empty(),
+            Optional.empty(), mediaType, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty());
     }
@@ -332,8 +336,8 @@ public class CreatePlayQueueRequest {
      * The type of play queue to create
      */
     @JsonIgnore
-    public Type type() {
-        return type;
+    public Type mediaType() {
+        return mediaType;
     }
 
     /**
@@ -372,7 +376,9 @@ public class CreatePlayQueueRequest {
     }
 
     /**
-     * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a parameter instead of passing 0.
+     * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will
+     * not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a
+     * parameter instead of passing 0.
      */
     @JsonIgnore
     public Optional<Long> extrasPrefixCount() {
@@ -380,7 +386,8 @@ public class CreatePlayQueueRequest {
     }
 
     /**
-     * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or section, defaults to 1.
+     * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or
+     * section, defaults to 1.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -389,7 +396,8 @@ public class CreatePlayQueueRequest {
     }
 
     /**
-     * Only applies to queues of type show or seasons, whether to return a queue that is started on the On Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
+     * Only applies to queues of type show or seasons, whether to return a queue that is started on the On
+     * Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -652,9 +660,9 @@ public class CreatePlayQueueRequest {
     /**
      * The type of play queue to create
      */
-    public CreatePlayQueueRequest withType(Type type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public CreatePlayQueueRequest withMediaType(Type mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -735,7 +743,9 @@ public class CreatePlayQueueRequest {
     }
 
     /**
-     * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a parameter instead of passing 0.
+     * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will
+     * not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a
+     * parameter instead of passing 0.
      */
     public CreatePlayQueueRequest withExtrasPrefixCount(long extrasPrefixCount) {
         Utils.checkNotNull(extrasPrefixCount, "extrasPrefixCount");
@@ -745,7 +755,9 @@ public class CreatePlayQueueRequest {
 
 
     /**
-     * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a parameter instead of passing 0.
+     * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will
+     * not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a
+     * parameter instead of passing 0.
      */
     public CreatePlayQueueRequest withExtrasPrefixCount(Optional<Long> extrasPrefixCount) {
         Utils.checkNotNull(extrasPrefixCount, "extrasPrefixCount");
@@ -754,7 +766,8 @@ public class CreatePlayQueueRequest {
     }
 
     /**
-     * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or section, defaults to 1.
+     * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or
+     * section, defaults to 1.
      */
     public CreatePlayQueueRequest withRecursive(BoolInt recursive) {
         Utils.checkNotNull(recursive, "recursive");
@@ -764,7 +777,8 @@ public class CreatePlayQueueRequest {
 
 
     /**
-     * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or section, defaults to 1.
+     * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or
+     * section, defaults to 1.
      */
     public CreatePlayQueueRequest withRecursive(Optional<? extends BoolInt> recursive) {
         Utils.checkNotNull(recursive, "recursive");
@@ -773,7 +787,8 @@ public class CreatePlayQueueRequest {
     }
 
     /**
-     * Only applies to queues of type show or seasons, whether to return a queue that is started on the On Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
+     * Only applies to queues of type show or seasons, whether to return a queue that is started on the On
+     * Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
      */
     public CreatePlayQueueRequest withOnDeck(BoolInt onDeck) {
         Utils.checkNotNull(onDeck, "onDeck");
@@ -783,7 +798,8 @@ public class CreatePlayQueueRequest {
 
 
     /**
-     * Only applies to queues of type show or seasons, whether to return a queue that is started on the On Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
+     * Only applies to queues of type show or seasons, whether to return a queue that is started on the On
+     * Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
      */
     public CreatePlayQueueRequest withOnDeck(Optional<? extends BoolInt> onDeck) {
         Utils.checkNotNull(onDeck, "onDeck");
@@ -814,7 +830,7 @@ public class CreatePlayQueueRequest {
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.uri, other.uri) &&
             Utils.enhancedDeepEquals(this.playlistID, other.playlistID) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
             Utils.enhancedDeepEquals(this.key, other.key) &&
             Utils.enhancedDeepEquals(this.shuffle, other.shuffle) &&
             Utils.enhancedDeepEquals(this.repeat, other.repeat) &&
@@ -831,7 +847,7 @@ public class CreatePlayQueueRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, uri,
-            playlistID, type, key,
+            playlistID, mediaType, key,
             shuffle, repeat, continuous,
             extrasPrefixCount, recursive, onDeck);
     }
@@ -852,7 +868,7 @@ public class CreatePlayQueueRequest {
                 "marketplace", marketplace,
                 "uri", uri,
                 "playlistID", playlistID,
-                "type", type,
+                "mediaType", mediaType,
                 "key", key,
                 "shuffle", shuffle,
                 "repeat", repeat,
@@ -891,7 +907,7 @@ public class CreatePlayQueueRequest {
 
         private Optional<Long> playlistID = Optional.empty();
 
-        private Type type;
+        private Type mediaType;
 
         private Optional<String> key = Optional.empty();
 
@@ -1162,9 +1178,9 @@ public class CreatePlayQueueRequest {
         /**
          * The type of play queue to create
          */
-        public Builder type(Type type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(Type mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -1246,7 +1262,9 @@ public class CreatePlayQueueRequest {
 
 
         /**
-         * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a parameter instead of passing 0.
+         * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will
+         * not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a
+         * parameter instead of passing 0.
          */
         public Builder extrasPrefixCount(long extrasPrefixCount) {
             Utils.checkNotNull(extrasPrefixCount, "extrasPrefixCount");
@@ -1255,7 +1273,9 @@ public class CreatePlayQueueRequest {
         }
 
         /**
-         * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a parameter instead of passing 0.
+         * Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will
+         * not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a
+         * parameter instead of passing 0.
          */
         public Builder extrasPrefixCount(Optional<Long> extrasPrefixCount) {
             Utils.checkNotNull(extrasPrefixCount, "extrasPrefixCount");
@@ -1265,7 +1285,8 @@ public class CreatePlayQueueRequest {
 
 
         /**
-         * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or section, defaults to 1.
+         * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or
+         * section, defaults to 1.
          */
         public Builder recursive(BoolInt recursive) {
             Utils.checkNotNull(recursive, "recursive");
@@ -1274,7 +1295,8 @@ public class CreatePlayQueueRequest {
         }
 
         /**
-         * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or section, defaults to 1.
+         * Only applies to queues of type photo, whether to retrieve all descendent photos from an album or
+         * section, defaults to 1.
          */
         public Builder recursive(Optional<? extends BoolInt> recursive) {
             Utils.checkNotNull(recursive, "recursive");
@@ -1284,7 +1306,8 @@ public class CreatePlayQueueRequest {
 
 
         /**
-         * Only applies to queues of type show or seasons, whether to return a queue that is started on the On Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
+         * Only applies to queues of type show or seasons, whether to return a queue that is started on the On
+         * Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
          */
         public Builder onDeck(BoolInt onDeck) {
             Utils.checkNotNull(onDeck, "onDeck");
@@ -1293,7 +1316,8 @@ public class CreatePlayQueueRequest {
         }
 
         /**
-         * Only applies to queues of type show or seasons, whether to return a queue that is started on the On Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
+         * Only applies to queues of type show or seasons, whether to return a queue that is started on the On
+         * Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season.
          */
         public Builder onDeck(Optional<? extends BoolInt> onDeck) {
             Utils.checkNotNull(onDeck, "onDeck");
@@ -1326,7 +1350,7 @@ public class CreatePlayQueueRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, uri,
-                playlistID, type, key,
+                playlistID, mediaType, key,
                 shuffle, repeat, continuous,
                 extrasPrefixCount, recursive, onDeck);
         }

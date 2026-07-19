@@ -1,5 +1,4 @@
 # Collections
-(*collections()*)
 
 ## Overview
 
@@ -54,8 +53,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+        if (res.collection().isPresent()) {
+            System.out.println(res.collection().get());
         }
     }
 }

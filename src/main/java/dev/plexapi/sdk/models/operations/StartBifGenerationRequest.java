@@ -84,11 +84,15 @@ public class StartBifGenerationRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * Force the operation even if conditions are not met
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=force")
     private Optional<? extends BoolInt> force;
 
@@ -233,11 +237,17 @@ public class StartBifGenerationRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * Force the operation even if conditions are not met
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<BoolInt> force() {
@@ -458,12 +468,18 @@ public class StartBifGenerationRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public StartBifGenerationRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * Force the operation even if conditions are not met
+     */
     public StartBifGenerationRequest withForce(BoolInt force) {
         Utils.checkNotNull(force, "force");
         this.force = Optional.ofNullable(force);
@@ -471,6 +487,9 @@ public class StartBifGenerationRequest {
     }
 
 
+    /**
+     * Force the operation even if conditions are not met
+     */
     public StartBifGenerationRequest withForce(Optional<? extends BoolInt> force) {
         Utils.checkNotNull(force, "force");
         this.force = force;
@@ -773,6 +792,9 @@ public class StartBifGenerationRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -780,12 +802,18 @@ public class StartBifGenerationRequest {
         }
 
 
+        /**
+         * Force the operation even if conditions are not met
+         */
         public Builder force(BoolInt force) {
             Utils.checkNotNull(force, "force");
             this.force = Optional.ofNullable(force);
             return this;
         }
 
+        /**
+         * Force the operation even if conditions are not met
+         */
         public Builder force(Optional<? extends BoolInt> force) {
             Utils.checkNotNull(force, "force");
             this.force = force;

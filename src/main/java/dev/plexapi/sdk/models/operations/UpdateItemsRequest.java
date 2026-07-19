@@ -90,9 +90,11 @@ public class UpdateItemsRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
     private String sectionId;
 
-
+    /**
+     * The media type to filter by
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private Optional<String> type;
+    private Optional<String> mediaType;
 
     /**
      * The filters to apply to determine which items should be modified
@@ -143,13 +145,15 @@ public class UpdateItemsRequest {
     private Optional<String> albumTitleId;
 
     /**
-     * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters together
+     * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters
+     * together
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=tagtype[idx].tag.tag")
     private Optional<String> tagtypeIdxTagTag;
 
     /**
-     * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update association info across the set.
+     * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update
+     * association info across the set.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=tagtype[idx].tagging.object")
     private Optional<String> tagtypeIdxTaggingObject;
@@ -180,7 +184,7 @@ public class UpdateItemsRequest {
             Optional<String> deviceName,
             Optional<String> marketplace,
             String sectionId,
-            Optional<String> type,
+            Optional<String> mediaType,
             Optional<String> filters,
             Optional<String> fieldValue,
             Optional<? extends BoolInt> fieldLocked,
@@ -205,7 +209,7 @@ public class UpdateItemsRequest {
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(sectionId, "sectionId");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         Utils.checkNotNull(filters, "filters");
         Utils.checkNotNull(fieldValue, "fieldValue");
         Utils.checkNotNull(fieldLocked, "fieldLocked");
@@ -230,7 +234,7 @@ public class UpdateItemsRequest {
         this.deviceName = deviceName;
         this.marketplace = marketplace;
         this.sectionId = sectionId;
-        this.type = type;
+        this.mediaType = mediaType;
         this.filters = filters;
         this.fieldValue = fieldValue;
         this.fieldLocked = fieldLocked;
@@ -355,9 +359,12 @@ public class UpdateItemsRequest {
         return sectionId;
     }
 
+    /**
+     * The media type to filter by
+     */
     @JsonIgnore
-    public Optional<String> type() {
-        return type;
+    public Optional<String> mediaType() {
+        return mediaType;
     }
 
     /**
@@ -426,7 +433,8 @@ public class UpdateItemsRequest {
     }
 
     /**
-     * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters together
+     * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters
+     * together
      */
     @JsonIgnore
     public Optional<String> tagtypeIdxTagTag() {
@@ -434,7 +442,8 @@ public class UpdateItemsRequest {
     }
 
     /**
-     * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update association info across the set.
+     * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update
+     * association info across the set.
      */
     @JsonIgnore
     public Optional<String> tagtypeIdxTaggingObject() {
@@ -680,16 +689,22 @@ public class UpdateItemsRequest {
         return this;
     }
 
-    public UpdateItemsRequest withType(String type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
+    /**
+     * The media type to filter by
+     */
+    public UpdateItemsRequest withMediaType(String mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
         return this;
     }
 
 
-    public UpdateItemsRequest withType(Optional<String> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    /**
+     * The media type to filter by
+     */
+    public UpdateItemsRequest withMediaType(Optional<String> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -846,7 +861,8 @@ public class UpdateItemsRequest {
     }
 
     /**
-     * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters together
+     * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters
+     * together
      */
     public UpdateItemsRequest withTagtypeIdxTagTag(String tagtypeIdxTagTag) {
         Utils.checkNotNull(tagtypeIdxTagTag, "tagtypeIdxTagTag");
@@ -856,7 +872,8 @@ public class UpdateItemsRequest {
 
 
     /**
-     * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters together
+     * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters
+     * together
      */
     public UpdateItemsRequest withTagtypeIdxTagTag(Optional<String> tagtypeIdxTagTag) {
         Utils.checkNotNull(tagtypeIdxTagTag, "tagtypeIdxTagTag");
@@ -865,7 +882,8 @@ public class UpdateItemsRequest {
     }
 
     /**
-     * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update association info across the set.
+     * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update
+     * association info across the set.
      */
     public UpdateItemsRequest withTagtypeIdxTaggingObject(String tagtypeIdxTaggingObject) {
         Utils.checkNotNull(tagtypeIdxTaggingObject, "tagtypeIdxTaggingObject");
@@ -875,7 +893,8 @@ public class UpdateItemsRequest {
 
 
     /**
-     * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update association info across the set.
+     * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update
+     * association info across the set.
      */
     public UpdateItemsRequest withTagtypeIdxTaggingObject(Optional<String> tagtypeIdxTaggingObject) {
         Utils.checkNotNull(tagtypeIdxTaggingObject, "tagtypeIdxTaggingObject");
@@ -943,7 +962,7 @@ public class UpdateItemsRequest {
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
             Utils.enhancedDeepEquals(this.filters, other.filters) &&
             Utils.enhancedDeepEquals(this.fieldValue, other.fieldValue) &&
             Utils.enhancedDeepEquals(this.fieldLocked, other.fieldLocked) &&
@@ -965,7 +984,7 @@ public class UpdateItemsRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, sectionId,
-            type, filters, fieldValue,
+            mediaType, filters, fieldValue,
             fieldLocked, titleValue, artistTitleValue,
             artistTitleId, albumTitleValue, albumTitleId,
             tagtypeIdxTagTag, tagtypeIdxTaggingObject, tagtypeTagTag,
@@ -987,7 +1006,7 @@ public class UpdateItemsRequest {
                 "deviceName", deviceName,
                 "marketplace", marketplace,
                 "sectionId", sectionId,
-                "type", type,
+                "mediaType", mediaType,
                 "filters", filters,
                 "fieldValue", fieldValue,
                 "fieldLocked", fieldLocked,
@@ -1029,7 +1048,7 @@ public class UpdateItemsRequest {
 
         private String sectionId;
 
-        private Optional<String> type = Optional.empty();
+        private Optional<String> mediaType = Optional.empty();
 
         private Optional<String> filters = Optional.empty();
 
@@ -1279,15 +1298,21 @@ public class UpdateItemsRequest {
         }
 
 
-        public Builder type(String type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
+        /**
+         * The media type to filter by
+         */
+        public Builder mediaType(String mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
             return this;
         }
 
-        public Builder type(Optional<String> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        /**
+         * The media type to filter by
+         */
+        public Builder mediaType(Optional<String> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -1445,7 +1470,8 @@ public class UpdateItemsRequest {
 
 
         /**
-         * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters together
+         * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters
+         * together
          */
         public Builder tagtypeIdxTagTag(String tagtypeIdxTagTag) {
             Utils.checkNotNull(tagtypeIdxTagTag, "tagtypeIdxTagTag");
@@ -1454,7 +1480,8 @@ public class UpdateItemsRequest {
         }
 
         /**
-         * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters together
+         * Creates tag and associates it with each item in the set. - [idx] links this and the next parameters
+         * together
          */
         public Builder tagtypeIdxTagTag(Optional<String> tagtypeIdxTagTag) {
             Utils.checkNotNull(tagtypeIdxTagTag, "tagtypeIdxTagTag");
@@ -1464,7 +1491,8 @@ public class UpdateItemsRequest {
 
 
         /**
-         * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update association info across the set.
+         * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update
+         * association info across the set.
          */
         public Builder tagtypeIdxTaggingObject(String tagtypeIdxTaggingObject) {
             Utils.checkNotNull(tagtypeIdxTaggingObject, "tagtypeIdxTaggingObject");
@@ -1473,7 +1501,8 @@ public class UpdateItemsRequest {
         }
 
         /**
-         * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update association info across the set.
+         * Here `object` may be text/thumb/art/theme - Optionally used in conjunction with tag.tag, to update
+         * association info across the set.
          */
         public Builder tagtypeIdxTaggingObject(Optional<String> tagtypeIdxTaggingObject) {
             Utils.checkNotNull(tagtypeIdxTaggingObject, "tagtypeIdxTaggingObject");
@@ -1532,7 +1561,7 @@ public class UpdateItemsRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, sectionId,
-                type, filters, fieldValue,
+                mediaType, filters, fieldValue,
                 fieldLocked, titleValue, artistTitleValue,
                 artistTitleId, albumTitleValue, albumTitleId,
                 tagtypeIdxTagTag, tagtypeIdxTaggingObject, tagtypeTagTag,

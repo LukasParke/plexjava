@@ -53,12 +53,16 @@ import dev.plexapi.sdk.operations.MovePlaylistItem;
 import dev.plexapi.sdk.operations.RefreshPlaylist;
 import dev.plexapi.sdk.operations.UpdatePlaylist;
 import dev.plexapi.sdk.operations.UploadPlaylist;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Endpoints for manipulating playlists.
  */
 public class AsyncLibraryPlaylists {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final LibraryPlaylists syncSDK;
 
@@ -94,20 +98,38 @@ public class AsyncLibraryPlaylists {
      * <p>Create a new playlist. By default the playlist is blank.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CreatePlaylistResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreatePlaylistResponse>} - The async response
      */
     public CompletableFuture<CreatePlaylistResponse> createPlaylist(CreatePlaylistRequest request) {
+        return createPlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Create a Playlist
+     * 
+     * <p>Create a new playlist. By default the playlist is blank.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreatePlaylistResponse>} - The async response
+     */
+    public CompletableFuture<CreatePlaylistResponse> createPlaylist(CreatePlaylistRequest request, Optional<Options> options) {
         AsyncRequestOperation<CreatePlaylistRequest, CreatePlaylistResponse> operation
-              = new CreatePlaylist.Async(sdkConfiguration);
+              = new CreatePlaylist.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Upload
+     * Upload media art
      * 
-     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a path to a single playlist file.
+     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a
+     * path to a single playlist file.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -116,16 +138,37 @@ public class AsyncLibraryPlaylists {
     }
 
     /**
-     * Upload
+     * Upload media art
      * 
-     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a path to a single playlist file.
+     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a
+     * path to a single playlist file.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;UploadPlaylistResponse&gt; - The async response
+     * @return {@code CompletableFuture<UploadPlaylistResponse>} - The async response
      */
     public CompletableFuture<UploadPlaylistResponse> uploadPlaylist(UploadPlaylistRequest request) {
+        return uploadPlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Upload media art
+     * 
+     * <p>Imports m3u playlists by passing a path on the server to scan for m3u-formatted playlist files, or a
+     * path to a single playlist file.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UploadPlaylistResponse>} - The async response
+     */
+    public CompletableFuture<UploadPlaylistResponse> uploadPlaylist(UploadPlaylistRequest request, Optional<Options> options) {
         AsyncRequestOperation<UploadPlaylistRequest, UploadPlaylistResponse> operation
-              = new UploadPlaylist.Async(sdkConfiguration);
+              = new UploadPlaylist.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -148,11 +191,26 @@ public class AsyncLibraryPlaylists {
      * <p>Deletes a playlist by provided id
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeletePlaylistResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeletePlaylistResponse>} - The async response
      */
     public CompletableFuture<DeletePlaylistResponse> deletePlaylist(DeletePlaylistRequest request) {
+        return deletePlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Delete a Playlist
+     * 
+     * <p>Deletes a playlist by provided id
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeletePlaylistResponse>} - The async response
+     */
+    public CompletableFuture<DeletePlaylistResponse> deletePlaylist(DeletePlaylistRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeletePlaylistRequest, DeletePlaylistResponse> operation
-              = new DeletePlaylist.Async(sdkConfiguration);
+              = new DeletePlaylist.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -175,11 +233,26 @@ public class AsyncLibraryPlaylists {
      * <p>Edits a playlist in the same manner as [editing metadata](#tag/Provider/operation/metadataPutItem)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;UpdatePlaylistResponse&gt; - The async response
+     * @return {@code CompletableFuture<UpdatePlaylistResponse>} - The async response
      */
     public CompletableFuture<UpdatePlaylistResponse> updatePlaylist(UpdatePlaylistRequest request) {
+        return updatePlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Editing a Playlist
+     * 
+     * <p>Edits a playlist in the same manner as [editing metadata](#tag/Provider/operation/metadataPutItem)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdatePlaylistResponse>} - The async response
+     */
+    public CompletableFuture<UpdatePlaylistResponse> updatePlaylist(UpdatePlaylistRequest request, Optional<Options> options) {
         AsyncRequestOperation<UpdatePlaylistRequest, UpdatePlaylistResponse> operation
-              = new UpdatePlaylist.Async(sdkConfiguration);
+              = new UpdatePlaylist.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -202,11 +275,26 @@ public class AsyncLibraryPlaylists {
      * <p>Get all the generators in a playlist
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPlaylistGeneratorsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPlaylistGeneratorsResponse>} - The async response
      */
     public CompletableFuture<GetPlaylistGeneratorsResponse> getPlaylistGenerators(GetPlaylistGeneratorsRequest request) {
+        return getPlaylistGenerators(request, Optional.empty());
+    }
+
+    /**
+     * Get a playlist's generators
+     * 
+     * <p>Get all the generators in a playlist
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPlaylistGeneratorsResponse>} - The async response
+     */
+    public CompletableFuture<GetPlaylistGeneratorsResponse> getPlaylistGenerators(GetPlaylistGeneratorsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPlaylistGeneratorsRequest, GetPlaylistGeneratorsResponse> operation
-              = new GetPlaylistGenerators.Async(sdkConfiguration);
+              = new GetPlaylistGenerators.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -229,11 +317,26 @@ public class AsyncLibraryPlaylists {
      * <p>Clears a playlist, only works with dumb playlists. Returns the playlist.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ClearPlaylistItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ClearPlaylistItemsResponse>} - The async response
      */
     public CompletableFuture<ClearPlaylistItemsResponse> clearPlaylistItems(ClearPlaylistItemsRequest request) {
+        return clearPlaylistItems(request, Optional.empty());
+    }
+
+    /**
+     * Clearing a playlist
+     * 
+     * <p>Clears a playlist, only works with dumb playlists. Returns the playlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ClearPlaylistItemsResponse>} - The async response
+     */
+    public CompletableFuture<ClearPlaylistItemsResponse> clearPlaylistItems(ClearPlaylistItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<ClearPlaylistItemsRequest, ClearPlaylistItemsResponse> operation
-              = new ClearPlaylistItems.Async(sdkConfiguration);
+              = new ClearPlaylistItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -242,7 +345,11 @@ public class AsyncLibraryPlaylists {
     /**
      * Adding to  a Playlist
      * 
-     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces the rules for the playlist. Returns the playlist.
+     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds
+     * the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces
+     * the rules for the playlist.
+     * 
+     * <p>Returns the playlist.
      * 
      * @return The async call builder
      */
@@ -253,14 +360,37 @@ public class AsyncLibraryPlaylists {
     /**
      * Adding to  a Playlist
      * 
-     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces the rules for the playlist. Returns the playlist.
+     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds
+     * the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces
+     * the rules for the playlist.
+     * 
+     * <p>Returns the playlist.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddPlaylistItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddPlaylistItemsResponse>} - The async response
      */
     public CompletableFuture<AddPlaylistItemsResponse> addPlaylistItems(AddPlaylistItemsRequest request) {
+        return addPlaylistItems(request, Optional.empty());
+    }
+
+    /**
+     * Adding to  a Playlist
+     * 
+     * <p>Adds a generator to a playlist, same parameters as the POST above. With a dumb playlist, this adds
+     * the specified items to the playlist. With a smart playlist, passing a new `uri` parameter replaces
+     * the rules for the playlist.
+     * 
+     * <p>Returns the playlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddPlaylistItemsResponse>} - The async response
+     */
+    public CompletableFuture<AddPlaylistItemsResponse> addPlaylistItems(AddPlaylistItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddPlaylistItemsRequest, AddPlaylistItemsResponse> operation
-              = new AddPlaylistItems.Async(sdkConfiguration);
+              = new AddPlaylistItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -283,11 +413,26 @@ public class AsyncLibraryPlaylists {
      * <p>Deletes an item from a playlist. Only works with dumb playlists.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeletePlaylistItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeletePlaylistItemResponse>} - The async response
      */
     public CompletableFuture<DeletePlaylistItemResponse> deletePlaylistItem(DeletePlaylistItemRequest request) {
+        return deletePlaylistItem(request, Optional.empty());
+    }
+
+    /**
+     * Delete a Generator
+     * 
+     * <p>Deletes an item from a playlist. Only works with dumb playlists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeletePlaylistItemResponse>} - The async response
+     */
+    public CompletableFuture<DeletePlaylistItemResponse> deletePlaylistItem(DeletePlaylistItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeletePlaylistItemRequest, DeletePlaylistItemResponse> operation
-              = new DeletePlaylistItem.Async(sdkConfiguration);
+              = new DeletePlaylistItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -296,7 +441,7 @@ public class AsyncLibraryPlaylists {
     /**
      * Get a playlist generator
      * 
-     * <p>Get a playlist's generator.  Only used for optimized versions
+     * <p>Get a playlist's generator. Only used for optimized versions
      * 
      * @return The async call builder
      */
@@ -307,14 +452,29 @@ public class AsyncLibraryPlaylists {
     /**
      * Get a playlist generator
      * 
-     * <p>Get a playlist's generator.  Only used for optimized versions
+     * <p>Get a playlist's generator. Only used for optimized versions
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPlaylistGeneratorResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPlaylistGeneratorResponse>} - The async response
      */
     public CompletableFuture<GetPlaylistGeneratorResponse> getPlaylistGenerator(GetPlaylistGeneratorRequest request) {
+        return getPlaylistGenerator(request, Optional.empty());
+    }
+
+    /**
+     * Get a playlist generator
+     * 
+     * <p>Get a playlist's generator. Only used for optimized versions
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPlaylistGeneratorResponse>} - The async response
+     */
+    public CompletableFuture<GetPlaylistGeneratorResponse> getPlaylistGenerator(GetPlaylistGeneratorRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPlaylistGeneratorRequest, GetPlaylistGeneratorResponse> operation
-              = new GetPlaylistGenerator.Async(sdkConfiguration);
+              = new GetPlaylistGenerator.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -337,11 +497,26 @@ public class AsyncLibraryPlaylists {
      * <p>Get a playlist generator's items
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPlaylistGeneratorItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPlaylistGeneratorItemsResponse>} - The async response
      */
     public CompletableFuture<GetPlaylistGeneratorItemsResponse> getPlaylistGeneratorItems(GetPlaylistGeneratorItemsRequest request) {
+        return getPlaylistGeneratorItems(request, Optional.empty());
+    }
+
+    /**
+     * Get a playlist generator's items
+     * 
+     * <p>Get a playlist generator's items
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPlaylistGeneratorItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetPlaylistGeneratorItemsResponse> getPlaylistGeneratorItems(GetPlaylistGeneratorItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPlaylistGeneratorItemsRequest, GetPlaylistGeneratorItemsResponse> operation
-              = new GetPlaylistGeneratorItems.Async(sdkConfiguration);
+              = new GetPlaylistGeneratorItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -364,11 +539,26 @@ public class AsyncLibraryPlaylists {
      * <p>Moves an item in a playlist. Only works with dumb playlists.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;MovePlaylistItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<MovePlaylistItemResponse>} - The async response
      */
     public CompletableFuture<MovePlaylistItemResponse> movePlaylistItem(MovePlaylistItemRequest request) {
+        return movePlaylistItem(request, Optional.empty());
+    }
+
+    /**
+     * Moving items in a playlist
+     * 
+     * <p>Moves an item in a playlist. Only works with dumb playlists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MovePlaylistItemResponse>} - The async response
+     */
+    public CompletableFuture<MovePlaylistItemResponse> movePlaylistItem(MovePlaylistItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<MovePlaylistItemRequest, MovePlaylistItemResponse> operation
-              = new MovePlaylistItem.Async(sdkConfiguration);
+              = new MovePlaylistItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -391,11 +581,26 @@ public class AsyncLibraryPlaylists {
      * <p>Make a generator reprocess (refresh)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;RefreshPlaylistResponse&gt; - The async response
+     * @return {@code CompletableFuture<RefreshPlaylistResponse>} - The async response
      */
     public CompletableFuture<RefreshPlaylistResponse> refreshPlaylist(RefreshPlaylistRequest request) {
+        return refreshPlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Reprocess a generator
+     * 
+     * <p>Make a generator reprocess (refresh)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshPlaylistResponse>} - The async response
+     */
+    public CompletableFuture<RefreshPlaylistResponse> refreshPlaylist(RefreshPlaylistRequest request, Optional<Options> options) {
         AsyncRequestOperation<RefreshPlaylistRequest, RefreshPlaylistResponse> operation
-              = new RefreshPlaylist.Async(sdkConfiguration);
+              = new RefreshPlaylist.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

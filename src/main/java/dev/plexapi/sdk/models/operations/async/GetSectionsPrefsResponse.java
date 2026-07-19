@@ -34,7 +34,7 @@ public class GetSectionsPrefsResponse implements AsyncResponse {
     private HttpResponse<Blob> rawResponse;
 
     /**
-     * OK
+     * Successfully retrieved get section prefs
      */
     private Optional<? extends LibrarySections> librarySections;
 
@@ -87,7 +87,7 @@ public class GetSectionsPrefsResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully retrieved get section prefs
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -128,7 +128,7 @@ public class GetSectionsPrefsResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully retrieved get section prefs
      */
     public GetSectionsPrefsResponse withLibrarySections(LibrarySections librarySections) {
         Utils.checkNotNull(librarySections, "librarySections");
@@ -138,7 +138,7 @@ public class GetSectionsPrefsResponse implements AsyncResponse {
 
 
     /**
-     * OK
+     * Successfully retrieved get section prefs
      */
     public GetSectionsPrefsResponse withLibrarySections(Optional<? extends LibrarySections> librarySections) {
         Utils.checkNotNull(librarySections, "librarySections");
@@ -225,7 +225,7 @@ public class GetSectionsPrefsResponse implements AsyncResponse {
 
 
         /**
-         * OK
+         * Successfully retrieved get section prefs
          */
         public Builder librarySections(LibrarySections librarySections) {
             Utils.checkNotNull(librarySections, "librarySections");
@@ -234,7 +234,7 @@ public class GetSectionsPrefsResponse implements AsyncResponse {
         }
 
         /**
-         * OK
+         * Successfully retrieved get section prefs
          */
         public Builder librarySections(Optional<? extends LibrarySections> librarySections) {
             Utils.checkNotNull(librarySections, "librarySections");

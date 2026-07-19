@@ -7,8 +7,10 @@ import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.PostUsersSignInData;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
 import java.lang.String;
 import java.util.Optional;
 
@@ -16,7 +18,9 @@ public class PostUsersSignInDataRequestBuilder {
 
     private PostUsersSignInDataRequest request;
     private Optional<String> serverURL = Optional.empty();
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public PostUsersSignInDataRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -39,11 +43,28 @@ public class PostUsersSignInDataRequestBuilder {
         this.serverURL = serverURL;
         return this;
     }
+                
+    public PostUsersSignInDataRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public PostUsersSignInDataResponse call() throws Exception {
-        
+    public PostUsersSignInDataRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public PostUsersSignInDataResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         RequestOperation<PostUsersSignInDataRequest, PostUsersSignInDataResponse> operation
-              = new PostUsersSignInData.Sync(sdkConfiguration, serverURL);
+              = new PostUsersSignInData.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

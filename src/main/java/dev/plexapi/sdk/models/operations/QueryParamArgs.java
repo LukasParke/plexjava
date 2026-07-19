@@ -10,6 +10,8 @@ import java.lang.String;
 
 /**
  * QueryParamArgs
+ * 
+ * <p>The args
  */
 public class QueryParamArgs {
     @JsonCreator

@@ -23,12 +23,17 @@ import dev.plexapi.sdk.operations.StartTask;
 import dev.plexapi.sdk.operations.StartTasks;
 import dev.plexapi.sdk.operations.StopTask;
 import dev.plexapi.sdk.operations.StopTasks;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * The butler is responsible for running periodic tasks.  Some tasks run daily, others every few days, and some weekly.  These includes database maintenance, metadata updating, thumbnail generation, media analysis, and other tasks.
+ * The butler is responsible for running periodic tasks. Some tasks run daily, others every few days,
+ * and some weekly. These includes database maintenance, metadata updating, thumbnail generation, media
+ * analysis, and other tasks.
  */
 public class Butler {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncButler asyncSDK;
 
@@ -51,6 +56,8 @@ public class Butler {
      * 
      * <p>This endpoint will stop all currently running tasks and remove any scheduled tasks from the queue.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The call builder
      */
     public StopTasksRequestBuilder stopTasks() {
@@ -62,12 +69,29 @@ public class Butler {
      * 
      * <p>This endpoint will stop all currently running tasks and remove any scheduled tasks from the queue.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StopTasksResponse stopTasksDirect() throws Exception {
+    public StopTasksResponse stopTasksDirect() {
+        return stopTasks(Optional.empty());
+    }
+
+    /**
+     * Stop all Butler tasks
+     * 
+     * <p>This endpoint will stop all currently running tasks and remove any scheduled tasks from the queue.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StopTasksResponse stopTasks(Optional<Options> options) {
         RequestlessOperation<StopTasksResponse> operation
-            = new StopTasks.Sync(sdkConfiguration);
+            = new StopTasks.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -75,6 +99,8 @@ public class Butler {
      * Get all Butler tasks
      * 
      * <p>Get the list of butler tasks and their scheduling
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -87,24 +113,47 @@ public class Butler {
      * 
      * <p>Get the list of butler tasks and their scheduling
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetTasksResponse getTasksDirect() throws Exception {
+    public GetTasksResponse getTasksDirect() {
+        return getTasks(Optional.empty());
+    }
+
+    /**
+     * Get all Butler tasks
+     * 
+     * <p>Get the list of butler tasks and their scheduling
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetTasksResponse getTasks(Optional<Options> options) {
         RequestlessOperation<GetTasksResponse> operation
-            = new GetTasks.Sync(sdkConfiguration);
+            = new GetTasks.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Start all Butler tasks
      * 
-     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks normally run automatically during a time window configured on the server's Settings page but can be manually started using this endpoint. Tasks will run with the following criteria:
+     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks
+     * normally run automatically during a time window configured on the server's Settings page but can be
+     * manually started using this endpoint. Tasks will run with the following criteria:
      * 
-     * <p>  1. Any tasks not scheduled to run on the current day will be skipped.
-     *   2. If a task is configured to run at a random time during the configured window and we are outside that window, the task will start immediately.
-     *   3. If a task is configured to run at a random time during the configured window and we are within that window, the task will be scheduled at a random time within the window.
-     *   4. If we are outside the configured window, the task will start immediately.
+     * <p>1. Any tasks not scheduled to run on the current day will be skipped.
+     * 2. If a task is configured to run at a random time during the configured window and we are outside
+     * that window, the task will start immediately.
+     * 3. If a task is configured to run at a random time during the configured window and we are within
+     * that window, the task will be scheduled at a random time within the window.
+     * 4. If we are outside the configured window, the task will start immediately.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -115,26 +164,59 @@ public class Butler {
     /**
      * Start all Butler tasks
      * 
-     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks normally run automatically during a time window configured on the server's Settings page but can be manually started using this endpoint. Tasks will run with the following criteria:
+     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks
+     * normally run automatically during a time window configured on the server's Settings page but can be
+     * manually started using this endpoint. Tasks will run with the following criteria:
      * 
-     * <p>  1. Any tasks not scheduled to run on the current day will be skipped.
-     *   2. If a task is configured to run at a random time during the configured window and we are outside that window, the task will start immediately.
-     *   3. If a task is configured to run at a random time during the configured window and we are within that window, the task will be scheduled at a random time within the window.
-     *   4. If we are outside the configured window, the task will start immediately.
+     * <p>1. Any tasks not scheduled to run on the current day will be skipped.
+     * 2. If a task is configured to run at a random time during the configured window and we are outside
+     * that window, the task will start immediately.
+     * 3. If a task is configured to run at a random time during the configured window and we are within
+     * that window, the task will be scheduled at a random time within the window.
+     * 4. If we are outside the configured window, the task will start immediately.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StartTasksResponse startTasksDirect() throws Exception {
+    public StartTasksResponse startTasksDirect() {
+        return startTasks(Optional.empty());
+    }
+
+    /**
+     * Start all Butler tasks
+     * 
+     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks
+     * normally run automatically during a time window configured on the server's Settings page but can be
+     * manually started using this endpoint. Tasks will run with the following criteria:
+     * 
+     * <p>1. Any tasks not scheduled to run on the current day will be skipped.
+     * 2. If a task is configured to run at a random time during the configured window and we are outside
+     * that window, the task will start immediately.
+     * 3. If a task is configured to run at a random time during the configured window and we are within
+     * that window, the task will be scheduled at a random time within the window.
+     * 4. If we are outside the configured window, the task will start immediately.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StartTasksResponse startTasks(Optional<Options> options) {
         RequestlessOperation<StartTasksResponse> operation
-            = new StartTasks.Sync(sdkConfiguration);
+            = new StartTasks.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Stop a single Butler task
      * 
-     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled tasks if it exists
+     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled
+     * tasks if it exists
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -145,15 +227,35 @@ public class Butler {
     /**
      * Stop a single Butler task
      * 
-     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled tasks if it exists
+     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled
+     * tasks if it exists
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StopTaskResponse stopTask(StopTaskRequest request) throws Exception {
+    public StopTaskResponse stopTask(StopTaskRequest request) {
+        return stopTask(request, Optional.empty());
+    }
+
+    /**
+     * Stop a single Butler task
+     * 
+     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled
+     * tasks if it exists
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StopTaskResponse stopTask(StopTaskRequest request, Optional<Options> options) {
         RequestOperation<StopTaskRequest, StopTaskResponse> operation
-              = new StopTask.Sync(sdkConfiguration);
+              = new StopTask.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -161,6 +263,8 @@ public class Butler {
      * Start a single Butler task
      * 
      * <p>This endpoint will attempt to start a specific Butler task by name.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -173,13 +277,31 @@ public class Butler {
      * 
      * <p>This endpoint will attempt to start a specific Butler task by name.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StartTaskResponse startTask(StartTaskRequest request) throws Exception {
+    public StartTaskResponse startTask(StartTaskRequest request) {
+        return startTask(request, Optional.empty());
+    }
+
+    /**
+     * Start a single Butler task
+     * 
+     * <p>This endpoint will attempt to start a specific Butler task by name.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StartTaskResponse startTask(StartTaskRequest request, Optional<Options> options) {
         RequestOperation<StartTaskRequest, StartTaskResponse> operation
-              = new StartTask.Sync(sdkConfiguration);
+              = new StartTask.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

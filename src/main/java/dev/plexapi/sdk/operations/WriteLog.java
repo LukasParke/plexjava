@@ -4,6 +4,7 @@
 package dev.plexapi.sdk.operations;
 
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
+import static dev.plexapi.sdk.utils.Exceptions.unchecked;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,25 +12,35 @@ import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.SecuritySource;
 import dev.plexapi.sdk.models.errors.SDKError;
 import dev.plexapi.sdk.models.operations.WriteLogResponse;
+import dev.plexapi.sdk.utils.AsyncRetries;
+import dev.plexapi.sdk.utils.BackoffStrategy;
 import dev.plexapi.sdk.utils.Blob;
-import dev.plexapi.sdk.utils.Exceptions;
 import dev.plexapi.sdk.utils.HTTPClient;
 import dev.plexapi.sdk.utils.HTTPRequest;
+import dev.plexapi.sdk.utils.Headers;
 import dev.plexapi.sdk.utils.Hook.AfterErrorContextImpl;
 import dev.plexapi.sdk.utils.Hook.AfterSuccessContextImpl;
 import dev.plexapi.sdk.utils.Hook.BeforeRequestContextImpl;
+import dev.plexapi.sdk.utils.NonRetryableException;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.Retries;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.SerializedBody;
 import dev.plexapi.sdk.utils.Utils.JsonShape;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
 import java.lang.Exception;
+import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import java.lang.String;
 import java.lang.Throwable;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 
@@ -39,13 +50,33 @@ public class WriteLog {
         final SDKConfiguration sdkConfiguration;
         final String baseUrl;
         final SecuritySource securitySource;
+        final List<String> retryStatusCodes;
+        final RetryConfig retryConfig;
         final HTTPClient client;
+        final Headers _headers;
 
-        public Base(SDKConfiguration sdkConfiguration) {
+        public Base(
+                SDKConfiguration sdkConfiguration, Optional<Options> options,
+                Headers _headers) {
             this.sdkConfiguration = sdkConfiguration;
+            this._headers =_headers;
             this.baseUrl = Utils.templateUrl(
                     this.sdkConfiguration.serverUrl(), this.sdkConfiguration.getServerVariableDefaults());
             this.securitySource = this.sdkConfiguration.securitySource();
+            options
+                    .ifPresent(o -> o.validate(List.of(Options.Option.RETRY_CONFIG)));
+            this.retryStatusCodes = List.of("429");
+            this.retryConfig = options
+                    .flatMap(Options::retryConfig)
+                    .or(sdkConfiguration::retryConfig)
+                    .orElse(RetryConfig.builder().backoff(BackoffStrategy.builder()
+                                    .initialInterval(1000, TimeUnit.MILLISECONDS)
+                                    .maxInterval(30000, TimeUnit.MILLISECONDS)
+                                    .baseFactor((double) (2))
+                                    .maxElapsedTime(300000, TimeUnit.MILLISECONDS)
+                                    .retryConnectError(true)
+                                    .build())
+                            .build());
             this.client = this.sdkConfiguration.client();
         }
 
@@ -58,7 +89,7 @@ public class WriteLog {
                     this.sdkConfiguration,
                     this.baseUrl,
                     "writeLog",
-                    java.util.Optional.of(java.util.List.of()),
+                    java.util.Optional.empty(),
                     securitySource());
         }
 
@@ -67,7 +98,7 @@ public class WriteLog {
                     this.sdkConfiguration,
                     this.baseUrl,
                     "writeLog",
-                    java.util.Optional.of(java.util.List.of()),
+                    java.util.Optional.empty(),
                     securitySource());
         }
 
@@ -76,7 +107,7 @@ public class WriteLog {
                     this.sdkConfiguration,
                     this.baseUrl,
                     "writeLog",
-                    java.util.Optional.of(java.util.List.of()),
+                    java.util.Optional.empty(),
                     securitySource());
         }
         <T, U>HttpRequest buildRequest(T request, TypeReference<U> typeReference) throws Exception {
@@ -90,16 +121,17 @@ public class WriteLog {
                     typeReference);
             SerializedBody serializedRequestBody = Utils.serializeRequestBody(
                     convertedRequest,
-                    "request",
+                    "",
                     "raw",
                     false);
             if (serializedRequestBody == null) {
-                throw new Exception("Request body is required");
+                throw new IllegalArgumentException("Request body is required");
             }
             req.setBody(Optional.ofNullable(serializedRequestBody));
             req.addHeader("Accept", "*/*")
                     .addHeader("user-agent", SDKConfiguration.USER_AGENT);
-            Utils.configureSecurity(req, this.sdkConfiguration.securitySource().getSecurity());
+            _headers.forEach((k, list) -> list.forEach(v -> req.addHeader(k, v)));
+            Utils.configureSecurity(req, this.sdkConfiguration.securitySource().getSecurity(), "token");
 
             return req.build();
         }
@@ -107,8 +139,12 @@ public class WriteLog {
 
     public static class Sync extends Base
             implements RequestOperation<byte[], WriteLogResponse> {
-        public Sync(SDKConfiguration sdkConfiguration) {
-            super(sdkConfiguration);
+        public Sync(
+                SDKConfiguration sdkConfiguration, Optional<Options> options,
+                Headers _headers) {
+            super(
+                  sdkConfiguration, options,
+                  _headers);
         }
 
         private HttpRequest onBuildRequest(byte[] request) throws Exception {
@@ -128,26 +164,34 @@ public class WriteLog {
         }
 
         @Override
-        public HttpResponse<InputStream> doRequest(byte[] request) throws Exception {
-            HttpRequest r = onBuildRequest(request);
-            HttpResponse<InputStream> httpRes;
-            try {
-                httpRes = client.send(r);
-                if (Utils.statusCodeMatches(httpRes.statusCode(), "400", "4XX", "5XX")) {
-                    httpRes = onError(httpRes, null);
-                } else {
-                    httpRes = onSuccess(httpRes);
-                }
-            } catch (Exception e) {
-                httpRes = onError(null, e);
-            }
-
-            return httpRes;
+        public HttpResponse<InputStream> doRequest(byte[] request) {
+            Retries retries = Retries.builder()
+                    .action(() -> {
+                        HttpRequest r;
+                        try {
+                            r = onBuildRequest(request);
+                        } catch (Exception e) {
+                            throw new NonRetryableException(e);
+                        }
+                        try {
+                            HttpResponse<InputStream> httpRes = client.send(r);
+                            if (Utils.statusCodeMatches(httpRes.statusCode(), "4XX", "5XX")) {
+                                return onError(httpRes, null);
+                            }
+                            return httpRes;
+                        } catch (Exception e) {
+                            return onError(null, e);
+                        }
+                    })
+                    .retryConfig(retryConfig)
+                    .statusCodes(retryStatusCodes)
+                    .build();
+            return unchecked(() -> onSuccess(retries.run())).get();
         }
 
 
         @Override
-        public WriteLogResponse handleResponse(HttpResponse<InputStream> response) throws Exception {
+        public WriteLogResponse handleResponse(HttpResponse<InputStream> response) {
             String contentType = response
                     .headers()
                     .firstValue("Content-Type")
@@ -165,37 +209,28 @@ public class WriteLog {
                 // no content
                 return res;
             }
-            
             if (Utils.statusCodeMatches(response.statusCode(), "400", "4XX")) {
                 // no content
-                throw new SDKError(
-                        response,
-                        response.statusCode(),
-                        "API error occurred",
-                        Utils.extractByteArrayFromBody(response));
+                throw SDKError.from("API error occurred", response);
             }
-            
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
-                throw new SDKError(
-                        response,
-                        response.statusCode(),
-                        "API error occurred",
-                        Utils.extractByteArrayFromBody(response));
+                throw SDKError.from("API error occurred", response);
             }
-            
-            throw new SDKError(
-                    response,
-                    response.statusCode(),
-                    "Unexpected status code received: " + response.statusCode(),
-                    Utils.extractByteArrayFromBody(response));
+            throw SDKError.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
     public static class Async extends Base
             implements AsyncRequestOperation<byte[], dev.plexapi.sdk.models.operations.async.WriteLogResponse> {
+        private final ScheduledExecutorService retryScheduler;
 
-        public Async(SDKConfiguration sdkConfiguration) {
-            super(sdkConfiguration);
+        public Async(
+                SDKConfiguration sdkConfiguration, Optional<Options> options,
+                ScheduledExecutorService retryScheduler, Headers _headers) {
+            super(
+                  sdkConfiguration, options,
+                  _headers);
+            this.retryScheduler = retryScheduler;
         }
 
         private CompletableFuture<HttpRequest> onBuildRequest(byte[] request) throws Exception {
@@ -213,17 +248,22 @@ public class WriteLog {
 
         @Override
         public CompletableFuture<HttpResponse<Blob>> doRequest(byte[] request) {
-            return Exceptions.unchecked(() -> onBuildRequest(request)).get().thenCompose(client::sendAsync)
-                    .handle((resp, err) -> {
-                        if (err != null) {
-                            return onError(null, err);
-                        }
-                        if (Utils.statusCodeMatches(resp.statusCode(), "400", "4XX", "5XX")) {
-                            return onError(resp, null);
-                        }
-                        return CompletableFuture.completedFuture(resp);
-                    })
-                    .thenCompose(Function.identity())
+            AsyncRetries retries = AsyncRetries.builder()
+                    .retryConfig(retryConfig)
+                    .statusCodes(retryStatusCodes)
+                    .scheduler(retryScheduler)
+                    .build();
+            return retries.retry(() -> unchecked(() -> onBuildRequest(request)).get().thenCompose(client::sendAsync)
+                            .handle((resp, err) -> {
+                                if (err != null) {
+                                    return onError(null, err);
+                                }
+                                if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
+                                    return onError(resp, null);
+                                }
+                                return CompletableFuture.completedFuture(resp);
+                            })
+                            .thenCompose(Function.identity()))
                     .thenCompose(this::onSuccess);
         }
 
@@ -247,17 +287,14 @@ public class WriteLog {
                 // no content
                 return CompletableFuture.completedFuture(res);
             }
-            
             if (Utils.statusCodeMatches(response.statusCode(), "400", "4XX")) {
                 // no content
                 return Utils.createAsyncApiError(response, "API error occurred");
             }
-            
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
                 return Utils.createAsyncApiError(response, "API error occurred");
             }
-            
             return Utils.createAsyncApiError(response, "Unexpected status code received: " + response.statusCode());
         }
     }

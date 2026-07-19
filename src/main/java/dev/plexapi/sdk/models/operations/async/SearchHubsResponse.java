@@ -5,7 +5,7 @@ package dev.plexapi.sdk.models.operations.async;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.plexapi.sdk.models.operations.SearchHubsResponseBody;
+import dev.plexapi.sdk.models.shared.MediaContainerWithHubs;
 import dev.plexapi.sdk.utils.AsyncResponse;
 import dev.plexapi.sdk.utils.Blob;
 import dev.plexapi.sdk.utils.Utils;
@@ -38,7 +38,7 @@ public class SearchHubsResponse implements AsyncResponse {
     /**
      * OK
      */
-    private Optional<? extends SearchHubsResponseBody> object;
+    private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs;
 
 
     private Map<String, List<String>> headers;
@@ -48,18 +48,18 @@ public class SearchHubsResponse implements AsyncResponse {
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
-            Optional<? extends SearchHubsResponseBody> object,
+            Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithHubs = mediaContainerWithHubs;
         this.headers = headers;
     }
     
@@ -101,8 +101,8 @@ public class SearchHubsResponse implements AsyncResponse {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<SearchHubsResponseBody> object() {
-        return (Optional<SearchHubsResponseBody>) object;
+    public Optional<MediaContainerWithHubs> mediaContainerWithHubs() {
+        return (Optional<MediaContainerWithHubs>) mediaContainerWithHubs;
     }
 
     @JsonIgnore
@@ -145,9 +145,9 @@ public class SearchHubsResponse implements AsyncResponse {
     /**
      * OK
      */
-    public SearchHubsResponse withObject(SearchHubsResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public SearchHubsResponse withMediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+        this.mediaContainerWithHubs = Optional.ofNullable(mediaContainerWithHubs);
         return this;
     }
 
@@ -155,9 +155,9 @@ public class SearchHubsResponse implements AsyncResponse {
     /**
      * OK
      */
-    public SearchHubsResponse withObject(Optional<? extends SearchHubsResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public SearchHubsResponse withMediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+        this.mediaContainerWithHubs = mediaContainerWithHubs;
         return this;
     }
 
@@ -180,7 +180,7 @@ public class SearchHubsResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
+            Utils.enhancedDeepEquals(this.mediaContainerWithHubs, other.mediaContainerWithHubs) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -188,7 +188,7 @@ public class SearchHubsResponse implements AsyncResponse {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object, headers);
+            mediaContainerWithHubs, headers);
     }
     
     @Override
@@ -197,7 +197,7 @@ public class SearchHubsResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object,
+                "mediaContainerWithHubs", mediaContainerWithHubs,
                 "headers", headers);
     }
 
@@ -210,7 +210,7 @@ public class SearchHubsResponse implements AsyncResponse {
 
         private HttpResponse<Blob> rawResponse;
 
-        private Optional<? extends SearchHubsResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -252,18 +252,18 @@ public class SearchHubsResponse implements AsyncResponse {
         /**
          * OK
          */
-        public Builder object(SearchHubsResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
+            Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+            this.mediaContainerWithHubs = Optional.ofNullable(mediaContainerWithHubs);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends SearchHubsResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
+            Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+            this.mediaContainerWithHubs = mediaContainerWithHubs;
             return this;
         }
 
@@ -278,7 +278,7 @@ public class SearchHubsResponse implements AsyncResponse {
 
             return new SearchHubsResponse(
                 contentType, statusCode, rawResponse,
-                object, headers);
+                mediaContainerWithHubs, headers);
         }
 
     }

@@ -8,14 +8,19 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.models.operations.GetPartIndexRequest;
 import dev.plexapi.sdk.operations.GetPartIndex;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class GetPartIndexRequestBuilder {
 
     private GetPartIndexRequest request;
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public GetPartIndexRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -26,11 +31,28 @@ public class GetPartIndexRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public GetPartIndexRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public CompletableFuture<GetPartIndexResponse> call() throws Exception {
-        
+    public GetPartIndexRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public CompletableFuture<GetPartIndexResponse> call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         AsyncRequestOperation<GetPartIndexRequest, GetPartIndexResponse> operation
-              = new GetPartIndex.Async(sdkConfiguration);
+              = new GetPartIndex.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
 
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);

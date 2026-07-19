@@ -87,19 +87,9 @@ public class GetSectionImageRequest {
     private Optional<String> marketplace;
 
     /**
-     * Section identifier
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
-    private long sectionId;
-
-    /**
-     * The update time of the image.  Used for busting cache.
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=updatedAt")
-    private long updatedAt;
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -111,10 +101,13 @@ public class GetSectionImageRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=mediaQuery")
     private Optional<? extends MediaQuery> mediaQuery;
@@ -122,6 +115,18 @@ public class GetSectionImageRequest {
 
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=composite")
     private Optional<? extends Composite> composite;
+
+    /**
+     * Section identifier
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
+    private long sectionId;
+
+    /**
+     * The update time of the image. Used for busting cache.
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=updatedAt")
+    private long updatedAt;
 
     @JsonCreator
     public GetSectionImageRequest(
@@ -136,10 +141,10 @@ public class GetSectionImageRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            long sectionId,
-            long updatedAt,
             Optional<? extends MediaQuery> mediaQuery,
-            Optional<? extends Composite> composite) {
+            Optional<? extends Composite> composite,
+            long sectionId,
+            long updatedAt) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -151,10 +156,10 @@ public class GetSectionImageRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(sectionId, "sectionId");
-        Utils.checkNotNull(updatedAt, "updatedAt");
         Utils.checkNotNull(mediaQuery, "mediaQuery");
         Utils.checkNotNull(composite, "composite");
+        Utils.checkNotNull(sectionId, "sectionId");
+        Utils.checkNotNull(updatedAt, "updatedAt");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -166,10 +171,10 @@ public class GetSectionImageRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.sectionId = sectionId;
-        this.updatedAt = updatedAt;
         this.mediaQuery = mediaQuery;
         this.composite = composite;
+        this.sectionId = sectionId;
+        this.updatedAt = updatedAt;
     }
     
     public GetSectionImageRequest(
@@ -178,8 +183,8 @@ public class GetSectionImageRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
-            updatedAt, Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), sectionId, updatedAt);
     }
 
     /**
@@ -272,23 +277,9 @@ public class GetSectionImageRequest {
     }
 
     /**
-     * Section identifier
-     */
-    @JsonIgnore
-    public long sectionId() {
-        return sectionId;
-    }
-
-    /**
-     * The update time of the image.  Used for busting cache.
-     */
-    @JsonIgnore
-    public long updatedAt() {
-        return updatedAt;
-    }
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -300,10 +291,13 @@ public class GetSectionImageRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -315,6 +309,22 @@ public class GetSectionImageRequest {
     @JsonIgnore
     public Optional<Composite> composite() {
         return (Optional<Composite>) composite;
+    }
+
+    /**
+     * Section identifier
+     */
+    @JsonIgnore
+    public long sectionId() {
+        return sectionId;
+    }
+
+    /**
+     * The update time of the image. Used for busting cache.
+     */
+    @JsonIgnore
+    public long updatedAt() {
+        return updatedAt;
     }
 
     public static Builder builder() {
@@ -532,25 +542,9 @@ public class GetSectionImageRequest {
     }
 
     /**
-     * Section identifier
-     */
-    public GetSectionImageRequest withSectionId(long sectionId) {
-        Utils.checkNotNull(sectionId, "sectionId");
-        this.sectionId = sectionId;
-        return this;
-    }
-
-    /**
-     * The update time of the image.  Used for busting cache.
-     */
-    public GetSectionImageRequest withUpdatedAt(long updatedAt) {
-        Utils.checkNotNull(updatedAt, "updatedAt");
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -562,10 +556,13 @@ public class GetSectionImageRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     public GetSectionImageRequest withMediaQuery(MediaQuery mediaQuery) {
         Utils.checkNotNull(mediaQuery, "mediaQuery");
@@ -575,7 +572,9 @@ public class GetSectionImageRequest {
 
 
     /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -587,10 +586,13 @@ public class GetSectionImageRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     public GetSectionImageRequest withMediaQuery(Optional<? extends MediaQuery> mediaQuery) {
         Utils.checkNotNull(mediaQuery, "mediaQuery");
@@ -608,6 +610,24 @@ public class GetSectionImageRequest {
     public GetSectionImageRequest withComposite(Optional<? extends Composite> composite) {
         Utils.checkNotNull(composite, "composite");
         this.composite = composite;
+        return this;
+    }
+
+    /**
+     * Section identifier
+     */
+    public GetSectionImageRequest withSectionId(long sectionId) {
+        Utils.checkNotNull(sectionId, "sectionId");
+        this.sectionId = sectionId;
+        return this;
+    }
+
+    /**
+     * The update time of the image. Used for busting cache.
+     */
+    public GetSectionImageRequest withUpdatedAt(long updatedAt) {
+        Utils.checkNotNull(updatedAt, "updatedAt");
+        this.updatedAt = updatedAt;
         return this;
     }
 
@@ -632,10 +652,10 @@ public class GetSectionImageRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
-            Utils.enhancedDeepEquals(this.updatedAt, other.updatedAt) &&
             Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery) &&
-            Utils.enhancedDeepEquals(this.composite, other.composite);
+            Utils.enhancedDeepEquals(this.composite, other.composite) &&
+            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
+            Utils.enhancedDeepEquals(this.updatedAt, other.updatedAt);
     }
     
     @Override
@@ -644,8 +664,8 @@ public class GetSectionImageRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, sectionId,
-            updatedAt, mediaQuery, composite);
+            deviceName, marketplace, mediaQuery,
+            composite, sectionId, updatedAt);
     }
     
     @Override
@@ -662,10 +682,10 @@ public class GetSectionImageRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "sectionId", sectionId,
-                "updatedAt", updatedAt,
                 "mediaQuery", mediaQuery,
-                "composite", composite);
+                "composite", composite,
+                "sectionId", sectionId,
+                "updatedAt", updatedAt);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -693,13 +713,13 @@ public class GetSectionImageRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
-        private Long sectionId;
-
-        private Long updatedAt;
-
         private Optional<? extends MediaQuery> mediaQuery = Optional.empty();
 
         private Optional<? extends Composite> composite = Optional.empty();
+
+        private Long sectionId;
+
+        private Long updatedAt;
 
         private Builder() {
           // force use of static builder() method
@@ -916,27 +936,9 @@ public class GetSectionImageRequest {
 
 
         /**
-         * Section identifier
-         */
-        public Builder sectionId(long sectionId) {
-            Utils.checkNotNull(sectionId, "sectionId");
-            this.sectionId = sectionId;
-            return this;
-        }
-
-
-        /**
-         * The update time of the image.  Used for busting cache.
-         */
-        public Builder updatedAt(long updatedAt) {
-            Utils.checkNotNull(updatedAt, "updatedAt");
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-
-        /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
          * 
          * <p>The query supports:
          * - Fields: integer, boolean, tag, string, date, language
@@ -948,10 +950,13 @@ public class GetSectionImageRequest {
          * 
          * <p>Examples:
          * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
          * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
          */
         public Builder mediaQuery(MediaQuery mediaQuery) {
             Utils.checkNotNull(mediaQuery, "mediaQuery");
@@ -960,7 +965,9 @@ public class GetSectionImageRequest {
         }
 
         /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
          * 
          * <p>The query supports:
          * - Fields: integer, boolean, tag, string, date, language
@@ -972,10 +979,13 @@ public class GetSectionImageRequest {
          * 
          * <p>Examples:
          * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
          * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
          */
         public Builder mediaQuery(Optional<? extends MediaQuery> mediaQuery) {
             Utils.checkNotNull(mediaQuery, "mediaQuery");
@@ -996,6 +1006,26 @@ public class GetSectionImageRequest {
             return this;
         }
 
+
+        /**
+         * Section identifier
+         */
+        public Builder sectionId(long sectionId) {
+            Utils.checkNotNull(sectionId, "sectionId");
+            this.sectionId = sectionId;
+            return this;
+        }
+
+
+        /**
+         * The update time of the image. Used for busting cache.
+         */
+        public Builder updatedAt(long updatedAt) {
+            Utils.checkNotNull(updatedAt, "updatedAt");
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
         public GetSectionImageRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -1005,8 +1035,8 @@ public class GetSectionImageRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, sectionId,
-                updatedAt, mediaQuery, composite);
+                deviceName, marketplace, mediaQuery,
+                composite, sectionId, updatedAt);
         }
 
 

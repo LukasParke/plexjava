@@ -93,7 +93,8 @@ public class GetAllHubsRequest {
     private Optional<Long> count;
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=onlyTransient")
     private Optional<? extends BoolInt> onlyTransient;
@@ -256,7 +257,8 @@ public class GetAllHubsRequest {
     }
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -507,7 +509,8 @@ public class GetAllHubsRequest {
     }
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     public GetAllHubsRequest withOnlyTransient(BoolInt onlyTransient) {
         Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -517,7 +520,8 @@ public class GetAllHubsRequest {
 
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     public GetAllHubsRequest withOnlyTransient(Optional<? extends BoolInt> onlyTransient) {
         Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -864,7 +868,8 @@ public class GetAllHubsRequest {
 
 
         /**
-         * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+         * Only return hubs which are "transient", meaning those which are prone to changing after media
+         * playback or addition (e.g. On Deck, or Recently Added)
          */
         public Builder onlyTransient(BoolInt onlyTransient) {
             Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -873,7 +878,8 @@ public class GetAllHubsRequest {
         }
 
         /**
-         * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+         * Only return hubs which are "transient", meaning those which are prone to changing after media
+         * playback or addition (e.g. On Deck, or Recently Added)
          */
         public Builder onlyTransient(Optional<? extends BoolInt> onlyTransient) {
             Utils.checkNotNull(onlyTransient, "onlyTransient");

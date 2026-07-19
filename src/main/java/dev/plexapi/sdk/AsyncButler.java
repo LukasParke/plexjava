@@ -23,12 +23,18 @@ import dev.plexapi.sdk.operations.StartTask;
 import dev.plexapi.sdk.operations.StartTasks;
 import dev.plexapi.sdk.operations.StopTask;
 import dev.plexapi.sdk.operations.StopTasks;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The butler is responsible for running periodic tasks.  Some tasks run daily, others every few days, and some weekly.  These includes database maintenance, metadata updating, thumbnail generation, media analysis, and other tasks.
+ * The butler is responsible for running periodic tasks. Some tasks run daily, others every few days,
+ * and some weekly. These includes database maintenance, metadata updating, thumbnail generation, media
+ * analysis, and other tasks.
  */
 public class AsyncButler {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Butler syncSDK;
 
@@ -52,6 +58,8 @@ public class AsyncButler {
      * 
      * <p>This endpoint will stop all currently running tasks and remove any scheduled tasks from the queue.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The async call builder
      */
     public StopTasksRequestBuilder stopTasks() {
@@ -63,11 +71,29 @@ public class AsyncButler {
      * 
      * <p>This endpoint will stop all currently running tasks and remove any scheduled tasks from the queue.
      * 
-     * @return CompletableFuture&lt;StopTasksResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<StopTasksResponse>} - The async response
      */
     public CompletableFuture<StopTasksResponse> stopTasksDirect() {
+        return stopTasks(Optional.empty());
+    }
+
+    /**
+     * Stop all Butler tasks
+     * 
+     * <p>This endpoint will stop all currently running tasks and remove any scheduled tasks from the queue.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<StopTasksResponse>} - The async response
+     */
+    public CompletableFuture<StopTasksResponse> stopTasks(Optional<Options> options) {
         AsyncRequestlessOperation<StopTasksResponse> operation
-            = new StopTasks.Async(sdkConfiguration);
+            = new StopTasks.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -77,6 +103,8 @@ public class AsyncButler {
      * Get all Butler tasks
      * 
      * <p>Get the list of butler tasks and their scheduling
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -89,11 +117,29 @@ public class AsyncButler {
      * 
      * <p>Get the list of butler tasks and their scheduling
      * 
-     * @return CompletableFuture&lt;GetTasksResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<GetTasksResponse>} - The async response
      */
     public CompletableFuture<GetTasksResponse> getTasksDirect() {
+        return getTasks(Optional.empty());
+    }
+
+    /**
+     * Get all Butler tasks
+     * 
+     * <p>Get the list of butler tasks and their scheduling
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetTasksResponse>} - The async response
+     */
+    public CompletableFuture<GetTasksResponse> getTasks(Optional<Options> options) {
         AsyncRequestlessOperation<GetTasksResponse> operation
-            = new GetTasks.Async(sdkConfiguration);
+            = new GetTasks.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -102,12 +148,18 @@ public class AsyncButler {
     /**
      * Start all Butler tasks
      * 
-     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks normally run automatically during a time window configured on the server's Settings page but can be manually started using this endpoint. Tasks will run with the following criteria:
+     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks
+     * normally run automatically during a time window configured on the server's Settings page but can be
+     * manually started using this endpoint. Tasks will run with the following criteria:
      * 
-     * <p>  1. Any tasks not scheduled to run on the current day will be skipped.
-     *   2. If a task is configured to run at a random time during the configured window and we are outside that window, the task will start immediately.
-     *   3. If a task is configured to run at a random time during the configured window and we are within that window, the task will be scheduled at a random time within the window.
-     *   4. If we are outside the configured window, the task will start immediately.
+     * <p>1. Any tasks not scheduled to run on the current day will be skipped.
+     * 2. If a task is configured to run at a random time during the configured window and we are outside
+     * that window, the task will start immediately.
+     * 3. If a task is configured to run at a random time during the configured window and we are within
+     * that window, the task will be scheduled at a random time within the window.
+     * 4. If we are outside the configured window, the task will start immediately.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -118,18 +170,49 @@ public class AsyncButler {
     /**
      * Start all Butler tasks
      * 
-     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks normally run automatically during a time window configured on the server's Settings page but can be manually started using this endpoint. Tasks will run with the following criteria:
+     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks
+     * normally run automatically during a time window configured on the server's Settings page but can be
+     * manually started using this endpoint. Tasks will run with the following criteria:
      * 
-     * <p>  1. Any tasks not scheduled to run on the current day will be skipped.
-     *   2. If a task is configured to run at a random time during the configured window and we are outside that window, the task will start immediately.
-     *   3. If a task is configured to run at a random time during the configured window and we are within that window, the task will be scheduled at a random time within the window.
-     *   4. If we are outside the configured window, the task will start immediately.
+     * <p>1. Any tasks not scheduled to run on the current day will be skipped.
+     * 2. If a task is configured to run at a random time during the configured window and we are outside
+     * that window, the task will start immediately.
+     * 3. If a task is configured to run at a random time during the configured window and we are within
+     * that window, the task will be scheduled at a random time within the window.
+     * 4. If we are outside the configured window, the task will start immediately.
      * 
-     * @return CompletableFuture&lt;StartTasksResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<StartTasksResponse>} - The async response
      */
     public CompletableFuture<StartTasksResponse> startTasksDirect() {
+        return startTasks(Optional.empty());
+    }
+
+    /**
+     * Start all Butler tasks
+     * 
+     * <p>This endpoint will attempt to start all Butler tasks that are enabled in the settings. Butler tasks
+     * normally run automatically during a time window configured on the server's Settings page but can be
+     * manually started using this endpoint. Tasks will run with the following criteria:
+     * 
+     * <p>1. Any tasks not scheduled to run on the current day will be skipped.
+     * 2. If a task is configured to run at a random time during the configured window and we are outside
+     * that window, the task will start immediately.
+     * 3. If a task is configured to run at a random time during the configured window and we are within
+     * that window, the task will be scheduled at a random time within the window.
+     * 4. If we are outside the configured window, the task will start immediately.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<StartTasksResponse>} - The async response
+     */
+    public CompletableFuture<StartTasksResponse> startTasks(Optional<Options> options) {
         AsyncRequestlessOperation<StartTasksResponse> operation
-            = new StartTasks.Async(sdkConfiguration);
+            = new StartTasks.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -138,7 +221,10 @@ public class AsyncButler {
     /**
      * Stop a single Butler task
      * 
-     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled tasks if it exists
+     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled
+     * tasks if it exists
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -149,14 +235,35 @@ public class AsyncButler {
     /**
      * Stop a single Butler task
      * 
-     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled tasks if it exists
+     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled
+     * tasks if it exists
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;StopTaskResponse&gt; - The async response
+     * @return {@code CompletableFuture<StopTaskResponse>} - The async response
      */
     public CompletableFuture<StopTaskResponse> stopTask(StopTaskRequest request) {
+        return stopTask(request, Optional.empty());
+    }
+
+    /**
+     * Stop a single Butler task
+     * 
+     * <p>This endpoint will stop a currently running task by name, or remove it from the list of scheduled
+     * tasks if it exists
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<StopTaskResponse>} - The async response
+     */
+    public CompletableFuture<StopTaskResponse> stopTask(StopTaskRequest request, Optional<Options> options) {
         AsyncRequestOperation<StopTaskRequest, StopTaskResponse> operation
-              = new StopTask.Async(sdkConfiguration);
+              = new StopTask.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -166,6 +273,8 @@ public class AsyncButler {
      * Start a single Butler task
      * 
      * <p>This endpoint will attempt to start a specific Butler task by name.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -178,12 +287,31 @@ public class AsyncButler {
      * 
      * <p>This endpoint will attempt to start a specific Butler task by name.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;StartTaskResponse&gt; - The async response
+     * @return {@code CompletableFuture<StartTaskResponse>} - The async response
      */
     public CompletableFuture<StartTaskResponse> startTask(StartTaskRequest request) {
+        return startTask(request, Optional.empty());
+    }
+
+    /**
+     * Start a single Butler task
+     * 
+     * <p>This endpoint will attempt to start a specific Butler task by name.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<StartTaskResponse>} - The async response
+     */
+    public CompletableFuture<StartTaskResponse> startTask(StartTaskRequest request, Optional<Options> options) {
         AsyncRequestOperation<StartTaskRequest, StartTaskResponse> operation
-              = new StartTask.Async(sdkConfiguration);
+              = new StartTask.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

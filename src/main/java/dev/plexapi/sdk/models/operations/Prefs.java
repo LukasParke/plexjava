@@ -10,6 +10,8 @@ import java.lang.String;
 
 /**
  * Prefs
+ * 
+ * <p>The preference key to retrieve or set
  */
 public class Prefs {
     @JsonCreator

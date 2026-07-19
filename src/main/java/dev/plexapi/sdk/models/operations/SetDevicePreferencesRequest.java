@@ -96,6 +96,12 @@ public class SetDevicePreferencesRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=name")
     private Optional<String> name;
 
+    /**
+     * Preference value to set.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=value")
+    private Optional<String> value;
+
     @JsonCreator
     public SetDevicePreferencesRequest(
             Optional<? extends Accepts> accepts,
@@ -110,7 +116,8 @@ public class SetDevicePreferencesRequest {
             Optional<String> deviceName,
             Optional<String> marketplace,
             long deviceId,
-            Optional<String> name) {
+            Optional<String> name,
+            Optional<String> value) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -124,6 +131,7 @@ public class SetDevicePreferencesRequest {
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(deviceId, "deviceId");
         Utils.checkNotNull(name, "name");
+        Utils.checkNotNull(value, "value");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -137,6 +145,7 @@ public class SetDevicePreferencesRequest {
         this.marketplace = marketplace;
         this.deviceId = deviceId;
         this.name = name;
+        this.value = value;
     }
     
     public SetDevicePreferencesRequest(
@@ -145,7 +154,7 @@ public class SetDevicePreferencesRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), deviceId,
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -251,6 +260,14 @@ public class SetDevicePreferencesRequest {
     @JsonIgnore
     public Optional<String> name() {
         return name;
+    }
+
+    /**
+     * Preference value to set.
+     */
+    @JsonIgnore
+    public Optional<String> value() {
+        return value;
     }
 
     public static Builder builder() {
@@ -495,6 +512,25 @@ public class SetDevicePreferencesRequest {
         return this;
     }
 
+    /**
+     * Preference value to set.
+     */
+    public SetDevicePreferencesRequest withValue(String value) {
+        Utils.checkNotNull(value, "value");
+        this.value = Optional.ofNullable(value);
+        return this;
+    }
+
+
+    /**
+     * Preference value to set.
+     */
+    public SetDevicePreferencesRequest withValue(Optional<String> value) {
+        Utils.checkNotNull(value, "value");
+        this.value = value;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -517,7 +553,8 @@ public class SetDevicePreferencesRequest {
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.deviceId, other.deviceId) &&
-            Utils.enhancedDeepEquals(this.name, other.name);
+            Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.value, other.value);
     }
     
     @Override
@@ -527,7 +564,7 @@ public class SetDevicePreferencesRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, deviceId,
-            name);
+            name, value);
     }
     
     @Override
@@ -545,7 +582,8 @@ public class SetDevicePreferencesRequest {
                 "deviceName", deviceName,
                 "marketplace", marketplace,
                 "deviceId", deviceId,
-                "name", name);
+                "name", name,
+                "value", value);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -576,6 +614,8 @@ public class SetDevicePreferencesRequest {
         private Long deviceId;
 
         private Optional<String> name = Optional.empty();
+
+        private Optional<String> value = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -819,6 +859,25 @@ public class SetDevicePreferencesRequest {
             return this;
         }
 
+
+        /**
+         * Preference value to set.
+         */
+        public Builder value(String value) {
+            Utils.checkNotNull(value, "value");
+            this.value = Optional.ofNullable(value);
+            return this;
+        }
+
+        /**
+         * Preference value to set.
+         */
+        public Builder value(Optional<String> value) {
+            Utils.checkNotNull(value, "value");
+            this.value = value;
+            return this;
+        }
+
         public SetDevicePreferencesRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -829,7 +888,7 @@ public class SetDevicePreferencesRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, deviceId,
-                name);
+                name, value);
         }
 
 

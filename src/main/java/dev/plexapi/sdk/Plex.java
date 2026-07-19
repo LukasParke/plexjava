@@ -9,12 +9,16 @@ import dev.plexapi.sdk.models.operations.GetServerResourcesRequest;
 import dev.plexapi.sdk.models.operations.GetServerResourcesRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetServerResourcesResponse;
 import dev.plexapi.sdk.operations.GetServerResources;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
 import java.lang.String;
 import java.util.Optional;
 
-
+/**
+ * Plex Plex operations
+ */
 public class Plex {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncPlex asyncSDK;
 
@@ -50,10 +54,10 @@ public class Plex {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetServerResourcesResponse getServerResources(GetServerResourcesRequest request) throws Exception {
-        return getServerResources(request, Optional.empty());
+    public GetServerResourcesResponse getServerResources(GetServerResourcesRequest request) {
+        return getServerResources(request, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -63,12 +67,17 @@ public class Plex {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param serverURL Overrides the server URL.
+     * @param options additional options
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetServerResourcesResponse getServerResources(GetServerResourcesRequest request, Optional<String> serverURL) throws Exception {
+    public GetServerResourcesResponse getServerResources(
+            GetServerResourcesRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
         RequestOperation<GetServerResourcesRequest, GetServerResourcesResponse> operation
-              = new GetServerResources.Sync(sdkConfiguration, serverURL);
+              = new GetServerResources.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

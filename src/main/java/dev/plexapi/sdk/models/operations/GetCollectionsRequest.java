@@ -86,13 +86,9 @@ public class GetCollectionsRequest {
     private Optional<String> marketplace;
 
     /**
-     * Section identifier
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
-    private long sectionId;
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -104,13 +100,22 @@ public class GetCollectionsRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=mediaQuery")
     private Optional<? extends MediaQuery> mediaQuery;
+
+    /**
+     * Section identifier
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
+    private long sectionId;
 
     @JsonCreator
     public GetCollectionsRequest(
@@ -125,8 +130,8 @@ public class GetCollectionsRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            long sectionId,
-            Optional<? extends MediaQuery> mediaQuery) {
+            Optional<? extends MediaQuery> mediaQuery,
+            long sectionId) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -138,8 +143,8 @@ public class GetCollectionsRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(sectionId, "sectionId");
         Utils.checkNotNull(mediaQuery, "mediaQuery");
+        Utils.checkNotNull(sectionId, "sectionId");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -151,8 +156,8 @@ public class GetCollectionsRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.sectionId = sectionId;
         this.mediaQuery = mediaQuery;
+        this.sectionId = sectionId;
     }
     
     public GetCollectionsRequest(
@@ -160,8 +165,8 @@ public class GetCollectionsRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
-            Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            sectionId);
     }
 
     /**
@@ -254,15 +259,9 @@ public class GetCollectionsRequest {
     }
 
     /**
-     * Section identifier
-     */
-    @JsonIgnore
-    public long sectionId() {
-        return sectionId;
-    }
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -274,15 +273,26 @@ public class GetCollectionsRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<MediaQuery> mediaQuery() {
         return (Optional<MediaQuery>) mediaQuery;
+    }
+
+    /**
+     * Section identifier
+     */
+    @JsonIgnore
+    public long sectionId() {
+        return sectionId;
     }
 
     public static Builder builder() {
@@ -500,16 +510,9 @@ public class GetCollectionsRequest {
     }
 
     /**
-     * Section identifier
-     */
-    public GetCollectionsRequest withSectionId(long sectionId) {
-        Utils.checkNotNull(sectionId, "sectionId");
-        this.sectionId = sectionId;
-        return this;
-    }
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -521,10 +524,13 @@ public class GetCollectionsRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     public GetCollectionsRequest withMediaQuery(MediaQuery mediaQuery) {
         Utils.checkNotNull(mediaQuery, "mediaQuery");
@@ -534,7 +540,9 @@ public class GetCollectionsRequest {
 
 
     /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -546,14 +554,26 @@ public class GetCollectionsRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     public GetCollectionsRequest withMediaQuery(Optional<? extends MediaQuery> mediaQuery) {
         Utils.checkNotNull(mediaQuery, "mediaQuery");
         this.mediaQuery = mediaQuery;
+        return this;
+    }
+
+    /**
+     * Section identifier
+     */
+    public GetCollectionsRequest withSectionId(long sectionId) {
+        Utils.checkNotNull(sectionId, "sectionId");
+        this.sectionId = sectionId;
         return this;
     }
 
@@ -578,8 +598,8 @@ public class GetCollectionsRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
-            Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery);
+            Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery) &&
+            Utils.enhancedDeepEquals(this.sectionId, other.sectionId);
     }
     
     @Override
@@ -588,8 +608,8 @@ public class GetCollectionsRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, sectionId,
-            mediaQuery);
+            deviceName, marketplace, mediaQuery,
+            sectionId);
     }
     
     @Override
@@ -606,8 +626,8 @@ public class GetCollectionsRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "sectionId", sectionId,
-                "mediaQuery", mediaQuery);
+                "mediaQuery", mediaQuery,
+                "sectionId", sectionId);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -635,9 +655,9 @@ public class GetCollectionsRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
-        private Long sectionId;
-
         private Optional<? extends MediaQuery> mediaQuery = Optional.empty();
+
+        private Long sectionId;
 
         private Builder() {
           // force use of static builder() method
@@ -854,17 +874,9 @@ public class GetCollectionsRequest {
 
 
         /**
-         * Section identifier
-         */
-        public Builder sectionId(long sectionId) {
-            Utils.checkNotNull(sectionId, "sectionId");
-            this.sectionId = sectionId;
-            return this;
-        }
-
-
-        /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
          * 
          * <p>The query supports:
          * - Fields: integer, boolean, tag, string, date, language
@@ -876,10 +888,13 @@ public class GetCollectionsRequest {
          * 
          * <p>Examples:
          * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
          * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
          */
         public Builder mediaQuery(MediaQuery mediaQuery) {
             Utils.checkNotNull(mediaQuery, "mediaQuery");
@@ -888,7 +903,9 @@ public class GetCollectionsRequest {
         }
 
         /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
          * 
          * <p>The query supports:
          * - Fields: integer, boolean, tag, string, date, language
@@ -900,14 +917,27 @@ public class GetCollectionsRequest {
          * 
          * <p>Examples:
          * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
          * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
          */
         public Builder mediaQuery(Optional<? extends MediaQuery> mediaQuery) {
             Utils.checkNotNull(mediaQuery, "mediaQuery");
             this.mediaQuery = mediaQuery;
+            return this;
+        }
+
+
+        /**
+         * Section identifier
+         */
+        public Builder sectionId(long sectionId) {
+            Utils.checkNotNull(sectionId, "sectionId");
+            this.sectionId = sectionId;
             return this;
         }
 
@@ -920,8 +950,8 @@ public class GetCollectionsRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, sectionId,
-                mediaQuery);
+                deviceName, marketplace, mediaQuery,
+                sectionId);
         }
 
 

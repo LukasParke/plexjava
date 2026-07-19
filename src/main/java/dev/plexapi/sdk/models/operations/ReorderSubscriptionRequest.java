@@ -84,12 +84,14 @@ public class ReorderSubscriptionRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * The unique identifier of the subscription
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=subscriptionId")
     private long subscriptionId;
 
     /**
-     * The subscription to move this sub after.  If missing will insert at the beginning of the list
+     * The subscription to move this sub after. If missing will insert at the beginning of the list
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=after")
     private Optional<Long> after;
@@ -235,13 +237,16 @@ public class ReorderSubscriptionRequest {
         return marketplace;
     }
 
+    /**
+     * The unique identifier of the subscription
+     */
     @JsonIgnore
     public long subscriptionId() {
         return subscriptionId;
     }
 
     /**
-     * The subscription to move this sub after.  If missing will insert at the beginning of the list
+     * The subscription to move this sub after. If missing will insert at the beginning of the list
      */
     @JsonIgnore
     public Optional<Long> after() {
@@ -462,6 +467,9 @@ public class ReorderSubscriptionRequest {
         return this;
     }
 
+    /**
+     * The unique identifier of the subscription
+     */
     public ReorderSubscriptionRequest withSubscriptionId(long subscriptionId) {
         Utils.checkNotNull(subscriptionId, "subscriptionId");
         this.subscriptionId = subscriptionId;
@@ -469,7 +477,7 @@ public class ReorderSubscriptionRequest {
     }
 
     /**
-     * The subscription to move this sub after.  If missing will insert at the beginning of the list
+     * The subscription to move this sub after. If missing will insert at the beginning of the list
      */
     public ReorderSubscriptionRequest withAfter(long after) {
         Utils.checkNotNull(after, "after");
@@ -479,7 +487,7 @@ public class ReorderSubscriptionRequest {
 
 
     /**
-     * The subscription to move this sub after.  If missing will insert at the beginning of the list
+     * The subscription to move this sub after. If missing will insert at the beginning of the list
      */
     public ReorderSubscriptionRequest withAfter(Optional<Long> after) {
         Utils.checkNotNull(after, "after");
@@ -783,6 +791,9 @@ public class ReorderSubscriptionRequest {
         }
 
 
+        /**
+         * The unique identifier of the subscription
+         */
         public Builder subscriptionId(long subscriptionId) {
             Utils.checkNotNull(subscriptionId, "subscriptionId");
             this.subscriptionId = subscriptionId;
@@ -791,7 +802,7 @@ public class ReorderSubscriptionRequest {
 
 
         /**
-         * The subscription to move this sub after.  If missing will insert at the beginning of the list
+         * The subscription to move this sub after. If missing will insert at the beginning of the list
          */
         public Builder after(long after) {
             Utils.checkNotNull(after, "after");
@@ -800,7 +811,7 @@ public class ReorderSubscriptionRequest {
         }
 
         /**
-         * The subscription to move this sub after.  If missing will insert at the beginning of the list
+         * The subscription to move this sub after. If missing will insert at the beginning of the list
          */
         public Builder after(Optional<Long> after) {
             Utils.checkNotNull(after, "after");

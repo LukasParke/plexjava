@@ -13,6 +13,7 @@ import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Integer;
+import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -103,7 +104,9 @@ public class ListContentRequest {
     private Optional<Integer> xPlexContainerSize;
 
     /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -115,13 +118,34 @@ public class ListContentRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=mediaQuery")
     private Optional<? extends MediaQuery> mediaQuery;
+
+    /**
+     * The id of the section
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
+    private long sectionId;
+
+    /**
+     * Filter by metadata type (1=movie, 2=show, 3=season, 4=episode, 8=artist, 9=album, 10=track)
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
+    private Optional<Long> mediaType;
+
+    /**
+     * Sort key and direction (e.g. addedAt:desc, titleSort)
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=sort")
+    private Optional<String> sort;
 
     /**
      * Adds the Meta object to the response
@@ -136,10 +160,220 @@ public class ListContentRequest {
     private Optional<? extends BoolInt> includeGuids;
 
     /**
-     * The id of the section
+     * Include collection items in results
      */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
-    private String sectionId;
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeCollections")
+    private Optional<? extends BoolInt> includeCollections;
+
+    /**
+     * Include external or online media
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeExternalMedia")
+    private Optional<? extends BoolInt> includeExternalMedia;
+
+    /**
+     * Include advanced settings
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeAdvanced")
+    private Optional<? extends BoolInt> includeAdvanced;
+
+    /**
+     * Verify file existence
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=checkFiles")
+    private Optional<? extends BoolInt> checkFiles;
+
+    /**
+     * Include related items
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeRelated")
+    private Optional<? extends BoolInt> includeRelated;
+
+    /**
+     * Include trailers, behind-the-scenes, etc.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeExtras")
+    private Optional<? extends BoolInt> includeExtras;
+
+    /**
+     * Include popular episodes
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includePopularLeaves")
+    private Optional<? extends BoolInt> includePopularLeaves;
+
+    /**
+     * Include concert items
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeConcerts")
+    private Optional<? extends BoolInt> includeConcerts;
+
+    /**
+     * Include On Deck status
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeOnDeck")
+    private Optional<? extends BoolInt> includeOnDeck;
+
+    /**
+     * Include chapter markers
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeChapters")
+    private Optional<? extends BoolInt> includeChapters;
+
+    /**
+     * Include user preferences
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includePreferences")
+    private Optional<? extends BoolInt> includePreferences;
+
+    /**
+     * Include bandwidth info
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeBandwidths")
+    private Optional<? extends BoolInt> includeBandwidths;
+
+    /**
+     * Include loudness ramp data
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeLoudnessRamps")
+    private Optional<? extends BoolInt> includeLoudnessRamps;
+
+    /**
+     * Include radio station data
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeStations")
+    private Optional<? extends BoolInt> includeStations;
+
+    /**
+     * Include external GUIDs
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeExternalIds")
+    private Optional<? extends BoolInt> includeExternalIds;
+
+    /**
+     * Include user reviews
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeReviews")
+    private Optional<? extends BoolInt> includeReviews;
+
+    /**
+     * Include full credits
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeCredits")
+    private Optional<? extends BoolInt> includeCredits;
+
+    /**
+     * Force inclusion of artwork fields
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeArt")
+    private Optional<? extends BoolInt> includeArt;
+
+    /**
+     * Force inclusion of thumbnail fields
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeThumb")
+    private Optional<? extends BoolInt> includeThumb;
+
+    /**
+     * Force inclusion of banner fields
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeBanner")
+    private Optional<? extends BoolInt> includeBanner;
+
+    /**
+     * Force inclusion of theme fields
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeTheme")
+    private Optional<? extends BoolInt> includeTheme;
+
+    /**
+     * Whitelist of fields to return
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeFields")
+    private Optional<String> includeFields;
+
+    /**
+     * Blacklist of fields to omit
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=excludeFields")
+    private Optional<String> excludeFields;
+
+    /**
+     * Async metadata augmentation
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=asyncAugmentMetadata")
+    private Optional<? extends BoolInt> asyncAugmentMetadata;
+
+    /**
+     * Async local media agent refresh
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=asyncRefreshLocalMediaAgent")
+    private Optional<? extends BoolInt> asyncRefreshLocalMediaAgent;
+
+    /**
+     * Bypass cache
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=nocache")
+    private Optional<? extends BoolInt> nocache;
+
+    /**
+     * Skip synchronous refresh
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=skipRefresh")
+    private Optional<? extends BoolInt> skipRefresh;
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=excludeElements")
+    private Optional<String> excludeElements;
+
+    /**
+     * General filtering expression.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=filters")
+    private Optional<String> filters;
+
+    /**
+     * Filter to unwatched only (1 = true).
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=unwatched")
+    private Optional<? extends BoolInt> unwatched;
+
+    /**
+     * Filter by genre.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=genre")
+    private Optional<String> genre;
+
+    /**
+     * Filter by studio.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=studio")
+    private Optional<String> studio;
+
+    /**
+     * Filter by content rating.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=contentRating")
+    private Optional<String> contentRating;
+
+    /**
+     * Filter by resolution.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=resolution")
+    private Optional<String> resolution;
+
+    /**
+     * Filter by year.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=year")
+    private Optional<Long> year;
+
+    /**
+     * Filter by first character of title.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=firstCharacter")
+    private Optional<String> firstCharacter;
 
     @JsonCreator
     public ListContentRequest(
@@ -157,9 +391,47 @@ public class ListContentRequest {
             Optional<Integer> xPlexContainerStart,
             Optional<Integer> xPlexContainerSize,
             Optional<? extends MediaQuery> mediaQuery,
+            long sectionId,
+            Optional<Long> mediaType,
+            Optional<String> sort,
             Optional<? extends BoolInt> includeMeta,
             Optional<? extends BoolInt> includeGuids,
-            String sectionId) {
+            Optional<? extends BoolInt> includeCollections,
+            Optional<? extends BoolInt> includeExternalMedia,
+            Optional<? extends BoolInt> includeAdvanced,
+            Optional<? extends BoolInt> checkFiles,
+            Optional<? extends BoolInt> includeRelated,
+            Optional<? extends BoolInt> includeExtras,
+            Optional<? extends BoolInt> includePopularLeaves,
+            Optional<? extends BoolInt> includeConcerts,
+            Optional<? extends BoolInt> includeOnDeck,
+            Optional<? extends BoolInt> includeChapters,
+            Optional<? extends BoolInt> includePreferences,
+            Optional<? extends BoolInt> includeBandwidths,
+            Optional<? extends BoolInt> includeLoudnessRamps,
+            Optional<? extends BoolInt> includeStations,
+            Optional<? extends BoolInt> includeExternalIds,
+            Optional<? extends BoolInt> includeReviews,
+            Optional<? extends BoolInt> includeCredits,
+            Optional<? extends BoolInt> includeArt,
+            Optional<? extends BoolInt> includeThumb,
+            Optional<? extends BoolInt> includeBanner,
+            Optional<? extends BoolInt> includeTheme,
+            Optional<String> includeFields,
+            Optional<String> excludeFields,
+            Optional<? extends BoolInt> asyncAugmentMetadata,
+            Optional<? extends BoolInt> asyncRefreshLocalMediaAgent,
+            Optional<? extends BoolInt> nocache,
+            Optional<? extends BoolInt> skipRefresh,
+            Optional<String> excludeElements,
+            Optional<String> filters,
+            Optional<? extends BoolInt> unwatched,
+            Optional<String> genre,
+            Optional<String> studio,
+            Optional<String> contentRating,
+            Optional<String> resolution,
+            Optional<Long> year,
+            Optional<String> firstCharacter) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -174,9 +446,47 @@ public class ListContentRequest {
         Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
         Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
         Utils.checkNotNull(mediaQuery, "mediaQuery");
+        Utils.checkNotNull(sectionId, "sectionId");
+        Utils.checkNotNull(mediaType, "mediaType");
+        Utils.checkNotNull(sort, "sort");
         Utils.checkNotNull(includeMeta, "includeMeta");
         Utils.checkNotNull(includeGuids, "includeGuids");
-        Utils.checkNotNull(sectionId, "sectionId");
+        Utils.checkNotNull(includeCollections, "includeCollections");
+        Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+        Utils.checkNotNull(includeAdvanced, "includeAdvanced");
+        Utils.checkNotNull(checkFiles, "checkFiles");
+        Utils.checkNotNull(includeRelated, "includeRelated");
+        Utils.checkNotNull(includeExtras, "includeExtras");
+        Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+        Utils.checkNotNull(includeConcerts, "includeConcerts");
+        Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+        Utils.checkNotNull(includeChapters, "includeChapters");
+        Utils.checkNotNull(includePreferences, "includePreferences");
+        Utils.checkNotNull(includeBandwidths, "includeBandwidths");
+        Utils.checkNotNull(includeLoudnessRamps, "includeLoudnessRamps");
+        Utils.checkNotNull(includeStations, "includeStations");
+        Utils.checkNotNull(includeExternalIds, "includeExternalIds");
+        Utils.checkNotNull(includeReviews, "includeReviews");
+        Utils.checkNotNull(includeCredits, "includeCredits");
+        Utils.checkNotNull(includeArt, "includeArt");
+        Utils.checkNotNull(includeThumb, "includeThumb");
+        Utils.checkNotNull(includeBanner, "includeBanner");
+        Utils.checkNotNull(includeTheme, "includeTheme");
+        Utils.checkNotNull(includeFields, "includeFields");
+        Utils.checkNotNull(excludeFields, "excludeFields");
+        Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
+        Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
+        Utils.checkNotNull(nocache, "nocache");
+        Utils.checkNotNull(skipRefresh, "skipRefresh");
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        Utils.checkNotNull(filters, "filters");
+        Utils.checkNotNull(unwatched, "unwatched");
+        Utils.checkNotNull(genre, "genre");
+        Utils.checkNotNull(studio, "studio");
+        Utils.checkNotNull(contentRating, "contentRating");
+        Utils.checkNotNull(resolution, "resolution");
+        Utils.checkNotNull(year, "year");
+        Utils.checkNotNull(firstCharacter, "firstCharacter");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -191,19 +501,70 @@ public class ListContentRequest {
         this.xPlexContainerStart = xPlexContainerStart;
         this.xPlexContainerSize = xPlexContainerSize;
         this.mediaQuery = mediaQuery;
+        this.sectionId = sectionId;
+        this.mediaType = mediaType;
+        this.sort = sort;
         this.includeMeta = includeMeta;
         this.includeGuids = includeGuids;
-        this.sectionId = sectionId;
+        this.includeCollections = includeCollections;
+        this.includeExternalMedia = includeExternalMedia;
+        this.includeAdvanced = includeAdvanced;
+        this.checkFiles = checkFiles;
+        this.includeRelated = includeRelated;
+        this.includeExtras = includeExtras;
+        this.includePopularLeaves = includePopularLeaves;
+        this.includeConcerts = includeConcerts;
+        this.includeOnDeck = includeOnDeck;
+        this.includeChapters = includeChapters;
+        this.includePreferences = includePreferences;
+        this.includeBandwidths = includeBandwidths;
+        this.includeLoudnessRamps = includeLoudnessRamps;
+        this.includeStations = includeStations;
+        this.includeExternalIds = includeExternalIds;
+        this.includeReviews = includeReviews;
+        this.includeCredits = includeCredits;
+        this.includeArt = includeArt;
+        this.includeThumb = includeThumb;
+        this.includeBanner = includeBanner;
+        this.includeTheme = includeTheme;
+        this.includeFields = includeFields;
+        this.excludeFields = excludeFields;
+        this.asyncAugmentMetadata = asyncAugmentMetadata;
+        this.asyncRefreshLocalMediaAgent = asyncRefreshLocalMediaAgent;
+        this.nocache = nocache;
+        this.skipRefresh = skipRefresh;
+        this.excludeElements = excludeElements;
+        this.filters = filters;
+        this.unwatched = unwatched;
+        this.genre = genre;
+        this.studio = studio;
+        this.contentRating = contentRating;
+        this.resolution = resolution;
+        this.year = year;
+        this.firstCharacter = firstCharacter;
     }
     
     public ListContentRequest(
-            String sectionId) {
+            long sectionId) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), sectionId,
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), sectionId);
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -316,7 +677,9 @@ public class ListContentRequest {
     }
 
     /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -328,15 +691,42 @@ public class ListContentRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<MediaQuery> mediaQuery() {
         return (Optional<MediaQuery>) mediaQuery;
+    }
+
+    /**
+     * The id of the section
+     */
+    @JsonIgnore
+    public long sectionId() {
+        return sectionId;
+    }
+
+    /**
+     * Filter by metadata type (1=movie, 2=show, 3=season, 4=episode, 8=artist, 9=album, 10=track)
+     */
+    @JsonIgnore
+    public Optional<Long> mediaType() {
+        return mediaType;
+    }
+
+    /**
+     * Sort key and direction (e.g. addedAt:desc, titleSort)
+     */
+    @JsonIgnore
+    public Optional<String> sort() {
+        return sort;
     }
 
     /**
@@ -358,11 +748,317 @@ public class ListContentRequest {
     }
 
     /**
-     * The id of the section
+     * Include collection items in results
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeCollections() {
+        return (Optional<BoolInt>) includeCollections;
+    }
+
+    /**
+     * Include external or online media
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeExternalMedia() {
+        return (Optional<BoolInt>) includeExternalMedia;
+    }
+
+    /**
+     * Include advanced settings
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeAdvanced() {
+        return (Optional<BoolInt>) includeAdvanced;
+    }
+
+    /**
+     * Verify file existence
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> checkFiles() {
+        return (Optional<BoolInt>) checkFiles;
+    }
+
+    /**
+     * Include related items
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeRelated() {
+        return (Optional<BoolInt>) includeRelated;
+    }
+
+    /**
+     * Include trailers, behind-the-scenes, etc.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeExtras() {
+        return (Optional<BoolInt>) includeExtras;
+    }
+
+    /**
+     * Include popular episodes
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includePopularLeaves() {
+        return (Optional<BoolInt>) includePopularLeaves;
+    }
+
+    /**
+     * Include concert items
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeConcerts() {
+        return (Optional<BoolInt>) includeConcerts;
+    }
+
+    /**
+     * Include On Deck status
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeOnDeck() {
+        return (Optional<BoolInt>) includeOnDeck;
+    }
+
+    /**
+     * Include chapter markers
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeChapters() {
+        return (Optional<BoolInt>) includeChapters;
+    }
+
+    /**
+     * Include user preferences
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includePreferences() {
+        return (Optional<BoolInt>) includePreferences;
+    }
+
+    /**
+     * Include bandwidth info
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeBandwidths() {
+        return (Optional<BoolInt>) includeBandwidths;
+    }
+
+    /**
+     * Include loudness ramp data
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeLoudnessRamps() {
+        return (Optional<BoolInt>) includeLoudnessRamps;
+    }
+
+    /**
+     * Include radio station data
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeStations() {
+        return (Optional<BoolInt>) includeStations;
+    }
+
+    /**
+     * Include external GUIDs
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeExternalIds() {
+        return (Optional<BoolInt>) includeExternalIds;
+    }
+
+    /**
+     * Include user reviews
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeReviews() {
+        return (Optional<BoolInt>) includeReviews;
+    }
+
+    /**
+     * Include full credits
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeCredits() {
+        return (Optional<BoolInt>) includeCredits;
+    }
+
+    /**
+     * Force inclusion of artwork fields
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeArt() {
+        return (Optional<BoolInt>) includeArt;
+    }
+
+    /**
+     * Force inclusion of thumbnail fields
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeThumb() {
+        return (Optional<BoolInt>) includeThumb;
+    }
+
+    /**
+     * Force inclusion of banner fields
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeBanner() {
+        return (Optional<BoolInt>) includeBanner;
+    }
+
+    /**
+     * Force inclusion of theme fields
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeTheme() {
+        return (Optional<BoolInt>) includeTheme;
+    }
+
+    /**
+     * Whitelist of fields to return
      */
     @JsonIgnore
-    public String sectionId() {
-        return sectionId;
+    public Optional<String> includeFields() {
+        return includeFields;
+    }
+
+    /**
+     * Blacklist of fields to omit
+     */
+    @JsonIgnore
+    public Optional<String> excludeFields() {
+        return excludeFields;
+    }
+
+    /**
+     * Async metadata augmentation
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> asyncAugmentMetadata() {
+        return (Optional<BoolInt>) asyncAugmentMetadata;
+    }
+
+    /**
+     * Async local media agent refresh
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> asyncRefreshLocalMediaAgent() {
+        return (Optional<BoolInt>) asyncRefreshLocalMediaAgent;
+    }
+
+    /**
+     * Bypass cache
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> nocache() {
+        return (Optional<BoolInt>) nocache;
+    }
+
+    /**
+     * Skip synchronous refresh
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> skipRefresh() {
+        return (Optional<BoolInt>) skipRefresh;
+    }
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    @JsonIgnore
+    public Optional<String> excludeElements() {
+        return excludeElements;
+    }
+
+    /**
+     * General filtering expression.
+     */
+    @JsonIgnore
+    public Optional<String> filters() {
+        return filters;
+    }
+
+    /**
+     * Filter to unwatched only (1 = true).
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> unwatched() {
+        return (Optional<BoolInt>) unwatched;
+    }
+
+    /**
+     * Filter by genre.
+     */
+    @JsonIgnore
+    public Optional<String> genre() {
+        return genre;
+    }
+
+    /**
+     * Filter by studio.
+     */
+    @JsonIgnore
+    public Optional<String> studio() {
+        return studio;
+    }
+
+    /**
+     * Filter by content rating.
+     */
+    @JsonIgnore
+    public Optional<String> contentRating() {
+        return contentRating;
+    }
+
+    /**
+     * Filter by resolution.
+     */
+    @JsonIgnore
+    public Optional<String> resolution() {
+        return resolution;
+    }
+
+    /**
+     * Filter by year.
+     */
+    @JsonIgnore
+    public Optional<Long> year() {
+        return year;
+    }
+
+    /**
+     * Filter by first character of title.
+     */
+    @JsonIgnore
+    public Optional<String> firstCharacter() {
+        return firstCharacter;
     }
 
     public static Builder builder() {
@@ -626,7 +1322,9 @@ public class ListContentRequest {
     }
 
     /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -638,10 +1336,13 @@ public class ListContentRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     public ListContentRequest withMediaQuery(MediaQuery mediaQuery) {
         Utils.checkNotNull(mediaQuery, "mediaQuery");
@@ -651,7 +1352,9 @@ public class ListContentRequest {
 
 
     /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -663,14 +1366,64 @@ public class ListContentRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     public ListContentRequest withMediaQuery(Optional<? extends MediaQuery> mediaQuery) {
         Utils.checkNotNull(mediaQuery, "mediaQuery");
         this.mediaQuery = mediaQuery;
+        return this;
+    }
+
+    /**
+     * The id of the section
+     */
+    public ListContentRequest withSectionId(long sectionId) {
+        Utils.checkNotNull(sectionId, "sectionId");
+        this.sectionId = sectionId;
+        return this;
+    }
+
+    /**
+     * Filter by metadata type (1=movie, 2=show, 3=season, 4=episode, 8=artist, 9=album, 10=track)
+     */
+    public ListContentRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
+        return this;
+    }
+
+
+    /**
+     * Filter by metadata type (1=movie, 2=show, 3=season, 4=episode, 8=artist, 9=album, 10=track)
+     */
+    public ListContentRequest withMediaType(Optional<Long> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
+        return this;
+    }
+
+    /**
+     * Sort key and direction (e.g. addedAt:desc, titleSort)
+     */
+    public ListContentRequest withSort(String sort) {
+        Utils.checkNotNull(sort, "sort");
+        this.sort = Optional.ofNullable(sort);
+        return this;
+    }
+
+
+    /**
+     * Sort key and direction (e.g. addedAt:desc, titleSort)
+     */
+    public ListContentRequest withSort(Optional<String> sort) {
+        Utils.checkNotNull(sort, "sort");
+        this.sort = sort;
         return this;
     }
 
@@ -713,11 +1466,686 @@ public class ListContentRequest {
     }
 
     /**
-     * The id of the section
+     * Include collection items in results
      */
-    public ListContentRequest withSectionId(String sectionId) {
-        Utils.checkNotNull(sectionId, "sectionId");
-        this.sectionId = sectionId;
+    public ListContentRequest withIncludeCollections(BoolInt includeCollections) {
+        Utils.checkNotNull(includeCollections, "includeCollections");
+        this.includeCollections = Optional.ofNullable(includeCollections);
+        return this;
+    }
+
+
+    /**
+     * Include collection items in results
+     */
+    public ListContentRequest withIncludeCollections(Optional<? extends BoolInt> includeCollections) {
+        Utils.checkNotNull(includeCollections, "includeCollections");
+        this.includeCollections = includeCollections;
+        return this;
+    }
+
+    /**
+     * Include external or online media
+     */
+    public ListContentRequest withIncludeExternalMedia(BoolInt includeExternalMedia) {
+        Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+        this.includeExternalMedia = Optional.ofNullable(includeExternalMedia);
+        return this;
+    }
+
+
+    /**
+     * Include external or online media
+     */
+    public ListContentRequest withIncludeExternalMedia(Optional<? extends BoolInt> includeExternalMedia) {
+        Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+        this.includeExternalMedia = includeExternalMedia;
+        return this;
+    }
+
+    /**
+     * Include advanced settings
+     */
+    public ListContentRequest withIncludeAdvanced(BoolInt includeAdvanced) {
+        Utils.checkNotNull(includeAdvanced, "includeAdvanced");
+        this.includeAdvanced = Optional.ofNullable(includeAdvanced);
+        return this;
+    }
+
+
+    /**
+     * Include advanced settings
+     */
+    public ListContentRequest withIncludeAdvanced(Optional<? extends BoolInt> includeAdvanced) {
+        Utils.checkNotNull(includeAdvanced, "includeAdvanced");
+        this.includeAdvanced = includeAdvanced;
+        return this;
+    }
+
+    /**
+     * Verify file existence
+     */
+    public ListContentRequest withCheckFiles(BoolInt checkFiles) {
+        Utils.checkNotNull(checkFiles, "checkFiles");
+        this.checkFiles = Optional.ofNullable(checkFiles);
+        return this;
+    }
+
+
+    /**
+     * Verify file existence
+     */
+    public ListContentRequest withCheckFiles(Optional<? extends BoolInt> checkFiles) {
+        Utils.checkNotNull(checkFiles, "checkFiles");
+        this.checkFiles = checkFiles;
+        return this;
+    }
+
+    /**
+     * Include related items
+     */
+    public ListContentRequest withIncludeRelated(BoolInt includeRelated) {
+        Utils.checkNotNull(includeRelated, "includeRelated");
+        this.includeRelated = Optional.ofNullable(includeRelated);
+        return this;
+    }
+
+
+    /**
+     * Include related items
+     */
+    public ListContentRequest withIncludeRelated(Optional<? extends BoolInt> includeRelated) {
+        Utils.checkNotNull(includeRelated, "includeRelated");
+        this.includeRelated = includeRelated;
+        return this;
+    }
+
+    /**
+     * Include trailers, behind-the-scenes, etc.
+     */
+    public ListContentRequest withIncludeExtras(BoolInt includeExtras) {
+        Utils.checkNotNull(includeExtras, "includeExtras");
+        this.includeExtras = Optional.ofNullable(includeExtras);
+        return this;
+    }
+
+
+    /**
+     * Include trailers, behind-the-scenes, etc.
+     */
+    public ListContentRequest withIncludeExtras(Optional<? extends BoolInt> includeExtras) {
+        Utils.checkNotNull(includeExtras, "includeExtras");
+        this.includeExtras = includeExtras;
+        return this;
+    }
+
+    /**
+     * Include popular episodes
+     */
+    public ListContentRequest withIncludePopularLeaves(BoolInt includePopularLeaves) {
+        Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+        this.includePopularLeaves = Optional.ofNullable(includePopularLeaves);
+        return this;
+    }
+
+
+    /**
+     * Include popular episodes
+     */
+    public ListContentRequest withIncludePopularLeaves(Optional<? extends BoolInt> includePopularLeaves) {
+        Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+        this.includePopularLeaves = includePopularLeaves;
+        return this;
+    }
+
+    /**
+     * Include concert items
+     */
+    public ListContentRequest withIncludeConcerts(BoolInt includeConcerts) {
+        Utils.checkNotNull(includeConcerts, "includeConcerts");
+        this.includeConcerts = Optional.ofNullable(includeConcerts);
+        return this;
+    }
+
+
+    /**
+     * Include concert items
+     */
+    public ListContentRequest withIncludeConcerts(Optional<? extends BoolInt> includeConcerts) {
+        Utils.checkNotNull(includeConcerts, "includeConcerts");
+        this.includeConcerts = includeConcerts;
+        return this;
+    }
+
+    /**
+     * Include On Deck status
+     */
+    public ListContentRequest withIncludeOnDeck(BoolInt includeOnDeck) {
+        Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+        this.includeOnDeck = Optional.ofNullable(includeOnDeck);
+        return this;
+    }
+
+
+    /**
+     * Include On Deck status
+     */
+    public ListContentRequest withIncludeOnDeck(Optional<? extends BoolInt> includeOnDeck) {
+        Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+        this.includeOnDeck = includeOnDeck;
+        return this;
+    }
+
+    /**
+     * Include chapter markers
+     */
+    public ListContentRequest withIncludeChapters(BoolInt includeChapters) {
+        Utils.checkNotNull(includeChapters, "includeChapters");
+        this.includeChapters = Optional.ofNullable(includeChapters);
+        return this;
+    }
+
+
+    /**
+     * Include chapter markers
+     */
+    public ListContentRequest withIncludeChapters(Optional<? extends BoolInt> includeChapters) {
+        Utils.checkNotNull(includeChapters, "includeChapters");
+        this.includeChapters = includeChapters;
+        return this;
+    }
+
+    /**
+     * Include user preferences
+     */
+    public ListContentRequest withIncludePreferences(BoolInt includePreferences) {
+        Utils.checkNotNull(includePreferences, "includePreferences");
+        this.includePreferences = Optional.ofNullable(includePreferences);
+        return this;
+    }
+
+
+    /**
+     * Include user preferences
+     */
+    public ListContentRequest withIncludePreferences(Optional<? extends BoolInt> includePreferences) {
+        Utils.checkNotNull(includePreferences, "includePreferences");
+        this.includePreferences = includePreferences;
+        return this;
+    }
+
+    /**
+     * Include bandwidth info
+     */
+    public ListContentRequest withIncludeBandwidths(BoolInt includeBandwidths) {
+        Utils.checkNotNull(includeBandwidths, "includeBandwidths");
+        this.includeBandwidths = Optional.ofNullable(includeBandwidths);
+        return this;
+    }
+
+
+    /**
+     * Include bandwidth info
+     */
+    public ListContentRequest withIncludeBandwidths(Optional<? extends BoolInt> includeBandwidths) {
+        Utils.checkNotNull(includeBandwidths, "includeBandwidths");
+        this.includeBandwidths = includeBandwidths;
+        return this;
+    }
+
+    /**
+     * Include loudness ramp data
+     */
+    public ListContentRequest withIncludeLoudnessRamps(BoolInt includeLoudnessRamps) {
+        Utils.checkNotNull(includeLoudnessRamps, "includeLoudnessRamps");
+        this.includeLoudnessRamps = Optional.ofNullable(includeLoudnessRamps);
+        return this;
+    }
+
+
+    /**
+     * Include loudness ramp data
+     */
+    public ListContentRequest withIncludeLoudnessRamps(Optional<? extends BoolInt> includeLoudnessRamps) {
+        Utils.checkNotNull(includeLoudnessRamps, "includeLoudnessRamps");
+        this.includeLoudnessRamps = includeLoudnessRamps;
+        return this;
+    }
+
+    /**
+     * Include radio station data
+     */
+    public ListContentRequest withIncludeStations(BoolInt includeStations) {
+        Utils.checkNotNull(includeStations, "includeStations");
+        this.includeStations = Optional.ofNullable(includeStations);
+        return this;
+    }
+
+
+    /**
+     * Include radio station data
+     */
+    public ListContentRequest withIncludeStations(Optional<? extends BoolInt> includeStations) {
+        Utils.checkNotNull(includeStations, "includeStations");
+        this.includeStations = includeStations;
+        return this;
+    }
+
+    /**
+     * Include external GUIDs
+     */
+    public ListContentRequest withIncludeExternalIds(BoolInt includeExternalIds) {
+        Utils.checkNotNull(includeExternalIds, "includeExternalIds");
+        this.includeExternalIds = Optional.ofNullable(includeExternalIds);
+        return this;
+    }
+
+
+    /**
+     * Include external GUIDs
+     */
+    public ListContentRequest withIncludeExternalIds(Optional<? extends BoolInt> includeExternalIds) {
+        Utils.checkNotNull(includeExternalIds, "includeExternalIds");
+        this.includeExternalIds = includeExternalIds;
+        return this;
+    }
+
+    /**
+     * Include user reviews
+     */
+    public ListContentRequest withIncludeReviews(BoolInt includeReviews) {
+        Utils.checkNotNull(includeReviews, "includeReviews");
+        this.includeReviews = Optional.ofNullable(includeReviews);
+        return this;
+    }
+
+
+    /**
+     * Include user reviews
+     */
+    public ListContentRequest withIncludeReviews(Optional<? extends BoolInt> includeReviews) {
+        Utils.checkNotNull(includeReviews, "includeReviews");
+        this.includeReviews = includeReviews;
+        return this;
+    }
+
+    /**
+     * Include full credits
+     */
+    public ListContentRequest withIncludeCredits(BoolInt includeCredits) {
+        Utils.checkNotNull(includeCredits, "includeCredits");
+        this.includeCredits = Optional.ofNullable(includeCredits);
+        return this;
+    }
+
+
+    /**
+     * Include full credits
+     */
+    public ListContentRequest withIncludeCredits(Optional<? extends BoolInt> includeCredits) {
+        Utils.checkNotNull(includeCredits, "includeCredits");
+        this.includeCredits = includeCredits;
+        return this;
+    }
+
+    /**
+     * Force inclusion of artwork fields
+     */
+    public ListContentRequest withIncludeArt(BoolInt includeArt) {
+        Utils.checkNotNull(includeArt, "includeArt");
+        this.includeArt = Optional.ofNullable(includeArt);
+        return this;
+    }
+
+
+    /**
+     * Force inclusion of artwork fields
+     */
+    public ListContentRequest withIncludeArt(Optional<? extends BoolInt> includeArt) {
+        Utils.checkNotNull(includeArt, "includeArt");
+        this.includeArt = includeArt;
+        return this;
+    }
+
+    /**
+     * Force inclusion of thumbnail fields
+     */
+    public ListContentRequest withIncludeThumb(BoolInt includeThumb) {
+        Utils.checkNotNull(includeThumb, "includeThumb");
+        this.includeThumb = Optional.ofNullable(includeThumb);
+        return this;
+    }
+
+
+    /**
+     * Force inclusion of thumbnail fields
+     */
+    public ListContentRequest withIncludeThumb(Optional<? extends BoolInt> includeThumb) {
+        Utils.checkNotNull(includeThumb, "includeThumb");
+        this.includeThumb = includeThumb;
+        return this;
+    }
+
+    /**
+     * Force inclusion of banner fields
+     */
+    public ListContentRequest withIncludeBanner(BoolInt includeBanner) {
+        Utils.checkNotNull(includeBanner, "includeBanner");
+        this.includeBanner = Optional.ofNullable(includeBanner);
+        return this;
+    }
+
+
+    /**
+     * Force inclusion of banner fields
+     */
+    public ListContentRequest withIncludeBanner(Optional<? extends BoolInt> includeBanner) {
+        Utils.checkNotNull(includeBanner, "includeBanner");
+        this.includeBanner = includeBanner;
+        return this;
+    }
+
+    /**
+     * Force inclusion of theme fields
+     */
+    public ListContentRequest withIncludeTheme(BoolInt includeTheme) {
+        Utils.checkNotNull(includeTheme, "includeTheme");
+        this.includeTheme = Optional.ofNullable(includeTheme);
+        return this;
+    }
+
+
+    /**
+     * Force inclusion of theme fields
+     */
+    public ListContentRequest withIncludeTheme(Optional<? extends BoolInt> includeTheme) {
+        Utils.checkNotNull(includeTheme, "includeTheme");
+        this.includeTheme = includeTheme;
+        return this;
+    }
+
+    /**
+     * Whitelist of fields to return
+     */
+    public ListContentRequest withIncludeFields(String includeFields) {
+        Utils.checkNotNull(includeFields, "includeFields");
+        this.includeFields = Optional.ofNullable(includeFields);
+        return this;
+    }
+
+
+    /**
+     * Whitelist of fields to return
+     */
+    public ListContentRequest withIncludeFields(Optional<String> includeFields) {
+        Utils.checkNotNull(includeFields, "includeFields");
+        this.includeFields = includeFields;
+        return this;
+    }
+
+    /**
+     * Blacklist of fields to omit
+     */
+    public ListContentRequest withExcludeFields(String excludeFields) {
+        Utils.checkNotNull(excludeFields, "excludeFields");
+        this.excludeFields = Optional.ofNullable(excludeFields);
+        return this;
+    }
+
+
+    /**
+     * Blacklist of fields to omit
+     */
+    public ListContentRequest withExcludeFields(Optional<String> excludeFields) {
+        Utils.checkNotNull(excludeFields, "excludeFields");
+        this.excludeFields = excludeFields;
+        return this;
+    }
+
+    /**
+     * Async metadata augmentation
+     */
+    public ListContentRequest withAsyncAugmentMetadata(BoolInt asyncAugmentMetadata) {
+        Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
+        this.asyncAugmentMetadata = Optional.ofNullable(asyncAugmentMetadata);
+        return this;
+    }
+
+
+    /**
+     * Async metadata augmentation
+     */
+    public ListContentRequest withAsyncAugmentMetadata(Optional<? extends BoolInt> asyncAugmentMetadata) {
+        Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
+        this.asyncAugmentMetadata = asyncAugmentMetadata;
+        return this;
+    }
+
+    /**
+     * Async local media agent refresh
+     */
+    public ListContentRequest withAsyncRefreshLocalMediaAgent(BoolInt asyncRefreshLocalMediaAgent) {
+        Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
+        this.asyncRefreshLocalMediaAgent = Optional.ofNullable(asyncRefreshLocalMediaAgent);
+        return this;
+    }
+
+
+    /**
+     * Async local media agent refresh
+     */
+    public ListContentRequest withAsyncRefreshLocalMediaAgent(Optional<? extends BoolInt> asyncRefreshLocalMediaAgent) {
+        Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
+        this.asyncRefreshLocalMediaAgent = asyncRefreshLocalMediaAgent;
+        return this;
+    }
+
+    /**
+     * Bypass cache
+     */
+    public ListContentRequest withNocache(BoolInt nocache) {
+        Utils.checkNotNull(nocache, "nocache");
+        this.nocache = Optional.ofNullable(nocache);
+        return this;
+    }
+
+
+    /**
+     * Bypass cache
+     */
+    public ListContentRequest withNocache(Optional<? extends BoolInt> nocache) {
+        Utils.checkNotNull(nocache, "nocache");
+        this.nocache = nocache;
+        return this;
+    }
+
+    /**
+     * Skip synchronous refresh
+     */
+    public ListContentRequest withSkipRefresh(BoolInt skipRefresh) {
+        Utils.checkNotNull(skipRefresh, "skipRefresh");
+        this.skipRefresh = Optional.ofNullable(skipRefresh);
+        return this;
+    }
+
+
+    /**
+     * Skip synchronous refresh
+     */
+    public ListContentRequest withSkipRefresh(Optional<? extends BoolInt> skipRefresh) {
+        Utils.checkNotNull(skipRefresh, "skipRefresh");
+        this.skipRefresh = skipRefresh;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    public ListContentRequest withExcludeElements(String excludeElements) {
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        this.excludeElements = Optional.ofNullable(excludeElements);
+        return this;
+    }
+
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    public ListContentRequest withExcludeElements(Optional<String> excludeElements) {
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        this.excludeElements = excludeElements;
+        return this;
+    }
+
+    /**
+     * General filtering expression.
+     */
+    public ListContentRequest withFilters(String filters) {
+        Utils.checkNotNull(filters, "filters");
+        this.filters = Optional.ofNullable(filters);
+        return this;
+    }
+
+
+    /**
+     * General filtering expression.
+     */
+    public ListContentRequest withFilters(Optional<String> filters) {
+        Utils.checkNotNull(filters, "filters");
+        this.filters = filters;
+        return this;
+    }
+
+    /**
+     * Filter to unwatched only (1 = true).
+     */
+    public ListContentRequest withUnwatched(BoolInt unwatched) {
+        Utils.checkNotNull(unwatched, "unwatched");
+        this.unwatched = Optional.ofNullable(unwatched);
+        return this;
+    }
+
+
+    /**
+     * Filter to unwatched only (1 = true).
+     */
+    public ListContentRequest withUnwatched(Optional<? extends BoolInt> unwatched) {
+        Utils.checkNotNull(unwatched, "unwatched");
+        this.unwatched = unwatched;
+        return this;
+    }
+
+    /**
+     * Filter by genre.
+     */
+    public ListContentRequest withGenre(String genre) {
+        Utils.checkNotNull(genre, "genre");
+        this.genre = Optional.ofNullable(genre);
+        return this;
+    }
+
+
+    /**
+     * Filter by genre.
+     */
+    public ListContentRequest withGenre(Optional<String> genre) {
+        Utils.checkNotNull(genre, "genre");
+        this.genre = genre;
+        return this;
+    }
+
+    /**
+     * Filter by studio.
+     */
+    public ListContentRequest withStudio(String studio) {
+        Utils.checkNotNull(studio, "studio");
+        this.studio = Optional.ofNullable(studio);
+        return this;
+    }
+
+
+    /**
+     * Filter by studio.
+     */
+    public ListContentRequest withStudio(Optional<String> studio) {
+        Utils.checkNotNull(studio, "studio");
+        this.studio = studio;
+        return this;
+    }
+
+    /**
+     * Filter by content rating.
+     */
+    public ListContentRequest withContentRating(String contentRating) {
+        Utils.checkNotNull(contentRating, "contentRating");
+        this.contentRating = Optional.ofNullable(contentRating);
+        return this;
+    }
+
+
+    /**
+     * Filter by content rating.
+     */
+    public ListContentRequest withContentRating(Optional<String> contentRating) {
+        Utils.checkNotNull(contentRating, "contentRating");
+        this.contentRating = contentRating;
+        return this;
+    }
+
+    /**
+     * Filter by resolution.
+     */
+    public ListContentRequest withResolution(String resolution) {
+        Utils.checkNotNull(resolution, "resolution");
+        this.resolution = Optional.ofNullable(resolution);
+        return this;
+    }
+
+
+    /**
+     * Filter by resolution.
+     */
+    public ListContentRequest withResolution(Optional<String> resolution) {
+        Utils.checkNotNull(resolution, "resolution");
+        this.resolution = resolution;
+        return this;
+    }
+
+    /**
+     * Filter by year.
+     */
+    public ListContentRequest withYear(long year) {
+        Utils.checkNotNull(year, "year");
+        this.year = Optional.ofNullable(year);
+        return this;
+    }
+
+
+    /**
+     * Filter by year.
+     */
+    public ListContentRequest withYear(Optional<Long> year) {
+        Utils.checkNotNull(year, "year");
+        this.year = year;
+        return this;
+    }
+
+    /**
+     * Filter by first character of title.
+     */
+    public ListContentRequest withFirstCharacter(String firstCharacter) {
+        Utils.checkNotNull(firstCharacter, "firstCharacter");
+        this.firstCharacter = Optional.ofNullable(firstCharacter);
+        return this;
+    }
+
+
+    /**
+     * Filter by first character of title.
+     */
+    public ListContentRequest withFirstCharacter(Optional<String> firstCharacter) {
+        Utils.checkNotNull(firstCharacter, "firstCharacter");
+        this.firstCharacter = firstCharacter;
         return this;
     }
 
@@ -745,9 +2173,47 @@ public class ListContentRequest {
             Utils.enhancedDeepEquals(this.xPlexContainerStart, other.xPlexContainerStart) &&
             Utils.enhancedDeepEquals(this.xPlexContainerSize, other.xPlexContainerSize) &&
             Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery) &&
+            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
+            Utils.enhancedDeepEquals(this.sort, other.sort) &&
             Utils.enhancedDeepEquals(this.includeMeta, other.includeMeta) &&
             Utils.enhancedDeepEquals(this.includeGuids, other.includeGuids) &&
-            Utils.enhancedDeepEquals(this.sectionId, other.sectionId);
+            Utils.enhancedDeepEquals(this.includeCollections, other.includeCollections) &&
+            Utils.enhancedDeepEquals(this.includeExternalMedia, other.includeExternalMedia) &&
+            Utils.enhancedDeepEquals(this.includeAdvanced, other.includeAdvanced) &&
+            Utils.enhancedDeepEquals(this.checkFiles, other.checkFiles) &&
+            Utils.enhancedDeepEquals(this.includeRelated, other.includeRelated) &&
+            Utils.enhancedDeepEquals(this.includeExtras, other.includeExtras) &&
+            Utils.enhancedDeepEquals(this.includePopularLeaves, other.includePopularLeaves) &&
+            Utils.enhancedDeepEquals(this.includeConcerts, other.includeConcerts) &&
+            Utils.enhancedDeepEquals(this.includeOnDeck, other.includeOnDeck) &&
+            Utils.enhancedDeepEquals(this.includeChapters, other.includeChapters) &&
+            Utils.enhancedDeepEquals(this.includePreferences, other.includePreferences) &&
+            Utils.enhancedDeepEquals(this.includeBandwidths, other.includeBandwidths) &&
+            Utils.enhancedDeepEquals(this.includeLoudnessRamps, other.includeLoudnessRamps) &&
+            Utils.enhancedDeepEquals(this.includeStations, other.includeStations) &&
+            Utils.enhancedDeepEquals(this.includeExternalIds, other.includeExternalIds) &&
+            Utils.enhancedDeepEquals(this.includeReviews, other.includeReviews) &&
+            Utils.enhancedDeepEquals(this.includeCredits, other.includeCredits) &&
+            Utils.enhancedDeepEquals(this.includeArt, other.includeArt) &&
+            Utils.enhancedDeepEquals(this.includeThumb, other.includeThumb) &&
+            Utils.enhancedDeepEquals(this.includeBanner, other.includeBanner) &&
+            Utils.enhancedDeepEquals(this.includeTheme, other.includeTheme) &&
+            Utils.enhancedDeepEquals(this.includeFields, other.includeFields) &&
+            Utils.enhancedDeepEquals(this.excludeFields, other.excludeFields) &&
+            Utils.enhancedDeepEquals(this.asyncAugmentMetadata, other.asyncAugmentMetadata) &&
+            Utils.enhancedDeepEquals(this.asyncRefreshLocalMediaAgent, other.asyncRefreshLocalMediaAgent) &&
+            Utils.enhancedDeepEquals(this.nocache, other.nocache) &&
+            Utils.enhancedDeepEquals(this.skipRefresh, other.skipRefresh) &&
+            Utils.enhancedDeepEquals(this.excludeElements, other.excludeElements) &&
+            Utils.enhancedDeepEquals(this.filters, other.filters) &&
+            Utils.enhancedDeepEquals(this.unwatched, other.unwatched) &&
+            Utils.enhancedDeepEquals(this.genre, other.genre) &&
+            Utils.enhancedDeepEquals(this.studio, other.studio) &&
+            Utils.enhancedDeepEquals(this.contentRating, other.contentRating) &&
+            Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
+            Utils.enhancedDeepEquals(this.year, other.year) &&
+            Utils.enhancedDeepEquals(this.firstCharacter, other.firstCharacter);
     }
     
     @Override
@@ -757,8 +2223,21 @@ public class ListContentRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, xPlexContainerStart,
-            xPlexContainerSize, mediaQuery, includeMeta,
-            includeGuids, sectionId);
+            xPlexContainerSize, mediaQuery, sectionId,
+            mediaType, sort, includeMeta,
+            includeGuids, includeCollections, includeExternalMedia,
+            includeAdvanced, checkFiles, includeRelated,
+            includeExtras, includePopularLeaves, includeConcerts,
+            includeOnDeck, includeChapters, includePreferences,
+            includeBandwidths, includeLoudnessRamps, includeStations,
+            includeExternalIds, includeReviews, includeCredits,
+            includeArt, includeThumb, includeBanner,
+            includeTheme, includeFields, excludeFields,
+            asyncAugmentMetadata, asyncRefreshLocalMediaAgent, nocache,
+            skipRefresh, excludeElements, filters,
+            unwatched, genre, studio,
+            contentRating, resolution, year,
+            firstCharacter);
     }
     
     @Override
@@ -778,9 +2257,47 @@ public class ListContentRequest {
                 "xPlexContainerStart", xPlexContainerStart,
                 "xPlexContainerSize", xPlexContainerSize,
                 "mediaQuery", mediaQuery,
+                "sectionId", sectionId,
+                "mediaType", mediaType,
+                "sort", sort,
                 "includeMeta", includeMeta,
                 "includeGuids", includeGuids,
-                "sectionId", sectionId);
+                "includeCollections", includeCollections,
+                "includeExternalMedia", includeExternalMedia,
+                "includeAdvanced", includeAdvanced,
+                "checkFiles", checkFiles,
+                "includeRelated", includeRelated,
+                "includeExtras", includeExtras,
+                "includePopularLeaves", includePopularLeaves,
+                "includeConcerts", includeConcerts,
+                "includeOnDeck", includeOnDeck,
+                "includeChapters", includeChapters,
+                "includePreferences", includePreferences,
+                "includeBandwidths", includeBandwidths,
+                "includeLoudnessRamps", includeLoudnessRamps,
+                "includeStations", includeStations,
+                "includeExternalIds", includeExternalIds,
+                "includeReviews", includeReviews,
+                "includeCredits", includeCredits,
+                "includeArt", includeArt,
+                "includeThumb", includeThumb,
+                "includeBanner", includeBanner,
+                "includeTheme", includeTheme,
+                "includeFields", includeFields,
+                "excludeFields", excludeFields,
+                "asyncAugmentMetadata", asyncAugmentMetadata,
+                "asyncRefreshLocalMediaAgent", asyncRefreshLocalMediaAgent,
+                "nocache", nocache,
+                "skipRefresh", skipRefresh,
+                "excludeElements", excludeElements,
+                "filters", filters,
+                "unwatched", unwatched,
+                "genre", genre,
+                "studio", studio,
+                "contentRating", contentRating,
+                "resolution", resolution,
+                "year", year,
+                "firstCharacter", firstCharacter);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -814,11 +2331,87 @@ public class ListContentRequest {
 
         private Optional<? extends MediaQuery> mediaQuery = Optional.empty();
 
+        private Long sectionId;
+
+        private Optional<Long> mediaType = Optional.empty();
+
+        private Optional<String> sort = Optional.empty();
+
         private Optional<? extends BoolInt> includeMeta;
 
         private Optional<? extends BoolInt> includeGuids;
 
-        private String sectionId;
+        private Optional<? extends BoolInt> includeCollections;
+
+        private Optional<? extends BoolInt> includeExternalMedia;
+
+        private Optional<? extends BoolInt> includeAdvanced;
+
+        private Optional<? extends BoolInt> checkFiles;
+
+        private Optional<? extends BoolInt> includeRelated;
+
+        private Optional<? extends BoolInt> includeExtras;
+
+        private Optional<? extends BoolInt> includePopularLeaves;
+
+        private Optional<? extends BoolInt> includeConcerts;
+
+        private Optional<? extends BoolInt> includeOnDeck;
+
+        private Optional<? extends BoolInt> includeChapters;
+
+        private Optional<? extends BoolInt> includePreferences;
+
+        private Optional<? extends BoolInt> includeBandwidths;
+
+        private Optional<? extends BoolInt> includeLoudnessRamps;
+
+        private Optional<? extends BoolInt> includeStations;
+
+        private Optional<? extends BoolInt> includeExternalIds;
+
+        private Optional<? extends BoolInt> includeReviews;
+
+        private Optional<? extends BoolInt> includeCredits;
+
+        private Optional<? extends BoolInt> includeArt;
+
+        private Optional<? extends BoolInt> includeThumb;
+
+        private Optional<? extends BoolInt> includeBanner;
+
+        private Optional<? extends BoolInt> includeTheme;
+
+        private Optional<String> includeFields = Optional.empty();
+
+        private Optional<String> excludeFields = Optional.empty();
+
+        private Optional<? extends BoolInt> asyncAugmentMetadata;
+
+        private Optional<? extends BoolInt> asyncRefreshLocalMediaAgent;
+
+        private Optional<? extends BoolInt> nocache;
+
+        private Optional<? extends BoolInt> skipRefresh;
+
+        private Optional<String> excludeElements = Optional.empty();
+
+        private Optional<String> filters = Optional.empty();
+
+        private Optional<? extends BoolInt> unwatched;
+
+        private Optional<String> genre = Optional.empty();
+
+        private Optional<String> studio = Optional.empty();
+
+        private Optional<String> contentRating = Optional.empty();
+
+        private Optional<String> resolution = Optional.empty();
+
+        private Optional<Long> year = Optional.empty();
+
+        private Optional<String> firstCharacter = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -1081,7 +2674,9 @@ public class ListContentRequest {
 
 
         /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
          * 
          * <p>The query supports:
          * - Fields: integer, boolean, tag, string, date, language
@@ -1093,10 +2688,13 @@ public class ListContentRequest {
          * 
          * <p>Examples:
          * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
          * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
          */
         public Builder mediaQuery(MediaQuery mediaQuery) {
             Utils.checkNotNull(mediaQuery, "mediaQuery");
@@ -1105,7 +2703,9 @@ public class ListContentRequest {
         }
 
         /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
          * 
          * <p>The query supports:
          * - Fields: integer, boolean, tag, string, date, language
@@ -1117,14 +2717,65 @@ public class ListContentRequest {
          * 
          * <p>Examples:
          * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
          * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
          */
         public Builder mediaQuery(Optional<? extends MediaQuery> mediaQuery) {
             Utils.checkNotNull(mediaQuery, "mediaQuery");
             this.mediaQuery = mediaQuery;
+            return this;
+        }
+
+
+        /**
+         * The id of the section
+         */
+        public Builder sectionId(long sectionId) {
+            Utils.checkNotNull(sectionId, "sectionId");
+            this.sectionId = sectionId;
+            return this;
+        }
+
+
+        /**
+         * Filter by metadata type (1=movie, 2=show, 3=season, 4=episode, 8=artist, 9=album, 10=track)
+         */
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
+            return this;
+        }
+
+        /**
+         * Filter by metadata type (1=movie, 2=show, 3=season, 4=episode, 8=artist, 9=album, 10=track)
+         */
+        public Builder mediaType(Optional<Long> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
+            return this;
+        }
+
+
+        /**
+         * Sort key and direction (e.g. addedAt:desc, titleSort)
+         */
+        public Builder sort(String sort) {
+            Utils.checkNotNull(sort, "sort");
+            this.sort = Optional.ofNullable(sort);
+            return this;
+        }
+
+        /**
+         * Sort key and direction (e.g. addedAt:desc, titleSort)
+         */
+        public Builder sort(Optional<String> sort) {
+            Utils.checkNotNull(sort, "sort");
+            this.sort = sort;
             return this;
         }
 
@@ -1168,11 +2819,685 @@ public class ListContentRequest {
 
 
         /**
-         * The id of the section
+         * Include collection items in results
          */
-        public Builder sectionId(String sectionId) {
-            Utils.checkNotNull(sectionId, "sectionId");
-            this.sectionId = sectionId;
+        public Builder includeCollections(BoolInt includeCollections) {
+            Utils.checkNotNull(includeCollections, "includeCollections");
+            this.includeCollections = Optional.ofNullable(includeCollections);
+            return this;
+        }
+
+        /**
+         * Include collection items in results
+         */
+        public Builder includeCollections(Optional<? extends BoolInt> includeCollections) {
+            Utils.checkNotNull(includeCollections, "includeCollections");
+            this.includeCollections = includeCollections;
+            return this;
+        }
+
+
+        /**
+         * Include external or online media
+         */
+        public Builder includeExternalMedia(BoolInt includeExternalMedia) {
+            Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+            this.includeExternalMedia = Optional.ofNullable(includeExternalMedia);
+            return this;
+        }
+
+        /**
+         * Include external or online media
+         */
+        public Builder includeExternalMedia(Optional<? extends BoolInt> includeExternalMedia) {
+            Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+            this.includeExternalMedia = includeExternalMedia;
+            return this;
+        }
+
+
+        /**
+         * Include advanced settings
+         */
+        public Builder includeAdvanced(BoolInt includeAdvanced) {
+            Utils.checkNotNull(includeAdvanced, "includeAdvanced");
+            this.includeAdvanced = Optional.ofNullable(includeAdvanced);
+            return this;
+        }
+
+        /**
+         * Include advanced settings
+         */
+        public Builder includeAdvanced(Optional<? extends BoolInt> includeAdvanced) {
+            Utils.checkNotNull(includeAdvanced, "includeAdvanced");
+            this.includeAdvanced = includeAdvanced;
+            return this;
+        }
+
+
+        /**
+         * Verify file existence
+         */
+        public Builder checkFiles(BoolInt checkFiles) {
+            Utils.checkNotNull(checkFiles, "checkFiles");
+            this.checkFiles = Optional.ofNullable(checkFiles);
+            return this;
+        }
+
+        /**
+         * Verify file existence
+         */
+        public Builder checkFiles(Optional<? extends BoolInt> checkFiles) {
+            Utils.checkNotNull(checkFiles, "checkFiles");
+            this.checkFiles = checkFiles;
+            return this;
+        }
+
+
+        /**
+         * Include related items
+         */
+        public Builder includeRelated(BoolInt includeRelated) {
+            Utils.checkNotNull(includeRelated, "includeRelated");
+            this.includeRelated = Optional.ofNullable(includeRelated);
+            return this;
+        }
+
+        /**
+         * Include related items
+         */
+        public Builder includeRelated(Optional<? extends BoolInt> includeRelated) {
+            Utils.checkNotNull(includeRelated, "includeRelated");
+            this.includeRelated = includeRelated;
+            return this;
+        }
+
+
+        /**
+         * Include trailers, behind-the-scenes, etc.
+         */
+        public Builder includeExtras(BoolInt includeExtras) {
+            Utils.checkNotNull(includeExtras, "includeExtras");
+            this.includeExtras = Optional.ofNullable(includeExtras);
+            return this;
+        }
+
+        /**
+         * Include trailers, behind-the-scenes, etc.
+         */
+        public Builder includeExtras(Optional<? extends BoolInt> includeExtras) {
+            Utils.checkNotNull(includeExtras, "includeExtras");
+            this.includeExtras = includeExtras;
+            return this;
+        }
+
+
+        /**
+         * Include popular episodes
+         */
+        public Builder includePopularLeaves(BoolInt includePopularLeaves) {
+            Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+            this.includePopularLeaves = Optional.ofNullable(includePopularLeaves);
+            return this;
+        }
+
+        /**
+         * Include popular episodes
+         */
+        public Builder includePopularLeaves(Optional<? extends BoolInt> includePopularLeaves) {
+            Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+            this.includePopularLeaves = includePopularLeaves;
+            return this;
+        }
+
+
+        /**
+         * Include concert items
+         */
+        public Builder includeConcerts(BoolInt includeConcerts) {
+            Utils.checkNotNull(includeConcerts, "includeConcerts");
+            this.includeConcerts = Optional.ofNullable(includeConcerts);
+            return this;
+        }
+
+        /**
+         * Include concert items
+         */
+        public Builder includeConcerts(Optional<? extends BoolInt> includeConcerts) {
+            Utils.checkNotNull(includeConcerts, "includeConcerts");
+            this.includeConcerts = includeConcerts;
+            return this;
+        }
+
+
+        /**
+         * Include On Deck status
+         */
+        public Builder includeOnDeck(BoolInt includeOnDeck) {
+            Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+            this.includeOnDeck = Optional.ofNullable(includeOnDeck);
+            return this;
+        }
+
+        /**
+         * Include On Deck status
+         */
+        public Builder includeOnDeck(Optional<? extends BoolInt> includeOnDeck) {
+            Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+            this.includeOnDeck = includeOnDeck;
+            return this;
+        }
+
+
+        /**
+         * Include chapter markers
+         */
+        public Builder includeChapters(BoolInt includeChapters) {
+            Utils.checkNotNull(includeChapters, "includeChapters");
+            this.includeChapters = Optional.ofNullable(includeChapters);
+            return this;
+        }
+
+        /**
+         * Include chapter markers
+         */
+        public Builder includeChapters(Optional<? extends BoolInt> includeChapters) {
+            Utils.checkNotNull(includeChapters, "includeChapters");
+            this.includeChapters = includeChapters;
+            return this;
+        }
+
+
+        /**
+         * Include user preferences
+         */
+        public Builder includePreferences(BoolInt includePreferences) {
+            Utils.checkNotNull(includePreferences, "includePreferences");
+            this.includePreferences = Optional.ofNullable(includePreferences);
+            return this;
+        }
+
+        /**
+         * Include user preferences
+         */
+        public Builder includePreferences(Optional<? extends BoolInt> includePreferences) {
+            Utils.checkNotNull(includePreferences, "includePreferences");
+            this.includePreferences = includePreferences;
+            return this;
+        }
+
+
+        /**
+         * Include bandwidth info
+         */
+        public Builder includeBandwidths(BoolInt includeBandwidths) {
+            Utils.checkNotNull(includeBandwidths, "includeBandwidths");
+            this.includeBandwidths = Optional.ofNullable(includeBandwidths);
+            return this;
+        }
+
+        /**
+         * Include bandwidth info
+         */
+        public Builder includeBandwidths(Optional<? extends BoolInt> includeBandwidths) {
+            Utils.checkNotNull(includeBandwidths, "includeBandwidths");
+            this.includeBandwidths = includeBandwidths;
+            return this;
+        }
+
+
+        /**
+         * Include loudness ramp data
+         */
+        public Builder includeLoudnessRamps(BoolInt includeLoudnessRamps) {
+            Utils.checkNotNull(includeLoudnessRamps, "includeLoudnessRamps");
+            this.includeLoudnessRamps = Optional.ofNullable(includeLoudnessRamps);
+            return this;
+        }
+
+        /**
+         * Include loudness ramp data
+         */
+        public Builder includeLoudnessRamps(Optional<? extends BoolInt> includeLoudnessRamps) {
+            Utils.checkNotNull(includeLoudnessRamps, "includeLoudnessRamps");
+            this.includeLoudnessRamps = includeLoudnessRamps;
+            return this;
+        }
+
+
+        /**
+         * Include radio station data
+         */
+        public Builder includeStations(BoolInt includeStations) {
+            Utils.checkNotNull(includeStations, "includeStations");
+            this.includeStations = Optional.ofNullable(includeStations);
+            return this;
+        }
+
+        /**
+         * Include radio station data
+         */
+        public Builder includeStations(Optional<? extends BoolInt> includeStations) {
+            Utils.checkNotNull(includeStations, "includeStations");
+            this.includeStations = includeStations;
+            return this;
+        }
+
+
+        /**
+         * Include external GUIDs
+         */
+        public Builder includeExternalIds(BoolInt includeExternalIds) {
+            Utils.checkNotNull(includeExternalIds, "includeExternalIds");
+            this.includeExternalIds = Optional.ofNullable(includeExternalIds);
+            return this;
+        }
+
+        /**
+         * Include external GUIDs
+         */
+        public Builder includeExternalIds(Optional<? extends BoolInt> includeExternalIds) {
+            Utils.checkNotNull(includeExternalIds, "includeExternalIds");
+            this.includeExternalIds = includeExternalIds;
+            return this;
+        }
+
+
+        /**
+         * Include user reviews
+         */
+        public Builder includeReviews(BoolInt includeReviews) {
+            Utils.checkNotNull(includeReviews, "includeReviews");
+            this.includeReviews = Optional.ofNullable(includeReviews);
+            return this;
+        }
+
+        /**
+         * Include user reviews
+         */
+        public Builder includeReviews(Optional<? extends BoolInt> includeReviews) {
+            Utils.checkNotNull(includeReviews, "includeReviews");
+            this.includeReviews = includeReviews;
+            return this;
+        }
+
+
+        /**
+         * Include full credits
+         */
+        public Builder includeCredits(BoolInt includeCredits) {
+            Utils.checkNotNull(includeCredits, "includeCredits");
+            this.includeCredits = Optional.ofNullable(includeCredits);
+            return this;
+        }
+
+        /**
+         * Include full credits
+         */
+        public Builder includeCredits(Optional<? extends BoolInt> includeCredits) {
+            Utils.checkNotNull(includeCredits, "includeCredits");
+            this.includeCredits = includeCredits;
+            return this;
+        }
+
+
+        /**
+         * Force inclusion of artwork fields
+         */
+        public Builder includeArt(BoolInt includeArt) {
+            Utils.checkNotNull(includeArt, "includeArt");
+            this.includeArt = Optional.ofNullable(includeArt);
+            return this;
+        }
+
+        /**
+         * Force inclusion of artwork fields
+         */
+        public Builder includeArt(Optional<? extends BoolInt> includeArt) {
+            Utils.checkNotNull(includeArt, "includeArt");
+            this.includeArt = includeArt;
+            return this;
+        }
+
+
+        /**
+         * Force inclusion of thumbnail fields
+         */
+        public Builder includeThumb(BoolInt includeThumb) {
+            Utils.checkNotNull(includeThumb, "includeThumb");
+            this.includeThumb = Optional.ofNullable(includeThumb);
+            return this;
+        }
+
+        /**
+         * Force inclusion of thumbnail fields
+         */
+        public Builder includeThumb(Optional<? extends BoolInt> includeThumb) {
+            Utils.checkNotNull(includeThumb, "includeThumb");
+            this.includeThumb = includeThumb;
+            return this;
+        }
+
+
+        /**
+         * Force inclusion of banner fields
+         */
+        public Builder includeBanner(BoolInt includeBanner) {
+            Utils.checkNotNull(includeBanner, "includeBanner");
+            this.includeBanner = Optional.ofNullable(includeBanner);
+            return this;
+        }
+
+        /**
+         * Force inclusion of banner fields
+         */
+        public Builder includeBanner(Optional<? extends BoolInt> includeBanner) {
+            Utils.checkNotNull(includeBanner, "includeBanner");
+            this.includeBanner = includeBanner;
+            return this;
+        }
+
+
+        /**
+         * Force inclusion of theme fields
+         */
+        public Builder includeTheme(BoolInt includeTheme) {
+            Utils.checkNotNull(includeTheme, "includeTheme");
+            this.includeTheme = Optional.ofNullable(includeTheme);
+            return this;
+        }
+
+        /**
+         * Force inclusion of theme fields
+         */
+        public Builder includeTheme(Optional<? extends BoolInt> includeTheme) {
+            Utils.checkNotNull(includeTheme, "includeTheme");
+            this.includeTheme = includeTheme;
+            return this;
+        }
+
+
+        /**
+         * Whitelist of fields to return
+         */
+        public Builder includeFields(String includeFields) {
+            Utils.checkNotNull(includeFields, "includeFields");
+            this.includeFields = Optional.ofNullable(includeFields);
+            return this;
+        }
+
+        /**
+         * Whitelist of fields to return
+         */
+        public Builder includeFields(Optional<String> includeFields) {
+            Utils.checkNotNull(includeFields, "includeFields");
+            this.includeFields = includeFields;
+            return this;
+        }
+
+
+        /**
+         * Blacklist of fields to omit
+         */
+        public Builder excludeFields(String excludeFields) {
+            Utils.checkNotNull(excludeFields, "excludeFields");
+            this.excludeFields = Optional.ofNullable(excludeFields);
+            return this;
+        }
+
+        /**
+         * Blacklist of fields to omit
+         */
+        public Builder excludeFields(Optional<String> excludeFields) {
+            Utils.checkNotNull(excludeFields, "excludeFields");
+            this.excludeFields = excludeFields;
+            return this;
+        }
+
+
+        /**
+         * Async metadata augmentation
+         */
+        public Builder asyncAugmentMetadata(BoolInt asyncAugmentMetadata) {
+            Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
+            this.asyncAugmentMetadata = Optional.ofNullable(asyncAugmentMetadata);
+            return this;
+        }
+
+        /**
+         * Async metadata augmentation
+         */
+        public Builder asyncAugmentMetadata(Optional<? extends BoolInt> asyncAugmentMetadata) {
+            Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
+            this.asyncAugmentMetadata = asyncAugmentMetadata;
+            return this;
+        }
+
+
+        /**
+         * Async local media agent refresh
+         */
+        public Builder asyncRefreshLocalMediaAgent(BoolInt asyncRefreshLocalMediaAgent) {
+            Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
+            this.asyncRefreshLocalMediaAgent = Optional.ofNullable(asyncRefreshLocalMediaAgent);
+            return this;
+        }
+
+        /**
+         * Async local media agent refresh
+         */
+        public Builder asyncRefreshLocalMediaAgent(Optional<? extends BoolInt> asyncRefreshLocalMediaAgent) {
+            Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
+            this.asyncRefreshLocalMediaAgent = asyncRefreshLocalMediaAgent;
+            return this;
+        }
+
+
+        /**
+         * Bypass cache
+         */
+        public Builder nocache(BoolInt nocache) {
+            Utils.checkNotNull(nocache, "nocache");
+            this.nocache = Optional.ofNullable(nocache);
+            return this;
+        }
+
+        /**
+         * Bypass cache
+         */
+        public Builder nocache(Optional<? extends BoolInt> nocache) {
+            Utils.checkNotNull(nocache, "nocache");
+            this.nocache = nocache;
+            return this;
+        }
+
+
+        /**
+         * Skip synchronous refresh
+         */
+        public Builder skipRefresh(BoolInt skipRefresh) {
+            Utils.checkNotNull(skipRefresh, "skipRefresh");
+            this.skipRefresh = Optional.ofNullable(skipRefresh);
+            return this;
+        }
+
+        /**
+         * Skip synchronous refresh
+         */
+        public Builder skipRefresh(Optional<? extends BoolInt> skipRefresh) {
+            Utils.checkNotNull(skipRefresh, "skipRefresh");
+            this.skipRefresh = skipRefresh;
+            return this;
+        }
+
+
+        /**
+         * Comma-separated list of elements to exclude from the response
+         */
+        public Builder excludeElements(String excludeElements) {
+            Utils.checkNotNull(excludeElements, "excludeElements");
+            this.excludeElements = Optional.ofNullable(excludeElements);
+            return this;
+        }
+
+        /**
+         * Comma-separated list of elements to exclude from the response
+         */
+        public Builder excludeElements(Optional<String> excludeElements) {
+            Utils.checkNotNull(excludeElements, "excludeElements");
+            this.excludeElements = excludeElements;
+            return this;
+        }
+
+
+        /**
+         * General filtering expression.
+         */
+        public Builder filters(String filters) {
+            Utils.checkNotNull(filters, "filters");
+            this.filters = Optional.ofNullable(filters);
+            return this;
+        }
+
+        /**
+         * General filtering expression.
+         */
+        public Builder filters(Optional<String> filters) {
+            Utils.checkNotNull(filters, "filters");
+            this.filters = filters;
+            return this;
+        }
+
+
+        /**
+         * Filter to unwatched only (1 = true).
+         */
+        public Builder unwatched(BoolInt unwatched) {
+            Utils.checkNotNull(unwatched, "unwatched");
+            this.unwatched = Optional.ofNullable(unwatched);
+            return this;
+        }
+
+        /**
+         * Filter to unwatched only (1 = true).
+         */
+        public Builder unwatched(Optional<? extends BoolInt> unwatched) {
+            Utils.checkNotNull(unwatched, "unwatched");
+            this.unwatched = unwatched;
+            return this;
+        }
+
+
+        /**
+         * Filter by genre.
+         */
+        public Builder genre(String genre) {
+            Utils.checkNotNull(genre, "genre");
+            this.genre = Optional.ofNullable(genre);
+            return this;
+        }
+
+        /**
+         * Filter by genre.
+         */
+        public Builder genre(Optional<String> genre) {
+            Utils.checkNotNull(genre, "genre");
+            this.genre = genre;
+            return this;
+        }
+
+
+        /**
+         * Filter by studio.
+         */
+        public Builder studio(String studio) {
+            Utils.checkNotNull(studio, "studio");
+            this.studio = Optional.ofNullable(studio);
+            return this;
+        }
+
+        /**
+         * Filter by studio.
+         */
+        public Builder studio(Optional<String> studio) {
+            Utils.checkNotNull(studio, "studio");
+            this.studio = studio;
+            return this;
+        }
+
+
+        /**
+         * Filter by content rating.
+         */
+        public Builder contentRating(String contentRating) {
+            Utils.checkNotNull(contentRating, "contentRating");
+            this.contentRating = Optional.ofNullable(contentRating);
+            return this;
+        }
+
+        /**
+         * Filter by content rating.
+         */
+        public Builder contentRating(Optional<String> contentRating) {
+            Utils.checkNotNull(contentRating, "contentRating");
+            this.contentRating = contentRating;
+            return this;
+        }
+
+
+        /**
+         * Filter by resolution.
+         */
+        public Builder resolution(String resolution) {
+            Utils.checkNotNull(resolution, "resolution");
+            this.resolution = Optional.ofNullable(resolution);
+            return this;
+        }
+
+        /**
+         * Filter by resolution.
+         */
+        public Builder resolution(Optional<String> resolution) {
+            Utils.checkNotNull(resolution, "resolution");
+            this.resolution = resolution;
+            return this;
+        }
+
+
+        /**
+         * Filter by year.
+         */
+        public Builder year(long year) {
+            Utils.checkNotNull(year, "year");
+            this.year = Optional.ofNullable(year);
+            return this;
+        }
+
+        /**
+         * Filter by year.
+         */
+        public Builder year(Optional<Long> year) {
+            Utils.checkNotNull(year, "year");
+            this.year = year;
+            return this;
+        }
+
+
+        /**
+         * Filter by first character of title.
+         */
+        public Builder firstCharacter(String firstCharacter) {
+            Utils.checkNotNull(firstCharacter, "firstCharacter");
+            this.firstCharacter = Optional.ofNullable(firstCharacter);
+            return this;
+        }
+
+        /**
+         * Filter by first character of title.
+         */
+        public Builder firstCharacter(Optional<String> firstCharacter) {
+            Utils.checkNotNull(firstCharacter, "firstCharacter");
+            this.firstCharacter = firstCharacter;
             return this;
         }
 
@@ -1192,14 +3517,105 @@ public class ListContentRequest {
             if (includeGuids == null) {
                 includeGuids = _SINGLETON_VALUE_IncludeGuids.value();
             }
+            if (includeCollections == null) {
+                includeCollections = _SINGLETON_VALUE_IncludeCollections.value();
+            }
+            if (includeExternalMedia == null) {
+                includeExternalMedia = _SINGLETON_VALUE_IncludeExternalMedia.value();
+            }
+            if (includeAdvanced == null) {
+                includeAdvanced = _SINGLETON_VALUE_IncludeAdvanced.value();
+            }
+            if (checkFiles == null) {
+                checkFiles = _SINGLETON_VALUE_CheckFiles.value();
+            }
+            if (includeRelated == null) {
+                includeRelated = _SINGLETON_VALUE_IncludeRelated.value();
+            }
+            if (includeExtras == null) {
+                includeExtras = _SINGLETON_VALUE_IncludeExtras.value();
+            }
+            if (includePopularLeaves == null) {
+                includePopularLeaves = _SINGLETON_VALUE_IncludePopularLeaves.value();
+            }
+            if (includeConcerts == null) {
+                includeConcerts = _SINGLETON_VALUE_IncludeConcerts.value();
+            }
+            if (includeOnDeck == null) {
+                includeOnDeck = _SINGLETON_VALUE_IncludeOnDeck.value();
+            }
+            if (includeChapters == null) {
+                includeChapters = _SINGLETON_VALUE_IncludeChapters.value();
+            }
+            if (includePreferences == null) {
+                includePreferences = _SINGLETON_VALUE_IncludePreferences.value();
+            }
+            if (includeBandwidths == null) {
+                includeBandwidths = _SINGLETON_VALUE_IncludeBandwidths.value();
+            }
+            if (includeLoudnessRamps == null) {
+                includeLoudnessRamps = _SINGLETON_VALUE_IncludeLoudnessRamps.value();
+            }
+            if (includeStations == null) {
+                includeStations = _SINGLETON_VALUE_IncludeStations.value();
+            }
+            if (includeExternalIds == null) {
+                includeExternalIds = _SINGLETON_VALUE_IncludeExternalIds.value();
+            }
+            if (includeReviews == null) {
+                includeReviews = _SINGLETON_VALUE_IncludeReviews.value();
+            }
+            if (includeCredits == null) {
+                includeCredits = _SINGLETON_VALUE_IncludeCredits.value();
+            }
+            if (includeArt == null) {
+                includeArt = _SINGLETON_VALUE_IncludeArt.value();
+            }
+            if (includeThumb == null) {
+                includeThumb = _SINGLETON_VALUE_IncludeThumb.value();
+            }
+            if (includeBanner == null) {
+                includeBanner = _SINGLETON_VALUE_IncludeBanner.value();
+            }
+            if (includeTheme == null) {
+                includeTheme = _SINGLETON_VALUE_IncludeTheme.value();
+            }
+            if (asyncAugmentMetadata == null) {
+                asyncAugmentMetadata = _SINGLETON_VALUE_AsyncAugmentMetadata.value();
+            }
+            if (asyncRefreshLocalMediaAgent == null) {
+                asyncRefreshLocalMediaAgent = _SINGLETON_VALUE_AsyncRefreshLocalMediaAgent.value();
+            }
+            if (nocache == null) {
+                nocache = _SINGLETON_VALUE_Nocache.value();
+            }
+            if (skipRefresh == null) {
+                skipRefresh = _SINGLETON_VALUE_SkipRefresh.value();
+            }
+            if (unwatched == null) {
+                unwatched = _SINGLETON_VALUE_Unwatched.value();
+            }
 
             return new ListContentRequest(
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, xPlexContainerStart,
-                xPlexContainerSize, mediaQuery, includeMeta,
-                includeGuids, sectionId);
+                xPlexContainerSize, mediaQuery, sectionId,
+                mediaType, sort, includeMeta,
+                includeGuids, includeCollections, includeExternalMedia,
+                includeAdvanced, checkFiles, includeRelated,
+                includeExtras, includePopularLeaves, includeConcerts,
+                includeOnDeck, includeChapters, includePreferences,
+                includeBandwidths, includeLoudnessRamps, includeStations,
+                includeExternalIds, includeReviews, includeCredits,
+                includeArt, includeThumb, includeBanner,
+                includeTheme, includeFields, excludeFields,
+                asyncAugmentMetadata, asyncRefreshLocalMediaAgent, nocache,
+                skipRefresh, excludeElements, filters,
+                unwatched, genre, studio,
+                contentRating, resolution, year,
+                firstCharacter);
         }
 
 
@@ -1230,6 +3646,162 @@ public class ListContentRequest {
         private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeGuids =
                 new LazySingletonValue<>(
                         "includeGuids",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeCollections =
+                new LazySingletonValue<>(
+                        "includeCollections",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeExternalMedia =
+                new LazySingletonValue<>(
+                        "includeExternalMedia",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeAdvanced =
+                new LazySingletonValue<>(
+                        "includeAdvanced",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_CheckFiles =
+                new LazySingletonValue<>(
+                        "checkFiles",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeRelated =
+                new LazySingletonValue<>(
+                        "includeRelated",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeExtras =
+                new LazySingletonValue<>(
+                        "includeExtras",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludePopularLeaves =
+                new LazySingletonValue<>(
+                        "includePopularLeaves",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeConcerts =
+                new LazySingletonValue<>(
+                        "includeConcerts",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeOnDeck =
+                new LazySingletonValue<>(
+                        "includeOnDeck",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeChapters =
+                new LazySingletonValue<>(
+                        "includeChapters",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludePreferences =
+                new LazySingletonValue<>(
+                        "includePreferences",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeBandwidths =
+                new LazySingletonValue<>(
+                        "includeBandwidths",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeLoudnessRamps =
+                new LazySingletonValue<>(
+                        "includeLoudnessRamps",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeStations =
+                new LazySingletonValue<>(
+                        "includeStations",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeExternalIds =
+                new LazySingletonValue<>(
+                        "includeExternalIds",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeReviews =
+                new LazySingletonValue<>(
+                        "includeReviews",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeCredits =
+                new LazySingletonValue<>(
+                        "includeCredits",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeArt =
+                new LazySingletonValue<>(
+                        "includeArt",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeThumb =
+                new LazySingletonValue<>(
+                        "includeThumb",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeBanner =
+                new LazySingletonValue<>(
+                        "includeBanner",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeTheme =
+                new LazySingletonValue<>(
+                        "includeTheme",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_AsyncAugmentMetadata =
+                new LazySingletonValue<>(
+                        "asyncAugmentMetadata",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_AsyncRefreshLocalMediaAgent =
+                new LazySingletonValue<>(
+                        "asyncRefreshLocalMediaAgent",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_Nocache =
+                new LazySingletonValue<>(
+                        "nocache",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_SkipRefresh =
+                new LazySingletonValue<>(
+                        "skipRefresh",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_Unwatched =
+                new LazySingletonValue<>(
+                        "unwatched",
                         "0",
                         new TypeReference<Optional<? extends BoolInt>>() {});
     }

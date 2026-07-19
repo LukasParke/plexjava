@@ -16,9 +16,11 @@ import java.util.Optional;
 /**
  * MediaQuery
  * 
- * <p>A querystring-based filtering language used to select subsets of media. When provided as an object, properties are serialized as a querystring using form style with explode.
+ * <p>A querystring-based filtering language used to select subsets of media. When provided as an object,
+ * properties are serialized as a querystring using form style with explode.
  * 
- * <p>Only the defined properties below are allowed. The object serializes to a querystring format like: `type=4&amp;sourceType=2&amp;sort=duration:desc,index`
+ * <p>Only the defined properties below are allowed. The object serializes to a querystring format like:
+ * `type=4&amp;sourceType=2&amp;sort=duration:desc,index`
  */
 public class MediaQuery {
     /**
@@ -34,22 +36,11 @@ public class MediaQuery {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SpeakeasyMetadata("queryParam:name=type")
     private Optional<? extends MediaType> type;
-
-    /**
-     * Change the default level to which fields refer (used with type for hierarchical queries)
-     */
-    @SpeakeasyMetadata("queryParam:name=sourceType")
-    private Optional<Long> sourceType;
-
-    /**
-     * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or :nullsLast for modifiers (e.g., "duration:desc,index")
-     */
-    @SpeakeasyMetadata("queryParam:name=sort")
-    private Optional<String> sort;
 
     /**
      * Field to group results by (similar to SQL GROUP BY)
@@ -63,23 +54,36 @@ public class MediaQuery {
     @SpeakeasyMetadata("queryParam:name=limit")
     private Optional<Long> limit;
 
+    /**
+     * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or
+     * :nullsLast for modifiers (e.g., "duration:desc,index")
+     */
+    @SpeakeasyMetadata("queryParam:name=sort")
+    private Optional<String> sort;
+
+    /**
+     * Change the default level to which fields refer (used with type for hierarchical queries)
+     */
+    @SpeakeasyMetadata("queryParam:name=sourceType")
+    private Optional<Long> sourceType;
+
     @JsonCreator
     public MediaQuery(
             Optional<? extends MediaType> type,
-            Optional<Long> sourceType,
-            Optional<String> sort,
             Optional<String> group,
-            Optional<Long> limit) {
+            Optional<Long> limit,
+            Optional<String> sort,
+            Optional<Long> sourceType) {
         Utils.checkNotNull(type, "type");
-        Utils.checkNotNull(sourceType, "sourceType");
-        Utils.checkNotNull(sort, "sort");
         Utils.checkNotNull(group, "group");
         Utils.checkNotNull(limit, "limit");
+        Utils.checkNotNull(sort, "sort");
+        Utils.checkNotNull(sourceType, "sourceType");
         this.type = type;
-        this.sourceType = sourceType;
-        this.sort = sort;
         this.group = group;
         this.limit = limit;
+        this.sort = sort;
+        this.sourceType = sourceType;
     }
     
     public MediaQuery() {
@@ -100,28 +104,13 @@ public class MediaQuery {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<MediaType> type() {
         return (Optional<MediaType>) type;
-    }
-
-    /**
-     * Change the default level to which fields refer (used with type for hierarchical queries)
-     */
-    @JsonIgnore
-    public Optional<Long> sourceType() {
-        return sourceType;
-    }
-
-    /**
-     * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or :nullsLast for modifiers (e.g., "duration:desc,index")
-     */
-    @JsonIgnore
-    public Optional<String> sort() {
-        return sort;
     }
 
     /**
@@ -138,6 +127,23 @@ public class MediaQuery {
     @JsonIgnore
     public Optional<Long> limit() {
         return limit;
+    }
+
+    /**
+     * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or
+     * :nullsLast for modifiers (e.g., "duration:desc,index")
+     */
+    @JsonIgnore
+    public Optional<String> sort() {
+        return sort;
+    }
+
+    /**
+     * Change the default level to which fields refer (used with type for hierarchical queries)
+     */
+    @JsonIgnore
+    public Optional<Long> sourceType() {
+        return sourceType;
     }
 
     public static Builder builder() {
@@ -158,7 +164,8 @@ public class MediaQuery {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public MediaQuery withType(MediaType type) {
         Utils.checkNotNull(type, "type");
@@ -180,49 +187,12 @@ public class MediaQuery {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public MediaQuery withType(Optional<? extends MediaType> type) {
         Utils.checkNotNull(type, "type");
         this.type = type;
-        return this;
-    }
-
-    /**
-     * Change the default level to which fields refer (used with type for hierarchical queries)
-     */
-    public MediaQuery withSourceType(long sourceType) {
-        Utils.checkNotNull(sourceType, "sourceType");
-        this.sourceType = Optional.ofNullable(sourceType);
-        return this;
-    }
-
-
-    /**
-     * Change the default level to which fields refer (used with type for hierarchical queries)
-     */
-    public MediaQuery withSourceType(Optional<Long> sourceType) {
-        Utils.checkNotNull(sourceType, "sourceType");
-        this.sourceType = sourceType;
-        return this;
-    }
-
-    /**
-     * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or :nullsLast for modifiers (e.g., "duration:desc,index")
-     */
-    public MediaQuery withSort(String sort) {
-        Utils.checkNotNull(sort, "sort");
-        this.sort = Optional.ofNullable(sort);
-        return this;
-    }
-
-
-    /**
-     * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or :nullsLast for modifiers (e.g., "duration:desc,index")
-     */
-    public MediaQuery withSort(Optional<String> sort) {
-        Utils.checkNotNull(sort, "sort");
-        this.sort = sort;
         return this;
     }
 
@@ -264,6 +234,46 @@ public class MediaQuery {
         return this;
     }
 
+    /**
+     * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or
+     * :nullsLast for modifiers (e.g., "duration:desc,index")
+     */
+    public MediaQuery withSort(String sort) {
+        Utils.checkNotNull(sort, "sort");
+        this.sort = Optional.ofNullable(sort);
+        return this;
+    }
+
+
+    /**
+     * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or
+     * :nullsLast for modifiers (e.g., "duration:desc,index")
+     */
+    public MediaQuery withSort(Optional<String> sort) {
+        Utils.checkNotNull(sort, "sort");
+        this.sort = sort;
+        return this;
+    }
+
+    /**
+     * Change the default level to which fields refer (used with type for hierarchical queries)
+     */
+    public MediaQuery withSourceType(long sourceType) {
+        Utils.checkNotNull(sourceType, "sourceType");
+        this.sourceType = Optional.ofNullable(sourceType);
+        return this;
+    }
+
+
+    /**
+     * Change the default level to which fields refer (used with type for hierarchical queries)
+     */
+    public MediaQuery withSourceType(Optional<Long> sourceType) {
+        Utils.checkNotNull(sourceType, "sourceType");
+        this.sourceType = sourceType;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -275,27 +285,27 @@ public class MediaQuery {
         MediaQuery other = (MediaQuery) o;
         return 
             Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.sourceType, other.sourceType) &&
-            Utils.enhancedDeepEquals(this.sort, other.sort) &&
             Utils.enhancedDeepEquals(this.group, other.group) &&
-            Utils.enhancedDeepEquals(this.limit, other.limit);
+            Utils.enhancedDeepEquals(this.limit, other.limit) &&
+            Utils.enhancedDeepEquals(this.sort, other.sort) &&
+            Utils.enhancedDeepEquals(this.sourceType, other.sourceType);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            type, sourceType, sort,
-            group, limit);
+            type, group, limit,
+            sort, sourceType);
     }
     
     @Override
     public String toString() {
         return Utils.toString(MediaQuery.class,
                 "type", type,
-                "sourceType", sourceType,
-                "sort", sort,
                 "group", group,
-                "limit", limit);
+                "limit", limit,
+                "sort", sort,
+                "sourceType", sourceType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -303,13 +313,13 @@ public class MediaQuery {
 
         private Optional<? extends MediaType> type = Optional.empty();
 
-        private Optional<Long> sourceType = Optional.empty();
-
-        private Optional<String> sort = Optional.empty();
-
         private Optional<String> group = Optional.empty();
 
         private Optional<Long> limit = Optional.empty();
+
+        private Optional<String> sort = Optional.empty();
+
+        private Optional<Long> sourceType = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -329,7 +339,8 @@ public class MediaQuery {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(MediaType type) {
             Utils.checkNotNull(type, "type");
@@ -350,49 +361,12 @@ public class MediaQuery {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(Optional<? extends MediaType> type) {
             Utils.checkNotNull(type, "type");
             this.type = type;
-            return this;
-        }
-
-
-        /**
-         * Change the default level to which fields refer (used with type for hierarchical queries)
-         */
-        public Builder sourceType(long sourceType) {
-            Utils.checkNotNull(sourceType, "sourceType");
-            this.sourceType = Optional.ofNullable(sourceType);
-            return this;
-        }
-
-        /**
-         * Change the default level to which fields refer (used with type for hierarchical queries)
-         */
-        public Builder sourceType(Optional<Long> sourceType) {
-            Utils.checkNotNull(sourceType, "sourceType");
-            this.sourceType = sourceType;
-            return this;
-        }
-
-
-        /**
-         * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or :nullsLast for modifiers (e.g., "duration:desc,index")
-         */
-        public Builder sort(String sort) {
-            Utils.checkNotNull(sort, "sort");
-            this.sort = Optional.ofNullable(sort);
-            return this;
-        }
-
-        /**
-         * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or :nullsLast for modifiers (e.g., "duration:desc,index")
-         */
-        public Builder sort(Optional<String> sort) {
-            Utils.checkNotNull(sort, "sort");
-            this.sort = sort;
             return this;
         }
 
@@ -434,11 +408,51 @@ public class MediaQuery {
             return this;
         }
 
+
+        /**
+         * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or
+         * :nullsLast for modifiers (e.g., "duration:desc,index")
+         */
+        public Builder sort(String sort) {
+            Utils.checkNotNull(sort, "sort");
+            this.sort = Optional.ofNullable(sort);
+            return this;
+        }
+
+        /**
+         * Field(s) to sort by, with optional modifiers. Use comma to separate multiple fields, and :desc or
+         * :nullsLast for modifiers (e.g., "duration:desc,index")
+         */
+        public Builder sort(Optional<String> sort) {
+            Utils.checkNotNull(sort, "sort");
+            this.sort = sort;
+            return this;
+        }
+
+
+        /**
+         * Change the default level to which fields refer (used with type for hierarchical queries)
+         */
+        public Builder sourceType(long sourceType) {
+            Utils.checkNotNull(sourceType, "sourceType");
+            this.sourceType = Optional.ofNullable(sourceType);
+            return this;
+        }
+
+        /**
+         * Change the default level to which fields refer (used with type for hierarchical queries)
+         */
+        public Builder sourceType(Optional<Long> sourceType) {
+            Utils.checkNotNull(sourceType, "sourceType");
+            this.sourceType = sourceType;
+            return this;
+        }
+
         public MediaQuery build() {
 
             return new MediaQuery(
-                type, sourceType, sort,
-                group, limit);
+                type, group, limit,
+                sort, sourceType);
         }
 
     }

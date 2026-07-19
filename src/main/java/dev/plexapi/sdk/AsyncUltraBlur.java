@@ -13,12 +13,16 @@ import dev.plexapi.sdk.models.operations.async.GetImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetImageResponse;
 import dev.plexapi.sdk.operations.GetColors;
 import dev.plexapi.sdk.operations.GetImage;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Service provided to compute UltraBlur colors and images.
  */
 public class AsyncUltraBlur {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final UltraBlur syncSDK;
 
@@ -54,11 +58,26 @@ public class AsyncUltraBlur {
      * <p>Retrieves the four colors extracted from an image for clients to use to generate an ultrablur image.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetColorsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetColorsResponse>} - The async response
      */
     public CompletableFuture<GetColorsResponse> getColors(GetColorsRequest request) {
+        return getColors(request, Optional.empty());
+    }
+
+    /**
+     * Get UltraBlur Colors
+     * 
+     * <p>Retrieves the four colors extracted from an image for clients to use to generate an ultrablur image.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetColorsResponse>} - The async response
+     */
+    public CompletableFuture<GetColorsResponse> getColors(GetColorsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetColorsRequest, GetColorsResponse> operation
-              = new GetColors.Async(sdkConfiguration);
+              = new GetColors.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -67,7 +86,8 @@ public class AsyncUltraBlur {
     /**
      * Get UltraBlur Image
      * 
-     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should always call this via the photo transcoder endpoint.
+     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should
+     * always call this via the photo transcoder endpoint.
      * 
      * @return The async call builder
      */
@@ -78,14 +98,31 @@ public class AsyncUltraBlur {
     /**
      * Get UltraBlur Image
      * 
-     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should always call this via the photo transcoder endpoint.
+     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should
+     * always call this via the photo transcoder endpoint.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetImageResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetImageResponse>} - The async response
      */
     public CompletableFuture<GetImageResponse> getImage(GetImageRequest request) {
+        return getImage(request, Optional.empty());
+    }
+
+    /**
+     * Get UltraBlur Image
+     * 
+     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should
+     * always call this via the photo transcoder endpoint.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetImageResponse>} - The async response
+     */
+    public CompletableFuture<GetImageResponse> getImage(GetImageRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetImageRequest, GetImageResponse> operation
-              = new GetImage.Async(sdkConfiguration);
+              = new GetImage.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

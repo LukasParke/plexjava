@@ -27,7 +27,13 @@ import java.util.Optional;
 /**
  * MediaContainerWithDecisionMedia
  * 
- * <p>`Media` represents an one or more media files (parts) and is a child of a metadata item. There aren't necessarily any guaranteed attributes on media elements since the attributes will vary based on the type. The possible attributes are not documented here, but they typically have self-evident names. High-level media information that can be used for badging and flagging, such as `videoResolution` and codecs, is included on the media element.
+ * <p>`Media` represents an one or more media files (parts) and is a child of a metadata item. There
+ * aren't necessarily any guaranteed attributes on media elements since the attributes will vary based
+ * on the type. The possible attributes are not documented here, but they typically have self-evident
+ * names.
+ * 
+ * <p>High-level media information that can be used for badging and flagging, such as `videoResolution`
+ * and codecs, is included on the media element.
  */
 public class MediaContainerWithDecisionMedia {
 
@@ -99,6 +105,18 @@ public class MediaContainerWithDecisionMedia {
 
 
     @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("selected")
+    private Optional<Boolean> selected;
+
+    /**
+     * Unique identifier for this media instance.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("uuid")
+    private Optional<String> uuid;
+
+
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("videoCodec")
     private Optional<String> videoCodec;
 
@@ -133,11 +151,6 @@ public class MediaContainerWithDecisionMedia {
     private Optional<String> resourceSession;
 
 
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("selected")
-    private Optional<Boolean> selected;
-
-
     @JsonIgnore
     private Map<String, Object> additionalProperties;
 
@@ -156,14 +169,15 @@ public class MediaContainerWithDecisionMedia {
             @JsonProperty("id") long id,
             @JsonProperty("optimizedForStreaming") Optional<? extends MediaContainerWithDecisionOptimizedForStreaming> optimizedForStreaming,
             @JsonProperty("Part") Optional<? extends List<MediaContainerWithDecisionPart>> part,
+            @JsonProperty("selected") Optional<Boolean> selected,
+            @JsonProperty("uuid") Optional<String> uuid,
             @JsonProperty("videoCodec") Optional<String> videoCodec,
             @JsonProperty("videoFrameRate") Optional<String> videoFrameRate,
             @JsonProperty("videoProfile") Optional<String> videoProfile,
             @JsonProperty("videoResolution") Optional<String> videoResolution,
             @JsonProperty("width") Optional<Integer> width,
             @JsonProperty("abr") Optional<Boolean> abr,
-            @JsonProperty("resourceSession") Optional<String> resourceSession,
-            @JsonProperty("selected") Optional<Boolean> selected) {
+            @JsonProperty("resourceSession") Optional<String> resourceSession) {
         Utils.checkNotNull(aspectRatio, "aspectRatio");
         Utils.checkNotNull(audioChannels, "audioChannels");
         Utils.checkNotNull(audioCodec, "audioCodec");
@@ -177,6 +191,8 @@ public class MediaContainerWithDecisionMedia {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
         Utils.checkNotNull(part, "part");
+        Utils.checkNotNull(selected, "selected");
+        Utils.checkNotNull(uuid, "uuid");
         Utils.checkNotNull(videoCodec, "videoCodec");
         Utils.checkNotNull(videoFrameRate, "videoFrameRate");
         Utils.checkNotNull(videoProfile, "videoProfile");
@@ -184,7 +200,6 @@ public class MediaContainerWithDecisionMedia {
         Utils.checkNotNull(width, "width");
         Utils.checkNotNull(abr, "abr");
         Utils.checkNotNull(resourceSession, "resourceSession");
-        Utils.checkNotNull(selected, "selected");
         this.aspectRatio = aspectRatio;
         this.audioChannels = audioChannels;
         this.audioCodec = audioCodec;
@@ -198,6 +213,8 @@ public class MediaContainerWithDecisionMedia {
         this.id = id;
         this.optimizedForStreaming = optimizedForStreaming;
         this.part = part;
+        this.selected = selected;
+        this.uuid = uuid;
         this.videoCodec = videoCodec;
         this.videoFrameRate = videoFrameRate;
         this.videoProfile = videoProfile;
@@ -205,7 +222,6 @@ public class MediaContainerWithDecisionMedia {
         this.width = width;
         this.abr = abr;
         this.resourceSession = resourceSession;
-        this.selected = selected;
         this.additionalProperties = new HashMap<>();
     }
     
@@ -217,7 +233,8 @@ public class MediaContainerWithDecisionMedia {
             Optional.empty(), id, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     @JsonIgnore
@@ -293,6 +310,19 @@ public class MediaContainerWithDecisionMedia {
     }
 
     @JsonIgnore
+    public Optional<Boolean> selected() {
+        return selected;
+    }
+
+    /**
+     * Unique identifier for this media instance.
+     */
+    @JsonIgnore
+    public Optional<String> uuid() {
+        return uuid;
+    }
+
+    @JsonIgnore
     public Optional<String> videoCodec() {
         return videoCodec;
     }
@@ -325,11 +355,6 @@ public class MediaContainerWithDecisionMedia {
     @JsonIgnore
     public Optional<String> resourceSession() {
         return resourceSession;
-    }
-
-    @JsonIgnore
-    public Optional<Boolean> selected() {
-        return selected;
     }
 
     @JsonAnyGetter
@@ -512,6 +537,38 @@ public class MediaContainerWithDecisionMedia {
         return this;
     }
 
+    public MediaContainerWithDecisionMedia withSelected(boolean selected) {
+        Utils.checkNotNull(selected, "selected");
+        this.selected = Optional.ofNullable(selected);
+        return this;
+    }
+
+
+    public MediaContainerWithDecisionMedia withSelected(Optional<Boolean> selected) {
+        Utils.checkNotNull(selected, "selected");
+        this.selected = selected;
+        return this;
+    }
+
+    /**
+     * Unique identifier for this media instance.
+     */
+    public MediaContainerWithDecisionMedia withUuid(String uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = Optional.ofNullable(uuid);
+        return this;
+    }
+
+
+    /**
+     * Unique identifier for this media instance.
+     */
+    public MediaContainerWithDecisionMedia withUuid(Optional<String> uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = uuid;
+        return this;
+    }
+
     public MediaContainerWithDecisionMedia withVideoCodec(String videoCodec) {
         Utils.checkNotNull(videoCodec, "videoCodec");
         this.videoCodec = Optional.ofNullable(videoCodec);
@@ -603,19 +660,6 @@ public class MediaContainerWithDecisionMedia {
         return this;
     }
 
-    public MediaContainerWithDecisionMedia withSelected(boolean selected) {
-        Utils.checkNotNull(selected, "selected");
-        this.selected = Optional.ofNullable(selected);
-        return this;
-    }
-
-
-    public MediaContainerWithDecisionMedia withSelected(Optional<Boolean> selected) {
-        Utils.checkNotNull(selected, "selected");
-        this.selected = selected;
-        return this;
-    }
-
     @JsonAnySetter
     public MediaContainerWithDecisionMedia withAdditionalProperty(String key, Object value) {
         // note that value can be null because of the way JsonAnySetter works
@@ -652,6 +696,8 @@ public class MediaContainerWithDecisionMedia {
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.optimizedForStreaming, other.optimizedForStreaming) &&
             Utils.enhancedDeepEquals(this.part, other.part) &&
+            Utils.enhancedDeepEquals(this.selected, other.selected) &&
+            Utils.enhancedDeepEquals(this.uuid, other.uuid) &&
             Utils.enhancedDeepEquals(this.videoCodec, other.videoCodec) &&
             Utils.enhancedDeepEquals(this.videoFrameRate, other.videoFrameRate) &&
             Utils.enhancedDeepEquals(this.videoProfile, other.videoProfile) &&
@@ -659,7 +705,6 @@ public class MediaContainerWithDecisionMedia {
             Utils.enhancedDeepEquals(this.width, other.width) &&
             Utils.enhancedDeepEquals(this.abr, other.abr) &&
             Utils.enhancedDeepEquals(this.resourceSession, other.resourceSession) &&
-            Utils.enhancedDeepEquals(this.selected, other.selected) &&
             Utils.enhancedDeepEquals(this.additionalProperties, other.additionalProperties);
     }
     
@@ -670,10 +715,10 @@ public class MediaContainerWithDecisionMedia {
             audioProfile, bitrate, container,
             duration, has64bitOffsets, hasVoiceActivity,
             height, id, optimizedForStreaming,
-            part, videoCodec, videoFrameRate,
-            videoProfile, videoResolution, width,
-            abr, resourceSession, selected,
-            additionalProperties);
+            part, selected, uuid,
+            videoCodec, videoFrameRate, videoProfile,
+            videoResolution, width, abr,
+            resourceSession, additionalProperties);
     }
     
     @Override
@@ -692,6 +737,8 @@ public class MediaContainerWithDecisionMedia {
                 "id", id,
                 "optimizedForStreaming", optimizedForStreaming,
                 "part", part,
+                "selected", selected,
+                "uuid", uuid,
                 "videoCodec", videoCodec,
                 "videoFrameRate", videoFrameRate,
                 "videoProfile", videoProfile,
@@ -699,7 +746,6 @@ public class MediaContainerWithDecisionMedia {
                 "width", width,
                 "abr", abr,
                 "resourceSession", resourceSession,
-                "selected", selected,
                 "additionalProperties", additionalProperties);
     }
 
@@ -732,6 +778,10 @@ public class MediaContainerWithDecisionMedia {
 
         private Optional<? extends List<MediaContainerWithDecisionPart>> part = Optional.empty();
 
+        private Optional<Boolean> selected = Optional.empty();
+
+        private Optional<String> uuid = Optional.empty();
+
         private Optional<String> videoCodec = Optional.empty();
 
         private Optional<String> videoFrameRate = Optional.empty();
@@ -745,8 +795,6 @@ public class MediaContainerWithDecisionMedia {
         private Optional<Boolean> abr = Optional.empty();
 
         private Optional<String> resourceSession = Optional.empty();
-
-        private Optional<Boolean> selected = Optional.empty();
 
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -926,6 +974,38 @@ public class MediaContainerWithDecisionMedia {
         }
 
 
+        public Builder selected(boolean selected) {
+            Utils.checkNotNull(selected, "selected");
+            this.selected = Optional.ofNullable(selected);
+            return this;
+        }
+
+        public Builder selected(Optional<Boolean> selected) {
+            Utils.checkNotNull(selected, "selected");
+            this.selected = selected;
+            return this;
+        }
+
+
+        /**
+         * Unique identifier for this media instance.
+         */
+        public Builder uuid(String uuid) {
+            Utils.checkNotNull(uuid, "uuid");
+            this.uuid = Optional.ofNullable(uuid);
+            return this;
+        }
+
+        /**
+         * Unique identifier for this media instance.
+         */
+        public Builder uuid(Optional<String> uuid) {
+            Utils.checkNotNull(uuid, "uuid");
+            this.uuid = uuid;
+            return this;
+        }
+
+
         public Builder videoCodec(String videoCodec) {
             Utils.checkNotNull(videoCodec, "videoCodec");
             this.videoCodec = Optional.ofNullable(videoCodec);
@@ -1016,19 +1096,6 @@ public class MediaContainerWithDecisionMedia {
             return this;
         }
 
-
-        public Builder selected(boolean selected) {
-            Utils.checkNotNull(selected, "selected");
-            this.selected = Optional.ofNullable(selected);
-            return this;
-        }
-
-        public Builder selected(Optional<Boolean> selected) {
-            Utils.checkNotNull(selected, "selected");
-            this.selected = selected;
-            return this;
-        }
-
         public Builder additionalProperty(String key, Object value) {
             Utils.checkNotNull(key, "key");
             // we could be strict about null values (force the user
@@ -1052,9 +1119,10 @@ public class MediaContainerWithDecisionMedia {
                 audioProfile, bitrate, container,
                 duration, has64bitOffsets, hasVoiceActivity,
                 height, id, optimizedForStreaming,
-                part, videoCodec, videoFrameRate,
-                videoProfile, videoResolution, width,
-                abr, resourceSession, selected)
+                part, selected, uuid,
+                videoCodec, videoFrameRate, videoProfile,
+                videoResolution, width, abr,
+                resourceSession)
                 .withAdditionalProperties(additionalProperties);
         }
 

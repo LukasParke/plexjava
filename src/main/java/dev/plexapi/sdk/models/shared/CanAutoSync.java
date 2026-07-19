@@ -25,20 +25,19 @@ import java.lang.SuppressWarnings;
 public class CanAutoSync {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private CanAutoSync(TypedObject value) {
         this.value = value;
     }
 
     public static CanAutoSync of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new CanAutoSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new CanAutoSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static CanAutoSync of(CanAutoSync2 value) {
         Utils.checkNotNull(value, "value");
-        return new CanAutoSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<CanAutoSync2>(){}));
+        return new CanAutoSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +60,7 @@ public class CanAutoSync {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +71,7 @@ public class CanAutoSync {
             return false;
         }
         CanAutoSync other = (CanAutoSync) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +84,8 @@ public class CanAutoSync {
 
         public _Deserializer() {
             super(CanAutoSync.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<CanAutoSync2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<CanAutoSync2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +94,6 @@ public class CanAutoSync {
         return Utils.toString(CanAutoSync.class,
                 "value", value);
     }
- 
+
 }
 

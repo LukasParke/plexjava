@@ -86,25 +86,9 @@ public class AutocompleteRequest {
     private Optional<String> marketplace;
 
     /**
-     * Section identifier
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
-    private long sectionId;
-
-    /**
-     * Item type
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private Optional<Long> type;
-
-    /**
-     * The "field" stands in for any field, the value is a partial string for matching
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=field.query")
-    private Optional<String> fieldQuery;
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -116,13 +100,34 @@ public class AutocompleteRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=mediaQuery")
     private Optional<? extends MediaQuery> mediaQuery;
+
+    /**
+     * Section identifier
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
+    private long sectionId;
+
+    /**
+     * Item type
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
+    private Optional<Long> mediaType;
+
+    /**
+     * The "field" stands in for any field, the value is a partial string for matching
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=field.query")
+    private Optional<String> fieldQuery;
 
     @JsonCreator
     public AutocompleteRequest(
@@ -137,10 +142,10 @@ public class AutocompleteRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<? extends MediaQuery> mediaQuery,
             long sectionId,
-            Optional<Long> type,
-            Optional<String> fieldQuery,
-            Optional<? extends MediaQuery> mediaQuery) {
+            Optional<Long> mediaType,
+            Optional<String> fieldQuery) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -152,10 +157,10 @@ public class AutocompleteRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(sectionId, "sectionId");
-        Utils.checkNotNull(type, "type");
-        Utils.checkNotNull(fieldQuery, "fieldQuery");
         Utils.checkNotNull(mediaQuery, "mediaQuery");
+        Utils.checkNotNull(sectionId, "sectionId");
+        Utils.checkNotNull(mediaType, "mediaType");
+        Utils.checkNotNull(fieldQuery, "fieldQuery");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -167,10 +172,10 @@ public class AutocompleteRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.sectionId = sectionId;
-        this.type = type;
-        this.fieldQuery = fieldQuery;
         this.mediaQuery = mediaQuery;
+        this.sectionId = sectionId;
+        this.mediaType = mediaType;
+        this.fieldQuery = fieldQuery;
     }
     
     public AutocompleteRequest(
@@ -178,8 +183,8 @@ public class AutocompleteRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            sectionId, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -272,31 +277,9 @@ public class AutocompleteRequest {
     }
 
     /**
-     * Section identifier
-     */
-    @JsonIgnore
-    public long sectionId() {
-        return sectionId;
-    }
-
-    /**
-     * Item type
-     */
-    @JsonIgnore
-    public Optional<Long> type() {
-        return type;
-    }
-
-    /**
-     * The "field" stands in for any field, the value is a partial string for matching
-     */
-    @JsonIgnore
-    public Optional<String> fieldQuery() {
-        return fieldQuery;
-    }
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -308,15 +291,42 @@ public class AutocompleteRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<MediaQuery> mediaQuery() {
         return (Optional<MediaQuery>) mediaQuery;
+    }
+
+    /**
+     * Section identifier
+     */
+    @JsonIgnore
+    public long sectionId() {
+        return sectionId;
+    }
+
+    /**
+     * Item type
+     */
+    @JsonIgnore
+    public Optional<Long> mediaType() {
+        return mediaType;
+    }
+
+    /**
+     * The "field" stands in for any field, the value is a partial string for matching
+     */
+    @JsonIgnore
+    public Optional<String> fieldQuery() {
+        return fieldQuery;
     }
 
     public static Builder builder() {
@@ -534,6 +544,65 @@ public class AutocompleteRequest {
     }
 
     /**
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
+     * 
+     * <p>The query supports:
+     * - Fields: integer, boolean, tag, string, date, language
+     * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
+     * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
+     * - Sorting: sort parameter with :desc, :nullsLast modifiers
+     * - Grouping: group parameter
+     * - Limits: limit parameter
+     * 
+     * <p>Examples:
+     * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
+     * 
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
+     */
+    public AutocompleteRequest withMediaQuery(MediaQuery mediaQuery) {
+        Utils.checkNotNull(mediaQuery, "mediaQuery");
+        this.mediaQuery = Optional.ofNullable(mediaQuery);
+        return this;
+    }
+
+
+    /**
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
+     * 
+     * <p>The query supports:
+     * - Fields: integer, boolean, tag, string, date, language
+     * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
+     * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
+     * - Sorting: sort parameter with :desc, :nullsLast modifiers
+     * - Grouping: group parameter
+     * - Limits: limit parameter
+     * 
+     * <p>Examples:
+     * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
+     * 
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
+     */
+    public AutocompleteRequest withMediaQuery(Optional<? extends MediaQuery> mediaQuery) {
+        Utils.checkNotNull(mediaQuery, "mediaQuery");
+        this.mediaQuery = mediaQuery;
+        return this;
+    }
+
+    /**
      * Section identifier
      */
     public AutocompleteRequest withSectionId(long sectionId) {
@@ -545,9 +614,9 @@ public class AutocompleteRequest {
     /**
      * Item type
      */
-    public AutocompleteRequest withType(long type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
+    public AutocompleteRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
         return this;
     }
 
@@ -555,9 +624,9 @@ public class AutocompleteRequest {
     /**
      * Item type
      */
-    public AutocompleteRequest withType(Optional<Long> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public AutocompleteRequest withMediaType(Optional<Long> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -577,55 +646,6 @@ public class AutocompleteRequest {
     public AutocompleteRequest withFieldQuery(Optional<String> fieldQuery) {
         Utils.checkNotNull(fieldQuery, "fieldQuery");
         this.fieldQuery = fieldQuery;
-        return this;
-    }
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
-     * 
-     * <p>The query supports:
-     * - Fields: integer, boolean, tag, string, date, language
-     * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
-     * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
-     * - Sorting: sort parameter with :desc, :nullsLast modifiers
-     * - Grouping: group parameter
-     * - Limits: limit parameter
-     * 
-     * <p>Examples:
-     * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
-     * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
-     */
-    public AutocompleteRequest withMediaQuery(MediaQuery mediaQuery) {
-        Utils.checkNotNull(mediaQuery, "mediaQuery");
-        this.mediaQuery = Optional.ofNullable(mediaQuery);
-        return this;
-    }
-
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
-     * 
-     * <p>The query supports:
-     * - Fields: integer, boolean, tag, string, date, language
-     * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
-     * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
-     * - Sorting: sort parameter with :desc, :nullsLast modifiers
-     * - Grouping: group parameter
-     * - Limits: limit parameter
-     * 
-     * <p>Examples:
-     * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
-     * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
-     */
-    public AutocompleteRequest withMediaQuery(Optional<? extends MediaQuery> mediaQuery) {
-        Utils.checkNotNull(mediaQuery, "mediaQuery");
-        this.mediaQuery = mediaQuery;
         return this;
     }
 
@@ -650,10 +670,10 @@ public class AutocompleteRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery) &&
             Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.fieldQuery, other.fieldQuery) &&
-            Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery);
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
+            Utils.enhancedDeepEquals(this.fieldQuery, other.fieldQuery);
     }
     
     @Override
@@ -662,8 +682,8 @@ public class AutocompleteRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, sectionId,
-            type, fieldQuery, mediaQuery);
+            deviceName, marketplace, mediaQuery,
+            sectionId, mediaType, fieldQuery);
     }
     
     @Override
@@ -680,10 +700,10 @@ public class AutocompleteRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "mediaQuery", mediaQuery,
                 "sectionId", sectionId,
-                "type", type,
-                "fieldQuery", fieldQuery,
-                "mediaQuery", mediaQuery);
+                "mediaType", mediaType,
+                "fieldQuery", fieldQuery);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -711,13 +731,13 @@ public class AutocompleteRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
+        private Optional<? extends MediaQuery> mediaQuery = Optional.empty();
+
         private Long sectionId;
 
-        private Optional<Long> type = Optional.empty();
+        private Optional<Long> mediaType = Optional.empty();
 
         private Optional<String> fieldQuery = Optional.empty();
-
-        private Optional<? extends MediaQuery> mediaQuery = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -934,6 +954,65 @@ public class AutocompleteRequest {
 
 
         /**
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
+         * 
+         * <p>The query supports:
+         * - Fields: integer, boolean, tag, string, date, language
+         * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
+         * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
+         * - Sorting: sort parameter with :desc, :nullsLast modifiers
+         * - Grouping: group parameter
+         * - Limits: limit parameter
+         * 
+         * <p>Examples:
+         * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
+         * 
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
+         */
+        public Builder mediaQuery(MediaQuery mediaQuery) {
+            Utils.checkNotNull(mediaQuery, "mediaQuery");
+            this.mediaQuery = Optional.ofNullable(mediaQuery);
+            return this;
+        }
+
+        /**
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
+         * 
+         * <p>The query supports:
+         * - Fields: integer, boolean, tag, string, date, language
+         * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
+         * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
+         * - Sorting: sort parameter with :desc, :nullsLast modifiers
+         * - Grouping: group parameter
+         * - Limits: limit parameter
+         * 
+         * <p>Examples:
+         * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
+         * 
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
+         */
+        public Builder mediaQuery(Optional<? extends MediaQuery> mediaQuery) {
+            Utils.checkNotNull(mediaQuery, "mediaQuery");
+            this.mediaQuery = mediaQuery;
+            return this;
+        }
+
+
+        /**
          * Section identifier
          */
         public Builder sectionId(long sectionId) {
@@ -946,18 +1025,18 @@ public class AutocompleteRequest {
         /**
          * Item type
          */
-        public Builder type(long type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
             return this;
         }
 
         /**
          * Item type
          */
-        public Builder type(Optional<Long> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(Optional<Long> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -980,55 +1059,6 @@ public class AutocompleteRequest {
             return this;
         }
 
-
-        /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
-         * 
-         * <p>The query supports:
-         * - Fields: integer, boolean, tag, string, date, language
-         * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
-         * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
-         * - Sorting: sort parameter with :desc, :nullsLast modifiers
-         * - Grouping: group parameter
-         * - Limits: limit parameter
-         * 
-         * <p>Examples:
-         * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
-         * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
-         */
-        public Builder mediaQuery(MediaQuery mediaQuery) {
-            Utils.checkNotNull(mediaQuery, "mediaQuery");
-            this.mediaQuery = Optional.ofNullable(mediaQuery);
-            return this;
-        }
-
-        /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
-         * 
-         * <p>The query supports:
-         * - Fields: integer, boolean, tag, string, date, language
-         * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
-         * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
-         * - Sorting: sort parameter with :desc, :nullsLast modifiers
-         * - Grouping: group parameter
-         * - Limits: limit parameter
-         * 
-         * <p>Examples:
-         * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
-         * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
-         */
-        public Builder mediaQuery(Optional<? extends MediaQuery> mediaQuery) {
-            Utils.checkNotNull(mediaQuery, "mediaQuery");
-            this.mediaQuery = mediaQuery;
-            return this;
-        }
-
         public AutocompleteRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -1038,8 +1068,8 @@ public class AutocompleteRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, sectionId,
-                type, fieldQuery, mediaQuery);
+                deviceName, marketplace, mediaQuery,
+                sectionId, mediaType, fieldQuery);
         }
 
 

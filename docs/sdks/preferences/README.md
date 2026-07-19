@@ -1,5 +1,4 @@
 # Preferences
-(*preferences()*)
 
 ## Overview
 
@@ -22,12 +21,13 @@ Get the list of all preferences
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetAllPreferencesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -37,7 +37,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithSettings().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithSettings().get());
         }
     }
 }
@@ -51,6 +51,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## setPreferences
@@ -160,7 +161,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithSettings().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithSettings().get());
         }
     }
 }

@@ -16,12 +16,16 @@ import dev.plexapi.sdk.models.operations.async.WriteMessageResponse;
 import dev.plexapi.sdk.operations.EnablePapertrail;
 import dev.plexapi.sdk.operations.WriteLog;
 import dev.plexapi.sdk.operations.WriteMessage;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Logging mechanism to allow clients to log to the server
  */
 public class AsyncLog {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Log syncSDK;
 
@@ -43,7 +47,11 @@ public class AsyncLog {
     /**
      * Logging a multi-line message to the Plex Media Server log
      * 
-     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It takes a set of query strings as would normally sent to the above PUT endpoint as a linefeed-separated block of POST data. The parameters for each query string match as above.
+     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It
+     * takes a set of query strings as would normally sent to the above PUT endpoint as a
+     * linefeed-separated block of POST data. The parameters for each query string match as above.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -54,14 +62,37 @@ public class AsyncLog {
     /**
      * Logging a multi-line message to the Plex Media Server log
      * 
-     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It takes a set of query strings as would normally sent to the above PUT endpoint as a linefeed-separated block of POST data. The parameters for each query string match as above.
+     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It
+     * takes a set of query strings as would normally sent to the above PUT endpoint as a
+     * linefeed-separated block of POST data. The parameters for each query string match as above.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;WriteLogResponse&gt; - The async response
+     * @return {@code CompletableFuture<WriteLogResponse>} - The async response
      */
     public CompletableFuture<WriteLogResponse> writeLog(byte[] request) {
+        return writeLog(request, Optional.empty());
+    }
+
+    /**
+     * Logging a multi-line message to the Plex Media Server log
+     * 
+     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It
+     * takes a set of query strings as would normally sent to the above PUT endpoint as a
+     * linefeed-separated block of POST data. The parameters for each query string match as above.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<WriteLogResponse>} - The async response
+     */
+    public CompletableFuture<WriteLogResponse> writeLog(byte[] request, Optional<Options> options) {
         AsyncRequestOperation<byte[], WriteLogResponse> operation
-              = new WriteLog.Async(sdkConfiguration);
+              = new WriteLog.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -70,9 +101,12 @@ public class AsyncLog {
     /**
      * Logging a single-line message to the Plex Media Server log
      * 
-     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex Media Server log.
+     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex
+     * Media Server log.
      * 
      * <p>Note: This endpoint responds to all HTTP verbs **except POST** but PUT is preferred
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -83,16 +117,39 @@ public class AsyncLog {
     /**
      * Logging a single-line message to the Plex Media Server log
      * 
-     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex Media Server log.
+     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex
+     * Media Server log.
      * 
      * <p>Note: This endpoint responds to all HTTP verbs **except POST** but PUT is preferred
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;WriteMessageResponse&gt; - The async response
+     * @return {@code CompletableFuture<WriteMessageResponse>} - The async response
      */
     public CompletableFuture<WriteMessageResponse> writeMessage(WriteMessageRequest request) {
+        return writeMessage(request, Optional.empty());
+    }
+
+    /**
+     * Logging a single-line message to the Plex Media Server log
+     * 
+     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex
+     * Media Server log.
+     * 
+     * <p>Note: This endpoint responds to all HTTP verbs **except POST** but PUT is preferred
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<WriteMessageResponse>} - The async response
+     */
+    public CompletableFuture<WriteMessageResponse> writeMessage(WriteMessageRequest request, Optional<Options> options) {
         AsyncRequestOperation<WriteMessageRequest, WriteMessageResponse> operation
-              = new WriteMessage.Async(sdkConfiguration);
+              = new WriteMessage.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -101,9 +158,12 @@ public class AsyncLog {
     /**
      * Enabling Papertrail
      * 
-     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging site for a period of time
+     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging
+     * site for a period of time
      * 
      * <p>Note: This endpoint responds to all HTTP verbs but POST is preferred
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -114,16 +174,39 @@ public class AsyncLog {
     /**
      * Enabling Papertrail
      * 
-     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging site for a period of time
+     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging
+     * site for a period of time
      * 
      * <p>Note: This endpoint responds to all HTTP verbs but POST is preferred
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;EnablePapertrailResponse&gt; - The async response
+     * @return {@code CompletableFuture<EnablePapertrailResponse>} - The async response
      */
     public CompletableFuture<EnablePapertrailResponse> enablePapertrail(EnablePapertrailRequest request) {
+        return enablePapertrail(request, Optional.empty());
+    }
+
+    /**
+     * Enabling Papertrail
+     * 
+     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging
+     * site for a period of time
+     * 
+     * <p>Note: This endpoint responds to all HTTP verbs but POST is preferred
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EnablePapertrailResponse>} - The async response
+     */
+    public CompletableFuture<EnablePapertrailResponse> enablePapertrail(EnablePapertrailRequest request, Optional<Options> options) {
         AsyncRequestOperation<EnablePapertrailRequest, EnablePapertrailResponse> operation
-              = new EnablePapertrail.Async(sdkConfiguration);
+              = new EnablePapertrail.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

@@ -2,6 +2,14 @@
 
 Indicates if the server is pending approval.
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.Pending;
+
+Pending value = Pending.Disable;
+```
+
 
 ## Values
 

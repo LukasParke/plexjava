@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.Dvr;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
@@ -25,12 +26,12 @@ public class AddDeviceToDVRMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("DVR")
-    private Optional<? extends List<AddDeviceToDVRDVR>> dvr;
+    private Optional<? extends List<Dvr>> dvr;
 
     @JsonCreator
     public AddDeviceToDVRMediaContainer(
             @JsonProperty("MediaContainer") Optional<? extends AddDeviceToDVRDVRsMediaContainer> mediaContainer,
-            @JsonProperty("DVR") Optional<? extends List<AddDeviceToDVRDVR>> dvr) {
+            @JsonProperty("DVR") Optional<? extends List<Dvr>> dvr) {
         Utils.checkNotNull(mediaContainer, "mediaContainer");
         Utils.checkNotNull(dvr, "dvr");
         this.mediaContainer = mediaContainer;
@@ -49,8 +50,8 @@ public class AddDeviceToDVRMediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<AddDeviceToDVRDVR>> dvr() {
-        return (Optional<List<AddDeviceToDVRDVR>>) dvr;
+    public Optional<List<Dvr>> dvr() {
+        return (Optional<List<Dvr>>) dvr;
     }
 
     public static Builder builder() {
@@ -71,14 +72,14 @@ public class AddDeviceToDVRMediaContainer {
         return this;
     }
 
-    public AddDeviceToDVRMediaContainer withDvr(List<AddDeviceToDVRDVR> dvr) {
+    public AddDeviceToDVRMediaContainer withDvr(List<Dvr> dvr) {
         Utils.checkNotNull(dvr, "dvr");
         this.dvr = Optional.ofNullable(dvr);
         return this;
     }
 
 
-    public AddDeviceToDVRMediaContainer withDvr(Optional<? extends List<AddDeviceToDVRDVR>> dvr) {
+    public AddDeviceToDVRMediaContainer withDvr(Optional<? extends List<Dvr>> dvr) {
         Utils.checkNotNull(dvr, "dvr");
         this.dvr = dvr;
         return this;
@@ -116,7 +117,7 @@ public class AddDeviceToDVRMediaContainer {
 
         private Optional<? extends AddDeviceToDVRDVRsMediaContainer> mediaContainer = Optional.empty();
 
-        private Optional<? extends List<AddDeviceToDVRDVR>> dvr = Optional.empty();
+        private Optional<? extends List<Dvr>> dvr = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -136,13 +137,13 @@ public class AddDeviceToDVRMediaContainer {
         }
 
 
-        public Builder dvr(List<AddDeviceToDVRDVR> dvr) {
+        public Builder dvr(List<Dvr> dvr) {
             Utils.checkNotNull(dvr, "dvr");
             this.dvr = Optional.ofNullable(dvr);
             return this;
         }
 
-        public Builder dvr(Optional<? extends List<AddDeviceToDVRDVR>> dvr) {
+        public Builder dvr(Optional<? extends List<Dvr>> dvr) {
             Utils.checkNotNull(dvr, "dvr");
             this.dvr = dvr;
             return this;

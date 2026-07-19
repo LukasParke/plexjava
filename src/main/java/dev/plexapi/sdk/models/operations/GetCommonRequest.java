@@ -86,19 +86,9 @@ public class GetCommonRequest {
     private Optional<String> marketplace;
 
     /**
-     * Section identifier
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
-    private long sectionId;
-
-    /**
-     * Item type
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private Optional<Long> type;
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -110,13 +100,28 @@ public class GetCommonRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=mediaQuery")
     private Optional<? extends MediaQuery> mediaQuery;
+
+    /**
+     * Section identifier
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
+    private long sectionId;
+
+    /**
+     * Item type
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
+    private Optional<Long> mediaType;
 
     @JsonCreator
     public GetCommonRequest(
@@ -131,9 +136,9 @@ public class GetCommonRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<? extends MediaQuery> mediaQuery,
             long sectionId,
-            Optional<Long> type,
-            Optional<? extends MediaQuery> mediaQuery) {
+            Optional<Long> mediaType) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -145,9 +150,9 @@ public class GetCommonRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(sectionId, "sectionId");
-        Utils.checkNotNull(type, "type");
         Utils.checkNotNull(mediaQuery, "mediaQuery");
+        Utils.checkNotNull(sectionId, "sectionId");
+        Utils.checkNotNull(mediaType, "mediaType");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -159,9 +164,9 @@ public class GetCommonRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.sectionId = sectionId;
-        this.type = type;
         this.mediaQuery = mediaQuery;
+        this.sectionId = sectionId;
+        this.mediaType = mediaType;
     }
     
     public GetCommonRequest(
@@ -169,8 +174,8 @@ public class GetCommonRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            sectionId, Optional.empty());
     }
 
     /**
@@ -263,23 +268,9 @@ public class GetCommonRequest {
     }
 
     /**
-     * Section identifier
-     */
-    @JsonIgnore
-    public long sectionId() {
-        return sectionId;
-    }
-
-    /**
-     * Item type
-     */
-    @JsonIgnore
-    public Optional<Long> type() {
-        return type;
-    }
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
      * 
      * <p>The query supports:
      * - Fields: integer, boolean, tag, string, date, language
@@ -291,15 +282,34 @@ public class GetCommonRequest {
      * 
      * <p>Examples:
      * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
      * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<MediaQuery> mediaQuery() {
         return (Optional<MediaQuery>) mediaQuery;
+    }
+
+    /**
+     * Section identifier
+     */
+    @JsonIgnore
+    public long sectionId() {
+        return sectionId;
+    }
+
+    /**
+     * Item type
+     */
+    @JsonIgnore
+    public Optional<Long> mediaType() {
+        return mediaType;
     }
 
     public static Builder builder() {
@@ -517,6 +527,65 @@ public class GetCommonRequest {
     }
 
     /**
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
+     * 
+     * <p>The query supports:
+     * - Fields: integer, boolean, tag, string, date, language
+     * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
+     * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
+     * - Sorting: sort parameter with :desc, :nullsLast modifiers
+     * - Grouping: group parameter
+     * - Limits: limit parameter
+     * 
+     * <p>Examples:
+     * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
+     * 
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
+     */
+    public GetCommonRequest withMediaQuery(MediaQuery mediaQuery) {
+        Utils.checkNotNull(mediaQuery, "mediaQuery");
+        this.mediaQuery = Optional.ofNullable(mediaQuery);
+        return this;
+    }
+
+
+    /**
+     * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+     * with typed properties for type safety, or as a string for complex queries with operators and boolean
+     * logic.
+     * 
+     * <p>The query supports:
+     * - Fields: integer, boolean, tag, string, date, language
+     * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
+     * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
+     * - Sorting: sort parameter with :desc, :nullsLast modifiers
+     * - Grouping: group parameter
+     * - Limits: limit parameter
+     * 
+     * <p>Examples:
+     * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
+     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+     * "24"
+     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+     * rating = 2) AND duration = 10
+     * 
+     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+     * queries.
+     */
+    public GetCommonRequest withMediaQuery(Optional<? extends MediaQuery> mediaQuery) {
+        Utils.checkNotNull(mediaQuery, "mediaQuery");
+        this.mediaQuery = mediaQuery;
+        return this;
+    }
+
+    /**
      * Section identifier
      */
     public GetCommonRequest withSectionId(long sectionId) {
@@ -528,9 +597,9 @@ public class GetCommonRequest {
     /**
      * Item type
      */
-    public GetCommonRequest withType(long type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
+    public GetCommonRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
         return this;
     }
 
@@ -538,58 +607,9 @@ public class GetCommonRequest {
     /**
      * Item type
      */
-    public GetCommonRequest withType(Optional<Long> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
-        return this;
-    }
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
-     * 
-     * <p>The query supports:
-     * - Fields: integer, boolean, tag, string, date, language
-     * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
-     * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
-     * - Sorting: sort parameter with :desc, :nullsLast modifiers
-     * - Grouping: group parameter
-     * - Limits: limit parameter
-     * 
-     * <p>Examples:
-     * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
-     * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
-     */
-    public GetCommonRequest withMediaQuery(MediaQuery mediaQuery) {
-        Utils.checkNotNull(mediaQuery, "mediaQuery");
-        this.mediaQuery = Optional.ofNullable(mediaQuery);
-        return this;
-    }
-
-
-    /**
-     * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
-     * 
-     * <p>The query supports:
-     * - Fields: integer, boolean, tag, string, date, language
-     * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
-     * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
-     * - Sorting: sort parameter with :desc, :nullsLast modifiers
-     * - Grouping: group parameter
-     * - Limits: limit parameter
-     * 
-     * <p>Examples:
-     * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-     * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-     * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
-     * 
-     * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
-     */
-    public GetCommonRequest withMediaQuery(Optional<? extends MediaQuery> mediaQuery) {
-        Utils.checkNotNull(mediaQuery, "mediaQuery");
-        this.mediaQuery = mediaQuery;
+    public GetCommonRequest withMediaType(Optional<Long> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -614,9 +634,9 @@ public class GetCommonRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery) &&
             Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery);
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType);
     }
     
     @Override
@@ -625,8 +645,8 @@ public class GetCommonRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, sectionId,
-            type, mediaQuery);
+            deviceName, marketplace, mediaQuery,
+            sectionId, mediaType);
     }
     
     @Override
@@ -643,9 +663,9 @@ public class GetCommonRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "mediaQuery", mediaQuery,
                 "sectionId", sectionId,
-                "type", type,
-                "mediaQuery", mediaQuery);
+                "mediaType", mediaType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -673,11 +693,11 @@ public class GetCommonRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
+        private Optional<? extends MediaQuery> mediaQuery = Optional.empty();
+
         private Long sectionId;
 
-        private Optional<Long> type = Optional.empty();
-
-        private Optional<? extends MediaQuery> mediaQuery = Optional.empty();
+        private Optional<Long> mediaType = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -894,6 +914,65 @@ public class GetCommonRequest {
 
 
         /**
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
+         * 
+         * <p>The query supports:
+         * - Fields: integer, boolean, tag, string, date, language
+         * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
+         * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
+         * - Sorting: sort parameter with :desc, :nullsLast modifiers
+         * - Grouping: group parameter
+         * - Limits: limit parameter
+         * 
+         * <p>Examples:
+         * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
+         * 
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
+         */
+        public Builder mediaQuery(MediaQuery mediaQuery) {
+            Utils.checkNotNull(mediaQuery, "mediaQuery");
+            this.mediaQuery = Optional.ofNullable(mediaQuery);
+            return this;
+        }
+
+        /**
+         * A querystring-based filtering language used to select subsets of media. Can be provided as an object
+         * with typed properties for type safety, or as a string for complex queries with operators and boolean
+         * logic.
+         * 
+         * <p>The query supports:
+         * - Fields: integer, boolean, tag, string, date, language
+         * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
+         * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
+         * - Sorting: sort parameter with :desc, :nullsLast modifiers
+         * - Grouping: group parameter
+         * - Limits: limit parameter
+         * 
+         * <p>Examples:
+         * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
+         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title =
+         * "24"
+         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR
+         * rating = 2) AND duration = 10
+         * 
+         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media
+         * queries.
+         */
+        public Builder mediaQuery(Optional<? extends MediaQuery> mediaQuery) {
+            Utils.checkNotNull(mediaQuery, "mediaQuery");
+            this.mediaQuery = mediaQuery;
+            return this;
+        }
+
+
+        /**
          * Section identifier
          */
         public Builder sectionId(long sectionId) {
@@ -906,67 +985,18 @@ public class GetCommonRequest {
         /**
          * Item type
          */
-        public Builder type(long type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
             return this;
         }
 
         /**
          * Item type
          */
-        public Builder type(Optional<Long> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
-            return this;
-        }
-
-
-        /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
-         * 
-         * <p>The query supports:
-         * - Fields: integer, boolean, tag, string, date, language
-         * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
-         * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
-         * - Sorting: sort parameter with :desc, :nullsLast modifiers
-         * - Grouping: group parameter
-         * - Limits: limit parameter
-         * 
-         * <p>Examples:
-         * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
-         * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
-         */
-        public Builder mediaQuery(MediaQuery mediaQuery) {
-            Utils.checkNotNull(mediaQuery, "mediaQuery");
-            this.mediaQuery = Optional.ofNullable(mediaQuery);
-            return this;
-        }
-
-        /**
-         * A querystring-based filtering language used to select subsets of media. Can be provided as an object with typed properties for type safety, or as a string for complex queries with operators and boolean logic.
-         * 
-         * <p>The query supports:
-         * - Fields: integer, boolean, tag, string, date, language
-         * - Operators: =, !=, ==, !==, &lt;=, &gt;=, &gt;&gt;=, &lt;&lt;= (varies by field type)
-         * - Boolean operators: &amp; (AND), , (OR), push/pop (parentheses), or=1 (explicit OR)
-         * - Sorting: sort parameter with :desc, :nullsLast modifiers
-         * - Grouping: group parameter
-         * - Limits: limit parameter
-         * 
-         * <p>Examples:
-         * - Object format: `{type: 4, sourceType: 2, title: "24"}` → `type=4&amp;sourceType=2&amp;title=24`
-         * - String format: `type=4&amp;sourceType=2&amp;title==24` - type = 4 AND sourceType = 2 AND title = "24"
-         * - Complex: `push=1&amp;index=1&amp;or=1&amp;rating=2&amp;pop=1&amp;duration=10` - (index = 1 OR rating = 2) AND duration = 10
-         * 
-         * <p>See [API Info section](#section/API-Info/Media-Queries) for detailed information on building media queries.
-         */
-        public Builder mediaQuery(Optional<? extends MediaQuery> mediaQuery) {
-            Utils.checkNotNull(mediaQuery, "mediaQuery");
-            this.mediaQuery = mediaQuery;
+        public Builder mediaType(Optional<Long> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -979,8 +1009,8 @@ public class GetCommonRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, sectionId,
-                type, mediaQuery);
+                deviceName, marketplace, mediaQuery,
+                sectionId, mediaType);
         }
 
 

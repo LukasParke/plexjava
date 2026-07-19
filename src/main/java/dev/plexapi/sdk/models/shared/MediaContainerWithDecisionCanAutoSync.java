@@ -25,20 +25,19 @@ import java.lang.SuppressWarnings;
 public class MediaContainerWithDecisionCanAutoSync {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private MediaContainerWithDecisionCanAutoSync(TypedObject value) {
         this.value = value;
     }
 
     public static MediaContainerWithDecisionCanAutoSync of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new MediaContainerWithDecisionCanAutoSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new MediaContainerWithDecisionCanAutoSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static MediaContainerWithDecisionCanAutoSync of(MediaContainerWithDecisionCanAutoSync2 value) {
         Utils.checkNotNull(value, "value");
-        return new MediaContainerWithDecisionCanAutoSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaContainerWithDecisionCanAutoSync2>(){}));
+        return new MediaContainerWithDecisionCanAutoSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +60,7 @@ public class MediaContainerWithDecisionCanAutoSync {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +71,7 @@ public class MediaContainerWithDecisionCanAutoSync {
             return false;
         }
         MediaContainerWithDecisionCanAutoSync other = (MediaContainerWithDecisionCanAutoSync) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +84,8 @@ public class MediaContainerWithDecisionCanAutoSync {
 
         public _Deserializer() {
             super(MediaContainerWithDecisionCanAutoSync.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithDecisionCanAutoSync2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithDecisionCanAutoSync2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +94,6 @@ public class MediaContainerWithDecisionCanAutoSync {
         return Utils.toString(MediaContainerWithDecisionCanAutoSync.class,
                 "value", value);
     }
- 
+
 }
 

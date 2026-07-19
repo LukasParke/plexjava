@@ -19,9 +19,15 @@ import java.util.Optional;
 /**
  * GetResponses200MediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class GetResponses200MediaContainer {
 
@@ -30,7 +36,8 @@ public class GetResponses200MediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -51,7 +58,7 @@ public class GetResponses200MediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Hub")
-    private Optional<? extends List<GetResponses200Hub>> hub;
+    private Optional<? extends List<ManagedHub>> hub;
 
     @JsonCreator
     public GetResponses200MediaContainer(
@@ -59,7 +66,7 @@ public class GetResponses200MediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("Hub") Optional<? extends List<GetResponses200Hub>> hub) {
+            @JsonProperty("Hub") Optional<? extends List<ManagedHub>> hub) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
@@ -83,7 +90,8 @@ public class GetResponses200MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -105,8 +113,8 @@ public class GetResponses200MediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<GetResponses200Hub>> hub() {
-        return (Optional<List<GetResponses200Hub>>) hub;
+    public Optional<List<ManagedHub>> hub() {
+        return (Optional<List<ManagedHub>>) hub;
     }
 
     public static Builder builder() {
@@ -128,7 +136,8 @@ public class GetResponses200MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetResponses200MediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -138,7 +147,8 @@ public class GetResponses200MediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetResponses200MediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -178,14 +188,14 @@ public class GetResponses200MediaContainer {
         return this;
     }
 
-    public GetResponses200MediaContainer withHub(List<GetResponses200Hub> hub) {
+    public GetResponses200MediaContainer withHub(List<ManagedHub> hub) {
         Utils.checkNotNull(hub, "hub");
         this.hub = Optional.ofNullable(hub);
         return this;
     }
 
 
-    public GetResponses200MediaContainer withHub(Optional<? extends List<GetResponses200Hub>> hub) {
+    public GetResponses200MediaContainer withHub(Optional<? extends List<ManagedHub>> hub) {
         Utils.checkNotNull(hub, "hub");
         this.hub = hub;
         return this;
@@ -236,7 +246,7 @@ public class GetResponses200MediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<? extends List<GetResponses200Hub>> hub = Optional.empty();
+        private Optional<? extends List<ManagedHub>> hub = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -257,7 +267,8 @@ public class GetResponses200MediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -266,7 +277,8 @@ public class GetResponses200MediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -307,13 +319,13 @@ public class GetResponses200MediaContainer {
         }
 
 
-        public Builder hub(List<GetResponses200Hub> hub) {
+        public Builder hub(List<ManagedHub> hub) {
             Utils.checkNotNull(hub, "hub");
             this.hub = Optional.ofNullable(hub);
             return this;
         }
 
-        public Builder hub(Optional<? extends List<GetResponses200Hub>> hub) {
+        public Builder hub(Optional<? extends List<ManagedHub>> hub) {
             Utils.checkNotNull(hub, "hub");
             this.hub = hub;
             return this;

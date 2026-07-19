@@ -3,9 +3,17 @@
  */
 package dev.plexapi.sdk;
 
-import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
+import dev.plexapi.sdk.models.operations.DeleteLiveTVSessionRequest;
+import dev.plexapi.sdk.models.operations.DeleteLiveTVSessionRequestBuilder;
+import dev.plexapi.sdk.models.operations.DeleteLiveTVSessionResponse;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsByDVRRequest;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsByDVRRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsByDVRResponse;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsRequest;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsResponse;
 import dev.plexapi.sdk.models.operations.GetLiveTVSessionRequest;
 import dev.plexapi.sdk.models.operations.GetLiveTVSessionRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetLiveTVSessionResponse;
@@ -15,18 +23,26 @@ import dev.plexapi.sdk.models.operations.GetSessionPlaylistIndexResponse;
 import dev.plexapi.sdk.models.operations.GetSessionSegmentRequest;
 import dev.plexapi.sdk.models.operations.GetSessionSegmentRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSessionSegmentResponse;
+import dev.plexapi.sdk.models.operations.GetSessionsRequest;
 import dev.plexapi.sdk.models.operations.GetSessionsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSessionsResponse;
+import dev.plexapi.sdk.operations.DeleteLiveTVSession;
+import dev.plexapi.sdk.operations.GetDVRRecordings;
+import dev.plexapi.sdk.operations.GetDVRRecordingsByDVR;
 import dev.plexapi.sdk.operations.GetLiveTVSession;
 import dev.plexapi.sdk.operations.GetSessionPlaylistIndex;
 import dev.plexapi.sdk.operations.GetSessionSegment;
 import dev.plexapi.sdk.operations.GetSessions;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.Long;
+import java.util.Optional;
 
 /**
  * LiveTV contains the playback sessions of a channel from a DVR device
  */
 public class LiveTV {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncLiveTV asyncSDK;
 
@@ -42,6 +58,52 @@ public class LiveTV {
      */
     public AsyncLiveTV async() {
         return asyncSDK;
+    }
+
+    /**
+     * Get DVR Recordings
+     * 
+     * <p>List completed DVR recordings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetDVRRecordingsRequestBuilder getDVRRecordings() {
+        return new GetDVRRecordingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DVR Recordings
+     * 
+     * <p>List completed DVR recordings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRRecordingsResponse getDVRRecordings(GetDVRRecordingsRequest request) {
+        return getDVRRecordings(request, Optional.empty());
+    }
+
+    /**
+     * Get DVR Recordings
+     * 
+     * <p>List completed DVR recordings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRRecordingsResponse getDVRRecordings(GetDVRRecordingsRequest request, Optional<Options> options) {
+        RequestOperation<GetDVRRecordingsRequest, GetDVRRecordingsResponse> operation
+              = new GetDVRRecordings.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
@@ -61,12 +123,127 @@ public class LiveTV {
      * <p>Get all livetv sessions and metadata
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSessionsResponse getSessionsDirect() throws Exception {
-        RequestlessOperation<GetSessionsResponse> operation
-            = new GetSessions.Sync(sdkConfiguration);
-        return operation.handleResponse(operation.doRequest());
+    public GetSessionsResponse getSessionsDirect() {
+        return getSessions(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get all sessions
+     * 
+     * <p>Get all livetv sessions and metadata
+     * 
+     * @param dvrId Filter by DVR ID.
+     * @param channel Filter by channel ID.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSessionsResponse getSessions(
+            Optional<Long> dvrId, Optional<Long> channel,
+            Optional<Options> options) {
+        GetSessionsRequest request =
+            GetSessionsRequest
+                .builder()
+                .dvrId(dvrId)
+                .channel(channel)
+                .build();
+        RequestOperation<GetSessionsRequest, GetSessionsResponse> operation
+              = new GetSessions.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get DVR Recordings by DVR
+     * 
+     * <p>List completed DVR recordings for a specific DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetDVRRecordingsByDVRRequestBuilder getDVRRecordingsByDVR() {
+        return new GetDVRRecordingsByDVRRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DVR Recordings by DVR
+     * 
+     * <p>List completed DVR recordings for a specific DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRRecordingsByDVRResponse getDVRRecordingsByDVR(GetDVRRecordingsByDVRRequest request) {
+        return getDVRRecordingsByDVR(request, Optional.empty());
+    }
+
+    /**
+     * Get DVR Recordings by DVR
+     * 
+     * <p>List completed DVR recordings for a specific DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRRecordingsByDVRResponse getDVRRecordingsByDVR(GetDVRRecordingsByDVRRequest request, Optional<Options> options) {
+        RequestOperation<GetDVRRecordingsByDVRRequest, GetDVRRecordingsByDVRResponse> operation
+              = new GetDVRRecordingsByDVR.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Delete Live TV Session
+     * 
+     * <p>Terminate a Live TV session.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public DeleteLiveTVSessionRequestBuilder deleteLiveTVSession() {
+        return new DeleteLiveTVSessionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Delete Live TV Session
+     * 
+     * <p>Terminate a Live TV session.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteLiveTVSessionResponse deleteLiveTVSession(DeleteLiveTVSessionRequest request) {
+        return deleteLiveTVSession(request, Optional.empty());
+    }
+
+    /**
+     * Delete Live TV Session
+     * 
+     * <p>Terminate a Live TV session.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteLiveTVSessionResponse deleteLiveTVSession(DeleteLiveTVSessionRequest request, Optional<Options> options) {
+        RequestOperation<DeleteLiveTVSessionRequest, DeleteLiveTVSessionResponse> operation
+              = new DeleteLiveTVSession.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
@@ -87,11 +264,25 @@ public class LiveTV {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetLiveTVSessionResponse getLiveTVSession(GetLiveTVSessionRequest request) throws Exception {
+    public GetLiveTVSessionResponse getLiveTVSession(GetLiveTVSessionRequest request) {
+        return getLiveTVSession(request, Optional.empty());
+    }
+
+    /**
+     * Get a single session
+     * 
+     * <p>Get a single livetv session and metadata
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLiveTVSessionResponse getLiveTVSession(GetLiveTVSessionRequest request, Optional<Options> options) {
         RequestOperation<GetLiveTVSessionRequest, GetLiveTVSessionResponse> operation
-              = new GetLiveTVSession.Sync(sdkConfiguration);
+              = new GetLiveTVSession.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -113,11 +304,25 @@ public class LiveTV {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSessionPlaylistIndexResponse getSessionPlaylistIndex(GetSessionPlaylistIndexRequest request) throws Exception {
+    public GetSessionPlaylistIndexResponse getSessionPlaylistIndex(GetSessionPlaylistIndexRequest request) {
+        return getSessionPlaylistIndex(request, Optional.empty());
+    }
+
+    /**
+     * Get a session playlist index
+     * 
+     * <p>Get a playlist index for playing this session
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSessionPlaylistIndexResponse getSessionPlaylistIndex(GetSessionPlaylistIndexRequest request, Optional<Options> options) {
         RequestOperation<GetSessionPlaylistIndexRequest, GetSessionPlaylistIndexResponse> operation
-              = new GetSessionPlaylistIndex.Sync(sdkConfiguration);
+              = new GetSessionPlaylistIndex.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -139,11 +344,25 @@ public class LiveTV {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSessionSegmentResponse getSessionSegment(GetSessionSegmentRequest request) throws Exception {
+    public GetSessionSegmentResponse getSessionSegment(GetSessionSegmentRequest request) {
+        return getSessionSegment(request, Optional.empty());
+    }
+
+    /**
+     * Get a single session segment
+     * 
+     * <p>Get a single LiveTV session segment
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSessionSegmentResponse getSessionSegment(GetSessionSegmentRequest request, Optional<Options> options) {
         RequestOperation<GetSessionSegmentRequest, GetSessionSegmentResponse> operation
-              = new GetSessionSegment.Sync(sdkConfiguration);
+              = new GetSessionSegment.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

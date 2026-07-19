@@ -11,72 +11,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.lang.SuppressWarnings;
-import java.util.List;
 import java.util.Optional;
 
 
 public class Device {
 
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("accessToken")
-    private Optional<String> accessToken;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("clientIdentifier")
-    private Optional<String> clientIdentifier;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("Connection")
-    private Optional<? extends List<Connection>> connection;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("name")
-    private Optional<String> name;
+    @JsonProperty("profile")
+    private Optional<String> profile;
 
     @JsonCreator
     public Device(
-            @JsonProperty("accessToken") Optional<String> accessToken,
-            @JsonProperty("clientIdentifier") Optional<String> clientIdentifier,
-            @JsonProperty("Connection") Optional<? extends List<Connection>> connection,
-            @JsonProperty("name") Optional<String> name) {
-        Utils.checkNotNull(accessToken, "accessToken");
-        Utils.checkNotNull(clientIdentifier, "clientIdentifier");
-        Utils.checkNotNull(connection, "connection");
-        Utils.checkNotNull(name, "name");
-        this.accessToken = accessToken;
-        this.clientIdentifier = clientIdentifier;
-        this.connection = connection;
-        this.name = name;
+            @JsonProperty("profile") Optional<String> profile) {
+        Utils.checkNotNull(profile, "profile");
+        this.profile = profile;
     }
     
     public Device() {
-        this(Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+        this(Optional.empty());
     }
 
     @JsonIgnore
-    public Optional<String> accessToken() {
-        return accessToken;
-    }
-
-    @JsonIgnore
-    public Optional<String> clientIdentifier() {
-        return clientIdentifier;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<List<Connection>> connection() {
-        return (Optional<List<Connection>>) connection;
-    }
-
-    @JsonIgnore
-    public Optional<String> name() {
-        return name;
+    public Optional<String> profile() {
+        return profile;
     }
 
     public static Builder builder() {
@@ -84,55 +41,16 @@ public class Device {
     }
 
 
-    public Device withAccessToken(String accessToken) {
-        Utils.checkNotNull(accessToken, "accessToken");
-        this.accessToken = Optional.ofNullable(accessToken);
+    public Device withProfile(String profile) {
+        Utils.checkNotNull(profile, "profile");
+        this.profile = Optional.ofNullable(profile);
         return this;
     }
 
 
-    public Device withAccessToken(Optional<String> accessToken) {
-        Utils.checkNotNull(accessToken, "accessToken");
-        this.accessToken = accessToken;
-        return this;
-    }
-
-    public Device withClientIdentifier(String clientIdentifier) {
-        Utils.checkNotNull(clientIdentifier, "clientIdentifier");
-        this.clientIdentifier = Optional.ofNullable(clientIdentifier);
-        return this;
-    }
-
-
-    public Device withClientIdentifier(Optional<String> clientIdentifier) {
-        Utils.checkNotNull(clientIdentifier, "clientIdentifier");
-        this.clientIdentifier = clientIdentifier;
-        return this;
-    }
-
-    public Device withConnection(List<Connection> connection) {
-        Utils.checkNotNull(connection, "connection");
-        this.connection = Optional.ofNullable(connection);
-        return this;
-    }
-
-
-    public Device withConnection(Optional<? extends List<Connection>> connection) {
-        Utils.checkNotNull(connection, "connection");
-        this.connection = connection;
-        return this;
-    }
-
-    public Device withName(String name) {
-        Utils.checkNotNull(name, "name");
-        this.name = Optional.ofNullable(name);
-        return this;
-    }
-
-
-    public Device withName(Optional<String> name) {
-        Utils.checkNotNull(name, "name");
-        this.name = name;
+    public Device withProfile(Optional<String> profile) {
+        Utils.checkNotNull(profile, "profile");
+        this.profile = profile;
         return this;
     }
 
@@ -146,100 +64,47 @@ public class Device {
         }
         Device other = (Device) o;
         return 
-            Utils.enhancedDeepEquals(this.accessToken, other.accessToken) &&
-            Utils.enhancedDeepEquals(this.clientIdentifier, other.clientIdentifier) &&
-            Utils.enhancedDeepEquals(this.connection, other.connection) &&
-            Utils.enhancedDeepEquals(this.name, other.name);
+            Utils.enhancedDeepEquals(this.profile, other.profile);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            accessToken, clientIdentifier, connection,
-            name);
+            profile);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Device.class,
-                "accessToken", accessToken,
-                "clientIdentifier", clientIdentifier,
-                "connection", connection,
-                "name", name);
+                "profile", profile);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Optional<String> accessToken = Optional.empty();
-
-        private Optional<String> clientIdentifier = Optional.empty();
-
-        private Optional<? extends List<Connection>> connection = Optional.empty();
-
-        private Optional<String> name = Optional.empty();
+        private Optional<String> profile = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
         }
 
 
-        public Builder accessToken(String accessToken) {
-            Utils.checkNotNull(accessToken, "accessToken");
-            this.accessToken = Optional.ofNullable(accessToken);
+        public Builder profile(String profile) {
+            Utils.checkNotNull(profile, "profile");
+            this.profile = Optional.ofNullable(profile);
             return this;
         }
 
-        public Builder accessToken(Optional<String> accessToken) {
-            Utils.checkNotNull(accessToken, "accessToken");
-            this.accessToken = accessToken;
-            return this;
-        }
-
-
-        public Builder clientIdentifier(String clientIdentifier) {
-            Utils.checkNotNull(clientIdentifier, "clientIdentifier");
-            this.clientIdentifier = Optional.ofNullable(clientIdentifier);
-            return this;
-        }
-
-        public Builder clientIdentifier(Optional<String> clientIdentifier) {
-            Utils.checkNotNull(clientIdentifier, "clientIdentifier");
-            this.clientIdentifier = clientIdentifier;
-            return this;
-        }
-
-
-        public Builder connection(List<Connection> connection) {
-            Utils.checkNotNull(connection, "connection");
-            this.connection = Optional.ofNullable(connection);
-            return this;
-        }
-
-        public Builder connection(Optional<? extends List<Connection>> connection) {
-            Utils.checkNotNull(connection, "connection");
-            this.connection = connection;
-            return this;
-        }
-
-
-        public Builder name(String name) {
-            Utils.checkNotNull(name, "name");
-            this.name = Optional.ofNullable(name);
-            return this;
-        }
-
-        public Builder name(Optional<String> name) {
-            Utils.checkNotNull(name, "name");
-            this.name = name;
+        public Builder profile(Optional<String> profile) {
+            Utils.checkNotNull(profile, "profile");
+            this.profile = profile;
             return this;
         }
 
         public Device build() {
 
             return new Device(
-                accessToken, clientIdentifier, connection,
-                name);
+                profile);
         }
 
     }

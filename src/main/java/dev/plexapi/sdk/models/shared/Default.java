@@ -26,7 +26,7 @@ import java.lang.SuppressWarnings;
 public class Default {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private Default(TypedObject value) {
         this.value = value;
@@ -34,17 +34,15 @@ public class Default {
 
     public static Default of(String value) {
         Utils.checkNotNull(value, "value");
-        return new Default(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+        return new Default(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static Default of(double value) {
-        Utils.checkNotNull(value, "value");
-        return new Default(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Double>(){}));
+        return new Default(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static Default of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new Default(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new Default(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -68,7 +66,7 @@ public class Default {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -79,7 +77,7 @@ public class Default {
             return false;
         }
         Default other = (Default) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -92,9 +90,9 @@ public class Default {
 
         public _Deserializer() {
             super(Default.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<Double>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -103,6 +101,6 @@ public class Default {
         return Utils.toString(Default.class,
                 "value", value);
     }
- 
+
 }
 

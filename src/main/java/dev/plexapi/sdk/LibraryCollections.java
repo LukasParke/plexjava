@@ -8,21 +8,26 @@ import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 import dev.plexapi.sdk.models.operations.AddCollectionItemsRequest;
 import dev.plexapi.sdk.models.operations.AddCollectionItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.AddCollectionItemsResponse;
-import dev.plexapi.sdk.models.operations.DeleteCollectionItemRequest;
-import dev.plexapi.sdk.models.operations.DeleteCollectionItemRequestBuilder;
-import dev.plexapi.sdk.models.operations.DeleteCollectionItemResponse;
 import dev.plexapi.sdk.models.operations.MoveCollectionItemRequest;
 import dev.plexapi.sdk.models.operations.MoveCollectionItemRequestBuilder;
 import dev.plexapi.sdk.models.operations.MoveCollectionItemResponse;
+import dev.plexapi.sdk.models.operations.UpdateCollectionItemRequest;
+import dev.plexapi.sdk.models.operations.UpdateCollectionItemRequestBuilder;
+import dev.plexapi.sdk.models.operations.UpdateCollectionItemResponse;
 import dev.plexapi.sdk.operations.AddCollectionItems;
-import dev.plexapi.sdk.operations.DeleteCollectionItem;
 import dev.plexapi.sdk.operations.MoveCollectionItem;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.UpdateCollectionItem;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * Endpoints for manipulating collections.  In addition to these endpoints, `/library/collections/:collectionId/X` will be rerouted to `/library/metadata/:collectionId/X` and respond to those endpoints as well.
+ * Endpoints for manipulating collections. In addition to these endpoints,
+ * `/library/collections/:collectionId/X` will be rerouted to `/library/metadata/:collectionId/X` and
+ * respond to those endpoints as well.
  */
 public class LibraryCollections {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncLibraryCollections asyncSDK;
 
@@ -45,6 +50,8 @@ public class LibraryCollections {
      * 
      * <p>Add items to a collection by uri
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The call builder
      */
     public AddCollectionItemsRequestBuilder addCollectionItems() {
@@ -56,39 +63,77 @@ public class LibraryCollections {
      * 
      * <p>Add items to a collection by uri
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddCollectionItemsResponse addCollectionItems(AddCollectionItemsRequest request) throws Exception {
+    public AddCollectionItemsResponse addCollectionItems(AddCollectionItemsRequest request) {
+        return addCollectionItems(request, Optional.empty());
+    }
+
+    /**
+     * Add items to a collection
+     * 
+     * <p>Add items to a collection by uri
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddCollectionItemsResponse addCollectionItems(AddCollectionItemsRequest request, Optional<Options> options) {
         RequestOperation<AddCollectionItemsRequest, AddCollectionItemsResponse> operation
-              = new AddCollectionItems.Sync(sdkConfiguration);
+              = new AddCollectionItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
-     * Delete an item from a collection
+     * Update an item in a collection
      * 
      * <p>Delete an item from a collection
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
-    public DeleteCollectionItemRequestBuilder deleteCollectionItem() {
-        return new DeleteCollectionItemRequestBuilder(sdkConfiguration);
+    public UpdateCollectionItemRequestBuilder updateCollectionItem() {
+        return new UpdateCollectionItemRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Delete an item from a collection
+     * Update an item in a collection
      * 
      * <p>Delete an item from a collection
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteCollectionItemResponse deleteCollectionItem(DeleteCollectionItemRequest request) throws Exception {
-        RequestOperation<DeleteCollectionItemRequest, DeleteCollectionItemResponse> operation
-              = new DeleteCollectionItem.Sync(sdkConfiguration);
+    public UpdateCollectionItemResponse updateCollectionItem(UpdateCollectionItemRequest request) {
+        return updateCollectionItem(request, Optional.empty());
+    }
+
+    /**
+     * Update an item in a collection
+     * 
+     * <p>Delete an item from a collection
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateCollectionItemResponse updateCollectionItem(UpdateCollectionItemRequest request, Optional<Options> options) {
+        RequestOperation<UpdateCollectionItemRequest, UpdateCollectionItemResponse> operation
+              = new UpdateCollectionItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -96,6 +141,8 @@ public class LibraryCollections {
      * Reorder an item in the collection
      * 
      * <p>Reorder items in a collection with one item after another
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -108,13 +155,31 @@ public class LibraryCollections {
      * 
      * <p>Reorder items in a collection with one item after another
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public MoveCollectionItemResponse moveCollectionItem(MoveCollectionItemRequest request) throws Exception {
+    public MoveCollectionItemResponse moveCollectionItem(MoveCollectionItemRequest request) {
+        return moveCollectionItem(request, Optional.empty());
+    }
+
+    /**
+     * Reorder an item in the collection
+     * 
+     * <p>Reorder items in a collection with one item after another
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MoveCollectionItemResponse moveCollectionItem(MoveCollectionItemRequest request, Optional<Options> options) {
         RequestOperation<MoveCollectionItemRequest, MoveCollectionItemResponse> operation
-              = new MoveCollectionItem.Sync(sdkConfiguration);
+              = new MoveCollectionItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

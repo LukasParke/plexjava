@@ -90,7 +90,9 @@ public class SetSectionPreferencesRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
     private long sectionId;
 
-
+    /**
+     * The preference key to retrieve or set
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=prefs")
     private SetSectionPreferencesQueryParamPrefs prefs;
 
@@ -244,6 +246,9 @@ public class SetSectionPreferencesRequest {
         return sectionId;
     }
 
+    /**
+     * The preference key to retrieve or set
+     */
     @JsonIgnore
     public SetSectionPreferencesQueryParamPrefs prefs() {
         return prefs;
@@ -472,6 +477,9 @@ public class SetSectionPreferencesRequest {
         return this;
     }
 
+    /**
+     * The preference key to retrieve or set
+     */
     public SetSectionPreferencesRequest withPrefs(SetSectionPreferencesQueryParamPrefs prefs) {
         Utils.checkNotNull(prefs, "prefs");
         this.prefs = prefs;
@@ -784,6 +792,9 @@ public class SetSectionPreferencesRequest {
         }
 
 
+        /**
+         * The preference key to retrieve or set
+         */
         public Builder prefs(SetSectionPreferencesQueryParamPrefs prefs) {
             Utils.checkNotNull(prefs, "prefs");
             this.prefs = prefs;

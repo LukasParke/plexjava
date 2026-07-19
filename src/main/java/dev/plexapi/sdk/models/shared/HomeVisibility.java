@@ -12,10 +12,10 @@ import java.util.Optional;
  * HomeVisibility
  * 
  * <p>Whether this hub is visible on the home screen
- *   - all: Visible to all users
- *   - none: Visible to no users
- *   - admin: Visible to only admin users
- *   - shared: Visible to shared users
+ * - all: Visible to all users
+ * - none: Visible to no users
+ * - admin: Visible to only admin users
+ * - shared: Visible to shared users
  */
 public enum HomeVisibility {
     ALL("all"),

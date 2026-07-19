@@ -86,6 +86,18 @@ public class ListPlaybackHistoryRequest {
     private Optional<String> marketplace;
 
     /**
+     * Pagination start offset
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=X-Plex-Container-Start")
+    private Optional<Long> xPlexContainerStart;
+
+    /**
+     * Pagination page size
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=X-Plex-Container-Size")
+    private Optional<Long> xPlexContainerSize;
+
+    /**
      * The account id to restrict view history
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=accountID")
@@ -104,16 +116,62 @@ public class ListPlaybackHistoryRequest {
     private Optional<Long> librarySectionID;
 
     /**
-     * The metadata item to restrict view history (can provide the id for a show to see all of that show's view history).  Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id` internally depending on the metadata type.
+     * The metadata item to restrict view history (can provide the id for a show to see all of that show's
+     * view history). Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id`
+     * internally depending on the metadata type.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=metadataItemID")
     private Optional<Long> metadataItemID;
 
     /**
-     * The field on which to sort.  Multiple orderings can be specified separated by `,` and the direction specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided).  Note `metadataItemID` may not be used here.
+     * The field on which to sort. Multiple orderings can be specified separated by `,` and the direction
+     * specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided). Note `metadataItemID`
+     * may not be used here.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=sort")
     private Optional<? extends List<String>> sort;
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=excludeElements")
+    private Optional<String> excludeElements;
+
+    /**
+     * Comma-separated list of fields to exclude from the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=excludeFields")
+    private Optional<String> excludeFields;
+
+    /**
+     * Whitelist of fields to return
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeFields")
+    private Optional<String> includeFields;
+
+    /**
+     * Whitelist of elements to include
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeElements")
+    private Optional<String> includeElements;
+
+    /**
+     * Greater-than filter for viewedAt timestamp
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=viewedAt>")
+    private Optional<Long> viewedAtGreaterThan;
+
+    /**
+     * Less-than filter for viewedAt timestamp
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=viewedAt<")
+    private Optional<Long> viewedAtLessThan;
+
+    /**
+     * Filter by device ID
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=deviceID")
+    private Optional<Long> deviceID;
 
     @JsonCreator
     public ListPlaybackHistoryRequest(
@@ -128,11 +186,20 @@ public class ListPlaybackHistoryRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<Long> xPlexContainerStart,
+            Optional<Long> xPlexContainerSize,
             Optional<Long> accountID,
             Optional<Long> viewedAt,
             Optional<Long> librarySectionID,
             Optional<Long> metadataItemID,
-            Optional<? extends List<String>> sort) {
+            Optional<? extends List<String>> sort,
+            Optional<String> excludeElements,
+            Optional<String> excludeFields,
+            Optional<String> includeFields,
+            Optional<String> includeElements,
+            Optional<Long> viewedAtGreaterThan,
+            Optional<Long> viewedAtLessThan,
+            Optional<Long> deviceID) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -144,11 +211,20 @@ public class ListPlaybackHistoryRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
         Utils.checkNotNull(accountID, "accountID");
         Utils.checkNotNull(viewedAt, "viewedAt");
         Utils.checkNotNull(librarySectionID, "librarySectionID");
         Utils.checkNotNull(metadataItemID, "metadataItemID");
         Utils.checkNotNull(sort, "sort");
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        Utils.checkNotNull(excludeFields, "excludeFields");
+        Utils.checkNotNull(includeFields, "includeFields");
+        Utils.checkNotNull(includeElements, "includeElements");
+        Utils.checkNotNull(viewedAtGreaterThan, "viewedAtGreaterThan");
+        Utils.checkNotNull(viewedAtLessThan, "viewedAtLessThan");
+        Utils.checkNotNull(deviceID, "deviceID");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -160,15 +236,27 @@ public class ListPlaybackHistoryRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
+        this.xPlexContainerStart = xPlexContainerStart;
+        this.xPlexContainerSize = xPlexContainerSize;
         this.accountID = accountID;
         this.viewedAt = viewedAt;
         this.librarySectionID = librarySectionID;
         this.metadataItemID = metadataItemID;
         this.sort = sort;
+        this.excludeElements = excludeElements;
+        this.excludeFields = excludeFields;
+        this.includeFields = includeFields;
+        this.includeElements = includeElements;
+        this.viewedAtGreaterThan = viewedAtGreaterThan;
+        this.viewedAtLessThan = viewedAtLessThan;
+        this.deviceID = deviceID;
     }
     
     public ListPlaybackHistoryRequest() {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
@@ -266,6 +354,22 @@ public class ListPlaybackHistoryRequest {
     }
 
     /**
+     * Pagination start offset
+     */
+    @JsonIgnore
+    public Optional<Long> xPlexContainerStart() {
+        return xPlexContainerStart;
+    }
+
+    /**
+     * Pagination page size
+     */
+    @JsonIgnore
+    public Optional<Long> xPlexContainerSize() {
+        return xPlexContainerSize;
+    }
+
+    /**
      * The account id to restrict view history
      */
     @JsonIgnore
@@ -290,7 +394,9 @@ public class ListPlaybackHistoryRequest {
     }
 
     /**
-     * The metadata item to restrict view history (can provide the id for a show to see all of that show's view history).  Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id` internally depending on the metadata type.
+     * The metadata item to restrict view history (can provide the id for a show to see all of that show's
+     * view history). Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id`
+     * internally depending on the metadata type.
      */
     @JsonIgnore
     public Optional<Long> metadataItemID() {
@@ -298,12 +404,70 @@ public class ListPlaybackHistoryRequest {
     }
 
     /**
-     * The field on which to sort.  Multiple orderings can be specified separated by `,` and the direction specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided).  Note `metadataItemID` may not be used here.
+     * The field on which to sort. Multiple orderings can be specified separated by `,` and the direction
+     * specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided). Note `metadataItemID`
+     * may not be used here.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<List<String>> sort() {
         return (Optional<List<String>>) sort;
+    }
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    @JsonIgnore
+    public Optional<String> excludeElements() {
+        return excludeElements;
+    }
+
+    /**
+     * Comma-separated list of fields to exclude from the response
+     */
+    @JsonIgnore
+    public Optional<String> excludeFields() {
+        return excludeFields;
+    }
+
+    /**
+     * Whitelist of fields to return
+     */
+    @JsonIgnore
+    public Optional<String> includeFields() {
+        return includeFields;
+    }
+
+    /**
+     * Whitelist of elements to include
+     */
+    @JsonIgnore
+    public Optional<String> includeElements() {
+        return includeElements;
+    }
+
+    /**
+     * Greater-than filter for viewedAt timestamp
+     */
+    @JsonIgnore
+    public Optional<Long> viewedAtGreaterThan() {
+        return viewedAtGreaterThan;
+    }
+
+    /**
+     * Less-than filter for viewedAt timestamp
+     */
+    @JsonIgnore
+    public Optional<Long> viewedAtLessThan() {
+        return viewedAtLessThan;
+    }
+
+    /**
+     * Filter by device ID
+     */
+    @JsonIgnore
+    public Optional<Long> deviceID() {
+        return deviceID;
     }
 
     public static Builder builder() {
@@ -521,6 +685,44 @@ public class ListPlaybackHistoryRequest {
     }
 
     /**
+     * Pagination start offset
+     */
+    public ListPlaybackHistoryRequest withXPlexContainerStart(long xPlexContainerStart) {
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        this.xPlexContainerStart = Optional.ofNullable(xPlexContainerStart);
+        return this;
+    }
+
+
+    /**
+     * Pagination start offset
+     */
+    public ListPlaybackHistoryRequest withXPlexContainerStart(Optional<Long> xPlexContainerStart) {
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        this.xPlexContainerStart = xPlexContainerStart;
+        return this;
+    }
+
+    /**
+     * Pagination page size
+     */
+    public ListPlaybackHistoryRequest withXPlexContainerSize(long xPlexContainerSize) {
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+        this.xPlexContainerSize = Optional.ofNullable(xPlexContainerSize);
+        return this;
+    }
+
+
+    /**
+     * Pagination page size
+     */
+    public ListPlaybackHistoryRequest withXPlexContainerSize(Optional<Long> xPlexContainerSize) {
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+        this.xPlexContainerSize = xPlexContainerSize;
+        return this;
+    }
+
+    /**
      * The account id to restrict view history
      */
     public ListPlaybackHistoryRequest withAccountID(long accountID) {
@@ -578,7 +780,9 @@ public class ListPlaybackHistoryRequest {
     }
 
     /**
-     * The metadata item to restrict view history (can provide the id for a show to see all of that show's view history).  Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id` internally depending on the metadata type.
+     * The metadata item to restrict view history (can provide the id for a show to see all of that show's
+     * view history). Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id`
+     * internally depending on the metadata type.
      */
     public ListPlaybackHistoryRequest withMetadataItemID(long metadataItemID) {
         Utils.checkNotNull(metadataItemID, "metadataItemID");
@@ -588,7 +792,9 @@ public class ListPlaybackHistoryRequest {
 
 
     /**
-     * The metadata item to restrict view history (can provide the id for a show to see all of that show's view history).  Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id` internally depending on the metadata type.
+     * The metadata item to restrict view history (can provide the id for a show to see all of that show's
+     * view history). Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id`
+     * internally depending on the metadata type.
      */
     public ListPlaybackHistoryRequest withMetadataItemID(Optional<Long> metadataItemID) {
         Utils.checkNotNull(metadataItemID, "metadataItemID");
@@ -597,7 +803,9 @@ public class ListPlaybackHistoryRequest {
     }
 
     /**
-     * The field on which to sort.  Multiple orderings can be specified separated by `,` and the direction specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided).  Note `metadataItemID` may not be used here.
+     * The field on which to sort. Multiple orderings can be specified separated by `,` and the direction
+     * specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided). Note `metadataItemID`
+     * may not be used here.
      */
     public ListPlaybackHistoryRequest withSort(List<String> sort) {
         Utils.checkNotNull(sort, "sort");
@@ -607,11 +815,146 @@ public class ListPlaybackHistoryRequest {
 
 
     /**
-     * The field on which to sort.  Multiple orderings can be specified separated by `,` and the direction specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided).  Note `metadataItemID` may not be used here.
+     * The field on which to sort. Multiple orderings can be specified separated by `,` and the direction
+     * specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided). Note `metadataItemID`
+     * may not be used here.
      */
     public ListPlaybackHistoryRequest withSort(Optional<? extends List<String>> sort) {
         Utils.checkNotNull(sort, "sort");
         this.sort = sort;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    public ListPlaybackHistoryRequest withExcludeElements(String excludeElements) {
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        this.excludeElements = Optional.ofNullable(excludeElements);
+        return this;
+    }
+
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    public ListPlaybackHistoryRequest withExcludeElements(Optional<String> excludeElements) {
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        this.excludeElements = excludeElements;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of fields to exclude from the response
+     */
+    public ListPlaybackHistoryRequest withExcludeFields(String excludeFields) {
+        Utils.checkNotNull(excludeFields, "excludeFields");
+        this.excludeFields = Optional.ofNullable(excludeFields);
+        return this;
+    }
+
+
+    /**
+     * Comma-separated list of fields to exclude from the response
+     */
+    public ListPlaybackHistoryRequest withExcludeFields(Optional<String> excludeFields) {
+        Utils.checkNotNull(excludeFields, "excludeFields");
+        this.excludeFields = excludeFields;
+        return this;
+    }
+
+    /**
+     * Whitelist of fields to return
+     */
+    public ListPlaybackHistoryRequest withIncludeFields(String includeFields) {
+        Utils.checkNotNull(includeFields, "includeFields");
+        this.includeFields = Optional.ofNullable(includeFields);
+        return this;
+    }
+
+
+    /**
+     * Whitelist of fields to return
+     */
+    public ListPlaybackHistoryRequest withIncludeFields(Optional<String> includeFields) {
+        Utils.checkNotNull(includeFields, "includeFields");
+        this.includeFields = includeFields;
+        return this;
+    }
+
+    /**
+     * Whitelist of elements to include
+     */
+    public ListPlaybackHistoryRequest withIncludeElements(String includeElements) {
+        Utils.checkNotNull(includeElements, "includeElements");
+        this.includeElements = Optional.ofNullable(includeElements);
+        return this;
+    }
+
+
+    /**
+     * Whitelist of elements to include
+     */
+    public ListPlaybackHistoryRequest withIncludeElements(Optional<String> includeElements) {
+        Utils.checkNotNull(includeElements, "includeElements");
+        this.includeElements = includeElements;
+        return this;
+    }
+
+    /**
+     * Greater-than filter for viewedAt timestamp
+     */
+    public ListPlaybackHistoryRequest withViewedAtGreaterThan(long viewedAtGreaterThan) {
+        Utils.checkNotNull(viewedAtGreaterThan, "viewedAtGreaterThan");
+        this.viewedAtGreaterThan = Optional.ofNullable(viewedAtGreaterThan);
+        return this;
+    }
+
+
+    /**
+     * Greater-than filter for viewedAt timestamp
+     */
+    public ListPlaybackHistoryRequest withViewedAtGreaterThan(Optional<Long> viewedAtGreaterThan) {
+        Utils.checkNotNull(viewedAtGreaterThan, "viewedAtGreaterThan");
+        this.viewedAtGreaterThan = viewedAtGreaterThan;
+        return this;
+    }
+
+    /**
+     * Less-than filter for viewedAt timestamp
+     */
+    public ListPlaybackHistoryRequest withViewedAtLessThan(long viewedAtLessThan) {
+        Utils.checkNotNull(viewedAtLessThan, "viewedAtLessThan");
+        this.viewedAtLessThan = Optional.ofNullable(viewedAtLessThan);
+        return this;
+    }
+
+
+    /**
+     * Less-than filter for viewedAt timestamp
+     */
+    public ListPlaybackHistoryRequest withViewedAtLessThan(Optional<Long> viewedAtLessThan) {
+        Utils.checkNotNull(viewedAtLessThan, "viewedAtLessThan");
+        this.viewedAtLessThan = viewedAtLessThan;
+        return this;
+    }
+
+    /**
+     * Filter by device ID
+     */
+    public ListPlaybackHistoryRequest withDeviceID(long deviceID) {
+        Utils.checkNotNull(deviceID, "deviceID");
+        this.deviceID = Optional.ofNullable(deviceID);
+        return this;
+    }
+
+
+    /**
+     * Filter by device ID
+     */
+    public ListPlaybackHistoryRequest withDeviceID(Optional<Long> deviceID) {
+        Utils.checkNotNull(deviceID, "deviceID");
+        this.deviceID = deviceID;
         return this;
     }
 
@@ -636,11 +979,20 @@ public class ListPlaybackHistoryRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.xPlexContainerStart, other.xPlexContainerStart) &&
+            Utils.enhancedDeepEquals(this.xPlexContainerSize, other.xPlexContainerSize) &&
             Utils.enhancedDeepEquals(this.accountID, other.accountID) &&
             Utils.enhancedDeepEquals(this.viewedAt, other.viewedAt) &&
             Utils.enhancedDeepEquals(this.librarySectionID, other.librarySectionID) &&
             Utils.enhancedDeepEquals(this.metadataItemID, other.metadataItemID) &&
-            Utils.enhancedDeepEquals(this.sort, other.sort);
+            Utils.enhancedDeepEquals(this.sort, other.sort) &&
+            Utils.enhancedDeepEquals(this.excludeElements, other.excludeElements) &&
+            Utils.enhancedDeepEquals(this.excludeFields, other.excludeFields) &&
+            Utils.enhancedDeepEquals(this.includeFields, other.includeFields) &&
+            Utils.enhancedDeepEquals(this.includeElements, other.includeElements) &&
+            Utils.enhancedDeepEquals(this.viewedAtGreaterThan, other.viewedAtGreaterThan) &&
+            Utils.enhancedDeepEquals(this.viewedAtLessThan, other.viewedAtLessThan) &&
+            Utils.enhancedDeepEquals(this.deviceID, other.deviceID);
     }
     
     @Override
@@ -649,9 +1001,12 @@ public class ListPlaybackHistoryRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, accountID,
-            viewedAt, librarySectionID, metadataItemID,
-            sort);
+            deviceName, marketplace, xPlexContainerStart,
+            xPlexContainerSize, accountID, viewedAt,
+            librarySectionID, metadataItemID, sort,
+            excludeElements, excludeFields, includeFields,
+            includeElements, viewedAtGreaterThan, viewedAtLessThan,
+            deviceID);
     }
     
     @Override
@@ -668,11 +1023,20 @@ public class ListPlaybackHistoryRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "xPlexContainerStart", xPlexContainerStart,
+                "xPlexContainerSize", xPlexContainerSize,
                 "accountID", accountID,
                 "viewedAt", viewedAt,
                 "librarySectionID", librarySectionID,
                 "metadataItemID", metadataItemID,
-                "sort", sort);
+                "sort", sort,
+                "excludeElements", excludeElements,
+                "excludeFields", excludeFields,
+                "includeFields", includeFields,
+                "includeElements", includeElements,
+                "viewedAtGreaterThan", viewedAtGreaterThan,
+                "viewedAtLessThan", viewedAtLessThan,
+                "deviceID", deviceID);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -700,6 +1064,10 @@ public class ListPlaybackHistoryRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
+        private Optional<Long> xPlexContainerStart = Optional.empty();
+
+        private Optional<Long> xPlexContainerSize = Optional.empty();
+
         private Optional<Long> accountID = Optional.empty();
 
         private Optional<Long> viewedAt = Optional.empty();
@@ -709,6 +1077,20 @@ public class ListPlaybackHistoryRequest {
         private Optional<Long> metadataItemID = Optional.empty();
 
         private Optional<? extends List<String>> sort = Optional.empty();
+
+        private Optional<String> excludeElements = Optional.empty();
+
+        private Optional<String> excludeFields = Optional.empty();
+
+        private Optional<String> includeFields = Optional.empty();
+
+        private Optional<String> includeElements = Optional.empty();
+
+        private Optional<Long> viewedAtGreaterThan = Optional.empty();
+
+        private Optional<Long> viewedAtLessThan = Optional.empty();
+
+        private Optional<Long> deviceID = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -925,6 +1307,44 @@ public class ListPlaybackHistoryRequest {
 
 
         /**
+         * Pagination start offset
+         */
+        public Builder xPlexContainerStart(long xPlexContainerStart) {
+            Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+            this.xPlexContainerStart = Optional.ofNullable(xPlexContainerStart);
+            return this;
+        }
+
+        /**
+         * Pagination start offset
+         */
+        public Builder xPlexContainerStart(Optional<Long> xPlexContainerStart) {
+            Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+            this.xPlexContainerStart = xPlexContainerStart;
+            return this;
+        }
+
+
+        /**
+         * Pagination page size
+         */
+        public Builder xPlexContainerSize(long xPlexContainerSize) {
+            Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+            this.xPlexContainerSize = Optional.ofNullable(xPlexContainerSize);
+            return this;
+        }
+
+        /**
+         * Pagination page size
+         */
+        public Builder xPlexContainerSize(Optional<Long> xPlexContainerSize) {
+            Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+            this.xPlexContainerSize = xPlexContainerSize;
+            return this;
+        }
+
+
+        /**
          * The account id to restrict view history
          */
         public Builder accountID(long accountID) {
@@ -982,7 +1402,9 @@ public class ListPlaybackHistoryRequest {
 
 
         /**
-         * The metadata item to restrict view history (can provide the id for a show to see all of that show's view history).  Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id` internally depending on the metadata type.
+         * The metadata item to restrict view history (can provide the id for a show to see all of that show's
+         * view history). Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id`
+         * internally depending on the metadata type.
          */
         public Builder metadataItemID(long metadataItemID) {
             Utils.checkNotNull(metadataItemID, "metadataItemID");
@@ -991,7 +1413,9 @@ public class ListPlaybackHistoryRequest {
         }
 
         /**
-         * The metadata item to restrict view history (can provide the id for a show to see all of that show's view history).  Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id` internally depending on the metadata type.
+         * The metadata item to restrict view history (can provide the id for a show to see all of that show's
+         * view history). Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id`
+         * internally depending on the metadata type.
          */
         public Builder metadataItemID(Optional<Long> metadataItemID) {
             Utils.checkNotNull(metadataItemID, "metadataItemID");
@@ -1001,7 +1425,9 @@ public class ListPlaybackHistoryRequest {
 
 
         /**
-         * The field on which to sort.  Multiple orderings can be specified separated by `,` and the direction specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided).  Note `metadataItemID` may not be used here.
+         * The field on which to sort. Multiple orderings can be specified separated by `,` and the direction
+         * specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided). Note `metadataItemID`
+         * may not be used here.
          */
         public Builder sort(List<String> sort) {
             Utils.checkNotNull(sort, "sort");
@@ -1010,11 +1436,146 @@ public class ListPlaybackHistoryRequest {
         }
 
         /**
-         * The field on which to sort.  Multiple orderings can be specified separated by `,` and the direction specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided).  Note `metadataItemID` may not be used here.
+         * The field on which to sort. Multiple orderings can be specified separated by `,` and the direction
+         * specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided). Note `metadataItemID`
+         * may not be used here.
          */
         public Builder sort(Optional<? extends List<String>> sort) {
             Utils.checkNotNull(sort, "sort");
             this.sort = sort;
+            return this;
+        }
+
+
+        /**
+         * Comma-separated list of elements to exclude from the response
+         */
+        public Builder excludeElements(String excludeElements) {
+            Utils.checkNotNull(excludeElements, "excludeElements");
+            this.excludeElements = Optional.ofNullable(excludeElements);
+            return this;
+        }
+
+        /**
+         * Comma-separated list of elements to exclude from the response
+         */
+        public Builder excludeElements(Optional<String> excludeElements) {
+            Utils.checkNotNull(excludeElements, "excludeElements");
+            this.excludeElements = excludeElements;
+            return this;
+        }
+
+
+        /**
+         * Comma-separated list of fields to exclude from the response
+         */
+        public Builder excludeFields(String excludeFields) {
+            Utils.checkNotNull(excludeFields, "excludeFields");
+            this.excludeFields = Optional.ofNullable(excludeFields);
+            return this;
+        }
+
+        /**
+         * Comma-separated list of fields to exclude from the response
+         */
+        public Builder excludeFields(Optional<String> excludeFields) {
+            Utils.checkNotNull(excludeFields, "excludeFields");
+            this.excludeFields = excludeFields;
+            return this;
+        }
+
+
+        /**
+         * Whitelist of fields to return
+         */
+        public Builder includeFields(String includeFields) {
+            Utils.checkNotNull(includeFields, "includeFields");
+            this.includeFields = Optional.ofNullable(includeFields);
+            return this;
+        }
+
+        /**
+         * Whitelist of fields to return
+         */
+        public Builder includeFields(Optional<String> includeFields) {
+            Utils.checkNotNull(includeFields, "includeFields");
+            this.includeFields = includeFields;
+            return this;
+        }
+
+
+        /**
+         * Whitelist of elements to include
+         */
+        public Builder includeElements(String includeElements) {
+            Utils.checkNotNull(includeElements, "includeElements");
+            this.includeElements = Optional.ofNullable(includeElements);
+            return this;
+        }
+
+        /**
+         * Whitelist of elements to include
+         */
+        public Builder includeElements(Optional<String> includeElements) {
+            Utils.checkNotNull(includeElements, "includeElements");
+            this.includeElements = includeElements;
+            return this;
+        }
+
+
+        /**
+         * Greater-than filter for viewedAt timestamp
+         */
+        public Builder viewedAtGreaterThan(long viewedAtGreaterThan) {
+            Utils.checkNotNull(viewedAtGreaterThan, "viewedAtGreaterThan");
+            this.viewedAtGreaterThan = Optional.ofNullable(viewedAtGreaterThan);
+            return this;
+        }
+
+        /**
+         * Greater-than filter for viewedAt timestamp
+         */
+        public Builder viewedAtGreaterThan(Optional<Long> viewedAtGreaterThan) {
+            Utils.checkNotNull(viewedAtGreaterThan, "viewedAtGreaterThan");
+            this.viewedAtGreaterThan = viewedAtGreaterThan;
+            return this;
+        }
+
+
+        /**
+         * Less-than filter for viewedAt timestamp
+         */
+        public Builder viewedAtLessThan(long viewedAtLessThan) {
+            Utils.checkNotNull(viewedAtLessThan, "viewedAtLessThan");
+            this.viewedAtLessThan = Optional.ofNullable(viewedAtLessThan);
+            return this;
+        }
+
+        /**
+         * Less-than filter for viewedAt timestamp
+         */
+        public Builder viewedAtLessThan(Optional<Long> viewedAtLessThan) {
+            Utils.checkNotNull(viewedAtLessThan, "viewedAtLessThan");
+            this.viewedAtLessThan = viewedAtLessThan;
+            return this;
+        }
+
+
+        /**
+         * Filter by device ID
+         */
+        public Builder deviceID(long deviceID) {
+            Utils.checkNotNull(deviceID, "deviceID");
+            this.deviceID = Optional.ofNullable(deviceID);
+            return this;
+        }
+
+        /**
+         * Filter by device ID
+         */
+        public Builder deviceID(Optional<Long> deviceID) {
+            Utils.checkNotNull(deviceID, "deviceID");
+            this.deviceID = deviceID;
             return this;
         }
 
@@ -1027,9 +1588,12 @@ public class ListPlaybackHistoryRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, accountID,
-                viewedAt, librarySectionID, metadataItemID,
-                sort);
+                deviceName, marketplace, xPlexContainerStart,
+                xPlexContainerSize, accountID, viewedAt,
+                librarySectionID, metadataItemID, sort,
+                excludeElements, excludeFields, includeFields,
+                includeElements, viewedAtGreaterThan, viewedAtLessThan,
+                deviceID);
         }
 
 

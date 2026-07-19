@@ -6,6 +6,13 @@ Whether this hub is visible on the home screen
   - admin: Visible to only admin users
   - shared: Visible to shared users
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.HomeVisibility;
+
+HomeVisibility value = HomeVisibility.ALL;
+```
 
 
 ## Values

@@ -83,7 +83,9 @@ public class SetPreferencesRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * The preference key to retrieve or set
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=prefs")
     private Prefs prefs;
 
@@ -224,6 +226,9 @@ public class SetPreferencesRequest {
         return marketplace;
     }
 
+    /**
+     * The preference key to retrieve or set
+     */
     @JsonIgnore
     public Prefs prefs() {
         return prefs;
@@ -443,6 +448,9 @@ public class SetPreferencesRequest {
         return this;
     }
 
+    /**
+     * The preference key to retrieve or set
+     */
     public SetPreferencesRequest withPrefs(Prefs prefs) {
         Utils.checkNotNull(prefs, "prefs");
         this.prefs = prefs;
@@ -740,6 +748,9 @@ public class SetPreferencesRequest {
         }
 
 
+        /**
+         * The preference key to retrieve or set
+         */
         public Builder prefs(Prefs prefs) {
             Utils.checkNotNull(prefs, "prefs");
             this.prefs = prefs;

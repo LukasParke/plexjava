@@ -44,12 +44,16 @@ import dev.plexapi.sdk.operations.GetSubscription;
 import dev.plexapi.sdk.operations.GetTemplate;
 import dev.plexapi.sdk.operations.ProcessSubscriptions;
 import dev.plexapi.sdk.operations.ReorderSubscription;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * Subscriptions determine which media will be recorded and the criteria for selecting an airing when multiple are available
+ * Subscriptions determine which media will be recorded and the criteria for selecting an airing when
+ * multiple are available
  */
 public class Subscriptions {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncSubscriptions asyncSDK;
 
@@ -85,18 +89,33 @@ public class Subscriptions {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAllSubscriptionsResponse getAllSubscriptions(GetAllSubscriptionsRequest request) throws Exception {
+    public GetAllSubscriptionsResponse getAllSubscriptions(GetAllSubscriptionsRequest request) {
+        return getAllSubscriptions(request, Optional.empty());
+    }
+
+    /**
+     * Get all subscriptions
+     * 
+     * <p>Get all subscriptions and potentially the grabs too
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAllSubscriptionsResponse getAllSubscriptions(GetAllSubscriptionsRequest request, Optional<Options> options) {
         RequestOperation<GetAllSubscriptionsRequest, GetAllSubscriptionsResponse> operation
-              = new GetAllSubscriptions.Sync(sdkConfiguration);
+              = new GetAllSubscriptions.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Create a subscription
      * 
-     * <p>Create a subscription. The query parameters should be mostly derived from the [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
+     * <p>Create a subscription. The query parameters should be mostly derived from the
+     * [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
      * 
      * @return The call builder
      */
@@ -107,15 +126,31 @@ public class Subscriptions {
     /**
      * Create a subscription
      * 
-     * <p>Create a subscription. The query parameters should be mostly derived from the [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
+     * <p>Create a subscription. The query parameters should be mostly derived from the
+     * [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request) throws Exception {
+    public CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request) {
+        return createSubscription(request, Optional.empty());
+    }
+
+    /**
+     * Create a subscription
+     * 
+     * <p>Create a subscription. The query parameters should be mostly derived from the
+     * [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request, Optional<Options> options) {
         RequestOperation<CreateSubscriptionRequest, CreateSubscriptionResponse> operation
-              = new CreateSubscription.Sync(sdkConfiguration);
+              = new CreateSubscription.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -136,11 +171,24 @@ public class Subscriptions {
      * <p>Process all subscriptions asynchronously
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ProcessSubscriptionsResponse processSubscriptionsDirect() throws Exception {
+    public ProcessSubscriptionsResponse processSubscriptionsDirect() {
+        return processSubscriptions(Optional.empty());
+    }
+
+    /**
+     * Process all subscriptions
+     * 
+     * <p>Process all subscriptions asynchronously
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ProcessSubscriptionsResponse processSubscriptions(Optional<Options> options) {
         RequestlessOperation<ProcessSubscriptionsResponse> operation
-            = new ProcessSubscriptions.Sync(sdkConfiguration);
+            = new ProcessSubscriptions.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -161,18 +209,32 @@ public class Subscriptions {
      * <p>Get all scheduled recordings across all subscriptions
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetScheduledRecordingsResponse getScheduledRecordingsDirect() throws Exception {
+    public GetScheduledRecordingsResponse getScheduledRecordingsDirect() {
+        return getScheduledRecordings(Optional.empty());
+    }
+
+    /**
+     * Get all scheduled recordings
+     * 
+     * <p>Get all scheduled recordings across all subscriptions
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetScheduledRecordingsResponse getScheduledRecordings(Optional<Options> options) {
         RequestlessOperation<GetScheduledRecordingsResponse> operation
-            = new GetScheduledRecordings.Sync(sdkConfiguration);
+            = new GetScheduledRecordings.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Get the subscription template
      * 
-     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole show, etc.
+     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole
+     * show, etc.
      * 
      * @return The call builder
      */
@@ -183,23 +245,41 @@ public class Subscriptions {
     /**
      * Get the subscription template
      * 
-     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole show, etc.
+     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole
+     * show, etc.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetTemplateResponse getTemplate(GetTemplateRequest request) throws Exception {
+    public GetTemplateResponse getTemplate(GetTemplateRequest request) {
+        return getTemplate(request, Optional.empty());
+    }
+
+    /**
+     * Get the subscription template
+     * 
+     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole
+     * show, etc.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetTemplateResponse getTemplate(GetTemplateRequest request, Optional<Options> options) {
         RequestOperation<GetTemplateRequest, GetTemplateResponse> operation
-              = new GetTemplate.Sync(sdkConfiguration);
+              = new GetTemplate.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Cancel an existing grab
      * 
-     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a rolling subscription.
-     * Note: This cancellation does not persist across a server restart, but neither does a rolling subscription itself.
+     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a
+     * rolling subscription.
+     * Note: This cancellation does not persist across a server restart, but neither does a rolling
+     * subscription itself.
      * 
      * @return The call builder
      */
@@ -210,16 +290,35 @@ public class Subscriptions {
     /**
      * Cancel an existing grab
      * 
-     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a rolling subscription.
-     * Note: This cancellation does not persist across a server restart, but neither does a rolling subscription itself.
+     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a
+     * rolling subscription.
+     * Note: This cancellation does not persist across a server restart, but neither does a rolling
+     * subscription itself.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CancelGrabResponse cancelGrab(CancelGrabRequest request) throws Exception {
+    public CancelGrabResponse cancelGrab(CancelGrabRequest request) {
+        return cancelGrab(request, Optional.empty());
+    }
+
+    /**
+     * Cancel an existing grab
+     * 
+     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a
+     * rolling subscription.
+     * Note: This cancellation does not persist across a server restart, but neither does a rolling
+     * subscription itself.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CancelGrabResponse cancelGrab(CancelGrabRequest request, Optional<Options> options) {
         RequestOperation<CancelGrabRequest, CancelGrabResponse> operation
-              = new CancelGrab.Sync(sdkConfiguration);
+              = new CancelGrab.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -241,11 +340,25 @@ public class Subscriptions {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteSubscriptionResponse deleteSubscription(DeleteSubscriptionRequest request) throws Exception {
+    public DeleteSubscriptionResponse deleteSubscription(DeleteSubscriptionRequest request) {
+        return deleteSubscription(request, Optional.empty());
+    }
+
+    /**
+     * Delete a subscription
+     * 
+     * <p>Delete a subscription, cancelling all of its grabs as well
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteSubscriptionResponse deleteSubscription(DeleteSubscriptionRequest request, Optional<Options> options) {
         RequestOperation<DeleteSubscriptionRequest, DeleteSubscriptionResponse> operation
-              = new DeleteSubscription.Sync(sdkConfiguration);
+              = new DeleteSubscription.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -267,11 +380,25 @@ public class Subscriptions {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSubscriptionResponse getSubscription(GetSubscriptionRequest request) throws Exception {
+    public GetSubscriptionResponse getSubscription(GetSubscriptionRequest request) {
+        return getSubscription(request, Optional.empty());
+    }
+
+    /**
+     * Get a single subscription
+     * 
+     * <p>Get a single subscription and potentially the grabs too
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSubscriptionResponse getSubscription(GetSubscriptionRequest request, Optional<Options> options) {
         RequestOperation<GetSubscriptionRequest, GetSubscriptionResponse> operation
-              = new GetSubscription.Sync(sdkConfiguration);
+              = new GetSubscription.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -293,11 +420,25 @@ public class Subscriptions {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public EditSubscriptionPreferencesResponse editSubscriptionPreferences(EditSubscriptionPreferencesRequest request) throws Exception {
+    public EditSubscriptionPreferencesResponse editSubscriptionPreferences(EditSubscriptionPreferencesRequest request) {
+        return editSubscriptionPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Edit a subscription
+     * 
+     * <p>Edit a subscription's preferences
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EditSubscriptionPreferencesResponse editSubscriptionPreferences(EditSubscriptionPreferencesRequest request, Optional<Options> options) {
         RequestOperation<EditSubscriptionPreferencesRequest, EditSubscriptionPreferencesResponse> operation
-              = new EditSubscriptionPreferences.Sync(sdkConfiguration);
+              = new EditSubscriptionPreferences.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -305,6 +446,8 @@ public class Subscriptions {
      * Re-order a subscription
      * 
      * <p>Re-order a subscription to change its priority
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -317,13 +460,31 @@ public class Subscriptions {
      * 
      * <p>Re-order a subscription to change its priority
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ReorderSubscriptionResponse reorderSubscription(ReorderSubscriptionRequest request) throws Exception {
+    public ReorderSubscriptionResponse reorderSubscription(ReorderSubscriptionRequest request) {
+        return reorderSubscription(request, Optional.empty());
+    }
+
+    /**
+     * Re-order a subscription
+     * 
+     * <p>Re-order a subscription to change its priority
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ReorderSubscriptionResponse reorderSubscription(ReorderSubscriptionRequest request, Optional<Options> options) {
         RequestOperation<ReorderSubscriptionRequest, ReorderSubscriptionResponse> operation
-              = new ReorderSubscription.Sync(sdkConfiguration);
+              = new ReorderSubscription.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

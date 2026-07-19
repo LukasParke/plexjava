@@ -12,6 +12,7 @@ import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 
 public class StartTaskResponse implements AsyncResponse {
@@ -30,17 +31,39 @@ public class StartTaskResponse implements AsyncResponse {
      */
     private HttpResponse<Blob> rawResponse;
 
+
+    private Optional<byte[]> body;
+
+    /**
+     * Task is already running
+     */
+    private Optional<String> res;
+
     @JsonCreator
     public StartTaskResponse(
             String contentType,
             int statusCode,
-            HttpResponse<Blob> rawResponse) {
+            HttpResponse<Blob> rawResponse,
+            Optional<byte[]> body,
+            Optional<String> res) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(body, "body");
+        Utils.checkNotNull(res, "res");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.body = body;
+        this.res = res;
+    }
+    
+    public StartTaskResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<Blob> rawResponse) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -65,6 +88,19 @@ public class StartTaskResponse implements AsyncResponse {
     @JsonIgnore
     public HttpResponse<Blob> rawResponse() {
         return rawResponse;
+    }
+
+    @JsonIgnore
+    public Blob body() {
+        return rawResponse.body();
+    }
+
+    /**
+     * Task is already running
+     */
+    @JsonIgnore
+    public Optional<String> res() {
+        return res;
     }
 
     public static Builder builder() {
@@ -99,6 +135,38 @@ public class StartTaskResponse implements AsyncResponse {
         return this;
     }
 
+    public StartTaskResponse withBody(byte[] body) {
+        Utils.checkNotNull(body, "body");
+        this.body = Optional.ofNullable(body);
+        return this;
+    }
+
+
+    public StartTaskResponse withBody(Optional<byte[]> body) {
+        Utils.checkNotNull(body, "body");
+        this.body = body;
+        return this;
+    }
+
+    /**
+     * Task is already running
+     */
+    public StartTaskResponse withRes(String res) {
+        Utils.checkNotNull(res, "res");
+        this.res = Optional.ofNullable(res);
+        return this;
+    }
+
+
+    /**
+     * Task is already running
+     */
+    public StartTaskResponse withRes(Optional<String> res) {
+        Utils.checkNotNull(res, "res");
+        this.res = res;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,13 +179,16 @@ public class StartTaskResponse implements AsyncResponse {
         return 
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse);
+            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.body, other.body) &&
+            Utils.enhancedDeepEquals(this.res, other.res);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            contentType, statusCode, rawResponse);
+            contentType, statusCode, rawResponse,
+            body, res);
     }
     
     @Override
@@ -125,7 +196,9 @@ public class StartTaskResponse implements AsyncResponse {
         return Utils.toString(StartTaskResponse.class,
                 "contentType", contentType,
                 "statusCode", statusCode,
-                "rawResponse", rawResponse);
+                "rawResponse", rawResponse,
+                "body", body,
+                "res", res);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -136,6 +209,10 @@ public class StartTaskResponse implements AsyncResponse {
         private Integer statusCode;
 
         private HttpResponse<Blob> rawResponse;
+
+        private Optional<byte[]> body = Optional.empty();
+
+        private Optional<String> res = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -171,10 +248,43 @@ public class StartTaskResponse implements AsyncResponse {
             return this;
         }
 
+
+        public Builder body(byte[] body) {
+            Utils.checkNotNull(body, "body");
+            this.body = Optional.ofNullable(body);
+            return this;
+        }
+
+        public Builder body(Optional<byte[]> body) {
+            Utils.checkNotNull(body, "body");
+            this.body = body;
+            return this;
+        }
+
+
+        /**
+         * Task is already running
+         */
+        public Builder res(String res) {
+            Utils.checkNotNull(res, "res");
+            this.res = Optional.ofNullable(res);
+            return this;
+        }
+
+        /**
+         * Task is already running
+         */
+        public Builder res(Optional<String> res) {
+            Utils.checkNotNull(res, "res");
+            this.res = res;
+            return this;
+        }
+
         public StartTaskResponse build() {
 
             return new StartTaskResponse(
-                contentType, statusCode, rawResponse);
+                contentType, statusCode, rawResponse,
+                body, res);
         }
 
     }

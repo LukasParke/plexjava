@@ -18,6 +18,11 @@ import java.util.Optional;
 public class GetFirstCharactersDirectory {
 
     @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("title")
+    private Optional<String> title;
+
+
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("key")
     private Optional<String> key;
 
@@ -28,26 +33,26 @@ public class GetFirstCharactersDirectory {
     @JsonProperty("size")
     private Optional<Long> size;
 
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("title")
-    private Optional<String> title;
-
     @JsonCreator
     public GetFirstCharactersDirectory(
+            @JsonProperty("title") Optional<String> title,
             @JsonProperty("key") Optional<String> key,
-            @JsonProperty("size") Optional<Long> size,
-            @JsonProperty("title") Optional<String> title) {
+            @JsonProperty("size") Optional<Long> size) {
+        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(key, "key");
         Utils.checkNotNull(size, "size");
-        Utils.checkNotNull(title, "title");
+        this.title = title;
         this.key = key;
         this.size = size;
-        this.title = title;
     }
     
     public GetFirstCharactersDirectory() {
         this(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    @JsonIgnore
+    public Optional<String> title() {
+        return title;
     }
 
     @JsonIgnore
@@ -63,15 +68,23 @@ public class GetFirstCharactersDirectory {
         return size;
     }
 
-    @JsonIgnore
-    public Optional<String> title() {
-        return title;
-    }
-
     public static Builder builder() {
         return new Builder();
     }
 
+
+    public GetFirstCharactersDirectory withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = Optional.ofNullable(title);
+        return this;
+    }
+
+
+    public GetFirstCharactersDirectory withTitle(Optional<String> title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
+    }
 
     public GetFirstCharactersDirectory withKey(String key) {
         Utils.checkNotNull(key, "key");
@@ -105,19 +118,6 @@ public class GetFirstCharactersDirectory {
         return this;
     }
 
-    public GetFirstCharactersDirectory withTitle(String title) {
-        Utils.checkNotNull(title, "title");
-        this.title = Optional.ofNullable(title);
-        return this;
-    }
-
-
-    public GetFirstCharactersDirectory withTitle(Optional<String> title) {
-        Utils.checkNotNull(title, "title");
-        this.title = title;
-        return this;
-    }
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -128,36 +128,49 @@ public class GetFirstCharactersDirectory {
         }
         GetFirstCharactersDirectory other = (GetFirstCharactersDirectory) o;
         return 
+            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.key, other.key) &&
-            Utils.enhancedDeepEquals(this.size, other.size) &&
-            Utils.enhancedDeepEquals(this.title, other.title);
+            Utils.enhancedDeepEquals(this.size, other.size);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            key, size, title);
+            title, key, size);
     }
     
     @Override
     public String toString() {
         return Utils.toString(GetFirstCharactersDirectory.class,
+                "title", title,
                 "key", key,
-                "size", size,
-                "title", title);
+                "size", size);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private Optional<String> title = Optional.empty();
+
         private Optional<String> key = Optional.empty();
 
         private Optional<Long> size = Optional.empty();
 
-        private Optional<String> title = Optional.empty();
-
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = Optional.ofNullable(title);
+            return this;
+        }
+
+        public Builder title(Optional<String> title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
         }
 
 
@@ -192,23 +205,10 @@ public class GetFirstCharactersDirectory {
             return this;
         }
 
-
-        public Builder title(String title) {
-            Utils.checkNotNull(title, "title");
-            this.title = Optional.ofNullable(title);
-            return this;
-        }
-
-        public Builder title(Optional<String> title) {
-            Utils.checkNotNull(title, "title");
-            this.title = title;
-            return this;
-        }
-
         public GetFirstCharactersDirectory build() {
 
             return new GetFirstCharactersDirectory(
-                key, size, title);
+                title, key, size);
         }
 
     }

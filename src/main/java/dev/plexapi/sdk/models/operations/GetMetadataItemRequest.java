@@ -11,6 +11,7 @@ import dev.plexapi.sdk.models.shared.BoolInt;
 import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
+import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -85,57 +86,140 @@ public class GetMetadataItemRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private List<String> ids;
 
     /**
-     * Determines if file check should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if file check should be performed asynchronously. An activity is created to indicate
+     * progress. Default is false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=asyncCheckFiles")
     private Optional<? extends BoolInt> asyncCheckFiles;
 
     /**
-     * Determines if local media agent refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if local media agent refresh should be performed asynchronously. An activity is created
+     * to indicate progress. Default is false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=asyncRefreshLocalMediaAgent")
     private Optional<? extends BoolInt> asyncRefreshLocalMediaAgent;
 
     /**
-     * Determines if analysis refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if analysis refresh should be performed asynchronously. An activity is created to
+     * indicate progress. Default is false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=asyncRefreshAnalysis")
     private Optional<? extends BoolInt> asyncRefreshAnalysis;
 
     /**
-     * Determines if file check should be performed synchronously.  Specifying `asyncCheckFiles` will cause this option to be ignored.  Default is false.
+     * Determines if file check should be performed synchronously. Specifying `asyncCheckFiles` will cause
+     * this option to be ignored. Default is false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=checkFiles")
     private Optional<? extends BoolInt> checkFiles;
 
     /**
-     * Determines if synchronous local media agent and analysis refresh should be skipped.  Specifying async versions will cause synchronous versions to be skipped.  Default is false.
+     * Determines if synchronous local media agent and analysis refresh should be skipped. Specifying async
+     * versions will cause synchronous versions to be skipped. Default is false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=skipRefresh")
     private Optional<? extends BoolInt> skipRefresh;
 
     /**
-     * Determines if file existence check should be performed synchronously.  Specifying `checkFiles` will imply this option.  Default is false.
+     * Determines if file existence check should be performed synchronously. Specifying `checkFiles` will
+     * imply this option. Default is false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=checkFileAvailability")
     private Optional<? extends BoolInt> checkFileAvailability;
 
     /**
-     * Add metadata augmentations.  An activity is created to indicate progress.  Option will be ignored if specified by non-admin or if multiple metadata items are requested.  Default is false.
+     * Add metadata augmentations. An activity is created to indicate progress. Option will be ignored if
+     * specified by non-admin or if multiple metadata items are requested.
+     * 
+     * <p>Default is false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=asyncAugmentMetadata")
     private Optional<? extends BoolInt> asyncAugmentMetadata;
 
     /**
-     * Number of augmentations to add.  Requires `asyncAugmentMetadata` to be specified.
+     * Number of augmentations to add. Requires `asyncAugmentMetadata` to be specified.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=augmentCount")
     private Optional<? extends BoolInt> augmentCount;
+
+    /**
+     * Include intro/credits markers in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeMarkers")
+    private Optional<Boolean> includeMarkers;
+
+    /**
+     * Include external GUIDs (e.g. TMDB, TVDB) in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeGuids")
+    private Optional<Boolean> includeGuids;
+
+    /**
+     * Include chapter data in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeChapters")
+    private Optional<Boolean> includeChapters;
+
+    /**
+     * Include external/online media in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeExternalMedia")
+    private Optional<Boolean> includeExternalMedia;
+
+    /**
+     * Include trailers, behind-the-scenes, and other extras
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeExtras")
+    private Optional<Boolean> includeExtras;
+
+    /**
+     * Include related items in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeRelated")
+    private Optional<Boolean> includeRelated;
+
+    /**
+     * Include On Deck status in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeOnDeck")
+    private Optional<Boolean> includeOnDeck;
+
+    /**
+     * Include popular episodes in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includePopularLeaves")
+    private Optional<Boolean> includePopularLeaves;
+
+    /**
+     * Include user reviews in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeReviews")
+    private Optional<Boolean> includeReviews;
+
+    /**
+     * Include radio station data in the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeStations")
+    private Optional<Boolean> includeStations;
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=excludeElements")
+    private Optional<String> excludeElements;
+
+    /**
+     * Comma-separated list of fields to exclude from the response
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=excludeFields")
+    private Optional<String> excludeFields;
 
     @JsonCreator
     public GetMetadataItemRequest(
@@ -158,7 +242,19 @@ public class GetMetadataItemRequest {
             Optional<? extends BoolInt> skipRefresh,
             Optional<? extends BoolInt> checkFileAvailability,
             Optional<? extends BoolInt> asyncAugmentMetadata,
-            Optional<? extends BoolInt> augmentCount) {
+            Optional<? extends BoolInt> augmentCount,
+            Optional<Boolean> includeMarkers,
+            Optional<Boolean> includeGuids,
+            Optional<Boolean> includeChapters,
+            Optional<Boolean> includeExternalMedia,
+            Optional<Boolean> includeExtras,
+            Optional<Boolean> includeRelated,
+            Optional<Boolean> includeOnDeck,
+            Optional<Boolean> includePopularLeaves,
+            Optional<Boolean> includeReviews,
+            Optional<Boolean> includeStations,
+            Optional<String> excludeElements,
+            Optional<String> excludeFields) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -179,6 +275,18 @@ public class GetMetadataItemRequest {
         Utils.checkNotNull(checkFileAvailability, "checkFileAvailability");
         Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
         Utils.checkNotNull(augmentCount, "augmentCount");
+        Utils.checkNotNull(includeMarkers, "includeMarkers");
+        Utils.checkNotNull(includeGuids, "includeGuids");
+        Utils.checkNotNull(includeChapters, "includeChapters");
+        Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+        Utils.checkNotNull(includeExtras, "includeExtras");
+        Utils.checkNotNull(includeRelated, "includeRelated");
+        Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+        Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+        Utils.checkNotNull(includeReviews, "includeReviews");
+        Utils.checkNotNull(includeStations, "includeStations");
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        Utils.checkNotNull(excludeFields, "excludeFields");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -199,6 +307,18 @@ public class GetMetadataItemRequest {
         this.checkFileAvailability = checkFileAvailability;
         this.asyncAugmentMetadata = asyncAugmentMetadata;
         this.augmentCount = augmentCount;
+        this.includeMarkers = includeMarkers;
+        this.includeGuids = includeGuids;
+        this.includeChapters = includeChapters;
+        this.includeExternalMedia = includeExternalMedia;
+        this.includeExtras = includeExtras;
+        this.includeRelated = includeRelated;
+        this.includeOnDeck = includeOnDeck;
+        this.includePopularLeaves = includePopularLeaves;
+        this.includeReviews = includeReviews;
+        this.includeStations = includeStations;
+        this.excludeElements = excludeElements;
+        this.excludeFields = excludeFields;
     }
     
     public GetMetadataItemRequest(
@@ -207,6 +327,10 @@ public class GetMetadataItemRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), ids,
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty());
@@ -301,13 +425,17 @@ public class GetMetadataItemRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public List<String> ids() {
         return ids;
     }
 
     /**
-     * Determines if file check should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if file check should be performed asynchronously. An activity is created to indicate
+     * progress. Default is false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -316,7 +444,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if local media agent refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if local media agent refresh should be performed asynchronously. An activity is created
+     * to indicate progress. Default is false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -325,7 +454,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if analysis refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if analysis refresh should be performed asynchronously. An activity is created to
+     * indicate progress. Default is false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -334,7 +464,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if file check should be performed synchronously.  Specifying `asyncCheckFiles` will cause this option to be ignored.  Default is false.
+     * Determines if file check should be performed synchronously. Specifying `asyncCheckFiles` will cause
+     * this option to be ignored. Default is false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -343,7 +474,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if synchronous local media agent and analysis refresh should be skipped.  Specifying async versions will cause synchronous versions to be skipped.  Default is false.
+     * Determines if synchronous local media agent and analysis refresh should be skipped. Specifying async
+     * versions will cause synchronous versions to be skipped. Default is false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -352,7 +484,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if file existence check should be performed synchronously.  Specifying `checkFiles` will imply this option.  Default is false.
+     * Determines if file existence check should be performed synchronously. Specifying `checkFiles` will
+     * imply this option. Default is false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -361,7 +494,10 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Add metadata augmentations.  An activity is created to indicate progress.  Option will be ignored if specified by non-admin or if multiple metadata items are requested.  Default is false.
+     * Add metadata augmentations. An activity is created to indicate progress. Option will be ignored if
+     * specified by non-admin or if multiple metadata items are requested.
+     * 
+     * <p>Default is false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -370,12 +506,108 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Number of augmentations to add.  Requires `asyncAugmentMetadata` to be specified.
+     * Number of augmentations to add. Requires `asyncAugmentMetadata` to be specified.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<BoolInt> augmentCount() {
         return (Optional<BoolInt>) augmentCount;
+    }
+
+    /**
+     * Include intro/credits markers in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeMarkers() {
+        return includeMarkers;
+    }
+
+    /**
+     * Include external GUIDs (e.g. TMDB, TVDB) in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeGuids() {
+        return includeGuids;
+    }
+
+    /**
+     * Include chapter data in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeChapters() {
+        return includeChapters;
+    }
+
+    /**
+     * Include external/online media in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeExternalMedia() {
+        return includeExternalMedia;
+    }
+
+    /**
+     * Include trailers, behind-the-scenes, and other extras
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeExtras() {
+        return includeExtras;
+    }
+
+    /**
+     * Include related items in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeRelated() {
+        return includeRelated;
+    }
+
+    /**
+     * Include On Deck status in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeOnDeck() {
+        return includeOnDeck;
+    }
+
+    /**
+     * Include popular episodes in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includePopularLeaves() {
+        return includePopularLeaves;
+    }
+
+    /**
+     * Include user reviews in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeReviews() {
+        return includeReviews;
+    }
+
+    /**
+     * Include radio station data in the response
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeStations() {
+        return includeStations;
+    }
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    @JsonIgnore
+    public Optional<String> excludeElements() {
+        return excludeElements;
+    }
+
+    /**
+     * Comma-separated list of fields to exclude from the response
+     */
+    @JsonIgnore
+    public Optional<String> excludeFields() {
+        return excludeFields;
     }
 
     public static Builder builder() {
@@ -592,6 +824,9 @@ public class GetMetadataItemRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public GetMetadataItemRequest withIds(List<String> ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
@@ -599,7 +834,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if file check should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if file check should be performed asynchronously. An activity is created to indicate
+     * progress. Default is false.
      */
     public GetMetadataItemRequest withAsyncCheckFiles(BoolInt asyncCheckFiles) {
         Utils.checkNotNull(asyncCheckFiles, "asyncCheckFiles");
@@ -609,7 +845,8 @@ public class GetMetadataItemRequest {
 
 
     /**
-     * Determines if file check should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if file check should be performed asynchronously. An activity is created to indicate
+     * progress. Default is false.
      */
     public GetMetadataItemRequest withAsyncCheckFiles(Optional<? extends BoolInt> asyncCheckFiles) {
         Utils.checkNotNull(asyncCheckFiles, "asyncCheckFiles");
@@ -618,7 +855,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if local media agent refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if local media agent refresh should be performed asynchronously. An activity is created
+     * to indicate progress. Default is false.
      */
     public GetMetadataItemRequest withAsyncRefreshLocalMediaAgent(BoolInt asyncRefreshLocalMediaAgent) {
         Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
@@ -628,7 +866,8 @@ public class GetMetadataItemRequest {
 
 
     /**
-     * Determines if local media agent refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if local media agent refresh should be performed asynchronously. An activity is created
+     * to indicate progress. Default is false.
      */
     public GetMetadataItemRequest withAsyncRefreshLocalMediaAgent(Optional<? extends BoolInt> asyncRefreshLocalMediaAgent) {
         Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
@@ -637,7 +876,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if analysis refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if analysis refresh should be performed asynchronously. An activity is created to
+     * indicate progress. Default is false.
      */
     public GetMetadataItemRequest withAsyncRefreshAnalysis(BoolInt asyncRefreshAnalysis) {
         Utils.checkNotNull(asyncRefreshAnalysis, "asyncRefreshAnalysis");
@@ -647,7 +887,8 @@ public class GetMetadataItemRequest {
 
 
     /**
-     * Determines if analysis refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+     * Determines if analysis refresh should be performed asynchronously. An activity is created to
+     * indicate progress. Default is false.
      */
     public GetMetadataItemRequest withAsyncRefreshAnalysis(Optional<? extends BoolInt> asyncRefreshAnalysis) {
         Utils.checkNotNull(asyncRefreshAnalysis, "asyncRefreshAnalysis");
@@ -656,7 +897,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if file check should be performed synchronously.  Specifying `asyncCheckFiles` will cause this option to be ignored.  Default is false.
+     * Determines if file check should be performed synchronously. Specifying `asyncCheckFiles` will cause
+     * this option to be ignored. Default is false.
      */
     public GetMetadataItemRequest withCheckFiles(BoolInt checkFiles) {
         Utils.checkNotNull(checkFiles, "checkFiles");
@@ -666,7 +908,8 @@ public class GetMetadataItemRequest {
 
 
     /**
-     * Determines if file check should be performed synchronously.  Specifying `asyncCheckFiles` will cause this option to be ignored.  Default is false.
+     * Determines if file check should be performed synchronously. Specifying `asyncCheckFiles` will cause
+     * this option to be ignored. Default is false.
      */
     public GetMetadataItemRequest withCheckFiles(Optional<? extends BoolInt> checkFiles) {
         Utils.checkNotNull(checkFiles, "checkFiles");
@@ -675,7 +918,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if synchronous local media agent and analysis refresh should be skipped.  Specifying async versions will cause synchronous versions to be skipped.  Default is false.
+     * Determines if synchronous local media agent and analysis refresh should be skipped. Specifying async
+     * versions will cause synchronous versions to be skipped. Default is false.
      */
     public GetMetadataItemRequest withSkipRefresh(BoolInt skipRefresh) {
         Utils.checkNotNull(skipRefresh, "skipRefresh");
@@ -685,7 +929,8 @@ public class GetMetadataItemRequest {
 
 
     /**
-     * Determines if synchronous local media agent and analysis refresh should be skipped.  Specifying async versions will cause synchronous versions to be skipped.  Default is false.
+     * Determines if synchronous local media agent and analysis refresh should be skipped. Specifying async
+     * versions will cause synchronous versions to be skipped. Default is false.
      */
     public GetMetadataItemRequest withSkipRefresh(Optional<? extends BoolInt> skipRefresh) {
         Utils.checkNotNull(skipRefresh, "skipRefresh");
@@ -694,7 +939,8 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Determines if file existence check should be performed synchronously.  Specifying `checkFiles` will imply this option.  Default is false.
+     * Determines if file existence check should be performed synchronously. Specifying `checkFiles` will
+     * imply this option. Default is false.
      */
     public GetMetadataItemRequest withCheckFileAvailability(BoolInt checkFileAvailability) {
         Utils.checkNotNull(checkFileAvailability, "checkFileAvailability");
@@ -704,7 +950,8 @@ public class GetMetadataItemRequest {
 
 
     /**
-     * Determines if file existence check should be performed synchronously.  Specifying `checkFiles` will imply this option.  Default is false.
+     * Determines if file existence check should be performed synchronously. Specifying `checkFiles` will
+     * imply this option. Default is false.
      */
     public GetMetadataItemRequest withCheckFileAvailability(Optional<? extends BoolInt> checkFileAvailability) {
         Utils.checkNotNull(checkFileAvailability, "checkFileAvailability");
@@ -713,7 +960,10 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Add metadata augmentations.  An activity is created to indicate progress.  Option will be ignored if specified by non-admin or if multiple metadata items are requested.  Default is false.
+     * Add metadata augmentations. An activity is created to indicate progress. Option will be ignored if
+     * specified by non-admin or if multiple metadata items are requested.
+     * 
+     * <p>Default is false.
      */
     public GetMetadataItemRequest withAsyncAugmentMetadata(BoolInt asyncAugmentMetadata) {
         Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
@@ -723,7 +973,10 @@ public class GetMetadataItemRequest {
 
 
     /**
-     * Add metadata augmentations.  An activity is created to indicate progress.  Option will be ignored if specified by non-admin or if multiple metadata items are requested.  Default is false.
+     * Add metadata augmentations. An activity is created to indicate progress. Option will be ignored if
+     * specified by non-admin or if multiple metadata items are requested.
+     * 
+     * <p>Default is false.
      */
     public GetMetadataItemRequest withAsyncAugmentMetadata(Optional<? extends BoolInt> asyncAugmentMetadata) {
         Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
@@ -732,7 +985,7 @@ public class GetMetadataItemRequest {
     }
 
     /**
-     * Number of augmentations to add.  Requires `asyncAugmentMetadata` to be specified.
+     * Number of augmentations to add. Requires `asyncAugmentMetadata` to be specified.
      */
     public GetMetadataItemRequest withAugmentCount(BoolInt augmentCount) {
         Utils.checkNotNull(augmentCount, "augmentCount");
@@ -742,11 +995,239 @@ public class GetMetadataItemRequest {
 
 
     /**
-     * Number of augmentations to add.  Requires `asyncAugmentMetadata` to be specified.
+     * Number of augmentations to add. Requires `asyncAugmentMetadata` to be specified.
      */
     public GetMetadataItemRequest withAugmentCount(Optional<? extends BoolInt> augmentCount) {
         Utils.checkNotNull(augmentCount, "augmentCount");
         this.augmentCount = augmentCount;
+        return this;
+    }
+
+    /**
+     * Include intro/credits markers in the response
+     */
+    public GetMetadataItemRequest withIncludeMarkers(boolean includeMarkers) {
+        Utils.checkNotNull(includeMarkers, "includeMarkers");
+        this.includeMarkers = Optional.ofNullable(includeMarkers);
+        return this;
+    }
+
+
+    /**
+     * Include intro/credits markers in the response
+     */
+    public GetMetadataItemRequest withIncludeMarkers(Optional<Boolean> includeMarkers) {
+        Utils.checkNotNull(includeMarkers, "includeMarkers");
+        this.includeMarkers = includeMarkers;
+        return this;
+    }
+
+    /**
+     * Include external GUIDs (e.g. TMDB, TVDB) in the response
+     */
+    public GetMetadataItemRequest withIncludeGuids(boolean includeGuids) {
+        Utils.checkNotNull(includeGuids, "includeGuids");
+        this.includeGuids = Optional.ofNullable(includeGuids);
+        return this;
+    }
+
+
+    /**
+     * Include external GUIDs (e.g. TMDB, TVDB) in the response
+     */
+    public GetMetadataItemRequest withIncludeGuids(Optional<Boolean> includeGuids) {
+        Utils.checkNotNull(includeGuids, "includeGuids");
+        this.includeGuids = includeGuids;
+        return this;
+    }
+
+    /**
+     * Include chapter data in the response
+     */
+    public GetMetadataItemRequest withIncludeChapters(boolean includeChapters) {
+        Utils.checkNotNull(includeChapters, "includeChapters");
+        this.includeChapters = Optional.ofNullable(includeChapters);
+        return this;
+    }
+
+
+    /**
+     * Include chapter data in the response
+     */
+    public GetMetadataItemRequest withIncludeChapters(Optional<Boolean> includeChapters) {
+        Utils.checkNotNull(includeChapters, "includeChapters");
+        this.includeChapters = includeChapters;
+        return this;
+    }
+
+    /**
+     * Include external/online media in the response
+     */
+    public GetMetadataItemRequest withIncludeExternalMedia(boolean includeExternalMedia) {
+        Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+        this.includeExternalMedia = Optional.ofNullable(includeExternalMedia);
+        return this;
+    }
+
+
+    /**
+     * Include external/online media in the response
+     */
+    public GetMetadataItemRequest withIncludeExternalMedia(Optional<Boolean> includeExternalMedia) {
+        Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+        this.includeExternalMedia = includeExternalMedia;
+        return this;
+    }
+
+    /**
+     * Include trailers, behind-the-scenes, and other extras
+     */
+    public GetMetadataItemRequest withIncludeExtras(boolean includeExtras) {
+        Utils.checkNotNull(includeExtras, "includeExtras");
+        this.includeExtras = Optional.ofNullable(includeExtras);
+        return this;
+    }
+
+
+    /**
+     * Include trailers, behind-the-scenes, and other extras
+     */
+    public GetMetadataItemRequest withIncludeExtras(Optional<Boolean> includeExtras) {
+        Utils.checkNotNull(includeExtras, "includeExtras");
+        this.includeExtras = includeExtras;
+        return this;
+    }
+
+    /**
+     * Include related items in the response
+     */
+    public GetMetadataItemRequest withIncludeRelated(boolean includeRelated) {
+        Utils.checkNotNull(includeRelated, "includeRelated");
+        this.includeRelated = Optional.ofNullable(includeRelated);
+        return this;
+    }
+
+
+    /**
+     * Include related items in the response
+     */
+    public GetMetadataItemRequest withIncludeRelated(Optional<Boolean> includeRelated) {
+        Utils.checkNotNull(includeRelated, "includeRelated");
+        this.includeRelated = includeRelated;
+        return this;
+    }
+
+    /**
+     * Include On Deck status in the response
+     */
+    public GetMetadataItemRequest withIncludeOnDeck(boolean includeOnDeck) {
+        Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+        this.includeOnDeck = Optional.ofNullable(includeOnDeck);
+        return this;
+    }
+
+
+    /**
+     * Include On Deck status in the response
+     */
+    public GetMetadataItemRequest withIncludeOnDeck(Optional<Boolean> includeOnDeck) {
+        Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+        this.includeOnDeck = includeOnDeck;
+        return this;
+    }
+
+    /**
+     * Include popular episodes in the response
+     */
+    public GetMetadataItemRequest withIncludePopularLeaves(boolean includePopularLeaves) {
+        Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+        this.includePopularLeaves = Optional.ofNullable(includePopularLeaves);
+        return this;
+    }
+
+
+    /**
+     * Include popular episodes in the response
+     */
+    public GetMetadataItemRequest withIncludePopularLeaves(Optional<Boolean> includePopularLeaves) {
+        Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+        this.includePopularLeaves = includePopularLeaves;
+        return this;
+    }
+
+    /**
+     * Include user reviews in the response
+     */
+    public GetMetadataItemRequest withIncludeReviews(boolean includeReviews) {
+        Utils.checkNotNull(includeReviews, "includeReviews");
+        this.includeReviews = Optional.ofNullable(includeReviews);
+        return this;
+    }
+
+
+    /**
+     * Include user reviews in the response
+     */
+    public GetMetadataItemRequest withIncludeReviews(Optional<Boolean> includeReviews) {
+        Utils.checkNotNull(includeReviews, "includeReviews");
+        this.includeReviews = includeReviews;
+        return this;
+    }
+
+    /**
+     * Include radio station data in the response
+     */
+    public GetMetadataItemRequest withIncludeStations(boolean includeStations) {
+        Utils.checkNotNull(includeStations, "includeStations");
+        this.includeStations = Optional.ofNullable(includeStations);
+        return this;
+    }
+
+
+    /**
+     * Include radio station data in the response
+     */
+    public GetMetadataItemRequest withIncludeStations(Optional<Boolean> includeStations) {
+        Utils.checkNotNull(includeStations, "includeStations");
+        this.includeStations = includeStations;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    public GetMetadataItemRequest withExcludeElements(String excludeElements) {
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        this.excludeElements = Optional.ofNullable(excludeElements);
+        return this;
+    }
+
+
+    /**
+     * Comma-separated list of elements to exclude from the response
+     */
+    public GetMetadataItemRequest withExcludeElements(Optional<String> excludeElements) {
+        Utils.checkNotNull(excludeElements, "excludeElements");
+        this.excludeElements = excludeElements;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of fields to exclude from the response
+     */
+    public GetMetadataItemRequest withExcludeFields(String excludeFields) {
+        Utils.checkNotNull(excludeFields, "excludeFields");
+        this.excludeFields = Optional.ofNullable(excludeFields);
+        return this;
+    }
+
+
+    /**
+     * Comma-separated list of fields to exclude from the response
+     */
+    public GetMetadataItemRequest withExcludeFields(Optional<String> excludeFields) {
+        Utils.checkNotNull(excludeFields, "excludeFields");
+        this.excludeFields = excludeFields;
         return this;
     }
 
@@ -779,7 +1260,19 @@ public class GetMetadataItemRequest {
             Utils.enhancedDeepEquals(this.skipRefresh, other.skipRefresh) &&
             Utils.enhancedDeepEquals(this.checkFileAvailability, other.checkFileAvailability) &&
             Utils.enhancedDeepEquals(this.asyncAugmentMetadata, other.asyncAugmentMetadata) &&
-            Utils.enhancedDeepEquals(this.augmentCount, other.augmentCount);
+            Utils.enhancedDeepEquals(this.augmentCount, other.augmentCount) &&
+            Utils.enhancedDeepEquals(this.includeMarkers, other.includeMarkers) &&
+            Utils.enhancedDeepEquals(this.includeGuids, other.includeGuids) &&
+            Utils.enhancedDeepEquals(this.includeChapters, other.includeChapters) &&
+            Utils.enhancedDeepEquals(this.includeExternalMedia, other.includeExternalMedia) &&
+            Utils.enhancedDeepEquals(this.includeExtras, other.includeExtras) &&
+            Utils.enhancedDeepEquals(this.includeRelated, other.includeRelated) &&
+            Utils.enhancedDeepEquals(this.includeOnDeck, other.includeOnDeck) &&
+            Utils.enhancedDeepEquals(this.includePopularLeaves, other.includePopularLeaves) &&
+            Utils.enhancedDeepEquals(this.includeReviews, other.includeReviews) &&
+            Utils.enhancedDeepEquals(this.includeStations, other.includeStations) &&
+            Utils.enhancedDeepEquals(this.excludeElements, other.excludeElements) &&
+            Utils.enhancedDeepEquals(this.excludeFields, other.excludeFields);
     }
     
     @Override
@@ -791,7 +1284,11 @@ public class GetMetadataItemRequest {
             deviceName, marketplace, ids,
             asyncCheckFiles, asyncRefreshLocalMediaAgent, asyncRefreshAnalysis,
             checkFiles, skipRefresh, checkFileAvailability,
-            asyncAugmentMetadata, augmentCount);
+            asyncAugmentMetadata, augmentCount, includeMarkers,
+            includeGuids, includeChapters, includeExternalMedia,
+            includeExtras, includeRelated, includeOnDeck,
+            includePopularLeaves, includeReviews, includeStations,
+            excludeElements, excludeFields);
     }
     
     @Override
@@ -816,7 +1313,19 @@ public class GetMetadataItemRequest {
                 "skipRefresh", skipRefresh,
                 "checkFileAvailability", checkFileAvailability,
                 "asyncAugmentMetadata", asyncAugmentMetadata,
-                "augmentCount", augmentCount);
+                "augmentCount", augmentCount,
+                "includeMarkers", includeMarkers,
+                "includeGuids", includeGuids,
+                "includeChapters", includeChapters,
+                "includeExternalMedia", includeExternalMedia,
+                "includeExtras", includeExtras,
+                "includeRelated", includeRelated,
+                "includeOnDeck", includeOnDeck,
+                "includePopularLeaves", includePopularLeaves,
+                "includeReviews", includeReviews,
+                "includeStations", includeStations,
+                "excludeElements", excludeElements,
+                "excludeFields", excludeFields);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -861,6 +1370,30 @@ public class GetMetadataItemRequest {
         private Optional<? extends BoolInt> asyncAugmentMetadata;
 
         private Optional<? extends BoolInt> augmentCount;
+
+        private Optional<Boolean> includeMarkers = Optional.empty();
+
+        private Optional<Boolean> includeGuids = Optional.empty();
+
+        private Optional<Boolean> includeChapters = Optional.empty();
+
+        private Optional<Boolean> includeExternalMedia = Optional.empty();
+
+        private Optional<Boolean> includeExtras = Optional.empty();
+
+        private Optional<Boolean> includeRelated = Optional.empty();
+
+        private Optional<Boolean> includeOnDeck = Optional.empty();
+
+        private Optional<Boolean> includePopularLeaves = Optional.empty();
+
+        private Optional<Boolean> includeReviews = Optional.empty();
+
+        private Optional<Boolean> includeStations = Optional.empty();
+
+        private Optional<String> excludeElements = Optional.empty();
+
+        private Optional<String> excludeFields = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -1076,6 +1609,9 @@ public class GetMetadataItemRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(List<String> ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -1084,7 +1620,8 @@ public class GetMetadataItemRequest {
 
 
         /**
-         * Determines if file check should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+         * Determines if file check should be performed asynchronously. An activity is created to indicate
+         * progress. Default is false.
          */
         public Builder asyncCheckFiles(BoolInt asyncCheckFiles) {
             Utils.checkNotNull(asyncCheckFiles, "asyncCheckFiles");
@@ -1093,7 +1630,8 @@ public class GetMetadataItemRequest {
         }
 
         /**
-         * Determines if file check should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+         * Determines if file check should be performed asynchronously. An activity is created to indicate
+         * progress. Default is false.
          */
         public Builder asyncCheckFiles(Optional<? extends BoolInt> asyncCheckFiles) {
             Utils.checkNotNull(asyncCheckFiles, "asyncCheckFiles");
@@ -1103,7 +1641,8 @@ public class GetMetadataItemRequest {
 
 
         /**
-         * Determines if local media agent refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+         * Determines if local media agent refresh should be performed asynchronously. An activity is created
+         * to indicate progress. Default is false.
          */
         public Builder asyncRefreshLocalMediaAgent(BoolInt asyncRefreshLocalMediaAgent) {
             Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
@@ -1112,7 +1651,8 @@ public class GetMetadataItemRequest {
         }
 
         /**
-         * Determines if local media agent refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+         * Determines if local media agent refresh should be performed asynchronously. An activity is created
+         * to indicate progress. Default is false.
          */
         public Builder asyncRefreshLocalMediaAgent(Optional<? extends BoolInt> asyncRefreshLocalMediaAgent) {
             Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
@@ -1122,7 +1662,8 @@ public class GetMetadataItemRequest {
 
 
         /**
-         * Determines if analysis refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+         * Determines if analysis refresh should be performed asynchronously. An activity is created to
+         * indicate progress. Default is false.
          */
         public Builder asyncRefreshAnalysis(BoolInt asyncRefreshAnalysis) {
             Utils.checkNotNull(asyncRefreshAnalysis, "asyncRefreshAnalysis");
@@ -1131,7 +1672,8 @@ public class GetMetadataItemRequest {
         }
 
         /**
-         * Determines if analysis refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false.
+         * Determines if analysis refresh should be performed asynchronously. An activity is created to
+         * indicate progress. Default is false.
          */
         public Builder asyncRefreshAnalysis(Optional<? extends BoolInt> asyncRefreshAnalysis) {
             Utils.checkNotNull(asyncRefreshAnalysis, "asyncRefreshAnalysis");
@@ -1141,7 +1683,8 @@ public class GetMetadataItemRequest {
 
 
         /**
-         * Determines if file check should be performed synchronously.  Specifying `asyncCheckFiles` will cause this option to be ignored.  Default is false.
+         * Determines if file check should be performed synchronously. Specifying `asyncCheckFiles` will cause
+         * this option to be ignored. Default is false.
          */
         public Builder checkFiles(BoolInt checkFiles) {
             Utils.checkNotNull(checkFiles, "checkFiles");
@@ -1150,7 +1693,8 @@ public class GetMetadataItemRequest {
         }
 
         /**
-         * Determines if file check should be performed synchronously.  Specifying `asyncCheckFiles` will cause this option to be ignored.  Default is false.
+         * Determines if file check should be performed synchronously. Specifying `asyncCheckFiles` will cause
+         * this option to be ignored. Default is false.
          */
         public Builder checkFiles(Optional<? extends BoolInt> checkFiles) {
             Utils.checkNotNull(checkFiles, "checkFiles");
@@ -1160,7 +1704,8 @@ public class GetMetadataItemRequest {
 
 
         /**
-         * Determines if synchronous local media agent and analysis refresh should be skipped.  Specifying async versions will cause synchronous versions to be skipped.  Default is false.
+         * Determines if synchronous local media agent and analysis refresh should be skipped. Specifying async
+         * versions will cause synchronous versions to be skipped. Default is false.
          */
         public Builder skipRefresh(BoolInt skipRefresh) {
             Utils.checkNotNull(skipRefresh, "skipRefresh");
@@ -1169,7 +1714,8 @@ public class GetMetadataItemRequest {
         }
 
         /**
-         * Determines if synchronous local media agent and analysis refresh should be skipped.  Specifying async versions will cause synchronous versions to be skipped.  Default is false.
+         * Determines if synchronous local media agent and analysis refresh should be skipped. Specifying async
+         * versions will cause synchronous versions to be skipped. Default is false.
          */
         public Builder skipRefresh(Optional<? extends BoolInt> skipRefresh) {
             Utils.checkNotNull(skipRefresh, "skipRefresh");
@@ -1179,7 +1725,8 @@ public class GetMetadataItemRequest {
 
 
         /**
-         * Determines if file existence check should be performed synchronously.  Specifying `checkFiles` will imply this option.  Default is false.
+         * Determines if file existence check should be performed synchronously. Specifying `checkFiles` will
+         * imply this option. Default is false.
          */
         public Builder checkFileAvailability(BoolInt checkFileAvailability) {
             Utils.checkNotNull(checkFileAvailability, "checkFileAvailability");
@@ -1188,7 +1735,8 @@ public class GetMetadataItemRequest {
         }
 
         /**
-         * Determines if file existence check should be performed synchronously.  Specifying `checkFiles` will imply this option.  Default is false.
+         * Determines if file existence check should be performed synchronously. Specifying `checkFiles` will
+         * imply this option. Default is false.
          */
         public Builder checkFileAvailability(Optional<? extends BoolInt> checkFileAvailability) {
             Utils.checkNotNull(checkFileAvailability, "checkFileAvailability");
@@ -1198,7 +1746,10 @@ public class GetMetadataItemRequest {
 
 
         /**
-         * Add metadata augmentations.  An activity is created to indicate progress.  Option will be ignored if specified by non-admin or if multiple metadata items are requested.  Default is false.
+         * Add metadata augmentations. An activity is created to indicate progress. Option will be ignored if
+         * specified by non-admin or if multiple metadata items are requested.
+         * 
+         * <p>Default is false.
          */
         public Builder asyncAugmentMetadata(BoolInt asyncAugmentMetadata) {
             Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
@@ -1207,7 +1758,10 @@ public class GetMetadataItemRequest {
         }
 
         /**
-         * Add metadata augmentations.  An activity is created to indicate progress.  Option will be ignored if specified by non-admin or if multiple metadata items are requested.  Default is false.
+         * Add metadata augmentations. An activity is created to indicate progress. Option will be ignored if
+         * specified by non-admin or if multiple metadata items are requested.
+         * 
+         * <p>Default is false.
          */
         public Builder asyncAugmentMetadata(Optional<? extends BoolInt> asyncAugmentMetadata) {
             Utils.checkNotNull(asyncAugmentMetadata, "asyncAugmentMetadata");
@@ -1217,7 +1771,7 @@ public class GetMetadataItemRequest {
 
 
         /**
-         * Number of augmentations to add.  Requires `asyncAugmentMetadata` to be specified.
+         * Number of augmentations to add. Requires `asyncAugmentMetadata` to be specified.
          */
         public Builder augmentCount(BoolInt augmentCount) {
             Utils.checkNotNull(augmentCount, "augmentCount");
@@ -1226,11 +1780,239 @@ public class GetMetadataItemRequest {
         }
 
         /**
-         * Number of augmentations to add.  Requires `asyncAugmentMetadata` to be specified.
+         * Number of augmentations to add. Requires `asyncAugmentMetadata` to be specified.
          */
         public Builder augmentCount(Optional<? extends BoolInt> augmentCount) {
             Utils.checkNotNull(augmentCount, "augmentCount");
             this.augmentCount = augmentCount;
+            return this;
+        }
+
+
+        /**
+         * Include intro/credits markers in the response
+         */
+        public Builder includeMarkers(boolean includeMarkers) {
+            Utils.checkNotNull(includeMarkers, "includeMarkers");
+            this.includeMarkers = Optional.ofNullable(includeMarkers);
+            return this;
+        }
+
+        /**
+         * Include intro/credits markers in the response
+         */
+        public Builder includeMarkers(Optional<Boolean> includeMarkers) {
+            Utils.checkNotNull(includeMarkers, "includeMarkers");
+            this.includeMarkers = includeMarkers;
+            return this;
+        }
+
+
+        /**
+         * Include external GUIDs (e.g. TMDB, TVDB) in the response
+         */
+        public Builder includeGuids(boolean includeGuids) {
+            Utils.checkNotNull(includeGuids, "includeGuids");
+            this.includeGuids = Optional.ofNullable(includeGuids);
+            return this;
+        }
+
+        /**
+         * Include external GUIDs (e.g. TMDB, TVDB) in the response
+         */
+        public Builder includeGuids(Optional<Boolean> includeGuids) {
+            Utils.checkNotNull(includeGuids, "includeGuids");
+            this.includeGuids = includeGuids;
+            return this;
+        }
+
+
+        /**
+         * Include chapter data in the response
+         */
+        public Builder includeChapters(boolean includeChapters) {
+            Utils.checkNotNull(includeChapters, "includeChapters");
+            this.includeChapters = Optional.ofNullable(includeChapters);
+            return this;
+        }
+
+        /**
+         * Include chapter data in the response
+         */
+        public Builder includeChapters(Optional<Boolean> includeChapters) {
+            Utils.checkNotNull(includeChapters, "includeChapters");
+            this.includeChapters = includeChapters;
+            return this;
+        }
+
+
+        /**
+         * Include external/online media in the response
+         */
+        public Builder includeExternalMedia(boolean includeExternalMedia) {
+            Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+            this.includeExternalMedia = Optional.ofNullable(includeExternalMedia);
+            return this;
+        }
+
+        /**
+         * Include external/online media in the response
+         */
+        public Builder includeExternalMedia(Optional<Boolean> includeExternalMedia) {
+            Utils.checkNotNull(includeExternalMedia, "includeExternalMedia");
+            this.includeExternalMedia = includeExternalMedia;
+            return this;
+        }
+
+
+        /**
+         * Include trailers, behind-the-scenes, and other extras
+         */
+        public Builder includeExtras(boolean includeExtras) {
+            Utils.checkNotNull(includeExtras, "includeExtras");
+            this.includeExtras = Optional.ofNullable(includeExtras);
+            return this;
+        }
+
+        /**
+         * Include trailers, behind-the-scenes, and other extras
+         */
+        public Builder includeExtras(Optional<Boolean> includeExtras) {
+            Utils.checkNotNull(includeExtras, "includeExtras");
+            this.includeExtras = includeExtras;
+            return this;
+        }
+
+
+        /**
+         * Include related items in the response
+         */
+        public Builder includeRelated(boolean includeRelated) {
+            Utils.checkNotNull(includeRelated, "includeRelated");
+            this.includeRelated = Optional.ofNullable(includeRelated);
+            return this;
+        }
+
+        /**
+         * Include related items in the response
+         */
+        public Builder includeRelated(Optional<Boolean> includeRelated) {
+            Utils.checkNotNull(includeRelated, "includeRelated");
+            this.includeRelated = includeRelated;
+            return this;
+        }
+
+
+        /**
+         * Include On Deck status in the response
+         */
+        public Builder includeOnDeck(boolean includeOnDeck) {
+            Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+            this.includeOnDeck = Optional.ofNullable(includeOnDeck);
+            return this;
+        }
+
+        /**
+         * Include On Deck status in the response
+         */
+        public Builder includeOnDeck(Optional<Boolean> includeOnDeck) {
+            Utils.checkNotNull(includeOnDeck, "includeOnDeck");
+            this.includeOnDeck = includeOnDeck;
+            return this;
+        }
+
+
+        /**
+         * Include popular episodes in the response
+         */
+        public Builder includePopularLeaves(boolean includePopularLeaves) {
+            Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+            this.includePopularLeaves = Optional.ofNullable(includePopularLeaves);
+            return this;
+        }
+
+        /**
+         * Include popular episodes in the response
+         */
+        public Builder includePopularLeaves(Optional<Boolean> includePopularLeaves) {
+            Utils.checkNotNull(includePopularLeaves, "includePopularLeaves");
+            this.includePopularLeaves = includePopularLeaves;
+            return this;
+        }
+
+
+        /**
+         * Include user reviews in the response
+         */
+        public Builder includeReviews(boolean includeReviews) {
+            Utils.checkNotNull(includeReviews, "includeReviews");
+            this.includeReviews = Optional.ofNullable(includeReviews);
+            return this;
+        }
+
+        /**
+         * Include user reviews in the response
+         */
+        public Builder includeReviews(Optional<Boolean> includeReviews) {
+            Utils.checkNotNull(includeReviews, "includeReviews");
+            this.includeReviews = includeReviews;
+            return this;
+        }
+
+
+        /**
+         * Include radio station data in the response
+         */
+        public Builder includeStations(boolean includeStations) {
+            Utils.checkNotNull(includeStations, "includeStations");
+            this.includeStations = Optional.ofNullable(includeStations);
+            return this;
+        }
+
+        /**
+         * Include radio station data in the response
+         */
+        public Builder includeStations(Optional<Boolean> includeStations) {
+            Utils.checkNotNull(includeStations, "includeStations");
+            this.includeStations = includeStations;
+            return this;
+        }
+
+
+        /**
+         * Comma-separated list of elements to exclude from the response
+         */
+        public Builder excludeElements(String excludeElements) {
+            Utils.checkNotNull(excludeElements, "excludeElements");
+            this.excludeElements = Optional.ofNullable(excludeElements);
+            return this;
+        }
+
+        /**
+         * Comma-separated list of elements to exclude from the response
+         */
+        public Builder excludeElements(Optional<String> excludeElements) {
+            Utils.checkNotNull(excludeElements, "excludeElements");
+            this.excludeElements = excludeElements;
+            return this;
+        }
+
+
+        /**
+         * Comma-separated list of fields to exclude from the response
+         */
+        public Builder excludeFields(String excludeFields) {
+            Utils.checkNotNull(excludeFields, "excludeFields");
+            this.excludeFields = Optional.ofNullable(excludeFields);
+            return this;
+        }
+
+        /**
+         * Comma-separated list of fields to exclude from the response
+         */
+        public Builder excludeFields(Optional<String> excludeFields) {
+            Utils.checkNotNull(excludeFields, "excludeFields");
+            this.excludeFields = excludeFields;
             return this;
         }
 
@@ -1270,7 +2052,11 @@ public class GetMetadataItemRequest {
                 deviceName, marketplace, ids,
                 asyncCheckFiles, asyncRefreshLocalMediaAgent, asyncRefreshAnalysis,
                 checkFiles, skipRefresh, checkFileAvailability,
-                asyncAugmentMetadata, augmentCount);
+                asyncAugmentMetadata, augmentCount, includeMarkers,
+                includeGuids, includeChapters, includeExternalMedia,
+                includeExtras, includeRelated, includeOnDeck,
+                includePopularLeaves, includeReviews, includeStations,
+                excludeElements, excludeFields);
         }
 
 

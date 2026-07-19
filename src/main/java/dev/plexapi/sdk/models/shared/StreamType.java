@@ -11,9 +11,9 @@ import java.util.Optional;
  * StreamType
  * 
  * <p>Stream type:
- *   - VIDEO = 1 (Video stream)
- *   - AUDIO = 2 (Audio stream)
- *   - SUBTITLE = 3 (Subtitle stream)
+ * - VIDEO = 1 (Video stream)
+ * - AUDIO = 2 (Audio stream)
+ * - SUBTITLE = 3 (Subtitle stream)
  */
 public enum StreamType {
     Video(1),

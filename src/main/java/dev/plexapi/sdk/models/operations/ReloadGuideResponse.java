@@ -7,13 +7,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class ReloadGuideResponse implements Response {
@@ -33,6 +36,9 @@ public class ReloadGuideResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
 
+    private Optional<byte[]> body;
+
+
     private Map<String, List<String>> headers;
 
     @JsonCreator
@@ -40,16 +46,28 @@ public class ReloadGuideResponse implements Response {
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
+            Optional<byte[]> body,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(body, "body");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.body = body;
         this.headers = headers;
+    }
+    
+    public ReloadGuideResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<InputStream> rawResponse,
+            Map<String, List<String>> headers) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty(), headers);
     }
 
     /**
@@ -74,6 +92,19 @@ public class ReloadGuideResponse implements Response {
     @JsonIgnore
     public HttpResponse<InputStream> rawResponse() {
         return rawResponse;
+    }
+
+    @JsonIgnore
+    public Optional<byte[]> body() {
+        this.body = body
+            .or(() -> {
+                try {
+                    return Optional.of(Utils.extractByteArrayFromBody(rawResponse));
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
+        return  this.body;
     }
 
     @JsonIgnore
@@ -113,6 +144,19 @@ public class ReloadGuideResponse implements Response {
         return this;
     }
 
+    public ReloadGuideResponse withBody(byte[] body) {
+        Utils.checkNotNull(body, "body");
+        this.body = Optional.ofNullable(body);
+        return this;
+    }
+
+
+    public ReloadGuideResponse withBody(Optional<byte[]> body) {
+        Utils.checkNotNull(body, "body");
+        this.body = body;
+        return this;
+    }
+
     public ReloadGuideResponse withHeaders(Map<String, List<String>> headers) {
         Utils.checkNotNull(headers, "headers");
         this.headers = headers;
@@ -132,6 +176,7 @@ public class ReloadGuideResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.body, other.body) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -139,7 +184,7 @@ public class ReloadGuideResponse implements Response {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            headers);
+            body, headers);
     }
     
     @Override
@@ -148,6 +193,7 @@ public class ReloadGuideResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
+                "body", body,
                 "headers", headers);
     }
 
@@ -159,6 +205,8 @@ public class ReloadGuideResponse implements Response {
         private Integer statusCode;
 
         private HttpResponse<InputStream> rawResponse;
+
+        private Optional<byte[]> body = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -197,6 +245,19 @@ public class ReloadGuideResponse implements Response {
         }
 
 
+        public Builder body(byte[] body) {
+            Utils.checkNotNull(body, "body");
+            this.body = Optional.ofNullable(body);
+            return this;
+        }
+
+        public Builder body(Optional<byte[]> body) {
+            Utils.checkNotNull(body, "body");
+            this.body = body;
+            return this;
+        }
+
+
         public Builder headers(Map<String, List<String>> headers) {
             Utils.checkNotNull(headers, "headers");
             this.headers = headers;
@@ -207,7 +268,7 @@ public class ReloadGuideResponse implements Response {
 
             return new ReloadGuideResponse(
                 contentType, statusCode, rawResponse,
-                headers);
+                body, headers);
         }
 
     }

@@ -17,9 +17,15 @@ import java.util.Optional;
 /**
  * MediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class MediaContainer {
 
@@ -28,7 +34,8 @@ public class MediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -73,7 +80,8 @@ public class MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -112,7 +120,8 @@ public class MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public MediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -122,7 +131,8 @@ public class MediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public MediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -224,7 +234,8 @@ public class MediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -233,7 +244,8 @@ public class MediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");

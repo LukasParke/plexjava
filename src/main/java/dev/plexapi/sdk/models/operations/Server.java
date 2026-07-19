@@ -19,6 +19,11 @@ import java.util.Optional;
 
 
 public class Server {
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("allLibraries")
+    private Optional<? extends AllLibraries> allLibraries;
+
     /**
      * Unique ID of the server of the connected user
      */
@@ -26,10 +31,10 @@ public class Server {
     private long id;
 
     /**
-     * ID of the actual Plex server.
+     * Unix epoch datetime in seconds
      */
-    @JsonProperty("serverId")
-    private long serverId;
+    @JsonProperty("lastSeenAt")
+    private long lastSeenAt;
 
     /**
      * Machine identifier of the Plex server.
@@ -44,21 +49,10 @@ public class Server {
     private String name;
 
     /**
-     * Unix epoch datetime in seconds
-     */
-    @JsonProperty("lastSeenAt")
-    private long lastSeenAt;
-
-    /**
      * Number of libraries in the server this user has access to.
      */
     @JsonProperty("numLibraries")
     private long numLibraries;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("allLibraries")
-    private Optional<? extends AllLibraries> allLibraries;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -70,47 +64,59 @@ public class Server {
     @JsonProperty("pending")
     private Optional<? extends Pending> pending;
 
+    /**
+     * ID of the actual Plex server.
+     */
+    @JsonProperty("serverId")
+    private long serverId;
+
     @JsonCreator
     public Server(
+            @JsonProperty("allLibraries") Optional<? extends AllLibraries> allLibraries,
             @JsonProperty("id") long id,
-            @JsonProperty("serverId") long serverId,
+            @JsonProperty("lastSeenAt") long lastSeenAt,
             @JsonProperty("machineIdentifier") String machineIdentifier,
             @JsonProperty("name") String name,
-            @JsonProperty("lastSeenAt") long lastSeenAt,
             @JsonProperty("numLibraries") long numLibraries,
-            @JsonProperty("allLibraries") Optional<? extends AllLibraries> allLibraries,
             @JsonProperty("owned") Optional<? extends Owned> owned,
-            @JsonProperty("pending") Optional<? extends Pending> pending) {
+            @JsonProperty("pending") Optional<? extends Pending> pending,
+            @JsonProperty("serverId") long serverId) {
+        Utils.checkNotNull(allLibraries, "allLibraries");
         Utils.checkNotNull(id, "id");
-        Utils.checkNotNull(serverId, "serverId");
+        Utils.checkNotNull(lastSeenAt, "lastSeenAt");
         Utils.checkNotNull(machineIdentifier, "machineIdentifier");
         Utils.checkNotNull(name, "name");
-        Utils.checkNotNull(lastSeenAt, "lastSeenAt");
         Utils.checkNotNull(numLibraries, "numLibraries");
-        Utils.checkNotNull(allLibraries, "allLibraries");
         Utils.checkNotNull(owned, "owned");
         Utils.checkNotNull(pending, "pending");
+        Utils.checkNotNull(serverId, "serverId");
+        this.allLibraries = allLibraries;
         this.id = id;
-        this.serverId = serverId;
+        this.lastSeenAt = lastSeenAt;
         this.machineIdentifier = machineIdentifier;
         this.name = name;
-        this.lastSeenAt = lastSeenAt;
         this.numLibraries = numLibraries;
-        this.allLibraries = allLibraries;
         this.owned = owned;
         this.pending = pending;
+        this.serverId = serverId;
     }
     
     public Server(
             long id,
-            long serverId,
+            long lastSeenAt,
             String machineIdentifier,
             String name,
-            long lastSeenAt,
-            long numLibraries) {
-        this(id, serverId, machineIdentifier,
-            name, lastSeenAt, numLibraries,
-            Optional.empty(), Optional.empty(), Optional.empty());
+            long numLibraries,
+            long serverId) {
+        this(Optional.empty(), id, lastSeenAt,
+            machineIdentifier, name, numLibraries,
+            Optional.empty(), Optional.empty(), serverId);
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<AllLibraries> allLibraries() {
+        return (Optional<AllLibraries>) allLibraries;
     }
 
     /**
@@ -122,11 +128,11 @@ public class Server {
     }
 
     /**
-     * ID of the actual Plex server.
+     * Unix epoch datetime in seconds
      */
     @JsonIgnore
-    public long serverId() {
-        return serverId;
+    public long lastSeenAt() {
+        return lastSeenAt;
     }
 
     /**
@@ -146,25 +152,11 @@ public class Server {
     }
 
     /**
-     * Unix epoch datetime in seconds
-     */
-    @JsonIgnore
-    public long lastSeenAt() {
-        return lastSeenAt;
-    }
-
-    /**
      * Number of libraries in the server this user has access to.
      */
     @JsonIgnore
     public long numLibraries() {
         return numLibraries;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<AllLibraries> allLibraries() {
-        return (Optional<AllLibraries>) allLibraries;
     }
 
     @SuppressWarnings("unchecked")
@@ -179,10 +171,31 @@ public class Server {
         return (Optional<Pending>) pending;
     }
 
+    /**
+     * ID of the actual Plex server.
+     */
+    @JsonIgnore
+    public long serverId() {
+        return serverId;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
+
+    public Server withAllLibraries(AllLibraries allLibraries) {
+        Utils.checkNotNull(allLibraries, "allLibraries");
+        this.allLibraries = Optional.ofNullable(allLibraries);
+        return this;
+    }
+
+
+    public Server withAllLibraries(Optional<? extends AllLibraries> allLibraries) {
+        Utils.checkNotNull(allLibraries, "allLibraries");
+        this.allLibraries = allLibraries;
+        return this;
+    }
 
     /**
      * Unique ID of the server of the connected user
@@ -194,11 +207,11 @@ public class Server {
     }
 
     /**
-     * ID of the actual Plex server.
+     * Unix epoch datetime in seconds
      */
-    public Server withServerId(long serverId) {
-        Utils.checkNotNull(serverId, "serverId");
-        this.serverId = serverId;
+    public Server withLastSeenAt(long lastSeenAt) {
+        Utils.checkNotNull(lastSeenAt, "lastSeenAt");
+        this.lastSeenAt = lastSeenAt;
         return this;
     }
 
@@ -221,33 +234,11 @@ public class Server {
     }
 
     /**
-     * Unix epoch datetime in seconds
-     */
-    public Server withLastSeenAt(long lastSeenAt) {
-        Utils.checkNotNull(lastSeenAt, "lastSeenAt");
-        this.lastSeenAt = lastSeenAt;
-        return this;
-    }
-
-    /**
      * Number of libraries in the server this user has access to.
      */
     public Server withNumLibraries(long numLibraries) {
         Utils.checkNotNull(numLibraries, "numLibraries");
         this.numLibraries = numLibraries;
-        return this;
-    }
-
-    public Server withAllLibraries(AllLibraries allLibraries) {
-        Utils.checkNotNull(allLibraries, "allLibraries");
-        this.allLibraries = Optional.ofNullable(allLibraries);
-        return this;
-    }
-
-
-    public Server withAllLibraries(Optional<? extends AllLibraries> allLibraries) {
-        Utils.checkNotNull(allLibraries, "allLibraries");
-        this.allLibraries = allLibraries;
         return this;
     }
 
@@ -277,6 +268,15 @@ public class Server {
         return this;
     }
 
+    /**
+     * ID of the actual Plex server.
+     */
+    public Server withServerId(long serverId) {
+        Utils.checkNotNull(serverId, "serverId");
+        this.serverId = serverId;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -287,62 +287,75 @@ public class Server {
         }
         Server other = (Server) o;
         return 
+            Utils.enhancedDeepEquals(this.allLibraries, other.allLibraries) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.serverId, other.serverId) &&
+            Utils.enhancedDeepEquals(this.lastSeenAt, other.lastSeenAt) &&
             Utils.enhancedDeepEquals(this.machineIdentifier, other.machineIdentifier) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.lastSeenAt, other.lastSeenAt) &&
             Utils.enhancedDeepEquals(this.numLibraries, other.numLibraries) &&
-            Utils.enhancedDeepEquals(this.allLibraries, other.allLibraries) &&
             Utils.enhancedDeepEquals(this.owned, other.owned) &&
-            Utils.enhancedDeepEquals(this.pending, other.pending);
+            Utils.enhancedDeepEquals(this.pending, other.pending) &&
+            Utils.enhancedDeepEquals(this.serverId, other.serverId);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, serverId, machineIdentifier,
-            name, lastSeenAt, numLibraries,
-            allLibraries, owned, pending);
+            allLibraries, id, lastSeenAt,
+            machineIdentifier, name, numLibraries,
+            owned, pending, serverId);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Server.class,
+                "allLibraries", allLibraries,
                 "id", id,
-                "serverId", serverId,
+                "lastSeenAt", lastSeenAt,
                 "machineIdentifier", machineIdentifier,
                 "name", name,
-                "lastSeenAt", lastSeenAt,
                 "numLibraries", numLibraries,
-                "allLibraries", allLibraries,
                 "owned", owned,
-                "pending", pending);
+                "pending", pending,
+                "serverId", serverId);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private Optional<? extends AllLibraries> allLibraries;
+
         private Long id;
 
-        private Long serverId;
+        private Long lastSeenAt;
 
         private String machineIdentifier;
 
         private String name;
 
-        private Long lastSeenAt;
-
         private Long numLibraries;
-
-        private Optional<? extends AllLibraries> allLibraries;
 
         private Optional<? extends Owned> owned;
 
         private Optional<? extends Pending> pending;
 
+        private Long serverId;
+
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        public Builder allLibraries(AllLibraries allLibraries) {
+            Utils.checkNotNull(allLibraries, "allLibraries");
+            this.allLibraries = Optional.ofNullable(allLibraries);
+            return this;
+        }
+
+        public Builder allLibraries(Optional<? extends AllLibraries> allLibraries) {
+            Utils.checkNotNull(allLibraries, "allLibraries");
+            this.allLibraries = allLibraries;
+            return this;
         }
 
 
@@ -357,11 +370,11 @@ public class Server {
 
 
         /**
-         * ID of the actual Plex server.
+         * Unix epoch datetime in seconds
          */
-        public Builder serverId(long serverId) {
-            Utils.checkNotNull(serverId, "serverId");
-            this.serverId = serverId;
+        public Builder lastSeenAt(long lastSeenAt) {
+            Utils.checkNotNull(lastSeenAt, "lastSeenAt");
+            this.lastSeenAt = lastSeenAt;
             return this;
         }
 
@@ -387,34 +400,11 @@ public class Server {
 
 
         /**
-         * Unix epoch datetime in seconds
-         */
-        public Builder lastSeenAt(long lastSeenAt) {
-            Utils.checkNotNull(lastSeenAt, "lastSeenAt");
-            this.lastSeenAt = lastSeenAt;
-            return this;
-        }
-
-
-        /**
          * Number of libraries in the server this user has access to.
          */
         public Builder numLibraries(long numLibraries) {
             Utils.checkNotNull(numLibraries, "numLibraries");
             this.numLibraries = numLibraries;
-            return this;
-        }
-
-
-        public Builder allLibraries(AllLibraries allLibraries) {
-            Utils.checkNotNull(allLibraries, "allLibraries");
-            this.allLibraries = Optional.ofNullable(allLibraries);
-            return this;
-        }
-
-        public Builder allLibraries(Optional<? extends AllLibraries> allLibraries) {
-            Utils.checkNotNull(allLibraries, "allLibraries");
-            this.allLibraries = allLibraries;
             return this;
         }
 
@@ -444,6 +434,16 @@ public class Server {
             return this;
         }
 
+
+        /**
+         * ID of the actual Plex server.
+         */
+        public Builder serverId(long serverId) {
+            Utils.checkNotNull(serverId, "serverId");
+            this.serverId = serverId;
+            return this;
+        }
+
         public Server build() {
             if (allLibraries == null) {
                 allLibraries = _SINGLETON_VALUE_AllLibraries.value();
@@ -456,9 +456,9 @@ public class Server {
             }
 
             return new Server(
-                id, serverId, machineIdentifier,
-                name, lastSeenAt, numLibraries,
-                allLibraries, owned, pending);
+                allLibraries, id, lastSeenAt,
+                machineIdentifier, name, numLibraries,
+                owned, pending, serverId);
         }
 
 

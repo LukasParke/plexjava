@@ -10,7 +10,8 @@ import java.util.Optional;
 /**
  * AutoSelectSubtitle
  * 
- * <p>The auto-select subtitle mode (0 = Manually selected, 1 = Shown with foreign audio, 2 = Always enabled)
+ * <p>The auto-select subtitle mode (0 = Manually selected, 1 = Shown with foreign audio, 2 = Always
+ * enabled)
  */
 public enum AutoSelectSubtitle {
     ManuallySelected(0),

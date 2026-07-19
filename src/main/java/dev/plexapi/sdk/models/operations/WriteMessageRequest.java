@@ -85,11 +85,11 @@ public class WriteMessageRequest {
 
     /**
      * An integer log level to write to the PMS log with.
-     *   - 0: Error
-     *   - 1: Warning
-     *   - 2: Info
-     *   - 3: Debug
-     *   - 4: Verbose
+     * - 0: Error
+     * - 1: Warning
+     * - 2: Info
+     * - 3: Debug
+     * - 4: Verbose
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=level")
     private Optional<? extends Level> level;
@@ -251,11 +251,11 @@ public class WriteMessageRequest {
 
     /**
      * An integer log level to write to the PMS log with.
-     *   - 0: Error
-     *   - 1: Warning
-     *   - 2: Info
-     *   - 3: Debug
-     *   - 4: Verbose
+     * - 0: Error
+     * - 1: Warning
+     * - 2: Info
+     * - 3: Debug
+     * - 4: Verbose
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -495,11 +495,11 @@ public class WriteMessageRequest {
 
     /**
      * An integer log level to write to the PMS log with.
-     *   - 0: Error
-     *   - 1: Warning
-     *   - 2: Info
-     *   - 3: Debug
-     *   - 4: Verbose
+     * - 0: Error
+     * - 1: Warning
+     * - 2: Info
+     * - 3: Debug
+     * - 4: Verbose
      */
     public WriteMessageRequest withLevel(Level level) {
         Utils.checkNotNull(level, "level");
@@ -510,11 +510,11 @@ public class WriteMessageRequest {
 
     /**
      * An integer log level to write to the PMS log with.
-     *   - 0: Error
-     *   - 1: Warning
-     *   - 2: Info
-     *   - 3: Debug
-     *   - 4: Verbose
+     * - 0: Error
+     * - 1: Warning
+     * - 2: Info
+     * - 3: Debug
+     * - 4: Verbose
      */
     public WriteMessageRequest withLevel(Optional<? extends Level> level) {
         Utils.checkNotNull(level, "level");
@@ -862,11 +862,11 @@ public class WriteMessageRequest {
 
         /**
          * An integer log level to write to the PMS log with.
-         *   - 0: Error
-         *   - 1: Warning
-         *   - 2: Info
-         *   - 3: Debug
-         *   - 4: Verbose
+         * - 0: Error
+         * - 1: Warning
+         * - 2: Info
+         * - 3: Debug
+         * - 4: Verbose
          */
         public Builder level(Level level) {
             Utils.checkNotNull(level, "level");
@@ -876,11 +876,11 @@ public class WriteMessageRequest {
 
         /**
          * An integer log level to write to the PMS log with.
-         *   - 0: Error
-         *   - 1: Warning
-         *   - 2: Info
-         *   - 3: Debug
-         *   - 4: Verbose
+         * - 0: Error
+         * - 1: Warning
+         * - 2: Info
+         * - 3: Debug
+         * - 4: Verbose
          */
         public Builder level(Optional<? extends Level> level) {
             Utils.checkNotNull(level, "level");

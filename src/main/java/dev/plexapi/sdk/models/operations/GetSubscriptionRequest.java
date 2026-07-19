@@ -85,7 +85,9 @@ public class GetSubscriptionRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * The unique identifier of the subscription
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=subscriptionId")
     private long subscriptionId;
 
@@ -245,6 +247,9 @@ public class GetSubscriptionRequest {
         return marketplace;
     }
 
+    /**
+     * The unique identifier of the subscription
+     */
     @JsonIgnore
     public long subscriptionId() {
         return subscriptionId;
@@ -482,6 +487,9 @@ public class GetSubscriptionRequest {
         return this;
     }
 
+    /**
+     * The unique identifier of the subscription
+     */
     public GetSubscriptionRequest withSubscriptionId(long subscriptionId) {
         Utils.checkNotNull(subscriptionId, "subscriptionId");
         this.subscriptionId = subscriptionId;
@@ -826,6 +834,9 @@ public class GetSubscriptionRequest {
         }
 
 
+        /**
+         * The unique identifier of the subscription
+         */
         public Builder subscriptionId(long subscriptionId) {
             Utils.checkNotNull(subscriptionId, "subscriptionId");
             this.subscriptionId = subscriptionId;

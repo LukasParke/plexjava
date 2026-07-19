@@ -1,5 +1,13 @@
 # MediaContainerWithDecisionLocation
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.MediaContainerWithDecisionLocation;
+
+MediaContainerWithDecisionLocation value = MediaContainerWithDecisionLocation.DIRECT;
+```
+
 
 ## Values
 

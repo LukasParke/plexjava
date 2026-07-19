@@ -84,22 +84,24 @@ public class UnscrobbleRequest {
     private Optional<String> marketplace;
 
     /**
-     * The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`
+     * The identifier of the media provider containing the media to rate. Typically
+     * `com.plexapp.plugins.library`
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=identifier")
     private String identifier;
 
     /**
-     * The key of the item to rate.  This is the `ratingKey` found in metadata items
+     * The key of the item to rate. This is the `ratingKey` found in metadata items
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=key")
     private Optional<String> key;
 
     /**
-     * The URI of the item to mark as played.  See intro for description of the URIs
+     * URI of the item to scrobble. Format is `library://&lt;section-uuid&gt;/item/&lt;url-encoded-key&gt;`
+     * or `plex://movie/&lt;guid&gt;` or `plex://episode/&lt;guid&gt;`.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=uri")
-    private Optional<String> uri;
+    private String uri;
 
     @JsonCreator
     public UnscrobbleRequest(
@@ -116,7 +118,7 @@ public class UnscrobbleRequest {
             Optional<String> marketplace,
             String identifier,
             Optional<String> key,
-            Optional<String> uri) {
+            String uri) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -148,12 +150,13 @@ public class UnscrobbleRequest {
     }
     
     public UnscrobbleRequest(
-            String identifier) {
+            String identifier,
+            String uri) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), identifier,
-            Optional.empty(), Optional.empty());
+            Optional.empty(), uri);
     }
 
     /**
@@ -246,7 +249,8 @@ public class UnscrobbleRequest {
     }
 
     /**
-     * The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`
+     * The identifier of the media provider containing the media to rate. Typically
+     * `com.plexapp.plugins.library`
      */
     @JsonIgnore
     public String identifier() {
@@ -254,7 +258,7 @@ public class UnscrobbleRequest {
     }
 
     /**
-     * The key of the item to rate.  This is the `ratingKey` found in metadata items
+     * The key of the item to rate. This is the `ratingKey` found in metadata items
      */
     @JsonIgnore
     public Optional<String> key() {
@@ -262,10 +266,11 @@ public class UnscrobbleRequest {
     }
 
     /**
-     * The URI of the item to mark as played.  See intro for description of the URIs
+     * URI of the item to scrobble. Format is `library://&lt;section-uuid&gt;/item/&lt;url-encoded-key&gt;`
+     * or `plex://movie/&lt;guid&gt;` or `plex://episode/&lt;guid&gt;`.
      */
     @JsonIgnore
-    public Optional<String> uri() {
+    public String uri() {
         return uri;
     }
 
@@ -484,7 +489,8 @@ public class UnscrobbleRequest {
     }
 
     /**
-     * The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`
+     * The identifier of the media provider containing the media to rate. Typically
+     * `com.plexapp.plugins.library`
      */
     public UnscrobbleRequest withIdentifier(String identifier) {
         Utils.checkNotNull(identifier, "identifier");
@@ -493,7 +499,7 @@ public class UnscrobbleRequest {
     }
 
     /**
-     * The key of the item to rate.  This is the `ratingKey` found in metadata items
+     * The key of the item to rate. This is the `ratingKey` found in metadata items
      */
     public UnscrobbleRequest withKey(String key) {
         Utils.checkNotNull(key, "key");
@@ -503,7 +509,7 @@ public class UnscrobbleRequest {
 
 
     /**
-     * The key of the item to rate.  This is the `ratingKey` found in metadata items
+     * The key of the item to rate. This is the `ratingKey` found in metadata items
      */
     public UnscrobbleRequest withKey(Optional<String> key) {
         Utils.checkNotNull(key, "key");
@@ -512,19 +518,10 @@ public class UnscrobbleRequest {
     }
 
     /**
-     * The URI of the item to mark as played.  See intro for description of the URIs
+     * URI of the item to scrobble. Format is `library://&lt;section-uuid&gt;/item/&lt;url-encoded-key&gt;`
+     * or `plex://movie/&lt;guid&gt;` or `plex://episode/&lt;guid&gt;`.
      */
     public UnscrobbleRequest withUri(String uri) {
-        Utils.checkNotNull(uri, "uri");
-        this.uri = Optional.ofNullable(uri);
-        return this;
-    }
-
-
-    /**
-     * The URI of the item to mark as played.  See intro for description of the URIs
-     */
-    public UnscrobbleRequest withUri(Optional<String> uri) {
         Utils.checkNotNull(uri, "uri");
         this.uri = uri;
         return this;
@@ -614,7 +611,7 @@ public class UnscrobbleRequest {
 
         private Optional<String> key = Optional.empty();
 
-        private Optional<String> uri = Optional.empty();
+        private String uri;
 
         private Builder() {
           // force use of static builder() method
@@ -831,7 +828,8 @@ public class UnscrobbleRequest {
 
 
         /**
-         * The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`
+         * The identifier of the media provider containing the media to rate. Typically
+         * `com.plexapp.plugins.library`
          */
         public Builder identifier(String identifier) {
             Utils.checkNotNull(identifier, "identifier");
@@ -841,7 +839,7 @@ public class UnscrobbleRequest {
 
 
         /**
-         * The key of the item to rate.  This is the `ratingKey` found in metadata items
+         * The key of the item to rate. This is the `ratingKey` found in metadata items
          */
         public Builder key(String key) {
             Utils.checkNotNull(key, "key");
@@ -850,7 +848,7 @@ public class UnscrobbleRequest {
         }
 
         /**
-         * The key of the item to rate.  This is the `ratingKey` found in metadata items
+         * The key of the item to rate. This is the `ratingKey` found in metadata items
          */
         public Builder key(Optional<String> key) {
             Utils.checkNotNull(key, "key");
@@ -860,18 +858,10 @@ public class UnscrobbleRequest {
 
 
         /**
-         * The URI of the item to mark as played.  See intro for description of the URIs
+         * URI of the item to scrobble. Format is `library://&lt;section-uuid&gt;/item/&lt;url-encoded-key&gt;`
+         * or `plex://movie/&lt;guid&gt;` or `plex://episode/&lt;guid&gt;`.
          */
         public Builder uri(String uri) {
-            Utils.checkNotNull(uri, "uri");
-            this.uri = Optional.ofNullable(uri);
-            return this;
-        }
-
-        /**
-         * The URI of the item to mark as played.  See intro for description of the URIs
-         */
-        public Builder uri(Optional<String> uri) {
             Utils.checkNotNull(uri, "uri");
             this.uri = uri;
             return this;

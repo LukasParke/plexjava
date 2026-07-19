@@ -12,10 +12,10 @@ import java.util.Optional;
  * RecommendationsVisibility
  * 
  * <p>The visibility of this hub in recommendations:
- *   - all: Visible to all users
- *   - none: Visible to no users
- *   - admin: Visible to only admin users
- *   - shared: Visible to shared users
+ * - all: Visible to all users
+ * - none: Visible to no users
+ * - admin: Visible to only admin users
+ * - shared: Visible to shared users
  */
 public enum RecommendationsVisibility {
     ALL("all"),

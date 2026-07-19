@@ -69,7 +69,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import dev.plexapi.sdk.models.errors.UncheckedSDKError;
+import dev.plexapi.sdk.models.errors.AsyncSDKError;
+import dev.plexapi.sdk.models.errors.SDKError;
 
 
 public final class Utils {
@@ -179,10 +180,10 @@ public final class Utils {
                                     pathParams.put(pathParamsMetadata.name, pathEncode(valToString(value), pathParamsMetadata.allowReserved));
                                     break;
                                 }
-                                Optional<?> openEnumValue = Reflections.getOpenEnumValue(value.getClass(), value);
-                                if (openEnumValue.isPresent()) {
+                                Optional<?> unwrappedEnumValue = Reflections.getUnwrappedEnumValue(value.getClass(), value);
+                                if (unwrappedEnumValue.isPresent()) {
                                     pathParams.put(pathParamsMetadata.name, pathEncode(
-                                            valToString(openEnumValue.get()),
+                                            valToString(unwrappedEnumValue.get()),
                                             pathParamsMetadata.allowReserved));
                                     break;
                                 }
@@ -307,8 +308,8 @@ public final class Utils {
         return QueryParameters.parseQueryParams(type, params, globals);
     }
 
-    public static HTTPRequest configureSecurity(HTTPRequest request, Object security) throws Exception {
-        return Security.configureSecurity(request, security);
+    public static HTTPRequest configureSecurity(HTTPRequest request, Object security, String... allowedFields) throws Exception {
+        return Security.configureSecurity(request, security, allowedFields);
     }
     
     private static final String DOLLAR_MARKER = "D9qPtyhOYzkHGu3c";
@@ -367,9 +368,9 @@ public final class Utils {
                     if (!allowIntrospection(value.getClass())) {
                         break;
                     }
-                    Optional<?> openEnumValue = Reflections.getOpenEnumValue(value.getClass(), value);
-                    if (openEnumValue.isPresent()) {
-                        upsertHeader(result, headerMetadata.name, openEnumValue.get());
+                    Optional<?> unwrappedEnumValue = Reflections.getUnwrappedEnumValue(value.getClass(), value);
+                    if (unwrappedEnumValue.isPresent()) {
+                        upsertHeader(result, headerMetadata.name, unwrappedEnumValue.get());
                         break;
                     }
 
@@ -492,6 +493,14 @@ public final class Utils {
                 field.setAccessible(true);
                 return String.valueOf(field.get(value));
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+                return "ERROR_UNKNOWN_VALUE";
+            }
+        } else if (Reflections.isEnumWrapper(value)) {
+            // Extract the underlying value from enum wrapper
+            Optional<?> unwrappedEnumValue = Reflections.getUnwrappedEnumValue(value.getClass(), value);
+            if (unwrappedEnumValue.isPresent()) {
+                return String.valueOf(unwrappedEnumValue.get());
+            } else {
                 return "ERROR_UNKNOWN_VALUE";
             }
         } else {
@@ -974,13 +983,18 @@ public final class Utils {
         m.event().ifPresent(value -> node.set("event", new TextNode(value)));
         m.id().ifPresent(value -> node.set("id", new TextNode(value)));
         m.retryMs().ifPresent(value -> node.set("retry", new IntNode(value)));
-        // data is always present (but may be an empty string)
-        if (dataIsPlainText || m.data().trim().isEmpty()) {
-            node.set("data", new TextNode(m.data()));
-        } else {
-            JsonNode tree = mapper.readTree(m.data());
-            node.set("data", tree);
-        }
+        m.data().ifPresent(data -> {
+            if (dataIsPlainText) {
+                node.set("data", new TextNode(data));
+            } else {
+                try {
+                    JsonNode tree = mapper.readTree(data);
+                    node.set("data", tree);
+                } catch (JsonProcessingException e) {
+                    node.set("data", new TextNode(data));
+                }
+            }
+        });
         return mapper.writeValueAsString(node);
     }
     
@@ -1134,13 +1148,22 @@ public final class Utils {
     
     @SuppressWarnings("unchecked")
     public static String discriminatorToString(Object o) {
-        // expects o to be either an Optional<String>, Enum (with a String value() method)
-        // or a String value
+        // expects o to be either an Optional<String>, Enum (with a String value() method),
+        // an open enum wrapper, or a String value
         Class<?> cls = o.getClass();
         if (cls.equals(Optional.class)) {
             Optional<String> a = (Optional<String>) o;
             return a.map(x -> discriminatorToString(x)).orElse(null);
-        } else if (cls.isEnum()) {
+        }
+
+        // Check if it's an open enum wrapper
+        if (Reflections.isEnumWrapper(o)) {
+            Optional<?> value = Reflections.getUnwrappedEnumValue(cls, o);
+            return value.map(String::valueOf).orElse(null);
+        }
+
+        // Handle regular enums
+        if (cls.isEnum()) {
             try {
                 Method m = cls.getMethod("value");
                 return (String) m.invoke(o);
@@ -1148,9 +1171,10 @@ public final class Utils {
                     | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
-        } else {
-            return (String) o;
         }
+
+        // Fall back to String cast
+        return (String) o;
     }
     
     public static void recordTest(String id) {
@@ -1411,11 +1435,16 @@ public final class Utils {
     public static <T> T valueOrElse(T value, T valueIfNotPresent) {
         return value != null ? value : valueIfNotPresent;
     }
-        
+
     public static <T> T valueOrElse(Optional<T> value, T valueIfNotPresent) {
+        if (value == null) {
+            // this defensive check is used in custom exception class constructors
+            // to simplify calling code
+            return valueIfNotPresent;
+        }
         return value.orElse(valueIfNotPresent);
     }
-    
+
     public static <T> T valueOrElse(JsonNullable<T> value, T valueIfNotPresent) {
         if (value.isPresent()) {
             return value.get();
@@ -1423,15 +1452,15 @@ public final class Utils {
             return valueIfNotPresent;
         }
     }
-    
+
     public static <T> T valueOrNull(T value) {
         return valueOrElse(value, null);
     }
-    
+
     public static <T> T valueOrNull(Optional<T> value) {
         return valueOrElse(value, null);
     }
-    
+
     public static <T> T valueOrNull(JsonNullable<T> value) {
         return valueOrElse(value, null);
     }
@@ -1604,16 +1633,54 @@ public final class Utils {
     /**
      * Creates a failed CompletableFuture with an async API exception.
      * Uses the Blob to read the response body asynchronously.
-     */public static <T> CompletableFuture<T> createAsyncApiError(
+     */
+    public static <T> CompletableFuture<T> createAsyncApiError(
             HttpResponse<dev.plexapi.sdk.utils.Blob> response,
             String reason) {
         return response.body().toByteArray()
                 .thenApply(bodyBytes -> {
-                    throw new UncheckedSDKError(
-                            response,
-                            response.statusCode(),
+                    throw new AsyncSDKError(
                             reason,
-                            bodyBytes);
+                            response.statusCode(),
+                            bodyBytes,
+                            response,
+                            null);
+                });
+    }
+
+        public static <T> T unmarshal(HttpResponse<InputStream> response, TypeReference<T> typeReference) {
+        try {
+            return mapper().readValue(
+                    Utils.extractByteArrayFromBody(response),
+                    typeReference);
+        } catch (Exception e) {
+            throw SDKError.from(
+                    "Error deserializing response body: " + e.getMessage(), response, e);
+        }
+    }
+    public static <T> CompletableFuture<T> unmarshalAsync(HttpResponse<Blob> response, TypeReference<T> typeReference) {
+        return response.body()
+                .toByteArray()
+                .handle((bytes, err) -> {
+                    // if a body read error occurs, we want to transform the exception
+                    if (err != null) {
+                        throw new AsyncSDKError(
+                                "Error reading response body: " + err.getMessage(),
+                                response.statusCode(),
+                                null,
+                                response,
+                                err);
+                    }
+                    try {
+                        return mapper().readValue(bytes, typeReference);
+                    } catch (Exception e) {
+                        throw new AsyncSDKError(
+                                "Error deserializing response body: " + e.getMessage(),
+                                response.statusCode(),
+                                bytes,
+                                response,
+                                e);
+                    }
                 });
     }
 }

@@ -86,13 +86,14 @@ public class SetRatingRequest {
     private Optional<String> marketplace;
 
     /**
-     * The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`
+     * The identifier of the media provider containing the media to rate. Typically
+     * `com.plexapp.plugins.library`
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=identifier")
     private String identifier;
 
     /**
-     * The key of the item to rate.  This is the `ratingKey` found in metadata items
+     * The key of the item to rate. This is the `ratingKey` found in metadata items
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=key")
     private String key;
@@ -104,7 +105,7 @@ public class SetRatingRequest {
     private double rating;
 
     /**
-     * The time when the rating occurred.  If not present, interpreted as now.
+     * The time when the rating occurred. If not present, interpreted as now.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=ratedAt")
     private Optional<Long> ratedAt;
@@ -259,7 +260,8 @@ public class SetRatingRequest {
     }
 
     /**
-     * The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`
+     * The identifier of the media provider containing the media to rate. Typically
+     * `com.plexapp.plugins.library`
      */
     @JsonIgnore
     public String identifier() {
@@ -267,7 +269,7 @@ public class SetRatingRequest {
     }
 
     /**
-     * The key of the item to rate.  This is the `ratingKey` found in metadata items
+     * The key of the item to rate. This is the `ratingKey` found in metadata items
      */
     @JsonIgnore
     public String key() {
@@ -283,7 +285,7 @@ public class SetRatingRequest {
     }
 
     /**
-     * The time when the rating occurred.  If not present, interpreted as now.
+     * The time when the rating occurred. If not present, interpreted as now.
      */
     @JsonIgnore
     public Optional<Long> ratedAt() {
@@ -505,7 +507,8 @@ public class SetRatingRequest {
     }
 
     /**
-     * The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`
+     * The identifier of the media provider containing the media to rate. Typically
+     * `com.plexapp.plugins.library`
      */
     public SetRatingRequest withIdentifier(String identifier) {
         Utils.checkNotNull(identifier, "identifier");
@@ -514,7 +517,7 @@ public class SetRatingRequest {
     }
 
     /**
-     * The key of the item to rate.  This is the `ratingKey` found in metadata items
+     * The key of the item to rate. This is the `ratingKey` found in metadata items
      */
     public SetRatingRequest withKey(String key) {
         Utils.checkNotNull(key, "key");
@@ -532,7 +535,7 @@ public class SetRatingRequest {
     }
 
     /**
-     * The time when the rating occurred.  If not present, interpreted as now.
+     * The time when the rating occurred. If not present, interpreted as now.
      */
     public SetRatingRequest withRatedAt(long ratedAt) {
         Utils.checkNotNull(ratedAt, "ratedAt");
@@ -542,7 +545,7 @@ public class SetRatingRequest {
 
 
     /**
-     * The time when the rating occurred.  If not present, interpreted as now.
+     * The time when the rating occurred. If not present, interpreted as now.
      */
     public SetRatingRequest withRatedAt(Optional<Long> ratedAt) {
         Utils.checkNotNull(ratedAt, "ratedAt");
@@ -855,7 +858,8 @@ public class SetRatingRequest {
 
 
         /**
-         * The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`
+         * The identifier of the media provider containing the media to rate. Typically
+         * `com.plexapp.plugins.library`
          */
         public Builder identifier(String identifier) {
             Utils.checkNotNull(identifier, "identifier");
@@ -865,7 +869,7 @@ public class SetRatingRequest {
 
 
         /**
-         * The key of the item to rate.  This is the `ratingKey` found in metadata items
+         * The key of the item to rate. This is the `ratingKey` found in metadata items
          */
         public Builder key(String key) {
             Utils.checkNotNull(key, "key");
@@ -885,7 +889,7 @@ public class SetRatingRequest {
 
 
         /**
-         * The time when the rating occurred.  If not present, interpreted as now.
+         * The time when the rating occurred. If not present, interpreted as now.
          */
         public Builder ratedAt(long ratedAt) {
             Utils.checkNotNull(ratedAt, "ratedAt");
@@ -894,7 +898,7 @@ public class SetRatingRequest {
         }
 
         /**
-         * The time when the rating occurred.  If not present, interpreted as now.
+         * The time when the rating occurred. If not present, interpreted as now.
          */
         public Builder ratedAt(Optional<Long> ratedAt) {
             Utils.checkNotNull(ratedAt, "ratedAt");

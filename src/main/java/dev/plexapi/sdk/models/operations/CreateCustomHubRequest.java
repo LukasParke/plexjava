@@ -92,7 +92,7 @@ public class CreateCustomHubRequest {
     private long sectionId;
 
     /**
-     * The metadata item on which to base this hub.  This must currently be a collection
+     * The metadata item on which to base this hub. This must currently be a collection
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=metadataItemId")
     private long metadataItemId;
@@ -276,7 +276,7 @@ public class CreateCustomHubRequest {
     }
 
     /**
-     * The metadata item on which to base this hub.  This must currently be a collection
+     * The metadata item on which to base this hub. This must currently be a collection
      */
     @JsonIgnore
     public long metadataItemId() {
@@ -534,7 +534,7 @@ public class CreateCustomHubRequest {
     }
 
     /**
-     * The metadata item on which to base this hub.  This must currently be a collection
+     * The metadata item on which to base this hub. This must currently be a collection
      */
     public CreateCustomHubRequest withMetadataItemId(long metadataItemId) {
         Utils.checkNotNull(metadataItemId, "metadataItemId");
@@ -919,7 +919,7 @@ public class CreateCustomHubRequest {
 
 
         /**
-         * The metadata item on which to base this hub.  This must currently be a collection
+         * The metadata item on which to base this hub. This must currently be a collection
          */
         public Builder metadataItemId(long metadataItemId) {
             Utils.checkNotNull(metadataItemId, "metadataItemId");

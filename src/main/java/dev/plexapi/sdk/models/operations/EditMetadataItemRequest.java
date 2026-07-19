@@ -84,7 +84,9 @@ public class EditMetadataItemRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private List<String> ids;
 
@@ -235,6 +237,9 @@ public class EditMetadataItemRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public List<String> ids() {
         return ids;
@@ -463,6 +468,9 @@ public class EditMetadataItemRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public EditMetadataItemRequest withIds(List<String> ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
@@ -784,6 +792,9 @@ public class EditMetadataItemRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(List<String> ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;

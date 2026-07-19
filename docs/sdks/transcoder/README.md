@@ -1,5 +1,4 @@
 # Transcoder
-(*transcoder()*)
 
 ## Overview
 
@@ -7,11 +6,82 @@ API Operations against the Transcoder
 
 ### Available Operations
 
+* [transcodeMusic](#transcodemusic) - Transcode Music
 * [transcodeImage](#transcodeimage) - Transcode an image
+* [getTranscodeSessions](#gettranscodesessions) - Get Transcode Sessions
 * [makeDecision](#makedecision) - Make a decision on media playback
 * [triggerFallback](#triggerfallback) - Manually trigger a transcoder fallback
 * [transcodeSubtitles](#transcodesubtitles) - Transcode subtitles
 * [startTranscodeSession](#starttranscodesession) - Start A Transcoding Session
+* [getDASHSegment](#getdashsegment) - Get DASH Segment
+* [getHLSSegment](#gethlssegment) - Get HLS Segment
+
+## transcodeMusic
+
+Audio transcode endpoint for music playback.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="transcodeMusic" method="get" path="/music/:/transcode" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.TranscodeMusicRequest;
+import dev.plexapi.sdk.models.operations.TranscodeMusicResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        TranscodeMusicRequest req = TranscodeMusicRequest.builder()
+                .build();
+
+        TranscodeMusicResponse res = sdk.transcoder().transcodeMusic()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [TranscodeMusicRequest](../../models/operations/TranscodeMusicRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+
+### Response
+
+**[TranscodeMusicResponse](../../models/operations/TranscodeMusicResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## transcodeImage
 
@@ -85,6 +155,50 @@ public class Application {
 | ---------------------- | ---------------------- | ---------------------- |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
+## getTranscodeSessions
+
+Get active transcode sessions.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getTranscodeSessions" method="get" path="/transcode/sessions" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetTranscodeSessionsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetTranscodeSessionsResponse res = sdk.transcoder().getTranscodeSessions()
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Response
+
+**[GetTranscodeSessionsResponse](../../models/operations/GetTranscodeSessionsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
 ## makeDecision
 
 Make a decision on media playback based on client profile, and requested settings such as bandwidth and resolution.
@@ -96,13 +210,14 @@ Make a decision on media playback based on client profile, and requested setting
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.*;
 import dev.plexapi.sdk.models.shared.*;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -140,12 +255,14 @@ public class Application {
                 .path("/library/metadata/151671")
                 .peakBitrate(12000L)
                 .photoResolution("1080x1080")
-                .protocol(Protocol.DASH)
+                .protocol(QueryParamProtocol.DASH)
                 .secondsPerSegment(5L)
                 .subtitleSize(50L)
+                .subtitles(Subtitles.BURN)
+                .videoResolution("1080x1080")
+                .copyts(BoolInt.True)
                 .videoBitrate(12000L)
                 .videoQuality(50L)
-                .videoResolution("1080x1080")
                 .xPlexClientProfileExtra("add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)")
                 .xPlexClientProfileName("generic")
                 .build();
@@ -155,7 +272,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDecision().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDecision().get());
         }
     }
 }
@@ -175,6 +292,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## triggerFallback
@@ -297,12 +415,14 @@ public class Application {
                 .path("/library/metadata/151671")
                 .peakBitrate(12000L)
                 .photoResolution("1080x1080")
-                .protocol(QueryParamProtocol.DASH)
+                .protocol(TranscodeSubtitlesQueryParamProtocol.DASH)
                 .secondsPerSegment(5L)
                 .subtitleSize(50L)
+                .subtitles(QueryParamSubtitles.BURN)
+                .videoResolution("1080x1080")
+                .copyts(BoolInt.True)
                 .videoBitrate(12000L)
                 .videoQuality(50L)
-                .videoResolution("1080x1080")
                 .xPlexClientProfileExtra("add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)")
                 .xPlexClientProfileName("generic")
                 .build();
@@ -311,7 +431,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.binaryResponse().isPresent()) {
+            // handle response
+        }
     }
 }
 ```
@@ -391,9 +513,11 @@ public class Application {
                 .protocol(StartTranscodeSessionQueryParamProtocol.DASH)
                 .secondsPerSegment(5L)
                 .subtitleSize(50L)
+                .subtitles(StartTranscodeSessionQueryParamSubtitles.BURN)
+                .videoResolution("1080x1080")
+                .copyts(BoolInt.True)
                 .videoBitrate(12000L)
                 .videoQuality(50L)
-                .videoResolution("1080x1080")
                 .xPlexClientProfileExtra("add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)")
                 .xPlexClientProfileName("generic")
                 .build();
@@ -402,7 +526,7 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.responseStream().isPresent()) {
+        if (res.twoHundredApplicationVndAppleMpegurlBinaryResponse().isPresent()) {
             // handle response
         }
     }
@@ -423,4 +547,144 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getDASHSegment
+
+DASH segment delivery for adaptive streaming.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getDASHSegment" method="get" path="/{transcodeType}/:/transcode/universal/session/{sessionId}/{segmentId}.m4s" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetDASHSegmentRequest;
+import dev.plexapi.sdk.models.operations.GetDASHSegmentResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetDASHSegmentRequest req = GetDASHSegmentRequest.builder()
+                .transcodeType("<value>")
+                .sessionId("<id>")
+                .segmentId("<id>")
+                .build();
+
+        GetDASHSegmentResponse res = sdk.transcoder().getDASHSegment()
+                .request(req)
+                .call();
+
+        if (res.responseStream().isPresent()) {
+            // handle response
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [GetDASHSegmentRequest](../../models/operations/GetDASHSegmentRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+
+### Response
+
+**[GetDASHSegmentResponse](../../models/operations/GetDASHSegmentResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getHLSSegment
+
+HLS TS segment delivery for adaptive streaming.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getHLSSegment" method="get" path="/{transcodeType}/:/transcode/universal/session/{sessionId}/{segmentId}.ts" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetHLSSegmentRequest;
+import dev.plexapi.sdk.models.operations.GetHLSSegmentResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetHLSSegmentRequest req = GetHLSSegmentRequest.builder()
+                .transcodeType("<value>")
+                .sessionId("<id>")
+                .segmentId("<id>")
+                .build();
+
+        GetHLSSegmentResponse res = sdk.transcoder().getHLSSegment()
+                .request(req)
+                .call();
+
+        if (res.responseStream().isPresent()) {
+            // handle response
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `request`                                                               | [GetHLSSegmentRequest](../../models/operations/GetHLSSegmentRequest.md) | :heavy_check_mark:                                                      | The request object to use for the request.                              |
+
+### Response
+
+**[GetHLSSegmentResponse](../../models/operations/GetHLSSegmentResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |

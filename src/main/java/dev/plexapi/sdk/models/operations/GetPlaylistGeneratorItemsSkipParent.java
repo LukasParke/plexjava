@@ -19,26 +19,26 @@ import java.lang.SuppressWarnings;
 /**
  * GetPlaylistGeneratorItemsSkipParent
  * 
- * <p>When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
+ * <p>When present on an episode or track item, indicates parent should be skipped in favor of grandparent
+ * (show).
  */
 @JsonDeserialize(using = GetPlaylistGeneratorItemsSkipParent._Deserializer.class)
 public class GetPlaylistGeneratorItemsSkipParent {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private GetPlaylistGeneratorItemsSkipParent(TypedObject value) {
         this.value = value;
     }
 
     public static GetPlaylistGeneratorItemsSkipParent of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new GetPlaylistGeneratorItemsSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new GetPlaylistGeneratorItemsSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static GetPlaylistGeneratorItemsSkipParent of(GetPlaylistGeneratorItemsSkipParent2 value) {
         Utils.checkNotNull(value, "value");
-        return new GetPlaylistGeneratorItemsSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<GetPlaylistGeneratorItemsSkipParent2>(){}));
+        return new GetPlaylistGeneratorItemsSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +61,7 @@ public class GetPlaylistGeneratorItemsSkipParent {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +72,7 @@ public class GetPlaylistGeneratorItemsSkipParent {
             return false;
         }
         GetPlaylistGeneratorItemsSkipParent other = (GetPlaylistGeneratorItemsSkipParent) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +85,8 @@ public class GetPlaylistGeneratorItemsSkipParent {
 
         public _Deserializer() {
             super(GetPlaylistGeneratorItemsSkipParent.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<GetPlaylistGeneratorItemsSkipParent2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<GetPlaylistGeneratorItemsSkipParent2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +95,6 @@ public class GetPlaylistGeneratorItemsSkipParent {
         return Utils.toString(GetPlaylistGeneratorItemsSkipParent.class,
                 "value", value);
     }
- 
+
 }
 

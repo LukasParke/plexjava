@@ -5,7 +5,7 @@ package dev.plexapi.sdk.models.operations.async;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.plexapi.sdk.models.operations.CreatePlayQueueResponseBody;
+import dev.plexapi.sdk.models.shared.MediaContainerWithPlayQueue;
 import dev.plexapi.sdk.utils.AsyncResponse;
 import dev.plexapi.sdk.utils.Blob;
 import dev.plexapi.sdk.utils.Utils;
@@ -38,7 +38,7 @@ public class CreatePlayQueueResponse implements AsyncResponse {
     /**
      * OK
      */
-    private Optional<? extends CreatePlayQueueResponseBody> object;
+    private Optional<? extends MediaContainerWithPlayQueue> mediaContainerWithPlayQueue;
 
 
     private Map<String, List<String>> headers;
@@ -48,18 +48,18 @@ public class CreatePlayQueueResponse implements AsyncResponse {
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
-            Optional<? extends CreatePlayQueueResponseBody> object,
+            Optional<? extends MediaContainerWithPlayQueue> mediaContainerWithPlayQueue,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithPlayQueue, "mediaContainerWithPlayQueue");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithPlayQueue = mediaContainerWithPlayQueue;
         this.headers = headers;
     }
     
@@ -101,8 +101,8 @@ public class CreatePlayQueueResponse implements AsyncResponse {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<CreatePlayQueueResponseBody> object() {
-        return (Optional<CreatePlayQueueResponseBody>) object;
+    public Optional<MediaContainerWithPlayQueue> mediaContainerWithPlayQueue() {
+        return (Optional<MediaContainerWithPlayQueue>) mediaContainerWithPlayQueue;
     }
 
     @JsonIgnore
@@ -145,9 +145,9 @@ public class CreatePlayQueueResponse implements AsyncResponse {
     /**
      * OK
      */
-    public CreatePlayQueueResponse withObject(CreatePlayQueueResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public CreatePlayQueueResponse withMediaContainerWithPlayQueue(MediaContainerWithPlayQueue mediaContainerWithPlayQueue) {
+        Utils.checkNotNull(mediaContainerWithPlayQueue, "mediaContainerWithPlayQueue");
+        this.mediaContainerWithPlayQueue = Optional.ofNullable(mediaContainerWithPlayQueue);
         return this;
     }
 
@@ -155,9 +155,9 @@ public class CreatePlayQueueResponse implements AsyncResponse {
     /**
      * OK
      */
-    public CreatePlayQueueResponse withObject(Optional<? extends CreatePlayQueueResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public CreatePlayQueueResponse withMediaContainerWithPlayQueue(Optional<? extends MediaContainerWithPlayQueue> mediaContainerWithPlayQueue) {
+        Utils.checkNotNull(mediaContainerWithPlayQueue, "mediaContainerWithPlayQueue");
+        this.mediaContainerWithPlayQueue = mediaContainerWithPlayQueue;
         return this;
     }
 
@@ -180,7 +180,7 @@ public class CreatePlayQueueResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
+            Utils.enhancedDeepEquals(this.mediaContainerWithPlayQueue, other.mediaContainerWithPlayQueue) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -188,7 +188,7 @@ public class CreatePlayQueueResponse implements AsyncResponse {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object, headers);
+            mediaContainerWithPlayQueue, headers);
     }
     
     @Override
@@ -197,7 +197,7 @@ public class CreatePlayQueueResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object,
+                "mediaContainerWithPlayQueue", mediaContainerWithPlayQueue,
                 "headers", headers);
     }
 
@@ -210,7 +210,7 @@ public class CreatePlayQueueResponse implements AsyncResponse {
 
         private HttpResponse<Blob> rawResponse;
 
-        private Optional<? extends CreatePlayQueueResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithPlayQueue> mediaContainerWithPlayQueue = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -252,18 +252,18 @@ public class CreatePlayQueueResponse implements AsyncResponse {
         /**
          * OK
          */
-        public Builder object(CreatePlayQueueResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithPlayQueue(MediaContainerWithPlayQueue mediaContainerWithPlayQueue) {
+            Utils.checkNotNull(mediaContainerWithPlayQueue, "mediaContainerWithPlayQueue");
+            this.mediaContainerWithPlayQueue = Optional.ofNullable(mediaContainerWithPlayQueue);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends CreatePlayQueueResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithPlayQueue(Optional<? extends MediaContainerWithPlayQueue> mediaContainerWithPlayQueue) {
+            Utils.checkNotNull(mediaContainerWithPlayQueue, "mediaContainerWithPlayQueue");
+            this.mediaContainerWithPlayQueue = mediaContainerWithPlayQueue;
             return this;
         }
 
@@ -278,7 +278,7 @@ public class CreatePlayQueueResponse implements AsyncResponse {
 
             return new CreatePlayQueueResponse(
                 contentType, statusCode, rawResponse,
-                object, headers);
+                mediaContainerWithPlayQueue, headers);
         }
 
     }

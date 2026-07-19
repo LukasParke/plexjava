@@ -5,7 +5,7 @@ package dev.plexapi.sdk.models.operations.async;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.plexapi.sdk.models.operations.GetPromotedHubsResponseBody;
+import dev.plexapi.sdk.models.shared.MediaContainerWithHubs;
 import dev.plexapi.sdk.utils.AsyncResponse;
 import dev.plexapi.sdk.utils.Blob;
 import dev.plexapi.sdk.utils.Utils;
@@ -38,7 +38,7 @@ public class GetPromotedHubsResponse implements AsyncResponse {
     /**
      * OK
      */
-    private Optional<? extends GetPromotedHubsResponseBody> object;
+    private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs;
 
 
     private Map<String, List<String>> headers;
@@ -48,18 +48,18 @@ public class GetPromotedHubsResponse implements AsyncResponse {
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
-            Optional<? extends GetPromotedHubsResponseBody> object,
+            Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithHubs = mediaContainerWithHubs;
         this.headers = headers;
     }
     
@@ -101,8 +101,8 @@ public class GetPromotedHubsResponse implements AsyncResponse {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetPromotedHubsResponseBody> object() {
-        return (Optional<GetPromotedHubsResponseBody>) object;
+    public Optional<MediaContainerWithHubs> mediaContainerWithHubs() {
+        return (Optional<MediaContainerWithHubs>) mediaContainerWithHubs;
     }
 
     @JsonIgnore
@@ -145,9 +145,9 @@ public class GetPromotedHubsResponse implements AsyncResponse {
     /**
      * OK
      */
-    public GetPromotedHubsResponse withObject(GetPromotedHubsResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public GetPromotedHubsResponse withMediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+        this.mediaContainerWithHubs = Optional.ofNullable(mediaContainerWithHubs);
         return this;
     }
 
@@ -155,9 +155,9 @@ public class GetPromotedHubsResponse implements AsyncResponse {
     /**
      * OK
      */
-    public GetPromotedHubsResponse withObject(Optional<? extends GetPromotedHubsResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public GetPromotedHubsResponse withMediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+        this.mediaContainerWithHubs = mediaContainerWithHubs;
         return this;
     }
 
@@ -180,7 +180,7 @@ public class GetPromotedHubsResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
+            Utils.enhancedDeepEquals(this.mediaContainerWithHubs, other.mediaContainerWithHubs) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -188,7 +188,7 @@ public class GetPromotedHubsResponse implements AsyncResponse {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object, headers);
+            mediaContainerWithHubs, headers);
     }
     
     @Override
@@ -197,7 +197,7 @@ public class GetPromotedHubsResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object,
+                "mediaContainerWithHubs", mediaContainerWithHubs,
                 "headers", headers);
     }
 
@@ -210,7 +210,7 @@ public class GetPromotedHubsResponse implements AsyncResponse {
 
         private HttpResponse<Blob> rawResponse;
 
-        private Optional<? extends GetPromotedHubsResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -252,18 +252,18 @@ public class GetPromotedHubsResponse implements AsyncResponse {
         /**
          * OK
          */
-        public Builder object(GetPromotedHubsResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
+            Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+            this.mediaContainerWithHubs = Optional.ofNullable(mediaContainerWithHubs);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends GetPromotedHubsResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
+            Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+            this.mediaContainerWithHubs = mediaContainerWithHubs;
             return this;
         }
 
@@ -278,7 +278,7 @@ public class GetPromotedHubsResponse implements AsyncResponse {
 
             return new GetPromotedHubsResponse(
                 contentType, statusCode, rawResponse,
-                object, headers);
+                mediaContainerWithHubs, headers);
         }
 
     }

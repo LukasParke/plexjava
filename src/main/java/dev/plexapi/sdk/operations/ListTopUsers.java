@@ -4,32 +4,43 @@
 package dev.plexapi.sdk.operations;
 
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
+import static dev.plexapi.sdk.utils.Exceptions.unchecked;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.SecuritySource;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.errors.SDKError;
 import dev.plexapi.sdk.models.operations.ListTopUsersRequest;
 import dev.plexapi.sdk.models.operations.ListTopUsersResponse;
 import dev.plexapi.sdk.models.operations.ListTopUsersResponseBody;
+import dev.plexapi.sdk.utils.AsyncRetries;
+import dev.plexapi.sdk.utils.BackoffStrategy;
 import dev.plexapi.sdk.utils.Blob;
-import dev.plexapi.sdk.utils.Exceptions;
+import dev.plexapi.sdk.utils.Globals;
 import dev.plexapi.sdk.utils.HTTPClient;
 import dev.plexapi.sdk.utils.HTTPRequest;
+import dev.plexapi.sdk.utils.Headers;
 import dev.plexapi.sdk.utils.Hook.AfterErrorContextImpl;
 import dev.plexapi.sdk.utils.Hook.AfterSuccessContextImpl;
 import dev.plexapi.sdk.utils.Hook.BeforeRequestContextImpl;
+import dev.plexapi.sdk.utils.NonRetryableException;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.Retries;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
 import java.lang.Exception;
-import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.Throwable;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 
@@ -39,14 +50,58 @@ public class ListTopUsers {
         final SDKConfiguration sdkConfiguration;
         final String baseUrl;
         final SecuritySource securitySource;
+        final List<String> retryStatusCodes;
+        final RetryConfig retryConfig;
         final HTTPClient client;
+        final Headers _headers;
+        final Globals operationGlobals;
 
-        public Base(SDKConfiguration sdkConfiguration) {
+        public Base(
+                SDKConfiguration sdkConfiguration, Optional<Options> options,
+                Headers _headers) {
             this.sdkConfiguration = sdkConfiguration;
+            this._headers =_headers;
             this.baseUrl = Utils.templateUrl(
                     this.sdkConfiguration.serverUrl(), this.sdkConfiguration.getServerVariableDefaults());
             this.securitySource = this.sdkConfiguration.securitySource();
+            options
+                    .ifPresent(o -> o.validate(List.of(Options.Option.RETRY_CONFIG)));
+            this.retryStatusCodes = List.of("429");
+            this.retryConfig = options
+                    .flatMap(Options::retryConfig)
+                    .or(sdkConfiguration::retryConfig)
+                    .orElse(RetryConfig.builder().backoff(BackoffStrategy.builder()
+                                    .initialInterval(1000, TimeUnit.MILLISECONDS)
+                                    .maxInterval(30000, TimeUnit.MILLISECONDS)
+                                    .baseFactor((double) (2))
+                                    .maxElapsedTime(300000, TimeUnit.MILLISECONDS)
+                                    .retryConnectError(true)
+                                    .build())
+                            .build());
             this.client = this.sdkConfiguration.client();
+            this.operationGlobals = new Globals();
+            this.sdkConfiguration.globals.getParam("header", "accepts")
+                .ifPresent(param -> operationGlobals.putParam("header", "accepts", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Client-Identifier")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Client-Identifier", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Product")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Product", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Version")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Version", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Platform")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Platform", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Platform-Version")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Platform-Version", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Device")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Device", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Model")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Model", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Device-Vendor")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Device-Vendor", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Device-Name")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Device-Name", param));
+            this.sdkConfiguration.globals.getParam("header", "X-Plex-Marketplace")
+                .ifPresent(param -> operationGlobals.putParam("header", "X-Plex-Marketplace", param));
         }
 
         Optional<SecuritySource> securitySource() {
@@ -58,7 +113,7 @@ public class ListTopUsers {
                     this.sdkConfiguration,
                     this.baseUrl,
                     "listTopUsers",
-                    java.util.Optional.of(java.util.List.of()),
+                    java.util.Optional.empty(),
                     securitySource());
         }
 
@@ -67,7 +122,7 @@ public class ListTopUsers {
                     this.sdkConfiguration,
                     this.baseUrl,
                     "listTopUsers",
-                    java.util.Optional.of(java.util.List.of()),
+                    java.util.Optional.empty(),
                     securitySource());
         }
 
@@ -76,7 +131,7 @@ public class ListTopUsers {
                     this.sdkConfiguration,
                     this.baseUrl,
                     "listTopUsers",
-                    java.util.Optional.of(java.util.List.of()),
+                    java.util.Optional.empty(),
                     securitySource());
         }
         <T>HttpRequest buildRequest(T request, Class<T> klass) throws Exception {
@@ -84,12 +139,13 @@ public class ListTopUsers {
                     klass,
                     this.baseUrl,
                     "/library/metadata/{ids}/users/top",
-                    request, this.sdkConfiguration.globals);
+                    request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "GET");
             req.addHeader("Accept", "application/json")
                     .addHeader("user-agent", SDKConfiguration.USER_AGENT);
-            req.addHeaders(Utils.getHeadersFromMetadata(request, this.sdkConfiguration.globals));
-            Utils.configureSecurity(req, this.sdkConfiguration.securitySource().getSecurity());
+            _headers.forEach((k, list) -> list.forEach(v -> req.addHeader(k, v)));
+            req.addHeaders(Utils.getHeadersFromMetadata(request, this.operationGlobals));
+            Utils.configureSecurity(req, this.sdkConfiguration.securitySource().getSecurity(), "token");
 
             return req.build();
         }
@@ -97,8 +153,12 @@ public class ListTopUsers {
 
     public static class Sync extends Base
             implements RequestOperation<ListTopUsersRequest, ListTopUsersResponse> {
-        public Sync(SDKConfiguration sdkConfiguration) {
-            super(sdkConfiguration);
+        public Sync(
+                SDKConfiguration sdkConfiguration, Optional<Options> options,
+                Headers _headers) {
+            super(
+                  sdkConfiguration, options,
+                  _headers);
         }
 
         private HttpRequest onBuildRequest(ListTopUsersRequest request) throws Exception {
@@ -118,26 +178,34 @@ public class ListTopUsers {
         }
 
         @Override
-        public HttpResponse<InputStream> doRequest(ListTopUsersRequest request) throws Exception {
-            HttpRequest r = onBuildRequest(request);
-            HttpResponse<InputStream> httpRes;
-            try {
-                httpRes = client.send(r);
-                if (Utils.statusCodeMatches(httpRes.statusCode(), "4XX", "5XX")) {
-                    httpRes = onError(httpRes, null);
-                } else {
-                    httpRes = onSuccess(httpRes);
-                }
-            } catch (Exception e) {
-                httpRes = onError(null, e);
-            }
-
-            return httpRes;
+        public HttpResponse<InputStream> doRequest(ListTopUsersRequest request) {
+            Retries retries = Retries.builder()
+                    .action(() -> {
+                        HttpRequest r;
+                        try {
+                            r = onBuildRequest(request);
+                        } catch (Exception e) {
+                            throw new NonRetryableException(e);
+                        }
+                        try {
+                            HttpResponse<InputStream> httpRes = client.send(r);
+                            if (Utils.statusCodeMatches(httpRes.statusCode(), "4XX", "5XX")) {
+                                return onError(httpRes, null);
+                            }
+                            return httpRes;
+                        } catch (Exception e) {
+                            return onError(null, e);
+                        }
+                    })
+                    .retryConfig(retryConfig)
+                    .statusCodes(retryStatusCodes)
+                    .build();
+            return unchecked(() -> onSuccess(retries.run())).get();
         }
 
 
         @Override
-        public ListTopUsersResponse handleResponse(HttpResponse<InputStream> response) throws Exception {
+        public ListTopUsersResponse handleResponse(HttpResponse<InputStream> response) {
             String contentType = response
                     .headers()
                     .firstValue("Content-Type")
@@ -153,51 +221,40 @@ public class ListTopUsers {
             
             if (Utils.statusCodeMatches(response.statusCode(), "200")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    ListTopUsersResponseBody out = Utils.mapper().readValue(
-                            response.body(),
-                            new TypeReference<>() {
-                            });
-                    res.withObject(out);
-                    return res;
+                    return res.withObject(Utils.unmarshal(response, new TypeReference<ListTopUsersResponseBody>() {}));
                 } else {
-                    throw new SDKError(
-                            response,
-                            response.statusCode(),
-                            "Unexpected content-type received: " + contentType,
-                            Utils.extractByteArrayFromBody(response));
+                    throw SDKError.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            
-            if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
-                // no content
-                throw new SDKError(
-                        response,
-                        response.statusCode(),
-                        "API error occurred",
-                        Utils.extractByteArrayFromBody(response));
+            if (Utils.statusCodeMatches(response.statusCode(), "401")) {
+                if (Utils.contentTypeMatches(contentType, "application/json")) {
+                    throw Error.from(response);
+                } else {
+                    throw SDKError.from("Unexpected content-type received: " + contentType, response);
+                }
             }
-            
+            if (Utils.statusCodeMatches(response.statusCode(), "400", "4XX")) {
+                // no content
+                throw SDKError.from("API error occurred", response);
+            }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
-                throw new SDKError(
-                        response,
-                        response.statusCode(),
-                        "API error occurred",
-                        Utils.extractByteArrayFromBody(response));
+                throw SDKError.from("API error occurred", response);
             }
-            
-            throw new SDKError(
-                    response,
-                    response.statusCode(),
-                    "Unexpected status code received: " + response.statusCode(),
-                    Utils.extractByteArrayFromBody(response));
+            throw SDKError.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
     public static class Async extends Base
             implements AsyncRequestOperation<ListTopUsersRequest, dev.plexapi.sdk.models.operations.async.ListTopUsersResponse> {
+        private final ScheduledExecutorService retryScheduler;
 
-        public Async(SDKConfiguration sdkConfiguration) {
-            super(sdkConfiguration);
+        public Async(
+                SDKConfiguration sdkConfiguration, Optional<Options> options,
+                ScheduledExecutorService retryScheduler, Headers _headers) {
+            super(
+                  sdkConfiguration, options,
+                  _headers);
+            this.retryScheduler = retryScheduler;
         }
 
         private CompletableFuture<HttpRequest> onBuildRequest(ListTopUsersRequest request) throws Exception {
@@ -215,17 +272,22 @@ public class ListTopUsers {
 
         @Override
         public CompletableFuture<HttpResponse<Blob>> doRequest(ListTopUsersRequest request) {
-            return Exceptions.unchecked(() -> onBuildRequest(request)).get().thenCompose(client::sendAsync)
-                    .handle((resp, err) -> {
-                        if (err != null) {
-                            return onError(null, err);
-                        }
-                        if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
-                            return onError(resp, null);
-                        }
-                        return CompletableFuture.completedFuture(resp);
-                    })
-                    .thenCompose(Function.identity())
+            AsyncRetries retries = AsyncRetries.builder()
+                    .retryConfig(retryConfig)
+                    .statusCodes(retryStatusCodes)
+                    .scheduler(retryScheduler)
+                    .build();
+            return retries.retry(() -> unchecked(() -> onBuildRequest(request)).get().thenCompose(client::sendAsync)
+                            .handle((resp, err) -> {
+                                if (err != null) {
+                                    return onError(null, err);
+                                }
+                                if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
+                                    return onError(resp, null);
+                                }
+                                return CompletableFuture.completedFuture(resp);
+                            })
+                            .thenCompose(Function.identity()))
                     .thenCompose(this::onSuccess);
         }
 
@@ -247,33 +309,28 @@ public class ListTopUsers {
             
             if (Utils.statusCodeMatches(response.statusCode(), "200")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return response.body().toByteArray().thenApply(bodyBytes -> {
-                        try {
-                            ListTopUsersResponseBody out = Utils.mapper().readValue(
-                                    bodyBytes,
-                                    new TypeReference<>() {
-                                    });
-                            res.withObject(out);
-                            return res;
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
+                    return Utils.unmarshalAsync(response, new TypeReference<ListTopUsersResponseBody>() {})
+                            .thenApply(res::withObject);
                 } else {
                     return Utils.createAsyncApiError(response, "Unexpected content-type received: " + contentType);
                 }
             }
-            
-            if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
+            if (Utils.statusCodeMatches(response.statusCode(), "401")) {
+                if (Utils.contentTypeMatches(contentType, "application/json")) {
+                    return Error.fromAsync(response)
+                            .thenCompose(CompletableFuture::failedFuture);
+                } else {
+                    return Utils.createAsyncApiError(response, "Unexpected content-type received: " + contentType);
+                }
+            }
+            if (Utils.statusCodeMatches(response.statusCode(), "400", "4XX")) {
                 // no content
                 return Utils.createAsyncApiError(response, "API error occurred");
             }
-            
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
                 return Utils.createAsyncApiError(response, "API error occurred");
             }
-            
             return Utils.createAsyncApiError(response, "Unexpected status code received: " + response.statusCode());
         }
     }

@@ -26,7 +26,14 @@ import java.util.Optional;
 /**
  * MediaContainerWithDecisionPart
  * 
- * <p>`Part` represents a particular file or "part" of a media item. The part is the playable unit of the media hierarchy. Suppose that a movie library contains a movie that is broken up into files, reminiscent of a movie split across two BDs. The metadata item represents information about the movie, the media item represents this instance of the movie at this resolution and quality, and the part items represent the two playable files.  If another media were added which contained the joining of these two parts transcoded down to a lower resolution, then this metadata would contain 2 medias, one with 2 parts and one with 1 part.
+ * <p>`Part` represents a particular file or "part" of a media item. The part is the playable unit of the
+ * media hierarchy. Suppose that a movie library contains a movie that is broken up into files,
+ * reminiscent of a movie split across two BDs.
+ * 
+ * <p>The metadata item represents information about the movie, the media item represents this instance of
+ * the movie at this resolution and quality, and the part items represent the two playable files. If
+ * another media were added which contained the joining of these two parts transcoded down to a lower
+ * resolution, then this metadata would contain 2 medias, one with 2 parts and one with 1 part.
  */
 public class MediaContainerWithDecisionPart {
     /**
@@ -47,6 +54,13 @@ public class MediaContainerWithDecisionPart {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("container")
     private Optional<String> container;
+
+    /**
+     * Deep analysis version for this part.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("deepAnalysisVersion")
+    private Optional<Long> deepAnalysisVersion;
 
     /**
      * The duration of the media item, in milliseconds
@@ -95,6 +109,27 @@ public class MediaContainerWithDecisionPart {
     private Optional<Boolean> optimizedForStreaming;
 
     /**
+     * RTP packet length for streaming.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("packetLength")
+    private Optional<Long> packetLength;
+
+    /**
+     * Streaming protocol (e.g. dash, hls, direct).
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("protocol")
+    private Optional<String> protocol;
+
+    /**
+     * Comma-separated list of bandwidth requirements.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("requiredBandwidths")
+    private Optional<String> requiredBandwidths;
+
+    /**
      * The size of the media, in bytes
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -105,6 +140,20 @@ public class MediaContainerWithDecisionPart {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Stream")
     private Optional<? extends List<MediaContainerWithDecisionStream>> stream;
+
+    /**
+     * Mobile sync item association ID.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("syncItemId")
+    private Optional<Long> syncItemId;
+
+    /**
+     * Sync state (e.g. pending, downloaded, processing).
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("syncState")
+    private Optional<String> syncState;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -130,6 +179,7 @@ public class MediaContainerWithDecisionPart {
             @JsonProperty("accessible") Optional<Boolean> accessible,
             @JsonProperty("audioProfile") Optional<String> audioProfile,
             @JsonProperty("container") Optional<String> container,
+            @JsonProperty("deepAnalysisVersion") Optional<Long> deepAnalysisVersion,
             @JsonProperty("duration") Optional<Integer> duration,
             @JsonProperty("exists") Optional<Boolean> exists,
             @JsonProperty("file") Optional<String> file,
@@ -138,14 +188,20 @@ public class MediaContainerWithDecisionPart {
             @JsonProperty("indexes") Optional<String> indexes,
             @JsonProperty("key") String key,
             @JsonProperty("optimizedForStreaming") Optional<Boolean> optimizedForStreaming,
+            @JsonProperty("packetLength") Optional<Long> packetLength,
+            @JsonProperty("protocol") Optional<String> protocol,
+            @JsonProperty("requiredBandwidths") Optional<String> requiredBandwidths,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("Stream") Optional<? extends List<MediaContainerWithDecisionStream>> stream,
+            @JsonProperty("syncItemId") Optional<Long> syncItemId,
+            @JsonProperty("syncState") Optional<String> syncState,
             @JsonProperty("videoProfile") Optional<String> videoProfile,
             @JsonProperty("decision") Optional<? extends Decision> decision,
             @JsonProperty("selected") Optional<Boolean> selected) {
         Utils.checkNotNull(accessible, "accessible");
         Utils.checkNotNull(audioProfile, "audioProfile");
         Utils.checkNotNull(container, "container");
+        Utils.checkNotNull(deepAnalysisVersion, "deepAnalysisVersion");
         Utils.checkNotNull(duration, "duration");
         Utils.checkNotNull(exists, "exists");
         Utils.checkNotNull(file, "file");
@@ -154,14 +210,20 @@ public class MediaContainerWithDecisionPart {
         Utils.checkNotNull(indexes, "indexes");
         Utils.checkNotNull(key, "key");
         Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
+        Utils.checkNotNull(packetLength, "packetLength");
+        Utils.checkNotNull(protocol, "protocol");
+        Utils.checkNotNull(requiredBandwidths, "requiredBandwidths");
         Utils.checkNotNull(size, "size");
         Utils.checkNotNull(stream, "stream");
+        Utils.checkNotNull(syncItemId, "syncItemId");
+        Utils.checkNotNull(syncState, "syncState");
         Utils.checkNotNull(videoProfile, "videoProfile");
         Utils.checkNotNull(decision, "decision");
         Utils.checkNotNull(selected, "selected");
         this.accessible = accessible;
         this.audioProfile = audioProfile;
         this.container = container;
+        this.deepAnalysisVersion = deepAnalysisVersion;
         this.duration = duration;
         this.exists = exists;
         this.file = file;
@@ -170,8 +232,13 @@ public class MediaContainerWithDecisionPart {
         this.indexes = indexes;
         this.key = key;
         this.optimizedForStreaming = optimizedForStreaming;
+        this.packetLength = packetLength;
+        this.protocol = protocol;
+        this.requiredBandwidths = requiredBandwidths;
         this.size = size;
         this.stream = stream;
+        this.syncItemId = syncItemId;
+        this.syncState = syncState;
         this.videoProfile = videoProfile;
         this.decision = decision;
         this.selected = selected;
@@ -183,8 +250,10 @@ public class MediaContainerWithDecisionPart {
             String key) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), id, Optional.empty(),
-            key, Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), id,
+            Optional.empty(), key, Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty());
     }
@@ -208,6 +277,14 @@ public class MediaContainerWithDecisionPart {
     @JsonIgnore
     public Optional<String> container() {
         return container;
+    }
+
+    /**
+     * Deep analysis version for this part.
+     */
+    @JsonIgnore
+    public Optional<Long> deepAnalysisVersion() {
+        return deepAnalysisVersion;
     }
 
     /**
@@ -263,6 +340,30 @@ public class MediaContainerWithDecisionPart {
     }
 
     /**
+     * RTP packet length for streaming.
+     */
+    @JsonIgnore
+    public Optional<Long> packetLength() {
+        return packetLength;
+    }
+
+    /**
+     * Streaming protocol (e.g. dash, hls, direct).
+     */
+    @JsonIgnore
+    public Optional<String> protocol() {
+        return protocol;
+    }
+
+    /**
+     * Comma-separated list of bandwidth requirements.
+     */
+    @JsonIgnore
+    public Optional<String> requiredBandwidths() {
+        return requiredBandwidths;
+    }
+
+    /**
      * The size of the media, in bytes
      */
     @JsonIgnore
@@ -274,6 +375,22 @@ public class MediaContainerWithDecisionPart {
     @JsonIgnore
     public Optional<List<MediaContainerWithDecisionStream>> stream() {
         return (Optional<List<MediaContainerWithDecisionStream>>) stream;
+    }
+
+    /**
+     * Mobile sync item association ID.
+     */
+    @JsonIgnore
+    public Optional<Long> syncItemId() {
+        return syncItemId;
+    }
+
+    /**
+     * Sync state (e.g. pending, downloaded, processing).
+     */
+    @JsonIgnore
+    public Optional<String> syncState() {
+        return syncState;
     }
 
     @JsonIgnore
@@ -350,6 +467,25 @@ public class MediaContainerWithDecisionPart {
     public MediaContainerWithDecisionPart withContainer(Optional<String> container) {
         Utils.checkNotNull(container, "container");
         this.container = container;
+        return this;
+    }
+
+    /**
+     * Deep analysis version for this part.
+     */
+    public MediaContainerWithDecisionPart withDeepAnalysisVersion(long deepAnalysisVersion) {
+        Utils.checkNotNull(deepAnalysisVersion, "deepAnalysisVersion");
+        this.deepAnalysisVersion = Optional.ofNullable(deepAnalysisVersion);
+        return this;
+    }
+
+
+    /**
+     * Deep analysis version for this part.
+     */
+    public MediaContainerWithDecisionPart withDeepAnalysisVersion(Optional<Long> deepAnalysisVersion) {
+        Utils.checkNotNull(deepAnalysisVersion, "deepAnalysisVersion");
+        this.deepAnalysisVersion = deepAnalysisVersion;
         return this;
     }
 
@@ -465,6 +601,63 @@ public class MediaContainerWithDecisionPart {
     }
 
     /**
+     * RTP packet length for streaming.
+     */
+    public MediaContainerWithDecisionPart withPacketLength(long packetLength) {
+        Utils.checkNotNull(packetLength, "packetLength");
+        this.packetLength = Optional.ofNullable(packetLength);
+        return this;
+    }
+
+
+    /**
+     * RTP packet length for streaming.
+     */
+    public MediaContainerWithDecisionPart withPacketLength(Optional<Long> packetLength) {
+        Utils.checkNotNull(packetLength, "packetLength");
+        this.packetLength = packetLength;
+        return this;
+    }
+
+    /**
+     * Streaming protocol (e.g. dash, hls, direct).
+     */
+    public MediaContainerWithDecisionPart withProtocol(String protocol) {
+        Utils.checkNotNull(protocol, "protocol");
+        this.protocol = Optional.ofNullable(protocol);
+        return this;
+    }
+
+
+    /**
+     * Streaming protocol (e.g. dash, hls, direct).
+     */
+    public MediaContainerWithDecisionPart withProtocol(Optional<String> protocol) {
+        Utils.checkNotNull(protocol, "protocol");
+        this.protocol = protocol;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of bandwidth requirements.
+     */
+    public MediaContainerWithDecisionPart withRequiredBandwidths(String requiredBandwidths) {
+        Utils.checkNotNull(requiredBandwidths, "requiredBandwidths");
+        this.requiredBandwidths = Optional.ofNullable(requiredBandwidths);
+        return this;
+    }
+
+
+    /**
+     * Comma-separated list of bandwidth requirements.
+     */
+    public MediaContainerWithDecisionPart withRequiredBandwidths(Optional<String> requiredBandwidths) {
+        Utils.checkNotNull(requiredBandwidths, "requiredBandwidths");
+        this.requiredBandwidths = requiredBandwidths;
+        return this;
+    }
+
+    /**
      * The size of the media, in bytes
      */
     public MediaContainerWithDecisionPart withSize(long size) {
@@ -493,6 +686,44 @@ public class MediaContainerWithDecisionPart {
     public MediaContainerWithDecisionPart withStream(Optional<? extends List<MediaContainerWithDecisionStream>> stream) {
         Utils.checkNotNull(stream, "stream");
         this.stream = stream;
+        return this;
+    }
+
+    /**
+     * Mobile sync item association ID.
+     */
+    public MediaContainerWithDecisionPart withSyncItemId(long syncItemId) {
+        Utils.checkNotNull(syncItemId, "syncItemId");
+        this.syncItemId = Optional.ofNullable(syncItemId);
+        return this;
+    }
+
+
+    /**
+     * Mobile sync item association ID.
+     */
+    public MediaContainerWithDecisionPart withSyncItemId(Optional<Long> syncItemId) {
+        Utils.checkNotNull(syncItemId, "syncItemId");
+        this.syncItemId = syncItemId;
+        return this;
+    }
+
+    /**
+     * Sync state (e.g. pending, downloaded, processing).
+     */
+    public MediaContainerWithDecisionPart withSyncState(String syncState) {
+        Utils.checkNotNull(syncState, "syncState");
+        this.syncState = Optional.ofNullable(syncState);
+        return this;
+    }
+
+
+    /**
+     * Sync state (e.g. pending, downloaded, processing).
+     */
+    public MediaContainerWithDecisionPart withSyncState(Optional<String> syncState) {
+        Utils.checkNotNull(syncState, "syncState");
+        this.syncState = syncState;
         return this;
     }
 
@@ -561,6 +792,7 @@ public class MediaContainerWithDecisionPart {
             Utils.enhancedDeepEquals(this.accessible, other.accessible) &&
             Utils.enhancedDeepEquals(this.audioProfile, other.audioProfile) &&
             Utils.enhancedDeepEquals(this.container, other.container) &&
+            Utils.enhancedDeepEquals(this.deepAnalysisVersion, other.deepAnalysisVersion) &&
             Utils.enhancedDeepEquals(this.duration, other.duration) &&
             Utils.enhancedDeepEquals(this.exists, other.exists) &&
             Utils.enhancedDeepEquals(this.file, other.file) &&
@@ -569,8 +801,13 @@ public class MediaContainerWithDecisionPart {
             Utils.enhancedDeepEquals(this.indexes, other.indexes) &&
             Utils.enhancedDeepEquals(this.key, other.key) &&
             Utils.enhancedDeepEquals(this.optimizedForStreaming, other.optimizedForStreaming) &&
+            Utils.enhancedDeepEquals(this.packetLength, other.packetLength) &&
+            Utils.enhancedDeepEquals(this.protocol, other.protocol) &&
+            Utils.enhancedDeepEquals(this.requiredBandwidths, other.requiredBandwidths) &&
             Utils.enhancedDeepEquals(this.size, other.size) &&
             Utils.enhancedDeepEquals(this.stream, other.stream) &&
+            Utils.enhancedDeepEquals(this.syncItemId, other.syncItemId) &&
+            Utils.enhancedDeepEquals(this.syncState, other.syncState) &&
             Utils.enhancedDeepEquals(this.videoProfile, other.videoProfile) &&
             Utils.enhancedDeepEquals(this.decision, other.decision) &&
             Utils.enhancedDeepEquals(this.selected, other.selected) &&
@@ -581,10 +818,12 @@ public class MediaContainerWithDecisionPart {
     public int hashCode() {
         return Utils.enhancedHash(
             accessible, audioProfile, container,
-            duration, exists, file,
-            has64bitOffsets, id, indexes,
-            key, optimizedForStreaming, size,
-            stream, videoProfile, decision,
+            deepAnalysisVersion, duration, exists,
+            file, has64bitOffsets, id,
+            indexes, key, optimizedForStreaming,
+            packetLength, protocol, requiredBandwidths,
+            size, stream, syncItemId,
+            syncState, videoProfile, decision,
             selected, additionalProperties);
     }
     
@@ -594,6 +833,7 @@ public class MediaContainerWithDecisionPart {
                 "accessible", accessible,
                 "audioProfile", audioProfile,
                 "container", container,
+                "deepAnalysisVersion", deepAnalysisVersion,
                 "duration", duration,
                 "exists", exists,
                 "file", file,
@@ -602,8 +842,13 @@ public class MediaContainerWithDecisionPart {
                 "indexes", indexes,
                 "key", key,
                 "optimizedForStreaming", optimizedForStreaming,
+                "packetLength", packetLength,
+                "protocol", protocol,
+                "requiredBandwidths", requiredBandwidths,
                 "size", size,
                 "stream", stream,
+                "syncItemId", syncItemId,
+                "syncState", syncState,
                 "videoProfile", videoProfile,
                 "decision", decision,
                 "selected", selected,
@@ -618,6 +863,8 @@ public class MediaContainerWithDecisionPart {
         private Optional<String> audioProfile = Optional.empty();
 
         private Optional<String> container = Optional.empty();
+
+        private Optional<Long> deepAnalysisVersion = Optional.empty();
 
         private Optional<Integer> duration = Optional.empty();
 
@@ -635,9 +882,19 @@ public class MediaContainerWithDecisionPart {
 
         private Optional<Boolean> optimizedForStreaming = Optional.empty();
 
+        private Optional<Long> packetLength = Optional.empty();
+
+        private Optional<String> protocol = Optional.empty();
+
+        private Optional<String> requiredBandwidths = Optional.empty();
+
         private Optional<Long> size = Optional.empty();
 
         private Optional<? extends List<MediaContainerWithDecisionStream>> stream = Optional.empty();
+
+        private Optional<Long> syncItemId = Optional.empty();
+
+        private Optional<String> syncState = Optional.empty();
 
         private Optional<String> videoProfile = Optional.empty();
 
@@ -699,6 +956,25 @@ public class MediaContainerWithDecisionPart {
         public Builder container(Optional<String> container) {
             Utils.checkNotNull(container, "container");
             this.container = container;
+            return this;
+        }
+
+
+        /**
+         * Deep analysis version for this part.
+         */
+        public Builder deepAnalysisVersion(long deepAnalysisVersion) {
+            Utils.checkNotNull(deepAnalysisVersion, "deepAnalysisVersion");
+            this.deepAnalysisVersion = Optional.ofNullable(deepAnalysisVersion);
+            return this;
+        }
+
+        /**
+         * Deep analysis version for this part.
+         */
+        public Builder deepAnalysisVersion(Optional<Long> deepAnalysisVersion) {
+            Utils.checkNotNull(deepAnalysisVersion, "deepAnalysisVersion");
+            this.deepAnalysisVersion = deepAnalysisVersion;
             return this;
         }
 
@@ -817,6 +1093,63 @@ public class MediaContainerWithDecisionPart {
 
 
         /**
+         * RTP packet length for streaming.
+         */
+        public Builder packetLength(long packetLength) {
+            Utils.checkNotNull(packetLength, "packetLength");
+            this.packetLength = Optional.ofNullable(packetLength);
+            return this;
+        }
+
+        /**
+         * RTP packet length for streaming.
+         */
+        public Builder packetLength(Optional<Long> packetLength) {
+            Utils.checkNotNull(packetLength, "packetLength");
+            this.packetLength = packetLength;
+            return this;
+        }
+
+
+        /**
+         * Streaming protocol (e.g. dash, hls, direct).
+         */
+        public Builder protocol(String protocol) {
+            Utils.checkNotNull(protocol, "protocol");
+            this.protocol = Optional.ofNullable(protocol);
+            return this;
+        }
+
+        /**
+         * Streaming protocol (e.g. dash, hls, direct).
+         */
+        public Builder protocol(Optional<String> protocol) {
+            Utils.checkNotNull(protocol, "protocol");
+            this.protocol = protocol;
+            return this;
+        }
+
+
+        /**
+         * Comma-separated list of bandwidth requirements.
+         */
+        public Builder requiredBandwidths(String requiredBandwidths) {
+            Utils.checkNotNull(requiredBandwidths, "requiredBandwidths");
+            this.requiredBandwidths = Optional.ofNullable(requiredBandwidths);
+            return this;
+        }
+
+        /**
+         * Comma-separated list of bandwidth requirements.
+         */
+        public Builder requiredBandwidths(Optional<String> requiredBandwidths) {
+            Utils.checkNotNull(requiredBandwidths, "requiredBandwidths");
+            this.requiredBandwidths = requiredBandwidths;
+            return this;
+        }
+
+
+        /**
          * The size of the media, in bytes
          */
         public Builder size(long size) {
@@ -844,6 +1177,44 @@ public class MediaContainerWithDecisionPart {
         public Builder stream(Optional<? extends List<MediaContainerWithDecisionStream>> stream) {
             Utils.checkNotNull(stream, "stream");
             this.stream = stream;
+            return this;
+        }
+
+
+        /**
+         * Mobile sync item association ID.
+         */
+        public Builder syncItemId(long syncItemId) {
+            Utils.checkNotNull(syncItemId, "syncItemId");
+            this.syncItemId = Optional.ofNullable(syncItemId);
+            return this;
+        }
+
+        /**
+         * Mobile sync item association ID.
+         */
+        public Builder syncItemId(Optional<Long> syncItemId) {
+            Utils.checkNotNull(syncItemId, "syncItemId");
+            this.syncItemId = syncItemId;
+            return this;
+        }
+
+
+        /**
+         * Sync state (e.g. pending, downloaded, processing).
+         */
+        public Builder syncState(String syncState) {
+            Utils.checkNotNull(syncState, "syncState");
+            this.syncState = Optional.ofNullable(syncState);
+            return this;
+        }
+
+        /**
+         * Sync state (e.g. pending, downloaded, processing).
+         */
+        public Builder syncState(Optional<String> syncState) {
+            Utils.checkNotNull(syncState, "syncState");
+            this.syncState = syncState;
             return this;
         }
 
@@ -906,10 +1277,12 @@ public class MediaContainerWithDecisionPart {
 
             return new MediaContainerWithDecisionPart(
                 accessible, audioProfile, container,
-                duration, exists, file,
-                has64bitOffsets, id, indexes,
-                key, optimizedForStreaming, size,
-                stream, videoProfile, decision,
+                deepAnalysisVersion, duration, exists,
+                file, has64bitOffsets, id,
+                indexes, key, optimizedForStreaming,
+                packetLength, protocol, requiredBandwidths,
+                size, stream, syncItemId,
+                syncState, videoProfile, decision,
                 selected)
                 .withAdditionalProperties(additionalProperties);
         }

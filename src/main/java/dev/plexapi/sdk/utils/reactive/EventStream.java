@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.plexapi.sdk.utils.AsyncResponse;
 import dev.plexapi.sdk.utils.Blob;
 import dev.plexapi.sdk.utils.EventStreamMessage;
+import dev.plexapi.sdk.utils.SpeakeasyLogger;
 import dev.plexapi.sdk.utils.StreamingParser;
 import dev.plexapi.sdk.utils.Utils;
 
@@ -29,6 +30,8 @@ import org.reactivestreams.Subscription;
  * @param <ItemT> the type that events are deserialized into
  */
 public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publisher<ItemT> {
+
+    private static final SpeakeasyLogger logger = SpeakeasyLogger.getLogger(EventStream.class);
     
     /**
      * Protocol interface that defines how to parse and process different event stream formats
@@ -70,6 +73,7 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
         this.typeReference = typeReference;
         this.objectMapper = objectMapper;
         this.protocol = protocol;
+        logger.debug("Reactive EventStream initialized for type: {}", typeReference.getType().getTypeName());
     }
 
     /**
@@ -80,8 +84,17 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
             TypeReference<ItemT> typeReference,
             ObjectMapper objectMapper,
             String terminalMessage) {
-        return new EventStream<>(asyncResponseFuture, typeReference, objectMapper, 
-                                new SSEProtocol<>(terminalMessage));
+        return forSSE(asyncResponseFuture, typeReference, objectMapper, terminalMessage, true);
+    }
+
+    public static <ResponseT extends AsyncResponse, ItemT> EventStream<ResponseT, ItemT> forSSE(
+            CompletableFuture<ResponseT> asyncResponseFuture,
+            TypeReference<ItemT> typeReference,
+            ObjectMapper objectMapper,
+            String terminalMessage,
+            boolean dataRequired) {
+        return new EventStream<>(asyncResponseFuture, typeReference, objectMapper,
+                                new SSEProtocol<>(terminalMessage, dataRequired));
     }
 
     /**
@@ -129,10 +142,10 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
             throw new NullPointerException("Subscriber cannot be null");
         }
 
-        EventStreamSubscription subscription = new EventStreamSubscription(
-                rawResponse(), subscriber
-        );
+        EventStreamSubscription subscription = new EventStreamSubscription(subscriber);
         subscriber.onSubscribe(subscription);
+        // Start the async operation only after onSubscribe has been called
+        subscription.start(rawResponse());
     }
 
     private class EventStreamSubscription implements Subscription {
@@ -143,29 +156,36 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
         private Flow.Subscription upstreamSubscription;
         private volatile boolean cancelled = false;
         private volatile boolean completed = false;
-        private volatile Throwable pendingError;
 
         @SuppressWarnings("unchecked")
-        public EventStreamSubscription(CompletableFuture<HttpResponse<Blob>> httpResponseFuture,
-                                      Subscriber<? super ItemT> subscriber) {
+        public EventStreamSubscription(Subscriber<? super ItemT> subscriber) {
             this.subscriber = subscriber;
             this.parser = ((Protocol<Object, ItemT>) protocol).createParser();
+        }
 
+        public void start(CompletableFuture<HttpResponse<Blob>> httpResponseFuture) {
             // Wait for the CompletableFuture and then subscribe to the Blob
             httpResponseFuture.whenComplete((httpResponse, throwable) -> {
                 if (cancelled) {
                     return;
                 }
                 if (throwable != null) {
-                    // Store the error to signal when demand is requested
-                    pendingError = throwable;
+                    // Signal error immediately per Reactive Streams specification
+                    signalError(throwable);
                     return;
                 }
 
                 // Extract Blob from HttpResponse and subscribe to it
                 Blob blob = httpResponse.body();
                 // Blob.asPublisher() now returns Flow.Publisher directly
-                Flow.Publisher<ByteBuffer> flowPublisher = blob.asPublisher();
+                Flow.Publisher<ByteBuffer> flowPublisher;
+                try {
+                    flowPublisher = blob.asPublisher();
+                } catch (Exception e) {
+                    // Handle case where blob is already consumed or other errors
+                    signalError(e);
+                    return;
+                }
                 flowPublisher.subscribe(new Flow.Subscriber<>() {
                     @Override
                     public void onSubscribe(Flow.Subscription subscription) {
@@ -261,9 +281,13 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
                     ItemT item = typedProtocol.processItem(parsed, objectMapper, typeReference);
                     if (item != null) {
                         demand.decrementAndGet();
+                        if (logger.isTraceEnabled()) {
+                            logger.trace("Reactive EventStream item emitted");
+                        }
                         subscriber.onNext(item);
                     }
                 } catch (Exception e) {
+                    logger.debug("Error processing reactive EventStream item: {}", e.getMessage());
                     signalError(e);
                     return false; // Signal to stop processing on error
                 }
@@ -273,12 +297,6 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
 
         private void requestMoreIfNeeded() {
             if (cancelled || completed) {
-                return;
-            }
-
-            // Check for pending error first
-            if (pendingError != null && demand.get() > 0) {
-                signalError(pendingError);
                 return;
             }
 
@@ -302,6 +320,7 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
         private void signalComplete() {
             if (!cancelled && !completed) {
                 completed = true;
+                logger.debug("Reactive EventStream completed");
                 subscriber.onComplete();
             }
         }
@@ -312,9 +331,11 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
      */
     private static class SSEProtocol<ItemT> implements Protocol<EventStreamMessage, ItemT> {
         private final String terminalMessage;
+        private final boolean dataRequired;
 
-        public SSEProtocol(String terminalMessage) {
+        public SSEProtocol(String terminalMessage, boolean dataRequired) {
             this.terminalMessage = terminalMessage;
+            this.dataRequired = dataRequired;
         }
 
         @Override
@@ -324,8 +345,8 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
 
         @Override
         public ItemT processItem(EventStreamMessage message, ObjectMapper objectMapper, TypeReference<ItemT> typeReference) {
-            // Skip empty data messages
-            if (message.data().isEmpty()) {
+            // Skip events without data when data is required
+            if (dataRequired && message.data().isEmpty()) {
                 return null;
             }
             return Utils.asType(message, objectMapper, typeReference);
@@ -334,7 +355,7 @@ public class EventStream<ResponseT extends AsyncResponse, ItemT> implements Publ
         @Override
         public boolean shouldStop(EventStreamMessage message) {
             // Check if this is a terminal message
-            return terminalMessage != null && terminalMessage.equals(message.data());
+            return terminalMessage != null && message.data().map(terminalMessage::equals).orElse(false);
         }
     }
 

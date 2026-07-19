@@ -90,7 +90,9 @@ public class GetSectionPreferencesRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
     private long sectionId;
 
-
+    /**
+     * The identifier of the metadata agent to use
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=agent")
     private Optional<String> agent;
 
@@ -243,6 +245,9 @@ public class GetSectionPreferencesRequest {
         return sectionId;
     }
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     @JsonIgnore
     public Optional<String> agent() {
         return agent;
@@ -471,6 +476,9 @@ public class GetSectionPreferencesRequest {
         return this;
     }
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     public GetSectionPreferencesRequest withAgent(String agent) {
         Utils.checkNotNull(agent, "agent");
         this.agent = Optional.ofNullable(agent);
@@ -478,6 +486,9 @@ public class GetSectionPreferencesRequest {
     }
 
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     public GetSectionPreferencesRequest withAgent(Optional<String> agent) {
         Utils.checkNotNull(agent, "agent");
         this.agent = agent;
@@ -790,12 +801,18 @@ public class GetSectionPreferencesRequest {
         }
 
 
+        /**
+         * The identifier of the metadata agent to use
+         */
         public Builder agent(String agent) {
             Utils.checkNotNull(agent, "agent");
             this.agent = Optional.ofNullable(agent);
             return this;
         }
 
+        /**
+         * The identifier of the metadata agent to use
+         */
         public Builder agent(Optional<String> agent) {
             Utils.checkNotNull(agent, "agent");
             this.agent = agent;

@@ -92,13 +92,14 @@ public class GetMediaPartRequest {
     private long partId;
 
     /**
-     * The changestamp of the part; used for busting potential caches.  Provided in the `key` for the part
+     * The changestamp of the part; used for busting potential caches. Provided in the `key` for the part
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=changestamp")
     private long changestamp;
 
     /**
-     * A generic filename used for a client media stack which relies on the extension in the request.  Provided in the `key` for the part
+     * A generic filename used for a client media stack which relies on the extension in the request.
+     * Provided in the `key` for the part
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=filename")
     private String filename;
@@ -267,7 +268,7 @@ public class GetMediaPartRequest {
     }
 
     /**
-     * The changestamp of the part; used for busting potential caches.  Provided in the `key` for the part
+     * The changestamp of the part; used for busting potential caches. Provided in the `key` for the part
      */
     @JsonIgnore
     public long changestamp() {
@@ -275,7 +276,8 @@ public class GetMediaPartRequest {
     }
 
     /**
-     * A generic filename used for a client media stack which relies on the extension in the request.  Provided in the `key` for the part
+     * A generic filename used for a client media stack which relies on the extension in the request.
+     * Provided in the `key` for the part
      */
     @JsonIgnore
     public String filename() {
@@ -515,7 +517,7 @@ public class GetMediaPartRequest {
     }
 
     /**
-     * The changestamp of the part; used for busting potential caches.  Provided in the `key` for the part
+     * The changestamp of the part; used for busting potential caches. Provided in the `key` for the part
      */
     public GetMediaPartRequest withChangestamp(long changestamp) {
         Utils.checkNotNull(changestamp, "changestamp");
@@ -524,7 +526,8 @@ public class GetMediaPartRequest {
     }
 
     /**
-     * A generic filename used for a client media stack which relies on the extension in the request.  Provided in the `key` for the part
+     * A generic filename used for a client media stack which relies on the extension in the request.
+     * Provided in the `key` for the part
      */
     public GetMediaPartRequest withFilename(String filename) {
         Utils.checkNotNull(filename, "filename");
@@ -866,7 +869,7 @@ public class GetMediaPartRequest {
 
 
         /**
-         * The changestamp of the part; used for busting potential caches.  Provided in the `key` for the part
+         * The changestamp of the part; used for busting potential caches. Provided in the `key` for the part
          */
         public Builder changestamp(long changestamp) {
             Utils.checkNotNull(changestamp, "changestamp");
@@ -876,7 +879,8 @@ public class GetMediaPartRequest {
 
 
         /**
-         * A generic filename used for a client media stack which relies on the extension in the request.  Provided in the `key` for the part
+         * A generic filename used for a client media stack which relies on the extension in the request.
+         * Provided in the `key` for the part
          */
         public Builder filename(String filename) {
             Utils.checkNotNull(filename, "filename");

@@ -4,7 +4,16 @@
 package dev.plexapi.sdk;
 
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
+import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 
+import dev.plexapi.sdk.models.operations.GetDASHSegmentRequest;
+import dev.plexapi.sdk.models.operations.GetDASHSegmentRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetDASHSegmentResponse;
+import dev.plexapi.sdk.models.operations.GetHLSSegmentRequest;
+import dev.plexapi.sdk.models.operations.GetHLSSegmentRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetHLSSegmentResponse;
+import dev.plexapi.sdk.models.operations.GetTranscodeSessionsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetTranscodeSessionsResponse;
 import dev.plexapi.sdk.models.operations.MakeDecisionRequest;
 import dev.plexapi.sdk.models.operations.MakeDecisionRequestBuilder;
 import dev.plexapi.sdk.models.operations.MakeDecisionResponse;
@@ -14,23 +23,33 @@ import dev.plexapi.sdk.models.operations.StartTranscodeSessionResponse;
 import dev.plexapi.sdk.models.operations.TranscodeImageRequest;
 import dev.plexapi.sdk.models.operations.TranscodeImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.TranscodeImageResponse;
+import dev.plexapi.sdk.models.operations.TranscodeMusicRequest;
+import dev.plexapi.sdk.models.operations.TranscodeMusicRequestBuilder;
+import dev.plexapi.sdk.models.operations.TranscodeMusicResponse;
 import dev.plexapi.sdk.models.operations.TranscodeSubtitlesRequest;
 import dev.plexapi.sdk.models.operations.TranscodeSubtitlesRequestBuilder;
 import dev.plexapi.sdk.models.operations.TranscodeSubtitlesResponse;
 import dev.plexapi.sdk.models.operations.TriggerFallbackRequest;
 import dev.plexapi.sdk.models.operations.TriggerFallbackRequestBuilder;
 import dev.plexapi.sdk.models.operations.TriggerFallbackResponse;
+import dev.plexapi.sdk.operations.GetDASHSegment;
+import dev.plexapi.sdk.operations.GetHLSSegment;
+import dev.plexapi.sdk.operations.GetTranscodeSessions;
 import dev.plexapi.sdk.operations.MakeDecision;
 import dev.plexapi.sdk.operations.StartTranscodeSession;
 import dev.plexapi.sdk.operations.TranscodeImage;
+import dev.plexapi.sdk.operations.TranscodeMusic;
 import dev.plexapi.sdk.operations.TranscodeSubtitles;
 import dev.plexapi.sdk.operations.TriggerFallback;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * API Operations against the Transcoder
  */
 public class Transcoder {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncTranscoder asyncSDK;
 
@@ -46,6 +65,52 @@ public class Transcoder {
      */
     public AsyncTranscoder async() {
         return asyncSDK;
+    }
+
+    /**
+     * Transcode Music
+     * 
+     * <p>Audio transcode endpoint for music playback.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public TranscodeMusicRequestBuilder transcodeMusic() {
+        return new TranscodeMusicRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Transcode Music
+     * 
+     * <p>Audio transcode endpoint for music playback.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public TranscodeMusicResponse transcodeMusic(TranscodeMusicRequest request) {
+        return transcodeMusic(request, Optional.empty());
+    }
+
+    /**
+     * Transcode Music
+     * 
+     * <p>Audio transcode endpoint for music playback.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public TranscodeMusicResponse transcodeMusic(TranscodeMusicRequest request, Optional<Options> options) {
+        RequestOperation<TranscodeMusicRequest, TranscodeMusicResponse> operation
+              = new TranscodeMusic.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
@@ -66,18 +131,77 @@ public class Transcoder {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public TranscodeImageResponse transcodeImage(TranscodeImageRequest request) throws Exception {
+    public TranscodeImageResponse transcodeImage(TranscodeImageRequest request) {
+        return transcodeImage(request, Optional.empty());
+    }
+
+    /**
+     * Transcode an image
+     * 
+     * <p>Transcode an image, possibly changing format or size
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public TranscodeImageResponse transcodeImage(TranscodeImageRequest request, Optional<Options> options) {
         RequestOperation<TranscodeImageRequest, TranscodeImageResponse> operation
-              = new TranscodeImage.Sync(sdkConfiguration);
+              = new TranscodeImage.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Transcode Sessions
+     * 
+     * <p>Get active transcode sessions.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetTranscodeSessionsRequestBuilder getTranscodeSessions() {
+        return new GetTranscodeSessionsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Transcode Sessions
+     * 
+     * <p>Get active transcode sessions.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetTranscodeSessionsResponse getTranscodeSessionsDirect() {
+        return getTranscodeSessions(Optional.empty());
+    }
+
+    /**
+     * Get Transcode Sessions
+     * 
+     * <p>Get active transcode sessions.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetTranscodeSessionsResponse getTranscodeSessions(Optional<Options> options) {
+        RequestlessOperation<GetTranscodeSessionsResponse> operation
+            = new GetTranscodeSessions.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Make a decision on media playback
      * 
-     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth and resolution.
+     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth
+     * and resolution.
      * 
      * @return The call builder
      */
@@ -88,15 +212,31 @@ public class Transcoder {
     /**
      * Make a decision on media playback
      * 
-     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth and resolution.
+     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth
+     * and resolution.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public MakeDecisionResponse makeDecision(MakeDecisionRequest request) throws Exception {
+    public MakeDecisionResponse makeDecision(MakeDecisionRequest request) {
+        return makeDecision(request, Optional.empty());
+    }
+
+    /**
+     * Make a decision on media playback
+     * 
+     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth
+     * and resolution.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MakeDecisionResponse makeDecision(MakeDecisionRequest request, Optional<Options> options) {
         RequestOperation<MakeDecisionRequest, MakeDecisionResponse> operation
-              = new MakeDecision.Sync(sdkConfiguration);
+              = new MakeDecision.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -118,11 +258,25 @@ public class Transcoder {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public TriggerFallbackResponse triggerFallback(TriggerFallbackRequest request) throws Exception {
+    public TriggerFallbackResponse triggerFallback(TriggerFallbackRequest request) {
+        return triggerFallback(request, Optional.empty());
+    }
+
+    /**
+     * Manually trigger a transcoder fallback
+     * 
+     * <p>Manually trigger a transcoder fallback ex: HEVC to h.264 or hw to sw
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public TriggerFallbackResponse triggerFallback(TriggerFallbackRequest request, Optional<Options> options) {
         RequestOperation<TriggerFallbackRequest, TriggerFallbackResponse> operation
-              = new TriggerFallback.Sync(sdkConfiguration);
+              = new TriggerFallback.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -144,11 +298,25 @@ public class Transcoder {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public TranscodeSubtitlesResponse transcodeSubtitles(TranscodeSubtitlesRequest request) throws Exception {
+    public TranscodeSubtitlesResponse transcodeSubtitles(TranscodeSubtitlesRequest request) {
+        return transcodeSubtitles(request, Optional.empty());
+    }
+
+    /**
+     * Transcode subtitles
+     * 
+     * <p>Only transcode subtitle streams.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public TranscodeSubtitlesResponse transcodeSubtitles(TranscodeSubtitlesRequest request, Optional<Options> options) {
         RequestOperation<TranscodeSubtitlesRequest, TranscodeSubtitlesResponse> operation
-              = new TranscodeSubtitles.Sync(sdkConfiguration);
+              = new TranscodeSubtitles.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -170,11 +338,117 @@ public class Transcoder {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StartTranscodeSessionResponse startTranscodeSession(StartTranscodeSessionRequest request) throws Exception {
+    public StartTranscodeSessionResponse startTranscodeSession(StartTranscodeSessionRequest request) {
+        return startTranscodeSession(request, Optional.empty());
+    }
+
+    /**
+     * Start A Transcoding Session
+     * 
+     * <p>Starts the transcoder and returns the corresponding streaming resource document.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StartTranscodeSessionResponse startTranscodeSession(StartTranscodeSessionRequest request, Optional<Options> options) {
         RequestOperation<StartTranscodeSessionRequest, StartTranscodeSessionResponse> operation
-              = new StartTranscodeSession.Sync(sdkConfiguration);
+              = new StartTranscodeSession.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get DASH Segment
+     * 
+     * <p>DASH segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetDASHSegmentRequestBuilder getDASHSegment() {
+        return new GetDASHSegmentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DASH Segment
+     * 
+     * <p>DASH segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDASHSegmentResponse getDASHSegment(GetDASHSegmentRequest request) {
+        return getDASHSegment(request, Optional.empty());
+    }
+
+    /**
+     * Get DASH Segment
+     * 
+     * <p>DASH segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDASHSegmentResponse getDASHSegment(GetDASHSegmentRequest request, Optional<Options> options) {
+        RequestOperation<GetDASHSegmentRequest, GetDASHSegmentResponse> operation
+              = new GetDASHSegment.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get HLS Segment
+     * 
+     * <p>HLS TS segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetHLSSegmentRequestBuilder getHLSSegment() {
+        return new GetHLSSegmentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get HLS Segment
+     * 
+     * <p>HLS TS segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHLSSegmentResponse getHLSSegment(GetHLSSegmentRequest request) {
+        return getHLSSegment(request, Optional.empty());
+    }
+
+    /**
+     * Get HLS Segment
+     * 
+     * <p>HLS TS segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHLSSegmentResponse getHLSSegment(GetHLSSegmentRequest request, Optional<Options> options) {
+        RequestOperation<GetHLSSegmentRequest, GetHLSSegmentResponse> operation
+              = new GetHLSSegment.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

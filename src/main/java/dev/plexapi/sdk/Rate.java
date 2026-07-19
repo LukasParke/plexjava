@@ -9,12 +9,15 @@ import dev.plexapi.sdk.models.operations.SetRatingRequest;
 import dev.plexapi.sdk.models.operations.SetRatingRequestBuilder;
 import dev.plexapi.sdk.models.operations.SetRatingResponse;
 import dev.plexapi.sdk.operations.SetRating;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * Operations for rating media items (thumbs up/down, star ratings, etc.)
  */
 public class Rate {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncRate asyncSDK;
 
@@ -52,11 +55,26 @@ public class Rate {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetRatingResponse setRating(SetRatingRequest request) throws Exception {
+    public SetRatingResponse setRating(SetRatingRequest request) {
+        return setRating(request, Optional.empty());
+    }
+
+    /**
+     * Rate an item
+     * 
+     * <p>Set the rating on an item.
+     * This API does respond to the GET verb but applications should use PUT
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetRatingResponse setRating(SetRatingRequest request, Optional<Options> options) {
         RequestOperation<SetRatingRequest, SetRatingResponse> operation
-              = new SetRating.Sync(sdkConfiguration);
+              = new SetRating.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

@@ -1,7 +1,14 @@
 # Extension
 
-Extension 
+Extension
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.Extension;
+
+Extension value = Extension.M3U8;
+```
 
 
 ## Values

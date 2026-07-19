@@ -23,9 +23,15 @@ import java.util.Optional;
 /**
  * PostResponses200MediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class PostResponses200MediaContainer {
 
@@ -34,7 +40,8 @@ public class PostResponses200MediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -51,6 +58,16 @@ public class PostResponses200MediaContainer {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("totalSize")
     private Optional<Long> totalSize;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("title")
+    private Optional<String> title;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("type")
+    private Optional<? extends PostResponses200Type> type;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -73,16 +90,6 @@ public class PostResponses200MediaContainer {
     private Optional<Long> startTimeOffset;
 
 
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("title")
-    private Optional<String> title;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("type")
-    private Optional<? extends PostResponses200Type> type;
-
-
     @JsonIgnore
     private Map<String, Object> additionalProperties;
 
@@ -92,32 +99,32 @@ public class PostResponses200MediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
+            @JsonProperty("title") Optional<String> title,
+            @JsonProperty("type") Optional<? extends PostResponses200Type> type,
             @JsonProperty("color") Optional<String> color,
             @JsonProperty("endTimeOffset") Optional<Long> endTimeOffset,
             @JsonProperty("id") Optional<Long> id,
-            @JsonProperty("startTimeOffset") Optional<Long> startTimeOffset,
-            @JsonProperty("title") Optional<String> title,
-            @JsonProperty("type") Optional<? extends PostResponses200Type> type) {
+            @JsonProperty("startTimeOffset") Optional<Long> startTimeOffset) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
         Utils.checkNotNull(totalSize, "totalSize");
+        Utils.checkNotNull(title, "title");
+        Utils.checkNotNull(type, "type");
         Utils.checkNotNull(color, "color");
         Utils.checkNotNull(endTimeOffset, "endTimeOffset");
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(startTimeOffset, "startTimeOffset");
-        Utils.checkNotNull(title, "title");
-        Utils.checkNotNull(type, "type");
         this.identifier = identifier;
         this.offset = offset;
         this.size = size;
         this.totalSize = totalSize;
+        this.title = title;
+        this.type = type;
         this.color = color;
         this.endTimeOffset = endTimeOffset;
         this.id = id;
         this.startTimeOffset = startTimeOffset;
-        this.title = title;
-        this.type = type;
         this.additionalProperties = new HashMap<>();
     }
     
@@ -134,7 +141,8 @@ public class PostResponses200MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -155,6 +163,17 @@ public class PostResponses200MediaContainer {
     }
 
     @JsonIgnore
+    public Optional<String> title() {
+        return title;
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<PostResponses200Type> type() {
+        return (Optional<PostResponses200Type>) type;
+    }
+
+    @JsonIgnore
     public Optional<String> color() {
         return color;
     }
@@ -172,17 +191,6 @@ public class PostResponses200MediaContainer {
     @JsonIgnore
     public Optional<Long> startTimeOffset() {
         return startTimeOffset;
-    }
-
-    @JsonIgnore
-    public Optional<String> title() {
-        return title;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<PostResponses200Type> type() {
-        return (Optional<PostResponses200Type>) type;
     }
 
     @JsonAnyGetter
@@ -209,7 +217,8 @@ public class PostResponses200MediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public PostResponses200MediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -219,7 +228,8 @@ public class PostResponses200MediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public PostResponses200MediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -256,6 +266,32 @@ public class PostResponses200MediaContainer {
     public PostResponses200MediaContainer withTotalSize(Optional<Long> totalSize) {
         Utils.checkNotNull(totalSize, "totalSize");
         this.totalSize = totalSize;
+        return this;
+    }
+
+    public PostResponses200MediaContainer withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = Optional.ofNullable(title);
+        return this;
+    }
+
+
+    public PostResponses200MediaContainer withTitle(Optional<String> title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
+    }
+
+    public PostResponses200MediaContainer withType(PostResponses200Type type) {
+        Utils.checkNotNull(type, "type");
+        this.type = Optional.ofNullable(type);
+        return this;
+    }
+
+
+    public PostResponses200MediaContainer withType(Optional<? extends PostResponses200Type> type) {
+        Utils.checkNotNull(type, "type");
+        this.type = type;
         return this;
     }
 
@@ -311,32 +347,6 @@ public class PostResponses200MediaContainer {
         return this;
     }
 
-    public PostResponses200MediaContainer withTitle(String title) {
-        Utils.checkNotNull(title, "title");
-        this.title = Optional.ofNullable(title);
-        return this;
-    }
-
-
-    public PostResponses200MediaContainer withTitle(Optional<String> title) {
-        Utils.checkNotNull(title, "title");
-        this.title = title;
-        return this;
-    }
-
-    public PostResponses200MediaContainer withType(PostResponses200Type type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
-        return this;
-    }
-
-
-    public PostResponses200MediaContainer withType(Optional<? extends PostResponses200Type> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
-        return this;
-    }
-
     @JsonAnySetter
     public PostResponses200MediaContainer withAdditionalProperty(String key, Object value) {
         // note that value can be null because of the way JsonAnySetter works
@@ -364,12 +374,12 @@ public class PostResponses200MediaContainer {
             Utils.enhancedDeepEquals(this.offset, other.offset) &&
             Utils.enhancedDeepEquals(this.size, other.size) &&
             Utils.enhancedDeepEquals(this.totalSize, other.totalSize) &&
+            Utils.enhancedDeepEquals(this.title, other.title) &&
+            Utils.enhancedDeepEquals(this.type, other.type) &&
             Utils.enhancedDeepEquals(this.color, other.color) &&
             Utils.enhancedDeepEquals(this.endTimeOffset, other.endTimeOffset) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.startTimeOffset, other.startTimeOffset) &&
-            Utils.enhancedDeepEquals(this.title, other.title) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
             Utils.enhancedDeepEquals(this.additionalProperties, other.additionalProperties);
     }
     
@@ -377,9 +387,9 @@ public class PostResponses200MediaContainer {
     public int hashCode() {
         return Utils.enhancedHash(
             identifier, offset, size,
-            totalSize, color, endTimeOffset,
-            id, startTimeOffset, title,
-            type, additionalProperties);
+            totalSize, title, type,
+            color, endTimeOffset, id,
+            startTimeOffset, additionalProperties);
     }
     
     @Override
@@ -389,12 +399,12 @@ public class PostResponses200MediaContainer {
                 "offset", offset,
                 "size", size,
                 "totalSize", totalSize,
+                "title", title,
+                "type", type,
                 "color", color,
                 "endTimeOffset", endTimeOffset,
                 "id", id,
                 "startTimeOffset", startTimeOffset,
-                "title", title,
-                "type", type,
                 "additionalProperties", additionalProperties);
     }
 
@@ -409,6 +419,10 @@ public class PostResponses200MediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
+        private Optional<String> title = Optional.empty();
+
+        private Optional<? extends PostResponses200Type> type = Optional.empty();
+
         private Optional<String> color = Optional.empty();
 
         private Optional<Long> endTimeOffset = Optional.empty();
@@ -416,10 +430,6 @@ public class PostResponses200MediaContainer {
         private Optional<Long> id = Optional.empty();
 
         private Optional<Long> startTimeOffset = Optional.empty();
-
-        private Optional<String> title = Optional.empty();
-
-        private Optional<? extends PostResponses200Type> type = Optional.empty();
 
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -442,7 +452,8 @@ public class PostResponses200MediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -451,7 +462,8 @@ public class PostResponses200MediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -488,6 +500,32 @@ public class PostResponses200MediaContainer {
         public Builder totalSize(Optional<Long> totalSize) {
             Utils.checkNotNull(totalSize, "totalSize");
             this.totalSize = totalSize;
+            return this;
+        }
+
+
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = Optional.ofNullable(title);
+            return this;
+        }
+
+        public Builder title(Optional<String> title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
+        }
+
+
+        public Builder type(PostResponses200Type type) {
+            Utils.checkNotNull(type, "type");
+            this.type = Optional.ofNullable(type);
+            return this;
+        }
+
+        public Builder type(Optional<? extends PostResponses200Type> type) {
+            Utils.checkNotNull(type, "type");
+            this.type = type;
             return this;
         }
 
@@ -543,32 +581,6 @@ public class PostResponses200MediaContainer {
             return this;
         }
 
-
-        public Builder title(String title) {
-            Utils.checkNotNull(title, "title");
-            this.title = Optional.ofNullable(title);
-            return this;
-        }
-
-        public Builder title(Optional<String> title) {
-            Utils.checkNotNull(title, "title");
-            this.title = title;
-            return this;
-        }
-
-
-        public Builder type(PostResponses200Type type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
-            return this;
-        }
-
-        public Builder type(Optional<? extends PostResponses200Type> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
-            return this;
-        }
-
         public Builder additionalProperty(String key, Object value) {
             Utils.checkNotNull(key, "key");
             // we could be strict about null values (force the user
@@ -589,9 +601,9 @@ public class PostResponses200MediaContainer {
 
             return new PostResponses200MediaContainer(
                 identifier, offset, size,
-                totalSize, color, endTimeOffset,
-                id, startTimeOffset, title,
-                type)
+                totalSize, title, type,
+                color, endTimeOffset, id,
+                startTimeOffset)
                 .withAdditionalProperties(additionalProperties);
         }
 

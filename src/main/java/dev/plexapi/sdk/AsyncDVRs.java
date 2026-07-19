@@ -3,7 +3,6 @@
  */
 package dev.plexapi.sdk;
 
-import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
 import dev.plexapi.sdk.models.operations.AddDeviceToDVRRequest;
@@ -11,12 +10,17 @@ import dev.plexapi.sdk.models.operations.AddLineupRequest;
 import dev.plexapi.sdk.models.operations.CreateDVRRequest;
 import dev.plexapi.sdk.models.operations.DeleteDVRRequest;
 import dev.plexapi.sdk.models.operations.DeleteLineupRequest;
+import dev.plexapi.sdk.models.operations.GetDVRChannelsRequest;
+import dev.plexapi.sdk.models.operations.GetDVRGuideRequest;
 import dev.plexapi.sdk.models.operations.GetDVRRequest;
+import dev.plexapi.sdk.models.operations.ListDVRsRequest;
+import dev.plexapi.sdk.models.operations.PatchDVRSettingsRequest;
 import dev.plexapi.sdk.models.operations.ReloadGuideRequest;
 import dev.plexapi.sdk.models.operations.RemoveDeviceFromDVRRequest;
 import dev.plexapi.sdk.models.operations.SetDVRPreferencesRequest;
 import dev.plexapi.sdk.models.operations.StopDVRReloadRequest;
 import dev.plexapi.sdk.models.operations.TuneChannelRequest;
+import dev.plexapi.sdk.models.operations.UpdateDVRSettingsRequest;
 import dev.plexapi.sdk.models.operations.async.AddDeviceToDVRRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.AddDeviceToDVRResponse;
 import dev.plexapi.sdk.models.operations.async.AddLineupRequestBuilder;
@@ -27,10 +31,16 @@ import dev.plexapi.sdk.models.operations.async.DeleteDVRRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.DeleteDVRResponse;
 import dev.plexapi.sdk.models.operations.async.DeleteLineupRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.DeleteLineupResponse;
+import dev.plexapi.sdk.models.operations.async.GetDVRChannelsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetDVRChannelsResponse;
+import dev.plexapi.sdk.models.operations.async.GetDVRGuideRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetDVRGuideResponse;
 import dev.plexapi.sdk.models.operations.async.GetDVRRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetDVRResponse;
 import dev.plexapi.sdk.models.operations.async.ListDVRsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ListDVRsResponse;
+import dev.plexapi.sdk.models.operations.async.PatchDVRSettingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.PatchDVRSettingsResponse;
 import dev.plexapi.sdk.models.operations.async.ReloadGuideRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ReloadGuideResponse;
 import dev.plexapi.sdk.models.operations.async.RemoveDeviceFromDVRRequestBuilder;
@@ -41,24 +51,36 @@ import dev.plexapi.sdk.models.operations.async.StopDVRReloadRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.StopDVRReloadResponse;
 import dev.plexapi.sdk.models.operations.async.TuneChannelRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.TuneChannelResponse;
+import dev.plexapi.sdk.models.operations.async.UpdateDVRSettingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UpdateDVRSettingsResponse;
 import dev.plexapi.sdk.operations.AddDeviceToDVR;
 import dev.plexapi.sdk.operations.AddLineup;
 import dev.plexapi.sdk.operations.CreateDVR;
 import dev.plexapi.sdk.operations.DeleteDVR;
 import dev.plexapi.sdk.operations.DeleteLineup;
 import dev.plexapi.sdk.operations.GetDVR;
+import dev.plexapi.sdk.operations.GetDVRChannels;
+import dev.plexapi.sdk.operations.GetDVRGuide;
 import dev.plexapi.sdk.operations.ListDVRs;
+import dev.plexapi.sdk.operations.PatchDVRSettings;
 import dev.plexapi.sdk.operations.ReloadGuide;
 import dev.plexapi.sdk.operations.RemoveDeviceFromDVR;
 import dev.plexapi.sdk.operations.SetDVRPreferences;
 import dev.plexapi.sdk.operations.StopDVRReload;
 import dev.plexapi.sdk.operations.TuneChannel;
+import dev.plexapi.sdk.operations.UpdateDVRSettings;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.String;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The DVR provides means to watch and record live TV.  This section of endpoints describes how to setup the DVR itself
+ * The DVR provides means to watch and record live TV. This section of endpoints describes how to setup
+ * the DVR itself
  */
 public class AsyncDVRs {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final DVRs syncSDK;
 
@@ -93,12 +115,36 @@ public class AsyncDVRs {
      * 
      * <p>Get the list of all available DVRs
      * 
-     * @return CompletableFuture&lt;ListDVRsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListDVRsResponse>} - The async response
      */
     public CompletableFuture<ListDVRsResponse> listDVRsDirect() {
-        AsyncRequestlessOperation<ListDVRsResponse> operation
-            = new ListDVRs.Async(sdkConfiguration);
-        return operation.doRequest()
+        return listDVRs(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get DVRs
+     * 
+     * <p>Get the list of all available DVRs
+     * 
+     * @param uuid Filter by DVR UUID.
+     * @param lineup Filter by lineup.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListDVRsResponse>} - The async response
+     */
+    public CompletableFuture<ListDVRsResponse> listDVRs(
+            Optional<String> uuid, Optional<String> lineup,
+            Optional<Options> options) {
+        ListDVRsRequest request =
+            ListDVRsRequest
+                .builder()
+                .uuid(uuid)
+                .lineup(lineup)
+                .build();
+        AsyncRequestOperation<ListDVRsRequest, ListDVRsResponse> operation
+              = new ListDVRs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
@@ -106,7 +152,9 @@ public class AsyncDVRs {
     /**
      * Create a DVR
      * 
-     * <p>Creation of a DVR, after creation of a devcie and a lineup is selected
+     * <p>Creation of a DVR, after creation of a device and a lineup is selected
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -117,14 +165,33 @@ public class AsyncDVRs {
     /**
      * Create a DVR
      * 
-     * <p>Creation of a DVR, after creation of a devcie and a lineup is selected
+     * <p>Creation of a DVR, after creation of a device and a lineup is selected
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CreateDVRResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreateDVRResponse>} - The async response
      */
     public CompletableFuture<CreateDVRResponse> createDVR(CreateDVRRequest request) {
+        return createDVR(request, Optional.empty());
+    }
+
+    /**
+     * Create a DVR
+     * 
+     * <p>Creation of a DVR, after creation of a device and a lineup is selected
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateDVRResponse>} - The async response
+     */
+    public CompletableFuture<CreateDVRResponse> createDVR(CreateDVRRequest request, Optional<Options> options) {
         AsyncRequestOperation<CreateDVRRequest, CreateDVRResponse> operation
-              = new CreateDVR.Async(sdkConfiguration);
+              = new CreateDVR.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -134,6 +201,8 @@ public class AsyncDVRs {
      * Delete a single DVR
      * 
      * <p>Delete a single DVR by its id (key)
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -146,12 +215,31 @@ public class AsyncDVRs {
      * 
      * <p>Delete a single DVR by its id (key)
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteDVRResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteDVRResponse>} - The async response
      */
     public CompletableFuture<DeleteDVRResponse> deleteDVR(DeleteDVRRequest request) {
+        return deleteDVR(request, Optional.empty());
+    }
+
+    /**
+     * Delete a single DVR
+     * 
+     * <p>Delete a single DVR by its id (key)
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteDVRResponse>} - The async response
+     */
+    public CompletableFuture<DeleteDVRResponse> deleteDVR(DeleteDVRRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteDVRRequest, DeleteDVRResponse> operation
-              = new DeleteDVR.Async(sdkConfiguration);
+              = new DeleteDVR.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -174,11 +262,218 @@ public class AsyncDVRs {
      * <p>Get a single DVR by its id (key)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetDVRResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetDVRResponse>} - The async response
      */
     public CompletableFuture<GetDVRResponse> getDVR(GetDVRRequest request) {
+        return getDVR(request, Optional.empty());
+    }
+
+    /**
+     * Get a single DVR
+     * 
+     * <p>Get a single DVR by its id (key)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDVRResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRResponse> getDVR(GetDVRRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetDVRRequest, GetDVRResponse> operation
-              = new GetDVR.Async(sdkConfiguration);
+              = new GetDVR.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public PatchDVRSettingsRequestBuilder patchDVRSettings() {
+        return new PatchDVRSettingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<PatchDVRSettingsResponse>} - The async response
+     */
+    public CompletableFuture<PatchDVRSettingsResponse> patchDVRSettings(PatchDVRSettingsRequest request) {
+        return patchDVRSettings(request, Optional.empty());
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<PatchDVRSettingsResponse>} - The async response
+     */
+    public CompletableFuture<PatchDVRSettingsResponse> patchDVRSettings(PatchDVRSettingsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<PatchDVRSettingsRequest, PatchDVRSettingsResponse> operation
+              = new PatchDVRSettings.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public UpdateDVRSettingsRequestBuilder updateDVRSettings() {
+        return new UpdateDVRSettingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<UpdateDVRSettingsResponse>} - The async response
+     */
+    public CompletableFuture<UpdateDVRSettingsResponse> updateDVRSettings(UpdateDVRSettingsRequest request) {
+        return updateDVRSettings(request, Optional.empty());
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateDVRSettingsResponse>} - The async response
+     */
+    public CompletableFuture<UpdateDVRSettingsResponse> updateDVRSettings(UpdateDVRSettingsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<UpdateDVRSettingsRequest, UpdateDVRSettingsResponse> operation
+              = new UpdateDVRSettings.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get DVR Channels
+     * 
+     * <p>List channels directly associated with a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetDVRChannelsRequestBuilder getDVRChannels() {
+        return new GetDVRChannelsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DVR Channels
+     * 
+     * <p>List channels directly associated with a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetDVRChannelsResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRChannelsResponse> getDVRChannels(GetDVRChannelsRequest request) {
+        return getDVRChannels(request, Optional.empty());
+    }
+
+    /**
+     * Get DVR Channels
+     * 
+     * <p>List channels directly associated with a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDVRChannelsResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRChannelsResponse> getDVRChannels(GetDVRChannelsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetDVRChannelsRequest, GetDVRChannelsResponse> operation
+              = new GetDVRChannels.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get DVR Guide
+     * 
+     * <p>Fetch program guide/schedule for a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetDVRGuideRequestBuilder getDVRGuide() {
+        return new GetDVRGuideRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DVR Guide
+     * 
+     * <p>Fetch program guide/schedule for a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetDVRGuideResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRGuideResponse> getDVRGuide(GetDVRGuideRequest request) {
+        return getDVRGuide(request, Optional.empty());
+    }
+
+    /**
+     * Get DVR Guide
+     * 
+     * <p>Fetch program guide/schedule for a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDVRGuideResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRGuideResponse> getDVRGuide(GetDVRGuideRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetDVRGuideRequest, GetDVRGuideResponse> operation
+              = new GetDVRGuide.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -188,6 +483,8 @@ public class AsyncDVRs {
      * Delete a DVR Lineup
      * 
      * <p>Deletes a DVR device's lineup.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -200,12 +497,31 @@ public class AsyncDVRs {
      * 
      * <p>Deletes a DVR device's lineup.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteLineupResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteLineupResponse>} - The async response
      */
     public CompletableFuture<DeleteLineupResponse> deleteLineup(DeleteLineupRequest request) {
+        return deleteLineup(request, Optional.empty());
+    }
+
+    /**
+     * Delete a DVR Lineup
+     * 
+     * <p>Deletes a DVR device's lineup.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteLineupResponse>} - The async response
+     */
+    public CompletableFuture<DeleteLineupResponse> deleteLineup(DeleteLineupRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteLineupRequest, DeleteLineupResponse> operation
-              = new DeleteLineup.Async(sdkConfiguration);
+              = new DeleteLineup.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -215,6 +531,8 @@ public class AsyncDVRs {
      * Add a DVR Lineup
      * 
      * <p>Add a lineup to a DVR device's set of lineups.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -227,12 +545,31 @@ public class AsyncDVRs {
      * 
      * <p>Add a lineup to a DVR device's set of lineups.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddLineupResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddLineupResponse>} - The async response
      */
     public CompletableFuture<AddLineupResponse> addLineup(AddLineupRequest request) {
+        return addLineup(request, Optional.empty());
+    }
+
+    /**
+     * Add a DVR Lineup
+     * 
+     * <p>Add a lineup to a DVR device's set of lineups.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddLineupResponse>} - The async response
+     */
+    public CompletableFuture<AddLineupResponse> addLineup(AddLineupRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddLineupRequest, AddLineupResponse> operation
-              = new AddLineup.Async(sdkConfiguration);
+              = new AddLineup.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -241,7 +578,9 @@ public class AsyncDVRs {
     /**
      * Set DVR preferences
      * 
-     * <p>Set DVR preferences by name avd value
+     * <p>Set DVR preferences by name and value
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -252,14 +591,33 @@ public class AsyncDVRs {
     /**
      * Set DVR preferences
      * 
-     * <p>Set DVR preferences by name avd value
+     * <p>Set DVR preferences by name and value
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetDVRPreferencesResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetDVRPreferencesResponse>} - The async response
      */
     public CompletableFuture<SetDVRPreferencesResponse> setDVRPreferences(SetDVRPreferencesRequest request) {
+        return setDVRPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set DVR preferences
+     * 
+     * <p>Set DVR preferences by name and value
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetDVRPreferencesResponse>} - The async response
+     */
+    public CompletableFuture<SetDVRPreferencesResponse> setDVRPreferences(SetDVRPreferencesRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetDVRPreferencesRequest, SetDVRPreferencesResponse> operation
-              = new SetDVRPreferences.Async(sdkConfiguration);
+              = new SetDVRPreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -269,6 +627,8 @@ public class AsyncDVRs {
      * Tell a DVR to stop reloading program guide
      * 
      * <p>Tell a DVR to stop reloading program guide
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -281,12 +641,31 @@ public class AsyncDVRs {
      * 
      * <p>Tell a DVR to stop reloading program guide
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;StopDVRReloadResponse&gt; - The async response
+     * @return {@code CompletableFuture<StopDVRReloadResponse>} - The async response
      */
     public CompletableFuture<StopDVRReloadResponse> stopDVRReload(StopDVRReloadRequest request) {
+        return stopDVRReload(request, Optional.empty());
+    }
+
+    /**
+     * Tell a DVR to stop reloading program guide
+     * 
+     * <p>Tell a DVR to stop reloading program guide
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<StopDVRReloadResponse>} - The async response
+     */
+    public CompletableFuture<StopDVRReloadResponse> stopDVRReload(StopDVRReloadRequest request, Optional<Options> options) {
         AsyncRequestOperation<StopDVRReloadRequest, StopDVRReloadResponse> operation
-              = new StopDVRReload.Async(sdkConfiguration);
+              = new StopDVRReload.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -296,6 +675,8 @@ public class AsyncDVRs {
      * Tell a DVR to reload program guide
      * 
      * <p>Tell a DVR to reload program guide
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -308,12 +689,31 @@ public class AsyncDVRs {
      * 
      * <p>Tell a DVR to reload program guide
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ReloadGuideResponse&gt; - The async response
+     * @return {@code CompletableFuture<ReloadGuideResponse>} - The async response
      */
     public CompletableFuture<ReloadGuideResponse> reloadGuide(ReloadGuideRequest request) {
+        return reloadGuide(request, Optional.empty());
+    }
+
+    /**
+     * Tell a DVR to reload program guide
+     * 
+     * <p>Tell a DVR to reload program guide
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ReloadGuideResponse>} - The async response
+     */
+    public CompletableFuture<ReloadGuideResponse> reloadGuide(ReloadGuideRequest request, Optional<Options> options) {
         AsyncRequestOperation<ReloadGuideRequest, ReloadGuideResponse> operation
-              = new ReloadGuide.Async(sdkConfiguration);
+              = new ReloadGuide.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -336,11 +736,26 @@ public class AsyncDVRs {
      * <p>Tune a channel on a DVR to the provided channel
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;TuneChannelResponse&gt; - The async response
+     * @return {@code CompletableFuture<TuneChannelResponse>} - The async response
      */
     public CompletableFuture<TuneChannelResponse> tuneChannel(TuneChannelRequest request) {
+        return tuneChannel(request, Optional.empty());
+    }
+
+    /**
+     * Tune a channel on a DVR
+     * 
+     * <p>Tune a channel on a DVR to the provided channel
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<TuneChannelResponse>} - The async response
+     */
+    public CompletableFuture<TuneChannelResponse> tuneChannel(TuneChannelRequest request, Optional<Options> options) {
         AsyncRequestOperation<TuneChannelRequest, TuneChannelResponse> operation
-              = new TuneChannel.Async(sdkConfiguration);
+              = new TuneChannel.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -350,6 +765,8 @@ public class AsyncDVRs {
      * Remove a device from an existing DVR
      * 
      * <p>Remove a device from an existing DVR
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -362,12 +779,31 @@ public class AsyncDVRs {
      * 
      * <p>Remove a device from an existing DVR
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;RemoveDeviceFromDVRResponse&gt; - The async response
+     * @return {@code CompletableFuture<RemoveDeviceFromDVRResponse>} - The async response
      */
     public CompletableFuture<RemoveDeviceFromDVRResponse> removeDeviceFromDVR(RemoveDeviceFromDVRRequest request) {
+        return removeDeviceFromDVR(request, Optional.empty());
+    }
+
+    /**
+     * Remove a device from an existing DVR
+     * 
+     * <p>Remove a device from an existing DVR
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RemoveDeviceFromDVRResponse>} - The async response
+     */
+    public CompletableFuture<RemoveDeviceFromDVRResponse> removeDeviceFromDVR(RemoveDeviceFromDVRRequest request, Optional<Options> options) {
         AsyncRequestOperation<RemoveDeviceFromDVRRequest, RemoveDeviceFromDVRResponse> operation
-              = new RemoveDeviceFromDVR.Async(sdkConfiguration);
+              = new RemoveDeviceFromDVR.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -377,6 +813,8 @@ public class AsyncDVRs {
      * Add a device to an existing DVR
      * 
      * <p>Add a device to an existing DVR
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -389,12 +827,31 @@ public class AsyncDVRs {
      * 
      * <p>Add a device to an existing DVR
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddDeviceToDVRResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddDeviceToDVRResponse>} - The async response
      */
     public CompletableFuture<AddDeviceToDVRResponse> addDeviceToDVR(AddDeviceToDVRRequest request) {
+        return addDeviceToDVR(request, Optional.empty());
+    }
+
+    /**
+     * Add a device to an existing DVR
+     * 
+     * <p>Add a device to an existing DVR
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddDeviceToDVRResponse>} - The async response
+     */
+    public CompletableFuture<AddDeviceToDVRResponse> addDeviceToDVR(AddDeviceToDVRRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddDeviceToDVRRequest, AddDeviceToDVRResponse> operation
-              = new AddDeviceToDVR.Async(sdkConfiguration);
+              = new AddDeviceToDVR.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

@@ -5,24 +5,32 @@ package dev.plexapi.sdk;
 
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
+import dev.plexapi.sdk.models.operations.GetConversionQueueRequest;
 import dev.plexapi.sdk.models.operations.MarkPlayedRequest;
 import dev.plexapi.sdk.models.operations.ReportRequest;
 import dev.plexapi.sdk.models.operations.UnscrobbleRequest;
+import dev.plexapi.sdk.models.operations.async.GetConversionQueueRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetConversionQueueResponse;
 import dev.plexapi.sdk.models.operations.async.MarkPlayedRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.MarkPlayedResponse;
 import dev.plexapi.sdk.models.operations.async.ReportRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ReportResponse;
 import dev.plexapi.sdk.models.operations.async.UnscrobbleRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.UnscrobbleResponse;
+import dev.plexapi.sdk.operations.GetConversionQueue;
 import dev.plexapi.sdk.operations.MarkPlayed;
 import dev.plexapi.sdk.operations.Report;
 import dev.plexapi.sdk.operations.Unscrobble;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * The actions feature within a media provider
  */
 public class AsyncTimeline {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Timeline syncSDK;
 
@@ -44,7 +52,8 @@ public class AsyncTimeline {
     /**
      * Mark an item as played
      * 
-     * <p>Mark an item as played.  Note, this does not create any view history of this item but rather just sets the state as played. The client must provide either the `key` or `uri` query parameter
+     * <p>Mark an item as played. Note, this does not create any view history of this item but rather just
+     * sets the state as played. The client must provide either the `key` or `uri` query parameter
      * This API does respond to the GET verb but applications should use PUT
      * 
      * @return The async call builder
@@ -56,15 +65,33 @@ public class AsyncTimeline {
     /**
      * Mark an item as played
      * 
-     * <p>Mark an item as played.  Note, this does not create any view history of this item but rather just sets the state as played. The client must provide either the `key` or `uri` query parameter
+     * <p>Mark an item as played. Note, this does not create any view history of this item but rather just
+     * sets the state as played. The client must provide either the `key` or `uri` query parameter
      * This API does respond to the GET verb but applications should use PUT
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;MarkPlayedResponse&gt; - The async response
+     * @return {@code CompletableFuture<MarkPlayedResponse>} - The async response
      */
     public CompletableFuture<MarkPlayedResponse> markPlayed(MarkPlayedRequest request) {
+        return markPlayed(request, Optional.empty());
+    }
+
+    /**
+     * Mark an item as played
+     * 
+     * <p>Mark an item as played. Note, this does not create any view history of this item but rather just
+     * sets the state as played. The client must provide either the `key` or `uri` query parameter
+     * This API does respond to the GET verb but applications should use PUT
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MarkPlayedResponse>} - The async response
+     */
+    public CompletableFuture<MarkPlayedResponse> markPlayed(MarkPlayedRequest request, Optional<Options> options) {
         AsyncRequestOperation<MarkPlayedRequest, MarkPlayedResponse> operation
-              = new MarkPlayed.Async(sdkConfiguration);
+              = new MarkPlayed.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -73,7 +100,9 @@ public class AsyncTimeline {
     /**
      * Report media timeline
      * 
-     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state changes, or in the absence of a play state change, in a regular fashion (generally this means every 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
+     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state
+     * changes, or in the absence of a play state change, in a regular fashion (generally this means every
+     * 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
      * 
      * @return The async call builder
      */
@@ -84,14 +113,33 @@ public class AsyncTimeline {
     /**
      * Report media timeline
      * 
-     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state changes, or in the absence of a play state change, in a regular fashion (generally this means every 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
+     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state
+     * changes, or in the absence of a play state change, in a regular fashion (generally this means every
+     * 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ReportResponse&gt; - The async response
+     * @return {@code CompletableFuture<ReportResponse>} - The async response
      */
     public CompletableFuture<ReportResponse> report(ReportRequest request) {
+        return report(request, Optional.empty());
+    }
+
+    /**
+     * Report media timeline
+     * 
+     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state
+     * changes, or in the absence of a play state change, in a regular fashion (generally this means every
+     * 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ReportResponse>} - The async response
+     */
+    public CompletableFuture<ReportResponse> report(ReportRequest request, Optional<Options> options) {
         AsyncRequestOperation<ReportRequest, ReportResponse> operation
-              = new Report.Async(sdkConfiguration);
+              = new Report.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -116,11 +164,75 @@ public class AsyncTimeline {
      * This API does respond to the GET verb but applications should use PUT
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;UnscrobbleResponse&gt; - The async response
+     * @return {@code CompletableFuture<UnscrobbleResponse>} - The async response
      */
     public CompletableFuture<UnscrobbleResponse> unscrobble(UnscrobbleRequest request) {
+        return unscrobble(request, Optional.empty());
+    }
+
+    /**
+     * Mark an item as unplayed
+     * 
+     * <p>Mark an item as unplayed. The client must provide either the `key` or `uri` query parameter
+     * This API does respond to the GET verb but applications should use PUT
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UnscrobbleResponse>} - The async response
+     */
+    public CompletableFuture<UnscrobbleResponse> unscrobble(UnscrobbleRequest request, Optional<Options> options) {
         AsyncRequestOperation<UnscrobbleRequest, UnscrobbleResponse> operation
-              = new Unscrobble.Async(sdkConfiguration);
+              = new Unscrobble.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Conversion Queue
+     * 
+     * <p>Get the conversion/optimization queue.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetConversionQueueRequestBuilder getConversionQueue() {
+        return new GetConversionQueueRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Conversion Queue
+     * 
+     * <p>Get the conversion/optimization queue.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetConversionQueueResponse>} - The async response
+     */
+    public CompletableFuture<GetConversionQueueResponse> getConversionQueue(GetConversionQueueRequest request) {
+        return getConversionQueue(request, Optional.empty());
+    }
+
+    /**
+     * Get Conversion Queue
+     * 
+     * <p>Get the conversion/optimization queue.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetConversionQueueResponse>} - The async response
+     */
+    public CompletableFuture<GetConversionQueueResponse> getConversionQueue(GetConversionQueueRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetConversionQueueRequest, GetConversionQueueResponse> operation
+              = new GetConversionQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

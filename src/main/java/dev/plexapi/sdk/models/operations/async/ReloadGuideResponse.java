@@ -14,6 +14,7 @@ import java.lang.String;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class ReloadGuideResponse implements AsyncResponse {
@@ -33,6 +34,9 @@ public class ReloadGuideResponse implements AsyncResponse {
     private HttpResponse<Blob> rawResponse;
 
 
+    private Optional<byte[]> body;
+
+
     private Map<String, List<String>> headers;
 
     @JsonCreator
@@ -40,16 +44,28 @@ public class ReloadGuideResponse implements AsyncResponse {
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
+            Optional<byte[]> body,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(body, "body");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.body = body;
         this.headers = headers;
+    }
+    
+    public ReloadGuideResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<Blob> rawResponse,
+            Map<String, List<String>> headers) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty(), headers);
     }
 
     /**
@@ -74,6 +90,11 @@ public class ReloadGuideResponse implements AsyncResponse {
     @JsonIgnore
     public HttpResponse<Blob> rawResponse() {
         return rawResponse;
+    }
+
+    @JsonIgnore
+    public Blob body() {
+        return rawResponse.body();
     }
 
     @JsonIgnore
@@ -113,6 +134,19 @@ public class ReloadGuideResponse implements AsyncResponse {
         return this;
     }
 
+    public ReloadGuideResponse withBody(byte[] body) {
+        Utils.checkNotNull(body, "body");
+        this.body = Optional.ofNullable(body);
+        return this;
+    }
+
+
+    public ReloadGuideResponse withBody(Optional<byte[]> body) {
+        Utils.checkNotNull(body, "body");
+        this.body = body;
+        return this;
+    }
+
     public ReloadGuideResponse withHeaders(Map<String, List<String>> headers) {
         Utils.checkNotNull(headers, "headers");
         this.headers = headers;
@@ -132,6 +166,7 @@ public class ReloadGuideResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.body, other.body) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -139,7 +174,7 @@ public class ReloadGuideResponse implements AsyncResponse {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            headers);
+            body, headers);
     }
     
     @Override
@@ -148,6 +183,7 @@ public class ReloadGuideResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
+                "body", body,
                 "headers", headers);
     }
 
@@ -159,6 +195,8 @@ public class ReloadGuideResponse implements AsyncResponse {
         private Integer statusCode;
 
         private HttpResponse<Blob> rawResponse;
+
+        private Optional<byte[]> body = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -197,6 +235,19 @@ public class ReloadGuideResponse implements AsyncResponse {
         }
 
 
+        public Builder body(byte[] body) {
+            Utils.checkNotNull(body, "body");
+            this.body = Optional.ofNullable(body);
+            return this;
+        }
+
+        public Builder body(Optional<byte[]> body) {
+            Utils.checkNotNull(body, "body");
+            this.body = body;
+            return this;
+        }
+
+
         public Builder headers(Map<String, List<String>> headers) {
             Utils.checkNotNull(headers, "headers");
             this.headers = headers;
@@ -207,7 +258,7 @@ public class ReloadGuideResponse implements AsyncResponse {
 
             return new ReloadGuideResponse(
                 contentType, statusCode, rawResponse,
-                headers);
+                body, headers);
         }
 
     }

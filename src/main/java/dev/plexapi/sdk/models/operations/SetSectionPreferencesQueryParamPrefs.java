@@ -10,6 +10,8 @@ import java.lang.String;
 
 /**
  * SetSectionPreferencesQueryParamPrefs
+ * 
+ * <p>The preference key to retrieve or set
  */
 public class SetSectionPreferencesQueryParamPrefs {
     @JsonCreator

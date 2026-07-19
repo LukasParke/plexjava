@@ -84,7 +84,8 @@ public class ListPersonMediaRequest {
     private Optional<String> marketplace;
 
     /**
-     * Either the PMS tag `id` of the person or `tagKey` of the actor.  Note the `tagKey` is the hex portion of the plex guid for the actor
+     * Either the PMS tag `id` of the person or `tagKey` of the actor. Note the `tagKey` is the hex portion
+     * of the plex guid for the actor
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=personId")
     private String personId;
@@ -227,7 +228,8 @@ public class ListPersonMediaRequest {
     }
 
     /**
-     * Either the PMS tag `id` of the person or `tagKey` of the actor.  Note the `tagKey` is the hex portion of the plex guid for the actor
+     * Either the PMS tag `id` of the person or `tagKey` of the actor. Note the `tagKey` is the hex portion
+     * of the plex guid for the actor
      */
     @JsonIgnore
     public String personId() {
@@ -449,7 +451,8 @@ public class ListPersonMediaRequest {
     }
 
     /**
-     * Either the PMS tag `id` of the person or `tagKey` of the actor.  Note the `tagKey` is the hex portion of the plex guid for the actor
+     * Either the PMS tag `id` of the person or `tagKey` of the actor. Note the `tagKey` is the hex portion
+     * of the plex guid for the actor
      */
     public ListPersonMediaRequest withPersonId(String personId) {
         Utils.checkNotNull(personId, "personId");
@@ -749,7 +752,8 @@ public class ListPersonMediaRequest {
 
 
         /**
-         * Either the PMS tag `id` of the person or `tagKey` of the actor.  Note the `tagKey` is the hex portion of the plex guid for the actor
+         * Either the PMS tag `id` of the person or `tagKey` of the actor. Note the `tagKey` is the hex portion
+         * of the plex guid for the actor
          */
         public Builder personId(String personId) {
             Utils.checkNotNull(personId, "personId");

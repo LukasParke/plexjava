@@ -41,17 +41,42 @@ import dev.plexapi.sdk.operations.MovePlayQueueItem;
 import dev.plexapi.sdk.operations.ResetPlayQueue;
 import dev.plexapi.sdk.operations.Shuffle;
 import dev.plexapi.sdk.operations.Unshuffle;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * The playqueue feature within a media provider
- * A play queue represents the current list of media for playback. Although queues are persisted by the server, they should be regarded by the user as a fairly lightweight, an ephemeral list of items queued up for playback in a session.  There is generally one active queue for each type of media (music, video, photos) that can be added to or destroyed and replaced with a fresh queue.
- * Play Queues has a region, which we refer to in this doc (partially for historical reasons) as "Up Next". This region is defined by `playQueueLastAddedItemID` existing on the media container. This follows iTunes' terminology. It is a special region after the currently playing item but before the originally-played items. This enables "Party Mode" listening/viewing, where items can be added on-the-fly, and normal queue playback resumed when completed. 
- * You can visualize the play queue as a sliding window in the complete list of media queued for playback. This model is important when scaling to larger play queues (e.g. shuffling 40,000 audio tracks). The client only needs visibility into small areas of the queue at any given time, and the server can optimize access in this fashion.
- * All created play queues will have an empty "Up Next" area - unless the item is an album and no `key` is provided. In this case the "Up Next" area will be populated by the contents of the album. This is to allow queueing of multiple albums - since the 'Add to Up Next' will insert after all the tracks. This means that If you're creating a PQ from an album, you can only shuffle it if you set `key`. This is due to the above implicit queueing of albums when no `key` is provided as well as the current limitation that you cannot shuffle a PQ with an "Up Next" area.
- * The play queue window advances as the server receives timeline requests. The client needs to retrieve the play queue as the “now playing” item changes. There is no play queue API to update the playing item.
+ * A play queue represents the current list of media for playback. Although queues are persisted by the
+ * server, they should be regarded by the user as a fairly lightweight, an ephemeral list of items
+ * queued up for playback in a session. There is generally one active queue for each type of media
+ * (music, video, photos) that can be added to or destroyed and replaced with a fresh queue.
+ * Play Queues has a region, which we refer to in this doc (partially for historical reasons) as "Up
+ * Next". This region is defined by `playQueueLastAddedItemID` existing on the media container. This
+ * follows iTunes' terminology.
+ * 
+ * <p>It is a special region after the currently playing item but before the originally-played items. This
+ * enables "Party Mode" listening/viewing, where items can be added on-the-fly, and normal queue
+ * playback resumed when completed.
+ * You can visualize the play queue as a sliding window in the complete list of media queued for
+ * playback. This model is important when scaling to larger play queues (e.g. shuffling 40,000 audio
+ * tracks).
+ * 
+ * <p>The client only needs visibility into small areas of the queue at any given time, and the server can
+ * optimize access in this fashion.
+ * All created play queues will have an empty "Up Next" area - unless the item is an album and no `key`
+ * is provided. In this case the "Up Next" area will be populated by the contents of the album. This is
+ * to allow queueing of multiple albums - since the 'Add to Up Next' will insert after all the tracks.
+ * 
+ * <p>This means that If you're creating a PQ from an album, you can only shuffle it if you set `key`.
+ * This is due to the above implicit queueing of albums when no `key` is provided as well as the
+ * current limitation that you cannot shuffle a PQ with an "Up Next" area.
+ * The play queue window advances as the server receives timeline requests. The client needs to
+ * retrieve the play queue as the “now playing” item changes. There is no play queue API to update the
+ * playing item.
  */
 public class PlayQueue {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncPlayQueue asyncSDK;
 
@@ -72,7 +97,11 @@ public class PlayQueue {
     /**
      * Create a play queue
      * 
-     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist. The response is a media container with the initial items in the queue. Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the queue could have repeated items with the same `ratingKey`.
+     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist.
+     * The response is a media container with the initial items in the queue.
+     * 
+     * <p>Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the
+     * queue could have repeated items with the same `ratingKey`.
      * Note: Either `uri` or `playlistID` must be specified
      * 
      * @return The call builder
@@ -84,23 +113,48 @@ public class PlayQueue {
     /**
      * Create a play queue
      * 
-     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist. The response is a media container with the initial items in the queue. Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the queue could have repeated items with the same `ratingKey`.
+     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist.
+     * The response is a media container with the initial items in the queue.
+     * 
+     * <p>Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the
+     * queue could have repeated items with the same `ratingKey`.
      * Note: Either `uri` or `playlistID` must be specified
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreatePlayQueueResponse createPlayQueue(CreatePlayQueueRequest request) throws Exception {
+    public CreatePlayQueueResponse createPlayQueue(CreatePlayQueueRequest request) {
+        return createPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Create a play queue
+     * 
+     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist.
+     * The response is a media container with the initial items in the queue.
+     * 
+     * <p>Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the
+     * queue could have repeated items with the same `ratingKey`.
+     * Note: Either `uri` or `playlistID` must be specified
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreatePlayQueueResponse createPlayQueue(CreatePlayQueueRequest request, Optional<Options> options) {
         RequestOperation<CreatePlayQueueRequest, CreatePlayQueueResponse> operation
-              = new CreatePlayQueue.Sync(sdkConfiguration);
+              = new CreatePlayQueue.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Retrieve a play queue
      * 
-     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by play queue-oblivious clients, but they may wish to request a large window onto the queue since they won't know to refresh.
+     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by
+     * play queue-oblivious clients, but they may wish to request a large window onto the queue since they
+     * won't know to refresh.
      * 
      * @return The call builder
      */
@@ -111,22 +165,43 @@ public class PlayQueue {
     /**
      * Retrieve a play queue
      * 
-     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by play queue-oblivious clients, but they may wish to request a large window onto the queue since they won't know to refresh.
+     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by
+     * play queue-oblivious clients, but they may wish to request a large window onto the queue since they
+     * won't know to refresh.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPlayQueueResponse getPlayQueue(GetPlayQueueRequest request) throws Exception {
+    public GetPlayQueueResponse getPlayQueue(GetPlayQueueRequest request) {
+        return getPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Retrieve a play queue
+     * 
+     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by
+     * play queue-oblivious clients, but they may wish to request a large window onto the queue since they
+     * won't know to refresh.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPlayQueueResponse getPlayQueue(GetPlayQueueRequest request, Optional<Options> options) {
         RequestOperation<GetPlayQueueRequest, GetPlayQueueResponse> operation
-              = new GetPlayQueue.Sync(sdkConfiguration);
+              = new GetPlayQueue.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Add a generator or playlist to a play queue
      * 
-     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue. Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified play queue.
+     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue.
+     * 
+     * <p>Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified
+     * play queue.
      * 
      * @return The call builder
      */
@@ -137,15 +212,35 @@ public class PlayQueue {
     /**
      * Add a generator or playlist to a play queue
      * 
-     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue. Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified play queue.
+     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue.
+     * 
+     * <p>Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified
+     * play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddToPlayQueueResponse addToPlayQueue(AddToPlayQueueRequest request) throws Exception {
+    public AddToPlayQueueResponse addToPlayQueue(AddToPlayQueueRequest request) {
+        return addToPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Add a generator or playlist to a play queue
+     * 
+     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue.
+     * 
+     * <p>Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified
+     * play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddToPlayQueueResponse addToPlayQueue(AddToPlayQueueRequest request, Optional<Options> options) {
         RequestOperation<AddToPlayQueueRequest, AddToPlayQueueResponse> operation
-              = new AddToPlayQueue.Sync(sdkConfiguration);
+              = new AddToPlayQueue.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -167,11 +262,25 @@ public class PlayQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ClearPlayQueueResponse clearPlayQueue(ClearPlayQueueRequest request) throws Exception {
+    public ClearPlayQueueResponse clearPlayQueue(ClearPlayQueueRequest request) {
+        return clearPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Clear a play queue
+     * 
+     * <p>Deletes all items in the play queue, and increases the version of the play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ClearPlayQueueResponse clearPlayQueue(ClearPlayQueueRequest request, Optional<Options> options) {
         RequestOperation<ClearPlayQueueRequest, ClearPlayQueueResponse> operation
-              = new ClearPlayQueue.Sync(sdkConfiguration);
+              = new ClearPlayQueue.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -193,18 +302,35 @@ public class PlayQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ResetPlayQueueResponse resetPlayQueue(ResetPlayQueueRequest request) throws Exception {
+    public ResetPlayQueueResponse resetPlayQueue(ResetPlayQueueRequest request) {
+        return resetPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Reset a play queue
+     * 
+     * <p>Reset a play queue to the first item being the current item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ResetPlayQueueResponse resetPlayQueue(ResetPlayQueueRequest request, Optional<Options> options) {
         RequestOperation<ResetPlayQueueRequest, ResetPlayQueueResponse> operation
-              = new ResetPlayQueue.Sync(sdkConfiguration);
+              = new ResetPlayQueue.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Shuffle a play queue
      * 
-     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained. Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue.
+     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained.
+     * Note that this is currently only supported for play queues *without* an Up Next area.
+     * 
+     * <p>Returns the modified play queue.
      * 
      * @return The call builder
      */
@@ -215,22 +341,43 @@ public class PlayQueue {
     /**
      * Shuffle a play queue
      * 
-     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained. Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue.
+     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained.
+     * Note that this is currently only supported for play queues *without* an Up Next area.
+     * 
+     * <p>Returns the modified play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ShuffleResponse shuffle(ShuffleRequest request) throws Exception {
+    public ShuffleResponse shuffle(ShuffleRequest request) {
+        return shuffle(request, Optional.empty());
+    }
+
+    /**
+     * Shuffle a play queue
+     * 
+     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained.
+     * Note that this is currently only supported for play queues *without* an Up Next area.
+     * 
+     * <p>Returns the modified play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ShuffleResponse shuffle(ShuffleRequest request, Optional<Options> options) {
         RequestOperation<ShuffleRequest, ShuffleResponse> operation
-              = new Shuffle.Sync(sdkConfiguration);
+              = new Shuffle.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Unshuffle a play queue
      * 
-     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue.
+     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for
+     * play queues *without* an Up Next area. Returns the modified play queue.
      * 
      * @return The call builder
      */
@@ -241,22 +388,39 @@ public class PlayQueue {
     /**
      * Unshuffle a play queue
      * 
-     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue.
+     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for
+     * play queues *without* an Up Next area. Returns the modified play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public UnshuffleResponse unshuffle(UnshuffleRequest request) throws Exception {
+    public UnshuffleResponse unshuffle(UnshuffleRequest request) {
+        return unshuffle(request, Optional.empty());
+    }
+
+    /**
+     * Unshuffle a play queue
+     * 
+     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for
+     * play queues *without* an Up Next area. Returns the modified play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UnshuffleResponse unshuffle(UnshuffleRequest request, Optional<Options> options) {
         RequestOperation<UnshuffleRequest, UnshuffleResponse> operation
-              = new Unshuffle.Sync(sdkConfiguration);
+              = new Unshuffle.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Delete an item from a play queue
      * 
-     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play queue.
+     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play
+     * queue.
      * 
      * @return The call builder
      */
@@ -267,22 +431,39 @@ public class PlayQueue {
     /**
      * Delete an item from a play queue
      * 
-     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play queue.
+     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play
+     * queue.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeletePlayQueueItemResponse deletePlayQueueItem(DeletePlayQueueItemRequest request) throws Exception {
+    public DeletePlayQueueItemResponse deletePlayQueueItem(DeletePlayQueueItemRequest request) {
+        return deletePlayQueueItem(request, Optional.empty());
+    }
+
+    /**
+     * Delete an item from a play queue
+     * 
+     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play
+     * queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeletePlayQueueItemResponse deletePlayQueueItem(DeletePlayQueueItemRequest request, Optional<Options> options) {
         RequestOperation<DeletePlayQueueItemRequest, DeletePlayQueueItemResponse> operation
-              = new DeletePlayQueueItem.Sync(sdkConfiguration);
+              = new DeletePlayQueueItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Move an item in a play queue
      * 
-     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified play queue.
+     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified
+     * play queue.
      * 
      * @return The call builder
      */
@@ -293,15 +474,31 @@ public class PlayQueue {
     /**
      * Move an item in a play queue
      * 
-     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified play queue.
+     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified
+     * play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public MovePlayQueueItemResponse movePlayQueueItem(MovePlayQueueItemRequest request) throws Exception {
+    public MovePlayQueueItemResponse movePlayQueueItem(MovePlayQueueItemRequest request) {
+        return movePlayQueueItem(request, Optional.empty());
+    }
+
+    /**
+     * Move an item in a play queue
+     * 
+     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified
+     * play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MovePlayQueueItemResponse movePlayQueueItem(MovePlayQueueItemRequest request, Optional<Options> options) {
         RequestOperation<MovePlayQueueItemRequest, MovePlayQueueItemResponse> operation
-              = new MovePlayQueueItem.Sync(sdkConfiguration);
+              = new MovePlayQueueItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

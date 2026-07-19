@@ -1,5 +1,4 @@
 # Playlist
-(*playlist()*)
 
 ## Overview
 
@@ -22,6 +21,7 @@ Gets a list of playlists and playlist folders for a user. General filters are pe
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListPlaylistsRequest;
 import dev.plexapi.sdk.models.operations.ListPlaylistsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -29,7 +29,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -54,7 +54,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -74,6 +74,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getPlaylist
@@ -121,7 +122,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -187,7 +188,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }

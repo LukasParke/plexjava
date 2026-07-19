@@ -19,9 +19,15 @@ import java.util.Optional;
 /**
  * MediaContainerWithDeviceMediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class MediaContainerWithDeviceMediaContainer {
 
@@ -30,7 +36,8 @@ public class MediaContainerWithDeviceMediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -51,7 +58,7 @@ public class MediaContainerWithDeviceMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Device")
-    private Optional<? extends List<MediaContainerWithDeviceDevice>> device;
+    private Optional<? extends List<Device>> device;
 
     @JsonCreator
     public MediaContainerWithDeviceMediaContainer(
@@ -59,7 +66,7 @@ public class MediaContainerWithDeviceMediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("Device") Optional<? extends List<MediaContainerWithDeviceDevice>> device) {
+            @JsonProperty("Device") Optional<? extends List<Device>> device) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
@@ -83,7 +90,8 @@ public class MediaContainerWithDeviceMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -105,8 +113,8 @@ public class MediaContainerWithDeviceMediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<MediaContainerWithDeviceDevice>> device() {
-        return (Optional<List<MediaContainerWithDeviceDevice>>) device;
+    public Optional<List<Device>> device() {
+        return (Optional<List<Device>>) device;
     }
 
     public static Builder builder() {
@@ -128,7 +136,8 @@ public class MediaContainerWithDeviceMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public MediaContainerWithDeviceMediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -138,7 +147,8 @@ public class MediaContainerWithDeviceMediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public MediaContainerWithDeviceMediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -178,14 +188,14 @@ public class MediaContainerWithDeviceMediaContainer {
         return this;
     }
 
-    public MediaContainerWithDeviceMediaContainer withDevice(List<MediaContainerWithDeviceDevice> device) {
+    public MediaContainerWithDeviceMediaContainer withDevice(List<Device> device) {
         Utils.checkNotNull(device, "device");
         this.device = Optional.ofNullable(device);
         return this;
     }
 
 
-    public MediaContainerWithDeviceMediaContainer withDevice(Optional<? extends List<MediaContainerWithDeviceDevice>> device) {
+    public MediaContainerWithDeviceMediaContainer withDevice(Optional<? extends List<Device>> device) {
         Utils.checkNotNull(device, "device");
         this.device = device;
         return this;
@@ -236,7 +246,7 @@ public class MediaContainerWithDeviceMediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<? extends List<MediaContainerWithDeviceDevice>> device = Optional.empty();
+        private Optional<? extends List<Device>> device = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -257,7 +267,8 @@ public class MediaContainerWithDeviceMediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -266,7 +277,8 @@ public class MediaContainerWithDeviceMediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -307,13 +319,13 @@ public class MediaContainerWithDeviceMediaContainer {
         }
 
 
-        public Builder device(List<MediaContainerWithDeviceDevice> device) {
+        public Builder device(List<Device> device) {
             Utils.checkNotNull(device, "device");
             this.device = Optional.ofNullable(device);
             return this;
         }
 
-        public Builder device(Optional<? extends List<MediaContainerWithDeviceDevice>> device) {
+        public Builder device(Optional<? extends List<Device>> device) {
             Utils.checkNotNull(device, "device");
             this.device = device;
             return this;

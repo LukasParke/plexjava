@@ -2,6 +2,14 @@
 
 The type of this generator
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.GetPlaylistGeneratorType;
+
+GetPlaylistGeneratorType value = GetPlaylistGeneratorType.MINUS1;
+```
+
 
 ## Values
 

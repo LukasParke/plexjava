@@ -36,7 +36,7 @@ public class MoveHubResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * OK
+     * Successfully updated move hub
      */
     private Optional<? extends GetResponses200> getResponses200;
 
@@ -97,7 +97,7 @@ public class MoveHubResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully updated move hub
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -143,7 +143,7 @@ public class MoveHubResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully updated move hub
      */
     public MoveHubResponse withGetResponses200(GetResponses200 getResponses200) {
         Utils.checkNotNull(getResponses200, "getResponses200");
@@ -153,7 +153,7 @@ public class MoveHubResponse implements Response {
 
 
     /**
-     * OK
+     * Successfully updated move hub
      */
     public MoveHubResponse withGetResponses200(Optional<? extends GetResponses200> getResponses200) {
         Utils.checkNotNull(getResponses200, "getResponses200");
@@ -250,7 +250,7 @@ public class MoveHubResponse implements Response {
 
 
         /**
-         * OK
+         * Successfully updated move hub
          */
         public Builder getResponses200(GetResponses200 getResponses200) {
             Utils.checkNotNull(getResponses200, "getResponses200");
@@ -259,7 +259,7 @@ public class MoveHubResponse implements Response {
         }
 
         /**
-         * OK
+         * Successfully updated move hub
          */
         public Builder getResponses200(Optional<? extends GetResponses200> getResponses200) {
             Utils.checkNotNull(getResponses200, "getResponses200");

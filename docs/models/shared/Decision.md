@@ -1,5 +1,13 @@
 # Decision
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.Decision;
+
+Decision value = Decision.DIRECTPLAY;
+```
+
 
 ## Values
 

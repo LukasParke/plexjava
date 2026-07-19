@@ -4,32 +4,91 @@
 package dev.plexapi.sdk.models.shared;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import dev.plexapi.sdk.utils.OneOfDeserializer;
+import dev.plexapi.sdk.utils.TypedObject;
+import dev.plexapi.sdk.utils.Utils.JsonShape;
+import dev.plexapi.sdk.utils.Utils.TypeReferenceWithShape;
+import dev.plexapi.sdk.utils.Utils;
+import java.lang.Boolean;
+import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
-import java.util.Optional;
+import java.lang.SuppressWarnings;
 
-public enum MediaContainerWithDecisionCanAutoSync2 {
-    ZERO("0"),
-    ONE("1");
+@JsonDeserialize(using = MediaContainerWithDecisionCanAutoSync2._Deserializer.class)
+public class MediaContainerWithDecisionCanAutoSync2 {
 
     @JsonValue
-    private final String value;
-
-    MediaContainerWithDecisionCanAutoSync2(String value) {
+    private final TypedObject value;
+    
+    private MediaContainerWithDecisionCanAutoSync2(TypedObject value) {
         this.value = value;
     }
-    
-    public String value() {
-        return value;
+
+    public static MediaContainerWithDecisionCanAutoSync2 of(Two1 value) {
+        Utils.checkNotNull(value, "value");
+        return new MediaContainerWithDecisionCanAutoSync2(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
+    }
+
+    public static MediaContainerWithDecisionCanAutoSync2 of(boolean value) {
+        return new MediaContainerWithDecisionCanAutoSync2(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
-    public static Optional<MediaContainerWithDecisionCanAutoSync2> fromValue(String value) {
-        for (MediaContainerWithDecisionCanAutoSync2 o: MediaContainerWithDecisionCanAutoSync2.values()) {
-            if (Objects.deepEquals(o.value, value)) {
-                return Optional.of(o);
-            }
+    /**
+     * Returns an instance of one of these types:
+     * <ul>
+     * <li>{@code dev.plexapi.sdk.models.shared.Two1}</li>
+     * <li>{@code boolean}</li>
+     * </ul>
+     * 
+     * <p>Use {@code instanceof} to determine what type is returned. For example:
+     * 
+     * <pre>
+     * if (obj.value() instanceof String) {
+     *     String answer = (String) obj.value();
+     *     System.out.println("answer=" + answer);
+     * }
+     * </pre>
+     * 
+     * @return value of oneOf type
+     **/ 
+    public java.lang.Object value() {
+        return value.value();
+    }
+    
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
         }
-        return Optional.empty();
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MediaContainerWithDecisionCanAutoSync2 other = (MediaContainerWithDecisionCanAutoSync2) o;
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
+    
+    @Override
+    public int hashCode() {
+        return Utils.enhancedHash(value.value());
+    }
+    
+    @SuppressWarnings("serial")
+    public static final class _Deserializer extends OneOfDeserializer<MediaContainerWithDecisionCanAutoSync2> {
+
+        public _Deserializer() {
+            super(MediaContainerWithDecisionCanAutoSync2.class, false,
+                  TypeReferenceWithShape.of(new TypeReference<Two1>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return Utils.toString(MediaContainerWithDecisionCanAutoSync2.class,
+                "value", value);
+    }
+
 }
 

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import dev.plexapi.sdk.models.shared.Accepts;
-import dev.plexapi.sdk.models.shared.BoolInt;
 import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
@@ -91,18 +90,6 @@ public class RefreshSectionRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
     private long sectionId;
 
-    /**
-     * Whether the update of metadata and items should be performed even if modification dates indicate the items have not change
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=force")
-    private Optional<? extends BoolInt> force;
-
-    /**
-     * Restrict refresh to the specified path
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=path")
-    private Optional<String> path;
-
     @JsonCreator
     public RefreshSectionRequest(
             Optional<? extends Accepts> accepts,
@@ -116,9 +103,7 @@ public class RefreshSectionRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            long sectionId,
-            Optional<? extends BoolInt> force,
-            Optional<String> path) {
+            long sectionId) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -131,8 +116,6 @@ public class RefreshSectionRequest {
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(sectionId, "sectionId");
-        Utils.checkNotNull(force, "force");
-        Utils.checkNotNull(path, "path");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -145,8 +128,6 @@ public class RefreshSectionRequest {
         this.deviceName = deviceName;
         this.marketplace = marketplace;
         this.sectionId = sectionId;
-        this.force = force;
-        this.path = path;
     }
     
     public RefreshSectionRequest(
@@ -154,8 +135,7 @@ public class RefreshSectionRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), sectionId);
     }
 
     /**
@@ -253,23 +233,6 @@ public class RefreshSectionRequest {
     @JsonIgnore
     public long sectionId() {
         return sectionId;
-    }
-
-    /**
-     * Whether the update of metadata and items should be performed even if modification dates indicate the items have not change
-     */
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<BoolInt> force() {
-        return (Optional<BoolInt>) force;
-    }
-
-    /**
-     * Restrict refresh to the specified path
-     */
-    @JsonIgnore
-    public Optional<String> path() {
-        return path;
     }
 
     public static Builder builder() {
@@ -495,44 +458,6 @@ public class RefreshSectionRequest {
         return this;
     }
 
-    /**
-     * Whether the update of metadata and items should be performed even if modification dates indicate the items have not change
-     */
-    public RefreshSectionRequest withForce(BoolInt force) {
-        Utils.checkNotNull(force, "force");
-        this.force = Optional.ofNullable(force);
-        return this;
-    }
-
-
-    /**
-     * Whether the update of metadata and items should be performed even if modification dates indicate the items have not change
-     */
-    public RefreshSectionRequest withForce(Optional<? extends BoolInt> force) {
-        Utils.checkNotNull(force, "force");
-        this.force = force;
-        return this;
-    }
-
-    /**
-     * Restrict refresh to the specified path
-     */
-    public RefreshSectionRequest withPath(String path) {
-        Utils.checkNotNull(path, "path");
-        this.path = Optional.ofNullable(path);
-        return this;
-    }
-
-
-    /**
-     * Restrict refresh to the specified path
-     */
-    public RefreshSectionRequest withPath(Optional<String> path) {
-        Utils.checkNotNull(path, "path");
-        this.path = path;
-        return this;
-    }
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -554,9 +479,7 @@ public class RefreshSectionRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
-            Utils.enhancedDeepEquals(this.force, other.force) &&
-            Utils.enhancedDeepEquals(this.path, other.path);
+            Utils.enhancedDeepEquals(this.sectionId, other.sectionId);
     }
     
     @Override
@@ -565,8 +488,7 @@ public class RefreshSectionRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, sectionId,
-            force, path);
+            deviceName, marketplace, sectionId);
     }
     
     @Override
@@ -583,9 +505,7 @@ public class RefreshSectionRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "sectionId", sectionId,
-                "force", force,
-                "path", path);
+                "sectionId", sectionId);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -614,10 +534,6 @@ public class RefreshSectionRequest {
         private Optional<String> marketplace = Optional.empty();
 
         private Long sectionId;
-
-        private Optional<? extends BoolInt> force;
-
-        private Optional<String> path = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -842,58 +758,16 @@ public class RefreshSectionRequest {
             return this;
         }
 
-
-        /**
-         * Whether the update of metadata and items should be performed even if modification dates indicate the items have not change
-         */
-        public Builder force(BoolInt force) {
-            Utils.checkNotNull(force, "force");
-            this.force = Optional.ofNullable(force);
-            return this;
-        }
-
-        /**
-         * Whether the update of metadata and items should be performed even if modification dates indicate the items have not change
-         */
-        public Builder force(Optional<? extends BoolInt> force) {
-            Utils.checkNotNull(force, "force");
-            this.force = force;
-            return this;
-        }
-
-
-        /**
-         * Restrict refresh to the specified path
-         */
-        public Builder path(String path) {
-            Utils.checkNotNull(path, "path");
-            this.path = Optional.ofNullable(path);
-            return this;
-        }
-
-        /**
-         * Restrict refresh to the specified path
-         */
-        public Builder path(Optional<String> path) {
-            Utils.checkNotNull(path, "path");
-            this.path = path;
-            return this;
-        }
-
         public RefreshSectionRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
-            }
-            if (force == null) {
-                force = _SINGLETON_VALUE_Force.value();
             }
 
             return new RefreshSectionRequest(
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, sectionId,
-                force, path);
+                deviceName, marketplace, sectionId);
         }
 
 
@@ -902,11 +776,5 @@ public class RefreshSectionRequest {
                         "accepts",
                         "\"application/xml\"",
                         new TypeReference<Optional<? extends Accepts>>() {});
-
-        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_Force =
-                new LazySingletonValue<>(
-                        "force",
-                        "0",
-                        new TypeReference<Optional<? extends BoolInt>>() {});
     }
 }

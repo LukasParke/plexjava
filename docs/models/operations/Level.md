@@ -7,6 +7,13 @@ An integer log level to write to the PMS log with.
   - 3: Debug
   - 4: Verbose
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.Level;
+
+Level value = Level.ZERO;
+```
 
 
 ## Values

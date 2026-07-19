@@ -35,16 +35,16 @@ public class GetUsersMediaContainer {
     private String machineIdentifier;
 
     /**
-     * Total number of users.
-     */
-    @JsonProperty("totalSize")
-    private long totalSize;
-
-    /**
      * Number of users in the current response.
      */
     @JsonProperty("size")
     private long size;
+
+    /**
+     * Total number of users.
+     */
+    @JsonProperty("totalSize")
+    private long totalSize;
 
     /**
      * List of users with access to the Plex server.
@@ -57,20 +57,20 @@ public class GetUsersMediaContainer {
             @JsonProperty("friendlyName") String friendlyName,
             @JsonProperty("identifier") String identifier,
             @JsonProperty("machineIdentifier") String machineIdentifier,
-            @JsonProperty("totalSize") long totalSize,
             @JsonProperty("size") long size,
+            @JsonProperty("totalSize") long totalSize,
             @JsonProperty("User") List<User> user) {
         Utils.checkNotNull(friendlyName, "friendlyName");
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(machineIdentifier, "machineIdentifier");
-        Utils.checkNotNull(totalSize, "totalSize");
         Utils.checkNotNull(size, "size");
+        Utils.checkNotNull(totalSize, "totalSize");
         Utils.checkNotNull(user, "user");
         this.friendlyName = friendlyName;
         this.identifier = identifier;
         this.machineIdentifier = machineIdentifier;
-        this.totalSize = totalSize;
         this.size = size;
+        this.totalSize = totalSize;
         this.user = user;
     }
 
@@ -96,19 +96,19 @@ public class GetUsersMediaContainer {
     }
 
     /**
-     * Total number of users.
-     */
-    @JsonIgnore
-    public long totalSize() {
-        return totalSize;
-    }
-
-    /**
      * Number of users in the current response.
      */
     @JsonIgnore
     public long size() {
         return size;
+    }
+
+    /**
+     * Total number of users.
+     */
+    @JsonIgnore
+    public long totalSize() {
+        return totalSize;
     }
 
     /**
@@ -149,20 +149,20 @@ public class GetUsersMediaContainer {
     }
 
     /**
-     * Total number of users.
-     */
-    public GetUsersMediaContainer withTotalSize(long totalSize) {
-        Utils.checkNotNull(totalSize, "totalSize");
-        this.totalSize = totalSize;
-        return this;
-    }
-
-    /**
      * Number of users in the current response.
      */
     public GetUsersMediaContainer withSize(long size) {
         Utils.checkNotNull(size, "size");
         this.size = size;
+        return this;
+    }
+
+    /**
+     * Total number of users.
+     */
+    public GetUsersMediaContainer withTotalSize(long totalSize) {
+        Utils.checkNotNull(totalSize, "totalSize");
+        this.totalSize = totalSize;
         return this;
     }
 
@@ -188,8 +188,8 @@ public class GetUsersMediaContainer {
             Utils.enhancedDeepEquals(this.friendlyName, other.friendlyName) &&
             Utils.enhancedDeepEquals(this.identifier, other.identifier) &&
             Utils.enhancedDeepEquals(this.machineIdentifier, other.machineIdentifier) &&
-            Utils.enhancedDeepEquals(this.totalSize, other.totalSize) &&
             Utils.enhancedDeepEquals(this.size, other.size) &&
+            Utils.enhancedDeepEquals(this.totalSize, other.totalSize) &&
             Utils.enhancedDeepEquals(this.user, other.user);
     }
     
@@ -197,7 +197,7 @@ public class GetUsersMediaContainer {
     public int hashCode() {
         return Utils.enhancedHash(
             friendlyName, identifier, machineIdentifier,
-            totalSize, size, user);
+            size, totalSize, user);
     }
     
     @Override
@@ -206,8 +206,8 @@ public class GetUsersMediaContainer {
                 "friendlyName", friendlyName,
                 "identifier", identifier,
                 "machineIdentifier", machineIdentifier,
-                "totalSize", totalSize,
                 "size", size,
+                "totalSize", totalSize,
                 "user", user);
     }
 
@@ -220,9 +220,9 @@ public class GetUsersMediaContainer {
 
         private String machineIdentifier;
 
-        private Long totalSize;
-
         private Long size;
+
+        private Long totalSize;
 
         private List<User> user;
 
@@ -259,21 +259,21 @@ public class GetUsersMediaContainer {
 
 
         /**
-         * Total number of users.
-         */
-        public Builder totalSize(long totalSize) {
-            Utils.checkNotNull(totalSize, "totalSize");
-            this.totalSize = totalSize;
-            return this;
-        }
-
-
-        /**
          * Number of users in the current response.
          */
         public Builder size(long size) {
             Utils.checkNotNull(size, "size");
             this.size = size;
+            return this;
+        }
+
+
+        /**
+         * Total number of users.
+         */
+        public Builder totalSize(long totalSize) {
+            Utils.checkNotNull(totalSize, "totalSize");
+            this.totalSize = totalSize;
             return this;
         }
 
@@ -291,7 +291,7 @@ public class GetUsersMediaContainer {
 
             return new GetUsersMediaContainer(
                 friendlyName, identifier, machineIdentifier,
-                totalSize, size, user);
+                size, totalSize, user);
         }
 
     }

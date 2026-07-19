@@ -6,23 +6,29 @@ package dev.plexapi.sdk;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
 import dev.plexapi.sdk.models.operations.AddCollectionItemsRequest;
-import dev.plexapi.sdk.models.operations.DeleteCollectionItemRequest;
 import dev.plexapi.sdk.models.operations.MoveCollectionItemRequest;
+import dev.plexapi.sdk.models.operations.UpdateCollectionItemRequest;
 import dev.plexapi.sdk.models.operations.async.AddCollectionItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.AddCollectionItemsResponse;
-import dev.plexapi.sdk.models.operations.async.DeleteCollectionItemRequestBuilder;
-import dev.plexapi.sdk.models.operations.async.DeleteCollectionItemResponse;
 import dev.plexapi.sdk.models.operations.async.MoveCollectionItemRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.MoveCollectionItemResponse;
+import dev.plexapi.sdk.models.operations.async.UpdateCollectionItemRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UpdateCollectionItemResponse;
 import dev.plexapi.sdk.operations.AddCollectionItems;
-import dev.plexapi.sdk.operations.DeleteCollectionItem;
 import dev.plexapi.sdk.operations.MoveCollectionItem;
+import dev.plexapi.sdk.operations.UpdateCollectionItem;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Endpoints for manipulating collections.  In addition to these endpoints, `/library/collections/:collectionId/X` will be rerouted to `/library/metadata/:collectionId/X` and respond to those endpoints as well.
+ * Endpoints for manipulating collections. In addition to these endpoints,
+ * `/library/collections/:collectionId/X` will be rerouted to `/library/metadata/:collectionId/X` and
+ * respond to those endpoints as well.
  */
 public class AsyncLibraryCollections {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final LibraryCollections syncSDK;
 
@@ -46,6 +52,8 @@ public class AsyncLibraryCollections {
      * 
      * <p>Add items to a collection by uri
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The async call builder
      */
     public AddCollectionItemsRequestBuilder addCollectionItems() {
@@ -57,39 +65,79 @@ public class AsyncLibraryCollections {
      * 
      * <p>Add items to a collection by uri
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddCollectionItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddCollectionItemsResponse>} - The async response
      */
     public CompletableFuture<AddCollectionItemsResponse> addCollectionItems(AddCollectionItemsRequest request) {
+        return addCollectionItems(request, Optional.empty());
+    }
+
+    /**
+     * Add items to a collection
+     * 
+     * <p>Add items to a collection by uri
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddCollectionItemsResponse>} - The async response
+     */
+    public CompletableFuture<AddCollectionItemsResponse> addCollectionItems(AddCollectionItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddCollectionItemsRequest, AddCollectionItemsResponse> operation
-              = new AddCollectionItems.Async(sdkConfiguration);
+              = new AddCollectionItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Delete an item from a collection
+     * Update an item in a collection
      * 
      * <p>Delete an item from a collection
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
-    public DeleteCollectionItemRequestBuilder deleteCollectionItem() {
-        return new DeleteCollectionItemRequestBuilder(sdkConfiguration);
+    public UpdateCollectionItemRequestBuilder updateCollectionItem() {
+        return new UpdateCollectionItemRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Delete an item from a collection
+     * Update an item in a collection
      * 
      * <p>Delete an item from a collection
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteCollectionItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<UpdateCollectionItemResponse>} - The async response
      */
-    public CompletableFuture<DeleteCollectionItemResponse> deleteCollectionItem(DeleteCollectionItemRequest request) {
-        AsyncRequestOperation<DeleteCollectionItemRequest, DeleteCollectionItemResponse> operation
-              = new DeleteCollectionItem.Async(sdkConfiguration);
+    public CompletableFuture<UpdateCollectionItemResponse> updateCollectionItem(UpdateCollectionItemRequest request) {
+        return updateCollectionItem(request, Optional.empty());
+    }
+
+    /**
+     * Update an item in a collection
+     * 
+     * <p>Delete an item from a collection
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateCollectionItemResponse>} - The async response
+     */
+    public CompletableFuture<UpdateCollectionItemResponse> updateCollectionItem(UpdateCollectionItemRequest request, Optional<Options> options) {
+        AsyncRequestOperation<UpdateCollectionItemRequest, UpdateCollectionItemResponse> operation
+              = new UpdateCollectionItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -99,6 +147,8 @@ public class AsyncLibraryCollections {
      * Reorder an item in the collection
      * 
      * <p>Reorder items in a collection with one item after another
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -111,12 +161,31 @@ public class AsyncLibraryCollections {
      * 
      * <p>Reorder items in a collection with one item after another
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;MoveCollectionItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<MoveCollectionItemResponse>} - The async response
      */
     public CompletableFuture<MoveCollectionItemResponse> moveCollectionItem(MoveCollectionItemRequest request) {
+        return moveCollectionItem(request, Optional.empty());
+    }
+
+    /**
+     * Reorder an item in the collection
+     * 
+     * <p>Reorder items in a collection with one item after another
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MoveCollectionItemResponse>} - The async response
+     */
+    public CompletableFuture<MoveCollectionItemResponse> moveCollectionItem(MoveCollectionItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<MoveCollectionItemRequest, MoveCollectionItemResponse> operation
-              = new MoveCollectionItem.Async(sdkConfiguration);
+              = new MoveCollectionItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

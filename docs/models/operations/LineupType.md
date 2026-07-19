@@ -7,6 +7,13 @@
 - `3`: IPTV
 - `4`: Virtual
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.LineupType;
+
+LineupType value = LineupType.MINUS1;
+```
 
 
 ## Values

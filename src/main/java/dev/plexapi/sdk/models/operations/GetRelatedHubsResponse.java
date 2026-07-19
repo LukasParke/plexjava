@@ -36,7 +36,7 @@ public class GetRelatedHubsResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * OK
+     * Successfully retrieved get related hubs
      */
     private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs;
 
@@ -97,7 +97,7 @@ public class GetRelatedHubsResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully retrieved get related hubs
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -143,7 +143,7 @@ public class GetRelatedHubsResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully retrieved get related hubs
      */
     public GetRelatedHubsResponse withMediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
         Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -153,7 +153,7 @@ public class GetRelatedHubsResponse implements Response {
 
 
     /**
-     * OK
+     * Successfully retrieved get related hubs
      */
     public GetRelatedHubsResponse withMediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
         Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -250,7 +250,7 @@ public class GetRelatedHubsResponse implements Response {
 
 
         /**
-         * OK
+         * Successfully retrieved get related hubs
          */
         public Builder mediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
             Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -259,7 +259,7 @@ public class GetRelatedHubsResponse implements Response {
         }
 
         /**
-         * OK
+         * Successfully retrieved get related hubs
          */
         public Builder mediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
             Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");

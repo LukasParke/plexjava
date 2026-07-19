@@ -5,7 +5,7 @@ package dev.plexapi.sdk.models.operations.async;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.plexapi.sdk.models.shared.MediaContainerWithMetadata;
+import dev.plexapi.sdk.models.shared.Collection;
 import dev.plexapi.sdk.utils.AsyncResponse;
 import dev.plexapi.sdk.utils.Blob;
 import dev.plexapi.sdk.utils.Utils;
@@ -34,24 +34,24 @@ public class CreateCollectionResponse implements AsyncResponse {
     private HttpResponse<Blob> rawResponse;
 
     /**
-     * OK
+     * The created collection
      */
-    private Optional<? extends MediaContainerWithMetadata> mediaContainerWithMetadata;
+    private Optional<? extends Collection> collection;
 
     @JsonCreator
     public CreateCollectionResponse(
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
-            Optional<? extends MediaContainerWithMetadata> mediaContainerWithMetadata) {
+            Optional<? extends Collection> collection) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(mediaContainerWithMetadata, "mediaContainerWithMetadata");
+        Utils.checkNotNull(collection, "collection");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.mediaContainerWithMetadata = mediaContainerWithMetadata;
+        this.collection = collection;
     }
     
     public CreateCollectionResponse(
@@ -87,12 +87,12 @@ public class CreateCollectionResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * The created collection
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<MediaContainerWithMetadata> mediaContainerWithMetadata() {
-        return (Optional<MediaContainerWithMetadata>) mediaContainerWithMetadata;
+    public Optional<Collection> collection() {
+        return (Optional<Collection>) collection;
     }
 
     public static Builder builder() {
@@ -128,21 +128,21 @@ public class CreateCollectionResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * The created collection
      */
-    public CreateCollectionResponse withMediaContainerWithMetadata(MediaContainerWithMetadata mediaContainerWithMetadata) {
-        Utils.checkNotNull(mediaContainerWithMetadata, "mediaContainerWithMetadata");
-        this.mediaContainerWithMetadata = Optional.ofNullable(mediaContainerWithMetadata);
+    public CreateCollectionResponse withCollection(Collection collection) {
+        Utils.checkNotNull(collection, "collection");
+        this.collection = Optional.ofNullable(collection);
         return this;
     }
 
 
     /**
-     * OK
+     * The created collection
      */
-    public CreateCollectionResponse withMediaContainerWithMetadata(Optional<? extends MediaContainerWithMetadata> mediaContainerWithMetadata) {
-        Utils.checkNotNull(mediaContainerWithMetadata, "mediaContainerWithMetadata");
-        this.mediaContainerWithMetadata = mediaContainerWithMetadata;
+    public CreateCollectionResponse withCollection(Optional<? extends Collection> collection) {
+        Utils.checkNotNull(collection, "collection");
+        this.collection = collection;
         return this;
     }
 
@@ -159,14 +159,14 @@ public class CreateCollectionResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.mediaContainerWithMetadata, other.mediaContainerWithMetadata);
+            Utils.enhancedDeepEquals(this.collection, other.collection);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            mediaContainerWithMetadata);
+            collection);
     }
     
     @Override
@@ -175,7 +175,7 @@ public class CreateCollectionResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "mediaContainerWithMetadata", mediaContainerWithMetadata);
+                "collection", collection);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -187,7 +187,7 @@ public class CreateCollectionResponse implements AsyncResponse {
 
         private HttpResponse<Blob> rawResponse;
 
-        private Optional<? extends MediaContainerWithMetadata> mediaContainerWithMetadata = Optional.empty();
+        private Optional<? extends Collection> collection = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -225,20 +225,20 @@ public class CreateCollectionResponse implements AsyncResponse {
 
 
         /**
-         * OK
+         * The created collection
          */
-        public Builder mediaContainerWithMetadata(MediaContainerWithMetadata mediaContainerWithMetadata) {
-            Utils.checkNotNull(mediaContainerWithMetadata, "mediaContainerWithMetadata");
-            this.mediaContainerWithMetadata = Optional.ofNullable(mediaContainerWithMetadata);
+        public Builder collection(Collection collection) {
+            Utils.checkNotNull(collection, "collection");
+            this.collection = Optional.ofNullable(collection);
             return this;
         }
 
         /**
-         * OK
+         * The created collection
          */
-        public Builder mediaContainerWithMetadata(Optional<? extends MediaContainerWithMetadata> mediaContainerWithMetadata) {
-            Utils.checkNotNull(mediaContainerWithMetadata, "mediaContainerWithMetadata");
-            this.mediaContainerWithMetadata = mediaContainerWithMetadata;
+        public Builder collection(Optional<? extends Collection> collection) {
+            Utils.checkNotNull(collection, "collection");
+            this.collection = collection;
             return this;
         }
 
@@ -246,7 +246,7 @@ public class CreateCollectionResponse implements AsyncResponse {
 
             return new CreateCollectionResponse(
                 contentType, statusCode, rawResponse,
-                mediaContainerWithMetadata);
+                collection);
         }
 
     }

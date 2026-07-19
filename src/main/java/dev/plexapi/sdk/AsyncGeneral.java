@@ -6,27 +6,158 @@ package dev.plexapi.sdk;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 
+import dev.plexapi.sdk.models.operations.AddUserWebhookRequest;
+import dev.plexapi.sdk.models.operations.AddWebhookRequest;
+import dev.plexapi.sdk.models.operations.BrowseFilesystemPathRequest;
+import dev.plexapi.sdk.models.operations.BrowseFilesystemRequest;
+import dev.plexapi.sdk.models.operations.CheckForSystemUpdatesRequest;
+import dev.plexapi.sdk.models.operations.ClaimServerRequest;
+import dev.plexapi.sdk.models.operations.CreateTransientTokenRequest;
+import dev.plexapi.sdk.models.operations.DownloadDatabaseDiagnosticsRequest;
+import dev.plexapi.sdk.models.operations.DownloadLogBundleRequest;
+import dev.plexapi.sdk.models.operations.GetBandwidthStatisticsRequest;
+import dev.plexapi.sdk.models.operations.GetClientsRequest;
+import dev.plexapi.sdk.models.operations.GetCloudServerRequest;
+import dev.plexapi.sdk.models.operations.GetDiagnosticsRequest;
+import dev.plexapi.sdk.models.operations.GetGeoIPRequest;
+import dev.plexapi.sdk.models.operations.GetIPRequest;
+import dev.plexapi.sdk.models.operations.GetLocalServersRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataAgentDetailsRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataAgentsRequest;
+import dev.plexapi.sdk.models.operations.GetPlexDownloadsRequest;
+import dev.plexapi.sdk.models.operations.GetResourceStatisticsRequest;
 import dev.plexapi.sdk.models.operations.GetServerInfoRequest;
 import dev.plexapi.sdk.models.operations.GetSourceConnectionInformationRequest;
-import dev.plexapi.sdk.models.operations.GetTransientTokenRequest;
+import dev.plexapi.sdk.models.operations.GetSyncItemRequest;
+import dev.plexapi.sdk.models.operations.GetSyncItemsRequest;
+import dev.plexapi.sdk.models.operations.GetSyncQueueRequest;
+import dev.plexapi.sdk.models.operations.GetSyncStatusRequest;
+import dev.plexapi.sdk.models.operations.GetSyncTranscodeQueueRequest;
+import dev.plexapi.sdk.models.operations.GetSystemAccountsRequest;
+import dev.plexapi.sdk.models.operations.GetSystemDevicesRequest;
+import dev.plexapi.sdk.models.operations.GetSystemSettingsRequest;
+import dev.plexapi.sdk.models.operations.GetWebhooksRequest;
+import dev.plexapi.sdk.models.operations.RefreshSyncContentRequest;
+import dev.plexapi.sdk.models.operations.RefreshSyncListsRequest;
+import dev.plexapi.sdk.models.operations.async.AddUserWebhookRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.AddUserWebhookResponse;
+import dev.plexapi.sdk.models.operations.async.AddWebhookRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.AddWebhookResponse;
+import dev.plexapi.sdk.models.operations.async.BrowseFilesystemPathRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.BrowseFilesystemPathResponse;
+import dev.plexapi.sdk.models.operations.async.BrowseFilesystemRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.BrowseFilesystemResponse;
+import dev.plexapi.sdk.models.operations.async.CheckForSystemUpdatesRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.CheckForSystemUpdatesResponse;
+import dev.plexapi.sdk.models.operations.async.ClaimServerRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.ClaimServerResponse;
+import dev.plexapi.sdk.models.operations.async.CreateTransientTokenRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.CreateTransientTokenResponse;
+import dev.plexapi.sdk.models.operations.async.DownloadDatabaseDiagnosticsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.DownloadDatabaseDiagnosticsResponse;
+import dev.plexapi.sdk.models.operations.async.DownloadLogBundleRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.DownloadLogBundleResponse;
+import dev.plexapi.sdk.models.operations.async.GetBandwidthStatisticsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetBandwidthStatisticsResponse;
+import dev.plexapi.sdk.models.operations.async.GetClientsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetClientsResponse;
+import dev.plexapi.sdk.models.operations.async.GetCloudServerRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetCloudServerResponse;
+import dev.plexapi.sdk.models.operations.async.GetDiagnosticsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetDiagnosticsResponse;
+import dev.plexapi.sdk.models.operations.async.GetGeoIPRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetGeoIPResponse;
+import dev.plexapi.sdk.models.operations.async.GetIPRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetIPResponse;
 import dev.plexapi.sdk.models.operations.async.GetIdentityRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetIdentityResponse;
+import dev.plexapi.sdk.models.operations.async.GetLocalServersRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetLocalServersResponse;
+import dev.plexapi.sdk.models.operations.async.GetMetadataAgentDetailsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMetadataAgentDetailsResponse;
+import dev.plexapi.sdk.models.operations.async.GetMetadataAgentsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMetadataAgentsResponse;
+import dev.plexapi.sdk.models.operations.async.GetPlexDownloadsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetPlexDownloadsResponse;
+import dev.plexapi.sdk.models.operations.async.GetResourceStatisticsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetResourceStatisticsResponse;
 import dev.plexapi.sdk.models.operations.async.GetServerInfoRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetServerInfoResponse;
 import dev.plexapi.sdk.models.operations.async.GetSourceConnectionInformationRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSourceConnectionInformationResponse;
-import dev.plexapi.sdk.models.operations.async.GetTransientTokenRequestBuilder;
-import dev.plexapi.sdk.models.operations.async.GetTransientTokenResponse;
+import dev.plexapi.sdk.models.operations.async.GetSyncItemRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSyncItemResponse;
+import dev.plexapi.sdk.models.operations.async.GetSyncItemsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSyncItemsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSyncQueueRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSyncQueueResponse;
+import dev.plexapi.sdk.models.operations.async.GetSyncStatusRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSyncStatusResponse;
+import dev.plexapi.sdk.models.operations.async.GetSyncTranscodeQueueRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSyncTranscodeQueueResponse;
+import dev.plexapi.sdk.models.operations.async.GetSystemAccountsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSystemAccountsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSystemDevicesRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSystemDevicesResponse;
+import dev.plexapi.sdk.models.operations.async.GetSystemSettingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSystemSettingsResponse;
+import dev.plexapi.sdk.models.operations.async.GetUserWebhooksRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetUserWebhooksResponse;
+import dev.plexapi.sdk.models.operations.async.GetWebhooksRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetWebhooksResponse;
+import dev.plexapi.sdk.models.operations.async.RefreshReachabilityRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.RefreshReachabilityResponse;
+import dev.plexapi.sdk.models.operations.async.RefreshSyncContentRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.RefreshSyncContentResponse;
+import dev.plexapi.sdk.models.operations.async.RefreshSyncListsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.RefreshSyncListsResponse;
+import dev.plexapi.sdk.operations.AddUserWebhook;
+import dev.plexapi.sdk.operations.AddWebhook;
+import dev.plexapi.sdk.operations.BrowseFilesystem;
+import dev.plexapi.sdk.operations.BrowseFilesystemPath;
+import dev.plexapi.sdk.operations.CheckForSystemUpdates;
+import dev.plexapi.sdk.operations.ClaimServer;
+import dev.plexapi.sdk.operations.CreateTransientToken;
+import dev.plexapi.sdk.operations.DownloadDatabaseDiagnostics;
+import dev.plexapi.sdk.operations.DownloadLogBundle;
+import dev.plexapi.sdk.operations.GetBandwidthStatistics;
+import dev.plexapi.sdk.operations.GetClients;
+import dev.plexapi.sdk.operations.GetCloudServer;
+import dev.plexapi.sdk.operations.GetDiagnostics;
+import dev.plexapi.sdk.operations.GetGeoIP;
+import dev.plexapi.sdk.operations.GetIP;
 import dev.plexapi.sdk.operations.GetIdentity;
+import dev.plexapi.sdk.operations.GetLocalServers;
+import dev.plexapi.sdk.operations.GetMetadataAgentDetails;
+import dev.plexapi.sdk.operations.GetMetadataAgents;
+import dev.plexapi.sdk.operations.GetPlexDownloads;
+import dev.plexapi.sdk.operations.GetResourceStatistics;
 import dev.plexapi.sdk.operations.GetServerInfo;
 import dev.plexapi.sdk.operations.GetSourceConnectionInformation;
-import dev.plexapi.sdk.operations.GetTransientToken;
+import dev.plexapi.sdk.operations.GetSyncItem;
+import dev.plexapi.sdk.operations.GetSyncItems;
+import dev.plexapi.sdk.operations.GetSyncQueue;
+import dev.plexapi.sdk.operations.GetSyncStatus;
+import dev.plexapi.sdk.operations.GetSyncTranscodeQueue;
+import dev.plexapi.sdk.operations.GetSystemAccounts;
+import dev.plexapi.sdk.operations.GetSystemDevices;
+import dev.plexapi.sdk.operations.GetSystemSettings;
+import dev.plexapi.sdk.operations.GetUserWebhooks;
+import dev.plexapi.sdk.operations.GetWebhooks;
+import dev.plexapi.sdk.operations.RefreshReachability;
+import dev.plexapi.sdk.operations.RefreshSyncContent;
+import dev.plexapi.sdk.operations.RefreshSyncLists;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.String;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * General endpoints for basic PMS operation not specific to any media provider
  */
 public class AsyncGeneral {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final General syncSDK;
 
@@ -62,11 +193,484 @@ public class AsyncGeneral {
      * <p>Information about this PMS setup and configuration
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetServerInfoResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetServerInfoResponse>} - The async response
      */
     public CompletableFuture<GetServerInfoResponse> getServerInfo(GetServerInfoRequest request) {
+        return getServerInfo(request, Optional.empty());
+    }
+
+    /**
+     * Get PMS info
+     * 
+     * <p>Information about this PMS setup and configuration
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetServerInfoResponse>} - The async response
+     */
+    public CompletableFuture<GetServerInfoResponse> getServerInfo(GetServerInfoRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetServerInfoRequest, GetServerInfoResponse> operation
-              = new GetServerInfo.Async(sdkConfiguration);
+              = new GetServerInfo.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get System Accounts
+     * 
+     * <p>Get a list of local system accounts.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSystemAccountsRequestBuilder getSystemAccounts() {
+        return new GetSystemAccountsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get System Accounts
+     * 
+     * <p>Get a list of local system accounts.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSystemAccountsResponse>} - The async response
+     */
+    public CompletableFuture<GetSystemAccountsResponse> getSystemAccounts(GetSystemAccountsRequest request) {
+        return getSystemAccounts(request, Optional.empty());
+    }
+
+    /**
+     * Get System Accounts
+     * 
+     * <p>Get a list of local system accounts.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSystemAccountsResponse>} - The async response
+     */
+    public CompletableFuture<GetSystemAccountsResponse> getSystemAccounts(GetSystemAccountsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSystemAccountsRequest, GetSystemAccountsResponse> operation
+              = new GetSystemAccounts.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * User Webhooks
+     * 
+     * <p>List webhook URLs for the logged-in user.
+     * 
+     * @return The async call builder
+     */
+    public GetUserWebhooksRequestBuilder getUserWebhooks() {
+        return new GetUserWebhooksRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * User Webhooks
+     * 
+     * <p>List webhook URLs for the logged-in user.
+     * 
+     * @return {@code CompletableFuture<GetUserWebhooksResponse>} - The async response
+     */
+    public CompletableFuture<GetUserWebhooksResponse> getUserWebhooksDirect() {
+        return getUserWebhooks(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * User Webhooks
+     * 
+     * <p>List webhook URLs for the logged-in user.
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetUserWebhooksResponse>} - The async response
+     */
+    public CompletableFuture<GetUserWebhooksResponse> getUserWebhooks(Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestlessOperation<GetUserWebhooksResponse> operation
+            = new GetUserWebhooks.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Add User Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @return The async call builder
+     */
+    public AddUserWebhookRequestBuilder addUserWebhook() {
+        return new AddUserWebhookRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Add User Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<AddUserWebhookResponse>} - The async response
+     */
+    public CompletableFuture<AddUserWebhookResponse> addUserWebhook(AddUserWebhookRequest request) {
+        return addUserWebhook(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Add User Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddUserWebhookResponse>} - The async response
+     */
+    public CompletableFuture<AddUserWebhookResponse> addUserWebhook(
+            AddUserWebhookRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<AddUserWebhookRequest, AddUserWebhookResponse> operation
+              = new AddUserWebhook.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Clients
+     * 
+     * <p>Get a list of connected Plex clients.
+     * 
+     * @return The async call builder
+     */
+    public GetClientsRequestBuilder getClients() {
+        return new GetClientsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Clients
+     * 
+     * <p>Get a list of connected Plex clients.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetClientsResponse>} - The async response
+     */
+    public CompletableFuture<GetClientsResponse> getClients(GetClientsRequest request) {
+        return getClients(request, Optional.empty());
+    }
+
+    /**
+     * Get Clients
+     * 
+     * <p>Get a list of connected Plex clients.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetClientsResponse>} - The async response
+     */
+    public CompletableFuture<GetClientsResponse> getClients(GetClientsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetClientsRequest, GetClientsResponse> operation
+              = new GetClients.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Cloud Server
+     * 
+     * <p>Get Plex Cloud server status for the logged-in user.
+     * 
+     * @return The async call builder
+     */
+    public GetCloudServerRequestBuilder getCloudServer() {
+        return new GetCloudServerRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Cloud Server
+     * 
+     * <p>Get Plex Cloud server status for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetCloudServerResponse>} - The async response
+     */
+    public CompletableFuture<GetCloudServerResponse> getCloudServer(GetCloudServerRequest request) {
+        return getCloudServer(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Cloud Server
+     * 
+     * <p>Get Plex Cloud server status for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCloudServerResponse>} - The async response
+     */
+    public CompletableFuture<GetCloudServerResponse> getCloudServer(
+            GetCloudServerRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetCloudServerRequest, GetCloudServerResponse> operation
+              = new GetCloudServer.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get System Devices
+     * 
+     * <p>Get a list of local system devices.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSystemDevicesRequestBuilder getSystemDevices() {
+        return new GetSystemDevicesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get System Devices
+     * 
+     * <p>Get a list of local system devices.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSystemDevicesResponse>} - The async response
+     */
+    public CompletableFuture<GetSystemDevicesResponse> getSystemDevices(GetSystemDevicesRequest request) {
+        return getSystemDevices(request, Optional.empty());
+    }
+
+    /**
+     * Get System Devices
+     * 
+     * <p>Get a list of local system devices.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSystemDevicesResponse>} - The async response
+     */
+    public CompletableFuture<GetSystemDevicesResponse> getSystemDevices(GetSystemDevicesRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSystemDevicesRequest, GetSystemDevicesResponse> operation
+              = new GetSystemDevices.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Diagnostics
+     * 
+     * <p>Get server diagnostics overview.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetDiagnosticsRequestBuilder getDiagnostics() {
+        return new GetDiagnosticsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Diagnostics
+     * 
+     * <p>Get server diagnostics overview.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetDiagnosticsResponse>} - The async response
+     */
+    public CompletableFuture<GetDiagnosticsResponse> getDiagnostics(GetDiagnosticsRequest request) {
+        return getDiagnostics(request, Optional.empty());
+    }
+
+    /**
+     * Get Diagnostics
+     * 
+     * <p>Get server diagnostics overview.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDiagnosticsResponse>} - The async response
+     */
+    public CompletableFuture<GetDiagnosticsResponse> getDiagnostics(GetDiagnosticsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetDiagnosticsRequest, GetDiagnosticsResponse> operation
+              = new GetDiagnostics.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Download Database Diagnostics
+     * 
+     * <p>Download server database diagnostics bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public DownloadDatabaseDiagnosticsRequestBuilder downloadDatabaseDiagnostics() {
+        return new DownloadDatabaseDiagnosticsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Download Database Diagnostics
+     * 
+     * <p>Download server database diagnostics bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<DownloadDatabaseDiagnosticsResponse>} - The async response
+     */
+    public CompletableFuture<DownloadDatabaseDiagnosticsResponse> downloadDatabaseDiagnostics(DownloadDatabaseDiagnosticsRequest request) {
+        return downloadDatabaseDiagnostics(request, Optional.empty());
+    }
+
+    /**
+     * Download Database Diagnostics
+     * 
+     * <p>Download server database diagnostics bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DownloadDatabaseDiagnosticsResponse>} - The async response
+     */
+    public CompletableFuture<DownloadDatabaseDiagnosticsResponse> downloadDatabaseDiagnostics(DownloadDatabaseDiagnosticsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<DownloadDatabaseDiagnosticsRequest, DownloadDatabaseDiagnosticsResponse> operation
+              = new DownloadDatabaseDiagnostics.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Download Log Bundle
+     * 
+     * <p>Download server logs bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public DownloadLogBundleRequestBuilder downloadLogBundle() {
+        return new DownloadLogBundleRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Download Log Bundle
+     * 
+     * <p>Download server logs bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<DownloadLogBundleResponse>} - The async response
+     */
+    public CompletableFuture<DownloadLogBundleResponse> downloadLogBundle(DownloadLogBundleRequest request) {
+        return downloadLogBundle(request, Optional.empty());
+    }
+
+    /**
+     * Download Log Bundle
+     * 
+     * <p>Download server logs bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DownloadLogBundleResponse>} - The async response
+     */
+    public CompletableFuture<DownloadLogBundleResponse> downloadLogBundle(DownloadLogBundleRequest request, Optional<Options> options) {
+        AsyncRequestOperation<DownloadLogBundleRequest, DownloadLogBundleResponse> operation
+              = new DownloadLogBundle.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get GeoIP
+     * 
+     * <p>Get GeoIP lookup information for the current request.
+     * 
+     * @return The async call builder
+     */
+    public GetGeoIPRequestBuilder getGeoIP() {
+        return new GetGeoIPRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get GeoIP
+     * 
+     * <p>Get GeoIP lookup information for the current request.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetGeoIPResponse>} - The async response
+     */
+    public CompletableFuture<GetGeoIPResponse> getGeoIP(GetGeoIPRequest request) {
+        return getGeoIP(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get GeoIP
+     * 
+     * <p>Get GeoIP lookup information for the current request.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetGeoIPResponse>} - The async response
+     */
+    public CompletableFuture<GetGeoIPResponse> getGeoIP(
+            GetGeoIPRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetGeoIPRequest, GetGeoIPResponse> operation
+              = new GetGeoIP.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -88,11 +692,158 @@ public class AsyncGeneral {
      * 
      * <p>Get details about this PMS's identity
      * 
-     * @return CompletableFuture&lt;GetIdentityResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetIdentityResponse>} - The async response
      */
     public CompletableFuture<GetIdentityResponse> getIdentityDirect() {
+        return getIdentity(Optional.empty());
+    }
+
+    /**
+     * Get PMS identity
+     * 
+     * <p>Get details about this PMS's identity
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetIdentityResponse>} - The async response
+     */
+    public CompletableFuture<GetIdentityResponse> getIdentity(Optional<Options> options) {
         AsyncRequestlessOperation<GetIdentityResponse> operation
-            = new GetIdentity.Async(sdkConfiguration);
+            = new GetIdentity.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get IP
+     * 
+     * <p>Get the public IP address detected by Plex.
+     * 
+     * @return The async call builder
+     */
+    public GetIPRequestBuilder getIP() {
+        return new GetIPRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get IP
+     * 
+     * <p>Get the public IP address detected by Plex.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetIPResponse>} - The async response
+     */
+    public CompletableFuture<GetIPResponse> getIP(GetIPRequest request) {
+        return getIP(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get IP
+     * 
+     * <p>Get the public IP address detected by Plex.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetIPResponse>} - The async response
+     */
+    public CompletableFuture<GetIPResponse> getIP(
+            GetIPRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetIPRequest, GetIPResponse> operation
+              = new GetIP.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Claim Server
+     * 
+     * <p>Claim the local PMS server using a claim token obtained from plex.tv.
+     * 
+     * @return The async call builder
+     */
+    public ClaimServerRequestBuilder claimServer() {
+        return new ClaimServerRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Claim Server
+     * 
+     * <p>Claim the local PMS server using a claim token obtained from plex.tv.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ClaimServerResponse>} - The async response
+     */
+    public CompletableFuture<ClaimServerResponse> claimServer(ClaimServerRequest request) {
+        return claimServer(request, Optional.empty());
+    }
+
+    /**
+     * Claim Server
+     * 
+     * <p>Claim the local PMS server using a claim token obtained from plex.tv.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ClaimServerResponse>} - The async response
+     */
+    public CompletableFuture<ClaimServerResponse> claimServer(ClaimServerRequest request, Optional<Options> options) {
+        AsyncRequestOperation<ClaimServerRequest, ClaimServerResponse> operation
+              = new ClaimServer.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Refresh Reachability
+     * 
+     * <p>Refresh remote access port mapping.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public RefreshReachabilityRequestBuilder refreshReachability() {
+        return new RefreshReachabilityRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Refresh Reachability
+     * 
+     * <p>Refresh remote access port mapping.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<RefreshReachabilityResponse>} - The async response
+     */
+    public CompletableFuture<RefreshReachabilityResponse> refreshReachabilityDirect() {
+        return refreshReachability(Optional.empty());
+    }
+
+    /**
+     * Refresh Reachability
+     * 
+     * <p>Refresh remote access port mapping.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshReachabilityResponse>} - The async response
+     */
+    public CompletableFuture<RefreshReachabilityResponse> refreshReachability(Optional<Options> options) {
+        AsyncRequestlessOperation<RefreshReachabilityResponse> operation
+            = new RefreshReachability.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -101,7 +852,10 @@ public class AsyncGeneral {
     /**
      * Get Source Connection Information
      * 
-     * <p>If a caller requires connection details and a transient token for a source that is known to the server, for example a cloud media provider or shared PMS, then this endpoint can be called. This endpoint is only accessible with either an admin token or a valid transient token generated from an admin token.
+     * <p>If a caller requires connection details and a transient token for a source that is known to the
+     * server, for example a cloud media provider or shared PMS, then this endpoint can be called. This
+     * endpoint is only accessible with either an admin token or a valid transient token generated from an
+     * admin token.
      * 
      * @return The async call builder
      */
@@ -112,14 +866,35 @@ public class AsyncGeneral {
     /**
      * Get Source Connection Information
      * 
-     * <p>If a caller requires connection details and a transient token for a source that is known to the server, for example a cloud media provider or shared PMS, then this endpoint can be called. This endpoint is only accessible with either an admin token or a valid transient token generated from an admin token.
+     * <p>If a caller requires connection details and a transient token for a source that is known to the
+     * server, for example a cloud media provider or shared PMS, then this endpoint can be called. This
+     * endpoint is only accessible with either an admin token or a valid transient token generated from an
+     * admin token.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSourceConnectionInformationResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSourceConnectionInformationResponse>} - The async response
      */
     public CompletableFuture<GetSourceConnectionInformationResponse> getSourceConnectionInformation(GetSourceConnectionInformationRequest request) {
+        return getSourceConnectionInformation(request, Optional.empty());
+    }
+
+    /**
+     * Get Source Connection Information
+     * 
+     * <p>If a caller requires connection details and a transient token for a source that is known to the
+     * server, for example a cloud media provider or shared PMS, then this endpoint can be called. This
+     * endpoint is only accessible with either an admin token or a valid transient token generated from an
+     * admin token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSourceConnectionInformationResponse>} - The async response
+     */
+    public CompletableFuture<GetSourceConnectionInformationResponse> getSourceConnectionInformation(GetSourceConnectionInformationRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSourceConnectionInformationRequest, GetSourceConnectionInformationResponse> operation
-              = new GetSourceConnectionInformation.Async(sdkConfiguration);
+              = new GetSourceConnectionInformation.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -128,27 +903,904 @@ public class AsyncGeneral {
     /**
      * Get Transient Tokens
      * 
-     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's token. These tokens are valid for up to 48 hours and are destroyed if the server instance is restarted.
+     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's
+     * token. These tokens are valid for up to 48 hours and are destroyed if the server instance is
+     * restarted.
      * Note: This endpoint responds to all HTTP verbs but POST in preferred
      * 
      * @return The async call builder
      */
-    public GetTransientTokenRequestBuilder getTransientToken() {
-        return new GetTransientTokenRequestBuilder(sdkConfiguration);
+    public CreateTransientTokenRequestBuilder createTransientToken() {
+        return new CreateTransientTokenRequestBuilder(sdkConfiguration);
     }
 
     /**
      * Get Transient Tokens
      * 
-     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's token. These tokens are valid for up to 48 hours and are destroyed if the server instance is restarted.
+     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's
+     * token. These tokens are valid for up to 48 hours and are destroyed if the server instance is
+     * restarted.
      * Note: This endpoint responds to all HTTP verbs but POST in preferred
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetTransientTokenResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreateTransientTokenResponse>} - The async response
      */
-    public CompletableFuture<GetTransientTokenResponse> getTransientToken(GetTransientTokenRequest request) {
-        AsyncRequestOperation<GetTransientTokenRequest, GetTransientTokenResponse> operation
-              = new GetTransientToken.Async(sdkConfiguration);
+    public CompletableFuture<CreateTransientTokenResponse> createTransientToken(CreateTransientTokenRequest request) {
+        return createTransientToken(request, Optional.empty());
+    }
+
+    /**
+     * Get Transient Tokens
+     * 
+     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's
+     * token. These tokens are valid for up to 48 hours and are destroyed if the server instance is
+     * restarted.
+     * Note: This endpoint responds to all HTTP verbs but POST in preferred
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateTransientTokenResponse>} - The async response
+     */
+    public CompletableFuture<CreateTransientTokenResponse> createTransientToken(CreateTransientTokenRequest request, Optional<Options> options) {
+        AsyncRequestOperation<CreateTransientTokenRequest, CreateTransientTokenResponse> operation
+              = new CreateTransientToken.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Local Servers
+     * 
+     * <p>Get a list of local servers.
+     * 
+     * @return The async call builder
+     */
+    public GetLocalServersRequestBuilder getLocalServers() {
+        return new GetLocalServersRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Local Servers
+     * 
+     * <p>Get a list of local servers.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetLocalServersResponse>} - The async response
+     */
+    public CompletableFuture<GetLocalServersResponse> getLocalServers(GetLocalServersRequest request) {
+        return getLocalServers(request, Optional.empty());
+    }
+
+    /**
+     * Get Local Servers
+     * 
+     * <p>Get a list of local servers.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLocalServersResponse>} - The async response
+     */
+    public CompletableFuture<GetLocalServersResponse> getLocalServers(GetLocalServersRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetLocalServersRequest, GetLocalServersResponse> operation
+              = new GetLocalServers.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Browse Filesystem
+     * 
+     * <p>Browse filesystem paths accessible to the server.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public BrowseFilesystemRequestBuilder browseFilesystem() {
+        return new BrowseFilesystemRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Browse Filesystem
+     * 
+     * <p>Browse filesystem paths accessible to the server.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<BrowseFilesystemResponse>} - The async response
+     */
+    public CompletableFuture<BrowseFilesystemResponse> browseFilesystem(BrowseFilesystemRequest request) {
+        return browseFilesystem(request, Optional.empty());
+    }
+
+    /**
+     * Browse Filesystem
+     * 
+     * <p>Browse filesystem paths accessible to the server.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<BrowseFilesystemResponse>} - The async response
+     */
+    public CompletableFuture<BrowseFilesystemResponse> browseFilesystem(BrowseFilesystemRequest request, Optional<Options> options) {
+        AsyncRequestOperation<BrowseFilesystemRequest, BrowseFilesystemResponse> operation
+              = new BrowseFilesystem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Bandwidth Statistics
+     * 
+     * <p>Get dashboard bandwidth data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetBandwidthStatisticsRequestBuilder getBandwidthStatistics() {
+        return new GetBandwidthStatisticsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Bandwidth Statistics
+     * 
+     * <p>Get dashboard bandwidth data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetBandwidthStatisticsResponse>} - The async response
+     */
+    public CompletableFuture<GetBandwidthStatisticsResponse> getBandwidthStatistics(GetBandwidthStatisticsRequest request) {
+        return getBandwidthStatistics(request, Optional.empty());
+    }
+
+    /**
+     * Get Bandwidth Statistics
+     * 
+     * <p>Get dashboard bandwidth data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetBandwidthStatisticsResponse>} - The async response
+     */
+    public CompletableFuture<GetBandwidthStatisticsResponse> getBandwidthStatistics(GetBandwidthStatisticsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetBandwidthStatisticsRequest, GetBandwidthStatisticsResponse> operation
+              = new GetBandwidthStatistics.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Resource Statistics
+     * 
+     * <p>Get dashboard resource data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetResourceStatisticsRequestBuilder getResourceStatistics() {
+        return new GetResourceStatisticsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Resource Statistics
+     * 
+     * <p>Get dashboard resource data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetResourceStatisticsResponse>} - The async response
+     */
+    public CompletableFuture<GetResourceStatisticsResponse> getResourceStatistics(GetResourceStatisticsRequest request) {
+        return getResourceStatistics(request, Optional.empty());
+    }
+
+    /**
+     * Get Resource Statistics
+     * 
+     * <p>Get dashboard resource data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetResourceStatisticsResponse>} - The async response
+     */
+    public CompletableFuture<GetResourceStatisticsResponse> getResourceStatistics(GetResourceStatisticsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetResourceStatisticsRequest, GetResourceStatisticsResponse> operation
+              = new GetResourceStatistics.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Sync Status
+     * 
+     * <p>Get sync status overview.
+     * 
+     * @return The async call builder
+     */
+    public GetSyncStatusRequestBuilder getSyncStatus() {
+        return new GetSyncStatusRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Status
+     * 
+     * <p>Get sync status overview.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSyncStatusResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncStatusResponse> getSyncStatus(GetSyncStatusRequest request) {
+        return getSyncStatus(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Status
+     * 
+     * <p>Get sync status overview.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSyncStatusResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncStatusResponse> getSyncStatus(GetSyncStatusRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSyncStatusRequest, GetSyncStatusResponse> operation
+              = new GetSyncStatus.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Sync Items
+     * 
+     * <p>Get sync items list.
+     * 
+     * @return The async call builder
+     */
+    public GetSyncItemsRequestBuilder getSyncItems() {
+        return new GetSyncItemsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Items
+     * 
+     * <p>Get sync items list.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSyncItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncItemsResponse> getSyncItems(GetSyncItemsRequest request) {
+        return getSyncItems(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Items
+     * 
+     * <p>Get sync items list.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSyncItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncItemsResponse> getSyncItems(GetSyncItemsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSyncItemsRequest, GetSyncItemsResponse> operation
+              = new GetSyncItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Sync Queue
+     * 
+     * <p>Get sync queue.
+     * 
+     * @return The async call builder
+     */
+    public GetSyncQueueRequestBuilder getSyncQueue() {
+        return new GetSyncQueueRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Queue
+     * 
+     * <p>Get sync queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSyncQueueResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncQueueResponse> getSyncQueue(GetSyncQueueRequest request) {
+        return getSyncQueue(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Queue
+     * 
+     * <p>Get sync queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSyncQueueResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncQueueResponse> getSyncQueue(GetSyncQueueRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSyncQueueRequest, GetSyncQueueResponse> operation
+              = new GetSyncQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Refresh Sync Content
+     * 
+     * <p>Force PMS to refresh content for known SyncLists.
+     * 
+     * @return The async call builder
+     */
+    public RefreshSyncContentRequestBuilder refreshSyncContent() {
+        return new RefreshSyncContentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Refresh Sync Content
+     * 
+     * <p>Force PMS to refresh content for known SyncLists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<RefreshSyncContentResponse>} - The async response
+     */
+    public CompletableFuture<RefreshSyncContentResponse> refreshSyncContent(RefreshSyncContentRequest request) {
+        return refreshSyncContent(request, Optional.empty());
+    }
+
+    /**
+     * Refresh Sync Content
+     * 
+     * <p>Force PMS to refresh content for known SyncLists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshSyncContentResponse>} - The async response
+     */
+    public CompletableFuture<RefreshSyncContentResponse> refreshSyncContent(RefreshSyncContentRequest request, Optional<Options> options) {
+        AsyncRequestOperation<RefreshSyncContentRequest, RefreshSyncContentResponse> operation
+              = new RefreshSyncContent.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Refresh Sync Lists
+     * 
+     * <p>Force PMS to download new SyncList from plex.tv.
+     * 
+     * @return The async call builder
+     */
+    public RefreshSyncListsRequestBuilder refreshSyncLists() {
+        return new RefreshSyncListsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Refresh Sync Lists
+     * 
+     * <p>Force PMS to download new SyncList from plex.tv.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<RefreshSyncListsResponse>} - The async response
+     */
+    public CompletableFuture<RefreshSyncListsResponse> refreshSyncLists(RefreshSyncListsRequest request) {
+        return refreshSyncLists(request, Optional.empty());
+    }
+
+    /**
+     * Refresh Sync Lists
+     * 
+     * <p>Force PMS to download new SyncList from plex.tv.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshSyncListsResponse>} - The async response
+     */
+    public CompletableFuture<RefreshSyncListsResponse> refreshSyncLists(RefreshSyncListsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<RefreshSyncListsRequest, RefreshSyncListsResponse> operation
+              = new RefreshSyncLists.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Sync Transcode Queue
+     * 
+     * <p>Get sync transcode queue status.
+     * 
+     * @return The async call builder
+     */
+    public GetSyncTranscodeQueueRequestBuilder getSyncTranscodeQueue() {
+        return new GetSyncTranscodeQueueRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Transcode Queue
+     * 
+     * <p>Get sync transcode queue status.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSyncTranscodeQueueResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncTranscodeQueueResponse> getSyncTranscodeQueue(GetSyncTranscodeQueueRequest request) {
+        return getSyncTranscodeQueue(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Transcode Queue
+     * 
+     * <p>Get sync transcode queue status.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSyncTranscodeQueueResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncTranscodeQueueResponse> getSyncTranscodeQueue(GetSyncTranscodeQueueRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSyncTranscodeQueueRequest, GetSyncTranscodeQueueResponse> operation
+              = new GetSyncTranscodeQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Metadata Agents
+     * 
+     * <p>Get a list of available metadata agents.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMetadataAgentsRequestBuilder getMetadataAgents() {
+        return new GetMetadataAgentsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Agents
+     * 
+     * <p>Get a list of available metadata agents.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetMetadataAgentsResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataAgentsResponse> getMetadataAgents(GetMetadataAgentsRequest request) {
+        return getMetadataAgents(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Agents
+     * 
+     * <p>Get a list of available metadata agents.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataAgentsResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataAgentsResponse> getMetadataAgents(GetMetadataAgentsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetMetadataAgentsRequest, GetMetadataAgentsResponse> operation
+              = new GetMetadataAgents.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get System Settings
+     * 
+     * <p>Get system-level settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSystemSettingsRequestBuilder getSystemSettings() {
+        return new GetSystemSettingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get System Settings
+     * 
+     * <p>Get system-level settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSystemSettingsResponse>} - The async response
+     */
+    public CompletableFuture<GetSystemSettingsResponse> getSystemSettings(GetSystemSettingsRequest request) {
+        return getSystemSettings(request, Optional.empty());
+    }
+
+    /**
+     * Get System Settings
+     * 
+     * <p>Get system-level settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSystemSettingsResponse>} - The async response
+     */
+    public CompletableFuture<GetSystemSettingsResponse> getSystemSettings(GetSystemSettingsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSystemSettingsRequest, GetSystemSettingsResponse> operation
+              = new GetSystemSettings.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Check for System Updates
+     * 
+     * <p>Check for available PMS updates.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public CheckForSystemUpdatesRequestBuilder checkForSystemUpdates() {
+        return new CheckForSystemUpdatesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Check for System Updates
+     * 
+     * <p>Check for available PMS updates.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<CheckForSystemUpdatesResponse>} - The async response
+     */
+    public CompletableFuture<CheckForSystemUpdatesResponse> checkForSystemUpdates(CheckForSystemUpdatesRequest request) {
+        return checkForSystemUpdates(request, Optional.empty());
+    }
+
+    /**
+     * Check for System Updates
+     * 
+     * <p>Check for available PMS updates.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CheckForSystemUpdatesResponse>} - The async response
+     */
+    public CompletableFuture<CheckForSystemUpdatesResponse> checkForSystemUpdates(CheckForSystemUpdatesRequest request, Optional<Options> options) {
+        AsyncRequestOperation<CheckForSystemUpdatesRequest, CheckForSystemUpdatesResponse> operation
+              = new CheckForSystemUpdates.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Webhooks
+     * 
+     * <p>List configured webhook URLs for the logged-in user.
+     * 
+     * @return The async call builder
+     */
+    public GetWebhooksRequestBuilder getWebhooks() {
+        return new GetWebhooksRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Webhooks
+     * 
+     * <p>List configured webhook URLs for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetWebhooksResponse>} - The async response
+     */
+    public CompletableFuture<GetWebhooksResponse> getWebhooks(GetWebhooksRequest request) {
+        return getWebhooks(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Webhooks
+     * 
+     * <p>List configured webhook URLs for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetWebhooksResponse>} - The async response
+     */
+    public CompletableFuture<GetWebhooksResponse> getWebhooks(
+            GetWebhooksRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetWebhooksRequest, GetWebhooksResponse> operation
+              = new GetWebhooks.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Add Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @return The async call builder
+     */
+    public AddWebhookRequestBuilder addWebhook() {
+        return new AddWebhookRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Add Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<AddWebhookResponse>} - The async response
+     */
+    public CompletableFuture<AddWebhookResponse> addWebhook(AddWebhookRequest request) {
+        return addWebhook(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Add Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddWebhookResponse>} - The async response
+     */
+    public CompletableFuture<AddWebhookResponse> addWebhook(
+            AddWebhookRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<AddWebhookRequest, AddWebhookResponse> operation
+              = new AddWebhook.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Plex Downloads
+     * 
+     * <p>Get available Plex update downloads for a specific channel (e.g. `plexpass`, `public`).
+     * 
+     * @return The async call builder
+     */
+    public GetPlexDownloadsRequestBuilder getPlexDownloads() {
+        return new GetPlexDownloadsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Plex Downloads
+     * 
+     * <p>Get available Plex update downloads for a specific channel (e.g. `plexpass`, `public`).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetPlexDownloadsResponse>} - The async response
+     */
+    public CompletableFuture<GetPlexDownloadsResponse> getPlexDownloads(GetPlexDownloadsRequest request) {
+        return getPlexDownloads(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Plex Downloads
+     * 
+     * <p>Get available Plex update downloads for a specific channel (e.g. `plexpass`, `public`).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPlexDownloadsResponse>} - The async response
+     */
+    public CompletableFuture<GetPlexDownloadsResponse> getPlexDownloads(
+            GetPlexDownloadsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetPlexDownloadsRequest, GetPlexDownloadsResponse> operation
+              = new GetPlexDownloads.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Browse Filesystem Path
+     * 
+     * <p>Browse a specific filesystem path.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public BrowseFilesystemPathRequestBuilder browseFilesystemPath() {
+        return new BrowseFilesystemPathRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Browse Filesystem Path
+     * 
+     * <p>Browse a specific filesystem path.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<BrowseFilesystemPathResponse>} - The async response
+     */
+    public CompletableFuture<BrowseFilesystemPathResponse> browseFilesystemPath(BrowseFilesystemPathRequest request) {
+        return browseFilesystemPath(request, Optional.empty());
+    }
+
+    /**
+     * Browse Filesystem Path
+     * 
+     * <p>Browse a specific filesystem path.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<BrowseFilesystemPathResponse>} - The async response
+     */
+    public CompletableFuture<BrowseFilesystemPathResponse> browseFilesystemPath(BrowseFilesystemPathRequest request, Optional<Options> options) {
+        AsyncRequestOperation<BrowseFilesystemPathRequest, BrowseFilesystemPathResponse> operation
+              = new BrowseFilesystemPath.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Sync Item
+     * 
+     * <p>Get sync item details.
+     * 
+     * @return The async call builder
+     */
+    public GetSyncItemRequestBuilder getSyncItem() {
+        return new GetSyncItemRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Item
+     * 
+     * <p>Get sync item details.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSyncItemResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncItemResponse> getSyncItem(GetSyncItemRequest request) {
+        return getSyncItem(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Item
+     * 
+     * <p>Get sync item details.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSyncItemResponse>} - The async response
+     */
+    public CompletableFuture<GetSyncItemResponse> getSyncItem(GetSyncItemRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSyncItemRequest, GetSyncItemResponse> operation
+              = new GetSyncItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Metadata Agent Details
+     * 
+     * <p>Get details and settings for a specific metadata agent.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMetadataAgentDetailsRequestBuilder getMetadataAgentDetails() {
+        return new GetMetadataAgentDetailsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Agent Details
+     * 
+     * <p>Get details and settings for a specific metadata agent.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetMetadataAgentDetailsResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataAgentDetailsResponse> getMetadataAgentDetails(GetMetadataAgentDetailsRequest request) {
+        return getMetadataAgentDetails(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Agent Details
+     * 
+     * <p>Get details and settings for a specific metadata agent.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataAgentDetailsResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataAgentDetailsResponse> getMetadataAgentDetails(GetMetadataAgentDetailsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetMetadataAgentDetailsRequest, GetMetadataAgentDetailsResponse> operation
+              = new GetMetadataAgentDetails.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

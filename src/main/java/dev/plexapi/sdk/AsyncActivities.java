@@ -13,16 +13,24 @@ import dev.plexapi.sdk.models.operations.async.ListActivitiesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ListActivitiesResponse;
 import dev.plexapi.sdk.operations.CancelActivity;
 import dev.plexapi.sdk.operations.ListActivities;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Activities provide a way to monitor and control asynchronous operations on the server. In order to receive real-time updates for activities, a client would normally subscribe via either EventSource or Websocket endpoints.
+ * Activities provide a way to monitor and control asynchronous operations on the server. In order to
+ * receive real-time updates for activities, a client would normally subscribe via either EventSource
+ * or Websocket endpoints.
  * 
- * <p>Activities are associated with HTTP replies via a special `X-Plex-Activity` header which contains the UUID of the activity.
+ * <p>Activities are associated with HTTP replies via a special `X-Plex-Activity` header which contains
+ * the UUID of the activity.
  * 
- * <p>Activities are optional cancellable. If cancellable, they may be cancelled via the `DELETE` endpoint.
+ * <p>Activities are optional cancellable. If cancellable, they may be cancelled via the `DELETE`
+ * endpoint.
  */
 public class AsyncActivities {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Activities syncSDK;
 
@@ -44,7 +52,8 @@ public class AsyncActivities {
     /**
      * Get all activities
      * 
-     * <p>List all activities on the server.  Admins can see all activities but other users can only see their own
+     * <p>List all activities on the server. Admins can see all activities but other users can only see their
+     * own
      * 
      * @return The async call builder
      */
@@ -55,13 +64,29 @@ public class AsyncActivities {
     /**
      * Get all activities
      * 
-     * <p>List all activities on the server.  Admins can see all activities but other users can only see their own
+     * <p>List all activities on the server. Admins can see all activities but other users can only see their
+     * own
      * 
-     * @return CompletableFuture&lt;ListActivitiesResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListActivitiesResponse>} - The async response
      */
     public CompletableFuture<ListActivitiesResponse> listActivitiesDirect() {
+        return listActivities(Optional.empty());
+    }
+
+    /**
+     * Get all activities
+     * 
+     * <p>List all activities on the server. Admins can see all activities but other users can only see their
+     * own
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<ListActivitiesResponse>} - The async response
+     */
+    public CompletableFuture<ListActivitiesResponse> listActivities(Optional<Options> options) {
         AsyncRequestlessOperation<ListActivitiesResponse> operation
-            = new ListActivities.Async(sdkConfiguration);
+            = new ListActivities.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -70,7 +95,10 @@ public class AsyncActivities {
     /**
      * Cancel a running activity
      * 
-     * <p>Cancel a running activity.  Admins can cancel all activities but other users can only cancel their own
+     * <p>Cancel a running activity. Admins can cancel all activities but other users can only cancel their
+     * own
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -81,14 +109,35 @@ public class AsyncActivities {
     /**
      * Cancel a running activity
      * 
-     * <p>Cancel a running activity.  Admins can cancel all activities but other users can only cancel their own
+     * <p>Cancel a running activity. Admins can cancel all activities but other users can only cancel their
+     * own
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CancelActivityResponse&gt; - The async response
+     * @return {@code CompletableFuture<CancelActivityResponse>} - The async response
      */
     public CompletableFuture<CancelActivityResponse> cancelActivity(CancelActivityRequest request) {
+        return cancelActivity(request, Optional.empty());
+    }
+
+    /**
+     * Cancel a running activity
+     * 
+     * <p>Cancel a running activity. Admins can cancel all activities but other users can only cancel their
+     * own
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CancelActivityResponse>} - The async response
+     */
+    public CompletableFuture<CancelActivityResponse> cancelActivity(CancelActivityRequest request, Optional<Options> options) {
         AsyncRequestOperation<CancelActivityRequest, CancelActivityResponse> operation
-              = new CancelActivity.Async(sdkConfiguration);
+              = new CancelActivity.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

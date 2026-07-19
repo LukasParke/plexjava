@@ -35,22 +35,38 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
     /**
      * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
      */
-    private Optional<? extends Blob> responseStream;
+    private Optional<? extends Blob> twoHundredApplicationVndAppleMpegurlBinaryResponse;
+
+    /**
+     * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+     */
+    private Optional<? extends Blob> twoHundredTextHtmlBinaryResponse;
+
+    /**
+     * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+     */
+    private Optional<? extends Blob> twoHundredVideoXMatroskaResponseStream;
 
     @JsonCreator
     public StartTranscodeSessionResponse(
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
-            Optional<? extends Blob> responseStream) {
+            Optional<? extends Blob> twoHundredApplicationVndAppleMpegurlBinaryResponse,
+            Optional<? extends Blob> twoHundredTextHtmlBinaryResponse,
+            Optional<? extends Blob> twoHundredVideoXMatroskaResponseStream) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(responseStream, "responseStream");
+        Utils.checkNotNull(twoHundredApplicationVndAppleMpegurlBinaryResponse, "twoHundredApplicationVndAppleMpegurlBinaryResponse");
+        Utils.checkNotNull(twoHundredTextHtmlBinaryResponse, "twoHundredTextHtmlBinaryResponse");
+        Utils.checkNotNull(twoHundredVideoXMatroskaResponseStream, "twoHundredVideoXMatroskaResponseStream");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.responseStream = responseStream;
+        this.twoHundredApplicationVndAppleMpegurlBinaryResponse = twoHundredApplicationVndAppleMpegurlBinaryResponse;
+        this.twoHundredTextHtmlBinaryResponse = twoHundredTextHtmlBinaryResponse;
+        this.twoHundredVideoXMatroskaResponseStream = twoHundredVideoXMatroskaResponseStream;
     }
     
     public StartTranscodeSessionResponse(
@@ -58,7 +74,7 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
             int statusCode,
             HttpResponse<Blob> rawResponse) {
         this(contentType, statusCode, rawResponse,
-            Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     /**
@@ -90,8 +106,26 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Blob> responseStream() {
-        return (Optional<Blob>) responseStream;
+    public Optional<Blob> twoHundredApplicationVndAppleMpegurlBinaryResponse() {
+        return (Optional<Blob>) twoHundredApplicationVndAppleMpegurlBinaryResponse;
+    }
+
+    /**
+     * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<Blob> twoHundredTextHtmlBinaryResponse() {
+        return (Optional<Blob>) twoHundredTextHtmlBinaryResponse;
+    }
+
+    /**
+     * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<Blob> twoHundredVideoXMatroskaResponseStream() {
+        return (Optional<Blob>) twoHundredVideoXMatroskaResponseStream;
     }
 
     public static Builder builder() {
@@ -129,9 +163,9 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
     /**
      * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
      */
-    public StartTranscodeSessionResponse withResponseStream(Blob responseStream) {
-        Utils.checkNotNull(responseStream, "responseStream");
-        this.responseStream = Optional.ofNullable(responseStream);
+    public StartTranscodeSessionResponse withTwoHundredApplicationVndAppleMpegurlBinaryResponse(Blob twoHundredApplicationVndAppleMpegurlBinaryResponse) {
+        Utils.checkNotNull(twoHundredApplicationVndAppleMpegurlBinaryResponse, "twoHundredApplicationVndAppleMpegurlBinaryResponse");
+        this.twoHundredApplicationVndAppleMpegurlBinaryResponse = Optional.ofNullable(twoHundredApplicationVndAppleMpegurlBinaryResponse);
         return this;
     }
 
@@ -139,9 +173,47 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
     /**
      * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
      */
-    public StartTranscodeSessionResponse withResponseStream(Optional<? extends Blob> responseStream) {
-        Utils.checkNotNull(responseStream, "responseStream");
-        this.responseStream = responseStream;
+    public StartTranscodeSessionResponse withTwoHundredApplicationVndAppleMpegurlBinaryResponse(Optional<? extends Blob> twoHundredApplicationVndAppleMpegurlBinaryResponse) {
+        Utils.checkNotNull(twoHundredApplicationVndAppleMpegurlBinaryResponse, "twoHundredApplicationVndAppleMpegurlBinaryResponse");
+        this.twoHundredApplicationVndAppleMpegurlBinaryResponse = twoHundredApplicationVndAppleMpegurlBinaryResponse;
+        return this;
+    }
+
+    /**
+     * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+     */
+    public StartTranscodeSessionResponse withTwoHundredTextHtmlBinaryResponse(Blob twoHundredTextHtmlBinaryResponse) {
+        Utils.checkNotNull(twoHundredTextHtmlBinaryResponse, "twoHundredTextHtmlBinaryResponse");
+        this.twoHundredTextHtmlBinaryResponse = Optional.ofNullable(twoHundredTextHtmlBinaryResponse);
+        return this;
+    }
+
+
+    /**
+     * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+     */
+    public StartTranscodeSessionResponse withTwoHundredTextHtmlBinaryResponse(Optional<? extends Blob> twoHundredTextHtmlBinaryResponse) {
+        Utils.checkNotNull(twoHundredTextHtmlBinaryResponse, "twoHundredTextHtmlBinaryResponse");
+        this.twoHundredTextHtmlBinaryResponse = twoHundredTextHtmlBinaryResponse;
+        return this;
+    }
+
+    /**
+     * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+     */
+    public StartTranscodeSessionResponse withTwoHundredVideoXMatroskaResponseStream(Blob twoHundredVideoXMatroskaResponseStream) {
+        Utils.checkNotNull(twoHundredVideoXMatroskaResponseStream, "twoHundredVideoXMatroskaResponseStream");
+        this.twoHundredVideoXMatroskaResponseStream = Optional.ofNullable(twoHundredVideoXMatroskaResponseStream);
+        return this;
+    }
+
+
+    /**
+     * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+     */
+    public StartTranscodeSessionResponse withTwoHundredVideoXMatroskaResponseStream(Optional<? extends Blob> twoHundredVideoXMatroskaResponseStream) {
+        Utils.checkNotNull(twoHundredVideoXMatroskaResponseStream, "twoHundredVideoXMatroskaResponseStream");
+        this.twoHundredVideoXMatroskaResponseStream = twoHundredVideoXMatroskaResponseStream;
         return this;
     }
 
@@ -158,14 +230,16 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.responseStream, other.responseStream);
+            Utils.enhancedDeepEquals(this.twoHundredApplicationVndAppleMpegurlBinaryResponse, other.twoHundredApplicationVndAppleMpegurlBinaryResponse) &&
+            Utils.enhancedDeepEquals(this.twoHundredTextHtmlBinaryResponse, other.twoHundredTextHtmlBinaryResponse) &&
+            Utils.enhancedDeepEquals(this.twoHundredVideoXMatroskaResponseStream, other.twoHundredVideoXMatroskaResponseStream);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            responseStream);
+            twoHundredApplicationVndAppleMpegurlBinaryResponse, twoHundredTextHtmlBinaryResponse, twoHundredVideoXMatroskaResponseStream);
     }
     
     @Override
@@ -174,7 +248,9 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "responseStream", responseStream);
+                "twoHundredApplicationVndAppleMpegurlBinaryResponse", twoHundredApplicationVndAppleMpegurlBinaryResponse,
+                "twoHundredTextHtmlBinaryResponse", twoHundredTextHtmlBinaryResponse,
+                "twoHundredVideoXMatroskaResponseStream", twoHundredVideoXMatroskaResponseStream);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -186,7 +262,11 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
 
         private HttpResponse<Blob> rawResponse;
 
-        private Optional<? extends Blob> responseStream = Optional.empty();
+        private Optional<? extends Blob> twoHundredApplicationVndAppleMpegurlBinaryResponse = Optional.empty();
+
+        private Optional<? extends Blob> twoHundredTextHtmlBinaryResponse = Optional.empty();
+
+        private Optional<? extends Blob> twoHundredVideoXMatroskaResponseStream = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -226,18 +306,56 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
         /**
          * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
          */
-        public Builder responseStream(Blob responseStream) {
-            Utils.checkNotNull(responseStream, "responseStream");
-            this.responseStream = Optional.ofNullable(responseStream);
+        public Builder twoHundredApplicationVndAppleMpegurlBinaryResponse(Blob twoHundredApplicationVndAppleMpegurlBinaryResponse) {
+            Utils.checkNotNull(twoHundredApplicationVndAppleMpegurlBinaryResponse, "twoHundredApplicationVndAppleMpegurlBinaryResponse");
+            this.twoHundredApplicationVndAppleMpegurlBinaryResponse = Optional.ofNullable(twoHundredApplicationVndAppleMpegurlBinaryResponse);
             return this;
         }
 
         /**
          * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
          */
-        public Builder responseStream(Optional<? extends Blob> responseStream) {
-            Utils.checkNotNull(responseStream, "responseStream");
-            this.responseStream = responseStream;
+        public Builder twoHundredApplicationVndAppleMpegurlBinaryResponse(Optional<? extends Blob> twoHundredApplicationVndAppleMpegurlBinaryResponse) {
+            Utils.checkNotNull(twoHundredApplicationVndAppleMpegurlBinaryResponse, "twoHundredApplicationVndAppleMpegurlBinaryResponse");
+            this.twoHundredApplicationVndAppleMpegurlBinaryResponse = twoHundredApplicationVndAppleMpegurlBinaryResponse;
+            return this;
+        }
+
+
+        /**
+         * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+         */
+        public Builder twoHundredTextHtmlBinaryResponse(Blob twoHundredTextHtmlBinaryResponse) {
+            Utils.checkNotNull(twoHundredTextHtmlBinaryResponse, "twoHundredTextHtmlBinaryResponse");
+            this.twoHundredTextHtmlBinaryResponse = Optional.ofNullable(twoHundredTextHtmlBinaryResponse);
+            return this;
+        }
+
+        /**
+         * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+         */
+        public Builder twoHundredTextHtmlBinaryResponse(Optional<? extends Blob> twoHundredTextHtmlBinaryResponse) {
+            Utils.checkNotNull(twoHundredTextHtmlBinaryResponse, "twoHundredTextHtmlBinaryResponse");
+            this.twoHundredTextHtmlBinaryResponse = twoHundredTextHtmlBinaryResponse;
+            return this;
+        }
+
+
+        /**
+         * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+         */
+        public Builder twoHundredVideoXMatroskaResponseStream(Blob twoHundredVideoXMatroskaResponseStream) {
+            Utils.checkNotNull(twoHundredVideoXMatroskaResponseStream, "twoHundredVideoXMatroskaResponseStream");
+            this.twoHundredVideoXMatroskaResponseStream = Optional.ofNullable(twoHundredVideoXMatroskaResponseStream);
+            return this;
+        }
+
+        /**
+         * MPD file (see ISO/IEC 23009-1:2022), m3u8 file (see RFC 8216), or binary http stream
+         */
+        public Builder twoHundredVideoXMatroskaResponseStream(Optional<? extends Blob> twoHundredVideoXMatroskaResponseStream) {
+            Utils.checkNotNull(twoHundredVideoXMatroskaResponseStream, "twoHundredVideoXMatroskaResponseStream");
+            this.twoHundredVideoXMatroskaResponseStream = twoHundredVideoXMatroskaResponseStream;
             return this;
         }
 
@@ -245,7 +363,7 @@ public class StartTranscodeSessionResponse implements AsyncResponse {
 
             return new StartTranscodeSessionResponse(
                 contentType, statusCode, rawResponse,
-                responseStream);
+                twoHundredApplicationVndAppleMpegurlBinaryResponse, twoHundredTextHtmlBinaryResponse, twoHundredVideoXMatroskaResponseStream);
         }
 
     }

@@ -1,5 +1,4 @@
 # Devices
-(*devices()*)
 
 ## Overview
 
@@ -38,6 +37,7 @@ Example SSDP output
   - UDN: (string) A UUID for the device. This should be unique across models of a device at minimum.
   - URLBase: (string) The base HTTP URL for the device from which all of the other endpoints are hosted.
 
+Note: This tag covers media grabber and network tuner devices only. For client device discovery, use `/clients` or `/resources`.
 
 ### Available Operations
 
@@ -66,6 +66,7 @@ Get available grabbers visible to the server
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetAvailableGrabbersRequest;
 import dev.plexapi.sdk.models.operations.GetAvailableGrabbersResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -73,7 +74,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -99,7 +100,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -119,6 +120,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## listDevices
@@ -132,12 +134,13 @@ Get the list of all devices present
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListDevicesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -147,7 +150,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDevice().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDevice().get());
         }
     }
 }
@@ -161,6 +164,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## addDevice
@@ -207,7 +211,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDevice().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDevice().get());
         }
     }
 }
@@ -235,17 +239,18 @@ Tell grabbers to discover devices
 
 ### Example Usage
 
-<!-- UsageSnippet language="java" operationID="discoverDevices" method="post" path="/media/grabbers/devices/discover" -->
+<!-- UsageSnippet language="java" operationID="discoverDevices" method="get" path="/media/grabbers/devices/discover" -->
 ```java
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DiscoverDevicesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -255,11 +260,18 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDevice().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDevice().get());
         }
     }
 }
 ```
+
+### Parameters
+
+| Parameter                                                  | Type                                                       | Required                                                   | Description                                                |
+| ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
+| `protocol`                                                 | [Optional\<Protocol>](../../models/operations/Protocol.md) | :heavy_minus_sign:                                         | Protocol to filter discovery.                              |
+| `grabberIdentifier`                                        | *Optional\<String>*                                        | :heavy_minus_sign:                                         | Targeted grabber identifier.                               |
 
 ### Response
 
@@ -269,6 +281,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## removeDevice
@@ -315,7 +328,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -381,7 +394,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDevice().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDevice().get());
         }
     }
 }
@@ -449,7 +462,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -482,6 +495,7 @@ Set a device's channel mapping
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.*;
 import dev.plexapi.sdk.models.shared.Accepts;
 import java.lang.Exception;
@@ -489,7 +503,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -534,7 +548,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDevice().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDevice().get());
         }
     }
 }
@@ -554,6 +568,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getDevicesChannels
@@ -600,7 +615,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -633,6 +648,7 @@ Set device preferences by its id
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.SetDevicePreferencesRequest;
 import dev.plexapi.sdk.models.operations.SetDevicePreferencesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -640,7 +656,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -684,6 +700,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## stopScan
@@ -697,6 +714,7 @@ Tell a device to stop scanning for channels
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.StopScanRequest;
 import dev.plexapi.sdk.models.operations.StopScanResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -704,7 +722,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -730,7 +748,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDevice().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDevice().get());
         }
     }
 }
@@ -750,6 +768,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## scan
@@ -763,6 +782,7 @@ Tell a device to scan for channels
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ScanRequest;
 import dev.plexapi.sdk.models.operations.ScanResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -770,7 +790,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -797,7 +817,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDevice().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDevice().get());
         }
     }
 }
@@ -817,6 +837,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getThumb
@@ -863,7 +884,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.binaryResponse().isPresent()) {
+            // handle response
+        }
     }
 }
 ```

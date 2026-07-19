@@ -1,5 +1,4 @@
 # LibraryCollections
-(*libraryCollections()*)
 
 ## Overview
 
@@ -8,7 +7,7 @@ Endpoints for manipulating collections.  In addition to these endpoints, `/libra
 ### Available Operations
 
 * [addCollectionItems](#addcollectionitems) - Add items to a collection
-* [deleteCollectionItem](#deletecollectionitem) - Delete an item from a collection
+* [updateCollectionItem](#updatecollectionitem) - Update an item in a collection
 * [moveCollectionItem](#movecollectionitem) - Reorder an item in the collection
 
 ## addCollectionItems
@@ -56,7 +55,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -78,19 +77,19 @@ public class Application {
 | ---------------------- | ---------------------- | ---------------------- |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
-## deleteCollectionItem
+## updateCollectionItem
 
 Delete an item from a collection
 
 ### Example Usage
 
-<!-- UsageSnippet language="java" operationID="deleteCollectionItem" method="put" path="/library/collections/{collectionId}/items/{itemId}" -->
+<!-- UsageSnippet language="java" operationID="updateCollectionItem" method="put" path="/library/collections/{collectionId}/items/{itemId}" -->
 ```java
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
-import dev.plexapi.sdk.models.operations.DeleteCollectionItemRequest;
-import dev.plexapi.sdk.models.operations.DeleteCollectionItemResponse;
+import dev.plexapi.sdk.models.operations.UpdateCollectionItemRequest;
+import dev.plexapi.sdk.models.operations.UpdateCollectionItemResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
 import java.lang.Exception;
 
@@ -113,17 +112,17 @@ public class Application {
                 .token(System.getenv().getOrDefault("TOKEN", ""))
             .build();
 
-        DeleteCollectionItemRequest req = DeleteCollectionItemRequest.builder()
-                .collectionId(320928L)
-                .itemId(406983L)
+        UpdateCollectionItemRequest req = UpdateCollectionItemRequest.builder()
+                .collectionId(640014L)
+                .itemId(2136L)
                 .build();
 
-        DeleteCollectionItemResponse res = sdk.libraryCollections().deleteCollectionItem()
+        UpdateCollectionItemResponse res = sdk.libraryCollections().updateCollectionItem()
                 .request(req)
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -133,11 +132,11 @@ public class Application {
 
 | Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `request`                                                                             | [DeleteCollectionItemRequest](../../models/operations/DeleteCollectionItemRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+| `request`                                                                             | [UpdateCollectionItemRequest](../../models/operations/UpdateCollectionItemRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
 
 ### Response
 
-**[DeleteCollectionItemResponse](../../models/operations/DeleteCollectionItemResponse.md)**
+**[UpdateCollectionItemResponse](../../models/operations/UpdateCollectionItemResponse.md)**
 
 ### Errors
 
@@ -190,7 +189,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }

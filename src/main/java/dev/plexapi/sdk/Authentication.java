@@ -4,21 +4,85 @@
 package dev.plexapi.sdk;
 
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
+import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 
+import dev.plexapi.sdk.models.operations.ChangePasswordRequest;
+import dev.plexapi.sdk.models.operations.ChangePasswordRequestBuilder;
+import dev.plexapi.sdk.models.operations.ChangePasswordResponse;
+import dev.plexapi.sdk.models.operations.CreateLegacyPinRequestBuilder;
+import dev.plexapi.sdk.models.operations.CreateLegacyPinResponse;
+import dev.plexapi.sdk.models.operations.CreateOAuthPinRequest;
+import dev.plexapi.sdk.models.operations.CreateOAuthPinRequestBuilder;
+import dev.plexapi.sdk.models.operations.CreateOAuthPinResponse;
+import dev.plexapi.sdk.models.operations.CreateOAuthPinSecurity;
+import dev.plexapi.sdk.models.operations.ExchangeJWTTokenRequest;
+import dev.plexapi.sdk.models.operations.ExchangeJWTTokenRequestBuilder;
+import dev.plexapi.sdk.models.operations.ExchangeJWTTokenResponse;
+import dev.plexapi.sdk.models.operations.GetAuthKeysRequest;
+import dev.plexapi.sdk.models.operations.GetAuthKeysRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetAuthKeysResponse;
+import dev.plexapi.sdk.models.operations.GetAuthNonceRequest;
+import dev.plexapi.sdk.models.operations.GetAuthNonceRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetAuthNonceResponse;
+import dev.plexapi.sdk.models.operations.GetClaimTokenRequest;
+import dev.plexapi.sdk.models.operations.GetClaimTokenRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetClaimTokenResponse;
+import dev.plexapi.sdk.models.operations.GetFeaturesRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetFeaturesResponse;
+import dev.plexapi.sdk.models.operations.GetOAuthPinRequest;
+import dev.plexapi.sdk.models.operations.GetOAuthPinRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetOAuthPinResponse;
+import dev.plexapi.sdk.models.operations.GetOAuthPinSecurity;
+import dev.plexapi.sdk.models.operations.GetServerAccessTokensRequest;
+import dev.plexapi.sdk.models.operations.GetServerAccessTokensRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetServerAccessTokensResponse;
 import dev.plexapi.sdk.models.operations.GetTokenDetailsRequest;
 import dev.plexapi.sdk.models.operations.GetTokenDetailsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetTokenDetailsResponse;
+import dev.plexapi.sdk.models.operations.LinkOAuthPinAuthenticationRequestBody;
+import dev.plexapi.sdk.models.operations.LinkOAuthPinRequestBuilder;
+import dev.plexapi.sdk.models.operations.LinkOAuthPinResponse;
+import dev.plexapi.sdk.models.operations.PingRequestBuilder;
+import dev.plexapi.sdk.models.operations.PingResponse;
 import dev.plexapi.sdk.models.operations.PostUsersSignInDataRequest;
 import dev.plexapi.sdk.models.operations.PostUsersSignInDataRequestBuilder;
 import dev.plexapi.sdk.models.operations.PostUsersSignInDataResponse;
+import dev.plexapi.sdk.models.operations.RegisterDeviceJWKRequest;
+import dev.plexapi.sdk.models.operations.RegisterDeviceJWKRequestBuilder;
+import dev.plexapi.sdk.models.operations.RegisterDeviceJWKResponse;
+import dev.plexapi.sdk.models.operations.SignOutRequest;
+import dev.plexapi.sdk.models.operations.SignOutRequestBuilder;
+import dev.plexapi.sdk.models.operations.SignOutResponse;
+import dev.plexapi.sdk.models.operations.SwitchHomeUserRequest;
+import dev.plexapi.sdk.models.operations.SwitchHomeUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.SwitchHomeUserResponse;
+import dev.plexapi.sdk.operations.ChangePassword;
+import dev.plexapi.sdk.operations.CreateLegacyPin;
+import dev.plexapi.sdk.operations.CreateOAuthPin;
+import dev.plexapi.sdk.operations.ExchangeJWTToken;
+import dev.plexapi.sdk.operations.GetAuthKeys;
+import dev.plexapi.sdk.operations.GetAuthNonce;
+import dev.plexapi.sdk.operations.GetClaimToken;
+import dev.plexapi.sdk.operations.GetFeatures;
+import dev.plexapi.sdk.operations.GetOAuthPin;
+import dev.plexapi.sdk.operations.GetServerAccessTokens;
 import dev.plexapi.sdk.operations.GetTokenDetails;
+import dev.plexapi.sdk.operations.LinkOAuthPin;
+import dev.plexapi.sdk.operations.Ping;
 import dev.plexapi.sdk.operations.PostUsersSignInData;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.RegisterDeviceJWK;
+import dev.plexapi.sdk.operations.SignOut;
+import dev.plexapi.sdk.operations.SwitchHomeUser;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
 import java.lang.String;
 import java.util.Optional;
 
-
+/**
+ * Plex Authentication operations
+ */
 public class Authentication {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncAuthentication asyncSDK;
 
@@ -34,6 +98,494 @@ public class Authentication {
      */
     public AsyncAuthentication async() {
         return asyncSDK;
+    }
+
+    /**
+     * Register Device JWK
+     * 
+     * <p>Register a device public key (JWK) for JWT-based authentication.
+     * 
+     * @return The call builder
+     */
+    public RegisterDeviceJWKRequestBuilder registerDeviceJWK() {
+        return new RegisterDeviceJWKRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Register Device JWK
+     * 
+     * <p>Register a device public key (JWK) for JWT-based authentication.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RegisterDeviceJWKResponse registerDeviceJWK(RegisterDeviceJWKRequest request) {
+        return registerDeviceJWK(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Register Device JWK
+     * 
+     * <p>Register a device public key (JWK) for JWT-based authentication.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RegisterDeviceJWKResponse registerDeviceJWK(
+            RegisterDeviceJWKRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<RegisterDeviceJWKRequest, RegisterDeviceJWKResponse> operation
+              = new RegisterDeviceJWK.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Auth Keys
+     * 
+     * <p>Get Plex public JWKs for signature verification.
+     * 
+     * @return The call builder
+     */
+    public GetAuthKeysRequestBuilder getAuthKeys() {
+        return new GetAuthKeysRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Auth Keys
+     * 
+     * <p>Get Plex public JWKs for signature verification.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuthKeysResponse getAuthKeys(GetAuthKeysRequest request) {
+        return getAuthKeys(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Auth Keys
+     * 
+     * <p>Get Plex public JWKs for signature verification.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuthKeysResponse getAuthKeys(
+            GetAuthKeysRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetAuthKeysRequest, GetAuthKeysResponse> operation
+              = new GetAuthKeys.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Auth Nonce
+     * 
+     * <p>Get a nonce to sign in client JWT authentication flow.
+     * 
+     * @return The call builder
+     */
+    public GetAuthNonceRequestBuilder getAuthNonce() {
+        return new GetAuthNonceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Auth Nonce
+     * 
+     * <p>Get a nonce to sign in client JWT authentication flow.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuthNonceResponse getAuthNonce(GetAuthNonceRequest request) {
+        return getAuthNonce(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Auth Nonce
+     * 
+     * <p>Get a nonce to sign in client JWT authentication flow.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuthNonceResponse getAuthNonce(
+            GetAuthNonceRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetAuthNonceRequest, GetAuthNonceResponse> operation
+              = new GetAuthNonce.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Exchange JWT Token
+     * 
+     * <p>Exchange a signed client JWT for a Plex JWT token.
+     * 
+     * @return The call builder
+     */
+    public ExchangeJWTTokenRequestBuilder exchangeJWTToken() {
+        return new ExchangeJWTTokenRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Exchange JWT Token
+     * 
+     * <p>Exchange a signed client JWT for a Plex JWT token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ExchangeJWTTokenResponse exchangeJWTToken(ExchangeJWTTokenRequest request) {
+        return exchangeJWTToken(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Exchange JWT Token
+     * 
+     * <p>Exchange a signed client JWT for a Plex JWT token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ExchangeJWTTokenResponse exchangeJWTToken(
+            ExchangeJWTTokenRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<ExchangeJWTTokenRequest, ExchangeJWTTokenResponse> operation
+              = new ExchangeJWTToken.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Claim Token
+     * 
+     * <p>Get a claim token for new server setup.
+     * 
+     * @return The call builder
+     */
+    public GetClaimTokenRequestBuilder getClaimToken() {
+        return new GetClaimTokenRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Claim Token
+     * 
+     * <p>Get a claim token for new server setup.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetClaimTokenResponse getClaimToken(GetClaimTokenRequest request) {
+        return getClaimToken(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Claim Token
+     * 
+     * <p>Get a claim token for new server setup.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetClaimTokenResponse getClaimToken(
+            GetClaimTokenRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetClaimTokenRequest, GetClaimTokenResponse> operation
+              = new GetClaimToken.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Features
+     * 
+     * <p>Get Plex Pass feature flags for the logged-in user.
+     * 
+     * @return The call builder
+     */
+    public GetFeaturesRequestBuilder getFeatures() {
+        return new GetFeaturesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Features
+     * 
+     * <p>Get Plex Pass feature flags for the logged-in user.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetFeaturesResponse getFeaturesDirect() {
+        return getFeatures(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Features
+     * 
+     * <p>Get Plex Pass feature flags for the logged-in user.
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetFeaturesResponse getFeatures(Optional<String> serverURL, Optional<Options> options) {
+        RequestlessOperation<GetFeaturesResponse> operation
+            = new GetFeatures.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Ping the server
+     * 
+     * <p>Health / latency check. No authentication required.
+     * 
+     * @return The call builder
+     */
+    public PingRequestBuilder ping() {
+        return new PingRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Ping the server
+     * 
+     * <p>Health / latency check. No authentication required.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public PingResponse pingDirect() {
+        return ping(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Ping the server
+     * 
+     * <p>Health / latency check. No authentication required.
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public PingResponse ping(Optional<String> serverURL, Optional<Options> options) {
+        RequestlessOperation<PingResponse> operation
+            = new Ping.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Create OAuth PIN
+     * 
+     * <p>Create a 4-character PIN for device linking via OAuth. The user must visit https://plex.tv/link and
+     * enter the PIN to authorize the device.
+     * 
+     * @return The call builder
+     */
+    public CreateOAuthPinRequestBuilder createOAuthPin() {
+        return new CreateOAuthPinRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create OAuth PIN
+     * 
+     * <p>Create a 4-character PIN for device linking via OAuth. The user must visit https://plex.tv/link and
+     * enter the PIN to authorize the device.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param security The security details to use for authentication.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateOAuthPinResponse createOAuthPin(CreateOAuthPinRequest request, CreateOAuthPinSecurity security) {
+        return createOAuthPin(request, security, Optional.empty(),
+            Optional.empty());
+    }
+
+    /**
+     * Create OAuth PIN
+     * 
+     * <p>Create a 4-character PIN for device linking via OAuth. The user must visit https://plex.tv/link and
+     * enter the PIN to authorize the device.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param security The security details to use for authentication.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateOAuthPinResponse createOAuthPin(
+            CreateOAuthPinRequest request, CreateOAuthPinSecurity security,
+            Optional<String> serverURL, Optional<Options> options) {
+        RequestOperation<CreateOAuthPinRequest, CreateOAuthPinResponse> operation
+              = new CreateOAuthPin.Sync(
+                                    sdkConfiguration, security, serverURL,
+                                    options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Create Legacy PIN
+     * 
+     * <p>Legacy PIN creation (XML).
+     * 
+     * @return The call builder
+     */
+    public CreateLegacyPinRequestBuilder createLegacyPin() {
+        return new CreateLegacyPinRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create Legacy PIN
+     * 
+     * <p>Legacy PIN creation (XML).
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateLegacyPinResponse createLegacyPinDirect() {
+        return createLegacyPin(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Create Legacy PIN
+     * 
+     * <p>Legacy PIN creation (XML).
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateLegacyPinResponse createLegacyPin(Optional<String> serverURL, Optional<Options> options) {
+        RequestlessOperation<CreateLegacyPinResponse> operation
+            = new CreateLegacyPin.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Link OAuth PIN
+     * 
+     * <p>Link a PIN to an account (OAuth completion).
+     * 
+     * @return The call builder
+     */
+    public LinkOAuthPinRequestBuilder linkOAuthPin() {
+        return new LinkOAuthPinRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Link OAuth PIN
+     * 
+     * <p>Link a PIN to an account (OAuth completion).
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public LinkOAuthPinResponse linkOAuthPinDirect() {
+        return linkOAuthPin(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Link OAuth PIN
+     * 
+     * <p>Link a PIN to an account (OAuth completion).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public LinkOAuthPinResponse linkOAuthPin(
+            Optional<? extends LinkOAuthPinAuthenticationRequestBody> request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<Optional<? extends LinkOAuthPinAuthenticationRequestBody>, LinkOAuthPinResponse> operation
+              = new LinkOAuthPin.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Server Access Tokens
+     * 
+     * <p>List access tokens for the server.
+     * 
+     * @return The call builder
+     */
+    public GetServerAccessTokensRequestBuilder getServerAccessTokens() {
+        return new GetServerAccessTokensRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Server Access Tokens
+     * 
+     * <p>List access tokens for the server.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetServerAccessTokensResponse getServerAccessTokens(GetServerAccessTokensRequest request) {
+        return getServerAccessTokens(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Server Access Tokens
+     * 
+     * <p>List access tokens for the server.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetServerAccessTokensResponse getServerAccessTokens(
+            GetServerAccessTokensRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetServerAccessTokensRequest, GetServerAccessTokensResponse> operation
+              = new GetServerAccessTokens.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
@@ -54,10 +606,10 @@ public class Authentication {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetTokenDetailsResponse getTokenDetails(GetTokenDetailsRequest request) throws Exception {
-        return getTokenDetails(request, Optional.empty());
+    public GetTokenDetailsResponse getTokenDetails(GetTokenDetailsRequest request) {
+        return getTokenDetails(request, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -67,12 +619,62 @@ public class Authentication {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param serverURL Overrides the server URL.
+     * @param options additional options
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetTokenDetailsResponse getTokenDetails(GetTokenDetailsRequest request, Optional<String> serverURL) throws Exception {
+    public GetTokenDetailsResponse getTokenDetails(
+            GetTokenDetailsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
         RequestOperation<GetTokenDetailsRequest, GetTokenDetailsResponse> operation
-              = new GetTokenDetails.Sync(sdkConfiguration, serverURL);
+              = new GetTokenDetails.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Change Password
+     * 
+     * <p>Change or reset the logged-in user's password.
+     * 
+     * @return The call builder
+     */
+    public ChangePasswordRequestBuilder changePassword() {
+        return new ChangePasswordRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Change Password
+     * 
+     * <p>Change or reset the logged-in user's password.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ChangePasswordResponse changePassword(ChangePasswordRequest request) {
+        return changePassword(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Change Password
+     * 
+     * <p>Change or reset the logged-in user's password.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ChangePasswordResponse changePassword(
+            ChangePasswordRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<ChangePasswordRequest, ChangePasswordResponse> operation
+              = new ChangePassword.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -94,10 +696,10 @@ public class Authentication {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public PostUsersSignInDataResponse postUsersSignInData(PostUsersSignInDataRequest request) throws Exception {
-        return postUsersSignInData(request, Optional.empty());
+    public PostUsersSignInDataResponse postUsersSignInData(PostUsersSignInDataRequest request) {
+        return postUsersSignInData(request, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -107,12 +709,155 @@ public class Authentication {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param serverURL Overrides the server URL.
+     * @param options additional options
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public PostUsersSignInDataResponse postUsersSignInData(PostUsersSignInDataRequest request, Optional<String> serverURL) throws Exception {
+    public PostUsersSignInDataResponse postUsersSignInData(
+            PostUsersSignInDataRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
         RequestOperation<PostUsersSignInDataRequest, PostUsersSignInDataResponse> operation
-              = new PostUsersSignInData.Sync(sdkConfiguration, serverURL);
+              = new PostUsersSignInData.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Sign Out
+     * 
+     * <p>Invalidate the current authentication token.
+     * 
+     * @return The call builder
+     */
+    public SignOutRequestBuilder signOut() {
+        return new SignOutRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Sign Out
+     * 
+     * <p>Invalidate the current authentication token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SignOutResponse signOut(SignOutRequest request) {
+        return signOut(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Sign Out
+     * 
+     * <p>Invalidate the current authentication token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SignOutResponse signOut(
+            SignOutRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<SignOutRequest, SignOutResponse> operation
+              = new SignOut.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Switch Home User
+     * 
+     * <p>Switch to a Plex Home user and return a new auth token.
+     * 
+     * @return The call builder
+     */
+    public SwitchHomeUserRequestBuilder switchHomeUser() {
+        return new SwitchHomeUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Switch Home User
+     * 
+     * <p>Switch to a Plex Home user and return a new auth token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SwitchHomeUserResponse switchHomeUser(SwitchHomeUserRequest request) {
+        return switchHomeUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Switch Home User
+     * 
+     * <p>Switch to a Plex Home user and return a new auth token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SwitchHomeUserResponse switchHomeUser(
+            SwitchHomeUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<SwitchHomeUserRequest, SwitchHomeUserResponse> operation
+              = new SwitchHomeUser.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get OAuth PIN Status
+     * 
+     * <p>Poll the PIN status. Returns authToken when the user has linked the device.
+     * 
+     * @return The call builder
+     */
+    public GetOAuthPinRequestBuilder getOAuthPin() {
+        return new GetOAuthPinRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get OAuth PIN Status
+     * 
+     * <p>Poll the PIN status. Returns authToken when the user has linked the device.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param security The security details to use for authentication.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetOAuthPinResponse getOAuthPin(GetOAuthPinRequest request, GetOAuthPinSecurity security) {
+        return getOAuthPin(request, security, Optional.empty(),
+            Optional.empty());
+    }
+
+    /**
+     * Get OAuth PIN Status
+     * 
+     * <p>Poll the PIN status. Returns authToken when the user has linked the device.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param security The security details to use for authentication.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetOAuthPinResponse getOAuthPin(
+            GetOAuthPinRequest request, GetOAuthPinSecurity security,
+            Optional<String> serverURL, Optional<Options> options) {
+        RequestOperation<GetOAuthPinRequest, GetOAuthPinResponse> operation
+              = new GetOAuthPin.Sync(
+                                    sdkConfiguration, security, serverURL,
+                                    options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

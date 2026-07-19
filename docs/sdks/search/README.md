@@ -1,5 +1,4 @@
 # Search
-(*search()*)
 
 ## Overview
 
@@ -26,7 +25,6 @@ In the response's items, the following extra attributes are returned to further 
 - `reasonID`: The ID of the item associated with the reason for the result. This might be a section ID, a tag ID, an artist ID, or a show ID.
 
 This request is intended to be very fast, and called as the user types.
-
 
 ### Example Usage
 
@@ -68,8 +66,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -98,7 +96,6 @@ Perform a search tailored to voice input and get the result as hubs
 This endpoint performs a search specifically tailored towards voice or other imprecise input which may work badly with the substring and spell-checking heuristics used by the `/hubs/search` endpoint. It uses a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) heuristic to search titles, and as such is much slower than the other search endpoint. Whenever possible, clients should limit the search to the appropriate type.
 
 Results, as well as their containing per-type hubs, contain a `distance` attribute which can be used to judge result quality.
-
 
 ### Example Usage
 
@@ -141,8 +138,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }

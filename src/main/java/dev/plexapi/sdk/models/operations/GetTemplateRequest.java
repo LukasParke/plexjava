@@ -10,6 +10,7 @@ import dev.plexapi.sdk.models.shared.Accepts;
 import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
+import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -89,6 +90,18 @@ public class GetTemplateRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=guid")
     private Optional<String> guid;
 
+    /**
+     * Subscription type.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
+    private Optional<String> mediaType;
+
+    /**
+     * Target library section ID.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=targetLibrarySectionID")
+    private Optional<Long> targetLibrarySectionID;
+
     @JsonCreator
     public GetTemplateRequest(
             Optional<? extends Accepts> accepts,
@@ -102,7 +115,9 @@ public class GetTemplateRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            Optional<String> guid) {
+            Optional<String> guid,
+            Optional<String> mediaType,
+            Optional<Long> targetLibrarySectionID) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -115,6 +130,8 @@ public class GetTemplateRequest {
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(guid, "guid");
+        Utils.checkNotNull(mediaType, "mediaType");
+        Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -127,13 +144,16 @@ public class GetTemplateRequest {
         this.deviceName = deviceName;
         this.marketplace = marketplace;
         this.guid = guid;
+        this.mediaType = mediaType;
+        this.targetLibrarySectionID = targetLibrarySectionID;
     }
     
     public GetTemplateRequest() {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -231,6 +251,22 @@ public class GetTemplateRequest {
     @JsonIgnore
     public Optional<String> guid() {
         return guid;
+    }
+
+    /**
+     * Subscription type.
+     */
+    @JsonIgnore
+    public Optional<String> mediaType() {
+        return mediaType;
+    }
+
+    /**
+     * Target library section ID.
+     */
+    @JsonIgnore
+    public Optional<Long> targetLibrarySectionID() {
+        return targetLibrarySectionID;
     }
 
     public static Builder builder() {
@@ -466,6 +502,44 @@ public class GetTemplateRequest {
         return this;
     }
 
+    /**
+     * Subscription type.
+     */
+    public GetTemplateRequest withMediaType(String mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
+        return this;
+    }
+
+
+    /**
+     * Subscription type.
+     */
+    public GetTemplateRequest withMediaType(Optional<String> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
+        return this;
+    }
+
+    /**
+     * Target library section ID.
+     */
+    public GetTemplateRequest withTargetLibrarySectionID(long targetLibrarySectionID) {
+        Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
+        this.targetLibrarySectionID = Optional.ofNullable(targetLibrarySectionID);
+        return this;
+    }
+
+
+    /**
+     * Target library section ID.
+     */
+    public GetTemplateRequest withTargetLibrarySectionID(Optional<Long> targetLibrarySectionID) {
+        Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
+        this.targetLibrarySectionID = targetLibrarySectionID;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -487,7 +561,9 @@ public class GetTemplateRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.guid, other.guid);
+            Utils.enhancedDeepEquals(this.guid, other.guid) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
+            Utils.enhancedDeepEquals(this.targetLibrarySectionID, other.targetLibrarySectionID);
     }
     
     @Override
@@ -496,7 +572,8 @@ public class GetTemplateRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, guid);
+            deviceName, marketplace, guid,
+            mediaType, targetLibrarySectionID);
     }
     
     @Override
@@ -513,7 +590,9 @@ public class GetTemplateRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "guid", guid);
+                "guid", guid,
+                "mediaType", mediaType,
+                "targetLibrarySectionID", targetLibrarySectionID);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -542,6 +621,10 @@ public class GetTemplateRequest {
         private Optional<String> marketplace = Optional.empty();
 
         private Optional<String> guid = Optional.empty();
+
+        private Optional<String> mediaType = Optional.empty();
+
+        private Optional<Long> targetLibrarySectionID = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -775,6 +858,44 @@ public class GetTemplateRequest {
             return this;
         }
 
+
+        /**
+         * Subscription type.
+         */
+        public Builder mediaType(String mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
+            return this;
+        }
+
+        /**
+         * Subscription type.
+         */
+        public Builder mediaType(Optional<String> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
+            return this;
+        }
+
+
+        /**
+         * Target library section ID.
+         */
+        public Builder targetLibrarySectionID(long targetLibrarySectionID) {
+            Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
+            this.targetLibrarySectionID = Optional.ofNullable(targetLibrarySectionID);
+            return this;
+        }
+
+        /**
+         * Target library section ID.
+         */
+        public Builder targetLibrarySectionID(Optional<Long> targetLibrarySectionID) {
+            Utils.checkNotNull(targetLibrarySectionID, "targetLibrarySectionID");
+            this.targetLibrarySectionID = targetLibrarySectionID;
+            return this;
+        }
+
         public GetTemplateRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -784,7 +905,8 @@ public class GetTemplateRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, guid);
+                deviceName, marketplace, guid,
+                mediaType, targetLibrarySectionID);
         }
 
 

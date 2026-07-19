@@ -12,8 +12,8 @@ import java.lang.String;
  * Params
  * 
  * <p>Subscription parameters.
- *   - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
- *   - `source`: Required for downloads to indicate the source of the downloaded content.
+ * - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into
+ * - `source`: Required for downloads to indicate the source of the downloaded content.
  */
 public class Params {
     @JsonCreator

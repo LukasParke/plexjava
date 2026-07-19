@@ -85,7 +85,7 @@ public class EmptyTrashRequest {
     private Optional<String> marketplace;
 
     /**
-     * Section identifier
+     * The unique identifier of the library section
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
     private long sectionId;
@@ -228,7 +228,7 @@ public class EmptyTrashRequest {
     }
 
     /**
-     * Section identifier
+     * The unique identifier of the library section
      */
     @JsonIgnore
     public long sectionId() {
@@ -450,7 +450,7 @@ public class EmptyTrashRequest {
     }
 
     /**
-     * Section identifier
+     * The unique identifier of the library section
      */
     public EmptyTrashRequest withSectionId(long sectionId) {
         Utils.checkNotNull(sectionId, "sectionId");
@@ -750,7 +750,7 @@ public class EmptyTrashRequest {
 
 
         /**
-         * Section identifier
+         * The unique identifier of the library section
          */
         public Builder sectionId(long sectionId) {
             Utils.checkNotNull(sectionId, "sectionId");

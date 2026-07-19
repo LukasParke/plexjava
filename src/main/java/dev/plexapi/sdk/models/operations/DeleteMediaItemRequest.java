@@ -84,16 +84,20 @@ public class DeleteMediaItemRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The mediaItem
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=mediaItem")
     private String mediaItem;
 
     /**
-     * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+     * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=proxy")
     private Optional<? extends BoolInt> proxy;
@@ -243,18 +247,24 @@ public class DeleteMediaItemRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The mediaItem
+     */
     @JsonIgnore
     public String mediaItem() {
         return mediaItem;
     }
 
     /**
-     * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+     * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -476,12 +486,18 @@ public class DeleteMediaItemRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public DeleteMediaItemRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The mediaItem
+     */
     public DeleteMediaItemRequest withMediaItem(String mediaItem) {
         Utils.checkNotNull(mediaItem, "mediaItem");
         this.mediaItem = mediaItem;
@@ -489,7 +505,7 @@ public class DeleteMediaItemRequest {
     }
 
     /**
-     * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+     * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
      */
     public DeleteMediaItemRequest withProxy(BoolInt proxy) {
         Utils.checkNotNull(proxy, "proxy");
@@ -499,7 +515,7 @@ public class DeleteMediaItemRequest {
 
 
     /**
-     * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+     * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
      */
     public DeleteMediaItemRequest withProxy(Optional<? extends BoolInt> proxy) {
         Utils.checkNotNull(proxy, "proxy");
@@ -807,6 +823,9 @@ public class DeleteMediaItemRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -814,6 +833,9 @@ public class DeleteMediaItemRequest {
         }
 
 
+        /**
+         * The mediaItem
+         */
         public Builder mediaItem(String mediaItem) {
             Utils.checkNotNull(mediaItem, "mediaItem");
             this.mediaItem = mediaItem;
@@ -822,7 +844,7 @@ public class DeleteMediaItemRequest {
 
 
         /**
-         * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+         * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
          */
         public Builder proxy(BoolInt proxy) {
             Utils.checkNotNull(proxy, "proxy");
@@ -831,7 +853,7 @@ public class DeleteMediaItemRequest {
         }
 
         /**
-         * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+         * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
          */
         public Builder proxy(Optional<? extends BoolInt> proxy) {
             Utils.checkNotNull(proxy, "proxy");

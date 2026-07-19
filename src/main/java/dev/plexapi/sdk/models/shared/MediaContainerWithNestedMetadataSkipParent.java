@@ -19,26 +19,26 @@ import java.lang.SuppressWarnings;
 /**
  * MediaContainerWithNestedMetadataSkipParent
  * 
- * <p>When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
+ * <p>When present on an episode or track item, indicates parent should be skipped in favor of grandparent
+ * (show).
  */
 @JsonDeserialize(using = MediaContainerWithNestedMetadataSkipParent._Deserializer.class)
 public class MediaContainerWithNestedMetadataSkipParent {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private MediaContainerWithNestedMetadataSkipParent(TypedObject value) {
         this.value = value;
     }
 
     public static MediaContainerWithNestedMetadataSkipParent of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new MediaContainerWithNestedMetadataSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new MediaContainerWithNestedMetadataSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static MediaContainerWithNestedMetadataSkipParent of(MediaContainerWithNestedMetadataSkipParent2 value) {
         Utils.checkNotNull(value, "value");
-        return new MediaContainerWithNestedMetadataSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaContainerWithNestedMetadataSkipParent2>(){}));
+        return new MediaContainerWithNestedMetadataSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +61,7 @@ public class MediaContainerWithNestedMetadataSkipParent {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +72,7 @@ public class MediaContainerWithNestedMetadataSkipParent {
             return false;
         }
         MediaContainerWithNestedMetadataSkipParent other = (MediaContainerWithNestedMetadataSkipParent) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +85,8 @@ public class MediaContainerWithNestedMetadataSkipParent {
 
         public _Deserializer() {
             super(MediaContainerWithNestedMetadataSkipParent.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithNestedMetadataSkipParent2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithNestedMetadataSkipParent2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +95,6 @@ public class MediaContainerWithNestedMetadataSkipParent {
         return Utils.toString(MediaContainerWithNestedMetadataSkipParent.class,
                 "value", value);
     }
- 
+
 }
 

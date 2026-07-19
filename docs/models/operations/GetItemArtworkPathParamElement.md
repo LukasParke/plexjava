@@ -1,5 +1,15 @@
 # GetItemArtworkPathParamElement
 
+The type of artwork element (e.g., art, poster, thumb)
+
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.GetItemArtworkPathParamElement;
+
+GetItemArtworkPathParamElement value = GetItemArtworkPathParamElement.THUMB;
+```
+
 
 ## Values
 

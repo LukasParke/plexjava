@@ -16,17 +16,12 @@ import java.util.Optional;
 
 public class Services {
 
-    @JsonProperty("identifier")
-    private String identifier;
-
-
     @JsonProperty("endpoint")
     private String endpoint;
 
 
-    @JsonInclude(Include.ALWAYS)
-    @JsonProperty("token")
-    private Optional<String> token;
+    @JsonProperty("identifier")
+    private String identifier;
 
 
     @JsonInclude(Include.ALWAYS)
@@ -37,36 +32,36 @@ public class Services {
     @JsonProperty("status")
     private Status status;
 
+
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("token")
+    private Optional<String> token;
+
     @JsonCreator
     public Services(
-            @JsonProperty("identifier") String identifier,
             @JsonProperty("endpoint") String endpoint,
-            @JsonProperty("token") Optional<String> token,
+            @JsonProperty("identifier") String identifier,
             @JsonProperty("secret") Optional<String> secret,
-            @JsonProperty("status") Status status) {
-        Utils.checkNotNull(identifier, "identifier");
+            @JsonProperty("status") Status status,
+            @JsonProperty("token") Optional<String> token) {
         Utils.checkNotNull(endpoint, "endpoint");
-        Utils.checkNotNull(token, "token");
+        Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(secret, "secret");
         Utils.checkNotNull(status, "status");
-        this.identifier = identifier;
+        Utils.checkNotNull(token, "token");
         this.endpoint = endpoint;
-        this.token = token;
+        this.identifier = identifier;
         this.secret = secret;
         this.status = status;
+        this.token = token;
     }
     
     public Services(
-            String identifier,
             String endpoint,
+            String identifier,
             Status status) {
-        this(identifier, endpoint, Optional.empty(),
-            Optional.empty(), status);
-    }
-
-    @JsonIgnore
-    public String identifier() {
-        return identifier;
+        this(endpoint, identifier, Optional.empty(),
+            status, Optional.empty());
     }
 
     @JsonIgnore
@@ -75,8 +70,8 @@ public class Services {
     }
 
     @JsonIgnore
-    public Optional<String> token() {
-        return token;
+    public String identifier() {
+        return identifier;
     }
 
     @JsonIgnore
@@ -89,16 +84,15 @@ public class Services {
         return status;
     }
 
+    @JsonIgnore
+    public Optional<String> token() {
+        return token;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
-
-    public Services withIdentifier(String identifier) {
-        Utils.checkNotNull(identifier, "identifier");
-        this.identifier = identifier;
-        return this;
-    }
 
     public Services withEndpoint(String endpoint) {
         Utils.checkNotNull(endpoint, "endpoint");
@@ -106,16 +100,9 @@ public class Services {
         return this;
     }
 
-    public Services withToken(String token) {
-        Utils.checkNotNull(token, "token");
-        this.token = Optional.ofNullable(token);
-        return this;
-    }
-
-
-    public Services withToken(Optional<String> token) {
-        Utils.checkNotNull(token, "token");
-        this.token = token;
+    public Services withIdentifier(String identifier) {
+        Utils.checkNotNull(identifier, "identifier");
+        this.identifier = identifier;
         return this;
     }
 
@@ -138,6 +125,19 @@ public class Services {
         return this;
     }
 
+    public Services withToken(String token) {
+        Utils.checkNotNull(token, "token");
+        this.token = Optional.ofNullable(token);
+        return this;
+    }
+
+
+    public Services withToken(Optional<String> token) {
+        Utils.checkNotNull(token, "token");
+        this.token = token;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -148,52 +148,45 @@ public class Services {
         }
         Services other = (Services) o;
         return 
-            Utils.enhancedDeepEquals(this.identifier, other.identifier) &&
             Utils.enhancedDeepEquals(this.endpoint, other.endpoint) &&
-            Utils.enhancedDeepEquals(this.token, other.token) &&
+            Utils.enhancedDeepEquals(this.identifier, other.identifier) &&
             Utils.enhancedDeepEquals(this.secret, other.secret) &&
-            Utils.enhancedDeepEquals(this.status, other.status);
+            Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.token, other.token);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            identifier, endpoint, token,
-            secret, status);
+            endpoint, identifier, secret,
+            status, token);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Services.class,
-                "identifier", identifier,
                 "endpoint", endpoint,
-                "token", token,
+                "identifier", identifier,
                 "secret", secret,
-                "status", status);
+                "status", status,
+                "token", token);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private String identifier;
-
         private String endpoint;
 
-        private Optional<String> token = Optional.empty();
+        private String identifier;
 
         private Optional<String> secret = Optional.empty();
 
         private Status status;
 
+        private Optional<String> token = Optional.empty();
+
         private Builder() {
           // force use of static builder() method
-        }
-
-
-        public Builder identifier(String identifier) {
-            Utils.checkNotNull(identifier, "identifier");
-            this.identifier = identifier;
-            return this;
         }
 
 
@@ -204,15 +197,9 @@ public class Services {
         }
 
 
-        public Builder token(String token) {
-            Utils.checkNotNull(token, "token");
-            this.token = Optional.ofNullable(token);
-            return this;
-        }
-
-        public Builder token(Optional<String> token) {
-            Utils.checkNotNull(token, "token");
-            this.token = token;
+        public Builder identifier(String identifier) {
+            Utils.checkNotNull(identifier, "identifier");
+            this.identifier = identifier;
             return this;
         }
 
@@ -236,11 +223,24 @@ public class Services {
             return this;
         }
 
+
+        public Builder token(String token) {
+            Utils.checkNotNull(token, "token");
+            this.token = Optional.ofNullable(token);
+            return this;
+        }
+
+        public Builder token(Optional<String> token) {
+            Utils.checkNotNull(token, "token");
+            this.token = token;
+            return this;
+        }
+
         public Services build() {
 
             return new Services(
-                identifier, endpoint, token,
-                secret, status);
+                endpoint, identifier, secret,
+                status, token);
         }
 
     }

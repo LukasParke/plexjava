@@ -5,7 +5,7 @@ package dev.plexapi.sdk.models.operations.async;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.plexapi.sdk.models.shared.MediaContainerWithDirectory;
+import dev.plexapi.sdk.models.operations.GetServerInfoResponseBody;
 import dev.plexapi.sdk.utils.AsyncResponse;
 import dev.plexapi.sdk.utils.Blob;
 import dev.plexapi.sdk.utils.Utils;
@@ -36,22 +36,22 @@ public class GetServerInfoResponse implements AsyncResponse {
     /**
      * OK
      */
-    private Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory;
+    private Optional<? extends GetServerInfoResponseBody> object;
 
     @JsonCreator
     public GetServerInfoResponse(
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
-            Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
+            Optional<? extends GetServerInfoResponseBody> object) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
+        Utils.checkNotNull(object, "object");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.mediaContainerWithDirectory = mediaContainerWithDirectory;
+        this.object = object;
     }
     
     public GetServerInfoResponse(
@@ -91,8 +91,8 @@ public class GetServerInfoResponse implements AsyncResponse {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<MediaContainerWithDirectory> mediaContainerWithDirectory() {
-        return (Optional<MediaContainerWithDirectory>) mediaContainerWithDirectory;
+    public Optional<GetServerInfoResponseBody> object() {
+        return (Optional<GetServerInfoResponseBody>) object;
     }
 
     public static Builder builder() {
@@ -130,9 +130,9 @@ public class GetServerInfoResponse implements AsyncResponse {
     /**
      * OK
      */
-    public GetServerInfoResponse withMediaContainerWithDirectory(MediaContainerWithDirectory mediaContainerWithDirectory) {
-        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
-        this.mediaContainerWithDirectory = Optional.ofNullable(mediaContainerWithDirectory);
+    public GetServerInfoResponse withObject(GetServerInfoResponseBody object) {
+        Utils.checkNotNull(object, "object");
+        this.object = Optional.ofNullable(object);
         return this;
     }
 
@@ -140,9 +140,9 @@ public class GetServerInfoResponse implements AsyncResponse {
     /**
      * OK
      */
-    public GetServerInfoResponse withMediaContainerWithDirectory(Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
-        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
-        this.mediaContainerWithDirectory = mediaContainerWithDirectory;
+    public GetServerInfoResponse withObject(Optional<? extends GetServerInfoResponseBody> object) {
+        Utils.checkNotNull(object, "object");
+        this.object = object;
         return this;
     }
 
@@ -159,14 +159,14 @@ public class GetServerInfoResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.mediaContainerWithDirectory, other.mediaContainerWithDirectory);
+            Utils.enhancedDeepEquals(this.object, other.object);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            mediaContainerWithDirectory);
+            object);
     }
     
     @Override
@@ -175,7 +175,7 @@ public class GetServerInfoResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "mediaContainerWithDirectory", mediaContainerWithDirectory);
+                "object", object);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -187,7 +187,7 @@ public class GetServerInfoResponse implements AsyncResponse {
 
         private HttpResponse<Blob> rawResponse;
 
-        private Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory = Optional.empty();
+        private Optional<? extends GetServerInfoResponseBody> object = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -227,18 +227,18 @@ public class GetServerInfoResponse implements AsyncResponse {
         /**
          * OK
          */
-        public Builder mediaContainerWithDirectory(MediaContainerWithDirectory mediaContainerWithDirectory) {
-            Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
-            this.mediaContainerWithDirectory = Optional.ofNullable(mediaContainerWithDirectory);
+        public Builder object(GetServerInfoResponseBody object) {
+            Utils.checkNotNull(object, "object");
+            this.object = Optional.ofNullable(object);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder mediaContainerWithDirectory(Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
-            Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
-            this.mediaContainerWithDirectory = mediaContainerWithDirectory;
+        public Builder object(Optional<? extends GetServerInfoResponseBody> object) {
+            Utils.checkNotNull(object, "object");
+            this.object = object;
             return this;
         }
 
@@ -246,7 +246,7 @@ public class GetServerInfoResponse implements AsyncResponse {
 
             return new GetServerInfoResponse(
                 contentType, statusCode, rawResponse,
-                mediaContainerWithDirectory);
+                object);
         }
 
     }

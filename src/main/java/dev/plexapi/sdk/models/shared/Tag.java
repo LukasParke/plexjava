@@ -18,7 +18,9 @@ import java.util.Optional;
 /**
  * Tag
  * 
- * <p>A variety of extra information about a metadata item is included as tags. These tags use their own element names such as `Genre`, `Writer`, `Directory`, and `Role`. Individual tag types may introduce their own extra attributes.
+ * <p>A variety of extra information about a metadata item is included as tags. These tags use their own
+ * element names such as `Genre`, `Writer`, `Directory`, and `Role`. Individual tag types may introduce
+ * their own extra attributes.
  */
 public class Tag {
     /**
@@ -46,7 +48,8 @@ public class Tag {
     private Optional<Integer> id;
 
     /**
-     * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is represented as a string in the API.
+     * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is
+     * represented as a string in the API.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("ratingKey")
@@ -151,7 +154,8 @@ public class Tag {
     }
 
     /**
-     * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is represented as a string in the API.
+     * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is
+     * represented as a string in the API.
      */
     @JsonIgnore
     public Optional<String> ratingKey() {
@@ -262,7 +266,8 @@ public class Tag {
     }
 
     /**
-     * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is represented as a string in the API.
+     * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is
+     * represented as a string in the API.
      */
     public Tag withRatingKey(String ratingKey) {
         Utils.checkNotNull(ratingKey, "ratingKey");
@@ -272,7 +277,8 @@ public class Tag {
 
 
     /**
-     * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is represented as a string in the API.
+     * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is
+     * represented as a string in the API.
      */
     public Tag withRatingKey(Optional<String> ratingKey) {
         Utils.checkNotNull(ratingKey, "ratingKey");
@@ -492,7 +498,8 @@ public class Tag {
 
 
         /**
-         * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is represented as a string in the API.
+         * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is
+         * represented as a string in the API.
          */
         public Builder ratingKey(String ratingKey) {
             Utils.checkNotNull(ratingKey, "ratingKey");
@@ -501,7 +508,8 @@ public class Tag {
         }
 
         /**
-         * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is represented as a string in the API.
+         * The rating key (Media ID) of this media item. Note: Although this is always an integer, it is
+         * represented as a string in the API.
          */
         public Builder ratingKey(Optional<String> ratingKey) {
             Utils.checkNotNull(ratingKey, "ratingKey");

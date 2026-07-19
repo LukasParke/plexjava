@@ -5,6 +5,7 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.MediaContainerWithHubs;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -35,22 +36,22 @@ public class GetRelatedItemsResponse implements Response {
     /**
      * OK
      */
-    private Optional<? extends GetRelatedItemsResponseBody> object;
+    private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs;
 
     @JsonCreator
     public GetRelatedItemsResponse(
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends GetRelatedItemsResponseBody> object) {
+            Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithHubs = mediaContainerWithHubs;
     }
     
     public GetRelatedItemsResponse(
@@ -90,8 +91,8 @@ public class GetRelatedItemsResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetRelatedItemsResponseBody> object() {
-        return (Optional<GetRelatedItemsResponseBody>) object;
+    public Optional<MediaContainerWithHubs> mediaContainerWithHubs() {
+        return (Optional<MediaContainerWithHubs>) mediaContainerWithHubs;
     }
 
     public static Builder builder() {
@@ -129,9 +130,9 @@ public class GetRelatedItemsResponse implements Response {
     /**
      * OK
      */
-    public GetRelatedItemsResponse withObject(GetRelatedItemsResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public GetRelatedItemsResponse withMediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+        this.mediaContainerWithHubs = Optional.ofNullable(mediaContainerWithHubs);
         return this;
     }
 
@@ -139,9 +140,9 @@ public class GetRelatedItemsResponse implements Response {
     /**
      * OK
      */
-    public GetRelatedItemsResponse withObject(Optional<? extends GetRelatedItemsResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public GetRelatedItemsResponse withMediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+        this.mediaContainerWithHubs = mediaContainerWithHubs;
         return this;
     }
 
@@ -158,14 +159,14 @@ public class GetRelatedItemsResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object);
+            Utils.enhancedDeepEquals(this.mediaContainerWithHubs, other.mediaContainerWithHubs);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object);
+            mediaContainerWithHubs);
     }
     
     @Override
@@ -174,7 +175,7 @@ public class GetRelatedItemsResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object);
+                "mediaContainerWithHubs", mediaContainerWithHubs);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -186,7 +187,7 @@ public class GetRelatedItemsResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends GetRelatedItemsResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -226,18 +227,18 @@ public class GetRelatedItemsResponse implements Response {
         /**
          * OK
          */
-        public Builder object(GetRelatedItemsResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
+            Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+            this.mediaContainerWithHubs = Optional.ofNullable(mediaContainerWithHubs);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends GetRelatedItemsResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
+            Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+            this.mediaContainerWithHubs = mediaContainerWithHubs;
             return this;
         }
 
@@ -245,7 +246,7 @@ public class GetRelatedItemsResponse implements Response {
 
             return new GetRelatedItemsResponse(
                 contentType, statusCode, rawResponse,
-                object);
+                mediaContainerWithHubs);
         }
 
     }

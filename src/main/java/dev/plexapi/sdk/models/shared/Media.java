@@ -27,7 +27,13 @@ import java.util.Optional;
 /**
  * Media
  * 
- * <p>`Media` represents an one or more media files (parts) and is a child of a metadata item. There aren't necessarily any guaranteed attributes on media elements since the attributes will vary based on the type. The possible attributes are not documented here, but they typically have self-evident names. High-level media information that can be used for badging and flagging, such as `videoResolution` and codecs, is included on the media element.
+ * <p>`Media` represents an one or more media files (parts) and is a child of a metadata item. There
+ * aren't necessarily any guaranteed attributes on media elements since the attributes will vary based
+ * on the type. The possible attributes are not documented here, but they typically have self-evident
+ * names.
+ * 
+ * <p>High-level media information that can be used for badging and flagging, such as `videoResolution`
+ * and codecs, is included on the media element.
  */
 public class Media {
 
@@ -97,6 +103,20 @@ public class Media {
     @JsonProperty("Part")
     private Optional<? extends List<Part>> part;
 
+    /**
+     * Whether this media version is selected for playback.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("selected")
+    private Optional<Boolean> selected;
+
+    /**
+     * Unique identifier for this media instance.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("uuid")
+    private Optional<String> uuid;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("videoCodec")
@@ -141,6 +161,8 @@ public class Media {
             @JsonProperty("id") long id,
             @JsonProperty("optimizedForStreaming") Optional<? extends OptimizedForStreaming> optimizedForStreaming,
             @JsonProperty("Part") Optional<? extends List<Part>> part,
+            @JsonProperty("selected") Optional<Boolean> selected,
+            @JsonProperty("uuid") Optional<String> uuid,
             @JsonProperty("videoCodec") Optional<String> videoCodec,
             @JsonProperty("videoFrameRate") Optional<String> videoFrameRate,
             @JsonProperty("videoProfile") Optional<String> videoProfile,
@@ -159,6 +181,8 @@ public class Media {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(optimizedForStreaming, "optimizedForStreaming");
         Utils.checkNotNull(part, "part");
+        Utils.checkNotNull(selected, "selected");
+        Utils.checkNotNull(uuid, "uuid");
         Utils.checkNotNull(videoCodec, "videoCodec");
         Utils.checkNotNull(videoFrameRate, "videoFrameRate");
         Utils.checkNotNull(videoProfile, "videoProfile");
@@ -177,6 +201,8 @@ public class Media {
         this.id = id;
         this.optimizedForStreaming = optimizedForStreaming;
         this.part = part;
+        this.selected = selected;
+        this.uuid = uuid;
         this.videoCodec = videoCodec;
         this.videoFrameRate = videoFrameRate;
         this.videoProfile = videoProfile;
@@ -192,7 +218,8 @@ public class Media {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), id, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty());
     }
 
     @JsonIgnore
@@ -265,6 +292,22 @@ public class Media {
     @JsonIgnore
     public Optional<List<Part>> part() {
         return (Optional<List<Part>>) part;
+    }
+
+    /**
+     * Whether this media version is selected for playback.
+     */
+    @JsonIgnore
+    public Optional<Boolean> selected() {
+        return selected;
+    }
+
+    /**
+     * Unique identifier for this media instance.
+     */
+    @JsonIgnore
+    public Optional<String> uuid() {
+        return uuid;
     }
 
     @JsonIgnore
@@ -472,6 +515,44 @@ public class Media {
         return this;
     }
 
+    /**
+     * Whether this media version is selected for playback.
+     */
+    public Media withSelected(boolean selected) {
+        Utils.checkNotNull(selected, "selected");
+        this.selected = Optional.ofNullable(selected);
+        return this;
+    }
+
+
+    /**
+     * Whether this media version is selected for playback.
+     */
+    public Media withSelected(Optional<Boolean> selected) {
+        Utils.checkNotNull(selected, "selected");
+        this.selected = selected;
+        return this;
+    }
+
+    /**
+     * Unique identifier for this media instance.
+     */
+    public Media withUuid(String uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = Optional.ofNullable(uuid);
+        return this;
+    }
+
+
+    /**
+     * Unique identifier for this media instance.
+     */
+    public Media withUuid(Optional<String> uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = uuid;
+        return this;
+    }
+
     public Media withVideoCodec(String videoCodec) {
         Utils.checkNotNull(videoCodec, "videoCodec");
         this.videoCodec = Optional.ofNullable(videoCodec);
@@ -573,6 +654,8 @@ public class Media {
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.optimizedForStreaming, other.optimizedForStreaming) &&
             Utils.enhancedDeepEquals(this.part, other.part) &&
+            Utils.enhancedDeepEquals(this.selected, other.selected) &&
+            Utils.enhancedDeepEquals(this.uuid, other.uuid) &&
             Utils.enhancedDeepEquals(this.videoCodec, other.videoCodec) &&
             Utils.enhancedDeepEquals(this.videoFrameRate, other.videoFrameRate) &&
             Utils.enhancedDeepEquals(this.videoProfile, other.videoProfile) &&
@@ -588,9 +671,9 @@ public class Media {
             audioProfile, bitrate, container,
             duration, has64bitOffsets, hasVoiceActivity,
             height, id, optimizedForStreaming,
-            part, videoCodec, videoFrameRate,
-            videoProfile, videoResolution, width,
-            additionalProperties);
+            part, selected, uuid,
+            videoCodec, videoFrameRate, videoProfile,
+            videoResolution, width, additionalProperties);
     }
     
     @Override
@@ -609,6 +692,8 @@ public class Media {
                 "id", id,
                 "optimizedForStreaming", optimizedForStreaming,
                 "part", part,
+                "selected", selected,
+                "uuid", uuid,
                 "videoCodec", videoCodec,
                 "videoFrameRate", videoFrameRate,
                 "videoProfile", videoProfile,
@@ -645,6 +730,10 @@ public class Media {
         private Optional<? extends OptimizedForStreaming> optimizedForStreaming = Optional.empty();
 
         private Optional<? extends List<Part>> part = Optional.empty();
+
+        private Optional<Boolean> selected = Optional.empty();
+
+        private Optional<String> uuid = Optional.empty();
 
         private Optional<String> videoCodec = Optional.empty();
 
@@ -834,6 +923,44 @@ public class Media {
         }
 
 
+        /**
+         * Whether this media version is selected for playback.
+         */
+        public Builder selected(boolean selected) {
+            Utils.checkNotNull(selected, "selected");
+            this.selected = Optional.ofNullable(selected);
+            return this;
+        }
+
+        /**
+         * Whether this media version is selected for playback.
+         */
+        public Builder selected(Optional<Boolean> selected) {
+            Utils.checkNotNull(selected, "selected");
+            this.selected = selected;
+            return this;
+        }
+
+
+        /**
+         * Unique identifier for this media instance.
+         */
+        public Builder uuid(String uuid) {
+            Utils.checkNotNull(uuid, "uuid");
+            this.uuid = Optional.ofNullable(uuid);
+            return this;
+        }
+
+        /**
+         * Unique identifier for this media instance.
+         */
+        public Builder uuid(Optional<String> uuid) {
+            Utils.checkNotNull(uuid, "uuid");
+            this.uuid = uuid;
+            return this;
+        }
+
+
         public Builder videoCodec(String videoCodec) {
             Utils.checkNotNull(videoCodec, "videoCodec");
             this.videoCodec = Optional.ofNullable(videoCodec);
@@ -921,8 +1048,9 @@ public class Media {
                 audioProfile, bitrate, container,
                 duration, has64bitOffsets, hasVoiceActivity,
                 height, id, optimizedForStreaming,
-                part, videoCodec, videoFrameRate,
-                videoProfile, videoResolution, width)
+                part, selected, uuid,
+                videoCodec, videoFrameRate, videoProfile,
+                videoResolution, width)
                 .withAdditionalProperties(additionalProperties);
         }
 

@@ -51,9 +51,11 @@ public class Application {
                 .protocol(StartTranscodeSessionQueryParamProtocol.DASH)
                 .secondsPerSegment(5L)
                 .subtitleSize(50L)
+                .subtitles(StartTranscodeSessionQueryParamSubtitles.BURN)
+                .videoResolution("1080x1080")
+                .copyts(BoolInt.True)
                 .videoBitrate(12000L)
                 .videoQuality(50L)
-                .videoResolution("1080x1080")
                 .xPlexClientProfileExtra("add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)")
                 .xPlexClientProfileName("generic")
                 .build();
@@ -62,7 +64,7 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.responseStream().isPresent()) {
+        if (res.twoHundredApplicationVndAppleMpegurlBinaryResponse().isPresent()) {
             // handle response
         }
     }

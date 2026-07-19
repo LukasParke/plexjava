@@ -1,5 +1,4 @@
 # Content
-(*content()*)
 
 ## Overview
 
@@ -65,7 +64,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -98,6 +97,7 @@ Get one or more metadata items.
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetMetadataItemRequest;
 import dev.plexapi.sdk.models.operations.GetMetadataItemResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -107,7 +107,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -141,7 +141,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -161,6 +161,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getAlbums
@@ -174,6 +175,7 @@ Get all albums in a music section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetAlbumsRequest;
 import dev.plexapi.sdk.models.operations.GetAlbumsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -181,7 +183,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -207,7 +209,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -227,11 +229,13 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## listContent
 
-Get the items in a section, potentially filtering them
+Get the items in a section, potentially filtering them.
+When `includeCollections=1` is passed, the response may also contain `Collection` items.
 
 ### Example Usage
 
@@ -240,6 +244,7 @@ Get the items in a section, potentially filtering them
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListContentRequest;
 import dev.plexapi.sdk.models.operations.ListContentResponse;
 import dev.plexapi.sdk.models.shared.*;
@@ -247,7 +252,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -265,14 +270,40 @@ public class Application {
             .build();
 
         ListContentRequest req = ListContentRequest.builder()
-                .sectionId("<id>")
+                .sectionId(813218L)
                 .mediaQuery(MediaQuery.builder()
                     .type(MediaType.Episode)
-                    .sourceType(2L)
                     .sort("duration:desc,index")
+                    .sourceType(2L)
                     .build())
                 .includeMeta(BoolInt.True)
                 .includeGuids(BoolInt.True)
+                .includeCollections(BoolInt.True)
+                .includeExternalMedia(BoolInt.True)
+                .includeAdvanced(BoolInt.True)
+                .checkFiles(BoolInt.True)
+                .includeRelated(BoolInt.True)
+                .includeExtras(BoolInt.True)
+                .includePopularLeaves(BoolInt.True)
+                .includeConcerts(BoolInt.True)
+                .includeOnDeck(BoolInt.True)
+                .includeChapters(BoolInt.True)
+                .includePreferences(BoolInt.True)
+                .includeBandwidths(BoolInt.True)
+                .includeLoudnessRamps(BoolInt.True)
+                .includeStations(BoolInt.True)
+                .includeExternalIds(BoolInt.True)
+                .includeReviews(BoolInt.True)
+                .includeCredits(BoolInt.True)
+                .includeArt(BoolInt.True)
+                .includeThumb(BoolInt.True)
+                .includeBanner(BoolInt.True)
+                .includeTheme(BoolInt.True)
+                .asyncAugmentMetadata(BoolInt.True)
+                .asyncRefreshLocalMediaAgent(BoolInt.True)
+                .nocache(BoolInt.True)
+                .skipRefresh(BoolInt.True)
+                .unwatched(BoolInt.True)
                 .build();
 
         ListContentResponse res = sdk.content().listContent()
@@ -280,7 +311,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -300,6 +331,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getAllLeaves
@@ -313,6 +345,7 @@ Get all leaves in a section (such as episodes in a show section)
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetAllLeavesRequest;
 import dev.plexapi.sdk.models.operations.GetAllLeavesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -320,7 +353,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -346,7 +379,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -366,6 +399,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getArts
@@ -379,6 +413,7 @@ Get artwork for a library section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetArtsRequest;
 import dev.plexapi.sdk.models.operations.GetArtsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -386,7 +421,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -412,7 +447,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithArtwork().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithArtwork().get());
         }
     }
 }
@@ -432,6 +467,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getCategories
@@ -445,6 +481,7 @@ Get categories in a library section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetCategoriesRequest;
 import dev.plexapi.sdk.models.operations.GetCategoriesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -452,7 +489,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -478,7 +515,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithArtwork().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithArtwork().get());
         }
     }
 }
@@ -498,6 +535,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getCluster
@@ -511,6 +549,7 @@ Get clusters in a library section (typically for photos)
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetClusterRequest;
 import dev.plexapi.sdk.models.operations.GetClusterResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -518,7 +557,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -544,7 +583,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithArtwork().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithArtwork().get());
         }
     }
 }
@@ -564,6 +603,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getSonicPath
@@ -577,6 +617,7 @@ Get a list of audio tracks starting at one and ending at another which are simil
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetSonicPathRequest;
 import dev.plexapi.sdk.models.operations.GetSonicPathResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -584,7 +625,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -612,7 +653,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -632,6 +673,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getFolders
@@ -645,6 +687,7 @@ Get all folder locations of the media in a section
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetFoldersRequest;
 import dev.plexapi.sdk.models.operations.GetFoldersResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -652,7 +695,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -678,7 +721,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -698,6 +741,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## listMoments
@@ -711,6 +755,7 @@ Get moments in a library section (typically for photos)
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListMomentsRequest;
 import dev.plexapi.sdk.models.operations.ListMomentsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -718,7 +763,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -744,7 +789,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithArtwork().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithArtwork().get());
         }
     }
 }
@@ -764,6 +809,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getSonicallySimilar
@@ -777,6 +823,7 @@ Get the nearest audio tracks to a particular analysis
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetSonicallySimilarRequest;
 import dev.plexapi.sdk.models.operations.GetSonicallySimilarResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -785,7 +832,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -812,7 +859,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -832,6 +879,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getCollectionImage

@@ -13,6 +13,7 @@ import dev.plexapi.sdk.models.operations.GetCountryRegionsRequest;
 import dev.plexapi.sdk.models.operations.GetLineupChannelsRequest;
 import dev.plexapi.sdk.models.operations.GetLineupRequest;
 import dev.plexapi.sdk.models.operations.ListLineupsRequest;
+import dev.plexapi.sdk.models.operations.SearchEPGRequest;
 import dev.plexapi.sdk.models.operations.async.ComputeChannelMapRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ComputeChannelMapResponse;
 import dev.plexapi.sdk.models.operations.async.GetAllLanguagesRequestBuilder;
@@ -25,27 +26,38 @@ import dev.plexapi.sdk.models.operations.async.GetCountriesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetCountriesResponse;
 import dev.plexapi.sdk.models.operations.async.GetCountryRegionsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetCountryRegionsResponse;
+import dev.plexapi.sdk.models.operations.async.GetEPGGuideRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetEPGGuideResponse;
 import dev.plexapi.sdk.models.operations.async.GetLineupChannelsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetLineupChannelsResponse;
 import dev.plexapi.sdk.models.operations.async.GetLineupRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetLineupResponse;
 import dev.plexapi.sdk.models.operations.async.ListLineupsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ListLineupsResponse;
+import dev.plexapi.sdk.models.operations.async.SearchEPGRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.SearchEPGResponse;
 import dev.plexapi.sdk.operations.ComputeChannelMap;
 import dev.plexapi.sdk.operations.GetAllLanguages;
 import dev.plexapi.sdk.operations.GetChannels;
 import dev.plexapi.sdk.operations.GetCountries;
 import dev.plexapi.sdk.operations.GetCountriesLineups;
 import dev.plexapi.sdk.operations.GetCountryRegions;
+import dev.plexapi.sdk.operations.GetEPGGuide;
 import dev.plexapi.sdk.operations.GetLineup;
 import dev.plexapi.sdk.operations.GetLineupChannels;
 import dev.plexapi.sdk.operations.ListLineups;
+import dev.plexapi.sdk.operations.SearchEPG;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The EPG (Electronic Program Guide) is responsible for obtaining metadata for what is airing on each channel and when
+ * The EPG (Electronic Program Guide) is responsible for obtaining metadata for what is airing on each
+ * channel and when
  */
 public class AsyncEpg {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Epg syncSDK;
 
@@ -81,11 +93,26 @@ public class AsyncEpg {
      * <p>Compute the best channel map, given device and lineup
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ComputeChannelMapResponse&gt; - The async response
+     * @return {@code CompletableFuture<ComputeChannelMapResponse>} - The async response
      */
     public CompletableFuture<ComputeChannelMapResponse> computeChannelMap(ComputeChannelMapRequest request) {
+        return computeChannelMap(request, Optional.empty());
+    }
+
+    /**
+     * Compute the best channel map
+     * 
+     * <p>Compute the best channel map, given device and lineup
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ComputeChannelMapResponse>} - The async response
+     */
+    public CompletableFuture<ComputeChannelMapResponse> computeChannelMap(ComputeChannelMapRequest request, Optional<Options> options) {
         AsyncRequestOperation<ComputeChannelMapRequest, ComputeChannelMapResponse> operation
-              = new ComputeChannelMap.Async(sdkConfiguration);
+              = new ComputeChannelMap.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -108,11 +135,26 @@ public class AsyncEpg {
      * <p>Get channels for a lineup within an EPG provider
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetChannelsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetChannelsResponse>} - The async response
      */
     public CompletableFuture<GetChannelsResponse> getChannels(GetChannelsRequest request) {
+        return getChannels(request, Optional.empty());
+    }
+
+    /**
+     * Get channels for a lineup
+     * 
+     * <p>Get channels for a lineup within an EPG provider
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetChannelsResponse>} - The async response
+     */
+    public CompletableFuture<GetChannelsResponse> getChannels(GetChannelsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetChannelsRequest, GetChannelsResponse> operation
-              = new GetChannels.Async(sdkConfiguration);
+              = new GetChannels.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -121,7 +163,8 @@ public class AsyncEpg {
     /**
      * Get all countries
      * 
-     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors, as specfied by the `flavor` attribute
+     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors,
+     * as specfied by the `flavor` attribute
      * 
      * @return The async call builder
      */
@@ -132,13 +175,75 @@ public class AsyncEpg {
     /**
      * Get all countries
      * 
-     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors, as specfied by the `flavor` attribute
+     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors,
+     * as specfied by the `flavor` attribute
      * 
-     * @return CompletableFuture&lt;GetCountriesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetCountriesResponse>} - The async response
      */
     public CompletableFuture<GetCountriesResponse> getCountriesDirect() {
+        return getCountries(Optional.empty());
+    }
+
+    /**
+     * Get all countries
+     * 
+     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors,
+     * as specfied by the `flavor` attribute
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCountriesResponse>} - The async response
+     */
+    public CompletableFuture<GetCountriesResponse> getCountries(Optional<Options> options) {
         AsyncRequestlessOperation<GetCountriesResponse> operation
-            = new GetCountries.Async(sdkConfiguration);
+            = new GetCountries.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get EPG Guide
+     * 
+     * <p>Fetch the global electronic program guide.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetEPGGuideRequestBuilder getEPGGuide() {
+        return new GetEPGGuideRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get EPG Guide
+     * 
+     * <p>Fetch the global electronic program guide.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<GetEPGGuideResponse>} - The async response
+     */
+    public CompletableFuture<GetEPGGuideResponse> getEPGGuideDirect() {
+        return getEPGGuide(Optional.empty());
+    }
+
+    /**
+     * Get EPG Guide
+     * 
+     * <p>Fetch the global electronic program guide.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetEPGGuideResponse>} - The async response
+     */
+    public CompletableFuture<GetEPGGuideResponse> getEPGGuide(Optional<Options> options) {
+        AsyncRequestlessOperation<GetEPGGuideResponse> operation
+            = new GetEPGGuide.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -160,11 +265,25 @@ public class AsyncEpg {
      * 
      * <p>Returns a list of all possible languages for EPG data.
      * 
-     * @return CompletableFuture&lt;GetAllLanguagesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAllLanguagesResponse>} - The async response
      */
     public CompletableFuture<GetAllLanguagesResponse> getAllLanguagesDirect() {
+        return getAllLanguages(Optional.empty());
+    }
+
+    /**
+     * Get all languages
+     * 
+     * <p>Returns a list of all possible languages for EPG data.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAllLanguagesResponse>} - The async response
+     */
+    public CompletableFuture<GetAllLanguagesResponse> getAllLanguages(Optional<Options> options) {
         AsyncRequestlessOperation<GetAllLanguagesResponse> operation
-            = new GetAllLanguages.Async(sdkConfiguration);
+            = new GetAllLanguages.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -187,18 +306,33 @@ public class AsyncEpg {
      * <p>Compute the best lineup, given lineup group and device
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetLineupResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetLineupResponse>} - The async response
      */
     public CompletableFuture<GetLineupResponse> getLineup(GetLineupRequest request) {
+        return getLineup(request, Optional.empty());
+    }
+
+    /**
+     * Compute the best lineup
+     * 
+     * <p>Compute the best lineup, given lineup group and device
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLineupResponse>} - The async response
+     */
+    public CompletableFuture<GetLineupResponse> getLineup(GetLineupRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetLineupRequest, GetLineupResponse> operation
-              = new GetLineup.Async(sdkConfiguration);
+              = new GetLineup.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Get the channels for mulitple lineups
+     * Get the channels for multiple lineups
      * 
      * <p>Get the channels across multiple lineups
      * 
@@ -209,16 +343,79 @@ public class AsyncEpg {
     }
 
     /**
-     * Get the channels for mulitple lineups
+     * Get the channels for multiple lineups
      * 
      * <p>Get the channels across multiple lineups
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetLineupChannelsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetLineupChannelsResponse>} - The async response
      */
     public CompletableFuture<GetLineupChannelsResponse> getLineupChannels(GetLineupChannelsRequest request) {
+        return getLineupChannels(request, Optional.empty());
+    }
+
+    /**
+     * Get the channels for multiple lineups
+     * 
+     * <p>Get the channels across multiple lineups
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLineupChannelsResponse>} - The async response
+     */
+    public CompletableFuture<GetLineupChannelsResponse> getLineupChannels(GetLineupChannelsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetLineupChannelsRequest, GetLineupChannelsResponse> operation
-              = new GetLineupChannels.Async(sdkConfiguration);
+              = new GetLineupChannels.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Search EPG
+     * 
+     * <p>Search the electronic program guide for upcoming airings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public SearchEPGRequestBuilder searchEPG() {
+        return new SearchEPGRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Search EPG
+     * 
+     * <p>Search the electronic program guide for upcoming airings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<SearchEPGResponse>} - The async response
+     */
+    public CompletableFuture<SearchEPGResponse> searchEPG(SearchEPGRequest request) {
+        return searchEPG(request, Optional.empty());
+    }
+
+    /**
+     * Search EPG
+     * 
+     * <p>Search the electronic program guide for upcoming airings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SearchEPGResponse>} - The async response
+     */
+    public CompletableFuture<SearchEPGResponse> searchEPG(SearchEPGRequest request, Optional<Options> options) {
+        AsyncRequestOperation<SearchEPGRequest, SearchEPGResponse> operation
+              = new SearchEPG.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -241,11 +438,26 @@ public class AsyncEpg {
      * <p>Returns a list of lineups for a given country, EPG provider and postal code
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetCountriesLineupsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetCountriesLineupsResponse>} - The async response
      */
     public CompletableFuture<GetCountriesLineupsResponse> getCountriesLineups(GetCountriesLineupsRequest request) {
+        return getCountriesLineups(request, Optional.empty());
+    }
+
+    /**
+     * Get lineups for a country via postal code
+     * 
+     * <p>Returns a list of lineups for a given country, EPG provider and postal code
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCountriesLineupsResponse>} - The async response
+     */
+    public CompletableFuture<GetCountriesLineupsResponse> getCountriesLineups(GetCountriesLineupsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetCountriesLineupsRequest, GetCountriesLineupsResponse> operation
-              = new GetCountriesLineups.Async(sdkConfiguration);
+              = new GetCountriesLineups.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -268,11 +480,26 @@ public class AsyncEpg {
      * <p>Get regions for a country within an EPG provider
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetCountryRegionsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetCountryRegionsResponse>} - The async response
      */
     public CompletableFuture<GetCountryRegionsResponse> getCountryRegions(GetCountryRegionsRequest request) {
+        return getCountryRegions(request, Optional.empty());
+    }
+
+    /**
+     * Get regions for a country
+     * 
+     * <p>Get regions for a country within an EPG provider
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCountryRegionsResponse>} - The async response
+     */
+    public CompletableFuture<GetCountryRegionsResponse> getCountryRegions(GetCountryRegionsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetCountryRegionsRequest, GetCountryRegionsResponse> operation
-              = new GetCountryRegions.Async(sdkConfiguration);
+              = new GetCountryRegions.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -295,11 +522,26 @@ public class AsyncEpg {
      * <p>Get lineups for a region within an EPG provider
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListLineupsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListLineupsResponse>} - The async response
      */
     public CompletableFuture<ListLineupsResponse> listLineups(ListLineupsRequest request) {
+        return listLineups(request, Optional.empty());
+    }
+
+    /**
+     * Get lineups for a region
+     * 
+     * <p>Get lineups for a region within an EPG provider
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListLineupsResponse>} - The async response
+     */
+    public CompletableFuture<ListLineupsResponse> listLineups(ListLineupsRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListLineupsRequest, ListLineupsResponse> operation
-              = new ListLineups.Async(sdkConfiguration);
+              = new ListLineups.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

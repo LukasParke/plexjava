@@ -1,5 +1,15 @@
 # Element
 
+The type of artwork element (e.g., art, poster, thumb)
+
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.Element;
+
+Element value = Element.THUMB;
+```
+
 
 ## Values
 

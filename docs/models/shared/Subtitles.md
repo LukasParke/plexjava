@@ -1,5 +1,13 @@
 # Subtitles
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.Subtitles;
+
+Subtitles value = Subtitles.AUTO;
+```
+
 
 ## Values
 

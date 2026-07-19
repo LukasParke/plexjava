@@ -3,27 +3,89 @@
  */
 package dev.plexapi.sdk.models.operations.async;
 
-import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
+import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
+import dev.plexapi.sdk.models.operations.DiscoverDevicesRequest;
+import dev.plexapi.sdk.models.operations.Protocol;
 import dev.plexapi.sdk.operations.DiscoverDevices;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
+import dev.plexapi.sdk.utils.Utils;
+import java.lang.String;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class DiscoverDevicesRequestBuilder {
 
+    private Optional<? extends Protocol> protocol = Optional.empty();
+    private Optional<String> grabberIdentifier = Optional.empty();
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public DiscoverDevicesRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
     }
+                
+    public DiscoverDevicesRequestBuilder protocol(Protocol protocol) {
+        Utils.checkNotNull(protocol, "protocol");
+        this.protocol = Optional.of(protocol);
+        return this;
+    }
 
-    public CompletableFuture<DiscoverDevicesResponse> call() throws Exception {
-        
-        AsyncRequestlessOperation<DiscoverDevicesResponse> operation
-            = new DiscoverDevices.Async(sdkConfiguration);
+    public DiscoverDevicesRequestBuilder protocol(Optional<? extends Protocol> protocol) {
+        Utils.checkNotNull(protocol, "protocol");
+        this.protocol = protocol;
+        return this;
+    }
+                
+    public DiscoverDevicesRequestBuilder grabberIdentifier(String grabberIdentifier) {
+        Utils.checkNotNull(grabberIdentifier, "grabberIdentifier");
+        this.grabberIdentifier = Optional.of(grabberIdentifier);
+        return this;
+    }
 
-        return operation.doRequest()
+    public DiscoverDevicesRequestBuilder grabberIdentifier(Optional<String> grabberIdentifier) {
+        Utils.checkNotNull(grabberIdentifier, "grabberIdentifier");
+        this.grabberIdentifier = grabberIdentifier;
+        return this;
+    }
+                
+    public DiscoverDevicesRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
+
+    public DiscoverDevicesRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+
+    private DiscoverDevicesRequest buildRequest() {
+
+        DiscoverDevicesRequest request = new DiscoverDevicesRequest(protocol,
+            grabberIdentifier);
+
+        return request;
+    }
+
+    public CompletableFuture<DiscoverDevicesResponse> call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
+        AsyncRequestOperation<DiscoverDevicesRequest, DiscoverDevicesResponse> operation
+              = new DiscoverDevices.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        DiscoverDevicesRequest request = buildRequest();
+
+        return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 }

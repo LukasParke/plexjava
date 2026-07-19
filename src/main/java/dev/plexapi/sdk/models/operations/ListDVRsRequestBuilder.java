@@ -3,25 +3,83 @@
  */
 package dev.plexapi.sdk.models.operations;
 
-import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
+import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.ListDVRs;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
+import dev.plexapi.sdk.utils.Utils;
+import java.lang.String;
+import java.util.Optional;
 
 public class ListDVRsRequestBuilder {
 
+    private Optional<String> uuid = Optional.empty();
+    private Optional<String> lineup = Optional.empty();
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public ListDVRsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
     }
+                
+    public ListDVRsRequestBuilder uuid(String uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = Optional.of(uuid);
+        return this;
+    }
 
-    public ListDVRsResponse call() throws Exception {
-        
-        RequestlessOperation<ListDVRsResponse> operation
-            = new ListDVRs.Sync(sdkConfiguration);
+    public ListDVRsRequestBuilder uuid(Optional<String> uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = uuid;
+        return this;
+    }
+                
+    public ListDVRsRequestBuilder lineup(String lineup) {
+        Utils.checkNotNull(lineup, "lineup");
+        this.lineup = Optional.of(lineup);
+        return this;
+    }
 
-        return operation.handleResponse(operation.doRequest());
+    public ListDVRsRequestBuilder lineup(Optional<String> lineup) {
+        Utils.checkNotNull(lineup, "lineup");
+        this.lineup = lineup;
+        return this;
+    }
+                
+    public ListDVRsRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
+
+    public ListDVRsRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+
+    private ListDVRsRequest buildRequest() {
+
+        ListDVRsRequest request = new ListDVRsRequest(uuid,
+            lineup);
+
+        return request;
+    }
+
+    public ListDVRsResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
+        RequestOperation<ListDVRsRequest, ListDVRsResponse> operation
+              = new ListDVRs.Sync(sdkConfiguration, options, _headers);
+        ListDVRsRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 }

@@ -7,11 +7,13 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 
 import dev.plexapi.sdk.models.operations.AddDeviceRequest;
+import dev.plexapi.sdk.models.operations.DiscoverDevicesRequest;
 import dev.plexapi.sdk.models.operations.GetAvailableGrabbersRequest;
 import dev.plexapi.sdk.models.operations.GetDeviceDetailsRequest;
 import dev.plexapi.sdk.models.operations.GetDevicesChannelsRequest;
 import dev.plexapi.sdk.models.operations.GetThumbRequest;
 import dev.plexapi.sdk.models.operations.ModifyDeviceRequest;
+import dev.plexapi.sdk.models.operations.Protocol;
 import dev.plexapi.sdk.models.operations.RemoveDeviceRequest;
 import dev.plexapi.sdk.models.operations.ScanRequest;
 import dev.plexapi.sdk.models.operations.SetChannelmapRequest;
@@ -56,45 +58,60 @@ import dev.plexapi.sdk.operations.Scan;
 import dev.plexapi.sdk.operations.SetChannelmap;
 import dev.plexapi.sdk.operations.SetDevicePreferences;
 import dev.plexapi.sdk.operations.StopScan;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.String;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Media grabbers provide ways for media to be obtained for a given protocol. The simplest ones are `stream` and `download`. More complex grabbers can have associated devices
+ * Media grabbers provide ways for media to be obtained for a given protocol. The simplest ones are
+ * `stream` and `download`. More complex grabbers can have associated devices
  * 
- * <p>Network tuners can present themselves on the network using the Simple Service Discovery Protocol and Plex Media Server will discover them. The following XML is an example of the data returned from SSDP. The `deviceType`, `serviceType`, and `serviceId` values must remain as they are in the example in order for PMS to properly discover the device. Other less-obvious fields are described in the parameters section below.
+ * <p>Network tuners can present themselves on the network using the Simple Service Discovery Protocol and
+ * Plex Media Server will discover them. The following XML is an example of the data returned from
+ * SSDP. The `deviceType`, `serviceType`, and `serviceId` values must remain as they are in the example
+ * in order for PMS to properly discover the device.
+ * 
+ * <p>Other less-obvious fields are described in the parameters section below.
  * 
  * <p>Example SSDP output
  * ```
  * &lt;root xmlns="urn:schemas-upnp-org:device-1-0"&gt;
- *     &lt;specVersion&gt;
- *         &lt;major&gt;1&lt;/major&gt;
- *         &lt;minor&gt;0&lt;/minor&gt;
- *     &lt;/specVersion&gt;
- *     &lt;device&gt;
- *         &lt;deviceType&gt;urn:plex-tv:device:Media:1&lt;/deviceType&gt;
- *         &lt;friendlyName&gt;Turing Hopper 3000&lt;/friendlyName&gt;
- *         &lt;manufacturer&gt;Plex, Inc.&lt;/manufacturer&gt;
- *         &lt;manufacturerURL&gt;https://plex.tv/&lt;/manufacturerURL&gt;
- *         &lt;modelDescription&gt;Turing Hopper 3000 Media Grabber&lt;/modelDescription&gt;
- *         &lt;modelName&gt;Plex Media Grabber&lt;/modelName&gt;
- *         &lt;modelNumber&gt;1&lt;/modelNumber&gt;
- *         &lt;modelURL&gt;https://plex.tv&lt;/modelURL&gt;
- *         &lt;UDN&gt;uuid:42fde8e4-93b6-41e5-8a63-12d848655811&lt;/UDN&gt;
- *         &lt;serviceList&gt;
- *             &lt;service&gt;
- *                 &lt;URLBase&gt;http://10.0.0.5:8088&lt;/URLBase&gt;
- *                 &lt;serviceType&gt;urn:plex-tv:service:MediaGrabber:1&lt;/serviceType&gt;
- *                 &lt;serviceId&gt;urn:plex-tv:serviceId:MediaGrabber&lt;/serviceId&gt;
- *             &lt;/service&gt;
- *         &lt;/serviceList&gt;
- *     &lt;/device&gt;
+ * &lt;specVersion&gt;
+ * &lt;major&gt;1&lt;/major&gt;
+ * &lt;minor&gt;0&lt;/minor&gt;
+ * &lt;/specVersion&gt;
+ * &lt;device&gt;
+ * &lt;deviceType&gt;urn:plex-tv:device:Media:1&lt;/deviceType&gt;
+ * &lt;friendlyName&gt;Turing Hopper 3000&lt;/friendlyName&gt;
+ * &lt;manufacturer&gt;Plex, Inc.&lt;/manufacturer&gt;
+ * &lt;manufacturerURL&gt;https://plex.tv/&lt;/manufacturerURL&gt;
+ * &lt;modelDescription&gt;Turing Hopper 3000 Media Grabber&lt;/modelDescription&gt;
+ * &lt;modelName&gt;Plex Media Grabber&lt;/modelName&gt;
+ * &lt;modelNumber&gt;1&lt;/modelNumber&gt;
+ * &lt;modelURL&gt;https://plex.tv&lt;/modelURL&gt;
+ * &lt;UDN&gt;uuid:42fde8e4-93b6-41e5-8a63-12d848655811&lt;/UDN&gt;
+ * &lt;serviceList&gt;
+ * &lt;service&gt;
+ * &lt;URLBase&gt;http://10.0.0.5:8088&lt;/URLBase&gt;
+ * &lt;serviceType&gt;urn:plex-tv:service:MediaGrabber:1&lt;/serviceType&gt;
+ * &lt;serviceId&gt;urn:plex-tv:serviceId:MediaGrabber&lt;/serviceId&gt;
+ * &lt;/service&gt;
+ * &lt;/serviceList&gt;
+ * &lt;/device&gt;
  * &lt;/root&gt;
  * ```
  * 
- * <p>  - UDN: (string) A UUID for the device. This should be unique across models of a device at minimum.
- *   - URLBase: (string) The base HTTP URL for the device from which all of the other endpoints are hosted.
+ * <p>- UDN: (string) A UUID for the device. This should be unique across models of a device at minimum.
+ * - URLBase: (string) The base HTTP URL for the device from which all of the other endpoints are
+ * hosted.
+ * 
+ * <p>Note: This tag covers media grabber and network tuner devices only. For client device discovery, use
+ * `/clients` or `/resources`.
  */
 public class AsyncDevices {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Devices syncSDK;
 
@@ -130,11 +147,26 @@ public class AsyncDevices {
      * <p>Get available grabbers visible to the server
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetAvailableGrabbersResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAvailableGrabbersResponse>} - The async response
      */
     public CompletableFuture<GetAvailableGrabbersResponse> getAvailableGrabbers(GetAvailableGrabbersRequest request) {
+        return getAvailableGrabbers(request, Optional.empty());
+    }
+
+    /**
+     * Get available grabbers
+     * 
+     * <p>Get available grabbers visible to the server
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAvailableGrabbersResponse>} - The async response
+     */
+    public CompletableFuture<GetAvailableGrabbersResponse> getAvailableGrabbers(GetAvailableGrabbersRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetAvailableGrabbersRequest, GetAvailableGrabbersResponse> operation
-              = new GetAvailableGrabbers.Async(sdkConfiguration);
+              = new GetAvailableGrabbers.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -144,6 +176,8 @@ public class AsyncDevices {
      * Get all devices
      * 
      * <p>Get the list of all devices present
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -156,11 +190,29 @@ public class AsyncDevices {
      * 
      * <p>Get the list of all devices present
      * 
-     * @return CompletableFuture&lt;ListDevicesResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<ListDevicesResponse>} - The async response
      */
     public CompletableFuture<ListDevicesResponse> listDevicesDirect() {
+        return listDevices(Optional.empty());
+    }
+
+    /**
+     * Get all devices
+     * 
+     * <p>Get the list of all devices present
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<ListDevicesResponse>} - The async response
+     */
+    public CompletableFuture<ListDevicesResponse> listDevices(Optional<Options> options) {
         AsyncRequestlessOperation<ListDevicesResponse> operation
-            = new ListDevices.Async(sdkConfiguration);
+            = new ListDevices.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -169,7 +221,10 @@ public class AsyncDevices {
     /**
      * Add a device
      * 
-     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the correct grabber.
+     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the
+     * correct grabber.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -180,14 +235,35 @@ public class AsyncDevices {
     /**
      * Add a device
      * 
-     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the correct grabber.
+     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the
+     * correct grabber.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddDeviceResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddDeviceResponse>} - The async response
      */
     public CompletableFuture<AddDeviceResponse> addDevice(AddDeviceRequest request) {
+        return addDevice(request, Optional.empty());
+    }
+
+    /**
+     * Add a device
+     * 
+     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the
+     * correct grabber.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddDeviceResponse>} - The async response
+     */
+    public CompletableFuture<AddDeviceResponse> addDevice(AddDeviceRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddDeviceRequest, AddDeviceResponse> operation
-              = new AddDevice.Async(sdkConfiguration);
+              = new AddDevice.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -197,6 +273,8 @@ public class AsyncDevices {
      * Tell grabbers to discover devices
      * 
      * <p>Tell grabbers to discover devices
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -209,12 +287,40 @@ public class AsyncDevices {
      * 
      * <p>Tell grabbers to discover devices
      * 
-     * @return CompletableFuture&lt;DiscoverDevicesResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<DiscoverDevicesResponse>} - The async response
      */
     public CompletableFuture<DiscoverDevicesResponse> discoverDevicesDirect() {
-        AsyncRequestlessOperation<DiscoverDevicesResponse> operation
-            = new DiscoverDevices.Async(sdkConfiguration);
-        return operation.doRequest()
+        return discoverDevices(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Tell grabbers to discover devices
+     * 
+     * <p>Tell grabbers to discover devices
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param protocol Protocol to filter discovery.
+     * @param grabberIdentifier Targeted grabber identifier.
+     * @param options additional options
+     * @return {@code CompletableFuture<DiscoverDevicesResponse>} - The async response
+     */
+    public CompletableFuture<DiscoverDevicesResponse> discoverDevices(
+            Optional<? extends Protocol> protocol, Optional<String> grabberIdentifier,
+            Optional<Options> options) {
+        DiscoverDevicesRequest request =
+            DiscoverDevicesRequest
+                .builder()
+                .protocol(protocol)
+                .grabberIdentifier(grabberIdentifier)
+                .build();
+        AsyncRequestOperation<DiscoverDevicesRequest, DiscoverDevicesResponse> operation
+              = new DiscoverDevices.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
@@ -223,6 +329,8 @@ public class AsyncDevices {
      * Remove a device
      * 
      * <p>Remove a devices by its id along with its channel mappings
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -235,12 +343,31 @@ public class AsyncDevices {
      * 
      * <p>Remove a devices by its id along with its channel mappings
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;RemoveDeviceResponse&gt; - The async response
+     * @return {@code CompletableFuture<RemoveDeviceResponse>} - The async response
      */
     public CompletableFuture<RemoveDeviceResponse> removeDevice(RemoveDeviceRequest request) {
+        return removeDevice(request, Optional.empty());
+    }
+
+    /**
+     * Remove a device
+     * 
+     * <p>Remove a devices by its id along with its channel mappings
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RemoveDeviceResponse>} - The async response
+     */
+    public CompletableFuture<RemoveDeviceResponse> removeDevice(RemoveDeviceRequest request, Optional<Options> options) {
         AsyncRequestOperation<RemoveDeviceRequest, RemoveDeviceResponse> operation
-              = new RemoveDevice.Async(sdkConfiguration);
+              = new RemoveDevice.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -250,6 +377,8 @@ public class AsyncDevices {
      * Get device details
      * 
      * <p>Get a device's details by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -262,12 +391,31 @@ public class AsyncDevices {
      * 
      * <p>Get a device's details by its id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetDeviceDetailsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetDeviceDetailsResponse>} - The async response
      */
     public CompletableFuture<GetDeviceDetailsResponse> getDeviceDetails(GetDeviceDetailsRequest request) {
+        return getDeviceDetails(request, Optional.empty());
+    }
+
+    /**
+     * Get device details
+     * 
+     * <p>Get a device's details by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDeviceDetailsResponse>} - The async response
+     */
+    public CompletableFuture<GetDeviceDetailsResponse> getDeviceDetails(GetDeviceDetailsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetDeviceDetailsRequest, GetDeviceDetailsResponse> operation
-              = new GetDeviceDetails.Async(sdkConfiguration);
+              = new GetDeviceDetails.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -277,6 +425,8 @@ public class AsyncDevices {
      * Enable or disable a device
      * 
      * <p>Enable or disable a device by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -289,12 +439,31 @@ public class AsyncDevices {
      * 
      * <p>Enable or disable a device by its id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ModifyDeviceResponse&gt; - The async response
+     * @return {@code CompletableFuture<ModifyDeviceResponse>} - The async response
      */
     public CompletableFuture<ModifyDeviceResponse> modifyDevice(ModifyDeviceRequest request) {
+        return modifyDevice(request, Optional.empty());
+    }
+
+    /**
+     * Enable or disable a device
+     * 
+     * <p>Enable or disable a device by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ModifyDeviceResponse>} - The async response
+     */
+    public CompletableFuture<ModifyDeviceResponse> modifyDevice(ModifyDeviceRequest request, Optional<Options> options) {
         AsyncRequestOperation<ModifyDeviceRequest, ModifyDeviceResponse> operation
-              = new ModifyDevice.Async(sdkConfiguration);
+              = new ModifyDevice.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -317,11 +486,26 @@ public class AsyncDevices {
      * <p>Set a device's channel mapping
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetChannelmapResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetChannelmapResponse>} - The async response
      */
     public CompletableFuture<SetChannelmapResponse> setChannelmap(SetChannelmapRequest request) {
+        return setChannelmap(request, Optional.empty());
+    }
+
+    /**
+     * Set a device's channel mapping
+     * 
+     * <p>Set a device's channel mapping
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetChannelmapResponse>} - The async response
+     */
+    public CompletableFuture<SetChannelmapResponse> setChannelmap(SetChannelmapRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetChannelmapRequest, SetChannelmapResponse> operation
-              = new SetChannelmap.Async(sdkConfiguration);
+              = new SetChannelmap.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -331,6 +515,8 @@ public class AsyncDevices {
      * Get a device's channels
      * 
      * <p>Get a device's channels by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -343,12 +529,31 @@ public class AsyncDevices {
      * 
      * <p>Get a device's channels by its id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetDevicesChannelsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetDevicesChannelsResponse>} - The async response
      */
     public CompletableFuture<GetDevicesChannelsResponse> getDevicesChannels(GetDevicesChannelsRequest request) {
+        return getDevicesChannels(request, Optional.empty());
+    }
+
+    /**
+     * Get a device's channels
+     * 
+     * <p>Get a device's channels by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDevicesChannelsResponse>} - The async response
+     */
+    public CompletableFuture<GetDevicesChannelsResponse> getDevicesChannels(GetDevicesChannelsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetDevicesChannelsRequest, GetDevicesChannelsResponse> operation
-              = new GetDevicesChannels.Async(sdkConfiguration);
+              = new GetDevicesChannels.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -358,6 +563,8 @@ public class AsyncDevices {
      * Set device preferences
      * 
      * <p>Set device preferences by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -370,12 +577,31 @@ public class AsyncDevices {
      * 
      * <p>Set device preferences by its id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetDevicePreferencesResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetDevicePreferencesResponse>} - The async response
      */
     public CompletableFuture<SetDevicePreferencesResponse> setDevicePreferences(SetDevicePreferencesRequest request) {
+        return setDevicePreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set device preferences
+     * 
+     * <p>Set device preferences by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetDevicePreferencesResponse>} - The async response
+     */
+    public CompletableFuture<SetDevicePreferencesResponse> setDevicePreferences(SetDevicePreferencesRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetDevicePreferencesRequest, SetDevicePreferencesResponse> operation
-              = new SetDevicePreferences.Async(sdkConfiguration);
+              = new SetDevicePreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -398,11 +624,26 @@ public class AsyncDevices {
      * <p>Tell a device to stop scanning for channels
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;StopScanResponse&gt; - The async response
+     * @return {@code CompletableFuture<StopScanResponse>} - The async response
      */
     public CompletableFuture<StopScanResponse> stopScan(StopScanRequest request) {
+        return stopScan(request, Optional.empty());
+    }
+
+    /**
+     * Tell a device to stop scanning for channels
+     * 
+     * <p>Tell a device to stop scanning for channels
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<StopScanResponse>} - The async response
+     */
+    public CompletableFuture<StopScanResponse> stopScan(StopScanRequest request, Optional<Options> options) {
         AsyncRequestOperation<StopScanRequest, StopScanResponse> operation
-              = new StopScan.Async(sdkConfiguration);
+              = new StopScan.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -425,11 +666,26 @@ public class AsyncDevices {
      * <p>Tell a device to scan for channels
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ScanResponse&gt; - The async response
+     * @return {@code CompletableFuture<ScanResponse>} - The async response
      */
     public CompletableFuture<ScanResponse> scan(ScanRequest request) {
+        return scan(request, Optional.empty());
+    }
+
+    /**
+     * Tell a device to scan for channels
+     * 
+     * <p>Tell a device to scan for channels
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ScanResponse>} - The async response
+     */
+    public CompletableFuture<ScanResponse> scan(ScanRequest request, Optional<Options> options) {
         AsyncRequestOperation<ScanRequest, ScanResponse> operation
-              = new Scan.Async(sdkConfiguration);
+              = new Scan.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -439,6 +695,8 @@ public class AsyncDevices {
      * Get device thumb
      * 
      * <p>Get a device's thumb for display to the user
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -451,12 +709,31 @@ public class AsyncDevices {
      * 
      * <p>Get a device's thumb for display to the user
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetThumbResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetThumbResponse>} - The async response
      */
     public CompletableFuture<GetThumbResponse> getThumb(GetThumbRequest request) {
+        return getThumb(request, Optional.empty());
+    }
+
+    /**
+     * Get device thumb
+     * 
+     * <p>Get a device's thumb for display to the user
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetThumbResponse>} - The async response
+     */
+    public CompletableFuture<GetThumbResponse> getThumb(GetThumbRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetThumbRequest, GetThumbResponse> operation
-              = new GetThumb.Async(sdkConfiguration);
+              = new GetThumb.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

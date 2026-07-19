@@ -34,7 +34,7 @@ public class MovePlayQueueItemResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * OK
+     * Successfully updated move an item in a play queue
      */
     private Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata;
 
@@ -87,7 +87,7 @@ public class MovePlayQueueItemResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully updated move an item in a play queue
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -128,7 +128,7 @@ public class MovePlayQueueItemResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully updated move an item in a play queue
      */
     public MovePlayQueueItemResponse withMediaContainerWithPlaylistMetadata(MediaContainerWithPlaylistMetadata mediaContainerWithPlaylistMetadata) {
         Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
@@ -138,7 +138,7 @@ public class MovePlayQueueItemResponse implements Response {
 
 
     /**
-     * OK
+     * Successfully updated move an item in a play queue
      */
     public MovePlayQueueItemResponse withMediaContainerWithPlaylistMetadata(Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata) {
         Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
@@ -225,7 +225,7 @@ public class MovePlayQueueItemResponse implements Response {
 
 
         /**
-         * OK
+         * Successfully updated move an item in a play queue
          */
         public Builder mediaContainerWithPlaylistMetadata(MediaContainerWithPlaylistMetadata mediaContainerWithPlaylistMetadata) {
             Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
@@ -234,7 +234,7 @@ public class MovePlayQueueItemResponse implements Response {
         }
 
         /**
-         * OK
+         * Successfully updated move an item in a play queue
          */
         public Builder mediaContainerWithPlaylistMetadata(Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata) {
             Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");

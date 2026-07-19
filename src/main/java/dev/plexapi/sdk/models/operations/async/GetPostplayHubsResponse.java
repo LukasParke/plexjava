@@ -36,7 +36,7 @@ public class GetPostplayHubsResponse implements AsyncResponse {
     private HttpResponse<Blob> rawResponse;
 
     /**
-     * OK
+     * Successfully retrieved get postplay hubs
      */
     private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs;
 
@@ -97,7 +97,7 @@ public class GetPostplayHubsResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully retrieved get postplay hubs
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -143,7 +143,7 @@ public class GetPostplayHubsResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully retrieved get postplay hubs
      */
     public GetPostplayHubsResponse withMediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
         Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -153,7 +153,7 @@ public class GetPostplayHubsResponse implements AsyncResponse {
 
 
     /**
-     * OK
+     * Successfully retrieved get postplay hubs
      */
     public GetPostplayHubsResponse withMediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
         Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -250,7 +250,7 @@ public class GetPostplayHubsResponse implements AsyncResponse {
 
 
         /**
-         * OK
+         * Successfully retrieved get postplay hubs
          */
         public Builder mediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
             Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
@@ -259,7 +259,7 @@ public class GetPostplayHubsResponse implements AsyncResponse {
         }
 
         /**
-         * OK
+         * Successfully retrieved get postplay hubs
          */
         public Builder mediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
             Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");

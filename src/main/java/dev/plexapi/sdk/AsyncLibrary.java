@@ -3,15 +3,15 @@
  */
 package dev.plexapi.sdk;
 
-import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
+import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
 import dev.plexapi.sdk.models.operations.AddExtrasRequest;
 import dev.plexapi.sdk.models.operations.AddSectionRequest;
-import dev.plexapi.sdk.models.operations.AddSubtitlesRequest;
 import dev.plexapi.sdk.models.operations.AnalyzeMetadataRequest;
 import dev.plexapi.sdk.models.operations.AutocompleteRequest;
 import dev.plexapi.sdk.models.operations.CancelRefreshRequest;
+import dev.plexapi.sdk.models.operations.ComputeSonicPathRequest;
 import dev.plexapi.sdk.models.operations.CreateMarkerRequest;
 import dev.plexapi.sdk.models.operations.DeleteCollectionRequest;
 import dev.plexapi.sdk.models.operations.DeleteIndexesRequest;
@@ -25,14 +25,22 @@ import dev.plexapi.sdk.models.operations.DetectAdsRequest;
 import dev.plexapi.sdk.models.operations.DetectCreditsRequest;
 import dev.plexapi.sdk.models.operations.DetectIntrosRequest;
 import dev.plexapi.sdk.models.operations.DetectVoiceActivityRequest;
+import dev.plexapi.sdk.models.operations.EditLibrarySectionRequest;
 import dev.plexapi.sdk.models.operations.EditMarkerRequest;
 import dev.plexapi.sdk.models.operations.EditMetadataItemRequest;
 import dev.plexapi.sdk.models.operations.EditSectionRequest;
+import dev.plexapi.sdk.models.operations.EmptyTrashPostRequest;
+import dev.plexapi.sdk.models.operations.EmptyTrashPutRequest;
 import dev.plexapi.sdk.models.operations.EmptyTrashRequest;
 import dev.plexapi.sdk.models.operations.GenerateThumbsRequest;
 import dev.plexapi.sdk.models.operations.GetAllItemLeavesRequest;
 import dev.plexapi.sdk.models.operations.GetAugmentationStatusRequest;
 import dev.plexapi.sdk.models.operations.GetAvailableSortsRequest;
+import dev.plexapi.sdk.models.operations.GetByContentRatingRequest;
+import dev.plexapi.sdk.models.operations.GetByDecadeRequest;
+import dev.plexapi.sdk.models.operations.GetByFolderRequest;
+import dev.plexapi.sdk.models.operations.GetByResolutionRequest;
+import dev.plexapi.sdk.models.operations.GetByYearRequest;
 import dev.plexapi.sdk.models.operations.GetChapterImageRequest;
 import dev.plexapi.sdk.models.operations.GetCollectionsRequest;
 import dev.plexapi.sdk.models.operations.GetCommonRequest;
@@ -45,31 +53,65 @@ import dev.plexapi.sdk.models.operations.GetItemTreeRequest;
 import dev.plexapi.sdk.models.operations.GetLibraryDetailsRequest;
 import dev.plexapi.sdk.models.operations.GetLibraryItemsRequest;
 import dev.plexapi.sdk.models.operations.GetLibraryMatchesRequest;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionHubsRequest;
 import dev.plexapi.sdk.models.operations.GetMediaPartRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandchildrenRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandparentRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataOnDeckRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataParentRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataReviewsRequest;
+import dev.plexapi.sdk.models.operations.GetNearestMetadataRequest;
+import dev.plexapi.sdk.models.operations.GetNewestForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetOnDeckForSectionRequest;
 import dev.plexapi.sdk.models.operations.GetPartIndexRequest;
 import dev.plexapi.sdk.models.operations.GetPersonRequest;
 import dev.plexapi.sdk.models.operations.GetRandomArtworkRequest;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedGlobalRequest;
 import dev.plexapi.sdk.models.operations.GetRelatedItemsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionAgentsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionArtistsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionClipsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionEditRequest;
+import dev.plexapi.sdk.models.operations.GetSectionEpisodesRequest;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersRequest;
 import dev.plexapi.sdk.models.operations.GetSectionImageRequest;
+import dev.plexapi.sdk.models.operations.GetSectionLabelsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionMoviesRequest;
+import dev.plexapi.sdk.models.operations.GetSectionPhotosRequest;
+import dev.plexapi.sdk.models.operations.GetSectionPlaylistsRequest;
 import dev.plexapi.sdk.models.operations.GetSectionPreferencesRequest;
+import dev.plexapi.sdk.models.operations.GetSectionSettingsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionShowsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionTagsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionTimelineRequest;
 import dev.plexapi.sdk.models.operations.GetSectionsPrefsRequest;
 import dev.plexapi.sdk.models.operations.GetStreamLevelsRequest;
 import dev.plexapi.sdk.models.operations.GetStreamLoudnessRequest;
 import dev.plexapi.sdk.models.operations.GetStreamRequest;
+import dev.plexapi.sdk.models.operations.GetSubtitlesRequest;
 import dev.plexapi.sdk.models.operations.GetTagsRequest;
+import dev.plexapi.sdk.models.operations.GetUnwatchedForSectionRequest;
 import dev.plexapi.sdk.models.operations.IngestTransientItemRequest;
 import dev.plexapi.sdk.models.operations.ListMatchesRequest;
 import dev.plexapi.sdk.models.operations.ListPersonMediaRequest;
 import dev.plexapi.sdk.models.operations.ListSimilarRequest;
-import dev.plexapi.sdk.models.operations.ListSonicallySimilarRequest;
 import dev.plexapi.sdk.models.operations.ListTopUsersRequest;
 import dev.plexapi.sdk.models.operations.MatchItemRequest;
+import dev.plexapi.sdk.models.operations.MatchSectionItemsRequest;
 import dev.plexapi.sdk.models.operations.MergeItemsRequest;
+import dev.plexapi.sdk.models.operations.MoveSectionRequest;
 import dev.plexapi.sdk.models.operations.OptimizeDatabaseRequest;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryPostRequest;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryRequest;
+import dev.plexapi.sdk.models.operations.OptimizeSectionPostRequest;
+import dev.plexapi.sdk.models.operations.OptimizeSectionRequest;
 import dev.plexapi.sdk.models.operations.RefreshItemsMetadataRequest;
+import dev.plexapi.sdk.models.operations.RefreshSectionPostRequest;
 import dev.plexapi.sdk.models.operations.RefreshSectionRequest;
 import dev.plexapi.sdk.models.operations.RefreshSectionsMetadataRequest;
+import dev.plexapi.sdk.models.operations.SearchSectionRequest;
 import dev.plexapi.sdk.models.operations.SetItemArtworkRequest;
 import dev.plexapi.sdk.models.operations.SetItemPreferencesRequest;
 import dev.plexapi.sdk.models.operations.SetSectionPreferencesRequest;
@@ -79,14 +121,15 @@ import dev.plexapi.sdk.models.operations.SplitItemRequest;
 import dev.plexapi.sdk.models.operations.StartAnalysisRequest;
 import dev.plexapi.sdk.models.operations.StartBifGenerationRequest;
 import dev.plexapi.sdk.models.operations.UnmatchRequest;
+import dev.plexapi.sdk.models.operations.UnmatchSectionItemsRequest;
 import dev.plexapi.sdk.models.operations.UpdateItemArtworkRequest;
 import dev.plexapi.sdk.models.operations.UpdateItemsRequest;
+import dev.plexapi.sdk.models.operations.UploadArtRequest;
+import dev.plexapi.sdk.models.operations.UploadPosterRequest;
 import dev.plexapi.sdk.models.operations.async.AddExtrasRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.AddExtrasResponse;
 import dev.plexapi.sdk.models.operations.async.AddSectionRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.AddSectionResponse;
-import dev.plexapi.sdk.models.operations.async.AddSubtitlesRequestBuilder;
-import dev.plexapi.sdk.models.operations.async.AddSubtitlesResponse;
 import dev.plexapi.sdk.models.operations.async.AnalyzeMetadataRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.AnalyzeMetadataResponse;
 import dev.plexapi.sdk.models.operations.async.AutocompleteRequestBuilder;
@@ -95,6 +138,8 @@ import dev.plexapi.sdk.models.operations.async.CancelRefreshRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.CancelRefreshResponse;
 import dev.plexapi.sdk.models.operations.async.CleanBundlesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.CleanBundlesResponse;
+import dev.plexapi.sdk.models.operations.async.ComputeSonicPathRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.ComputeSonicPathResponse;
 import dev.plexapi.sdk.models.operations.async.CreateMarkerRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.CreateMarkerResponse;
 import dev.plexapi.sdk.models.operations.async.DeleteCachesRequestBuilder;
@@ -123,12 +168,18 @@ import dev.plexapi.sdk.models.operations.async.DetectIntrosRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.DetectIntrosResponse;
 import dev.plexapi.sdk.models.operations.async.DetectVoiceActivityRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.DetectVoiceActivityResponse;
+import dev.plexapi.sdk.models.operations.async.EditLibrarySectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.EditLibrarySectionResponse;
 import dev.plexapi.sdk.models.operations.async.EditMarkerRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.EditMarkerResponse;
 import dev.plexapi.sdk.models.operations.async.EditMetadataItemRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.EditMetadataItemResponse;
 import dev.plexapi.sdk.models.operations.async.EditSectionRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.EditSectionResponse;
+import dev.plexapi.sdk.models.operations.async.EmptyTrashPostRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.EmptyTrashPostResponse;
+import dev.plexapi.sdk.models.operations.async.EmptyTrashPutRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.EmptyTrashPutResponse;
 import dev.plexapi.sdk.models.operations.async.EmptyTrashRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.EmptyTrashResponse;
 import dev.plexapi.sdk.models.operations.async.GenerateThumbsRequestBuilder;
@@ -139,6 +190,16 @@ import dev.plexapi.sdk.models.operations.async.GetAugmentationStatusRequestBuild
 import dev.plexapi.sdk.models.operations.async.GetAugmentationStatusResponse;
 import dev.plexapi.sdk.models.operations.async.GetAvailableSortsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetAvailableSortsResponse;
+import dev.plexapi.sdk.models.operations.async.GetByContentRatingRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetByContentRatingResponse;
+import dev.plexapi.sdk.models.operations.async.GetByDecadeRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetByDecadeResponse;
+import dev.plexapi.sdk.models.operations.async.GetByFolderRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetByFolderResponse;
+import dev.plexapi.sdk.models.operations.async.GetByResolutionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetByResolutionResponse;
+import dev.plexapi.sdk.models.operations.async.GetByYearRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetByYearResponse;
 import dev.plexapi.sdk.models.operations.async.GetChapterImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetChapterImageResponse;
 import dev.plexapi.sdk.models.operations.async.GetCollectionsRequestBuilder;
@@ -163,22 +224,76 @@ import dev.plexapi.sdk.models.operations.async.GetLibraryItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetLibraryItemsResponse;
 import dev.plexapi.sdk.models.operations.async.GetLibraryMatchesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetLibraryMatchesResponse;
+import dev.plexapi.sdk.models.operations.async.GetLibrarySectionHubsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetLibrarySectionHubsResponse;
+import dev.plexapi.sdk.models.operations.async.GetLibrarySectionsFallbackRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetLibrarySectionsFallbackResponse;
 import dev.plexapi.sdk.models.operations.async.GetMediaPartRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetMediaPartResponse;
+import dev.plexapi.sdk.models.operations.async.GetMetadataChildrenRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMetadataChildrenResponse;
+import dev.plexapi.sdk.models.operations.async.GetMetadataGrandchildrenRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMetadataGrandchildrenResponse;
+import dev.plexapi.sdk.models.operations.async.GetMetadataGrandparentRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMetadataGrandparentResponse;
+import dev.plexapi.sdk.models.operations.async.GetMetadataOnDeckRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMetadataOnDeckResponse;
+import dev.plexapi.sdk.models.operations.async.GetMetadataParentRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMetadataParentResponse;
+import dev.plexapi.sdk.models.operations.async.GetMetadataReviewsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMetadataReviewsResponse;
+import dev.plexapi.sdk.models.operations.async.GetNearestMetadataRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetNearestMetadataResponse;
+import dev.plexapi.sdk.models.operations.async.GetNewestForSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetNewestForSectionResponse;
+import dev.plexapi.sdk.models.operations.async.GetOnDeckForSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetOnDeckForSectionResponse;
 import dev.plexapi.sdk.models.operations.async.GetPartIndexRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetPartIndexResponse;
 import dev.plexapi.sdk.models.operations.async.GetPersonRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetPersonResponse;
 import dev.plexapi.sdk.models.operations.async.GetRandomArtworkRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetRandomArtworkResponse;
+import dev.plexapi.sdk.models.operations.async.GetRecentlyAddedForSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetRecentlyAddedForSectionResponse;
+import dev.plexapi.sdk.models.operations.async.GetRecentlyAddedGlobalRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetRecentlyAddedGlobalResponse;
 import dev.plexapi.sdk.models.operations.async.GetRelatedItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetRelatedItemsResponse;
+import dev.plexapi.sdk.models.operations.async.GetRootLibraryRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetRootLibraryResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionAgentsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionAgentsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionArtistsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionArtistsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionClipsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionClipsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionEditRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionEditResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionEpisodesRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionEpisodesResponse;
 import dev.plexapi.sdk.models.operations.async.GetSectionFiltersRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSectionFiltersResponse;
 import dev.plexapi.sdk.models.operations.async.GetSectionImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSectionImageResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionLabelsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionLabelsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionMoviesRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionMoviesResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionPhotosRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionPhotosResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionPlaylistsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionPlaylistsResponse;
 import dev.plexapi.sdk.models.operations.async.GetSectionPreferencesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSectionPreferencesResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionSettingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionSettingsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionShowsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionShowsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionTagsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionTagsResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionTimelineRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionTimelineResponse;
 import dev.plexapi.sdk.models.operations.async.GetSectionsPrefsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSectionsPrefsResponse;
 import dev.plexapi.sdk.models.operations.async.GetSectionsRequestBuilder;
@@ -189,8 +304,12 @@ import dev.plexapi.sdk.models.operations.async.GetStreamLoudnessRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetStreamLoudnessResponse;
 import dev.plexapi.sdk.models.operations.async.GetStreamRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetStreamResponse;
+import dev.plexapi.sdk.models.operations.async.GetSubtitlesRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSubtitlesResponse;
 import dev.plexapi.sdk.models.operations.async.GetTagsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetTagsResponse;
+import dev.plexapi.sdk.models.operations.async.GetUnwatchedForSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetUnwatchedForSectionResponse;
 import dev.plexapi.sdk.models.operations.async.IngestTransientItemRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.IngestTransientItemResponse;
 import dev.plexapi.sdk.models.operations.async.ListMatchesRequestBuilder;
@@ -199,22 +318,36 @@ import dev.plexapi.sdk.models.operations.async.ListPersonMediaRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ListPersonMediaResponse;
 import dev.plexapi.sdk.models.operations.async.ListSimilarRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ListSimilarResponse;
-import dev.plexapi.sdk.models.operations.async.ListSonicallySimilarRequestBuilder;
-import dev.plexapi.sdk.models.operations.async.ListSonicallySimilarResponse;
 import dev.plexapi.sdk.models.operations.async.ListTopUsersRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ListTopUsersResponse;
 import dev.plexapi.sdk.models.operations.async.MatchItemRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.MatchItemResponse;
+import dev.plexapi.sdk.models.operations.async.MatchSectionItemsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.MatchSectionItemsResponse;
 import dev.plexapi.sdk.models.operations.async.MergeItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.MergeItemsResponse;
+import dev.plexapi.sdk.models.operations.async.MoveSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.MoveSectionResponse;
 import dev.plexapi.sdk.models.operations.async.OptimizeDatabaseRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.OptimizeDatabaseResponse;
+import dev.plexapi.sdk.models.operations.async.OptimizeLibraryPostRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.OptimizeLibraryPostResponse;
+import dev.plexapi.sdk.models.operations.async.OptimizeLibraryRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.OptimizeLibraryResponse;
+import dev.plexapi.sdk.models.operations.async.OptimizeSectionPostRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.OptimizeSectionPostResponse;
+import dev.plexapi.sdk.models.operations.async.OptimizeSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.OptimizeSectionResponse;
 import dev.plexapi.sdk.models.operations.async.RefreshItemsMetadataRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.RefreshItemsMetadataResponse;
+import dev.plexapi.sdk.models.operations.async.RefreshSectionPostRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.RefreshSectionPostResponse;
 import dev.plexapi.sdk.models.operations.async.RefreshSectionRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.RefreshSectionResponse;
 import dev.plexapi.sdk.models.operations.async.RefreshSectionsMetadataRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.RefreshSectionsMetadataResponse;
+import dev.plexapi.sdk.models.operations.async.SearchSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.SearchSectionResponse;
 import dev.plexapi.sdk.models.operations.async.SetItemArtworkRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.SetItemArtworkResponse;
 import dev.plexapi.sdk.models.operations.async.SetItemPreferencesRequestBuilder;
@@ -235,17 +368,23 @@ import dev.plexapi.sdk.models.operations.async.StopAllRefreshesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.StopAllRefreshesResponse;
 import dev.plexapi.sdk.models.operations.async.UnmatchRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.UnmatchResponse;
+import dev.plexapi.sdk.models.operations.async.UnmatchSectionItemsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UnmatchSectionItemsResponse;
 import dev.plexapi.sdk.models.operations.async.UpdateItemArtworkRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.UpdateItemArtworkResponse;
 import dev.plexapi.sdk.models.operations.async.UpdateItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.UpdateItemsResponse;
+import dev.plexapi.sdk.models.operations.async.UploadArtRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UploadArtResponse;
+import dev.plexapi.sdk.models.operations.async.UploadPosterRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UploadPosterResponse;
 import dev.plexapi.sdk.operations.AddExtras;
 import dev.plexapi.sdk.operations.AddSection;
-import dev.plexapi.sdk.operations.AddSubtitles;
 import dev.plexapi.sdk.operations.AnalyzeMetadata;
 import dev.plexapi.sdk.operations.Autocomplete;
 import dev.plexapi.sdk.operations.CancelRefresh;
 import dev.plexapi.sdk.operations.CleanBundles;
+import dev.plexapi.sdk.operations.ComputeSonicPath;
 import dev.plexapi.sdk.operations.CreateMarker;
 import dev.plexapi.sdk.operations.DeleteCaches;
 import dev.plexapi.sdk.operations.DeleteCollection;
@@ -260,14 +399,22 @@ import dev.plexapi.sdk.operations.DetectAds;
 import dev.plexapi.sdk.operations.DetectCredits;
 import dev.plexapi.sdk.operations.DetectIntros;
 import dev.plexapi.sdk.operations.DetectVoiceActivity;
+import dev.plexapi.sdk.operations.EditLibrarySection;
 import dev.plexapi.sdk.operations.EditMarker;
 import dev.plexapi.sdk.operations.EditMetadataItem;
 import dev.plexapi.sdk.operations.EditSection;
 import dev.plexapi.sdk.operations.EmptyTrash;
+import dev.plexapi.sdk.operations.EmptyTrashPost;
+import dev.plexapi.sdk.operations.EmptyTrashPut;
 import dev.plexapi.sdk.operations.GenerateThumbs;
 import dev.plexapi.sdk.operations.GetAllItemLeaves;
 import dev.plexapi.sdk.operations.GetAugmentationStatus;
 import dev.plexapi.sdk.operations.GetAvailableSorts;
+import dev.plexapi.sdk.operations.GetByContentRating;
+import dev.plexapi.sdk.operations.GetByDecade;
+import dev.plexapi.sdk.operations.GetByFolder;
+import dev.plexapi.sdk.operations.GetByResolution;
+import dev.plexapi.sdk.operations.GetByYear;
 import dev.plexapi.sdk.operations.GetChapterImage;
 import dev.plexapi.sdk.operations.GetCollections;
 import dev.plexapi.sdk.operations.GetCommon;
@@ -280,32 +427,68 @@ import dev.plexapi.sdk.operations.GetItemTree;
 import dev.plexapi.sdk.operations.GetLibraryDetails;
 import dev.plexapi.sdk.operations.GetLibraryItems;
 import dev.plexapi.sdk.operations.GetLibraryMatches;
+import dev.plexapi.sdk.operations.GetLibrarySectionHubs;
+import dev.plexapi.sdk.operations.GetLibrarySectionsFallback;
 import dev.plexapi.sdk.operations.GetMediaPart;
+import dev.plexapi.sdk.operations.GetMetadataChildren;
+import dev.plexapi.sdk.operations.GetMetadataGrandchildren;
+import dev.plexapi.sdk.operations.GetMetadataGrandparent;
+import dev.plexapi.sdk.operations.GetMetadataOnDeck;
+import dev.plexapi.sdk.operations.GetMetadataParent;
+import dev.plexapi.sdk.operations.GetMetadataReviews;
+import dev.plexapi.sdk.operations.GetNearestMetadata;
+import dev.plexapi.sdk.operations.GetNewestForSection;
+import dev.plexapi.sdk.operations.GetOnDeckForSection;
 import dev.plexapi.sdk.operations.GetPartIndex;
 import dev.plexapi.sdk.operations.GetPerson;
 import dev.plexapi.sdk.operations.GetRandomArtwork;
+import dev.plexapi.sdk.operations.GetRecentlyAddedForSection;
+import dev.plexapi.sdk.operations.GetRecentlyAddedGlobal;
 import dev.plexapi.sdk.operations.GetRelatedItems;
+import dev.plexapi.sdk.operations.GetRootLibrary;
+import dev.plexapi.sdk.operations.GetSectionAgents;
+import dev.plexapi.sdk.operations.GetSectionArtists;
+import dev.plexapi.sdk.operations.GetSectionClips;
+import dev.plexapi.sdk.operations.GetSectionEdit;
+import dev.plexapi.sdk.operations.GetSectionEpisodes;
 import dev.plexapi.sdk.operations.GetSectionFilters;
 import dev.plexapi.sdk.operations.GetSectionImage;
+import dev.plexapi.sdk.operations.GetSectionLabels;
+import dev.plexapi.sdk.operations.GetSectionMovies;
+import dev.plexapi.sdk.operations.GetSectionPhotos;
+import dev.plexapi.sdk.operations.GetSectionPlaylists;
 import dev.plexapi.sdk.operations.GetSectionPreferences;
+import dev.plexapi.sdk.operations.GetSectionSettings;
+import dev.plexapi.sdk.operations.GetSectionShows;
+import dev.plexapi.sdk.operations.GetSectionTags;
+import dev.plexapi.sdk.operations.GetSectionTimeline;
 import dev.plexapi.sdk.operations.GetSections;
 import dev.plexapi.sdk.operations.GetSectionsPrefs;
 import dev.plexapi.sdk.operations.GetStream;
 import dev.plexapi.sdk.operations.GetStreamLevels;
 import dev.plexapi.sdk.operations.GetStreamLoudness;
+import dev.plexapi.sdk.operations.GetSubtitles;
 import dev.plexapi.sdk.operations.GetTags;
+import dev.plexapi.sdk.operations.GetUnwatchedForSection;
 import dev.plexapi.sdk.operations.IngestTransientItem;
 import dev.plexapi.sdk.operations.ListMatches;
 import dev.plexapi.sdk.operations.ListPersonMedia;
 import dev.plexapi.sdk.operations.ListSimilar;
-import dev.plexapi.sdk.operations.ListSonicallySimilar;
 import dev.plexapi.sdk.operations.ListTopUsers;
 import dev.plexapi.sdk.operations.MatchItem;
+import dev.plexapi.sdk.operations.MatchSectionItems;
 import dev.plexapi.sdk.operations.MergeItems;
+import dev.plexapi.sdk.operations.MoveSection;
 import dev.plexapi.sdk.operations.OptimizeDatabase;
+import dev.plexapi.sdk.operations.OptimizeLibrary;
+import dev.plexapi.sdk.operations.OptimizeLibraryPost;
+import dev.plexapi.sdk.operations.OptimizeSection;
+import dev.plexapi.sdk.operations.OptimizeSectionPost;
 import dev.plexapi.sdk.operations.RefreshItemsMetadata;
 import dev.plexapi.sdk.operations.RefreshSection;
+import dev.plexapi.sdk.operations.RefreshSectionPost;
 import dev.plexapi.sdk.operations.RefreshSectionsMetadata;
+import dev.plexapi.sdk.operations.SearchSection;
 import dev.plexapi.sdk.operations.SetItemArtwork;
 import dev.plexapi.sdk.operations.SetItemPreferences;
 import dev.plexapi.sdk.operations.SetSectionPreferences;
@@ -316,14 +499,22 @@ import dev.plexapi.sdk.operations.StartAnalysis;
 import dev.plexapi.sdk.operations.StartBifGeneration;
 import dev.plexapi.sdk.operations.StopAllRefreshes;
 import dev.plexapi.sdk.operations.Unmatch;
+import dev.plexapi.sdk.operations.UnmatchSectionItems;
 import dev.plexapi.sdk.operations.UpdateItemArtwork;
 import dev.plexapi.sdk.operations.UpdateItems;
+import dev.plexapi.sdk.operations.UploadArt;
+import dev.plexapi.sdk.operations.UploadPoster;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Library endpoints which are outside of the Media Provider API.  Typically this is manipulation of the library (adding/removing sections, modifying preferences, etc).
+ * Library endpoints which are outside of the Media Provider API. Typically this is manipulation of the
+ * library (adding/removing sections, modifying preferences, etc).
  */
 public class AsyncLibrary {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Library syncSDK;
 
@@ -339,6 +530,52 @@ public class AsyncLibrary {
      */
     public Library sync() {
         return syncSDK;
+    }
+
+
+    /**
+     * Get Root Library
+     * 
+     * <p>Get the root library object.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetRootLibraryRequestBuilder getRootLibrary() {
+        return new GetRootLibraryRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Root Library
+     * 
+     * <p>Get the root library object.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<GetRootLibraryResponse>} - The async response
+     */
+    public CompletableFuture<GetRootLibraryResponse> getRootLibraryDirect() {
+        return getRootLibrary(Optional.empty());
+    }
+
+    /**
+     * Get Root Library
+     * 
+     * <p>Get the root library object.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetRootLibraryResponse>} - The async response
+     */
+    public CompletableFuture<GetRootLibraryResponse> getRootLibrary(Optional<Options> options) {
+        AsyncRequestlessOperation<GetRootLibraryResponse> operation
+            = new GetRootLibrary.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
     }
 
 
@@ -359,11 +596,26 @@ public class AsyncLibrary {
      * <p>Request all metadata items according to a query.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetLibraryItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetLibraryItemsResponse>} - The async response
      */
     public CompletableFuture<GetLibraryItemsResponse> getLibraryItems(GetLibraryItemsRequest request) {
+        return getLibraryItems(request, Optional.empty());
+    }
+
+    /**
+     * Get all items in library
+     * 
+     * <p>Request all metadata items according to a query.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLibraryItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetLibraryItemsResponse> getLibraryItems(GetLibraryItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetLibraryItemsRequest, GetLibraryItemsResponse> operation
-              = new GetLibraryItems.Async(sdkConfiguration);
+              = new GetLibraryItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -373,6 +625,8 @@ public class AsyncLibrary {
      * Delete library caches
      * 
      * <p>Delete the hub caches so they are recomputed on next request
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -385,11 +639,29 @@ public class AsyncLibrary {
      * 
      * <p>Delete the hub caches so they are recomputed on next request
      * 
-     * @return CompletableFuture&lt;DeleteCachesResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<DeleteCachesResponse>} - The async response
      */
     public CompletableFuture<DeleteCachesResponse> deleteCachesDirect() {
+        return deleteCaches(Optional.empty());
+    }
+
+    /**
+     * Delete library caches
+     * 
+     * <p>Delete the hub caches so they are recomputed on next request
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteCachesResponse>} - The async response
+     */
+    public CompletableFuture<DeleteCachesResponse> deleteCaches(Optional<Options> options) {
         AsyncRequestlessOperation<DeleteCachesResponse> operation
-            = new DeleteCaches.Async(sdkConfiguration);
+            = new DeleteCaches.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -399,6 +671,8 @@ public class AsyncLibrary {
      * Clean bundles
      * 
      * <p>Clean out any now unused bundles. Bundles can become unused when media is deleted
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -411,11 +685,29 @@ public class AsyncLibrary {
      * 
      * <p>Clean out any now unused bundles. Bundles can become unused when media is deleted
      * 
-     * @return CompletableFuture&lt;CleanBundlesResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<CleanBundlesResponse>} - The async response
      */
     public CompletableFuture<CleanBundlesResponse> cleanBundlesDirect() {
+        return cleanBundles(Optional.empty());
+    }
+
+    /**
+     * Clean bundles
+     * 
+     * <p>Clean out any now unused bundles. Bundles can become unused when media is deleted
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<CleanBundlesResponse>} - The async response
+     */
+    public CompletableFuture<CleanBundlesResponse> cleanBundles(Optional<Options> options) {
         AsyncRequestlessOperation<CleanBundlesResponse> operation
-            = new CleanBundles.Async(sdkConfiguration);
+            = new CleanBundles.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -424,8 +716,13 @@ public class AsyncLibrary {
     /**
      * Ingest a transient item
      * 
-     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a library section). In the case where the file represents an episode, the entire tree (show, season, and episode) is added as transient items. At this time, movies and episodes are the only supported types, which are gleaned automatically from the file path.
-     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`) work here.
+     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's
+     * match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a
+     * library section). In the case where the file represents an episode, the entire tree (show, season,
+     * and episode) is added as transient items. At this time, movies and episodes are the only supported
+     * types, which are gleaned automatically from the file path.
+     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`)
+     * work here.
      * 
      * @return The async call builder
      */
@@ -436,15 +733,41 @@ public class AsyncLibrary {
     /**
      * Ingest a transient item
      * 
-     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a library section). In the case where the file represents an episode, the entire tree (show, season, and episode) is added as transient items. At this time, movies and episodes are the only supported types, which are gleaned automatically from the file path.
-     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`) work here.
+     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's
+     * match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a
+     * library section). In the case where the file represents an episode, the entire tree (show, season,
+     * and episode) is added as transient items. At this time, movies and episodes are the only supported
+     * types, which are gleaned automatically from the file path.
+     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`)
+     * work here.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;IngestTransientItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<IngestTransientItemResponse>} - The async response
      */
     public CompletableFuture<IngestTransientItemResponse> ingestTransientItem(IngestTransientItemRequest request) {
+        return ingestTransientItem(request, Optional.empty());
+    }
+
+    /**
+     * Ingest a transient item
+     * 
+     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's
+     * match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a
+     * library section). In the case where the file represents an episode, the entire tree (show, season,
+     * and episode) is added as transient items. At this time, movies and episodes are the only supported
+     * types, which are gleaned automatically from the file path.
+     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`)
+     * work here.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<IngestTransientItemResponse>} - The async response
+     */
+    public CompletableFuture<IngestTransientItemResponse> ingestTransientItem(IngestTransientItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<IngestTransientItemRequest, IngestTransientItemResponse> operation
-              = new IngestTransientItem.Async(sdkConfiguration);
+              = new IngestTransientItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -453,11 +776,22 @@ public class AsyncLibrary {
     /**
      * Get library matches
      * 
-     * <p>The matches endpoint is used to match content external to the library with content inside the library. This is done by passing a series of semantic "hints" about the content (its type, name, or release year). Each type (e.g. movie) has a canonical set of minimal required hints.
-     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses the endpoint to match up a piece of media with rich metadata.
-     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive match (we prefer false negatives over false positives in general for matching).
-     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
-     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be sent, or the show title
+     * <p>The matches endpoint is used to match content external to the library with content inside the
+     * library. This is done by passing a series of semantic "hints" about the content (its type, name, or
+     * release year). Each type (e.g.
+     * 
+     * <p>movie) has a canonical set of minimal required hints.
+     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG
+     * uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses
+     * the endpoint to match up a piece of media with rich metadata.
+     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a
+     * `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive
+     * match (we prefer false negatives over false positives in general for matching).
+     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece
+     * of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more
+     * ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
+     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be
+     * sent, or the show title
      * 
      * @return The async call builder
      */
@@ -468,18 +802,155 @@ public class AsyncLibrary {
     /**
      * Get library matches
      * 
-     * <p>The matches endpoint is used to match content external to the library with content inside the library. This is done by passing a series of semantic "hints" about the content (its type, name, or release year). Each type (e.g. movie) has a canonical set of minimal required hints.
-     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses the endpoint to match up a piece of media with rich metadata.
-     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive match (we prefer false negatives over false positives in general for matching).
-     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
-     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be sent, or the show title
+     * <p>The matches endpoint is used to match content external to the library with content inside the
+     * library. This is done by passing a series of semantic "hints" about the content (its type, name, or
+     * release year). Each type (e.g.
+     * 
+     * <p>movie) has a canonical set of minimal required hints.
+     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG
+     * uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses
+     * the endpoint to match up a piece of media with rich metadata.
+     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a
+     * `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive
+     * match (we prefer false negatives over false positives in general for matching).
+     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece
+     * of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more
+     * ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
+     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be
+     * sent, or the show title
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetLibraryMatchesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetLibraryMatchesResponse>} - The async response
      */
     public CompletableFuture<GetLibraryMatchesResponse> getLibraryMatches(GetLibraryMatchesRequest request) {
+        return getLibraryMatches(request, Optional.empty());
+    }
+
+    /**
+     * Get library matches
+     * 
+     * <p>The matches endpoint is used to match content external to the library with content inside the
+     * library. This is done by passing a series of semantic "hints" about the content (its type, name, or
+     * release year). Each type (e.g.
+     * 
+     * <p>movie) has a canonical set of minimal required hints.
+     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG
+     * uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses
+     * the endpoint to match up a piece of media with rich metadata.
+     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a
+     * `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive
+     * match (we prefer false negatives over false positives in general for matching).
+     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece
+     * of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more
+     * ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
+     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be
+     * sent, or the show title
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLibraryMatchesResponse>} - The async response
+     */
+    public CompletableFuture<GetLibraryMatchesResponse> getLibraryMatches(GetLibraryMatchesRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetLibraryMatchesRequest, GetLibraryMatchesResponse> operation
-              = new GetLibraryMatches.Async(sdkConfiguration);
+              = new GetLibraryMatches.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public OptimizeLibraryRequestBuilder optimizeLibrary() {
+        return new OptimizeLibraryRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<OptimizeLibraryResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeLibraryResponse> optimizeLibrary(OptimizeLibraryRequest request) {
+        return optimizeLibrary(request, Optional.empty());
+    }
+
+    /**
+     * Get Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<OptimizeLibraryResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeLibraryResponse> optimizeLibrary(OptimizeLibraryRequest request, Optional<Options> options) {
+        AsyncRequestOperation<OptimizeLibraryRequest, OptimizeLibraryResponse> operation
+              = new OptimizeLibrary.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public OptimizeLibraryPostRequestBuilder optimizeLibraryPost() {
+        return new OptimizeLibraryPostRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<OptimizeLibraryPostResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeLibraryPostResponse> optimizeLibraryPost(OptimizeLibraryPostRequest request) {
+        return optimizeLibraryPost(request, Optional.empty());
+    }
+
+    /**
+     * Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<OptimizeLibraryPostResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeLibraryPostResponse> optimizeLibraryPost(OptimizeLibraryPostRequest request, Optional<Options> options) {
+        AsyncRequestOperation<OptimizeLibraryPostRequest, OptimizeLibraryPostResponse> operation
+              = new OptimizeLibraryPost.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -489,6 +960,8 @@ public class AsyncLibrary {
      * Optimize the Database
      * 
      * <p>Initiate optimize on the database.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -501,12 +974,31 @@ public class AsyncLibrary {
      * 
      * <p>Initiate optimize on the database.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;OptimizeDatabaseResponse&gt; - The async response
+     * @return {@code CompletableFuture<OptimizeDatabaseResponse>} - The async response
      */
     public CompletableFuture<OptimizeDatabaseResponse> optimizeDatabase(OptimizeDatabaseRequest request) {
+        return optimizeDatabase(request, Optional.empty());
+    }
+
+    /**
+     * Optimize the Database
+     * 
+     * <p>Initiate optimize on the database.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<OptimizeDatabaseResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeDatabaseResponse> optimizeDatabase(OptimizeDatabaseRequest request, Optional<Options> options) {
         AsyncRequestOperation<OptimizeDatabaseRequest, OptimizeDatabaseResponse> operation
-              = new OptimizeDatabase.Async(sdkConfiguration);
+              = new OptimizeDatabase.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -515,9 +1007,11 @@ public class AsyncLibrary {
     /**
      * Get random artwork
      * 
-     * <p>Get random artwork across sections.  This is commonly used for a screensaver.
+     * <p>Get random artwork across sections. This is commonly used for a screensaver.
      * 
-     * <p>This retrieves 100 random artwork paths in the specified sections and returns them.  Restrictions are put in place to not return artwork for items the user is not allowed to access.  Artwork will be for Movies, Shows, and Artists only.
+     * <p>This retrieves 100 random artwork paths in the specified sections and returns them. Restrictions are
+     * put in place to not return artwork for items the user is not allowed to access. Artwork will be for
+     * Movies, Shows, and Artists only.
      * 
      * @return The async call builder
      */
@@ -528,17 +1022,132 @@ public class AsyncLibrary {
     /**
      * Get random artwork
      * 
-     * <p>Get random artwork across sections.  This is commonly used for a screensaver.
+     * <p>Get random artwork across sections. This is commonly used for a screensaver.
      * 
-     * <p>This retrieves 100 random artwork paths in the specified sections and returns them.  Restrictions are put in place to not return artwork for items the user is not allowed to access.  Artwork will be for Movies, Shows, and Artists only.
+     * <p>This retrieves 100 random artwork paths in the specified sections and returns them. Restrictions are
+     * put in place to not return artwork for items the user is not allowed to access. Artwork will be for
+     * Movies, Shows, and Artists only.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetRandomArtworkResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetRandomArtworkResponse>} - The async response
      */
     public CompletableFuture<GetRandomArtworkResponse> getRandomArtwork(GetRandomArtworkRequest request) {
+        return getRandomArtwork(request, Optional.empty());
+    }
+
+    /**
+     * Get random artwork
+     * 
+     * <p>Get random artwork across sections. This is commonly used for a screensaver.
+     * 
+     * <p>This retrieves 100 random artwork paths in the specified sections and returns them. Restrictions are
+     * put in place to not return artwork for items the user is not allowed to access. Artwork will be for
+     * Movies, Shows, and Artists only.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetRandomArtworkResponse>} - The async response
+     */
+    public CompletableFuture<GetRandomArtworkResponse> getRandomArtwork(GetRandomArtworkRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetRandomArtworkRequest, GetRandomArtworkResponse> operation
-              = new GetRandomArtwork.Async(sdkConfiguration);
+              = new GetRandomArtwork.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Global Recently Added
+     * 
+     * <p>Get recently added items across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetRecentlyAddedGlobalRequestBuilder getRecentlyAddedGlobal() {
+        return new GetRecentlyAddedGlobalRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Global Recently Added
+     * 
+     * <p>Get recently added items across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetRecentlyAddedGlobalResponse>} - The async response
+     */
+    public CompletableFuture<GetRecentlyAddedGlobalResponse> getRecentlyAddedGlobal(GetRecentlyAddedGlobalRequest request) {
+        return getRecentlyAddedGlobal(request, Optional.empty());
+    }
+
+    /**
+     * Get Global Recently Added
+     * 
+     * <p>Get recently added items across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetRecentlyAddedGlobalResponse>} - The async response
+     */
+    public CompletableFuture<GetRecentlyAddedGlobalResponse> getRecentlyAddedGlobal(GetRecentlyAddedGlobalRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetRecentlyAddedGlobalRequest, GetRecentlyAddedGlobalResponse> operation
+              = new GetRecentlyAddedGlobal.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Library Sections (Fallback)
+     * 
+     * <p>Fallback for non-owners to list library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetLibrarySectionsFallbackRequestBuilder getLibrarySectionsFallback() {
+        return new GetLibrarySectionsFallbackRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Library Sections (Fallback)
+     * 
+     * <p>Fallback for non-owners to list library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<GetLibrarySectionsFallbackResponse>} - The async response
+     */
+    public CompletableFuture<GetLibrarySectionsFallbackResponse> getLibrarySectionsFallbackDirect() {
+        return getLibrarySectionsFallback(Optional.empty());
+    }
+
+    /**
+     * Get Library Sections (Fallback)
+     * 
+     * <p>Fallback for non-owners to list library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLibrarySectionsFallbackResponse>} - The async response
+     */
+    public CompletableFuture<GetLibrarySectionsFallbackResponse> getLibrarySectionsFallback(Optional<Options> options) {
+        AsyncRequestlessOperation<GetLibrarySectionsFallbackResponse> operation
+            = new GetLibrarySectionsFallback.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
 
@@ -546,8 +1155,13 @@ public class AsyncLibrary {
     /**
      * Get library sections (main Media Provider Only)
      * 
-     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are typed, and depending on their type provide either a flat or a hierarchical view of the media. For example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is flat.
-     * Libraries have features beyond just being a collection of media; for starters, they include information about supported types, filters and sorts. This allows a client to provide a rich interface around the media (e.g. allow sorting movies by release year).
+     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are
+     * typed, and depending on their type provide either a flat or a hierarchical view of the media. For
+     * example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is
+     * flat.
+     * Libraries have features beyond just being a collection of media; for starters, they include
+     * information about supported types, filters and sorts. This allows a client to provide a rich
+     * interface around the media (e.g. allow sorting movies by release year).
      * 
      * @return The async call builder
      */
@@ -558,14 +1172,39 @@ public class AsyncLibrary {
     /**
      * Get library sections (main Media Provider Only)
      * 
-     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are typed, and depending on their type provide either a flat or a hierarchical view of the media. For example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is flat.
-     * Libraries have features beyond just being a collection of media; for starters, they include information about supported types, filters and sorts. This allows a client to provide a rich interface around the media (e.g. allow sorting movies by release year).
+     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are
+     * typed, and depending on their type provide either a flat or a hierarchical view of the media. For
+     * example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is
+     * flat.
+     * Libraries have features beyond just being a collection of media; for starters, they include
+     * information about supported types, filters and sorts. This allows a client to provide a rich
+     * interface around the media (e.g. allow sorting movies by release year).
      * 
-     * @return CompletableFuture&lt;GetSectionsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSectionsResponse>} - The async response
      */
     public CompletableFuture<GetSectionsResponse> getSectionsDirect() {
+        return getSections(Optional.empty());
+    }
+
+    /**
+     * Get library sections (main Media Provider Only)
+     * 
+     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are
+     * typed, and depending on their type provide either a flat or a hierarchical view of the media. For
+     * example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is
+     * flat.
+     * Libraries have features beyond just being a collection of media; for starters, they include
+     * information about supported types, filters and sorts. This allows a client to provide a rich
+     * interface around the media (e.g. allow sorting movies by release year).
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionsResponse> getSections(Optional<Options> options) {
         AsyncRequestlessOperation<GetSectionsResponse> operation
-            = new GetSections.Async(sdkConfiguration);
+            = new GetSections.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -575,6 +1214,8 @@ public class AsyncLibrary {
      * Add a library section
      * 
      * <p>Add a new library section to the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -587,12 +1228,31 @@ public class AsyncLibrary {
      * 
      * <p>Add a new library section to the server
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddSectionResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddSectionResponse>} - The async response
      */
     public CompletableFuture<AddSectionResponse> addSection(AddSectionRequest request) {
+        return addSection(request, Optional.empty());
+    }
+
+    /**
+     * Add a library section
+     * 
+     * <p>Add a new library section to the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddSectionResponse>} - The async response
+     */
+    public CompletableFuture<AddSectionResponse> addSection(AddSectionRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddSectionRequest, AddSectionResponse> operation
-              = new AddSection.Async(sdkConfiguration);
+              = new AddSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -602,6 +1262,8 @@ public class AsyncLibrary {
      * Stop refresh
      * 
      * <p>Stop all refreshes across all sections
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -614,11 +1276,29 @@ public class AsyncLibrary {
      * 
      * <p>Stop all refreshes across all sections
      * 
-     * @return CompletableFuture&lt;StopAllRefreshesResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<StopAllRefreshesResponse>} - The async response
      */
     public CompletableFuture<StopAllRefreshesResponse> stopAllRefreshesDirect() {
+        return stopAllRefreshes(Optional.empty());
+    }
+
+    /**
+     * Stop refresh
+     * 
+     * <p>Stop all refreshes across all sections
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<StopAllRefreshesResponse>} - The async response
+     */
+    public CompletableFuture<StopAllRefreshesResponse> stopAllRefreshes(Optional<Options> options) {
         AsyncRequestlessOperation<StopAllRefreshesResponse> operation
-            = new StopAllRefreshes.Async(sdkConfiguration);
+            = new StopAllRefreshes.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -628,6 +1308,8 @@ public class AsyncLibrary {
      * Get section prefs
      * 
      * <p>Get a section's preferences for a metadata type
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -640,12 +1322,31 @@ public class AsyncLibrary {
      * 
      * <p>Get a section's preferences for a metadata type
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSectionsPrefsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSectionsPrefsResponse>} - The async response
      */
     public CompletableFuture<GetSectionsPrefsResponse> getSectionsPrefs(GetSectionsPrefsRequest request) {
+        return getSectionsPrefs(request, Optional.empty());
+    }
+
+    /**
+     * Get section prefs
+     * 
+     * <p>Get a section's preferences for a metadata type
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionsPrefsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionsPrefsResponse> getSectionsPrefs(GetSectionsPrefsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSectionsPrefsRequest, GetSectionsPrefsResponse> operation
-              = new GetSectionsPrefs.Async(sdkConfiguration);
+              = new GetSectionsPrefs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -655,6 +1356,8 @@ public class AsyncLibrary {
      * Refresh all sections
      * 
      * <p>Tell PMS to refresh all section metadata
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -667,12 +1370,31 @@ public class AsyncLibrary {
      * 
      * <p>Tell PMS to refresh all section metadata
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;RefreshSectionsMetadataResponse&gt; - The async response
+     * @return {@code CompletableFuture<RefreshSectionsMetadataResponse>} - The async response
      */
     public CompletableFuture<RefreshSectionsMetadataResponse> refreshSectionsMetadata(RefreshSectionsMetadataRequest request) {
+        return refreshSectionsMetadata(request, Optional.empty());
+    }
+
+    /**
+     * Refresh all sections
+     * 
+     * <p>Tell PMS to refresh all section metadata
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshSectionsMetadataResponse>} - The async response
+     */
+    public CompletableFuture<RefreshSectionsMetadataResponse> refreshSectionsMetadata(RefreshSectionsMetadataRequest request, Optional<Options> options) {
         AsyncRequestOperation<RefreshSectionsMetadataRequest, RefreshSectionsMetadataResponse> operation
-              = new RefreshSectionsMetadata.Async(sdkConfiguration);
+              = new RefreshSectionsMetadata.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -695,11 +1417,506 @@ public class AsyncLibrary {
      * <p>Get all library tags of a type
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetTagsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetTagsResponse>} - The async response
      */
     public CompletableFuture<GetTagsResponse> getTags(GetTagsRequest request) {
+        return getTags(request, Optional.empty());
+    }
+
+    /**
+     * Get all library tags of a type
+     * 
+     * <p>Get all library tags of a type
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetTagsResponse>} - The async response
+     */
+    public CompletableFuture<GetTagsResponse> getTags(GetTagsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetTagsRequest, GetTagsResponse> operation
-              = new GetTags.Async(sdkConfiguration);
+              = new GetTags.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Upload media art Art
+     * 
+     * <p>Upload custom background art for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public UploadArtRequestBuilder uploadArt() {
+        return new UploadArtRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Upload media art Art
+     * 
+     * <p>Upload custom background art for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<UploadArtResponse>} - The async response
+     */
+    public CompletableFuture<UploadArtResponse> uploadArt(UploadArtRequest request) {
+        return uploadArt(request, Optional.empty());
+    }
+
+    /**
+     * Upload media art Art
+     * 
+     * <p>Upload custom background art for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UploadArtResponse>} - The async response
+     */
+    public CompletableFuture<UploadArtResponse> uploadArt(UploadArtRequest request, Optional<Options> options) {
+        AsyncRequestOperation<UploadArtRequest, UploadArtResponse> operation
+              = new UploadArt.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Metadata Children
+     * 
+     * <p>Get children of a show, season, artist, or album.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMetadataChildrenRequestBuilder getMetadataChildren() {
+        return new GetMetadataChildrenRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Children
+     * 
+     * <p>Get children of a show, season, artist, or album.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetMetadataChildrenResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataChildrenResponse> getMetadataChildren(GetMetadataChildrenRequest request) {
+        return getMetadataChildren(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Children
+     * 
+     * <p>Get children of a show, season, artist, or album.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataChildrenResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataChildrenResponse> getMetadataChildren(GetMetadataChildrenRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetMetadataChildrenRequest, GetMetadataChildrenResponse> operation
+              = new GetMetadataChildren.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Compute Sonic Path
+     * 
+     * <p>Compute a sonic adventure path from a starting track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public ComputeSonicPathRequestBuilder computeSonicPath() {
+        return new ComputeSonicPathRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Compute Sonic Path
+     * 
+     * <p>Compute a sonic adventure path from a starting track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ComputeSonicPathResponse>} - The async response
+     */
+    public CompletableFuture<ComputeSonicPathResponse> computeSonicPath(ComputeSonicPathRequest request) {
+        return computeSonicPath(request, Optional.empty());
+    }
+
+    /**
+     * Compute Sonic Path
+     * 
+     * <p>Compute a sonic adventure path from a starting track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ComputeSonicPathResponse>} - The async response
+     */
+    public CompletableFuture<ComputeSonicPathResponse> computeSonicPath(ComputeSonicPathRequest request, Optional<Options> options) {
+        AsyncRequestOperation<ComputeSonicPathRequest, ComputeSonicPathResponse> operation
+              = new ComputeSonicPath.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Metadata Grandchildren
+     * 
+     * <p>Get grandchildren (e.g. episodes under a show).
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMetadataGrandchildrenRequestBuilder getMetadataGrandchildren() {
+        return new GetMetadataGrandchildrenRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Grandchildren
+     * 
+     * <p>Get grandchildren (e.g. episodes under a show).
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetMetadataGrandchildrenResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataGrandchildrenResponse> getMetadataGrandchildren(GetMetadataGrandchildrenRequest request) {
+        return getMetadataGrandchildren(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Grandchildren
+     * 
+     * <p>Get grandchildren (e.g. episodes under a show).
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataGrandchildrenResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataGrandchildrenResponse> getMetadataGrandchildren(GetMetadataGrandchildrenRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetMetadataGrandchildrenRequest, GetMetadataGrandchildrenResponse> operation
+              = new GetMetadataGrandchildren.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Metadata Grandparent
+     * 
+     * <p>Get grandparent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMetadataGrandparentRequestBuilder getMetadataGrandparent() {
+        return new GetMetadataGrandparentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Grandparent
+     * 
+     * <p>Get grandparent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetMetadataGrandparentResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataGrandparentResponse> getMetadataGrandparent(GetMetadataGrandparentRequest request) {
+        return getMetadataGrandparent(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Grandparent
+     * 
+     * <p>Get grandparent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataGrandparentResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataGrandparentResponse> getMetadataGrandparent(GetMetadataGrandparentRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetMetadataGrandparentRequest, GetMetadataGrandparentResponse> operation
+              = new GetMetadataGrandparent.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Nearest Metadata
+     * 
+     * <p>Get sonically similar items for a music track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetNearestMetadataRequestBuilder getNearestMetadata() {
+        return new GetNearestMetadataRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Nearest Metadata
+     * 
+     * <p>Get sonically similar items for a music track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetNearestMetadataResponse>} - The async response
+     */
+    public CompletableFuture<GetNearestMetadataResponse> getNearestMetadata(GetNearestMetadataRequest request) {
+        return getNearestMetadata(request, Optional.empty());
+    }
+
+    /**
+     * Get Nearest Metadata
+     * 
+     * <p>Get sonically similar items for a music track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetNearestMetadataResponse>} - The async response
+     */
+    public CompletableFuture<GetNearestMetadataResponse> getNearestMetadata(GetNearestMetadataRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetNearestMetadataRequest, GetNearestMetadataResponse> operation
+              = new GetNearestMetadata.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Metadata On Deck
+     * 
+     * <p>Get On Deck status for a show or season.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMetadataOnDeckRequestBuilder getMetadataOnDeck() {
+        return new GetMetadataOnDeckRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata On Deck
+     * 
+     * <p>Get On Deck status for a show or season.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetMetadataOnDeckResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataOnDeckResponse> getMetadataOnDeck(GetMetadataOnDeckRequest request) {
+        return getMetadataOnDeck(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata On Deck
+     * 
+     * <p>Get On Deck status for a show or season.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataOnDeckResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataOnDeckResponse> getMetadataOnDeck(GetMetadataOnDeckRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetMetadataOnDeckRequest, GetMetadataOnDeckResponse> operation
+              = new GetMetadataOnDeck.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Metadata Parent
+     * 
+     * <p>Get parent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMetadataParentRequestBuilder getMetadataParent() {
+        return new GetMetadataParentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Parent
+     * 
+     * <p>Get parent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetMetadataParentResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataParentResponse> getMetadataParent(GetMetadataParentRequest request) {
+        return getMetadataParent(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Parent
+     * 
+     * <p>Get parent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataParentResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataParentResponse> getMetadataParent(GetMetadataParentRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetMetadataParentRequest, GetMetadataParentResponse> operation
+              = new GetMetadataParent.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Upload media art Poster
+     * 
+     * <p>Upload a custom poster image for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public UploadPosterRequestBuilder uploadPoster() {
+        return new UploadPosterRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Upload media art Poster
+     * 
+     * <p>Upload a custom poster image for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<UploadPosterResponse>} - The async response
+     */
+    public CompletableFuture<UploadPosterResponse> uploadPoster(UploadPosterRequest request) {
+        return uploadPoster(request, Optional.empty());
+    }
+
+    /**
+     * Upload media art Poster
+     * 
+     * <p>Upload a custom poster image for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UploadPosterResponse>} - The async response
+     */
+    public CompletableFuture<UploadPosterResponse> uploadPoster(UploadPosterRequest request, Optional<Options> options) {
+        AsyncRequestOperation<UploadPosterRequest, UploadPosterResponse> operation
+              = new UploadPoster.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Metadata Reviews
+     * 
+     * <p>Get user reviews for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMetadataReviewsRequestBuilder getMetadataReviews() {
+        return new GetMetadataReviewsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Reviews
+     * 
+     * <p>Get user reviews for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetMetadataReviewsResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataReviewsResponse> getMetadataReviews(GetMetadataReviewsRequest request) {
+        return getMetadataReviews(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Reviews
+     * 
+     * <p>Get user reviews for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataReviewsResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataReviewsResponse> getMetadataReviews(GetMetadataReviewsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetMetadataReviewsRequest, GetMetadataReviewsResponse> operation
+              = new GetMetadataReviews.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -709,6 +1926,8 @@ public class AsyncLibrary {
      * Delete a metadata item
      * 
      * <p>Delete a single metadata item from the library, deleting media as well
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -721,12 +1940,31 @@ public class AsyncLibrary {
      * 
      * <p>Delete a single metadata item from the library, deleting media as well
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteMetadataItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteMetadataItemResponse>} - The async response
      */
     public CompletableFuture<DeleteMetadataItemResponse> deleteMetadataItem(DeleteMetadataItemRequest request) {
+        return deleteMetadataItem(request, Optional.empty());
+    }
+
+    /**
+     * Delete a metadata item
+     * 
+     * <p>Delete a single metadata item from the library, deleting media as well
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteMetadataItemResponse>} - The async response
+     */
+    public CompletableFuture<DeleteMetadataItemResponse> deleteMetadataItem(DeleteMetadataItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteMetadataItemRequest, DeleteMetadataItemResponse> operation
-              = new DeleteMetadataItem.Async(sdkConfiguration);
+              = new DeleteMetadataItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -736,6 +1974,8 @@ public class AsyncLibrary {
      * Edit a metadata item
      * 
      * <p>Edit metadata items setting fields
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -748,12 +1988,31 @@ public class AsyncLibrary {
      * 
      * <p>Edit metadata items setting fields
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;EditMetadataItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<EditMetadataItemResponse>} - The async response
      */
     public CompletableFuture<EditMetadataItemResponse> editMetadataItem(EditMetadataItemRequest request) {
+        return editMetadataItem(request, Optional.empty());
+    }
+
+    /**
+     * Edit a metadata item
+     * 
+     * <p>Edit metadata items setting fields
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EditMetadataItemResponse>} - The async response
+     */
+    public CompletableFuture<EditMetadataItemResponse> editMetadataItem(EditMetadataItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<EditMetadataItemRequest, EditMetadataItemResponse> operation
-              = new EditMetadataItem.Async(sdkConfiguration);
+              = new EditMetadataItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -763,6 +2022,8 @@ public class AsyncLibrary {
      * Ad-detect an item
      * 
      * <p>Start the detection of ads in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -775,12 +2036,31 @@ public class AsyncLibrary {
      * 
      * <p>Start the detection of ads in a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DetectAdsResponse&gt; - The async response
+     * @return {@code CompletableFuture<DetectAdsResponse>} - The async response
      */
     public CompletableFuture<DetectAdsResponse> detectAds(DetectAdsRequest request) {
+        return detectAds(request, Optional.empty());
+    }
+
+    /**
+     * Ad-detect an item
+     * 
+     * <p>Start the detection of ads in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DetectAdsResponse>} - The async response
+     */
+    public CompletableFuture<DetectAdsResponse> detectAds(DetectAdsRequest request, Optional<Options> options) {
         AsyncRequestOperation<DetectAdsRequest, DetectAdsResponse> operation
-              = new DetectAds.Async(sdkConfiguration);
+              = new DetectAds.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -803,11 +2083,26 @@ public class AsyncLibrary {
      * <p>Get the leaves for a metadata item such as the episodes in a show
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetAllItemLeavesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAllItemLeavesResponse>} - The async response
      */
     public CompletableFuture<GetAllItemLeavesResponse> getAllItemLeaves(GetAllItemLeavesRequest request) {
+        return getAllItemLeaves(request, Optional.empty());
+    }
+
+    /**
+     * Get the leaves of an item
+     * 
+     * <p>Get the leaves for a metadata item such as the episodes in a show
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAllItemLeavesResponse>} - The async response
+     */
+    public CompletableFuture<GetAllItemLeavesResponse> getAllItemLeaves(GetAllItemLeavesRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetAllItemLeavesRequest, GetAllItemLeavesResponse> operation
-              = new GetAllItemLeaves.Async(sdkConfiguration);
+              = new GetAllItemLeaves.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -817,6 +2112,8 @@ public class AsyncLibrary {
      * Analyze an item
      * 
      * <p>Start the analysis of a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -829,12 +2126,31 @@ public class AsyncLibrary {
      * 
      * <p>Start the analysis of a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AnalyzeMetadataResponse&gt; - The async response
+     * @return {@code CompletableFuture<AnalyzeMetadataResponse>} - The async response
      */
     public CompletableFuture<AnalyzeMetadataResponse> analyzeMetadata(AnalyzeMetadataRequest request) {
+        return analyzeMetadata(request, Optional.empty());
+    }
+
+    /**
+     * Analyze an item
+     * 
+     * <p>Start the analysis of a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AnalyzeMetadataResponse>} - The async response
+     */
+    public CompletableFuture<AnalyzeMetadataResponse> analyzeMetadata(AnalyzeMetadataRequest request, Optional<Options> options) {
         AsyncRequestOperation<AnalyzeMetadataRequest, AnalyzeMetadataResponse> operation
-              = new AnalyzeMetadata.Async(sdkConfiguration);
+              = new AnalyzeMetadata.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -844,6 +2160,8 @@ public class AsyncLibrary {
      * Generate thumbs of chapters for an item
      * 
      * <p>Start the chapter thumb generation for an item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -856,12 +2174,31 @@ public class AsyncLibrary {
      * 
      * <p>Start the chapter thumb generation for an item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GenerateThumbsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GenerateThumbsResponse>} - The async response
      */
     public CompletableFuture<GenerateThumbsResponse> generateThumbs(GenerateThumbsRequest request) {
+        return generateThumbs(request, Optional.empty());
+    }
+
+    /**
+     * Generate thumbs of chapters for an item
+     * 
+     * <p>Start the chapter thumb generation for an item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GenerateThumbsResponse>} - The async response
+     */
+    public CompletableFuture<GenerateThumbsResponse> generateThumbs(GenerateThumbsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GenerateThumbsRequest, GenerateThumbsResponse> operation
-              = new GenerateThumbs.Async(sdkConfiguration);
+              = new GenerateThumbs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -871,6 +2208,8 @@ public class AsyncLibrary {
      * Credit detect a metadata item
      * 
      * <p>Start credit detection on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -883,12 +2222,31 @@ public class AsyncLibrary {
      * 
      * <p>Start credit detection on a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DetectCreditsResponse&gt; - The async response
+     * @return {@code CompletableFuture<DetectCreditsResponse>} - The async response
      */
     public CompletableFuture<DetectCreditsResponse> detectCredits(DetectCreditsRequest request) {
+        return detectCredits(request, Optional.empty());
+    }
+
+    /**
+     * Credit detect a metadata item
+     * 
+     * <p>Start credit detection on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DetectCreditsResponse>} - The async response
+     */
+    public CompletableFuture<DetectCreditsResponse> detectCredits(DetectCreditsRequest request, Optional<Options> options) {
         AsyncRequestOperation<DetectCreditsRequest, DetectCreditsResponse> operation
-              = new DetectCredits.Async(sdkConfiguration);
+              = new DetectCredits.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -911,11 +2269,26 @@ public class AsyncLibrary {
      * <p>Get the extras for a metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetExtrasResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetExtrasResponse>} - The async response
      */
     public CompletableFuture<GetExtrasResponse> getExtras(GetExtrasRequest request) {
+        return getExtras(request, Optional.empty());
+    }
+
+    /**
+     * Get an item's extras
+     * 
+     * <p>Get the extras for a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetExtrasResponse>} - The async response
+     */
+    public CompletableFuture<GetExtrasResponse> getExtras(GetExtrasRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetExtrasRequest, GetExtrasResponse> operation
-              = new GetExtras.Async(sdkConfiguration);
+              = new GetExtras.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -938,11 +2311,26 @@ public class AsyncLibrary {
      * <p>Add an extra to a metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddExtrasResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddExtrasResponse>} - The async response
      */
     public CompletableFuture<AddExtrasResponse> addExtras(AddExtrasRequest request) {
+        return addExtras(request, Optional.empty());
+    }
+
+    /**
+     * Add to an item's extras
+     * 
+     * <p>Add an extra to a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddExtrasResponse>} - The async response
+     */
+    public CompletableFuture<AddExtrasResponse> addExtras(AddExtrasRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddExtrasRequest, AddExtrasResponse> operation
-              = new AddExtras.Async(sdkConfiguration);
+              = new AddExtras.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -951,7 +2339,8 @@ public class AsyncLibrary {
     /**
      * Get a file from a metadata or media bundle
      * 
-     * <p>Get a bundle file for a metadata or media item.  This is either an image or a mp3 (for a show's theme)
+     * <p>Get a bundle file for a metadata or media item. This is either an image or a mp3 (for a show's
+     * theme)
      * 
      * @return The async call builder
      */
@@ -962,14 +2351,31 @@ public class AsyncLibrary {
     /**
      * Get a file from a metadata or media bundle
      * 
-     * <p>Get a bundle file for a metadata or media item.  This is either an image or a mp3 (for a show's theme)
+     * <p>Get a bundle file for a metadata or media item. This is either an image or a mp3 (for a show's
+     * theme)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetFileResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetFileResponse>} - The async response
      */
     public CompletableFuture<GetFileResponse> getFile(GetFileRequest request) {
+        return getFile(request, Optional.empty());
+    }
+
+    /**
+     * Get a file from a metadata or media bundle
+     * 
+     * <p>Get a bundle file for a metadata or media item. This is either an image or a mp3 (for a show's
+     * theme)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetFileResponse>} - The async response
+     */
+    public CompletableFuture<GetFileResponse> getFile(GetFileRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetFileRequest, GetFileResponse> operation
-              = new GetFile.Async(sdkConfiguration);
+              = new GetFile.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -979,6 +2385,8 @@ public class AsyncLibrary {
      * Start BIF generation of an item
      * 
      * <p>Start the indexing (BIF generation) of an item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -991,12 +2399,31 @@ public class AsyncLibrary {
      * 
      * <p>Start the indexing (BIF generation) of an item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;StartBifGenerationResponse&gt; - The async response
+     * @return {@code CompletableFuture<StartBifGenerationResponse>} - The async response
      */
     public CompletableFuture<StartBifGenerationResponse> startBifGeneration(StartBifGenerationRequest request) {
+        return startBifGeneration(request, Optional.empty());
+    }
+
+    /**
+     * Start BIF generation of an item
+     * 
+     * <p>Start the indexing (BIF generation) of an item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<StartBifGenerationResponse>} - The async response
+     */
+    public CompletableFuture<StartBifGenerationResponse> startBifGeneration(StartBifGenerationRequest request, Optional<Options> options) {
         AsyncRequestOperation<StartBifGenerationRequest, StartBifGenerationResponse> operation
-              = new StartBifGeneration.Async(sdkConfiguration);
+              = new StartBifGeneration.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1006,6 +2433,8 @@ public class AsyncLibrary {
      * Intro detect an item
      * 
      * <p>Start the detection of intros in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1018,12 +2447,31 @@ public class AsyncLibrary {
      * 
      * <p>Start the detection of intros in a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DetectIntrosResponse&gt; - The async response
+     * @return {@code CompletableFuture<DetectIntrosResponse>} - The async response
      */
     public CompletableFuture<DetectIntrosResponse> detectIntros(DetectIntrosRequest request) {
+        return detectIntros(request, Optional.empty());
+    }
+
+    /**
+     * Intro detect an item
+     * 
+     * <p>Start the detection of intros in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DetectIntrosResponse>} - The async response
+     */
+    public CompletableFuture<DetectIntrosResponse> detectIntros(DetectIntrosRequest request, Optional<Options> options) {
         AsyncRequestOperation<DetectIntrosRequest, DetectIntrosResponse> operation
-              = new DetectIntros.Async(sdkConfiguration);
+              = new DetectIntros.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1046,11 +2494,26 @@ public class AsyncLibrary {
      * <p>Create a marker for this user on the metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CreateMarkerResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreateMarkerResponse>} - The async response
      */
     public CompletableFuture<CreateMarkerResponse> createMarker(CreateMarkerRequest request) {
+        return createMarker(request, Optional.empty());
+    }
+
+    /**
+     * Create a marker
+     * 
+     * <p>Create a marker for this user on the metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateMarkerResponse>} - The async response
+     */
+    public CompletableFuture<CreateMarkerResponse> createMarker(CreateMarkerRequest request, Optional<Options> options) {
         AsyncRequestOperation<CreateMarkerRequest, CreateMarkerResponse> operation
-              = new CreateMarker.Async(sdkConfiguration);
+              = new CreateMarker.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1060,6 +2523,8 @@ public class AsyncLibrary {
      * Match a metadata item
      * 
      * <p>Match a metadata item to a guid
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1072,12 +2537,31 @@ public class AsyncLibrary {
      * 
      * <p>Match a metadata item to a guid
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;MatchItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<MatchItemResponse>} - The async response
      */
     public CompletableFuture<MatchItemResponse> matchItem(MatchItemRequest request) {
+        return matchItem(request, Optional.empty());
+    }
+
+    /**
+     * Match a metadata item
+     * 
+     * <p>Match a metadata item to a guid
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MatchItemResponse>} - The async response
+     */
+    public CompletableFuture<MatchItemResponse> matchItem(MatchItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<MatchItemRequest, MatchItemResponse> operation
-              = new MatchItem.Async(sdkConfiguration);
+              = new MatchItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1087,6 +2571,8 @@ public class AsyncLibrary {
      * Get metadata matches for an item
      * 
      * <p>Get the list of metadata matches for a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1099,12 +2585,31 @@ public class AsyncLibrary {
      * 
      * <p>Get the list of metadata matches for a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListMatchesResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListMatchesResponse>} - The async response
      */
     public CompletableFuture<ListMatchesResponse> listMatches(ListMatchesRequest request) {
+        return listMatches(request, Optional.empty());
+    }
+
+    /**
+     * Get metadata matches for an item
+     * 
+     * <p>Get the list of metadata matches for a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListMatchesResponse>} - The async response
+     */
+    public CompletableFuture<ListMatchesResponse> listMatches(ListMatchesRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListMatchesRequest, ListMatchesResponse> operation
-              = new ListMatches.Async(sdkConfiguration);
+              = new ListMatches.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1114,6 +2619,8 @@ public class AsyncLibrary {
      * Merge a metadata item
      * 
      * <p>Merge a metadata item with other items
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1126,39 +2633,31 @@ public class AsyncLibrary {
      * 
      * <p>Merge a metadata item with other items
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;MergeItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<MergeItemsResponse>} - The async response
      */
     public CompletableFuture<MergeItemsResponse> mergeItems(MergeItemsRequest request) {
-        AsyncRequestOperation<MergeItemsRequest, MergeItemsResponse> operation
-              = new MergeItems.Async(sdkConfiguration);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Get nearest tracks to metadata item
-     * 
-     * <p>Get the nearest tracks, sonically, to the provided track
-     * 
-     * @return The async call builder
-     */
-    public ListSonicallySimilarRequestBuilder listSonicallySimilar() {
-        return new ListSonicallySimilarRequestBuilder(sdkConfiguration);
+        return mergeItems(request, Optional.empty());
     }
 
     /**
-     * Get nearest tracks to metadata item
+     * Merge a metadata item
      * 
-     * <p>Get the nearest tracks, sonically, to the provided track
+     * <p>Merge a metadata item with other items
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListSonicallySimilarResponse&gt; - The async response
+     * @param options additional options
+     * @return {@code CompletableFuture<MergeItemsResponse>} - The async response
      */
-    public CompletableFuture<ListSonicallySimilarResponse> listSonicallySimilar(ListSonicallySimilarRequest request) {
-        AsyncRequestOperation<ListSonicallySimilarRequest, ListSonicallySimilarResponse> operation
-              = new ListSonicallySimilar.Async(sdkConfiguration);
+    public CompletableFuture<MergeItemsResponse> mergeItems(MergeItemsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<MergeItemsRequest, MergeItemsResponse> operation
+              = new MergeItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1168,6 +2667,8 @@ public class AsyncLibrary {
      * Set metadata preferences
      * 
      * <p>Set the preferences on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1180,12 +2681,31 @@ public class AsyncLibrary {
      * 
      * <p>Set the preferences on a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetItemPreferencesResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetItemPreferencesResponse>} - The async response
      */
     public CompletableFuture<SetItemPreferencesResponse> setItemPreferences(SetItemPreferencesRequest request) {
+        return setItemPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set metadata preferences
+     * 
+     * <p>Set the preferences on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetItemPreferencesResponse>} - The async response
+     */
+    public CompletableFuture<SetItemPreferencesResponse> setItemPreferences(SetItemPreferencesRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetItemPreferencesRequest, SetItemPreferencesResponse> operation
-              = new SetItemPreferences.Async(sdkConfiguration);
+              = new SetItemPreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1195,6 +2715,8 @@ public class AsyncLibrary {
      * Refresh a metadata item
      * 
      * <p>Refresh a metadata item from the agent
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1207,12 +2729,31 @@ public class AsyncLibrary {
      * 
      * <p>Refresh a metadata item from the agent
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;RefreshItemsMetadataResponse&gt; - The async response
+     * @return {@code CompletableFuture<RefreshItemsMetadataResponse>} - The async response
      */
     public CompletableFuture<RefreshItemsMetadataResponse> refreshItemsMetadata(RefreshItemsMetadataRequest request) {
+        return refreshItemsMetadata(request, Optional.empty());
+    }
+
+    /**
+     * Refresh a metadata item
+     * 
+     * <p>Refresh a metadata item from the agent
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshItemsMetadataResponse>} - The async response
+     */
+    public CompletableFuture<RefreshItemsMetadataResponse> refreshItemsMetadata(RefreshItemsMetadataRequest request, Optional<Options> options) {
         AsyncRequestOperation<RefreshItemsMetadataRequest, RefreshItemsMetadataResponse> operation
-              = new RefreshItemsMetadata.Async(sdkConfiguration);
+              = new RefreshItemsMetadata.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1235,11 +2776,26 @@ public class AsyncLibrary {
      * <p>Get a hub of related items to a metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetRelatedItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetRelatedItemsResponse>} - The async response
      */
     public CompletableFuture<GetRelatedItemsResponse> getRelatedItems(GetRelatedItemsRequest request) {
+        return getRelatedItems(request, Optional.empty());
+    }
+
+    /**
+     * Get related items
+     * 
+     * <p>Get a hub of related items to a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetRelatedItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetRelatedItemsResponse> getRelatedItems(GetRelatedItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetRelatedItemsRequest, GetRelatedItemsResponse> operation
-              = new GetRelatedItems.Async(sdkConfiguration);
+              = new GetRelatedItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1262,11 +2818,26 @@ public class AsyncLibrary {
      * <p>Get a list of similar items to a metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListSimilarResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListSimilarResponse>} - The async response
      */
     public CompletableFuture<ListSimilarResponse> listSimilar(ListSimilarRequest request) {
+        return listSimilar(request, Optional.empty());
+    }
+
+    /**
+     * Get similar items
+     * 
+     * <p>Get a list of similar items to a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListSimilarResponse>} - The async response
+     */
+    public CompletableFuture<ListSimilarResponse> listSimilar(ListSimilarRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListSimilarRequest, ListSimilarResponse> operation
-              = new ListSimilar.Async(sdkConfiguration);
+              = new ListSimilar.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1276,6 +2847,8 @@ public class AsyncLibrary {
      * Split a metadata item
      * 
      * <p>Split a metadata item into multiple items
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1288,39 +2861,79 @@ public class AsyncLibrary {
      * 
      * <p>Split a metadata item into multiple items
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SplitItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<SplitItemResponse>} - The async response
      */
     public CompletableFuture<SplitItemResponse> splitItem(SplitItemRequest request) {
+        return splitItem(request, Optional.empty());
+    }
+
+    /**
+     * Split a metadata item
+     * 
+     * <p>Split a metadata item into multiple items
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SplitItemResponse>} - The async response
+     */
+    public CompletableFuture<SplitItemResponse> splitItem(SplitItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<SplitItemRequest, SplitItemResponse> operation
-              = new SplitItem.Async(sdkConfiguration);
+              = new SplitItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Add subtitles
+     * Get subtitles
      * 
      * <p>Add a subtitle to a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
-    public AddSubtitlesRequestBuilder addSubtitles() {
-        return new AddSubtitlesRequestBuilder(sdkConfiguration);
+    public GetSubtitlesRequestBuilder getSubtitles() {
+        return new GetSubtitlesRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Add subtitles
+     * Get subtitles
      * 
      * <p>Add a subtitle to a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddSubtitlesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSubtitlesResponse>} - The async response
      */
-    public CompletableFuture<AddSubtitlesResponse> addSubtitles(AddSubtitlesRequest request) {
-        AsyncRequestOperation<AddSubtitlesRequest, AddSubtitlesResponse> operation
-              = new AddSubtitles.Async(sdkConfiguration);
+    public CompletableFuture<GetSubtitlesResponse> getSubtitles(GetSubtitlesRequest request) {
+        return getSubtitles(request, Optional.empty());
+    }
+
+    /**
+     * Get subtitles
+     * 
+     * <p>Add a subtitle to a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSubtitlesResponse>} - The async response
+     */
+    public CompletableFuture<GetSubtitlesResponse> getSubtitles(GetSubtitlesRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSubtitlesRequest, GetSubtitlesResponse> operation
+              = new GetSubtitles.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1343,11 +2956,26 @@ public class AsyncLibrary {
      * <p>Get a tree of metadata items, such as the seasons/episodes of a show
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetItemTreeResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetItemTreeResponse>} - The async response
      */
     public CompletableFuture<GetItemTreeResponse> getItemTree(GetItemTreeRequest request) {
+        return getItemTree(request, Optional.empty());
+    }
+
+    /**
+     * Get metadata items as a tree
+     * 
+     * <p>Get a tree of metadata items, such as the seasons/episodes of a show
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetItemTreeResponse>} - The async response
+     */
+    public CompletableFuture<GetItemTreeResponse> getItemTree(GetItemTreeRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetItemTreeRequest, GetItemTreeResponse> operation
-              = new GetItemTree.Async(sdkConfiguration);
+              = new GetItemTree.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1357,6 +2985,8 @@ public class AsyncLibrary {
      * Unmatch a metadata item
      * 
      * <p>Unmatch a metadata item to info fetched from the agent
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1369,12 +2999,31 @@ public class AsyncLibrary {
      * 
      * <p>Unmatch a metadata item to info fetched from the agent
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;UnmatchResponse&gt; - The async response
+     * @return {@code CompletableFuture<UnmatchResponse>} - The async response
      */
     public CompletableFuture<UnmatchResponse> unmatch(UnmatchRequest request) {
+        return unmatch(request, Optional.empty());
+    }
+
+    /**
+     * Unmatch a metadata item
+     * 
+     * <p>Unmatch a metadata item to info fetched from the agent
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UnmatchResponse>} - The async response
+     */
+    public CompletableFuture<UnmatchResponse> unmatch(UnmatchRequest request, Optional<Options> options) {
         AsyncRequestOperation<UnmatchRequest, UnmatchResponse> operation
-              = new Unmatch.Async(sdkConfiguration);
+              = new Unmatch.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1384,6 +3033,8 @@ public class AsyncLibrary {
      * Get metadata top users
      * 
      * <p>Get the list of users which have played this item starting with the most
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1396,12 +3047,31 @@ public class AsyncLibrary {
      * 
      * <p>Get the list of users which have played this item starting with the most
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListTopUsersResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListTopUsersResponse>} - The async response
      */
     public CompletableFuture<ListTopUsersResponse> listTopUsers(ListTopUsersRequest request) {
+        return listTopUsers(request, Optional.empty());
+    }
+
+    /**
+     * Get metadata top users
+     * 
+     * <p>Get the list of users which have played this item starting with the most
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListTopUsersResponse>} - The async response
+     */
+    public CompletableFuture<ListTopUsersResponse> listTopUsers(ListTopUsersRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListTopUsersRequest, ListTopUsersResponse> operation
-              = new ListTopUsers.Async(sdkConfiguration);
+              = new ListTopUsers.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1411,6 +3081,8 @@ public class AsyncLibrary {
      * Detect voice activity
      * 
      * <p>Start the detection of voice in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1423,12 +3095,31 @@ public class AsyncLibrary {
      * 
      * <p>Start the detection of voice in a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DetectVoiceActivityResponse&gt; - The async response
+     * @return {@code CompletableFuture<DetectVoiceActivityResponse>} - The async response
      */
     public CompletableFuture<DetectVoiceActivityResponse> detectVoiceActivity(DetectVoiceActivityRequest request) {
+        return detectVoiceActivity(request, Optional.empty());
+    }
+
+    /**
+     * Detect voice activity
+     * 
+     * <p>Start the detection of voice in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DetectVoiceActivityResponse>} - The async response
+     */
+    public CompletableFuture<DetectVoiceActivityResponse> detectVoiceActivity(DetectVoiceActivityRequest request, Optional<Options> options) {
         AsyncRequestOperation<DetectVoiceActivityRequest, DetectVoiceActivityResponse> operation
-              = new DetectVoiceActivity.Async(sdkConfiguration);
+              = new DetectVoiceActivity.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1451,11 +3142,26 @@ public class AsyncLibrary {
      * <p>Get augmentation status and potentially wait for completion
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetAugmentationStatusResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAugmentationStatusResponse>} - The async response
      */
     public CompletableFuture<GetAugmentationStatusResponse> getAugmentationStatus(GetAugmentationStatusRequest request) {
+        return getAugmentationStatus(request, Optional.empty());
+    }
+
+    /**
+     * Get augmentation status
+     * 
+     * <p>Get augmentation status and potentially wait for completion
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAugmentationStatusResponse>} - The async response
+     */
+    public CompletableFuture<GetAugmentationStatusResponse> getAugmentationStatus(GetAugmentationStatusRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetAugmentationStatusRequest, GetAugmentationStatusResponse> operation
-              = new GetAugmentationStatus.Async(sdkConfiguration);
+              = new GetAugmentationStatus.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1478,11 +3184,26 @@ public class AsyncLibrary {
      * <p>Set which streams (audio/subtitle) are selected by this user
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetStreamSelectionResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetStreamSelectionResponse>} - The async response
      */
     public CompletableFuture<SetStreamSelectionResponse> setStreamSelection(SetStreamSelectionRequest request) {
+        return setStreamSelection(request, Optional.empty());
+    }
+
+    /**
+     * Set stream selection
+     * 
+     * <p>Set which streams (audio/subtitle) are selected by this user
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetStreamSelectionResponse>} - The async response
+     */
+    public CompletableFuture<SetStreamSelectionResponse> setStreamSelection(SetStreamSelectionRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetStreamSelectionRequest, SetStreamSelectionResponse> operation
-              = new SetStreamSelection.Async(sdkConfiguration);
+              = new SetStreamSelection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1505,11 +3226,26 @@ public class AsyncLibrary {
      * <p>Get details for a single actor.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPersonResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPersonResponse>} - The async response
      */
     public CompletableFuture<GetPersonResponse> getPerson(GetPersonRequest request) {
+        return getPerson(request, Optional.empty());
+    }
+
+    /**
+     * Get person details
+     * 
+     * <p>Get details for a single actor.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPersonResponse>} - The async response
+     */
+    public CompletableFuture<GetPersonResponse> getPerson(GetPersonRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPersonRequest, GetPersonResponse> operation
-              = new GetPerson.Async(sdkConfiguration);
+              = new GetPerson.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1532,11 +3268,26 @@ public class AsyncLibrary {
      * <p>Get all the media for a single actor.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListPersonMediaResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListPersonMediaResponse>} - The async response
      */
     public CompletableFuture<ListPersonMediaResponse> listPersonMedia(ListPersonMediaRequest request) {
+        return listPersonMedia(request, Optional.empty());
+    }
+
+    /**
+     * Get media for a person
+     * 
+     * <p>Get all the media for a single actor.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListPersonMediaResponse>} - The async response
+     */
+    public CompletableFuture<ListPersonMediaResponse> listPersonMedia(ListPersonMediaRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListPersonMediaRequest, ListPersonMediaResponse> operation
-              = new ListPersonMedia.Async(sdkConfiguration);
+              = new ListPersonMedia.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1546,6 +3297,8 @@ public class AsyncLibrary {
      * Delete a library section
      * 
      * <p>Delete a library section by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1558,12 +3311,31 @@ public class AsyncLibrary {
      * 
      * <p>Delete a library section by id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteLibrarySectionResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteLibrarySectionResponse>} - The async response
      */
     public CompletableFuture<DeleteLibrarySectionResponse> deleteLibrarySection(DeleteLibrarySectionRequest request) {
+        return deleteLibrarySection(request, Optional.empty());
+    }
+
+    /**
+     * Delete a library section
+     * 
+     * <p>Delete a library section by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteLibrarySectionResponse>} - The async response
+     */
+    public CompletableFuture<DeleteLibrarySectionResponse> deleteLibrarySection(DeleteLibrarySectionRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteLibrarySectionRequest, DeleteLibrarySectionResponse> operation
-              = new DeleteLibrarySection.Async(sdkConfiguration);
+              = new DeleteLibrarySection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1572,7 +3344,9 @@ public class AsyncLibrary {
     /**
      * Get a library section by id
      * 
-     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it contains information about the library, rather than content itself. It often contains a list of `Directory` metadata objects: These used to be used by clients to build a menuing system.
+     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it
+     * contains information about the library, rather than content itself. It often contains a list of
+     * `Directory` metadata objects: These used to be used by clients to build a menuing system.
      * 
      * @return The async call builder
      */
@@ -1583,14 +3357,33 @@ public class AsyncLibrary {
     /**
      * Get a library section by id
      * 
-     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it contains information about the library, rather than content itself. It often contains a list of `Directory` metadata objects: These used to be used by clients to build a menuing system.
+     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it
+     * contains information about the library, rather than content itself. It often contains a list of
+     * `Directory` metadata objects: These used to be used by clients to build a menuing system.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetLibraryDetailsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetLibraryDetailsResponse>} - The async response
      */
     public CompletableFuture<GetLibraryDetailsResponse> getLibraryDetails(GetLibraryDetailsRequest request) {
+        return getLibraryDetails(request, Optional.empty());
+    }
+
+    /**
+     * Get a library section by id
+     * 
+     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it
+     * contains information about the library, rather than content itself. It often contains a list of
+     * `Directory` metadata objects: These used to be used by clients to build a menuing system.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLibraryDetailsResponse>} - The async response
+     */
+    public CompletableFuture<GetLibraryDetailsResponse> getLibraryDetails(GetLibraryDetailsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetLibraryDetailsRequest, GetLibraryDetailsResponse> operation
-              = new GetLibraryDetails.Async(sdkConfiguration);
+              = new GetLibraryDetails.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1600,6 +3393,8 @@ public class AsyncLibrary {
      * Edit a library section
      * 
      * <p>Edit a library section by id setting parameters
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1612,12 +3407,79 @@ public class AsyncLibrary {
      * 
      * <p>Edit a library section by id setting parameters
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;EditSectionResponse&gt; - The async response
+     * @return {@code CompletableFuture<EditSectionResponse>} - The async response
      */
     public CompletableFuture<EditSectionResponse> editSection(EditSectionRequest request) {
+        return editSection(request, Optional.empty());
+    }
+
+    /**
+     * Edit a library section
+     * 
+     * <p>Edit a library section by id setting parameters
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EditSectionResponse>} - The async response
+     */
+    public CompletableFuture<EditSectionResponse> editSection(EditSectionRequest request, Optional<Options> options) {
         AsyncRequestOperation<EditSectionRequest, EditSectionResponse> operation
-              = new EditSection.Async(sdkConfiguration);
+              = new EditSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Agents
+     * 
+     * <p>Get available metadata agents for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionAgentsRequestBuilder getSectionAgents() {
+        return new GetSectionAgentsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Agents
+     * 
+     * <p>Get available metadata agents for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionAgentsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionAgentsResponse> getSectionAgents(GetSectionAgentsRequest request) {
+        return getSectionAgents(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Agents
+     * 
+     * <p>Get available metadata agents for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionAgentsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionAgentsResponse> getSectionAgents(GetSectionAgentsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionAgentsRequest, GetSectionAgentsResponse> operation
+              = new GetSectionAgents.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1626,51 +3488,53 @@ public class AsyncLibrary {
     /**
      * Set the fields of the filtered items
      * 
-     * <p>This endpoint takes an large possible set of values.  Here are some examples.
+     * <p>This endpoint takes an large possible set of values. Here are some examples.
      * - **Parameters, extra documentation**
-     *   - artist.title.value
-     *       - When used with track, both artist.title.value and album.title.value need to be specified
-     *   - title.value usage
-     *       - Summary
-     *           - Tracks always rename and never merge
-     *           - Albums and Artists
-     *               - if single item and item without title does not exist, it is renamed.
-     *               - if single item and item with title does exist they are merged.
-     *               - if multiple they are always merged.
-     *       - Tracks
-     *           - Works as expected will update the track's title
-     *           - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
-     *           - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
-     *           - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
-     *       - Albums
-     *           - Functionality changes depending on the existence of an album with the same title
-     *           - Album exists
-     *               - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
-     *                   - Album with id 42 is merged into album titled "Album 2"
-     *               - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
-     *                   - All albums are merged into the existing album titled "Moo Album"
-     *           - Album does not exist
-     *               - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
-     *                   - Album with id 42 has title modified to "NewAlbumTitle"
-     *               - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
-     *                   - All albums are merged into a new album with title="NewAlbumTitle"
-     *       - Artists
-     *           - Functionaly changes depending on the existence of an artist with the same title.
-     *           - Artist exists
-     *               - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
-     *                   - Artist with id 42 is merged into existing artist titled "Artist 2"
-     *               - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
-     *                   - All artists are merged into the existing artist titled "Artist 3"
-     *           - Artist does not exist
-     *               - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
-     *                   - Artist with id 42 has title modified to "NewArtistTitle"
-     *               - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
-     *                   - All artists are merged into a new artist with title="NewArtistTitle"
+     * - artist.title.value
+     * - When used with track, both artist.title.value and album.title.value need to be specified
+     * - title.value usage
+     * - Summary
+     * - Tracks always rename and never merge
+     * - Albums and Artists
+     * - if single item and item without title does not exist, it is renamed.
+     * - if single item and item with title does exist they are merged.
+     * - if multiple they are always merged.
+     * - Tracks
+     * - Works as expected will update the track's title
+     * - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
+     * - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
+     * - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
+     * - Albums
+     * - Functionality changes depending on the existence of an album with the same title
+     * - Album exists
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
+     * - Album with id 42 is merged into album titled "Album 2"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
+     * - All albums are merged into the existing album titled "Moo Album"
+     * - Album does not exist
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
+     * - Album with id 42 has title modified to "NewAlbumTitle"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
+     * - All albums are merged into a new album with title="NewAlbumTitle"
+     * - Artists
+     * - Functionaly changes depending on the existence of an artist with the same title.
+     * - Artist exists
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
+     * - Artist with id 42 is merged into existing artist titled "Artist 2"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
+     * - All artists are merged into the existing artist titled "Artist 3"
+     * - Artist does not exist
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
+     * - Artist with id 42 has title modified to "NewArtistTitle"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
+     * - All artists are merged into a new artist with title="NewArtistTitle"
      * 
      * <p>- **Notes**
-     *     - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
-     *     - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later, is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only place where square bracket characters are allowed in the URI syntax.
-     *     - Escaped square brackets are allowed, but don't render well
+     * - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
+     * - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later,
+     * is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only
+     * place where square bracket characters are allowed in the URI syntax.
+     * - Escaped square brackets are allowed, but don't render well
      * 
      * @return The async call builder
      */
@@ -1681,58 +3545,121 @@ public class AsyncLibrary {
     /**
      * Set the fields of the filtered items
      * 
-     * <p>This endpoint takes an large possible set of values.  Here are some examples.
+     * <p>This endpoint takes an large possible set of values. Here are some examples.
      * - **Parameters, extra documentation**
-     *   - artist.title.value
-     *       - When used with track, both artist.title.value and album.title.value need to be specified
-     *   - title.value usage
-     *       - Summary
-     *           - Tracks always rename and never merge
-     *           - Albums and Artists
-     *               - if single item and item without title does not exist, it is renamed.
-     *               - if single item and item with title does exist they are merged.
-     *               - if multiple they are always merged.
-     *       - Tracks
-     *           - Works as expected will update the track's title
-     *           - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
-     *           - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
-     *           - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
-     *       - Albums
-     *           - Functionality changes depending on the existence of an album with the same title
-     *           - Album exists
-     *               - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
-     *                   - Album with id 42 is merged into album titled "Album 2"
-     *               - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
-     *                   - All albums are merged into the existing album titled "Moo Album"
-     *           - Album does not exist
-     *               - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
-     *                   - Album with id 42 has title modified to "NewAlbumTitle"
-     *               - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
-     *                   - All albums are merged into a new album with title="NewAlbumTitle"
-     *       - Artists
-     *           - Functionaly changes depending on the existence of an artist with the same title.
-     *           - Artist exists
-     *               - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
-     *                   - Artist with id 42 is merged into existing artist titled "Artist 2"
-     *               - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
-     *                   - All artists are merged into the existing artist titled "Artist 3"
-     *           - Artist does not exist
-     *               - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
-     *                   - Artist with id 42 has title modified to "NewArtistTitle"
-     *               - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
-     *                   - All artists are merged into a new artist with title="NewArtistTitle"
+     * - artist.title.value
+     * - When used with track, both artist.title.value and album.title.value need to be specified
+     * - title.value usage
+     * - Summary
+     * - Tracks always rename and never merge
+     * - Albums and Artists
+     * - if single item and item without title does not exist, it is renamed.
+     * - if single item and item with title does exist they are merged.
+     * - if multiple they are always merged.
+     * - Tracks
+     * - Works as expected will update the track's title
+     * - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
+     * - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
+     * - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
+     * - Albums
+     * - Functionality changes depending on the existence of an album with the same title
+     * - Album exists
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
+     * - Album with id 42 is merged into album titled "Album 2"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
+     * - All albums are merged into the existing album titled "Moo Album"
+     * - Album does not exist
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
+     * - Album with id 42 has title modified to "NewAlbumTitle"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
+     * - All albums are merged into a new album with title="NewAlbumTitle"
+     * - Artists
+     * - Functionaly changes depending on the existence of an artist with the same title.
+     * - Artist exists
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
+     * - Artist with id 42 is merged into existing artist titled "Artist 2"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
+     * - All artists are merged into the existing artist titled "Artist 3"
+     * - Artist does not exist
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
+     * - Artist with id 42 has title modified to "NewArtistTitle"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
+     * - All artists are merged into a new artist with title="NewArtistTitle"
      * 
      * <p>- **Notes**
-     *     - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
-     *     - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later, is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only place where square bracket characters are allowed in the URI syntax.
-     *     - Escaped square brackets are allowed, but don't render well
+     * - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
+     * - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later,
+     * is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only
+     * place where square bracket characters are allowed in the URI syntax.
+     * - Escaped square brackets are allowed, but don't render well
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;UpdateItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<UpdateItemsResponse>} - The async response
      */
     public CompletableFuture<UpdateItemsResponse> updateItems(UpdateItemsRequest request) {
+        return updateItems(request, Optional.empty());
+    }
+
+    /**
+     * Set the fields of the filtered items
+     * 
+     * <p>This endpoint takes an large possible set of values. Here are some examples.
+     * - **Parameters, extra documentation**
+     * - artist.title.value
+     * - When used with track, both artist.title.value and album.title.value need to be specified
+     * - title.value usage
+     * - Summary
+     * - Tracks always rename and never merge
+     * - Albums and Artists
+     * - if single item and item without title does not exist, it is renamed.
+     * - if single item and item with title does exist they are merged.
+     * - if multiple they are always merged.
+     * - Tracks
+     * - Works as expected will update the track's title
+     * - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
+     * - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
+     * - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
+     * - Albums
+     * - Functionality changes depending on the existence of an album with the same title
+     * - Album exists
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
+     * - Album with id 42 is merged into album titled "Album 2"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
+     * - All albums are merged into the existing album titled "Moo Album"
+     * - Album does not exist
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
+     * - Album with id 42 has title modified to "NewAlbumTitle"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
+     * - All albums are merged into a new album with title="NewAlbumTitle"
+     * - Artists
+     * - Functionaly changes depending on the existence of an artist with the same title.
+     * - Artist exists
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
+     * - Artist with id 42 is merged into existing artist titled "Artist 2"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
+     * - All artists are merged into the existing artist titled "Artist 3"
+     * - Artist does not exist
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
+     * - Artist with id 42 has title modified to "NewArtistTitle"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
+     * - All artists are merged into a new artist with title="NewArtistTitle"
+     * 
+     * <p>- **Notes**
+     * - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
+     * - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later,
+     * is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only
+     * place where square bracket characters are allowed in the URI syntax.
+     * - Escaped square brackets are allowed, but don't render well
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateItemsResponse>} - The async response
+     */
+    public CompletableFuture<UpdateItemsResponse> updateItems(UpdateItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<UpdateItemsRequest, UpdateItemsResponse> operation
-              = new UpdateItems.Async(sdkConfiguration);
+              = new UpdateItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1741,7 +3668,10 @@ public class AsyncLibrary {
     /**
      * Analyze a section
      * 
-     * <p>Start analysis of all items in a section.  If BIF generation is enabled, this will also be started on this section
+     * <p>Start analysis of all items in a section. If BIF generation is enabled, this will also be started on
+     * this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1752,14 +3682,83 @@ public class AsyncLibrary {
     /**
      * Analyze a section
      * 
-     * <p>Start analysis of all items in a section.  If BIF generation is enabled, this will also be started on this section
+     * <p>Start analysis of all items in a section. If BIF generation is enabled, this will also be started on
+     * this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;StartAnalysisResponse&gt; - The async response
+     * @return {@code CompletableFuture<StartAnalysisResponse>} - The async response
      */
     public CompletableFuture<StartAnalysisResponse> startAnalysis(StartAnalysisRequest request) {
+        return startAnalysis(request, Optional.empty());
+    }
+
+    /**
+     * Analyze a section
+     * 
+     * <p>Start analysis of all items in a section. If BIF generation is enabled, this will also be started on
+     * this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<StartAnalysisResponse>} - The async response
+     */
+    public CompletableFuture<StartAnalysisResponse> startAnalysis(StartAnalysisRequest request, Optional<Options> options) {
         AsyncRequestOperation<StartAnalysisRequest, StartAnalysisResponse> operation
-              = new StartAnalysis.Async(sdkConfiguration);
+              = new StartAnalysis.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Artists
+     * 
+     * <p>Get artists for a music library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionArtistsRequestBuilder getSectionArtists() {
+        return new GetSectionArtistsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Artists
+     * 
+     * <p>Get artists for a music library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionArtistsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionArtistsResponse> getSectionArtists(GetSectionArtistsRequest request) {
+        return getSectionArtists(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Artists
+     * 
+     * <p>Get artists for a music library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionArtistsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionArtistsResponse> getSectionArtists(GetSectionArtistsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionArtistsRequest, GetSectionArtistsResponse> operation
+              = new GetSectionArtists.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1768,8 +3767,10 @@ public class AsyncLibrary {
     /**
      * Get autocompletions for search
      * 
-     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example `genre.query` or `title.query`.
-     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`.  In the results, a `{field}.queryRange` will be present to express the range of the match
+     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example
+     * `genre.query` or `title.query`.
+     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`. In the
+     * results, a `{field}.queryRange` will be present to express the range of the match
      * 
      * @return The async call builder
      */
@@ -1780,15 +3781,323 @@ public class AsyncLibrary {
     /**
      * Get autocompletions for search
      * 
-     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example `genre.query` or `title.query`.
-     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`.  In the results, a `{field}.queryRange` will be present to express the range of the match
+     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example
+     * `genre.query` or `title.query`.
+     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`. In the
+     * results, a `{field}.queryRange` will be present to express the range of the match
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AutocompleteResponse&gt; - The async response
+     * @return {@code CompletableFuture<AutocompleteResponse>} - The async response
      */
     public CompletableFuture<AutocompleteResponse> autocomplete(AutocompleteRequest request) {
+        return autocomplete(request, Optional.empty());
+    }
+
+    /**
+     * Get autocompletions for search
+     * 
+     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example
+     * `genre.query` or `title.query`.
+     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`. In the
+     * results, a `{field}.queryRange` will be present to express the range of the match
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AutocompleteResponse>} - The async response
+     */
+    public CompletableFuture<AutocompleteResponse> autocomplete(AutocompleteRequest request, Optional<Options> options) {
         AsyncRequestOperation<AutocompleteRequest, AutocompleteResponse> operation
-              = new Autocomplete.Async(sdkConfiguration);
+              = new Autocomplete.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get By Content Rating
+     * 
+     * <p>Browse items in a library section grouped by content rating.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetByContentRatingRequestBuilder getByContentRating() {
+        return new GetByContentRatingRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Content Rating
+     * 
+     * <p>Browse items in a library section grouped by content rating.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetByContentRatingResponse>} - The async response
+     */
+    public CompletableFuture<GetByContentRatingResponse> getByContentRating(GetByContentRatingRequest request) {
+        return getByContentRating(request, Optional.empty());
+    }
+
+    /**
+     * Get By Content Rating
+     * 
+     * <p>Browse items in a library section grouped by content rating.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetByContentRatingResponse>} - The async response
+     */
+    public CompletableFuture<GetByContentRatingResponse> getByContentRating(GetByContentRatingRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetByContentRatingRequest, GetByContentRatingResponse> operation
+              = new GetByContentRating.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get By Decade
+     * 
+     * <p>Browse items in a library section grouped by decade.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetByDecadeRequestBuilder getByDecade() {
+        return new GetByDecadeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Decade
+     * 
+     * <p>Browse items in a library section grouped by decade.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetByDecadeResponse>} - The async response
+     */
+    public CompletableFuture<GetByDecadeResponse> getByDecade(GetByDecadeRequest request) {
+        return getByDecade(request, Optional.empty());
+    }
+
+    /**
+     * Get By Decade
+     * 
+     * <p>Browse items in a library section grouped by decade.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetByDecadeResponse>} - The async response
+     */
+    public CompletableFuture<GetByDecadeResponse> getByDecade(GetByDecadeRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetByDecadeRequest, GetByDecadeResponse> operation
+              = new GetByDecade.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get By Folder
+     * 
+     * <p>Browse items in a library section by underlying filesystem folder.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetByFolderRequestBuilder getByFolder() {
+        return new GetByFolderRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Folder
+     * 
+     * <p>Browse items in a library section by underlying filesystem folder.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetByFolderResponse>} - The async response
+     */
+    public CompletableFuture<GetByFolderResponse> getByFolder(GetByFolderRequest request) {
+        return getByFolder(request, Optional.empty());
+    }
+
+    /**
+     * Get By Folder
+     * 
+     * <p>Browse items in a library section by underlying filesystem folder.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetByFolderResponse>} - The async response
+     */
+    public CompletableFuture<GetByFolderResponse> getByFolder(GetByFolderRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetByFolderRequest, GetByFolderResponse> operation
+              = new GetByFolder.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get By Resolution
+     * 
+     * <p>Browse items in a library section grouped by resolution.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetByResolutionRequestBuilder getByResolution() {
+        return new GetByResolutionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Resolution
+     * 
+     * <p>Browse items in a library section grouped by resolution.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetByResolutionResponse>} - The async response
+     */
+    public CompletableFuture<GetByResolutionResponse> getByResolution(GetByResolutionRequest request) {
+        return getByResolution(request, Optional.empty());
+    }
+
+    /**
+     * Get By Resolution
+     * 
+     * <p>Browse items in a library section grouped by resolution.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetByResolutionResponse>} - The async response
+     */
+    public CompletableFuture<GetByResolutionResponse> getByResolution(GetByResolutionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetByResolutionRequest, GetByResolutionResponse> operation
+              = new GetByResolution.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get By Year
+     * 
+     * <p>Browse items in a library section grouped by year.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetByYearRequestBuilder getByYear() {
+        return new GetByYearRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Year
+     * 
+     * <p>Browse items in a library section grouped by year.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetByYearResponse>} - The async response
+     */
+    public CompletableFuture<GetByYearResponse> getByYear(GetByYearRequest request) {
+        return getByYear(request, Optional.empty());
+    }
+
+    /**
+     * Get By Year
+     * 
+     * <p>Browse items in a library section grouped by year.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetByYearResponse>} - The async response
+     */
+    public CompletableFuture<GetByYearResponse> getByYear(GetByYearRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetByYearRequest, GetByYearResponse> operation
+              = new GetByYear.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Clips
+     * 
+     * <p>Get clips for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionClipsRequestBuilder getSectionClips() {
+        return new GetSectionClipsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Clips
+     * 
+     * <p>Get clips for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionClipsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionClipsResponse> getSectionClips(GetSectionClipsRequest request) {
+        return getSectionClips(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Clips
+     * 
+     * <p>Get clips for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionClipsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionClipsResponse> getSectionClips(GetSectionClipsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionClipsRequest, GetSectionClipsResponse> operation
+              = new GetSectionClips.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1811,11 +4120,26 @@ public class AsyncLibrary {
      * <p>Get all collections in a section
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetCollectionsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetCollectionsResponse>} - The async response
      */
     public CompletableFuture<GetCollectionsResponse> getCollections(GetCollectionsRequest request) {
+        return getCollections(request, Optional.empty());
+    }
+
+    /**
+     * Get collections in a section
+     * 
+     * <p>Get all collections in a section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCollectionsResponse>} - The async response
+     */
+    public CompletableFuture<GetCollectionsResponse> getCollections(GetCollectionsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetCollectionsRequest, GetCollectionsResponse> operation
-              = new GetCollections.Async(sdkConfiguration);
+              = new GetCollections.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1824,7 +4148,8 @@ public class AsyncLibrary {
     /**
      * Get common fields for items
      * 
-     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the provided filter
+     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the
+     * provided filter
      * Fields which are not common will be expressed in the `mixedFields` field
      * 
      * @return The async call builder
@@ -1836,15 +4161,225 @@ public class AsyncLibrary {
     /**
      * Get common fields for items
      * 
-     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the provided filter
+     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the
+     * provided filter
      * Fields which are not common will be expressed in the `mixedFields` field
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetCommonResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetCommonResponse>} - The async response
      */
     public CompletableFuture<GetCommonResponse> getCommon(GetCommonRequest request) {
+        return getCommon(request, Optional.empty());
+    }
+
+    /**
+     * Get common fields for items
+     * 
+     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the
+     * provided filter
+     * Fields which are not common will be expressed in the `mixedFields` field
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCommonResponse>} - The async response
+     */
+    public CompletableFuture<GetCommonResponse> getCommon(GetCommonRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetCommonRequest, GetCommonResponse> operation
-              = new GetCommon.Async(sdkConfiguration);
+              = new GetCommon.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Edit Section
+     * 
+     * <p>Get library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionEditRequestBuilder getSectionEdit() {
+        return new GetSectionEditRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Get library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionEditResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionEditResponse> getSectionEdit(GetSectionEditRequest request) {
+        return getSectionEdit(request, Optional.empty());
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Get library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionEditResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionEditResponse> getSectionEdit(GetSectionEditRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionEditRequest, GetSectionEditResponse> operation
+              = new GetSectionEdit.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Edit Section
+     * 
+     * <p>Update library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public EditLibrarySectionRequestBuilder editLibrarySection() {
+        return new EditLibrarySectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Update library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<EditLibrarySectionResponse>} - The async response
+     */
+    public CompletableFuture<EditLibrarySectionResponse> editLibrarySection(EditLibrarySectionRequest request) {
+        return editLibrarySection(request, Optional.empty());
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Update library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EditLibrarySectionResponse>} - The async response
+     */
+    public CompletableFuture<EditLibrarySectionResponse> editLibrarySection(EditLibrarySectionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<EditLibrarySectionRequest, EditLibrarySectionResponse> operation
+              = new EditLibrarySection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public EmptyTrashRequestBuilder emptyTrash() {
+        return new EmptyTrashRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<EmptyTrashResponse>} - The async response
+     */
+    public CompletableFuture<EmptyTrashResponse> emptyTrash(EmptyTrashRequest request) {
+        return emptyTrash(request, Optional.empty());
+    }
+
+    /**
+     * Get Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EmptyTrashResponse>} - The async response
+     */
+    public CompletableFuture<EmptyTrashResponse> emptyTrash(EmptyTrashRequest request, Optional<Options> options) {
+        AsyncRequestOperation<EmptyTrashRequest, EmptyTrashResponse> operation
+              = new EmptyTrash.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public EmptyTrashPostRequestBuilder emptyTrashPost() {
+        return new EmptyTrashPostRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<EmptyTrashPostResponse>} - The async response
+     */
+    public CompletableFuture<EmptyTrashPostResponse> emptyTrashPost(EmptyTrashPostRequest request) {
+        return emptyTrashPost(request, Optional.empty());
+    }
+
+    /**
+     * Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EmptyTrashPostResponse>} - The async response
+     */
+    public CompletableFuture<EmptyTrashPostResponse> emptyTrashPost(EmptyTrashPostRequest request, Optional<Options> options) {
+        AsyncRequestOperation<EmptyTrashPostRequest, EmptyTrashPostResponse> operation
+              = new EmptyTrashPost.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1855,10 +4390,12 @@ public class AsyncLibrary {
      * 
      * <p>Empty trash in the section, permanently deleting media/metadata for missing media
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The async call builder
      */
-    public EmptyTrashRequestBuilder emptyTrash() {
-        return new EmptyTrashRequestBuilder(sdkConfiguration);
+    public EmptyTrashPutRequestBuilder emptyTrashPut() {
+        return new EmptyTrashPutRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -1866,12 +4403,79 @@ public class AsyncLibrary {
      * 
      * <p>Empty trash in the section, permanently deleting media/metadata for missing media
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;EmptyTrashResponse&gt; - The async response
+     * @return {@code CompletableFuture<EmptyTrashPutResponse>} - The async response
      */
-    public CompletableFuture<EmptyTrashResponse> emptyTrash(EmptyTrashRequest request) {
-        AsyncRequestOperation<EmptyTrashRequest, EmptyTrashResponse> operation
-              = new EmptyTrash.Async(sdkConfiguration);
+    public CompletableFuture<EmptyTrashPutResponse> emptyTrashPut(EmptyTrashPutRequest request) {
+        return emptyTrashPut(request, Optional.empty());
+    }
+
+    /**
+     * Empty section trash
+     * 
+     * <p>Empty trash in the section, permanently deleting media/metadata for missing media
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EmptyTrashPutResponse>} - The async response
+     */
+    public CompletableFuture<EmptyTrashPutResponse> emptyTrashPut(EmptyTrashPutRequest request, Optional<Options> options) {
+        AsyncRequestOperation<EmptyTrashPutRequest, EmptyTrashPutResponse> operation
+              = new EmptyTrashPut.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Episodes
+     * 
+     * <p>Get episodes for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionEpisodesRequestBuilder getSectionEpisodes() {
+        return new GetSectionEpisodesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Episodes
+     * 
+     * <p>Get episodes for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionEpisodesResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionEpisodesResponse> getSectionEpisodes(GetSectionEpisodesRequest request) {
+        return getSectionEpisodes(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Episodes
+     * 
+     * <p>Get episodes for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionEpisodesResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionEpisodesResponse> getSectionEpisodes(GetSectionEpisodesRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionEpisodesRequest, GetSectionEpisodesResponse> operation
+              = new GetSectionEpisodes.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1881,6 +4485,8 @@ public class AsyncLibrary {
      * Get section filters
      * 
      * <p>Get common filters on a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1893,12 +4499,31 @@ public class AsyncLibrary {
      * 
      * <p>Get common filters on a section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSectionFiltersResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSectionFiltersResponse>} - The async response
      */
     public CompletableFuture<GetSectionFiltersResponse> getSectionFilters(GetSectionFiltersRequest request) {
+        return getSectionFilters(request, Optional.empty());
+    }
+
+    /**
+     * Get section filters
+     * 
+     * <p>Get common filters on a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionFiltersResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionFiltersResponse> getSectionFilters(GetSectionFiltersRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSectionFiltersRequest, GetSectionFiltersResponse> operation
-              = new GetSectionFilters.Async(sdkConfiguration);
+              = new GetSectionFilters.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1921,11 +4546,74 @@ public class AsyncLibrary {
      * <p>Get list of first characters in this section
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetFirstCharactersResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetFirstCharactersResponse>} - The async response
      */
     public CompletableFuture<GetFirstCharactersResponse> getFirstCharacters(GetFirstCharactersRequest request) {
+        return getFirstCharacters(request, Optional.empty());
+    }
+
+    /**
+     * Get list of first characters
+     * 
+     * <p>Get list of first characters in this section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetFirstCharactersResponse>} - The async response
+     */
+    public CompletableFuture<GetFirstCharactersResponse> getFirstCharacters(GetFirstCharactersRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetFirstCharactersRequest, GetFirstCharactersResponse> operation
-              = new GetFirstCharacters.Async(sdkConfiguration);
+              = new GetFirstCharacters.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Hubs
+     * 
+     * <p>Get hubs for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetLibrarySectionHubsRequestBuilder getLibrarySectionHubs() {
+        return new GetLibrarySectionHubsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Hubs
+     * 
+     * <p>Get hubs for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetLibrarySectionHubsResponse>} - The async response
+     */
+    public CompletableFuture<GetLibrarySectionHubsResponse> getLibrarySectionHubs(GetLibrarySectionHubsRequest request) {
+        return getLibrarySectionHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Hubs
+     * 
+     * <p>Get hubs for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLibrarySectionHubsResponse>} - The async response
+     */
+    public CompletableFuture<GetLibrarySectionHubsResponse> getLibrarySectionHubs(GetLibrarySectionHubsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetLibrarySectionHubsRequest, GetLibrarySectionHubsResponse> operation
+              = new GetLibrarySectionHubs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1935,6 +4623,8 @@ public class AsyncLibrary {
      * Delete section indexes
      * 
      * <p>Delete all the indexes in a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1947,12 +4637,31 @@ public class AsyncLibrary {
      * 
      * <p>Delete all the indexes in a section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteIndexesResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteIndexesResponse>} - The async response
      */
     public CompletableFuture<DeleteIndexesResponse> deleteIndexes(DeleteIndexesRequest request) {
+        return deleteIndexes(request, Optional.empty());
+    }
+
+    /**
+     * Delete section indexes
+     * 
+     * <p>Delete all the indexes in a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteIndexesResponse>} - The async response
+     */
+    public CompletableFuture<DeleteIndexesResponse> deleteIndexes(DeleteIndexesRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteIndexesRequest, DeleteIndexesResponse> operation
-              = new DeleteIndexes.Async(sdkConfiguration);
+              = new DeleteIndexes.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1962,6 +4671,8 @@ public class AsyncLibrary {
      * Delete section intro markers
      * 
      * <p>Delete all the intro markers in a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -1974,12 +4685,505 @@ public class AsyncLibrary {
      * 
      * <p>Delete all the intro markers in a section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteIntrosResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteIntrosResponse>} - The async response
      */
     public CompletableFuture<DeleteIntrosResponse> deleteIntros(DeleteIntrosRequest request) {
+        return deleteIntros(request, Optional.empty());
+    }
+
+    /**
+     * Delete section intro markers
+     * 
+     * <p>Delete all the intro markers in a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteIntrosResponse>} - The async response
+     */
+    public CompletableFuture<DeleteIntrosResponse> deleteIntros(DeleteIntrosRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteIntrosRequest, DeleteIntrosResponse> operation
-              = new DeleteIntros.Async(sdkConfiguration);
+              = new DeleteIntros.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Labels
+     * 
+     * <p>Get labels for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionLabelsRequestBuilder getSectionLabels() {
+        return new GetSectionLabelsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Labels
+     * 
+     * <p>Get labels for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionLabelsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionLabelsResponse> getSectionLabels(GetSectionLabelsRequest request) {
+        return getSectionLabels(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Labels
+     * 
+     * <p>Get labels for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionLabelsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionLabelsResponse> getSectionLabels(GetSectionLabelsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionLabelsRequest, GetSectionLabelsResponse> operation
+              = new GetSectionLabels.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Match Section Items
+     * 
+     * <p>Match items in a library section against metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public MatchSectionItemsRequestBuilder matchSectionItems() {
+        return new MatchSectionItemsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Match Section Items
+     * 
+     * <p>Match items in a library section against metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<MatchSectionItemsResponse>} - The async response
+     */
+    public CompletableFuture<MatchSectionItemsResponse> matchSectionItems(MatchSectionItemsRequest request) {
+        return matchSectionItems(request, Optional.empty());
+    }
+
+    /**
+     * Match Section Items
+     * 
+     * <p>Match items in a library section against metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MatchSectionItemsResponse>} - The async response
+     */
+    public CompletableFuture<MatchSectionItemsResponse> matchSectionItems(MatchSectionItemsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<MatchSectionItemsRequest, MatchSectionItemsResponse> operation
+              = new MatchSectionItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Move Section
+     * 
+     * <p>Move library section paths.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public MoveSectionRequestBuilder moveSection() {
+        return new MoveSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Move Section
+     * 
+     * <p>Move library section paths.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<MoveSectionResponse>} - The async response
+     */
+    public CompletableFuture<MoveSectionResponse> moveSection(MoveSectionRequest request) {
+        return moveSection(request, Optional.empty());
+    }
+
+    /**
+     * Move Section
+     * 
+     * <p>Move library section paths.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MoveSectionResponse>} - The async response
+     */
+    public CompletableFuture<MoveSectionResponse> moveSection(MoveSectionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<MoveSectionRequest, MoveSectionResponse> operation
+              = new MoveSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Movies
+     * 
+     * <p>Get movies for a movie library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionMoviesRequestBuilder getSectionMovies() {
+        return new GetSectionMoviesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Movies
+     * 
+     * <p>Get movies for a movie library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionMoviesResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionMoviesResponse> getSectionMovies(GetSectionMoviesRequest request) {
+        return getSectionMovies(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Movies
+     * 
+     * <p>Get movies for a movie library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionMoviesResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionMoviesResponse> getSectionMovies(GetSectionMoviesRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionMoviesRequest, GetSectionMoviesResponse> operation
+              = new GetSectionMovies.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Newest for Section
+     * 
+     * <p>Get the newest additions for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetNewestForSectionRequestBuilder getNewestForSection() {
+        return new GetNewestForSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Newest for Section
+     * 
+     * <p>Get the newest additions for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetNewestForSectionResponse>} - The async response
+     */
+    public CompletableFuture<GetNewestForSectionResponse> getNewestForSection(GetNewestForSectionRequest request) {
+        return getNewestForSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Newest for Section
+     * 
+     * <p>Get the newest additions for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetNewestForSectionResponse>} - The async response
+     */
+    public CompletableFuture<GetNewestForSectionResponse> getNewestForSection(GetNewestForSectionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetNewestForSectionRequest, GetNewestForSectionResponse> operation
+              = new GetNewestForSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get On Deck for Section
+     * 
+     * <p>Get the On Deck items for a specific library section.
+     * 
+     * @return The async call builder
+     */
+    public GetOnDeckForSectionRequestBuilder getOnDeckForSection() {
+        return new GetOnDeckForSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get On Deck for Section
+     * 
+     * <p>Get the On Deck items for a specific library section.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetOnDeckForSectionResponse>} - The async response
+     */
+    public CompletableFuture<GetOnDeckForSectionResponse> getOnDeckForSection(GetOnDeckForSectionRequest request) {
+        return getOnDeckForSection(request, Optional.empty());
+    }
+
+    /**
+     * Get On Deck for Section
+     * 
+     * <p>Get the On Deck items for a specific library section.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetOnDeckForSectionResponse>} - The async response
+     */
+    public CompletableFuture<GetOnDeckForSectionResponse> getOnDeckForSection(GetOnDeckForSectionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetOnDeckForSectionRequest, GetOnDeckForSectionResponse> operation
+              = new GetOnDeckForSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public OptimizeSectionRequestBuilder optimizeSection() {
+        return new OptimizeSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<OptimizeSectionResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeSectionResponse> optimizeSection(OptimizeSectionRequest request) {
+        return optimizeSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<OptimizeSectionResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeSectionResponse> optimizeSection(OptimizeSectionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<OptimizeSectionRequest, OptimizeSectionResponse> operation
+              = new OptimizeSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public OptimizeSectionPostRequestBuilder optimizeSectionPost() {
+        return new OptimizeSectionPostRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<OptimizeSectionPostResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeSectionPostResponse> optimizeSectionPost(OptimizeSectionPostRequest request) {
+        return optimizeSectionPost(request, Optional.empty());
+    }
+
+    /**
+     * Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<OptimizeSectionPostResponse>} - The async response
+     */
+    public CompletableFuture<OptimizeSectionPostResponse> optimizeSectionPost(OptimizeSectionPostRequest request, Optional<Options> options) {
+        AsyncRequestOperation<OptimizeSectionPostRequest, OptimizeSectionPostResponse> operation
+              = new OptimizeSectionPost.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Photos
+     * 
+     * <p>Get photos for a photo library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionPhotosRequestBuilder getSectionPhotos() {
+        return new GetSectionPhotosRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Photos
+     * 
+     * <p>Get photos for a photo library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionPhotosResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionPhotosResponse> getSectionPhotos(GetSectionPhotosRequest request) {
+        return getSectionPhotos(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Photos
+     * 
+     * <p>Get photos for a photo library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionPhotosResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionPhotosResponse> getSectionPhotos(GetSectionPhotosRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionPhotosRequest, GetSectionPhotosResponse> operation
+              = new GetSectionPhotos.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Playlists
+     * 
+     * <p>Get playlists belonging to a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionPlaylistsRequestBuilder getSectionPlaylists() {
+        return new GetSectionPlaylistsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Playlists
+     * 
+     * <p>Get playlists belonging to a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionPlaylistsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionPlaylistsResponse> getSectionPlaylists(GetSectionPlaylistsRequest request) {
+        return getSectionPlaylists(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Playlists
+     * 
+     * <p>Get playlists belonging to a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionPlaylistsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionPlaylistsResponse> getSectionPlaylists(GetSectionPlaylistsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionPlaylistsRequest, GetSectionPlaylistsResponse> operation
+              = new GetSectionPlaylists.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2002,11 +5206,26 @@ public class AsyncLibrary {
      * <p>Get the prefs for a section by id and potentially overriding the agent
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSectionPreferencesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSectionPreferencesResponse>} - The async response
      */
     public CompletableFuture<GetSectionPreferencesResponse> getSectionPreferences(GetSectionPreferencesRequest request) {
+        return getSectionPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Get section prefs
+     * 
+     * <p>Get the prefs for a section by id and potentially overriding the agent
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionPreferencesResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionPreferencesResponse> getSectionPreferences(GetSectionPreferencesRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSectionPreferencesRequest, GetSectionPreferencesResponse> operation
-              = new GetSectionPreferences.Async(sdkConfiguration);
+              = new GetSectionPreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2016,6 +5235,8 @@ public class AsyncLibrary {
      * Set section prefs
      * 
      * <p>Set the prefs for a section by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -2028,12 +5249,73 @@ public class AsyncLibrary {
      * 
      * <p>Set the prefs for a section by id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetSectionPreferencesResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetSectionPreferencesResponse>} - The async response
      */
     public CompletableFuture<SetSectionPreferencesResponse> setSectionPreferences(SetSectionPreferencesRequest request) {
+        return setSectionPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set section prefs
+     * 
+     * <p>Set the prefs for a section by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetSectionPreferencesResponse>} - The async response
+     */
+    public CompletableFuture<SetSectionPreferencesResponse> setSectionPreferences(SetSectionPreferencesRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetSectionPreferencesRequest, SetSectionPreferencesResponse> operation
-              = new SetSectionPreferences.Async(sdkConfiguration);
+              = new SetSectionPreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Recently Added for Section
+     * 
+     * <p>Get recently added items for a specific library section.
+     * 
+     * @return The async call builder
+     */
+    public GetRecentlyAddedForSectionRequestBuilder getRecentlyAddedForSection() {
+        return new GetRecentlyAddedForSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Recently Added for Section
+     * 
+     * <p>Get recently added items for a specific library section.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetRecentlyAddedForSectionResponse>} - The async response
+     */
+    public CompletableFuture<GetRecentlyAddedForSectionResponse> getRecentlyAddedForSection(GetRecentlyAddedForSectionRequest request) {
+        return getRecentlyAddedForSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Recently Added for Section
+     * 
+     * <p>Get recently added items for a specific library section.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetRecentlyAddedForSectionResponse>} - The async response
+     */
+    public CompletableFuture<GetRecentlyAddedForSectionResponse> getRecentlyAddedForSection(GetRecentlyAddedForSectionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetRecentlyAddedForSectionRequest, GetRecentlyAddedForSectionResponse> operation
+              = new GetRecentlyAddedForSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2043,6 +5325,8 @@ public class AsyncLibrary {
      * Cancel section refresh
      * 
      * <p>Cancel the refresh of a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -2055,21 +5339,42 @@ public class AsyncLibrary {
      * 
      * <p>Cancel the refresh of a section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CancelRefreshResponse&gt; - The async response
+     * @return {@code CompletableFuture<CancelRefreshResponse>} - The async response
      */
     public CompletableFuture<CancelRefreshResponse> cancelRefresh(CancelRefreshRequest request) {
+        return cancelRefresh(request, Optional.empty());
+    }
+
+    /**
+     * Cancel section refresh
+     * 
+     * <p>Cancel the refresh of a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CancelRefreshResponse>} - The async response
+     */
+    public CompletableFuture<CancelRefreshResponse> cancelRefresh(CancelRefreshRequest request, Optional<Options> options) {
         AsyncRequestOperation<CancelRefreshRequest, CancelRefreshResponse> operation
-              = new CancelRefresh.Async(sdkConfiguration);
+              = new CancelRefresh.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Refresh section
+     * Get Refresh Section
      * 
-     * <p>Start a refresh of this section
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -2078,16 +5383,227 @@ public class AsyncLibrary {
     }
 
     /**
-     * Refresh section
+     * Get Refresh Section
      * 
-     * <p>Start a refresh of this section
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;RefreshSectionResponse&gt; - The async response
+     * @return {@code CompletableFuture<RefreshSectionResponse>} - The async response
      */
     public CompletableFuture<RefreshSectionResponse> refreshSection(RefreshSectionRequest request) {
+        return refreshSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Refresh Section
+     * 
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshSectionResponse>} - The async response
+     */
+    public CompletableFuture<RefreshSectionResponse> refreshSection(RefreshSectionRequest request, Optional<Options> options) {
         AsyncRequestOperation<RefreshSectionRequest, RefreshSectionResponse> operation
-              = new RefreshSection.Async(sdkConfiguration);
+              = new RefreshSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Refresh Section
+     * 
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public RefreshSectionPostRequestBuilder refreshSectionPost() {
+        return new RefreshSectionPostRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Refresh Section
+     * 
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<RefreshSectionPostResponse>} - The async response
+     */
+    public CompletableFuture<RefreshSectionPostResponse> refreshSectionPost(RefreshSectionPostRequest request) {
+        return refreshSectionPost(request, Optional.empty());
+    }
+
+    /**
+     * Refresh Section
+     * 
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshSectionPostResponse>} - The async response
+     */
+    public CompletableFuture<RefreshSectionPostResponse> refreshSectionPost(RefreshSectionPostRequest request, Optional<Options> options) {
+        AsyncRequestOperation<RefreshSectionPostRequest, RefreshSectionPostResponse> operation
+              = new RefreshSectionPost.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Search Section
+     * 
+     * <p>Search within a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public SearchSectionRequestBuilder searchSection() {
+        return new SearchSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Search Section
+     * 
+     * <p>Search within a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<SearchSectionResponse>} - The async response
+     */
+    public CompletableFuture<SearchSectionResponse> searchSection(SearchSectionRequest request) {
+        return searchSection(request, Optional.empty());
+    }
+
+    /**
+     * Search Section
+     * 
+     * <p>Search within a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SearchSectionResponse>} - The async response
+     */
+    public CompletableFuture<SearchSectionResponse> searchSection(SearchSectionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<SearchSectionRequest, SearchSectionResponse> operation
+              = new SearchSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Settings
+     * 
+     * <p>Get section-specific settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionSettingsRequestBuilder getSectionSettings() {
+        return new GetSectionSettingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Settings
+     * 
+     * <p>Get section-specific settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionSettingsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionSettingsResponse> getSectionSettings(GetSectionSettingsRequest request) {
+        return getSectionSettings(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Settings
+     * 
+     * <p>Get section-specific settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionSettingsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionSettingsResponse> getSectionSettings(GetSectionSettingsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionSettingsRequest, GetSectionSettingsResponse> operation
+              = new GetSectionSettings.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Shows
+     * 
+     * <p>Get shows for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionShowsRequestBuilder getSectionShows() {
+        return new GetSectionShowsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Shows
+     * 
+     * <p>Get shows for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionShowsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionShowsResponse> getSectionShows(GetSectionShowsRequest request) {
+        return getSectionShows(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Shows
+     * 
+     * <p>Get shows for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionShowsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionShowsResponse> getSectionShows(GetSectionShowsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionShowsRequest, GetSectionShowsResponse> operation
+              = new GetSectionShows.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2110,11 +5626,218 @@ public class AsyncLibrary {
      * <p>Get the sort mechanisms available in a section
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetAvailableSortsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAvailableSortsResponse>} - The async response
      */
     public CompletableFuture<GetAvailableSortsResponse> getAvailableSorts(GetAvailableSortsRequest request) {
+        return getAvailableSorts(request, Optional.empty());
+    }
+
+    /**
+     * Get a section sorts
+     * 
+     * <p>Get the sort mechanisms available in a section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAvailableSortsResponse>} - The async response
+     */
+    public CompletableFuture<GetAvailableSortsResponse> getAvailableSorts(GetAvailableSortsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetAvailableSortsRequest, GetAvailableSortsResponse> operation
-              = new GetAvailableSorts.Async(sdkConfiguration);
+              = new GetAvailableSorts.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Tags
+     * 
+     * <p>Get tags in a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionTagsRequestBuilder getSectionTags() {
+        return new GetSectionTagsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Tags
+     * 
+     * <p>Get tags in a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionTagsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionTagsResponse> getSectionTags(GetSectionTagsRequest request) {
+        return getSectionTags(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Tags
+     * 
+     * <p>Get tags in a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionTagsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionTagsResponse> getSectionTags(GetSectionTagsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionTagsRequest, GetSectionTagsResponse> operation
+              = new GetSectionTags.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Section Timeline
+     * 
+     * <p>Get section timeline data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionTimelineRequestBuilder getSectionTimeline() {
+        return new GetSectionTimelineRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Timeline
+     * 
+     * <p>Get section timeline data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionTimelineResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionTimelineResponse> getSectionTimeline(GetSectionTimelineRequest request) {
+        return getSectionTimeline(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Timeline
+     * 
+     * <p>Get section timeline data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionTimelineResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionTimelineResponse> getSectionTimeline(GetSectionTimelineRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionTimelineRequest, GetSectionTimelineResponse> operation
+              = new GetSectionTimeline.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Unmatch Section Items
+     * 
+     * <p>Unmatch items in a library section from metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public UnmatchSectionItemsRequestBuilder unmatchSectionItems() {
+        return new UnmatchSectionItemsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Unmatch Section Items
+     * 
+     * <p>Unmatch items in a library section from metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<UnmatchSectionItemsResponse>} - The async response
+     */
+    public CompletableFuture<UnmatchSectionItemsResponse> unmatchSectionItems(UnmatchSectionItemsRequest request) {
+        return unmatchSectionItems(request, Optional.empty());
+    }
+
+    /**
+     * Unmatch Section Items
+     * 
+     * <p>Unmatch items in a library section from metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UnmatchSectionItemsResponse>} - The async response
+     */
+    public CompletableFuture<UnmatchSectionItemsResponse> unmatchSectionItems(UnmatchSectionItemsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<UnmatchSectionItemsRequest, UnmatchSectionItemsResponse> operation
+              = new UnmatchSectionItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Unwatched for Section
+     * 
+     * <p>Get unwatched items for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetUnwatchedForSectionRequestBuilder getUnwatchedForSection() {
+        return new GetUnwatchedForSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Unwatched for Section
+     * 
+     * <p>Get unwatched items for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetUnwatchedForSectionResponse>} - The async response
+     */
+    public CompletableFuture<GetUnwatchedForSectionResponse> getUnwatchedForSection(GetUnwatchedForSectionRequest request) {
+        return getUnwatchedForSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Unwatched for Section
+     * 
+     * <p>Get unwatched items for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetUnwatchedForSectionResponse>} - The async response
+     */
+    public CompletableFuture<GetUnwatchedForSectionResponse> getUnwatchedForSection(GetUnwatchedForSectionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetUnwatchedForSectionRequest, GetUnwatchedForSectionResponse> operation
+              = new GetUnwatchedForSection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2137,11 +5860,26 @@ public class AsyncLibrary {
      * <p>The the loudness of a stream in db, one entry per 100ms
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetStreamLevelsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetStreamLevelsResponse>} - The async response
      */
     public CompletableFuture<GetStreamLevelsResponse> getStreamLevels(GetStreamLevelsRequest request) {
+        return getStreamLevels(request, Optional.empty());
+    }
+
+    /**
+     * Get loudness about a stream in json
+     * 
+     * <p>The the loudness of a stream in db, one entry per 100ms
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetStreamLevelsResponse>} - The async response
+     */
+    public CompletableFuture<GetStreamLevelsResponse> getStreamLevels(GetStreamLevelsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetStreamLevelsRequest, GetStreamLevelsResponse> operation
-              = new GetStreamLevels.Async(sdkConfiguration);
+              = new GetStreamLevels.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2164,11 +5902,26 @@ public class AsyncLibrary {
      * <p>The the loudness of a stream in db, one number per line, one entry per 100ms
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetStreamLoudnessResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetStreamLoudnessResponse>} - The async response
      */
     public CompletableFuture<GetStreamLoudnessResponse> getStreamLoudness(GetStreamLoudnessRequest request) {
+        return getStreamLoudness(request, Optional.empty());
+    }
+
+    /**
+     * Get loudness about a stream
+     * 
+     * <p>The the loudness of a stream in db, one number per line, one entry per 100ms
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetStreamLoudnessResponse>} - The async response
+     */
+    public CompletableFuture<GetStreamLoudnessResponse> getStreamLoudness(GetStreamLoudnessRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetStreamLoudnessRequest, GetStreamLoudnessResponse> operation
-              = new GetStreamLoudness.Async(sdkConfiguration);
+              = new GetStreamLoudness.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2191,11 +5944,26 @@ public class AsyncLibrary {
      * <p>Get a single chapter image for a piece of media
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetChapterImageResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetChapterImageResponse>} - The async response
      */
     public CompletableFuture<GetChapterImageResponse> getChapterImage(GetChapterImageRequest request) {
+        return getChapterImage(request, Optional.empty());
+    }
+
+    /**
+     * Get a chapter image
+     * 
+     * <p>Get a single chapter image for a piece of media
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetChapterImageResponse>} - The async response
+     */
+    public CompletableFuture<GetChapterImageResponse> getChapterImage(GetChapterImageRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetChapterImageRequest, GetChapterImageResponse> operation
-              = new GetChapterImage.Async(sdkConfiguration);
+              = new GetChapterImage.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2205,7 +5973,8 @@ public class AsyncLibrary {
      * Set an item's artwork, theme, etc
      * 
      * <p>Set the artwork, thumb, element for a metadata item
-     * Generally only the admin can perform this action.  The exception is if the metadata is a playlist created by the user
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
      * 
      * @return The async call builder
      */
@@ -2217,14 +5986,32 @@ public class AsyncLibrary {
      * Set an item's artwork, theme, etc
      * 
      * <p>Set the artwork, thumb, element for a metadata item
-     * Generally only the admin can perform this action.  The exception is if the metadata is a playlist created by the user
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetItemArtworkResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetItemArtworkResponse>} - The async response
      */
     public CompletableFuture<SetItemArtworkResponse> setItemArtwork(SetItemArtworkRequest request) {
+        return setItemArtwork(request, Optional.empty());
+    }
+
+    /**
+     * Set an item's artwork, theme, etc
+     * 
+     * <p>Set the artwork, thumb, element for a metadata item
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetItemArtworkResponse>} - The async response
+     */
+    public CompletableFuture<SetItemArtworkResponse> setItemArtwork(SetItemArtworkRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetItemArtworkRequest, SetItemArtworkResponse> operation
-              = new SetItemArtwork.Async(sdkConfiguration);
+              = new SetItemArtwork.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2234,7 +6021,8 @@ public class AsyncLibrary {
      * Set an item's artwork, theme, etc
      * 
      * <p>Set the artwork, thumb, element for a metadata item
-     * Generally only the admin can perform this action.  The exception is if the metadata is a playlist created by the user
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
      * 
      * @return The async call builder
      */
@@ -2246,14 +6034,32 @@ public class AsyncLibrary {
      * Set an item's artwork, theme, etc
      * 
      * <p>Set the artwork, thumb, element for a metadata item
-     * Generally only the admin can perform this action.  The exception is if the metadata is a playlist created by the user
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;UpdateItemArtworkResponse&gt; - The async response
+     * @return {@code CompletableFuture<UpdateItemArtworkResponse>} - The async response
      */
     public CompletableFuture<UpdateItemArtworkResponse> updateItemArtwork(UpdateItemArtworkRequest request) {
+        return updateItemArtwork(request, Optional.empty());
+    }
+
+    /**
+     * Set an item's artwork, theme, etc
+     * 
+     * <p>Set the artwork, thumb, element for a metadata item
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateItemArtworkResponse>} - The async response
+     */
+    public CompletableFuture<UpdateItemArtworkResponse> updateItemArtwork(UpdateItemArtworkRequest request, Optional<Options> options) {
         AsyncRequestOperation<UpdateItemArtworkRequest, UpdateItemArtworkResponse> operation
-              = new UpdateItemArtwork.Async(sdkConfiguration);
+              = new UpdateItemArtwork.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2276,11 +6082,26 @@ public class AsyncLibrary {
      * <p>Delete a marker for this user on the metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteMarkerResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteMarkerResponse>} - The async response
      */
     public CompletableFuture<DeleteMarkerResponse> deleteMarker(DeleteMarkerRequest request) {
+        return deleteMarker(request, Optional.empty());
+    }
+
+    /**
+     * Delete a marker
+     * 
+     * <p>Delete a marker for this user on the metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteMarkerResponse>} - The async response
+     */
+    public CompletableFuture<DeleteMarkerResponse> deleteMarker(DeleteMarkerRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteMarkerRequest, DeleteMarkerResponse> operation
-              = new DeleteMarker.Async(sdkConfiguration);
+              = new DeleteMarker.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2303,11 +6124,26 @@ public class AsyncLibrary {
      * <p>Edit a marker for this user on the metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;EditMarkerResponse&gt; - The async response
+     * @return {@code CompletableFuture<EditMarkerResponse>} - The async response
      */
     public CompletableFuture<EditMarkerResponse> editMarker(EditMarkerRequest request) {
+        return editMarker(request, Optional.empty());
+    }
+
+    /**
+     * Edit a marker
+     * 
+     * <p>Edit a marker for this user on the metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EditMarkerResponse>} - The async response
+     */
+    public CompletableFuture<EditMarkerResponse> editMarker(EditMarkerRequest request, Optional<Options> options) {
         AsyncRequestOperation<EditMarkerRequest, EditMarkerResponse> operation
-              = new EditMarker.Async(sdkConfiguration);
+              = new EditMarker.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2317,6 +6153,8 @@ public class AsyncLibrary {
      * Delete a media item
      * 
      * <p>Delete a single media from a metadata item in the library
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -2329,12 +6167,31 @@ public class AsyncLibrary {
      * 
      * <p>Delete a single media from a metadata item in the library
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteMediaItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteMediaItemResponse>} - The async response
      */
     public CompletableFuture<DeleteMediaItemResponse> deleteMediaItem(DeleteMediaItemRequest request) {
+        return deleteMediaItem(request, Optional.empty());
+    }
+
+    /**
+     * Delete a media item
+     * 
+     * <p>Delete a single media from a metadata item in the library
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteMediaItemResponse>} - The async response
+     */
+    public CompletableFuture<DeleteMediaItemResponse> deleteMediaItem(DeleteMediaItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteMediaItemRequest, DeleteMediaItemResponse> operation
-              = new DeleteMediaItem.Async(sdkConfiguration);
+              = new DeleteMediaItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2357,11 +6214,26 @@ public class AsyncLibrary {
      * <p>Get BIF index for a part by index type
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPartIndexResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPartIndexResponse>} - The async response
      */
     public CompletableFuture<GetPartIndexResponse> getPartIndex(GetPartIndexRequest request) {
+        return getPartIndex(request, Optional.empty());
+    }
+
+    /**
+     * Get BIF index for a part
+     * 
+     * <p>Get BIF index for a part by index type
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPartIndexResponse>} - The async response
+     */
+    public CompletableFuture<GetPartIndexResponse> getPartIndex(GetPartIndexRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPartIndexRequest, GetPartIndexResponse> operation
-              = new GetPartIndex.Async(sdkConfiguration);
+              = new GetPartIndex.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2371,6 +6243,8 @@ public class AsyncLibrary {
      * Delete a collection
      * 
      * <p>Delete a library collection from the PMS
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -2383,12 +6257,31 @@ public class AsyncLibrary {
      * 
      * <p>Delete a library collection from the PMS
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteCollectionResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteCollectionResponse>} - The async response
      */
     public CompletableFuture<DeleteCollectionResponse> deleteCollection(DeleteCollectionRequest request) {
+        return deleteCollection(request, Optional.empty());
+    }
+
+    /**
+     * Delete a collection
+     * 
+     * <p>Delete a library collection from the PMS
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteCollectionResponse>} - The async response
+     */
+    public CompletableFuture<DeleteCollectionResponse> deleteCollection(DeleteCollectionRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteCollectionRequest, DeleteCollectionResponse> operation
-              = new DeleteCollection.Async(sdkConfiguration);
+              = new DeleteCollection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2398,6 +6291,8 @@ public class AsyncLibrary {
      * Get a section composite image
      * 
      * <p>Get a composite image of images in this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -2410,12 +6305,31 @@ public class AsyncLibrary {
      * 
      * <p>Get a composite image of images in this section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSectionImageResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSectionImageResponse>} - The async response
      */
     public CompletableFuture<GetSectionImageResponse> getSectionImage(GetSectionImageRequest request) {
+        return getSectionImage(request, Optional.empty());
+    }
+
+    /**
+     * Get a section composite image
+     * 
+     * <p>Get a composite image of images in this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionImageResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionImageResponse> getSectionImage(GetSectionImageRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSectionImageRequest, GetSectionImageResponse> operation
-              = new GetSectionImage.Async(sdkConfiguration);
+              = new GetSectionImage.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2424,7 +6338,8 @@ public class AsyncLibrary {
     /**
      * Delete a stream
      * 
-     * <p>Delete a stream.  Only applies to downloaded subtitle streams or a sidecar subtitle when media deletion is enabled.
+     * <p>Delete a stream. Only applies to downloaded subtitle streams or a sidecar subtitle when media
+     * deletion is enabled.
      * 
      * @return The async call builder
      */
@@ -2435,14 +6350,31 @@ public class AsyncLibrary {
     /**
      * Delete a stream
      * 
-     * <p>Delete a stream.  Only applies to downloaded subtitle streams or a sidecar subtitle when media deletion is enabled.
+     * <p>Delete a stream. Only applies to downloaded subtitle streams or a sidecar subtitle when media
+     * deletion is enabled.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteStreamResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteStreamResponse>} - The async response
      */
     public CompletableFuture<DeleteStreamResponse> deleteStream(DeleteStreamRequest request) {
+        return deleteStream(request, Optional.empty());
+    }
+
+    /**
+     * Delete a stream
+     * 
+     * <p>Delete a stream. Only applies to downloaded subtitle streams or a sidecar subtitle when media
+     * deletion is enabled.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteStreamResponse>} - The async response
+     */
+    public CompletableFuture<DeleteStreamResponse> deleteStream(DeleteStreamRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteStreamRequest, DeleteStreamResponse> operation
-              = new DeleteStream.Async(sdkConfiguration);
+              = new DeleteStream.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2465,11 +6397,26 @@ public class AsyncLibrary {
      * <p>Get a stream (such as a sidecar subtitle stream)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetStreamResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetStreamResponse>} - The async response
      */
     public CompletableFuture<GetStreamResponse> getStream(GetStreamRequest request) {
+        return getStream(request, Optional.empty());
+    }
+
+    /**
+     * Get a stream
+     * 
+     * <p>Get a stream (such as a sidecar subtitle stream)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetStreamResponse>} - The async response
+     */
+    public CompletableFuture<GetStreamResponse> getStream(GetStreamRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetStreamRequest, GetStreamResponse> operation
-              = new GetStream.Async(sdkConfiguration);
+              = new GetStream.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2478,7 +6425,7 @@ public class AsyncLibrary {
     /**
      * Set a stream offset
      * 
-     * <p>Set a stream offset in ms.  This may not be respected by all clients
+     * <p>Set a stream offset in ms. This may not be respected by all clients
      * 
      * @return The async call builder
      */
@@ -2489,14 +6436,29 @@ public class AsyncLibrary {
     /**
      * Set a stream offset
      * 
-     * <p>Set a stream offset in ms.  This may not be respected by all clients
+     * <p>Set a stream offset in ms. This may not be respected by all clients
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetStreamOffsetResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetStreamOffsetResponse>} - The async response
      */
     public CompletableFuture<SetStreamOffsetResponse> setStreamOffset(SetStreamOffsetRequest request) {
+        return setStreamOffset(request, Optional.empty());
+    }
+
+    /**
+     * Set a stream offset
+     * 
+     * <p>Set a stream offset in ms. This may not be respected by all clients
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetStreamOffsetResponse>} - The async response
+     */
+    public CompletableFuture<SetStreamOffsetResponse> setStreamOffset(SetStreamOffsetRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetStreamOffsetRequest, SetStreamOffsetResponse> operation
-              = new SetStreamOffset.Async(sdkConfiguration);
+              = new SetStreamOffset.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2519,11 +6481,26 @@ public class AsyncLibrary {
      * <p>Get the artwork, thumb, element for a metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetItemArtworkResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetItemArtworkResponse>} - The async response
      */
     public CompletableFuture<GetItemArtworkResponse> getItemArtwork(GetItemArtworkRequest request) {
+        return getItemArtwork(request, Optional.empty());
+    }
+
+    /**
+     * Get an item's artwork, theme, etc
+     * 
+     * <p>Get the artwork, thumb, element for a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetItemArtworkResponse>} - The async response
+     */
+    public CompletableFuture<GetItemArtworkResponse> getItemArtwork(GetItemArtworkRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetItemArtworkRequest, GetItemArtworkResponse> operation
-              = new GetItemArtwork.Async(sdkConfiguration);
+              = new GetItemArtwork.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2533,8 +6510,13 @@ public class AsyncLibrary {
      * Get a media part
      * 
      * <p>Get a media part for streaming or download.
-     *   - streaming: This is the default scenario.  Bandwidth usage on this endpoint will be guaranteed (on the server's end) to be at least the bandwidth reservation given in the decision.  If no decision exists, an ad-hoc decision will be created if sufficient bandwidth exists.  Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
-     *   - download: Indicated if the query parameter indicates this is a download.  Bandwidth will be prioritized behind playbacks and will get a fair share of what remains.
+     * - streaming: This is the default scenario. Bandwidth usage on this endpoint will be guaranteed (on
+     * the server's end) to be at least the bandwidth reservation given in the decision. If no decision
+     * exists, an ad-hoc decision will be created if sufficient bandwidth exists.
+     * 
+     * <p>Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
+     * - download: Indicated if the query parameter indicates this is a download. Bandwidth will be
+     * prioritized behind playbacks and will get a fair share of what remains.
      * 
      * @return The async call builder
      */
@@ -2546,15 +6528,42 @@ public class AsyncLibrary {
      * Get a media part
      * 
      * <p>Get a media part for streaming or download.
-     *   - streaming: This is the default scenario.  Bandwidth usage on this endpoint will be guaranteed (on the server's end) to be at least the bandwidth reservation given in the decision.  If no decision exists, an ad-hoc decision will be created if sufficient bandwidth exists.  Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
-     *   - download: Indicated if the query parameter indicates this is a download.  Bandwidth will be prioritized behind playbacks and will get a fair share of what remains.
+     * - streaming: This is the default scenario. Bandwidth usage on this endpoint will be guaranteed (on
+     * the server's end) to be at least the bandwidth reservation given in the decision. If no decision
+     * exists, an ad-hoc decision will be created if sufficient bandwidth exists.
+     * 
+     * <p>Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
+     * - download: Indicated if the query parameter indicates this is a download. Bandwidth will be
+     * prioritized behind playbacks and will get a fair share of what remains.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetMediaPartResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetMediaPartResponse>} - The async response
      */
     public CompletableFuture<GetMediaPartResponse> getMediaPart(GetMediaPartRequest request) {
+        return getMediaPart(request, Optional.empty());
+    }
+
+    /**
+     * Get a media part
+     * 
+     * <p>Get a media part for streaming or download.
+     * - streaming: This is the default scenario. Bandwidth usage on this endpoint will be guaranteed (on
+     * the server's end) to be at least the bandwidth reservation given in the decision. If no decision
+     * exists, an ad-hoc decision will be created if sufficient bandwidth exists.
+     * 
+     * <p>Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
+     * - download: Indicated if the query parameter indicates this is a download. Bandwidth will be
+     * prioritized behind playbacks and will get a fair share of what remains.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMediaPartResponse>} - The async response
+     */
+    public CompletableFuture<GetMediaPartResponse> getMediaPart(GetMediaPartRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetMediaPartRequest, GetMediaPartResponse> operation
-              = new GetMediaPart.Async(sdkConfiguration);
+              = new GetMediaPart.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2577,11 +6586,26 @@ public class AsyncLibrary {
      * <p>Extract an image from the BIF for a part at a particular offset
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetImageFromBifResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetImageFromBifResponse>} - The async response
      */
     public CompletableFuture<GetImageFromBifResponse> getImageFromBif(GetImageFromBifRequest request) {
+        return getImageFromBif(request, Optional.empty());
+    }
+
+    /**
+     * Get an image from part BIF
+     * 
+     * <p>Extract an image from the BIF for a part at a particular offset
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetImageFromBifResponse>} - The async response
+     */
+    public CompletableFuture<GetImageFromBifResponse> getImageFromBif(GetImageFromBifRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetImageFromBifRequest, GetImageFromBifResponse> operation
-              = new GetImageFromBif.Async(sdkConfiguration);
+              = new GetImageFromBif.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

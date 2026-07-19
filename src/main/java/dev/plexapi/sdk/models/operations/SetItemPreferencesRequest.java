@@ -83,11 +83,15 @@ public class SetItemPreferencesRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The args
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=args")
     private Optional<? extends QueryParamArgs> args;
 
@@ -232,11 +236,17 @@ public class SetItemPreferencesRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The args
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<QueryParamArgs> args() {
@@ -457,12 +467,18 @@ public class SetItemPreferencesRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public SetItemPreferencesRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The args
+     */
     public SetItemPreferencesRequest withArgs(QueryParamArgs args) {
         Utils.checkNotNull(args, "args");
         this.args = Optional.ofNullable(args);
@@ -470,6 +486,9 @@ public class SetItemPreferencesRequest {
     }
 
 
+    /**
+     * The args
+     */
     public SetItemPreferencesRequest withArgs(Optional<? extends QueryParamArgs> args) {
         Utils.checkNotNull(args, "args");
         this.args = args;
@@ -772,6 +791,9 @@ public class SetItemPreferencesRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -779,12 +801,18 @@ public class SetItemPreferencesRequest {
         }
 
 
+        /**
+         * The args
+         */
         public Builder args(QueryParamArgs args) {
             Utils.checkNotNull(args, "args");
             this.args = Optional.ofNullable(args);
             return this;
         }
 
+        /**
+         * The args
+         */
         public Builder args(Optional<? extends QueryParamArgs> args) {
             Utils.checkNotNull(args, "args");
             this.args = args;

@@ -5,13 +5,16 @@ package dev.plexapi.sdk.models.operations.async;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.SuccessResponse;
 import dev.plexapi.sdk.utils.AsyncResponse;
 import dev.plexapi.sdk.utils.Blob;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 
 public class EmptyTrashResponse implements AsyncResponse {
@@ -30,17 +33,33 @@ public class EmptyTrashResponse implements AsyncResponse {
      */
     private HttpResponse<Blob> rawResponse;
 
+    /**
+     * OK
+     */
+    private Optional<? extends SuccessResponse> successResponse;
+
     @JsonCreator
     public EmptyTrashResponse(
             String contentType,
             int statusCode,
-            HttpResponse<Blob> rawResponse) {
+            HttpResponse<Blob> rawResponse,
+            Optional<? extends SuccessResponse> successResponse) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(successResponse, "successResponse");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.successResponse = successResponse;
+    }
+    
+    public EmptyTrashResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<Blob> rawResponse) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty());
     }
 
     /**
@@ -65,6 +84,15 @@ public class EmptyTrashResponse implements AsyncResponse {
     @JsonIgnore
     public HttpResponse<Blob> rawResponse() {
         return rawResponse;
+    }
+
+    /**
+     * OK
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<SuccessResponse> successResponse() {
+        return (Optional<SuccessResponse>) successResponse;
     }
 
     public static Builder builder() {
@@ -99,6 +127,25 @@ public class EmptyTrashResponse implements AsyncResponse {
         return this;
     }
 
+    /**
+     * OK
+     */
+    public EmptyTrashResponse withSuccessResponse(SuccessResponse successResponse) {
+        Utils.checkNotNull(successResponse, "successResponse");
+        this.successResponse = Optional.ofNullable(successResponse);
+        return this;
+    }
+
+
+    /**
+     * OK
+     */
+    public EmptyTrashResponse withSuccessResponse(Optional<? extends SuccessResponse> successResponse) {
+        Utils.checkNotNull(successResponse, "successResponse");
+        this.successResponse = successResponse;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,13 +158,15 @@ public class EmptyTrashResponse implements AsyncResponse {
         return 
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse);
+            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.successResponse, other.successResponse);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            contentType, statusCode, rawResponse);
+            contentType, statusCode, rawResponse,
+            successResponse);
     }
     
     @Override
@@ -125,7 +174,8 @@ public class EmptyTrashResponse implements AsyncResponse {
         return Utils.toString(EmptyTrashResponse.class,
                 "contentType", contentType,
                 "statusCode", statusCode,
-                "rawResponse", rawResponse);
+                "rawResponse", rawResponse,
+                "successResponse", successResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -136,6 +186,8 @@ public class EmptyTrashResponse implements AsyncResponse {
         private Integer statusCode;
 
         private HttpResponse<Blob> rawResponse;
+
+        private Optional<? extends SuccessResponse> successResponse = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -171,10 +223,30 @@ public class EmptyTrashResponse implements AsyncResponse {
             return this;
         }
 
+
+        /**
+         * OK
+         */
+        public Builder successResponse(SuccessResponse successResponse) {
+            Utils.checkNotNull(successResponse, "successResponse");
+            this.successResponse = Optional.ofNullable(successResponse);
+            return this;
+        }
+
+        /**
+         * OK
+         */
+        public Builder successResponse(Optional<? extends SuccessResponse> successResponse) {
+            Utils.checkNotNull(successResponse, "successResponse");
+            this.successResponse = successResponse;
+            return this;
+        }
+
         public EmptyTrashResponse build() {
 
             return new EmptyTrashResponse(
-                contentType, statusCode, rawResponse);
+                contentType, statusCode, rawResponse,
+                successResponse);
         }
 
     }

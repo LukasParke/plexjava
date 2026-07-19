@@ -5,6 +5,9 @@ package dev.plexapi.sdk;
 
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
+import dev.plexapi.sdk.models.operations.GetConversionQueueRequest;
+import dev.plexapi.sdk.models.operations.GetConversionQueueRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetConversionQueueResponse;
 import dev.plexapi.sdk.models.operations.MarkPlayedRequest;
 import dev.plexapi.sdk.models.operations.MarkPlayedRequestBuilder;
 import dev.plexapi.sdk.models.operations.MarkPlayedResponse;
@@ -14,15 +17,19 @@ import dev.plexapi.sdk.models.operations.ReportResponse;
 import dev.plexapi.sdk.models.operations.UnscrobbleRequest;
 import dev.plexapi.sdk.models.operations.UnscrobbleRequestBuilder;
 import dev.plexapi.sdk.models.operations.UnscrobbleResponse;
+import dev.plexapi.sdk.operations.GetConversionQueue;
 import dev.plexapi.sdk.operations.MarkPlayed;
 import dev.plexapi.sdk.operations.Report;
 import dev.plexapi.sdk.operations.Unscrobble;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * The actions feature within a media provider
  */
 public class Timeline {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncTimeline asyncSDK;
 
@@ -43,7 +50,8 @@ public class Timeline {
     /**
      * Mark an item as played
      * 
-     * <p>Mark an item as played.  Note, this does not create any view history of this item but rather just sets the state as played. The client must provide either the `key` or `uri` query parameter
+     * <p>Mark an item as played. Note, this does not create any view history of this item but rather just
+     * sets the state as played. The client must provide either the `key` or `uri` query parameter
      * This API does respond to the GET verb but applications should use PUT
      * 
      * @return The call builder
@@ -55,23 +63,42 @@ public class Timeline {
     /**
      * Mark an item as played
      * 
-     * <p>Mark an item as played.  Note, this does not create any view history of this item but rather just sets the state as played. The client must provide either the `key` or `uri` query parameter
+     * <p>Mark an item as played. Note, this does not create any view history of this item but rather just
+     * sets the state as played. The client must provide either the `key` or `uri` query parameter
      * This API does respond to the GET verb but applications should use PUT
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public MarkPlayedResponse markPlayed(MarkPlayedRequest request) throws Exception {
+    public MarkPlayedResponse markPlayed(MarkPlayedRequest request) {
+        return markPlayed(request, Optional.empty());
+    }
+
+    /**
+     * Mark an item as played
+     * 
+     * <p>Mark an item as played. Note, this does not create any view history of this item but rather just
+     * sets the state as played. The client must provide either the `key` or `uri` query parameter
+     * This API does respond to the GET verb but applications should use PUT
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MarkPlayedResponse markPlayed(MarkPlayedRequest request, Optional<Options> options) {
         RequestOperation<MarkPlayedRequest, MarkPlayedResponse> operation
-              = new MarkPlayed.Sync(sdkConfiguration);
+              = new MarkPlayed.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Report media timeline
      * 
-     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state changes, or in the absence of a play state change, in a regular fashion (generally this means every 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
+     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state
+     * changes, or in the absence of a play state change, in a regular fashion (generally this means every
+     * 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
      * 
      * @return The call builder
      */
@@ -82,15 +109,33 @@ public class Timeline {
     /**
      * Report media timeline
      * 
-     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state changes, or in the absence of a play state change, in a regular fashion (generally this means every 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
+     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state
+     * changes, or in the absence of a play state change, in a regular fashion (generally this means every
+     * 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ReportResponse report(ReportRequest request) throws Exception {
+    public ReportResponse report(ReportRequest request) {
+        return report(request, Optional.empty());
+    }
+
+    /**
+     * Report media timeline
+     * 
+     * <p>This endpoint is hit during media playback for an item. It must be hit whenever the play state
+     * changes, or in the absence of a play state change, in a regular fashion (generally this means every
+     * 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ReportResponse report(ReportRequest request, Optional<Options> options) {
         RequestOperation<ReportRequest, ReportResponse> operation
-              = new Report.Sync(sdkConfiguration);
+              = new Report.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -114,11 +159,72 @@ public class Timeline {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public UnscrobbleResponse unscrobble(UnscrobbleRequest request) throws Exception {
+    public UnscrobbleResponse unscrobble(UnscrobbleRequest request) {
+        return unscrobble(request, Optional.empty());
+    }
+
+    /**
+     * Mark an item as unplayed
+     * 
+     * <p>Mark an item as unplayed. The client must provide either the `key` or `uri` query parameter
+     * This API does respond to the GET verb but applications should use PUT
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UnscrobbleResponse unscrobble(UnscrobbleRequest request, Optional<Options> options) {
         RequestOperation<UnscrobbleRequest, UnscrobbleResponse> operation
-              = new Unscrobble.Sync(sdkConfiguration);
+              = new Unscrobble.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Conversion Queue
+     * 
+     * <p>Get the conversion/optimization queue.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetConversionQueueRequestBuilder getConversionQueue() {
+        return new GetConversionQueueRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Conversion Queue
+     * 
+     * <p>Get the conversion/optimization queue.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetConversionQueueResponse getConversionQueue(GetConversionQueueRequest request) {
+        return getConversionQueue(request, Optional.empty());
+    }
+
+    /**
+     * Get Conversion Queue
+     * 
+     * <p>Get the conversion/optimization queue.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetConversionQueueResponse getConversionQueue(GetConversionQueueRequest request, Optional<Options> options) {
+        RequestOperation<GetConversionQueueRequest, GetConversionQueueResponse> operation
+              = new GetConversionQueue.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

@@ -8,8 +8,10 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.models.operations.GetUsersRequest;
 import dev.plexapi.sdk.operations.GetUsers;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
 import java.lang.String;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -18,7 +20,9 @@ public class GetUsersRequestBuilder {
 
     private GetUsersRequest request;
     private Optional<String> serverURL = Optional.empty();
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public GetUsersRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -41,11 +45,28 @@ public class GetUsersRequestBuilder {
         this.serverURL = serverURL;
         return this;
     }
+                
+    public GetUsersRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public CompletableFuture<GetUsersResponse> call() throws Exception {
-        
+    public GetUsersRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public CompletableFuture<GetUsersResponse> call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         AsyncRequestOperation<GetUsersRequest, GetUsersResponse> operation
-              = new GetUsers.Async(sdkConfiguration, serverURL);
+              = new GetUsers.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
 
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);

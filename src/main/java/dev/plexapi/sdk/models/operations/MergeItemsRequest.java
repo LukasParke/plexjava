@@ -84,11 +84,15 @@ public class MergeItemsRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String idsPathParameter;
 
-
+    /**
+     * Comma-separated list of item identifiers
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=false,name=ids")
     private Optional<? extends List<String>> idsQueryParameter;
 
@@ -233,11 +237,17 @@ public class MergeItemsRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String idsPathParameter() {
         return idsPathParameter;
     }
 
+    /**
+     * Comma-separated list of item identifiers
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<List<String>> idsQueryParameter() {
@@ -458,12 +468,18 @@ public class MergeItemsRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public MergeItemsRequest withIdsPathParameter(String idsPathParameter) {
         Utils.checkNotNull(idsPathParameter, "idsPathParameter");
         this.idsPathParameter = idsPathParameter;
         return this;
     }
 
+    /**
+     * Comma-separated list of item identifiers
+     */
     public MergeItemsRequest withIdsQueryParameter(List<String> idsQueryParameter) {
         Utils.checkNotNull(idsQueryParameter, "idsQueryParameter");
         this.idsQueryParameter = Optional.ofNullable(idsQueryParameter);
@@ -471,6 +487,9 @@ public class MergeItemsRequest {
     }
 
 
+    /**
+     * Comma-separated list of item identifiers
+     */
     public MergeItemsRequest withIdsQueryParameter(Optional<? extends List<String>> idsQueryParameter) {
         Utils.checkNotNull(idsQueryParameter, "idsQueryParameter");
         this.idsQueryParameter = idsQueryParameter;
@@ -773,6 +792,9 @@ public class MergeItemsRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder idsPathParameter(String idsPathParameter) {
             Utils.checkNotNull(idsPathParameter, "idsPathParameter");
             this.idsPathParameter = idsPathParameter;
@@ -780,12 +802,18 @@ public class MergeItemsRequest {
         }
 
 
+        /**
+         * Comma-separated list of item identifiers
+         */
         public Builder idsQueryParameter(List<String> idsQueryParameter) {
             Utils.checkNotNull(idsQueryParameter, "idsQueryParameter");
             this.idsQueryParameter = Optional.ofNullable(idsQueryParameter);
             return this;
         }
 
+        /**
+         * Comma-separated list of item identifiers
+         */
         public Builder idsQueryParameter(Optional<? extends List<String>> idsQueryParameter) {
             Utils.checkNotNull(idsQueryParameter, "idsQueryParameter");
             this.idsQueryParameter = idsQueryParameter;

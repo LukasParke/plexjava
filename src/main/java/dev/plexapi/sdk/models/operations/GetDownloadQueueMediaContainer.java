@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.DownloadQueue;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Long;
 import java.lang.Override;
@@ -19,9 +20,15 @@ import java.util.Optional;
 /**
  * GetDownloadQueueMediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class GetDownloadQueueMediaContainer {
 
@@ -30,7 +37,8 @@ public class GetDownloadQueueMediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -51,7 +59,7 @@ public class GetDownloadQueueMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("DownloadQueue")
-    private Optional<? extends List<GetDownloadQueueDownloadQueue>> downloadQueue;
+    private Optional<? extends List<DownloadQueue>> downloadQueue;
 
     @JsonCreator
     public GetDownloadQueueMediaContainer(
@@ -59,7 +67,7 @@ public class GetDownloadQueueMediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("DownloadQueue") Optional<? extends List<GetDownloadQueueDownloadQueue>> downloadQueue) {
+            @JsonProperty("DownloadQueue") Optional<? extends List<DownloadQueue>> downloadQueue) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
@@ -83,7 +91,8 @@ public class GetDownloadQueueMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -105,8 +114,8 @@ public class GetDownloadQueueMediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<GetDownloadQueueDownloadQueue>> downloadQueue() {
-        return (Optional<List<GetDownloadQueueDownloadQueue>>) downloadQueue;
+    public Optional<List<DownloadQueue>> downloadQueue() {
+        return (Optional<List<DownloadQueue>>) downloadQueue;
     }
 
     public static Builder builder() {
@@ -128,7 +137,8 @@ public class GetDownloadQueueMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetDownloadQueueMediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -138,7 +148,8 @@ public class GetDownloadQueueMediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetDownloadQueueMediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -178,14 +189,14 @@ public class GetDownloadQueueMediaContainer {
         return this;
     }
 
-    public GetDownloadQueueMediaContainer withDownloadQueue(List<GetDownloadQueueDownloadQueue> downloadQueue) {
+    public GetDownloadQueueMediaContainer withDownloadQueue(List<DownloadQueue> downloadQueue) {
         Utils.checkNotNull(downloadQueue, "downloadQueue");
         this.downloadQueue = Optional.ofNullable(downloadQueue);
         return this;
     }
 
 
-    public GetDownloadQueueMediaContainer withDownloadQueue(Optional<? extends List<GetDownloadQueueDownloadQueue>> downloadQueue) {
+    public GetDownloadQueueMediaContainer withDownloadQueue(Optional<? extends List<DownloadQueue>> downloadQueue) {
         Utils.checkNotNull(downloadQueue, "downloadQueue");
         this.downloadQueue = downloadQueue;
         return this;
@@ -236,7 +247,7 @@ public class GetDownloadQueueMediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<? extends List<GetDownloadQueueDownloadQueue>> downloadQueue = Optional.empty();
+        private Optional<? extends List<DownloadQueue>> downloadQueue = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -257,7 +268,8 @@ public class GetDownloadQueueMediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -266,7 +278,8 @@ public class GetDownloadQueueMediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -307,13 +320,13 @@ public class GetDownloadQueueMediaContainer {
         }
 
 
-        public Builder downloadQueue(List<GetDownloadQueueDownloadQueue> downloadQueue) {
+        public Builder downloadQueue(List<DownloadQueue> downloadQueue) {
             Utils.checkNotNull(downloadQueue, "downloadQueue");
             this.downloadQueue = Optional.ofNullable(downloadQueue);
             return this;
         }
 
-        public Builder downloadQueue(Optional<? extends List<GetDownloadQueueDownloadQueue>> downloadQueue) {
+        public Builder downloadQueue(Optional<? extends List<DownloadQueue>> downloadQueue) {
             Utils.checkNotNull(downloadQueue, "downloadQueue");
             this.downloadQueue = downloadQueue;
             return this;

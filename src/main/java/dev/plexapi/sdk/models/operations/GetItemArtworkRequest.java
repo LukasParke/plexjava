@@ -84,11 +84,15 @@ public class GetItemArtworkRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=element")
     private GetItemArtworkPathParamElement element;
 
@@ -244,11 +248,17 @@ public class GetItemArtworkRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     @JsonIgnore
     public GetItemArtworkPathParamElement element() {
         return element;
@@ -476,12 +486,18 @@ public class GetItemArtworkRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public GetItemArtworkRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     public GetItemArtworkRequest withElement(GetItemArtworkPathParamElement element) {
         Utils.checkNotNull(element, "element");
         this.element = element;
@@ -797,6 +813,9 @@ public class GetItemArtworkRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -804,6 +823,9 @@ public class GetItemArtworkRequest {
         }
 
 
+        /**
+         * The type of artwork element (e.g., art, poster, thumb)
+         */
         public Builder element(GetItemArtworkPathParamElement element) {
             Utils.checkNotNull(element, "element");
             this.element = element;

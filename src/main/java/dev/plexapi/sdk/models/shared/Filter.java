@@ -25,7 +25,8 @@ import java.util.Optional;
 /**
  * Filter
  * 
- * <p>Each `Filter` object contains a description of the filter. Note that it is not an exhaustive list of the full media query language, but an important subset useful for top-level API.
+ * <p>Each `Filter` object contains a description of the filter. Note that it is not an exhaustive list of
+ * the full media query language, but an important subset useful for top-level API.
  */
 public class Filter {
     /**
@@ -51,7 +52,8 @@ public class Filter {
     private Optional<Boolean> content;
 
     /**
-     * This represents the filter name used for the filter, which can be used to construct complex media queries with.
+     * This represents the filter name used for the filter, which can be used to construct complex media
+     * queries with.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("filter")
@@ -78,7 +80,9 @@ public class Filter {
     private Optional<String> identifier;
 
     /**
-     * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
+     * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g.
+     * for a "Genre" filter, it returns a list of all the genres in the library). This will include a
+     * `type` argument that matches the metadata type of the Type element.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("key")
@@ -110,7 +114,8 @@ public class Filter {
     private Optional<String> titleBar;
 
     /**
-     * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
+     * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the
+     * filter.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("filterType")
@@ -206,7 +211,8 @@ public class Filter {
     }
 
     /**
-     * This represents the filter name used for the filter, which can be used to construct complex media queries with.
+     * This represents the filter name used for the filter, which can be used to construct complex media
+     * queries with.
      */
     @JsonIgnore
     public Optional<String> filter() {
@@ -234,7 +240,9 @@ public class Filter {
     }
 
     /**
-     * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
+     * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g.
+     * for a "Genre" filter, it returns a list of all the genres in the library). This will include a
+     * `type` argument that matches the metadata type of the Type element.
      */
     @JsonIgnore
     public Optional<String> key() {
@@ -268,7 +276,8 @@ public class Filter {
     }
 
     /**
-     * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
+     * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the
+     * filter.
      */
     @JsonIgnore
     public Optional<String> filterType() {
@@ -344,7 +353,8 @@ public class Filter {
     }
 
     /**
-     * This represents the filter name used for the filter, which can be used to construct complex media queries with.
+     * This represents the filter name used for the filter, which can be used to construct complex media
+     * queries with.
      */
     public Filter withFilter(String filter) {
         Utils.checkNotNull(filter, "filter");
@@ -354,7 +364,8 @@ public class Filter {
 
 
     /**
-     * This represents the filter name used for the filter, which can be used to construct complex media queries with.
+     * This represents the filter name used for the filter, which can be used to construct complex media
+     * queries with.
      */
     public Filter withFilter(Optional<String> filter) {
         Utils.checkNotNull(filter, "filter");
@@ -415,7 +426,9 @@ public class Filter {
     }
 
     /**
-     * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
+     * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g.
+     * for a "Genre" filter, it returns a list of all the genres in the library). This will include a
+     * `type` argument that matches the metadata type of the Type element.
      */
     public Filter withKey(String key) {
         Utils.checkNotNull(key, "key");
@@ -425,7 +438,9 @@ public class Filter {
 
 
     /**
-     * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
+     * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g.
+     * for a "Genre" filter, it returns a list of all the genres in the library). This will include a
+     * `type` argument that matches the metadata type of the Type element.
      */
     public Filter withKey(Optional<String> key) {
         Utils.checkNotNull(key, "key");
@@ -499,7 +514,8 @@ public class Filter {
     }
 
     /**
-     * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
+     * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the
+     * filter.
      */
     public Filter withFilterType(String filterType) {
         Utils.checkNotNull(filterType, "filterType");
@@ -509,7 +525,8 @@ public class Filter {
 
 
     /**
-     * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
+     * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the
+     * filter.
      */
     public Filter withFilterType(Optional<String> filterType) {
         Utils.checkNotNull(filterType, "filterType");
@@ -693,7 +710,8 @@ public class Filter {
 
 
         /**
-         * This represents the filter name used for the filter, which can be used to construct complex media queries with.
+         * This represents the filter name used for the filter, which can be used to construct complex media
+         * queries with.
          */
         public Builder filter(String filter) {
             Utils.checkNotNull(filter, "filter");
@@ -702,7 +720,8 @@ public class Filter {
         }
 
         /**
-         * This represents the filter name used for the filter, which can be used to construct complex media queries with.
+         * This represents the filter name used for the filter, which can be used to construct complex media
+         * queries with.
          */
         public Builder filter(Optional<String> filter) {
             Utils.checkNotNull(filter, "filter");
@@ -764,7 +783,9 @@ public class Filter {
 
 
         /**
-         * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
+         * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g.
+         * for a "Genre" filter, it returns a list of all the genres in the library). This will include a
+         * `type` argument that matches the metadata type of the Type element.
          */
         public Builder key(String key) {
             Utils.checkNotNull(key, "key");
@@ -773,7 +794,9 @@ public class Filter {
         }
 
         /**
-         * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
+         * This provides the endpoint where the possible range of values for the filter can be retrieved (e.g.
+         * for a "Genre" filter, it returns a list of all the genres in the library). This will include a
+         * `type` argument that matches the metadata type of the Type element.
          */
         public Builder key(Optional<String> key) {
             Utils.checkNotNull(key, "key");
@@ -848,7 +871,8 @@ public class Filter {
 
 
         /**
-         * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
+         * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the
+         * filter.
          */
         public Builder filterType(String filterType) {
             Utils.checkNotNull(filterType, "filterType");
@@ -857,7 +881,8 @@ public class Filter {
         }
 
         /**
-         * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
+         * This is either `string`, `integer`, or `boolean`, and describes the type of values used for the
+         * filter.
          */
         public Builder filterType(Optional<String> filterType) {
             Utils.checkNotNull(filterType, "filterType");

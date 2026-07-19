@@ -1,0 +1,17 @@
+# Collection
+
+A collection of related media items.
+
+
+## Fields
+
+| Field                                                              | Type                                                               | Required                                                           | Description                                                        | Example                                                            |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `artBlurHash`                                                      | *Optional\<String>*                                                | :heavy_minus_sign:                                                 | Blur hash for collection art.                                      | LhE3*HRjR*a#ogWBofj[bbf6ofa#                                       |
+| `collectionFilterBasedOnUser`                                      | *Optional\<Boolean>*                                               | :heavy_minus_sign:                                                 | Whether the smart collection filter is based on the current user.  | false                                                              |
+| `collectionMode`                                                   | [Optional\<CollectionMode>](../../models/shared/CollectionMode.md) | :heavy_minus_sign:                                                 | Display mode for the collection.                                   | default                                                            |
+| `collectionPublished`                                              | *Optional\<Boolean>*                                               | :heavy_minus_sign:                                                 | Whether the collection is published to Plex Discover.              | true                                                               |
+| `collectionSort`                                                   | *Optional\<String>*                                                | :heavy_minus_sign:                                                 | Sort order for items in the collection.                            | addedAt:desc                                                       |
+| `lastRatedAt`                                                      | *Optional\<Long>*                                                  | :heavy_minus_sign:                                                 | Timestamp of the last user rating.                                 | 1704067200                                                         |
+| `thumbBlurHash`                                                    | *Optional\<String>*                                                | :heavy_minus_sign:                                                 | Blur hash for collection thumbnail.                                | LhE3*HRjR*a#ogWBofj[bbf6ofa#                                       |
+| `userRating`                                                       | *Optional\<Double>*                                                | :heavy_minus_sign:                                                 | User star rating (0-10).                                           | 8.5                                                                |

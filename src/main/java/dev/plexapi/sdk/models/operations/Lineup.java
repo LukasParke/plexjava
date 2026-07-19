@@ -31,6 +31,20 @@ public class Lineup {
     private Optional<String> type;
 
     /**
+     * Lineup identifier.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("identifier")
+    private Optional<String> identifier;
+
+    /**
+     * API key for this lineup.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("key")
+    private Optional<String> key;
+
+    /**
      * - `-1`: N/A
      * - `0`: Over the air
      * - `1`: Cable
@@ -63,18 +77,24 @@ public class Lineup {
     public Lineup(
             @JsonProperty("title") Optional<String> title,
             @JsonProperty("type") Optional<String> type,
+            @JsonProperty("identifier") Optional<String> identifier,
+            @JsonProperty("key") Optional<String> key,
             @JsonProperty("lineupType") Optional<? extends LineupType> lineupType,
             @JsonProperty("location") Optional<String> location,
             @JsonProperty("uuid") Optional<String> uuid,
             @JsonProperty("Channel") Optional<? extends List<Channel>> channel) {
         Utils.checkNotNull(title, "title");
         Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(identifier, "identifier");
+        Utils.checkNotNull(key, "key");
         Utils.checkNotNull(lineupType, "lineupType");
         Utils.checkNotNull(location, "location");
         Utils.checkNotNull(uuid, "uuid");
         Utils.checkNotNull(channel, "channel");
         this.title = title;
         this.type = type;
+        this.identifier = identifier;
+        this.key = key;
         this.lineupType = lineupType;
         this.location = location;
         this.uuid = uuid;
@@ -83,7 +103,8 @@ public class Lineup {
     
     public Lineup() {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty());
     }
 
     @JsonIgnore
@@ -97,6 +118,22 @@ public class Lineup {
     @JsonIgnore
     public Optional<String> type() {
         return type;
+    }
+
+    /**
+     * Lineup identifier.
+     */
+    @JsonIgnore
+    public Optional<String> identifier() {
+        return identifier;
+    }
+
+    /**
+     * API key for this lineup.
+     */
+    @JsonIgnore
+    public Optional<String> key() {
+        return key;
     }
 
     /**
@@ -166,6 +203,44 @@ public class Lineup {
     public Lineup withType(Optional<String> type) {
         Utils.checkNotNull(type, "type");
         this.type = type;
+        return this;
+    }
+
+    /**
+     * Lineup identifier.
+     */
+    public Lineup withIdentifier(String identifier) {
+        Utils.checkNotNull(identifier, "identifier");
+        this.identifier = Optional.ofNullable(identifier);
+        return this;
+    }
+
+
+    /**
+     * Lineup identifier.
+     */
+    public Lineup withIdentifier(Optional<String> identifier) {
+        Utils.checkNotNull(identifier, "identifier");
+        this.identifier = identifier;
+        return this;
+    }
+
+    /**
+     * API key for this lineup.
+     */
+    public Lineup withKey(String key) {
+        Utils.checkNotNull(key, "key");
+        this.key = Optional.ofNullable(key);
+        return this;
+    }
+
+
+    /**
+     * API key for this lineup.
+     */
+    public Lineup withKey(Optional<String> key) {
+        Utils.checkNotNull(key, "key");
+        this.key = key;
         return this;
     }
 
@@ -255,6 +330,8 @@ public class Lineup {
         return 
             Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.identifier, other.identifier) &&
+            Utils.enhancedDeepEquals(this.key, other.key) &&
             Utils.enhancedDeepEquals(this.lineupType, other.lineupType) &&
             Utils.enhancedDeepEquals(this.location, other.location) &&
             Utils.enhancedDeepEquals(this.uuid, other.uuid) &&
@@ -264,8 +341,9 @@ public class Lineup {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            title, type, lineupType,
-            location, uuid, channel);
+            title, type, identifier,
+            key, lineupType, location,
+            uuid, channel);
     }
     
     @Override
@@ -273,6 +351,8 @@ public class Lineup {
         return Utils.toString(Lineup.class,
                 "title", title,
                 "type", type,
+                "identifier", identifier,
+                "key", key,
                 "lineupType", lineupType,
                 "location", location,
                 "uuid", uuid,
@@ -285,6 +365,10 @@ public class Lineup {
         private Optional<String> title = Optional.empty();
 
         private Optional<String> type = Optional.empty();
+
+        private Optional<String> identifier = Optional.empty();
+
+        private Optional<String> key = Optional.empty();
 
         private Optional<? extends LineupType> lineupType = Optional.empty();
 
@@ -327,6 +411,44 @@ public class Lineup {
         public Builder type(Optional<String> type) {
             Utils.checkNotNull(type, "type");
             this.type = type;
+            return this;
+        }
+
+
+        /**
+         * Lineup identifier.
+         */
+        public Builder identifier(String identifier) {
+            Utils.checkNotNull(identifier, "identifier");
+            this.identifier = Optional.ofNullable(identifier);
+            return this;
+        }
+
+        /**
+         * Lineup identifier.
+         */
+        public Builder identifier(Optional<String> identifier) {
+            Utils.checkNotNull(identifier, "identifier");
+            this.identifier = identifier;
+            return this;
+        }
+
+
+        /**
+         * API key for this lineup.
+         */
+        public Builder key(String key) {
+            Utils.checkNotNull(key, "key");
+            this.key = Optional.ofNullable(key);
+            return this;
+        }
+
+        /**
+         * API key for this lineup.
+         */
+        public Builder key(Optional<String> key) {
+            Utils.checkNotNull(key, "key");
+            this.key = key;
             return this;
         }
 
@@ -407,8 +529,9 @@ public class Lineup {
         public Lineup build() {
 
             return new Lineup(
-                title, type, lineupType,
-                location, uuid, channel);
+                title, type, identifier,
+                key, lineupType, location,
+                uuid, channel);
         }
 
     }

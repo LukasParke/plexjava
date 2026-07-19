@@ -11,6 +11,7 @@ import dev.plexapi.sdk.models.shared.MediaType;
 import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
+import java.lang.Boolean;
 import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
@@ -86,12 +87,6 @@ public class VoiceSearchHubsRequest {
     private Optional<String> marketplace;
 
     /**
-     * The query term
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=query")
-    private String query;
-
-    /**
      * The type of media to retrieve or filter by.
      * 
      * <p>1 = movie
@@ -104,16 +99,29 @@ public class VoiceSearchHubsRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
     private Optional<? extends MediaType> type;
 
     /**
-     * The number of items to return per hub.  3 if not specified
+     * The query term
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=query")
+    private String query;
+
+    /**
+     * The number of items to return per hub. 3 if not specified
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=limit")
     private Optional<Long> limit;
+
+    /**
+     * Include collection results in search hubs
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeCollections")
+    private Optional<Boolean> includeCollections;
 
     @JsonCreator
     public VoiceSearchHubsRequest(
@@ -128,9 +136,10 @@ public class VoiceSearchHubsRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            String query,
             Optional<? extends MediaType> type,
-            Optional<Long> limit) {
+            String query,
+            Optional<Long> limit,
+            Optional<Boolean> includeCollections) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -142,9 +151,10 @@ public class VoiceSearchHubsRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(query, "query");
         Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(query, "query");
         Utils.checkNotNull(limit, "limit");
+        Utils.checkNotNull(includeCollections, "includeCollections");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -156,9 +166,10 @@ public class VoiceSearchHubsRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.query = query;
         this.type = type;
+        this.query = query;
         this.limit = limit;
+        this.includeCollections = includeCollections;
     }
     
     public VoiceSearchHubsRequest(
@@ -166,8 +177,8 @@ public class VoiceSearchHubsRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), query,
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            query, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -260,14 +271,6 @@ public class VoiceSearchHubsRequest {
     }
 
     /**
-     * The query term
-     */
-    @JsonIgnore
-    public String query() {
-        return query;
-    }
-
-    /**
      * The type of media to retrieve or filter by.
      * 
      * <p>1 = movie
@@ -280,7 +283,8 @@ public class VoiceSearchHubsRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -289,11 +293,27 @@ public class VoiceSearchHubsRequest {
     }
 
     /**
-     * The number of items to return per hub.  3 if not specified
+     * The query term
+     */
+    @JsonIgnore
+    public String query() {
+        return query;
+    }
+
+    /**
+     * The number of items to return per hub. 3 if not specified
      */
     @JsonIgnore
     public Optional<Long> limit() {
         return limit;
+    }
+
+    /**
+     * Include collection results in search hubs
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeCollections() {
+        return includeCollections;
     }
 
     public static Builder builder() {
@@ -511,15 +531,6 @@ public class VoiceSearchHubsRequest {
     }
 
     /**
-     * The query term
-     */
-    public VoiceSearchHubsRequest withQuery(String query) {
-        Utils.checkNotNull(query, "query");
-        this.query = query;
-        return this;
-    }
-
-    /**
      * The type of media to retrieve or filter by.
      * 
      * <p>1 = movie
@@ -532,7 +543,8 @@ public class VoiceSearchHubsRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public VoiceSearchHubsRequest withType(MediaType type) {
         Utils.checkNotNull(type, "type");
@@ -554,7 +566,8 @@ public class VoiceSearchHubsRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public VoiceSearchHubsRequest withType(Optional<? extends MediaType> type) {
         Utils.checkNotNull(type, "type");
@@ -563,7 +576,16 @@ public class VoiceSearchHubsRequest {
     }
 
     /**
-     * The number of items to return per hub.  3 if not specified
+     * The query term
+     */
+    public VoiceSearchHubsRequest withQuery(String query) {
+        Utils.checkNotNull(query, "query");
+        this.query = query;
+        return this;
+    }
+
+    /**
+     * The number of items to return per hub. 3 if not specified
      */
     public VoiceSearchHubsRequest withLimit(long limit) {
         Utils.checkNotNull(limit, "limit");
@@ -573,11 +595,30 @@ public class VoiceSearchHubsRequest {
 
 
     /**
-     * The number of items to return per hub.  3 if not specified
+     * The number of items to return per hub. 3 if not specified
      */
     public VoiceSearchHubsRequest withLimit(Optional<Long> limit) {
         Utils.checkNotNull(limit, "limit");
         this.limit = limit;
+        return this;
+    }
+
+    /**
+     * Include collection results in search hubs
+     */
+    public VoiceSearchHubsRequest withIncludeCollections(boolean includeCollections) {
+        Utils.checkNotNull(includeCollections, "includeCollections");
+        this.includeCollections = Optional.ofNullable(includeCollections);
+        return this;
+    }
+
+
+    /**
+     * Include collection results in search hubs
+     */
+    public VoiceSearchHubsRequest withIncludeCollections(Optional<Boolean> includeCollections) {
+        Utils.checkNotNull(includeCollections, "includeCollections");
+        this.includeCollections = includeCollections;
         return this;
     }
 
@@ -602,9 +643,10 @@ public class VoiceSearchHubsRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.query, other.query) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.limit, other.limit);
+            Utils.enhancedDeepEquals(this.query, other.query) &&
+            Utils.enhancedDeepEquals(this.limit, other.limit) &&
+            Utils.enhancedDeepEquals(this.includeCollections, other.includeCollections);
     }
     
     @Override
@@ -613,8 +655,8 @@ public class VoiceSearchHubsRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, query,
-            type, limit);
+            deviceName, marketplace, type,
+            query, limit, includeCollections);
     }
     
     @Override
@@ -631,9 +673,10 @@ public class VoiceSearchHubsRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "query", query,
                 "type", type,
-                "limit", limit);
+                "query", query,
+                "limit", limit,
+                "includeCollections", includeCollections);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -661,11 +704,13 @@ public class VoiceSearchHubsRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
-        private String query;
-
         private Optional<? extends MediaType> type = Optional.empty();
 
+        private String query;
+
         private Optional<Long> limit = Optional.empty();
+
+        private Optional<Boolean> includeCollections = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -882,16 +927,6 @@ public class VoiceSearchHubsRequest {
 
 
         /**
-         * The query term
-         */
-        public Builder query(String query) {
-            Utils.checkNotNull(query, "query");
-            this.query = query;
-            return this;
-        }
-
-
-        /**
          * The type of media to retrieve or filter by.
          * 
          * <p>1 = movie
@@ -904,7 +939,8 @@ public class VoiceSearchHubsRequest {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(MediaType type) {
             Utils.checkNotNull(type, "type");
@@ -925,7 +961,8 @@ public class VoiceSearchHubsRequest {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(Optional<? extends MediaType> type) {
             Utils.checkNotNull(type, "type");
@@ -935,7 +972,17 @@ public class VoiceSearchHubsRequest {
 
 
         /**
-         * The number of items to return per hub.  3 if not specified
+         * The query term
+         */
+        public Builder query(String query) {
+            Utils.checkNotNull(query, "query");
+            this.query = query;
+            return this;
+        }
+
+
+        /**
+         * The number of items to return per hub. 3 if not specified
          */
         public Builder limit(long limit) {
             Utils.checkNotNull(limit, "limit");
@@ -944,11 +991,30 @@ public class VoiceSearchHubsRequest {
         }
 
         /**
-         * The number of items to return per hub.  3 if not specified
+         * The number of items to return per hub. 3 if not specified
          */
         public Builder limit(Optional<Long> limit) {
             Utils.checkNotNull(limit, "limit");
             this.limit = limit;
+            return this;
+        }
+
+
+        /**
+         * Include collection results in search hubs
+         */
+        public Builder includeCollections(boolean includeCollections) {
+            Utils.checkNotNull(includeCollections, "includeCollections");
+            this.includeCollections = Optional.ofNullable(includeCollections);
+            return this;
+        }
+
+        /**
+         * Include collection results in search hubs
+         */
+        public Builder includeCollections(Optional<Boolean> includeCollections) {
+            Utils.checkNotNull(includeCollections, "includeCollections");
+            this.includeCollections = includeCollections;
             return this;
         }
 
@@ -961,8 +1027,8 @@ public class VoiceSearchHubsRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, query,
-                type, limit);
+                deviceName, marketplace, type,
+                query, limit, includeCollections);
         }
 
 

@@ -19,26 +19,26 @@ import java.lang.SuppressWarnings;
 /**
  * MediaContainerWithDecisionSkipParent
  * 
- * <p>When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
+ * <p>When present on an episode or track item, indicates parent should be skipped in favor of grandparent
+ * (show).
  */
 @JsonDeserialize(using = MediaContainerWithDecisionSkipParent._Deserializer.class)
 public class MediaContainerWithDecisionSkipParent {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private MediaContainerWithDecisionSkipParent(TypedObject value) {
         this.value = value;
     }
 
     public static MediaContainerWithDecisionSkipParent of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new MediaContainerWithDecisionSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new MediaContainerWithDecisionSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static MediaContainerWithDecisionSkipParent of(MediaContainerWithDecisionSkipParent2 value) {
         Utils.checkNotNull(value, "value");
-        return new MediaContainerWithDecisionSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaContainerWithDecisionSkipParent2>(){}));
+        return new MediaContainerWithDecisionSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +61,7 @@ public class MediaContainerWithDecisionSkipParent {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +72,7 @@ public class MediaContainerWithDecisionSkipParent {
             return false;
         }
         MediaContainerWithDecisionSkipParent other = (MediaContainerWithDecisionSkipParent) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +85,8 @@ public class MediaContainerWithDecisionSkipParent {
 
         public _Deserializer() {
             super(MediaContainerWithDecisionSkipParent.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithDecisionSkipParent2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithDecisionSkipParent2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +95,6 @@ public class MediaContainerWithDecisionSkipParent {
         return Utils.toString(MediaContainerWithDecisionSkipParent.class,
                 "value", value);
     }
- 
+
 }
 

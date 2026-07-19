@@ -34,7 +34,7 @@ public class AddSectionResponse implements AsyncResponse {
     private HttpResponse<Blob> rawResponse;
 
     /**
-     * OK
+     * Successfully created/executed add a library section
      */
     private Optional<? extends SlashGetResponses200> slashGetResponses200;
 
@@ -87,7 +87,7 @@ public class AddSectionResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully created/executed add a library section
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -128,7 +128,7 @@ public class AddSectionResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully created/executed add a library section
      */
     public AddSectionResponse withSlashGetResponses200(SlashGetResponses200 slashGetResponses200) {
         Utils.checkNotNull(slashGetResponses200, "slashGetResponses200");
@@ -138,7 +138,7 @@ public class AddSectionResponse implements AsyncResponse {
 
 
     /**
-     * OK
+     * Successfully created/executed add a library section
      */
     public AddSectionResponse withSlashGetResponses200(Optional<? extends SlashGetResponses200> slashGetResponses200) {
         Utils.checkNotNull(slashGetResponses200, "slashGetResponses200");
@@ -225,7 +225,7 @@ public class AddSectionResponse implements AsyncResponse {
 
 
         /**
-         * OK
+         * Successfully created/executed add a library section
          */
         public Builder slashGetResponses200(SlashGetResponses200 slashGetResponses200) {
             Utils.checkNotNull(slashGetResponses200, "slashGetResponses200");
@@ -234,7 +234,7 @@ public class AddSectionResponse implements AsyncResponse {
         }
 
         /**
-         * OK
+         * Successfully created/executed add a library section
          */
         public Builder slashGetResponses200(Optional<? extends SlashGetResponses200> slashGetResponses200) {
             Utils.checkNotNull(slashGetResponses200, "slashGetResponses200");

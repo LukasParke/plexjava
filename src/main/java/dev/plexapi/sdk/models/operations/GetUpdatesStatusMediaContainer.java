@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.Release;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Boolean;
 import java.lang.Long;
@@ -27,7 +28,8 @@ public class GetUpdatesStatusMediaContainer {
     private Optional<Long> autoUpdateVersion;
 
     /**
-     * Indicates whether this install can be updated through these endpoints (typically only on MacOS and Windows)
+     * Indicates whether this install can be updated through these endpoints (typically only on MacOS and
+     * Windows)
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("canInstall")
@@ -95,7 +97,8 @@ public class GetUpdatesStatusMediaContainer {
     }
 
     /**
-     * Indicates whether this install can be updated through these endpoints (typically only on MacOS and Windows)
+     * Indicates whether this install can be updated through these endpoints (typically only on MacOS and
+     * Windows)
      */
     @JsonIgnore
     public Optional<Boolean> canInstall() {
@@ -157,7 +160,8 @@ public class GetUpdatesStatusMediaContainer {
     }
 
     /**
-     * Indicates whether this install can be updated through these endpoints (typically only on MacOS and Windows)
+     * Indicates whether this install can be updated through these endpoints (typically only on MacOS and
+     * Windows)
      */
     public GetUpdatesStatusMediaContainer withCanInstall(boolean canInstall) {
         Utils.checkNotNull(canInstall, "canInstall");
@@ -167,7 +171,8 @@ public class GetUpdatesStatusMediaContainer {
 
 
     /**
-     * Indicates whether this install can be updated through these endpoints (typically only on MacOS and Windows)
+     * Indicates whether this install can be updated through these endpoints (typically only on MacOS and
+     * Windows)
      */
     public GetUpdatesStatusMediaContainer withCanInstall(Optional<Boolean> canInstall) {
         Utils.checkNotNull(canInstall, "canInstall");
@@ -321,7 +326,8 @@ public class GetUpdatesStatusMediaContainer {
 
 
         /**
-         * Indicates whether this install can be updated through these endpoints (typically only on MacOS and Windows)
+         * Indicates whether this install can be updated through these endpoints (typically only on MacOS and
+         * Windows)
          */
         public Builder canInstall(boolean canInstall) {
             Utils.checkNotNull(canInstall, "canInstall");
@@ -330,7 +336,8 @@ public class GetUpdatesStatusMediaContainer {
         }
 
         /**
-         * Indicates whether this install can be updated through these endpoints (typically only on MacOS and Windows)
+         * Indicates whether this install can be updated through these endpoints (typically only on MacOS and
+         * Windows)
          */
         public Builder canInstall(Optional<Boolean> canInstall) {
             Utils.checkNotNull(canInstall, "canInstall");

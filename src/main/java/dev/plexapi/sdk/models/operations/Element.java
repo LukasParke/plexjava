@@ -10,6 +10,8 @@ import java.util.Optional;
 
 /**
  * Element
+ * 
+ * <p>The type of artwork element (e.g., art, poster, thumb)
  */
 public enum Element {
     THUMB("thumb"),

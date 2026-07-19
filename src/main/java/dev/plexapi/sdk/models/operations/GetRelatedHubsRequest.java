@@ -86,19 +86,20 @@ public class GetRelatedHubsRequest {
     private Optional<String> marketplace;
 
     /**
-     * The metadata ID for the hubs to fetch
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=metadataId")
-    private long metadataId;
-
-    /**
      * Limit results to count items
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=count")
     private Optional<Long> count;
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * The metadata ID for the hubs to fetch
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=metadataId")
+    private long metadataId;
+
+    /**
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=onlyTransient")
     private Optional<? extends BoolInt> onlyTransient;
@@ -116,8 +117,8 @@ public class GetRelatedHubsRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            long metadataId,
             Optional<Long> count,
+            long metadataId,
             Optional<? extends BoolInt> onlyTransient) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
@@ -130,8 +131,8 @@ public class GetRelatedHubsRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(metadataId, "metadataId");
         Utils.checkNotNull(count, "count");
+        Utils.checkNotNull(metadataId, "metadataId");
         Utils.checkNotNull(onlyTransient, "onlyTransient");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
@@ -144,8 +145,8 @@ public class GetRelatedHubsRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.metadataId = metadataId;
         this.count = count;
+        this.metadataId = metadataId;
         this.onlyTransient = onlyTransient;
     }
     
@@ -154,8 +155,8 @@ public class GetRelatedHubsRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), metadataId,
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            metadataId, Optional.empty());
     }
 
     /**
@@ -248,14 +249,6 @@ public class GetRelatedHubsRequest {
     }
 
     /**
-     * The metadata ID for the hubs to fetch
-     */
-    @JsonIgnore
-    public long metadataId() {
-        return metadataId;
-    }
-
-    /**
      * Limit results to count items
      */
     @JsonIgnore
@@ -264,7 +257,16 @@ public class GetRelatedHubsRequest {
     }
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * The metadata ID for the hubs to fetch
+     */
+    @JsonIgnore
+    public long metadataId() {
+        return metadataId;
+    }
+
+    /**
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -487,15 +489,6 @@ public class GetRelatedHubsRequest {
     }
 
     /**
-     * The metadata ID for the hubs to fetch
-     */
-    public GetRelatedHubsRequest withMetadataId(long metadataId) {
-        Utils.checkNotNull(metadataId, "metadataId");
-        this.metadataId = metadataId;
-        return this;
-    }
-
-    /**
      * Limit results to count items
      */
     public GetRelatedHubsRequest withCount(long count) {
@@ -515,7 +508,17 @@ public class GetRelatedHubsRequest {
     }
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * The metadata ID for the hubs to fetch
+     */
+    public GetRelatedHubsRequest withMetadataId(long metadataId) {
+        Utils.checkNotNull(metadataId, "metadataId");
+        this.metadataId = metadataId;
+        return this;
+    }
+
+    /**
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     public GetRelatedHubsRequest withOnlyTransient(BoolInt onlyTransient) {
         Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -525,7 +528,8 @@ public class GetRelatedHubsRequest {
 
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     public GetRelatedHubsRequest withOnlyTransient(Optional<? extends BoolInt> onlyTransient) {
         Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -554,8 +558,8 @@ public class GetRelatedHubsRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.metadataId, other.metadataId) &&
             Utils.enhancedDeepEquals(this.count, other.count) &&
+            Utils.enhancedDeepEquals(this.metadataId, other.metadataId) &&
             Utils.enhancedDeepEquals(this.onlyTransient, other.onlyTransient);
     }
     
@@ -565,8 +569,8 @@ public class GetRelatedHubsRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, metadataId,
-            count, onlyTransient);
+            deviceName, marketplace, count,
+            metadataId, onlyTransient);
     }
     
     @Override
@@ -583,8 +587,8 @@ public class GetRelatedHubsRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "metadataId", metadataId,
                 "count", count,
+                "metadataId", metadataId,
                 "onlyTransient", onlyTransient);
     }
 
@@ -613,9 +617,9 @@ public class GetRelatedHubsRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
-        private Long metadataId;
-
         private Optional<Long> count = Optional.empty();
+
+        private Long metadataId;
 
         private Optional<? extends BoolInt> onlyTransient;
 
@@ -834,16 +838,6 @@ public class GetRelatedHubsRequest {
 
 
         /**
-         * The metadata ID for the hubs to fetch
-         */
-        public Builder metadataId(long metadataId) {
-            Utils.checkNotNull(metadataId, "metadataId");
-            this.metadataId = metadataId;
-            return this;
-        }
-
-
-        /**
          * Limit results to count items
          */
         public Builder count(long count) {
@@ -863,7 +857,18 @@ public class GetRelatedHubsRequest {
 
 
         /**
-         * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+         * The metadata ID for the hubs to fetch
+         */
+        public Builder metadataId(long metadataId) {
+            Utils.checkNotNull(metadataId, "metadataId");
+            this.metadataId = metadataId;
+            return this;
+        }
+
+
+        /**
+         * Only return hubs which are "transient", meaning those which are prone to changing after media
+         * playback or addition (e.g. On Deck, or Recently Added)
          */
         public Builder onlyTransient(BoolInt onlyTransient) {
             Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -872,7 +877,8 @@ public class GetRelatedHubsRequest {
         }
 
         /**
-         * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+         * Only return hubs which are "transient", meaning those which are prone to changing after media
+         * playback or addition (e.g. On Deck, or Recently Added)
          */
         public Builder onlyTransient(Optional<? extends BoolInt> onlyTransient) {
             Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -892,8 +898,8 @@ public class GetRelatedHubsRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, metadataId,
-                count, onlyTransient);
+                deviceName, marketplace, count,
+                metadataId, onlyTransient);
         }
 
 

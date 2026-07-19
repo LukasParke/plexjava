@@ -9,12 +9,16 @@ import dev.plexapi.sdk.models.operations.SetRatingRequest;
 import dev.plexapi.sdk.models.operations.async.SetRatingRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.SetRatingResponse;
 import dev.plexapi.sdk.operations.SetRating;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Operations for rating media items (thumbs up/down, star ratings, etc.)
  */
 public class AsyncRate {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Rate syncSDK;
 
@@ -52,11 +56,27 @@ public class AsyncRate {
      * This API does respond to the GET verb but applications should use PUT
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetRatingResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetRatingResponse>} - The async response
      */
     public CompletableFuture<SetRatingResponse> setRating(SetRatingRequest request) {
+        return setRating(request, Optional.empty());
+    }
+
+    /**
+     * Rate an item
+     * 
+     * <p>Set the rating on an item.
+     * This API does respond to the GET verb but applications should use PUT
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetRatingResponse>} - The async response
+     */
+    public CompletableFuture<SetRatingResponse> setRating(SetRatingRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetRatingRequest, SetRatingResponse> operation
-              = new SetRating.Async(sdkConfiguration);
+              = new SetRating.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

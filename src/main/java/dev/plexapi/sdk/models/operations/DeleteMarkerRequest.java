@@ -83,11 +83,15 @@ public class DeleteMarkerRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The marker identifier
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=marker")
     private String marker;
 
@@ -233,11 +237,17 @@ public class DeleteMarkerRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The marker identifier
+     */
     @JsonIgnore
     public String marker() {
         return marker;
@@ -457,12 +467,18 @@ public class DeleteMarkerRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public DeleteMarkerRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The marker identifier
+     */
     public DeleteMarkerRequest withMarker(String marker) {
         Utils.checkNotNull(marker, "marker");
         this.marker = marker;
@@ -765,6 +781,9 @@ public class DeleteMarkerRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -772,6 +791,9 @@ public class DeleteMarkerRequest {
         }
 
 
+        /**
+         * The marker identifier
+         */
         public Builder marker(String marker) {
             Utils.checkNotNull(marker, "marker");
             this.marker = marker;

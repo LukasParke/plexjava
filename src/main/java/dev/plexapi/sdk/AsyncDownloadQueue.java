@@ -41,12 +41,18 @@ import dev.plexapi.sdk.operations.GetItemDecision;
 import dev.plexapi.sdk.operations.ListDownloadQueueItems;
 import dev.plexapi.sdk.operations.RemoveDownloadQueueItems;
 import dev.plexapi.sdk.operations.RestartProcessingDownloadQueueItems;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * API Operations against the Download Queue
+ * API Operations against the Download Queue.
+ * Note: The Download Queue is distinct from the Play Queue. The Download Queue manages
+ * offline/downloaded content, while the Play Queue manages active playback sessions.
  */
 public class AsyncDownloadQueue {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final DownloadQueue syncSDK;
 
@@ -70,7 +76,8 @@ public class AsyncDownloadQueue {
      * 
      * <p>Available: 0.2.0
      * 
-     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for this client and user.
+     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for
+     * this client and user.
      * 
      * @return The async call builder
      */
@@ -83,13 +90,31 @@ public class AsyncDownloadQueue {
      * 
      * <p>Available: 0.2.0
      * 
-     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for this client and user.
+     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for
+     * this client and user.
      * 
-     * @return CompletableFuture&lt;CreateDownloadQueueResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreateDownloadQueueResponse>} - The async response
      */
     public CompletableFuture<CreateDownloadQueueResponse> createDownloadQueueDirect() {
+        return createDownloadQueue(Optional.empty());
+    }
+
+    /**
+     * Create download queue
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for
+     * this client and user.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateDownloadQueueResponse>} - The async response
+     */
+    public CompletableFuture<CreateDownloadQueueResponse> createDownloadQueue(Optional<Options> options) {
         AsyncRequestlessOperation<CreateDownloadQueueResponse> operation
-            = new CreateDownloadQueue.Async(sdkConfiguration);
+            = new CreateDownloadQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -116,11 +141,28 @@ public class AsyncDownloadQueue {
      * <p>Get a download queue by its id
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetDownloadQueueResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetDownloadQueueResponse>} - The async response
      */
     public CompletableFuture<GetDownloadQueueResponse> getDownloadQueue(GetDownloadQueueRequest request) {
+        return getDownloadQueue(request, Optional.empty());
+    }
+
+    /**
+     * Get a download queue
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Get a download queue by its id
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDownloadQueueResponse>} - The async response
+     */
+    public CompletableFuture<GetDownloadQueueResponse> getDownloadQueue(GetDownloadQueueRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetDownloadQueueRequest, GetDownloadQueueResponse> operation
-              = new GetDownloadQueue.Async(sdkConfiguration);
+              = new GetDownloadQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -147,11 +189,28 @@ public class AsyncDownloadQueue {
      * <p>Add items to the download queue
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddDownloadQueueItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddDownloadQueueItemsResponse>} - The async response
      */
     public CompletableFuture<AddDownloadQueueItemsResponse> addDownloadQueueItems(AddDownloadQueueItemsRequest request) {
+        return addDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Add to download queue
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Add items to the download queue
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddDownloadQueueItemsResponse>} - The async response
+     */
+    public CompletableFuture<AddDownloadQueueItemsResponse> addDownloadQueueItems(AddDownloadQueueItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddDownloadQueueItemsRequest, AddDownloadQueueItemsResponse> operation
-              = new AddDownloadQueueItems.Async(sdkConfiguration);
+              = new AddDownloadQueueItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -178,11 +237,28 @@ public class AsyncDownloadQueue {
      * <p>Get items from a download queue
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListDownloadQueueItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListDownloadQueueItemsResponse>} - The async response
      */
     public CompletableFuture<ListDownloadQueueItemsResponse> listDownloadQueueItems(ListDownloadQueueItemsRequest request) {
+        return listDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Get download queue items
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Get items from a download queue
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListDownloadQueueItemsResponse>} - The async response
+     */
+    public CompletableFuture<ListDownloadQueueItemsResponse> listDownloadQueueItems(ListDownloadQueueItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListDownloadQueueItemsRequest, ListDownloadQueueItemsResponse> operation
-              = new ListDownloadQueueItems.Async(sdkConfiguration);
+              = new ListDownloadQueueItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -209,11 +285,28 @@ public class AsyncDownloadQueue {
      * <p>Grab the decision for a download queue item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetItemDecisionResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetItemDecisionResponse>} - The async response
      */
     public CompletableFuture<GetItemDecisionResponse> getItemDecision(GetItemDecisionRequest request) {
+        return getItemDecision(request, Optional.empty());
+    }
+
+    /**
+     * Grab download queue item decision
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Grab the decision for a download queue item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetItemDecisionResponse>} - The async response
+     */
+    public CompletableFuture<GetItemDecisionResponse> getItemDecision(GetItemDecisionRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetItemDecisionRequest, GetItemDecisionResponse> operation
-              = new GetItemDecision.Async(sdkConfiguration);
+              = new GetItemDecision.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -240,11 +333,28 @@ public class AsyncDownloadQueue {
      * <p>Grab the media for a download queue item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetDownloadQueueMediaResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetDownloadQueueMediaResponse>} - The async response
      */
     public CompletableFuture<GetDownloadQueueMediaResponse> getDownloadQueueMedia(GetDownloadQueueMediaRequest request) {
+        return getDownloadQueueMedia(request, Optional.empty());
+    }
+
+    /**
+     * Grab download queue media
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Grab the media for a download queue item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDownloadQueueMediaResponse>} - The async response
+     */
+    public CompletableFuture<GetDownloadQueueMediaResponse> getDownloadQueueMedia(GetDownloadQueueMediaRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetDownloadQueueMediaRequest, GetDownloadQueueMediaResponse> operation
-              = new GetDownloadQueueMedia.Async(sdkConfiguration);
+              = new GetDownloadQueueMedia.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -267,11 +377,26 @@ public class AsyncDownloadQueue {
      * <p>delete items from a download queue
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;RemoveDownloadQueueItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<RemoveDownloadQueueItemsResponse>} - The async response
      */
     public CompletableFuture<RemoveDownloadQueueItemsResponse> removeDownloadQueueItems(RemoveDownloadQueueItemsRequest request) {
+        return removeDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Delete download queue items
+     * 
+     * <p>delete items from a download queue
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RemoveDownloadQueueItemsResponse>} - The async response
+     */
+    public CompletableFuture<RemoveDownloadQueueItemsResponse> removeDownloadQueueItems(RemoveDownloadQueueItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<RemoveDownloadQueueItemsRequest, RemoveDownloadQueueItemsResponse> operation
-              = new RemoveDownloadQueueItems.Async(sdkConfiguration);
+              = new RemoveDownloadQueueItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -298,11 +423,28 @@ public class AsyncDownloadQueue {
      * <p>Get items from a download queue
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetDownloadQueueItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetDownloadQueueItemsResponse>} - The async response
      */
     public CompletableFuture<GetDownloadQueueItemsResponse> getDownloadQueueItems(GetDownloadQueueItemsRequest request) {
+        return getDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Get download queue items
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Get items from a download queue
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDownloadQueueItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetDownloadQueueItemsResponse> getDownloadQueueItems(GetDownloadQueueItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetDownloadQueueItemsRequest, GetDownloadQueueItemsResponse> operation
-              = new GetDownloadQueueItems.Async(sdkConfiguration);
+              = new GetDownloadQueueItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -329,11 +471,28 @@ public class AsyncDownloadQueue {
      * <p>Reprocess download queue items with previous decision parameters
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;RestartProcessingDownloadQueueItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<RestartProcessingDownloadQueueItemsResponse>} - The async response
      */
     public CompletableFuture<RestartProcessingDownloadQueueItemsResponse> restartProcessingDownloadQueueItems(RestartProcessingDownloadQueueItemsRequest request) {
+        return restartProcessingDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Restart processing of items from the decision
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Reprocess download queue items with previous decision parameters
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<RestartProcessingDownloadQueueItemsResponse>} - The async response
+     */
+    public CompletableFuture<RestartProcessingDownloadQueueItemsResponse> restartProcessingDownloadQueueItems(RestartProcessingDownloadQueueItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<RestartProcessingDownloadQueueItemsRequest, RestartProcessingDownloadQueueItemsResponse> operation
-              = new RestartProcessingDownloadQueueItems.Async(sdkConfiguration);
+              = new RestartProcessingDownloadQueueItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

@@ -19,9 +19,15 @@ import java.util.Optional;
 /**
  * MediaContainerWithDecisionMediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class MediaContainerWithDecisionMediaContainer {
 
@@ -30,7 +36,8 @@ public class MediaContainerWithDecisionMediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -66,7 +73,9 @@ public class MediaContainerWithDecisionMediaContainer {
     private Optional<String> directPlayDecisionText;
 
     /**
-     * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used in all.
+     * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient
+     * bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used
+     * in all.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("generalDecisionCode")
@@ -166,7 +175,8 @@ public class MediaContainerWithDecisionMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -205,7 +215,9 @@ public class MediaContainerWithDecisionMediaContainer {
     }
 
     /**
-     * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used in all.
+     * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient
+     * bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used
+     * in all.
      */
     @JsonIgnore
     public Optional<Long> generalDecisionCode() {
@@ -268,7 +280,8 @@ public class MediaContainerWithDecisionMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public MediaContainerWithDecisionMediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -278,7 +291,8 @@ public class MediaContainerWithDecisionMediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public MediaContainerWithDecisionMediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -364,7 +378,9 @@ public class MediaContainerWithDecisionMediaContainer {
     }
 
     /**
-     * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used in all.
+     * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient
+     * bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used
+     * in all.
      */
     public MediaContainerWithDecisionMediaContainer withGeneralDecisionCode(long generalDecisionCode) {
         Utils.checkNotNull(generalDecisionCode, "generalDecisionCode");
@@ -374,7 +390,9 @@ public class MediaContainerWithDecisionMediaContainer {
 
 
     /**
-     * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used in all.
+     * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient
+     * bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used
+     * in all.
      */
     public MediaContainerWithDecisionMediaContainer withGeneralDecisionCode(Optional<Long> generalDecisionCode) {
         Utils.checkNotNull(generalDecisionCode, "generalDecisionCode");
@@ -577,7 +595,8 @@ public class MediaContainerWithDecisionMediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -586,7 +605,8 @@ public class MediaContainerWithDecisionMediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -673,7 +693,9 @@ public class MediaContainerWithDecisionMediaContainer {
 
 
         /**
-         * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used in all.
+         * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient
+         * bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used
+         * in all.
          */
         public Builder generalDecisionCode(long generalDecisionCode) {
             Utils.checkNotNull(generalDecisionCode, "generalDecisionCode");
@@ -682,7 +704,9 @@ public class MediaContainerWithDecisionMediaContainer {
         }
 
         /**
-         * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used in all.
+         * The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient
+         * bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used
+         * in all.
          */
         public Builder generalDecisionCode(Optional<Long> generalDecisionCode) {
             Utils.checkNotNull(generalDecisionCode, "generalDecisionCode");

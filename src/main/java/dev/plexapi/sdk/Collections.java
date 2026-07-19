@@ -9,12 +9,15 @@ import dev.plexapi.sdk.models.operations.CreateCollectionRequest;
 import dev.plexapi.sdk.models.operations.CreateCollectionRequestBuilder;
 import dev.plexapi.sdk.models.operations.CreateCollectionResponse;
 import dev.plexapi.sdk.operations.CreateCollection;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * API Operations against the Collections
  */
 public class Collections {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncCollections asyncSDK;
 
@@ -50,11 +53,25 @@ public class Collections {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreateCollectionResponse createCollection(CreateCollectionRequest request) throws Exception {
+    public CreateCollectionResponse createCollection(CreateCollectionRequest request) {
+        return createCollection(request, Optional.empty());
+    }
+
+    /**
+     * Create collection
+     * 
+     * <p>Create a collection in the library
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateCollectionResponse createCollection(CreateCollectionRequest request, Optional<Options> options) {
         RequestOperation<CreateCollectionRequest, CreateCollectionResponse> operation
-              = new CreateCollection.Sync(sdkConfiguration);
+              = new CreateCollection.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

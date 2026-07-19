@@ -2,6 +2,14 @@
 
 Whether or not the account has media reviews visibility enabled
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.MediaReviewsVisibility;
+
+MediaReviewsVisibility value = MediaReviewsVisibility.NoOne;
+```
+
 
 ## Values
 

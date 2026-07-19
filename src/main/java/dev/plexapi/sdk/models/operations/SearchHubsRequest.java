@@ -10,6 +10,7 @@ import dev.plexapi.sdk.models.shared.Accepts;
 import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
+import java.lang.Boolean;
 import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
@@ -97,10 +98,16 @@ public class SearchHubsRequest {
     private Optional<Long> sectionId;
 
     /**
-     * The number of items to return per hub.  3 if not specified
+     * The number of items to return per hub. 3 if not specified
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=limit")
     private Optional<Long> limit;
+
+    /**
+     * Include collection results in search hubs
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeCollections")
+    private Optional<Boolean> includeCollections;
 
     @JsonCreator
     public SearchHubsRequest(
@@ -117,7 +124,8 @@ public class SearchHubsRequest {
             Optional<String> marketplace,
             String query,
             Optional<Long> sectionId,
-            Optional<Long> limit) {
+            Optional<Long> limit,
+            Optional<Boolean> includeCollections) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -132,6 +140,7 @@ public class SearchHubsRequest {
         Utils.checkNotNull(query, "query");
         Utils.checkNotNull(sectionId, "sectionId");
         Utils.checkNotNull(limit, "limit");
+        Utils.checkNotNull(includeCollections, "includeCollections");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -146,6 +155,7 @@ public class SearchHubsRequest {
         this.query = query;
         this.sectionId = sectionId;
         this.limit = limit;
+        this.includeCollections = includeCollections;
     }
     
     public SearchHubsRequest(
@@ -154,7 +164,7 @@ public class SearchHubsRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), query,
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     /**
@@ -263,11 +273,19 @@ public class SearchHubsRequest {
     }
 
     /**
-     * The number of items to return per hub.  3 if not specified
+     * The number of items to return per hub. 3 if not specified
      */
     @JsonIgnore
     public Optional<Long> limit() {
         return limit;
+    }
+
+    /**
+     * Include collection results in search hubs
+     */
+    @JsonIgnore
+    public Optional<Boolean> includeCollections() {
+        return includeCollections;
     }
 
     public static Builder builder() {
@@ -513,7 +531,7 @@ public class SearchHubsRequest {
     }
 
     /**
-     * The number of items to return per hub.  3 if not specified
+     * The number of items to return per hub. 3 if not specified
      */
     public SearchHubsRequest withLimit(long limit) {
         Utils.checkNotNull(limit, "limit");
@@ -523,11 +541,30 @@ public class SearchHubsRequest {
 
 
     /**
-     * The number of items to return per hub.  3 if not specified
+     * The number of items to return per hub. 3 if not specified
      */
     public SearchHubsRequest withLimit(Optional<Long> limit) {
         Utils.checkNotNull(limit, "limit");
         this.limit = limit;
+        return this;
+    }
+
+    /**
+     * Include collection results in search hubs
+     */
+    public SearchHubsRequest withIncludeCollections(boolean includeCollections) {
+        Utils.checkNotNull(includeCollections, "includeCollections");
+        this.includeCollections = Optional.ofNullable(includeCollections);
+        return this;
+    }
+
+
+    /**
+     * Include collection results in search hubs
+     */
+    public SearchHubsRequest withIncludeCollections(Optional<Boolean> includeCollections) {
+        Utils.checkNotNull(includeCollections, "includeCollections");
+        this.includeCollections = includeCollections;
         return this;
     }
 
@@ -554,7 +591,8 @@ public class SearchHubsRequest {
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.query, other.query) &&
             Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
-            Utils.enhancedDeepEquals(this.limit, other.limit);
+            Utils.enhancedDeepEquals(this.limit, other.limit) &&
+            Utils.enhancedDeepEquals(this.includeCollections, other.includeCollections);
     }
     
     @Override
@@ -564,7 +602,7 @@ public class SearchHubsRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, query,
-            sectionId, limit);
+            sectionId, limit, includeCollections);
     }
     
     @Override
@@ -583,7 +621,8 @@ public class SearchHubsRequest {
                 "marketplace", marketplace,
                 "query", query,
                 "sectionId", sectionId,
-                "limit", limit);
+                "limit", limit,
+                "includeCollections", includeCollections);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -616,6 +655,8 @@ public class SearchHubsRequest {
         private Optional<Long> sectionId = Optional.empty();
 
         private Optional<Long> limit = Optional.empty();
+
+        private Optional<Boolean> includeCollections = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -861,7 +902,7 @@ public class SearchHubsRequest {
 
 
         /**
-         * The number of items to return per hub.  3 if not specified
+         * The number of items to return per hub. 3 if not specified
          */
         public Builder limit(long limit) {
             Utils.checkNotNull(limit, "limit");
@@ -870,11 +911,30 @@ public class SearchHubsRequest {
         }
 
         /**
-         * The number of items to return per hub.  3 if not specified
+         * The number of items to return per hub. 3 if not specified
          */
         public Builder limit(Optional<Long> limit) {
             Utils.checkNotNull(limit, "limit");
             this.limit = limit;
+            return this;
+        }
+
+
+        /**
+         * Include collection results in search hubs
+         */
+        public Builder includeCollections(boolean includeCollections) {
+            Utils.checkNotNull(includeCollections, "includeCollections");
+            this.includeCollections = Optional.ofNullable(includeCollections);
+            return this;
+        }
+
+        /**
+         * Include collection results in search hubs
+         */
+        public Builder includeCollections(Optional<Boolean> includeCollections) {
+            Utils.checkNotNull(includeCollections, "includeCollections");
+            this.includeCollections = includeCollections;
             return this;
         }
 
@@ -888,7 +948,7 @@ public class SearchHubsRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, query,
-                sectionId, limit);
+                sectionId, limit, includeCollections);
         }
 
 

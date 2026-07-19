@@ -25,8 +25,8 @@ public class SDKConfiguration {
 
     private static final String LANGUAGE = "java";
     public static final String OPENAPI_DOC_VERSION = "1.1.1";
-    public static final String SDK_VERSION = "0.22.7";
-    public static final String GEN_VERSION = "2.698.4";
+    public static final String SDK_VERSION = "0.23.0";
+    public static final String GEN_VERSION = "2.918.3";
     private static final String BASE_PACKAGE = "dev.plexapi.sdk";
     public static final String USER_AGENT = 
             String.format("speakeasy-sdk/%s %s %s %s %s",
@@ -97,9 +97,9 @@ public class SDKConfiguration {
             put("port", "32400");
         } });
         add(new HashMap<>(){ {
-            put("protocol", "http");
             put("host", "localhost");
             put("port", "32400");
+            put("protocol", "http");
         } });
         add(new HashMap<>(){ {
             put("full_server_url", "http://localhost:32400");

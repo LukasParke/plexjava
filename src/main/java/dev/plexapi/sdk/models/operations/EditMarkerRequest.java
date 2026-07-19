@@ -84,7 +84,9 @@ public class EditMarkerRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
@@ -98,7 +100,7 @@ public class EditMarkerRequest {
      * The type of marker to edit/create
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private long type;
+    private long mediaType;
 
     /**
      * The start time of the marker
@@ -133,7 +135,7 @@ public class EditMarkerRequest {
             Optional<String> marketplace,
             String ids,
             String marker,
-            long type,
+            long mediaType,
             long startTimeOffset,
             Optional<Long> endTimeOffset,
             Optional<? extends QueryParamAttributes> attributes) {
@@ -150,7 +152,7 @@ public class EditMarkerRequest {
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(ids, "ids");
         Utils.checkNotNull(marker, "marker");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         Utils.checkNotNull(startTimeOffset, "startTimeOffset");
         Utils.checkNotNull(endTimeOffset, "endTimeOffset");
         Utils.checkNotNull(attributes, "attributes");
@@ -167,7 +169,7 @@ public class EditMarkerRequest {
         this.marketplace = marketplace;
         this.ids = ids;
         this.marker = marker;
-        this.type = type;
+        this.mediaType = mediaType;
         this.startTimeOffset = startTimeOffset;
         this.endTimeOffset = endTimeOffset;
         this.attributes = attributes;
@@ -176,13 +178,13 @@ public class EditMarkerRequest {
     public EditMarkerRequest(
             String ids,
             String marker,
-            long type,
+            long mediaType,
             long startTimeOffset) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), ids,
-            marker, type, startTimeOffset,
+            marker, mediaType, startTimeOffset,
             Optional.empty(), Optional.empty());
     }
 
@@ -275,6 +277,9 @@ public class EditMarkerRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
@@ -292,8 +297,8 @@ public class EditMarkerRequest {
      * The type of marker to edit/create
      */
     @JsonIgnore
-    public long type() {
-        return type;
+    public long mediaType() {
+        return mediaType;
     }
 
     /**
@@ -535,6 +540,9 @@ public class EditMarkerRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public EditMarkerRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
@@ -553,9 +561,9 @@ public class EditMarkerRequest {
     /**
      * The type of marker to edit/create
      */
-    public EditMarkerRequest withType(long type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public EditMarkerRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -629,7 +637,7 @@ public class EditMarkerRequest {
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.ids, other.ids) &&
             Utils.enhancedDeepEquals(this.marker, other.marker) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
             Utils.enhancedDeepEquals(this.startTimeOffset, other.startTimeOffset) &&
             Utils.enhancedDeepEquals(this.endTimeOffset, other.endTimeOffset) &&
             Utils.enhancedDeepEquals(this.attributes, other.attributes);
@@ -642,7 +650,7 @@ public class EditMarkerRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, ids,
-            marker, type, startTimeOffset,
+            marker, mediaType, startTimeOffset,
             endTimeOffset, attributes);
     }
     
@@ -662,7 +670,7 @@ public class EditMarkerRequest {
                 "marketplace", marketplace,
                 "ids", ids,
                 "marker", marker,
-                "type", type,
+                "mediaType", mediaType,
                 "startTimeOffset", startTimeOffset,
                 "endTimeOffset", endTimeOffset,
                 "attributes", attributes);
@@ -697,7 +705,7 @@ public class EditMarkerRequest {
 
         private String marker;
 
-        private Long type;
+        private Long mediaType;
 
         private Long startTimeOffset;
 
@@ -919,6 +927,9 @@ public class EditMarkerRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -939,9 +950,9 @@ public class EditMarkerRequest {
         /**
          * The type of marker to edit/create
          */
-        public Builder type(long type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -1003,7 +1014,7 @@ public class EditMarkerRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, ids,
-                marker, type, startTimeOffset,
+                marker, mediaType, startTimeOffset,
                 endTimeOffset, attributes);
         }
 

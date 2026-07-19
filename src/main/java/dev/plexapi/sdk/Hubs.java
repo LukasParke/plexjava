@@ -14,9 +14,15 @@ import dev.plexapi.sdk.models.operations.DeleteCustomHubResponse;
 import dev.plexapi.sdk.models.operations.GetAllHubsRequest;
 import dev.plexapi.sdk.models.operations.GetAllHubsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetAllHubsResponse;
+import dev.plexapi.sdk.models.operations.GetContinueWatchingItemsRequest;
+import dev.plexapi.sdk.models.operations.GetContinueWatchingItemsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetContinueWatchingItemsResponse;
 import dev.plexapi.sdk.models.operations.GetContinueWatchingRequest;
 import dev.plexapi.sdk.models.operations.GetContinueWatchingRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetContinueWatchingResponse;
+import dev.plexapi.sdk.models.operations.GetHomeRecentlyAddedRequest;
+import dev.plexapi.sdk.models.operations.GetHomeRecentlyAddedRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetHomeRecentlyAddedResponse;
 import dev.plexapi.sdk.models.operations.GetHubItemsRequest;
 import dev.plexapi.sdk.models.operations.GetHubItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetHubItemsResponse;
@@ -51,6 +57,8 @@ import dev.plexapi.sdk.operations.CreateCustomHub;
 import dev.plexapi.sdk.operations.DeleteCustomHub;
 import dev.plexapi.sdk.operations.GetAllHubs;
 import dev.plexapi.sdk.operations.GetContinueWatching;
+import dev.plexapi.sdk.operations.GetContinueWatchingItems;
+import dev.plexapi.sdk.operations.GetHomeRecentlyAdded;
 import dev.plexapi.sdk.operations.GetHubItems;
 import dev.plexapi.sdk.operations.GetMetadataHubs;
 import dev.plexapi.sdk.operations.GetPostplayHubs;
@@ -61,12 +69,15 @@ import dev.plexapi.sdk.operations.ListHubs;
 import dev.plexapi.sdk.operations.MoveHub;
 import dev.plexapi.sdk.operations.ResetSectionDefaults;
 import dev.plexapi.sdk.operations.UpdateHubVisibility;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * The hubs within a media provider
  */
 public class Hubs {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncHubs asyncSDK;
 
@@ -102,11 +113,25 @@ public class Hubs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAllHubsResponse getAllHubs(GetAllHubsRequest request) throws Exception {
+    public GetAllHubsResponse getAllHubs(GetAllHubsRequest request) {
+        return getAllHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get global hubs
+     * 
+     * <p>Get the global hubs in this PMS
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAllHubsResponse getAllHubs(GetAllHubsRequest request, Optional<Options> options) {
         RequestOperation<GetAllHubsRequest, GetAllHubsResponse> operation
-              = new GetAllHubs.Sync(sdkConfiguration);
+              = new GetAllHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -128,11 +153,117 @@ public class Hubs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetContinueWatchingResponse getContinueWatching(GetContinueWatchingRequest request) throws Exception {
+    public GetContinueWatchingResponse getContinueWatching(GetContinueWatchingRequest request) {
+        return getContinueWatching(request, Optional.empty());
+    }
+
+    /**
+     * Get the continue watching hub
+     * 
+     * <p>Get the global continue watching hub
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetContinueWatchingResponse getContinueWatching(GetContinueWatchingRequest request, Optional<Options> options) {
         RequestOperation<GetContinueWatchingRequest, GetContinueWatchingResponse> operation
-              = new GetContinueWatching.Sync(sdkConfiguration);
+              = new GetContinueWatching.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Continue Watching Items
+     * 
+     * <p>Get direct access to Continue Watching items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetContinueWatchingItemsRequestBuilder getContinueWatchingItems() {
+        return new GetContinueWatchingItemsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Continue Watching Items
+     * 
+     * <p>Get direct access to Continue Watching items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetContinueWatchingItemsResponse getContinueWatchingItems(GetContinueWatchingItemsRequest request) {
+        return getContinueWatchingItems(request, Optional.empty());
+    }
+
+    /**
+     * Get Continue Watching Items
+     * 
+     * <p>Get direct access to Continue Watching items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetContinueWatchingItemsResponse getContinueWatchingItems(GetContinueWatchingItemsRequest request, Optional<Options> options) {
+        RequestOperation<GetContinueWatchingItemsRequest, GetContinueWatchingItemsResponse> operation
+              = new GetContinueWatchingItems.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get home hubs Recently Added
+     * 
+     * <p>Get the recently added hub for the home screen.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetHomeRecentlyAddedRequestBuilder getHomeRecentlyAdded() {
+        return new GetHomeRecentlyAddedRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get home hubs Recently Added
+     * 
+     * <p>Get the recently added hub for the home screen.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHomeRecentlyAddedResponse getHomeRecentlyAdded(GetHomeRecentlyAddedRequest request) {
+        return getHomeRecentlyAdded(request, Optional.empty());
+    }
+
+    /**
+     * Get home hubs Recently Added
+     * 
+     * <p>Get the recently added hub for the home screen.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHomeRecentlyAddedResponse getHomeRecentlyAdded(GetHomeRecentlyAddedRequest request, Optional<Options> options) {
+        RequestOperation<GetHomeRecentlyAddedRequest, GetHomeRecentlyAddedResponse> operation
+              = new GetHomeRecentlyAdded.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -154,11 +285,25 @@ public class Hubs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetHubItemsResponse getHubItems(GetHubItemsRequest request) throws Exception {
+    public GetHubItemsResponse getHubItems(GetHubItemsRequest request) {
+        return getHubItems(request, Optional.empty());
+    }
+
+    /**
+     * Get a hub's items
+     * 
+     * <p>Get the items within a single hub specified by identifier
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHubItemsResponse getHubItems(GetHubItemsRequest request, Optional<Options> options) {
         RequestOperation<GetHubItemsRequest, GetHubItemsResponse> operation
-              = new GetHubItems.Sync(sdkConfiguration);
+              = new GetHubItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -180,18 +325,32 @@ public class Hubs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPromotedHubsResponse getPromotedHubs(GetPromotedHubsRequest request) throws Exception {
+    public GetPromotedHubsResponse getPromotedHubs(GetPromotedHubsRequest request) {
+        return getPromotedHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get the hubs which are promoted
+     * 
+     * <p>Get the global hubs which are promoted (should be displayed on the home screen)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPromotedHubsResponse getPromotedHubs(GetPromotedHubsRequest request, Optional<Options> options) {
         RequestOperation<GetPromotedHubsRequest, GetPromotedHubsResponse> operation
-              = new GetPromotedHubs.Sync(sdkConfiguration);
+              = new GetPromotedHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get hubs for section by metadata item
      * 
-     * <p>Get the hubs for a section by metadata item.  Currently only for music sections
+     * <p>Get the hubs for a section by metadata item. Currently only for music sections
      * 
      * @return The call builder
      */
@@ -202,15 +361,29 @@ public class Hubs {
     /**
      * Get hubs for section by metadata item
      * 
-     * <p>Get the hubs for a section by metadata item.  Currently only for music sections
+     * <p>Get the hubs for a section by metadata item. Currently only for music sections
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetMetadataHubsResponse getMetadataHubs(GetMetadataHubsRequest request) throws Exception {
+    public GetMetadataHubsResponse getMetadataHubs(GetMetadataHubsRequest request) {
+        return getMetadataHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get hubs for section by metadata item
+     * 
+     * <p>Get the hubs for a section by metadata item. Currently only for music sections
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataHubsResponse getMetadataHubs(GetMetadataHubsRequest request, Optional<Options> options) {
         RequestOperation<GetMetadataHubsRequest, GetMetadataHubsResponse> operation
-              = new GetMetadataHubs.Sync(sdkConfiguration);
+              = new GetMetadataHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -232,11 +405,25 @@ public class Hubs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPostplayHubsResponse getPostplayHubs(GetPostplayHubsRequest request) throws Exception {
+    public GetPostplayHubsResponse getPostplayHubs(GetPostplayHubsRequest request) {
+        return getPostplayHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get postplay hubs
+     * 
+     * <p>Get the hubs for a metadata to be displayed in post play
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPostplayHubsResponse getPostplayHubs(GetPostplayHubsRequest request, Optional<Options> options) {
         RequestOperation<GetPostplayHubsRequest, GetPostplayHubsResponse> operation
-              = new GetPostplayHubs.Sync(sdkConfiguration);
+              = new GetPostplayHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -258,11 +445,25 @@ public class Hubs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetRelatedHubsResponse getRelatedHubs(GetRelatedHubsRequest request) throws Exception {
+    public GetRelatedHubsResponse getRelatedHubs(GetRelatedHubsRequest request) {
+        return getRelatedHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get related hubs
+     * 
+     * <p>Get the hubs for a metadata related to the provided metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRelatedHubsResponse getRelatedHubs(GetRelatedHubsRequest request, Optional<Options> options) {
         RequestOperation<GetRelatedHubsRequest, GetRelatedHubsResponse> operation
-              = new GetRelatedHubs.Sync(sdkConfiguration);
+              = new GetRelatedHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -284,11 +485,25 @@ public class Hubs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSectionHubsResponse getSectionHubs(GetSectionHubsRequest request) throws Exception {
+    public GetSectionHubsResponse getSectionHubs(GetSectionHubsRequest request) {
+        return getSectionHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get section hubs
+     * 
+     * <p>Get the hubs for a single section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionHubsResponse getSectionHubs(GetSectionHubsRequest request, Optional<Options> options) {
         RequestOperation<GetSectionHubsRequest, GetSectionHubsResponse> operation
-              = new GetSectionHubs.Sync(sdkConfiguration);
+              = new GetSectionHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -296,6 +511,8 @@ public class Hubs {
      * Reset hubs to defaults
      * 
      * <p>Reset hubs for this section to defaults and delete custom hubs
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -308,13 +525,31 @@ public class Hubs {
      * 
      * <p>Reset hubs for this section to defaults and delete custom hubs
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ResetSectionDefaultsResponse resetSectionDefaults(ResetSectionDefaultsRequest request) throws Exception {
+    public ResetSectionDefaultsResponse resetSectionDefaults(ResetSectionDefaultsRequest request) {
+        return resetSectionDefaults(request, Optional.empty());
+    }
+
+    /**
+     * Reset hubs to defaults
+     * 
+     * <p>Reset hubs for this section to defaults and delete custom hubs
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ResetSectionDefaultsResponse resetSectionDefaults(ResetSectionDefaultsRequest request, Optional<Options> options) {
         RequestOperation<ResetSectionDefaultsRequest, ResetSectionDefaultsResponse> operation
-              = new ResetSectionDefaults.Sync(sdkConfiguration);
+              = new ResetSectionDefaults.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -322,6 +557,8 @@ public class Hubs {
      * Get hubs
      * 
      * <p>Get the list of hubs including both built-in and custom
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -334,13 +571,31 @@ public class Hubs {
      * 
      * <p>Get the list of hubs including both built-in and custom
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListHubsResponse listHubs(ListHubsRequest request) throws Exception {
+    public ListHubsResponse listHubs(ListHubsRequest request) {
+        return listHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get hubs
+     * 
+     * <p>Get the list of hubs including both built-in and custom
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListHubsResponse listHubs(ListHubsRequest request, Optional<Options> options) {
         RequestOperation<ListHubsRequest, ListHubsResponse> operation
-              = new ListHubs.Sync(sdkConfiguration);
+              = new ListHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -348,6 +603,8 @@ public class Hubs {
      * Create a custom hub
      * 
      * <p>Create a custom hub based on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -360,13 +617,31 @@ public class Hubs {
      * 
      * <p>Create a custom hub based on a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreateCustomHubResponse createCustomHub(CreateCustomHubRequest request) throws Exception {
+    public CreateCustomHubResponse createCustomHub(CreateCustomHubRequest request) {
+        return createCustomHub(request, Optional.empty());
+    }
+
+    /**
+     * Create a custom hub
+     * 
+     * <p>Create a custom hub based on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateCustomHubResponse createCustomHub(CreateCustomHubRequest request, Optional<Options> options) {
         RequestOperation<CreateCustomHubRequest, CreateCustomHubResponse> operation
-              = new CreateCustomHub.Sync(sdkConfiguration);
+              = new CreateCustomHub.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -374,6 +649,8 @@ public class Hubs {
      * Move Hub
      * 
      * <p>Changed the ordering of a hub among others hubs
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -386,13 +663,31 @@ public class Hubs {
      * 
      * <p>Changed the ordering of a hub among others hubs
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public MoveHubResponse moveHub(MoveHubRequest request) throws Exception {
+    public MoveHubResponse moveHub(MoveHubRequest request) {
+        return moveHub(request, Optional.empty());
+    }
+
+    /**
+     * Move Hub
+     * 
+     * <p>Changed the ordering of a hub among others hubs
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MoveHubResponse moveHub(MoveHubRequest request, Optional<Options> options) {
         RequestOperation<MoveHubRequest, MoveHubResponse> operation
-              = new MoveHub.Sync(sdkConfiguration);
+              = new MoveHub.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -400,6 +695,8 @@ public class Hubs {
      * Delete a custom hub
      * 
      * <p>Delete a custom hub from the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -412,13 +709,31 @@ public class Hubs {
      * 
      * <p>Delete a custom hub from the server
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteCustomHubResponse deleteCustomHub(DeleteCustomHubRequest request) throws Exception {
+    public DeleteCustomHubResponse deleteCustomHub(DeleteCustomHubRequest request) {
+        return deleteCustomHub(request, Optional.empty());
+    }
+
+    /**
+     * Delete a custom hub
+     * 
+     * <p>Delete a custom hub from the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteCustomHubResponse deleteCustomHub(DeleteCustomHubRequest request, Optional<Options> options) {
         RequestOperation<DeleteCustomHubRequest, DeleteCustomHubResponse> operation
-              = new DeleteCustomHub.Sync(sdkConfiguration);
+              = new DeleteCustomHub.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -426,6 +741,8 @@ public class Hubs {
      * Change hub visibility
      * 
      * <p>Changed the visibility of a hub for both the admin and shared users
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -438,13 +755,31 @@ public class Hubs {
      * 
      * <p>Changed the visibility of a hub for both the admin and shared users
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public UpdateHubVisibilityResponse updateHubVisibility(UpdateHubVisibilityRequest request) throws Exception {
+    public UpdateHubVisibilityResponse updateHubVisibility(UpdateHubVisibilityRequest request) {
+        return updateHubVisibility(request, Optional.empty());
+    }
+
+    /**
+     * Change hub visibility
+     * 
+     * <p>Changed the visibility of a hub for both the admin and shared users
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateHubVisibilityResponse updateHubVisibility(UpdateHubVisibilityRequest request, Optional<Options> options) {
         RequestOperation<UpdateHubVisibilityRequest, UpdateHubVisibilityResponse> operation
-              = new UpdateHubVisibility.Sync(sdkConfiguration);
+              = new UpdateHubVisibility.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

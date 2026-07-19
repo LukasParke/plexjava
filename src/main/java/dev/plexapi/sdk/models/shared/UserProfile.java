@@ -28,12 +28,10 @@ public class UserProfile {
     @JsonProperty("autoSelectAudio")
     private Optional<Boolean> autoSelectAudio;
 
-    /**
-     * The preferred audio language for the account
-     */
-    @JsonInclude(Include.ALWAYS)
-    @JsonProperty("defaultAudioLanguage")
-    private Optional<String> defaultAudioLanguage;
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("autoSelectSubtitle")
+    private Optional<? extends AutoSelectSubtitle> autoSelectSubtitle;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -41,11 +39,28 @@ public class UserProfile {
     private Optional<? extends DefaultAudioAccessibility> defaultAudioAccessibility;
 
     /**
+     * The preferred audio language for the account
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("defaultAudioLanguage")
+    private Optional<String> defaultAudioLanguage;
+
+    /**
      * The preferred audio languages for the account
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("defaultAudioLanguages")
     private JsonNullable<? extends List<String>> defaultAudioLanguages;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("defaultSubtitleAccessibility")
+    private Optional<? extends DefaultSubtitleAccessibility> defaultSubtitleAccessibility;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("defaultSubtitleForced")
+    private Optional<? extends DefaultSubtitleForced> defaultSubtitleForced;
 
     /**
      * The preferred subtitle language for the account
@@ -61,31 +76,6 @@ public class UserProfile {
     @JsonProperty("defaultSubtitleLanguages")
     private JsonNullable<? extends List<String>> defaultSubtitleLanguages;
 
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("autoSelectSubtitle")
-    private Optional<? extends AutoSelectSubtitle> autoSelectSubtitle;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("defaultSubtitleAccessibility")
-    private Optional<? extends DefaultSubtitleAccessibility> defaultSubtitleAccessibility;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("defaultSubtitleForced")
-    private Optional<? extends DefaultSubtitleForced> defaultSubtitleForced;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("watchedIndicator")
-    private Optional<? extends WatchedIndicator> watchedIndicator;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("mediaReviewsVisibility")
-    private Optional<? extends MediaReviewsVisibility> mediaReviewsVisibility;
-
     /**
      * The languages for media reviews visibility
      */
@@ -93,51 +83,61 @@ public class UserProfile {
     @JsonProperty("mediaReviewsLanguages")
     private JsonNullable<? extends List<String>> mediaReviewsLanguages;
 
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mediaReviewsVisibility")
+    private Optional<? extends MediaReviewsVisibility> mediaReviewsVisibility;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("watchedIndicator")
+    private Optional<? extends WatchedIndicator> watchedIndicator;
+
     @JsonCreator
     public UserProfile(
             @JsonProperty("autoSelectAudio") Optional<Boolean> autoSelectAudio,
-            @JsonProperty("defaultAudioLanguage") Optional<String> defaultAudioLanguage,
-            @JsonProperty("defaultAudioAccessibility") Optional<? extends DefaultAudioAccessibility> defaultAudioAccessibility,
-            @JsonProperty("defaultAudioLanguages") JsonNullable<? extends List<String>> defaultAudioLanguages,
-            @JsonProperty("defaultSubtitleLanguage") Optional<String> defaultSubtitleLanguage,
-            @JsonProperty("defaultSubtitleLanguages") JsonNullable<? extends List<String>> defaultSubtitleLanguages,
             @JsonProperty("autoSelectSubtitle") Optional<? extends AutoSelectSubtitle> autoSelectSubtitle,
+            @JsonProperty("defaultAudioAccessibility") Optional<? extends DefaultAudioAccessibility> defaultAudioAccessibility,
+            @JsonProperty("defaultAudioLanguage") Optional<String> defaultAudioLanguage,
+            @JsonProperty("defaultAudioLanguages") JsonNullable<? extends List<String>> defaultAudioLanguages,
             @JsonProperty("defaultSubtitleAccessibility") Optional<? extends DefaultSubtitleAccessibility> defaultSubtitleAccessibility,
             @JsonProperty("defaultSubtitleForced") Optional<? extends DefaultSubtitleForced> defaultSubtitleForced,
-            @JsonProperty("watchedIndicator") Optional<? extends WatchedIndicator> watchedIndicator,
+            @JsonProperty("defaultSubtitleLanguage") Optional<String> defaultSubtitleLanguage,
+            @JsonProperty("defaultSubtitleLanguages") JsonNullable<? extends List<String>> defaultSubtitleLanguages,
+            @JsonProperty("mediaReviewsLanguages") JsonNullable<? extends List<String>> mediaReviewsLanguages,
             @JsonProperty("mediaReviewsVisibility") Optional<? extends MediaReviewsVisibility> mediaReviewsVisibility,
-            @JsonProperty("mediaReviewsLanguages") JsonNullable<? extends List<String>> mediaReviewsLanguages) {
+            @JsonProperty("watchedIndicator") Optional<? extends WatchedIndicator> watchedIndicator) {
         Utils.checkNotNull(autoSelectAudio, "autoSelectAudio");
-        Utils.checkNotNull(defaultAudioLanguage, "defaultAudioLanguage");
-        Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
-        Utils.checkNotNull(defaultAudioLanguages, "defaultAudioLanguages");
-        Utils.checkNotNull(defaultSubtitleLanguage, "defaultSubtitleLanguage");
-        Utils.checkNotNull(defaultSubtitleLanguages, "defaultSubtitleLanguages");
         Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
+        Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
+        Utils.checkNotNull(defaultAudioLanguage, "defaultAudioLanguage");
+        Utils.checkNotNull(defaultAudioLanguages, "defaultAudioLanguages");
         Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
         Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
-        Utils.checkNotNull(watchedIndicator, "watchedIndicator");
-        Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
+        Utils.checkNotNull(defaultSubtitleLanguage, "defaultSubtitleLanguage");
+        Utils.checkNotNull(defaultSubtitleLanguages, "defaultSubtitleLanguages");
         Utils.checkNotNull(mediaReviewsLanguages, "mediaReviewsLanguages");
+        Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
+        Utils.checkNotNull(watchedIndicator, "watchedIndicator");
         this.autoSelectAudio = autoSelectAudio;
-        this.defaultAudioLanguage = defaultAudioLanguage;
-        this.defaultAudioAccessibility = defaultAudioAccessibility;
-        this.defaultAudioLanguages = defaultAudioLanguages;
-        this.defaultSubtitleLanguage = defaultSubtitleLanguage;
-        this.defaultSubtitleLanguages = defaultSubtitleLanguages;
         this.autoSelectSubtitle = autoSelectSubtitle;
+        this.defaultAudioAccessibility = defaultAudioAccessibility;
+        this.defaultAudioLanguage = defaultAudioLanguage;
+        this.defaultAudioLanguages = defaultAudioLanguages;
         this.defaultSubtitleAccessibility = defaultSubtitleAccessibility;
         this.defaultSubtitleForced = defaultSubtitleForced;
-        this.watchedIndicator = watchedIndicator;
-        this.mediaReviewsVisibility = mediaReviewsVisibility;
+        this.defaultSubtitleLanguage = defaultSubtitleLanguage;
+        this.defaultSubtitleLanguages = defaultSubtitleLanguages;
         this.mediaReviewsLanguages = mediaReviewsLanguages;
+        this.mediaReviewsVisibility = mediaReviewsVisibility;
+        this.watchedIndicator = watchedIndicator;
     }
     
     public UserProfile() {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
-            JsonNullable.undefined(), Optional.empty(), JsonNullable.undefined(),
-            Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), JsonNullable.undefined());
+            Optional.empty(), JsonNullable.undefined(), Optional.empty(),
+            Optional.empty(), Optional.empty(), JsonNullable.undefined(),
+            JsonNullable.undefined(), Optional.empty(), Optional.empty());
     }
 
     /**
@@ -148,12 +148,10 @@ public class UserProfile {
         return autoSelectAudio;
     }
 
-    /**
-     * The preferred audio language for the account
-     */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<String> defaultAudioLanguage() {
-        return defaultAudioLanguage;
+    public Optional<AutoSelectSubtitle> autoSelectSubtitle() {
+        return (Optional<AutoSelectSubtitle>) autoSelectSubtitle;
     }
 
     @SuppressWarnings("unchecked")
@@ -163,12 +161,32 @@ public class UserProfile {
     }
 
     /**
+     * The preferred audio language for the account
+     */
+    @JsonIgnore
+    public Optional<String> defaultAudioLanguage() {
+        return defaultAudioLanguage;
+    }
+
+    /**
      * The preferred audio languages for the account
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public JsonNullable<List<String>> defaultAudioLanguages() {
         return (JsonNullable<List<String>>) defaultAudioLanguages;
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<DefaultSubtitleAccessibility> defaultSubtitleAccessibility() {
+        return (Optional<DefaultSubtitleAccessibility>) defaultSubtitleAccessibility;
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<DefaultSubtitleForced> defaultSubtitleForced() {
+        return (Optional<DefaultSubtitleForced>) defaultSubtitleForced;
     }
 
     /**
@@ -188,28 +206,13 @@ public class UserProfile {
         return (JsonNullable<List<String>>) defaultSubtitleLanguages;
     }
 
+    /**
+     * The languages for media reviews visibility
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<AutoSelectSubtitle> autoSelectSubtitle() {
-        return (Optional<AutoSelectSubtitle>) autoSelectSubtitle;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<DefaultSubtitleAccessibility> defaultSubtitleAccessibility() {
-        return (Optional<DefaultSubtitleAccessibility>) defaultSubtitleAccessibility;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<DefaultSubtitleForced> defaultSubtitleForced() {
-        return (Optional<DefaultSubtitleForced>) defaultSubtitleForced;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<WatchedIndicator> watchedIndicator() {
-        return (Optional<WatchedIndicator>) watchedIndicator;
+    public JsonNullable<List<String>> mediaReviewsLanguages() {
+        return (JsonNullable<List<String>>) mediaReviewsLanguages;
     }
 
     @SuppressWarnings("unchecked")
@@ -218,13 +221,10 @@ public class UserProfile {
         return (Optional<MediaReviewsVisibility>) mediaReviewsVisibility;
     }
 
-    /**
-     * The languages for media reviews visibility
-     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public JsonNullable<List<String>> mediaReviewsLanguages() {
-        return (JsonNullable<List<String>>) mediaReviewsLanguages;
+    public Optional<WatchedIndicator> watchedIndicator() {
+        return (Optional<WatchedIndicator>) watchedIndicator;
     }
 
     public static Builder builder() {
@@ -251,6 +251,32 @@ public class UserProfile {
         return this;
     }
 
+    public UserProfile withAutoSelectSubtitle(AutoSelectSubtitle autoSelectSubtitle) {
+        Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
+        this.autoSelectSubtitle = Optional.ofNullable(autoSelectSubtitle);
+        return this;
+    }
+
+
+    public UserProfile withAutoSelectSubtitle(Optional<? extends AutoSelectSubtitle> autoSelectSubtitle) {
+        Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
+        this.autoSelectSubtitle = autoSelectSubtitle;
+        return this;
+    }
+
+    public UserProfile withDefaultAudioAccessibility(DefaultAudioAccessibility defaultAudioAccessibility) {
+        Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
+        this.defaultAudioAccessibility = Optional.ofNullable(defaultAudioAccessibility);
+        return this;
+    }
+
+
+    public UserProfile withDefaultAudioAccessibility(Optional<? extends DefaultAudioAccessibility> defaultAudioAccessibility) {
+        Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
+        this.defaultAudioAccessibility = defaultAudioAccessibility;
+        return this;
+    }
+
     /**
      * The preferred audio language for the account
      */
@@ -270,19 +296,6 @@ public class UserProfile {
         return this;
     }
 
-    public UserProfile withDefaultAudioAccessibility(DefaultAudioAccessibility defaultAudioAccessibility) {
-        Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
-        this.defaultAudioAccessibility = Optional.ofNullable(defaultAudioAccessibility);
-        return this;
-    }
-
-
-    public UserProfile withDefaultAudioAccessibility(Optional<? extends DefaultAudioAccessibility> defaultAudioAccessibility) {
-        Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
-        this.defaultAudioAccessibility = defaultAudioAccessibility;
-        return this;
-    }
-
     /**
      * The preferred audio languages for the account
      */
@@ -298,6 +311,32 @@ public class UserProfile {
     public UserProfile withDefaultAudioLanguages(JsonNullable<? extends List<String>> defaultAudioLanguages) {
         Utils.checkNotNull(defaultAudioLanguages, "defaultAudioLanguages");
         this.defaultAudioLanguages = defaultAudioLanguages;
+        return this;
+    }
+
+    public UserProfile withDefaultSubtitleAccessibility(DefaultSubtitleAccessibility defaultSubtitleAccessibility) {
+        Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
+        this.defaultSubtitleAccessibility = Optional.ofNullable(defaultSubtitleAccessibility);
+        return this;
+    }
+
+
+    public UserProfile withDefaultSubtitleAccessibility(Optional<? extends DefaultSubtitleAccessibility> defaultSubtitleAccessibility) {
+        Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
+        this.defaultSubtitleAccessibility = defaultSubtitleAccessibility;
+        return this;
+    }
+
+    public UserProfile withDefaultSubtitleForced(DefaultSubtitleForced defaultSubtitleForced) {
+        Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
+        this.defaultSubtitleForced = Optional.ofNullable(defaultSubtitleForced);
+        return this;
+    }
+
+
+    public UserProfile withDefaultSubtitleForced(Optional<? extends DefaultSubtitleForced> defaultSubtitleForced) {
+        Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
+        this.defaultSubtitleForced = defaultSubtitleForced;
         return this;
     }
 
@@ -338,71 +377,6 @@ public class UserProfile {
         return this;
     }
 
-    public UserProfile withAutoSelectSubtitle(AutoSelectSubtitle autoSelectSubtitle) {
-        Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
-        this.autoSelectSubtitle = Optional.ofNullable(autoSelectSubtitle);
-        return this;
-    }
-
-
-    public UserProfile withAutoSelectSubtitle(Optional<? extends AutoSelectSubtitle> autoSelectSubtitle) {
-        Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
-        this.autoSelectSubtitle = autoSelectSubtitle;
-        return this;
-    }
-
-    public UserProfile withDefaultSubtitleAccessibility(DefaultSubtitleAccessibility defaultSubtitleAccessibility) {
-        Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
-        this.defaultSubtitleAccessibility = Optional.ofNullable(defaultSubtitleAccessibility);
-        return this;
-    }
-
-
-    public UserProfile withDefaultSubtitleAccessibility(Optional<? extends DefaultSubtitleAccessibility> defaultSubtitleAccessibility) {
-        Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
-        this.defaultSubtitleAccessibility = defaultSubtitleAccessibility;
-        return this;
-    }
-
-    public UserProfile withDefaultSubtitleForced(DefaultSubtitleForced defaultSubtitleForced) {
-        Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
-        this.defaultSubtitleForced = Optional.ofNullable(defaultSubtitleForced);
-        return this;
-    }
-
-
-    public UserProfile withDefaultSubtitleForced(Optional<? extends DefaultSubtitleForced> defaultSubtitleForced) {
-        Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
-        this.defaultSubtitleForced = defaultSubtitleForced;
-        return this;
-    }
-
-    public UserProfile withWatchedIndicator(WatchedIndicator watchedIndicator) {
-        Utils.checkNotNull(watchedIndicator, "watchedIndicator");
-        this.watchedIndicator = Optional.ofNullable(watchedIndicator);
-        return this;
-    }
-
-
-    public UserProfile withWatchedIndicator(Optional<? extends WatchedIndicator> watchedIndicator) {
-        Utils.checkNotNull(watchedIndicator, "watchedIndicator");
-        this.watchedIndicator = watchedIndicator;
-        return this;
-    }
-
-    public UserProfile withMediaReviewsVisibility(MediaReviewsVisibility mediaReviewsVisibility) {
-        Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
-        this.mediaReviewsVisibility = Optional.ofNullable(mediaReviewsVisibility);
-        return this;
-    }
-
-
-    public UserProfile withMediaReviewsVisibility(Optional<? extends MediaReviewsVisibility> mediaReviewsVisibility) {
-        Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
-        this.mediaReviewsVisibility = mediaReviewsVisibility;
-        return this;
-    }
-
     /**
      * The languages for media reviews visibility
      */
@@ -421,6 +395,32 @@ public class UserProfile {
         return this;
     }
 
+    public UserProfile withMediaReviewsVisibility(MediaReviewsVisibility mediaReviewsVisibility) {
+        Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
+        this.mediaReviewsVisibility = Optional.ofNullable(mediaReviewsVisibility);
+        return this;
+    }
+
+
+    public UserProfile withMediaReviewsVisibility(Optional<? extends MediaReviewsVisibility> mediaReviewsVisibility) {
+        Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
+        this.mediaReviewsVisibility = mediaReviewsVisibility;
+        return this;
+    }
+
+    public UserProfile withWatchedIndicator(WatchedIndicator watchedIndicator) {
+        Utils.checkNotNull(watchedIndicator, "watchedIndicator");
+        this.watchedIndicator = Optional.ofNullable(watchedIndicator);
+        return this;
+    }
+
+
+    public UserProfile withWatchedIndicator(Optional<? extends WatchedIndicator> watchedIndicator) {
+        Utils.checkNotNull(watchedIndicator, "watchedIndicator");
+        this.watchedIndicator = watchedIndicator;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -432,43 +432,43 @@ public class UserProfile {
         UserProfile other = (UserProfile) o;
         return 
             Utils.enhancedDeepEquals(this.autoSelectAudio, other.autoSelectAudio) &&
-            Utils.enhancedDeepEquals(this.defaultAudioLanguage, other.defaultAudioLanguage) &&
-            Utils.enhancedDeepEquals(this.defaultAudioAccessibility, other.defaultAudioAccessibility) &&
-            Utils.enhancedDeepEquals(this.defaultAudioLanguages, other.defaultAudioLanguages) &&
-            Utils.enhancedDeepEquals(this.defaultSubtitleLanguage, other.defaultSubtitleLanguage) &&
-            Utils.enhancedDeepEquals(this.defaultSubtitleLanguages, other.defaultSubtitleLanguages) &&
             Utils.enhancedDeepEquals(this.autoSelectSubtitle, other.autoSelectSubtitle) &&
+            Utils.enhancedDeepEquals(this.defaultAudioAccessibility, other.defaultAudioAccessibility) &&
+            Utils.enhancedDeepEquals(this.defaultAudioLanguage, other.defaultAudioLanguage) &&
+            Utils.enhancedDeepEquals(this.defaultAudioLanguages, other.defaultAudioLanguages) &&
             Utils.enhancedDeepEquals(this.defaultSubtitleAccessibility, other.defaultSubtitleAccessibility) &&
             Utils.enhancedDeepEquals(this.defaultSubtitleForced, other.defaultSubtitleForced) &&
-            Utils.enhancedDeepEquals(this.watchedIndicator, other.watchedIndicator) &&
+            Utils.enhancedDeepEquals(this.defaultSubtitleLanguage, other.defaultSubtitleLanguage) &&
+            Utils.enhancedDeepEquals(this.defaultSubtitleLanguages, other.defaultSubtitleLanguages) &&
+            Utils.enhancedDeepEquals(this.mediaReviewsLanguages, other.mediaReviewsLanguages) &&
             Utils.enhancedDeepEquals(this.mediaReviewsVisibility, other.mediaReviewsVisibility) &&
-            Utils.enhancedDeepEquals(this.mediaReviewsLanguages, other.mediaReviewsLanguages);
+            Utils.enhancedDeepEquals(this.watchedIndicator, other.watchedIndicator);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            autoSelectAudio, defaultAudioLanguage, defaultAudioAccessibility,
-            defaultAudioLanguages, defaultSubtitleLanguage, defaultSubtitleLanguages,
-            autoSelectSubtitle, defaultSubtitleAccessibility, defaultSubtitleForced,
-            watchedIndicator, mediaReviewsVisibility, mediaReviewsLanguages);
+            autoSelectAudio, autoSelectSubtitle, defaultAudioAccessibility,
+            defaultAudioLanguage, defaultAudioLanguages, defaultSubtitleAccessibility,
+            defaultSubtitleForced, defaultSubtitleLanguage, defaultSubtitleLanguages,
+            mediaReviewsLanguages, mediaReviewsVisibility, watchedIndicator);
     }
     
     @Override
     public String toString() {
         return Utils.toString(UserProfile.class,
                 "autoSelectAudio", autoSelectAudio,
-                "defaultAudioLanguage", defaultAudioLanguage,
-                "defaultAudioAccessibility", defaultAudioAccessibility,
-                "defaultAudioLanguages", defaultAudioLanguages,
-                "defaultSubtitleLanguage", defaultSubtitleLanguage,
-                "defaultSubtitleLanguages", defaultSubtitleLanguages,
                 "autoSelectSubtitle", autoSelectSubtitle,
+                "defaultAudioAccessibility", defaultAudioAccessibility,
+                "defaultAudioLanguage", defaultAudioLanguage,
+                "defaultAudioLanguages", defaultAudioLanguages,
                 "defaultSubtitleAccessibility", defaultSubtitleAccessibility,
                 "defaultSubtitleForced", defaultSubtitleForced,
-                "watchedIndicator", watchedIndicator,
+                "defaultSubtitleLanguage", defaultSubtitleLanguage,
+                "defaultSubtitleLanguages", defaultSubtitleLanguages,
+                "mediaReviewsLanguages", mediaReviewsLanguages,
                 "mediaReviewsVisibility", mediaReviewsVisibility,
-                "mediaReviewsLanguages", mediaReviewsLanguages);
+                "watchedIndicator", watchedIndicator);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -476,27 +476,27 @@ public class UserProfile {
 
         private Optional<Boolean> autoSelectAudio;
 
-        private Optional<String> defaultAudioLanguage = Optional.empty();
+        private Optional<? extends AutoSelectSubtitle> autoSelectSubtitle;
 
         private Optional<? extends DefaultAudioAccessibility> defaultAudioAccessibility;
 
+        private Optional<String> defaultAudioLanguage = Optional.empty();
+
         private JsonNullable<? extends List<String>> defaultAudioLanguages = JsonNullable.undefined();
-
-        private Optional<String> defaultSubtitleLanguage = Optional.empty();
-
-        private JsonNullable<? extends List<String>> defaultSubtitleLanguages = JsonNullable.undefined();
-
-        private Optional<? extends AutoSelectSubtitle> autoSelectSubtitle;
 
         private Optional<? extends DefaultSubtitleAccessibility> defaultSubtitleAccessibility;
 
         private Optional<? extends DefaultSubtitleForced> defaultSubtitleForced;
 
-        private Optional<? extends WatchedIndicator> watchedIndicator;
+        private Optional<String> defaultSubtitleLanguage = Optional.empty();
+
+        private JsonNullable<? extends List<String>> defaultSubtitleLanguages = JsonNullable.undefined();
+
+        private JsonNullable<? extends List<String>> mediaReviewsLanguages = JsonNullable.undefined();
 
         private Optional<? extends MediaReviewsVisibility> mediaReviewsVisibility;
 
-        private JsonNullable<? extends List<String>> mediaReviewsLanguages = JsonNullable.undefined();
+        private Optional<? extends WatchedIndicator> watchedIndicator;
 
         private Builder() {
           // force use of static builder() method
@@ -522,6 +522,32 @@ public class UserProfile {
         }
 
 
+        public Builder autoSelectSubtitle(AutoSelectSubtitle autoSelectSubtitle) {
+            Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
+            this.autoSelectSubtitle = Optional.ofNullable(autoSelectSubtitle);
+            return this;
+        }
+
+        public Builder autoSelectSubtitle(Optional<? extends AutoSelectSubtitle> autoSelectSubtitle) {
+            Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
+            this.autoSelectSubtitle = autoSelectSubtitle;
+            return this;
+        }
+
+
+        public Builder defaultAudioAccessibility(DefaultAudioAccessibility defaultAudioAccessibility) {
+            Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
+            this.defaultAudioAccessibility = Optional.ofNullable(defaultAudioAccessibility);
+            return this;
+        }
+
+        public Builder defaultAudioAccessibility(Optional<? extends DefaultAudioAccessibility> defaultAudioAccessibility) {
+            Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
+            this.defaultAudioAccessibility = defaultAudioAccessibility;
+            return this;
+        }
+
+
         /**
          * The preferred audio language for the account
          */
@@ -541,19 +567,6 @@ public class UserProfile {
         }
 
 
-        public Builder defaultAudioAccessibility(DefaultAudioAccessibility defaultAudioAccessibility) {
-            Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
-            this.defaultAudioAccessibility = Optional.ofNullable(defaultAudioAccessibility);
-            return this;
-        }
-
-        public Builder defaultAudioAccessibility(Optional<? extends DefaultAudioAccessibility> defaultAudioAccessibility) {
-            Utils.checkNotNull(defaultAudioAccessibility, "defaultAudioAccessibility");
-            this.defaultAudioAccessibility = defaultAudioAccessibility;
-            return this;
-        }
-
-
         /**
          * The preferred audio languages for the account
          */
@@ -569,6 +582,32 @@ public class UserProfile {
         public Builder defaultAudioLanguages(JsonNullable<? extends List<String>> defaultAudioLanguages) {
             Utils.checkNotNull(defaultAudioLanguages, "defaultAudioLanguages");
             this.defaultAudioLanguages = defaultAudioLanguages;
+            return this;
+        }
+
+
+        public Builder defaultSubtitleAccessibility(DefaultSubtitleAccessibility defaultSubtitleAccessibility) {
+            Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
+            this.defaultSubtitleAccessibility = Optional.ofNullable(defaultSubtitleAccessibility);
+            return this;
+        }
+
+        public Builder defaultSubtitleAccessibility(Optional<? extends DefaultSubtitleAccessibility> defaultSubtitleAccessibility) {
+            Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
+            this.defaultSubtitleAccessibility = defaultSubtitleAccessibility;
+            return this;
+        }
+
+
+        public Builder defaultSubtitleForced(DefaultSubtitleForced defaultSubtitleForced) {
+            Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
+            this.defaultSubtitleForced = Optional.ofNullable(defaultSubtitleForced);
+            return this;
+        }
+
+        public Builder defaultSubtitleForced(Optional<? extends DefaultSubtitleForced> defaultSubtitleForced) {
+            Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
+            this.defaultSubtitleForced = defaultSubtitleForced;
             return this;
         }
 
@@ -611,71 +650,6 @@ public class UserProfile {
         }
 
 
-        public Builder autoSelectSubtitle(AutoSelectSubtitle autoSelectSubtitle) {
-            Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
-            this.autoSelectSubtitle = Optional.ofNullable(autoSelectSubtitle);
-            return this;
-        }
-
-        public Builder autoSelectSubtitle(Optional<? extends AutoSelectSubtitle> autoSelectSubtitle) {
-            Utils.checkNotNull(autoSelectSubtitle, "autoSelectSubtitle");
-            this.autoSelectSubtitle = autoSelectSubtitle;
-            return this;
-        }
-
-
-        public Builder defaultSubtitleAccessibility(DefaultSubtitleAccessibility defaultSubtitleAccessibility) {
-            Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
-            this.defaultSubtitleAccessibility = Optional.ofNullable(defaultSubtitleAccessibility);
-            return this;
-        }
-
-        public Builder defaultSubtitleAccessibility(Optional<? extends DefaultSubtitleAccessibility> defaultSubtitleAccessibility) {
-            Utils.checkNotNull(defaultSubtitleAccessibility, "defaultSubtitleAccessibility");
-            this.defaultSubtitleAccessibility = defaultSubtitleAccessibility;
-            return this;
-        }
-
-
-        public Builder defaultSubtitleForced(DefaultSubtitleForced defaultSubtitleForced) {
-            Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
-            this.defaultSubtitleForced = Optional.ofNullable(defaultSubtitleForced);
-            return this;
-        }
-
-        public Builder defaultSubtitleForced(Optional<? extends DefaultSubtitleForced> defaultSubtitleForced) {
-            Utils.checkNotNull(defaultSubtitleForced, "defaultSubtitleForced");
-            this.defaultSubtitleForced = defaultSubtitleForced;
-            return this;
-        }
-
-
-        public Builder watchedIndicator(WatchedIndicator watchedIndicator) {
-            Utils.checkNotNull(watchedIndicator, "watchedIndicator");
-            this.watchedIndicator = Optional.ofNullable(watchedIndicator);
-            return this;
-        }
-
-        public Builder watchedIndicator(Optional<? extends WatchedIndicator> watchedIndicator) {
-            Utils.checkNotNull(watchedIndicator, "watchedIndicator");
-            this.watchedIndicator = watchedIndicator;
-            return this;
-        }
-
-
-        public Builder mediaReviewsVisibility(MediaReviewsVisibility mediaReviewsVisibility) {
-            Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
-            this.mediaReviewsVisibility = Optional.ofNullable(mediaReviewsVisibility);
-            return this;
-        }
-
-        public Builder mediaReviewsVisibility(Optional<? extends MediaReviewsVisibility> mediaReviewsVisibility) {
-            Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
-            this.mediaReviewsVisibility = mediaReviewsVisibility;
-            return this;
-        }
-
-
         /**
          * The languages for media reviews visibility
          */
@@ -694,15 +668,41 @@ public class UserProfile {
             return this;
         }
 
+
+        public Builder mediaReviewsVisibility(MediaReviewsVisibility mediaReviewsVisibility) {
+            Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
+            this.mediaReviewsVisibility = Optional.ofNullable(mediaReviewsVisibility);
+            return this;
+        }
+
+        public Builder mediaReviewsVisibility(Optional<? extends MediaReviewsVisibility> mediaReviewsVisibility) {
+            Utils.checkNotNull(mediaReviewsVisibility, "mediaReviewsVisibility");
+            this.mediaReviewsVisibility = mediaReviewsVisibility;
+            return this;
+        }
+
+
+        public Builder watchedIndicator(WatchedIndicator watchedIndicator) {
+            Utils.checkNotNull(watchedIndicator, "watchedIndicator");
+            this.watchedIndicator = Optional.ofNullable(watchedIndicator);
+            return this;
+        }
+
+        public Builder watchedIndicator(Optional<? extends WatchedIndicator> watchedIndicator) {
+            Utils.checkNotNull(watchedIndicator, "watchedIndicator");
+            this.watchedIndicator = watchedIndicator;
+            return this;
+        }
+
         public UserProfile build() {
             if (autoSelectAudio == null) {
                 autoSelectAudio = _SINGLETON_VALUE_AutoSelectAudio.value();
             }
-            if (defaultAudioAccessibility == null) {
-                defaultAudioAccessibility = _SINGLETON_VALUE_DefaultAudioAccessibility.value();
-            }
             if (autoSelectSubtitle == null) {
                 autoSelectSubtitle = _SINGLETON_VALUE_AutoSelectSubtitle.value();
+            }
+            if (defaultAudioAccessibility == null) {
+                defaultAudioAccessibility = _SINGLETON_VALUE_DefaultAudioAccessibility.value();
             }
             if (defaultSubtitleAccessibility == null) {
                 defaultSubtitleAccessibility = _SINGLETON_VALUE_DefaultSubtitleAccessibility.value();
@@ -710,18 +710,18 @@ public class UserProfile {
             if (defaultSubtitleForced == null) {
                 defaultSubtitleForced = _SINGLETON_VALUE_DefaultSubtitleForced.value();
             }
-            if (watchedIndicator == null) {
-                watchedIndicator = _SINGLETON_VALUE_WatchedIndicator.value();
-            }
             if (mediaReviewsVisibility == null) {
                 mediaReviewsVisibility = _SINGLETON_VALUE_MediaReviewsVisibility.value();
             }
+            if (watchedIndicator == null) {
+                watchedIndicator = _SINGLETON_VALUE_WatchedIndicator.value();
+            }
 
             return new UserProfile(
-                autoSelectAudio, defaultAudioLanguage, defaultAudioAccessibility,
-                defaultAudioLanguages, defaultSubtitleLanguage, defaultSubtitleLanguages,
-                autoSelectSubtitle, defaultSubtitleAccessibility, defaultSubtitleForced,
-                watchedIndicator, mediaReviewsVisibility, mediaReviewsLanguages);
+                autoSelectAudio, autoSelectSubtitle, defaultAudioAccessibility,
+                defaultAudioLanguage, defaultAudioLanguages, defaultSubtitleAccessibility,
+                defaultSubtitleForced, defaultSubtitleLanguage, defaultSubtitleLanguages,
+                mediaReviewsLanguages, mediaReviewsVisibility, watchedIndicator);
         }
 
 
@@ -731,17 +731,17 @@ public class UserProfile {
                         "true",
                         new TypeReference<Optional<Boolean>>() {});
 
-        private static final LazySingletonValue<Optional<? extends DefaultAudioAccessibility>> _SINGLETON_VALUE_DefaultAudioAccessibility =
-                new LazySingletonValue<>(
-                        "defaultAudioAccessibility",
-                        "0",
-                        new TypeReference<Optional<? extends DefaultAudioAccessibility>>() {});
-
         private static final LazySingletonValue<Optional<? extends AutoSelectSubtitle>> _SINGLETON_VALUE_AutoSelectSubtitle =
                 new LazySingletonValue<>(
                         "autoSelectSubtitle",
                         "0",
                         new TypeReference<Optional<? extends AutoSelectSubtitle>>() {});
+
+        private static final LazySingletonValue<Optional<? extends DefaultAudioAccessibility>> _SINGLETON_VALUE_DefaultAudioAccessibility =
+                new LazySingletonValue<>(
+                        "defaultAudioAccessibility",
+                        "0",
+                        new TypeReference<Optional<? extends DefaultAudioAccessibility>>() {});
 
         private static final LazySingletonValue<Optional<? extends DefaultSubtitleAccessibility>> _SINGLETON_VALUE_DefaultSubtitleAccessibility =
                 new LazySingletonValue<>(
@@ -755,16 +755,16 @@ public class UserProfile {
                         "0",
                         new TypeReference<Optional<? extends DefaultSubtitleForced>>() {});
 
-        private static final LazySingletonValue<Optional<? extends WatchedIndicator>> _SINGLETON_VALUE_WatchedIndicator =
-                new LazySingletonValue<>(
-                        "watchedIndicator",
-                        "0",
-                        new TypeReference<Optional<? extends WatchedIndicator>>() {});
-
         private static final LazySingletonValue<Optional<? extends MediaReviewsVisibility>> _SINGLETON_VALUE_MediaReviewsVisibility =
                 new LazySingletonValue<>(
                         "mediaReviewsVisibility",
                         "0",
                         new TypeReference<Optional<? extends MediaReviewsVisibility>>() {});
+
+        private static final LazySingletonValue<Optional<? extends WatchedIndicator>> _SINGLETON_VALUE_WatchedIndicator =
+                new LazySingletonValue<>(
+                        "watchedIndicator",
+                        "0",
+                        new TypeReference<Optional<? extends WatchedIndicator>>() {});
     }
 }

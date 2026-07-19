@@ -96,7 +96,7 @@ public class AddSectionRequest {
      * The type of library section
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private long type;
+    private long mediaType;
 
     /**
      * The scanner this section should use
@@ -160,7 +160,7 @@ public class AddSectionRequest {
             Optional<String> deviceName,
             Optional<String> marketplace,
             String name,
-            long type,
+            long mediaType,
             Optional<String> scanner,
             String agent,
             Optional<String> metadataAgentProviderGroupId,
@@ -181,7 +181,7 @@ public class AddSectionRequest {
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(name, "name");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         Utils.checkNotNull(scanner, "scanner");
         Utils.checkNotNull(agent, "agent");
         Utils.checkNotNull(metadataAgentProviderGroupId, "metadataAgentProviderGroupId");
@@ -202,7 +202,7 @@ public class AddSectionRequest {
         this.deviceName = deviceName;
         this.marketplace = marketplace;
         this.name = name;
-        this.type = type;
+        this.mediaType = mediaType;
         this.scanner = scanner;
         this.agent = agent;
         this.metadataAgentProviderGroupId = metadataAgentProviderGroupId;
@@ -215,14 +215,14 @@ public class AddSectionRequest {
     
     public AddSectionRequest(
             String name,
-            long type,
+            long mediaType,
             String agent,
             String language) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), name,
-            type, Optional.empty(), agent,
+            mediaType, Optional.empty(), agent,
             Optional.empty(), language, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty());
     }
@@ -328,8 +328,8 @@ public class AddSectionRequest {
      * The type of library section
      */
     @JsonIgnore
-    public long type() {
-        return type;
+    public long mediaType() {
+        return mediaType;
     }
 
     /**
@@ -626,9 +626,9 @@ public class AddSectionRequest {
     /**
      * The type of library section
      */
-    public AddSectionRequest withType(long type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public AddSectionRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -786,7 +786,7 @@ public class AddSectionRequest {
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
             Utils.enhancedDeepEquals(this.scanner, other.scanner) &&
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
             Utils.enhancedDeepEquals(this.metadataAgentProviderGroupId, other.metadataAgentProviderGroupId) &&
@@ -804,7 +804,7 @@ public class AddSectionRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, name,
-            type, scanner, agent,
+            mediaType, scanner, agent,
             metadataAgentProviderGroupId, language, locations,
             prefs, relative, importFromiTunes);
     }
@@ -824,7 +824,7 @@ public class AddSectionRequest {
                 "deviceName", deviceName,
                 "marketplace", marketplace,
                 "name", name,
-                "type", type,
+                "mediaType", mediaType,
                 "scanner", scanner,
                 "agent", agent,
                 "metadataAgentProviderGroupId", metadataAgentProviderGroupId,
@@ -862,7 +862,7 @@ public class AddSectionRequest {
 
         private String name;
 
-        private Long type;
+        private Long mediaType;
 
         private Optional<String> scanner = Optional.empty();
 
@@ -1107,9 +1107,9 @@ public class AddSectionRequest {
         /**
          * The type of library section
          */
-        public Builder type(long type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -1263,7 +1263,7 @@ public class AddSectionRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, name,
-                type, scanner, agent,
+                mediaType, scanner, agent,
                 metadataAgentProviderGroupId, language, locations,
                 prefs, relative, importFromiTunes);
         }

@@ -92,10 +92,11 @@ public class GetPlaylistItemsRequest {
     private long playlistId;
 
     /**
-     * The metadata types of the item to return.  Values past the first are only used in fetching items from the background processing playlist.
+     * The metadata types of the item to return. Values past the first are only used in fetching items from
+     * the background processing playlist.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=false,name=type")
-    private Optional<? extends List<Long>> type;
+    private Optional<? extends List<Long>> mediaType;
 
     @JsonCreator
     public GetPlaylistItemsRequest(
@@ -111,7 +112,7 @@ public class GetPlaylistItemsRequest {
             Optional<String> deviceName,
             Optional<String> marketplace,
             long playlistId,
-            Optional<? extends List<Long>> type) {
+            Optional<? extends List<Long>> mediaType) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -124,7 +125,7 @@ public class GetPlaylistItemsRequest {
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(playlistId, "playlistId");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -137,7 +138,7 @@ public class GetPlaylistItemsRequest {
         this.deviceName = deviceName;
         this.marketplace = marketplace;
         this.playlistId = playlistId;
-        this.type = type;
+        this.mediaType = mediaType;
     }
     
     public GetPlaylistItemsRequest(
@@ -247,12 +248,13 @@ public class GetPlaylistItemsRequest {
     }
 
     /**
-     * The metadata types of the item to return.  Values past the first are only used in fetching items from the background processing playlist.
+     * The metadata types of the item to return. Values past the first are only used in fetching items from
+     * the background processing playlist.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<Long>> type() {
-        return (Optional<List<Long>>) type;
+    public Optional<List<Long>> mediaType() {
+        return (Optional<List<Long>>) mediaType;
     }
 
     public static Builder builder() {
@@ -479,21 +481,23 @@ public class GetPlaylistItemsRequest {
     }
 
     /**
-     * The metadata types of the item to return.  Values past the first are only used in fetching items from the background processing playlist.
+     * The metadata types of the item to return. Values past the first are only used in fetching items from
+     * the background processing playlist.
      */
-    public GetPlaylistItemsRequest withType(List<Long> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
+    public GetPlaylistItemsRequest withMediaType(List<Long> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
         return this;
     }
 
 
     /**
-     * The metadata types of the item to return.  Values past the first are only used in fetching items from the background processing playlist.
+     * The metadata types of the item to return. Values past the first are only used in fetching items from
+     * the background processing playlist.
      */
-    public GetPlaylistItemsRequest withType(Optional<? extends List<Long>> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public GetPlaylistItemsRequest withMediaType(Optional<? extends List<Long>> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -519,7 +523,7 @@ public class GetPlaylistItemsRequest {
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.playlistId, other.playlistId) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType);
     }
     
     @Override
@@ -529,7 +533,7 @@ public class GetPlaylistItemsRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, playlistId,
-            type);
+            mediaType);
     }
     
     @Override
@@ -547,7 +551,7 @@ public class GetPlaylistItemsRequest {
                 "deviceName", deviceName,
                 "marketplace", marketplace,
                 "playlistId", playlistId,
-                "type", type);
+                "mediaType", mediaType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -577,7 +581,7 @@ public class GetPlaylistItemsRequest {
 
         private Long playlistId;
 
-        private Optional<? extends List<Long>> type = Optional.empty();
+        private Optional<? extends List<Long>> mediaType = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -804,20 +808,22 @@ public class GetPlaylistItemsRequest {
 
 
         /**
-         * The metadata types of the item to return.  Values past the first are only used in fetching items from the background processing playlist.
+         * The metadata types of the item to return. Values past the first are only used in fetching items from
+         * the background processing playlist.
          */
-        public Builder type(List<Long> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
+        public Builder mediaType(List<Long> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
             return this;
         }
 
         /**
-         * The metadata types of the item to return.  Values past the first are only used in fetching items from the background processing playlist.
+         * The metadata types of the item to return. Values past the first are only used in fetching items from
+         * the background processing playlist.
          */
-        public Builder type(Optional<? extends List<Long>> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(Optional<? extends List<Long>> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -831,7 +837,7 @@ public class GetPlaylistItemsRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, playlistId,
-                type);
+                mediaType);
         }
 
 

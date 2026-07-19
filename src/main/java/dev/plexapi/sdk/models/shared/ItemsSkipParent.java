@@ -19,26 +19,26 @@ import java.lang.SuppressWarnings;
 /**
  * ItemsSkipParent
  * 
- * <p>When present on an episode or track item, indicates parent should be skipped in favor of grandparent (show).
+ * <p>When present on an episode or track item, indicates parent should be skipped in favor of grandparent
+ * (show).
  */
 @JsonDeserialize(using = ItemsSkipParent._Deserializer.class)
 public class ItemsSkipParent {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private ItemsSkipParent(TypedObject value) {
         this.value = value;
     }
 
     public static ItemsSkipParent of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new ItemsSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new ItemsSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static ItemsSkipParent of(ItemsSkipParent2 value) {
         Utils.checkNotNull(value, "value");
-        return new ItemsSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<ItemsSkipParent2>(){}));
+        return new ItemsSkipParent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +61,7 @@ public class ItemsSkipParent {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +72,7 @@ public class ItemsSkipParent {
             return false;
         }
         ItemsSkipParent other = (ItemsSkipParent) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +85,8 @@ public class ItemsSkipParent {
 
         public _Deserializer() {
             super(ItemsSkipParent.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<ItemsSkipParent2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<ItemsSkipParent2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +95,6 @@ public class ItemsSkipParent {
         return Utils.toString(ItemsSkipParent.class,
                 "value", value);
     }
- 
+
 }
 

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.ButlerTask;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
@@ -20,11 +21,11 @@ public class ButlerTasks {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("ButlerTask")
-    private Optional<? extends List<GetTasksButlerTask>> butlerTask;
+    private Optional<? extends List<ButlerTask>> butlerTask;
 
     @JsonCreator
     public ButlerTasks(
-            @JsonProperty("ButlerTask") Optional<? extends List<GetTasksButlerTask>> butlerTask) {
+            @JsonProperty("ButlerTask") Optional<? extends List<ButlerTask>> butlerTask) {
         Utils.checkNotNull(butlerTask, "butlerTask");
         this.butlerTask = butlerTask;
     }
@@ -35,8 +36,8 @@ public class ButlerTasks {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<GetTasksButlerTask>> butlerTask() {
-        return (Optional<List<GetTasksButlerTask>>) butlerTask;
+    public Optional<List<ButlerTask>> butlerTask() {
+        return (Optional<List<ButlerTask>>) butlerTask;
     }
 
     public static Builder builder() {
@@ -44,14 +45,14 @@ public class ButlerTasks {
     }
 
 
-    public ButlerTasks withButlerTask(List<GetTasksButlerTask> butlerTask) {
+    public ButlerTasks withButlerTask(List<ButlerTask> butlerTask) {
         Utils.checkNotNull(butlerTask, "butlerTask");
         this.butlerTask = Optional.ofNullable(butlerTask);
         return this;
     }
 
 
-    public ButlerTasks withButlerTask(Optional<? extends List<GetTasksButlerTask>> butlerTask) {
+    public ButlerTasks withButlerTask(Optional<? extends List<ButlerTask>> butlerTask) {
         Utils.checkNotNull(butlerTask, "butlerTask");
         this.butlerTask = butlerTask;
         return this;
@@ -85,20 +86,20 @@ public class ButlerTasks {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Optional<? extends List<GetTasksButlerTask>> butlerTask = Optional.empty();
+        private Optional<? extends List<ButlerTask>> butlerTask = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
         }
 
 
-        public Builder butlerTask(List<GetTasksButlerTask> butlerTask) {
+        public Builder butlerTask(List<ButlerTask> butlerTask) {
             Utils.checkNotNull(butlerTask, "butlerTask");
             this.butlerTask = Optional.ofNullable(butlerTask);
             return this;
         }
 
-        public Builder butlerTask(Optional<? extends List<GetTasksButlerTask>> butlerTask) {
+        public Builder butlerTask(Optional<? extends List<ButlerTask>> butlerTask) {
             Utils.checkNotNull(butlerTask, "butlerTask");
             this.butlerTask = butlerTask;
             return this;

@@ -122,7 +122,8 @@ public class GetImageRequest {
     private Optional<Long> height;
 
     /**
-     * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image sizes with noise will be larger.
+     * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image
+     * sizes with noise will be larger.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=noise")
     private Optional<? extends BoolInt> noise;
@@ -332,7 +333,8 @@ public class GetImageRequest {
     }
 
     /**
-     * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image sizes with noise will be larger.
+     * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image
+     * sizes with noise will be larger.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -669,7 +671,8 @@ public class GetImageRequest {
     }
 
     /**
-     * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image sizes with noise will be larger.
+     * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image
+     * sizes with noise will be larger.
      */
     public GetImageRequest withNoise(BoolInt noise) {
         Utils.checkNotNull(noise, "noise");
@@ -679,7 +682,8 @@ public class GetImageRequest {
 
 
     /**
-     * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image sizes with noise will be larger.
+     * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image
+     * sizes with noise will be larger.
      */
     public GetImageRequest withNoise(Optional<? extends BoolInt> noise) {
         Utils.checkNotNull(noise, "noise");
@@ -1119,7 +1123,8 @@ public class GetImageRequest {
 
 
         /**
-         * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image sizes with noise will be larger.
+         * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image
+         * sizes with noise will be larger.
          */
         public Builder noise(BoolInt noise) {
             Utils.checkNotNull(noise, "noise");
@@ -1128,7 +1133,8 @@ public class GetImageRequest {
         }
 
         /**
-         * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image sizes with noise will be larger.
+         * Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image
+         * sizes with noise will be larger.
          */
         public Builder noise(Optional<? extends BoolInt> noise) {
             Utils.checkNotNull(noise, "noise");

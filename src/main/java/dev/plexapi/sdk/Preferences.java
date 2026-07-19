@@ -17,12 +17,15 @@ import dev.plexapi.sdk.models.operations.SetPreferencesResponse;
 import dev.plexapi.sdk.operations.GetAllPreferences;
 import dev.plexapi.sdk.operations.GetPreference;
 import dev.plexapi.sdk.operations.SetPreferences;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * API Operations against the Preferences
  */
 public class Preferences {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncPreferences asyncSDK;
 
@@ -57,11 +60,24 @@ public class Preferences {
      * <p>Get the list of all preferences
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAllPreferencesResponse getAllPreferencesDirect() throws Exception {
+    public GetAllPreferencesResponse getAllPreferencesDirect() {
+        return getAllPreferences(Optional.empty());
+    }
+
+    /**
+     * Get all preferences
+     * 
+     * <p>Get the list of all preferences
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAllPreferencesResponse getAllPreferences(Optional<Options> options) {
         RequestlessOperation<GetAllPreferencesResponse> operation
-            = new GetAllPreferences.Sync(sdkConfiguration);
+            = new GetAllPreferences.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -83,11 +99,25 @@ public class Preferences {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetPreferencesResponse setPreferences(SetPreferencesRequest request) throws Exception {
+    public SetPreferencesResponse setPreferences(SetPreferencesRequest request) {
+        return setPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set preferences
+     * 
+     * <p>Set a set of preferences in query parameters
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetPreferencesResponse setPreferences(SetPreferencesRequest request, Optional<Options> options) {
         RequestOperation<SetPreferencesRequest, SetPreferencesResponse> operation
-              = new SetPreferences.Sync(sdkConfiguration);
+              = new SetPreferences.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -109,11 +139,25 @@ public class Preferences {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPreferenceResponse getPreference(GetPreferenceRequest request) throws Exception {
+    public GetPreferenceResponse getPreference(GetPreferenceRequest request) {
+        return getPreference(request, Optional.empty());
+    }
+
+    /**
+     * Get a preferences
+     * 
+     * <p>Get a single preference and value
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPreferenceResponse getPreference(GetPreferenceRequest request, Optional<Options> options) {
         RequestOperation<GetPreferenceRequest, GetPreferenceResponse> operation
-              = new GetPreference.Sync(sdkConfiguration);
+              = new GetPreference.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

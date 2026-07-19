@@ -51,7 +51,9 @@ public class Hub {
     private Optional<String> hubIdentifier;
 
     /**
-     * A key at which the exact content currently displayed can be fetched again. This is particularly important when a hub is marked as random and requesting the `key` may get different results. It's otherwise optional.
+     * A key at which the exact content currently displayed can be fetched again. This is particularly
+     * important when a hub is marked as random and requesting the `key` may get different results. It's
+     * otherwise optional.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("hubKey")
@@ -90,13 +92,35 @@ public class Hub {
     @JsonProperty("random")
     private Optional<Boolean> random;
 
+    /**
+     * Reason for hub inclusion (e.g. "because you watched").
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("reason")
+    private Optional<String> reason;
+
+    /**
+     * ID of the item that triggered the reason.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("reasonID")
+    private Optional<Long> reasonID;
+
+    /**
+     * Human-readable reason title.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("reasonTitle")
+    private Optional<String> reasonTitle;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("size")
     private Optional<Long> size;
 
     /**
-     * A suggestion on how this hub's contents might be displayed by a client. Some examples include `hero`, `list`, `spotlight`, and `upsell`
+     * A suggestion on how this hub's contents might be displayed by a client. Some examples include
+     * `hero`, `list`, `spotlight`, and `upsell`
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("style")
@@ -130,6 +154,9 @@ public class Hub {
             @JsonProperty("more") Optional<Boolean> more,
             @JsonProperty("promoted") Optional<Boolean> promoted,
             @JsonProperty("random") Optional<Boolean> random,
+            @JsonProperty("reason") Optional<String> reason,
+            @JsonProperty("reasonID") Optional<Long> reasonID,
+            @JsonProperty("reasonTitle") Optional<String> reasonTitle,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("style") Optional<String> style,
             @JsonProperty("subtype") Optional<String> subtype,
@@ -144,6 +171,9 @@ public class Hub {
         Utils.checkNotNull(more, "more");
         Utils.checkNotNull(promoted, "promoted");
         Utils.checkNotNull(random, "random");
+        Utils.checkNotNull(reason, "reason");
+        Utils.checkNotNull(reasonID, "reasonID");
+        Utils.checkNotNull(reasonTitle, "reasonTitle");
         Utils.checkNotNull(size, "size");
         Utils.checkNotNull(style, "style");
         Utils.checkNotNull(subtype, "subtype");
@@ -158,6 +188,9 @@ public class Hub {
         this.more = more;
         this.promoted = promoted;
         this.random = random;
+        this.reason = reason;
+        this.reasonID = reasonID;
+        this.reasonTitle = reasonTitle;
         this.size = size;
         this.style = style;
         this.subtype = subtype;
@@ -167,6 +200,7 @@ public class Hub {
     
     public Hub() {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
@@ -203,7 +237,9 @@ public class Hub {
     }
 
     /**
-     * A key at which the exact content currently displayed can be fetched again. This is particularly important when a hub is marked as random and requesting the `key` may get different results. It's otherwise optional.
+     * A key at which the exact content currently displayed can be fetched again. This is particularly
+     * important when a hub is marked as random and requesting the `key` may get different results. It's
+     * otherwise optional.
      */
     @JsonIgnore
     public Optional<String> hubKey() {
@@ -248,13 +284,38 @@ public class Hub {
         return random;
     }
 
+    /**
+     * Reason for hub inclusion (e.g. "because you watched").
+     */
+    @JsonIgnore
+    public Optional<String> reason() {
+        return reason;
+    }
+
+    /**
+     * ID of the item that triggered the reason.
+     */
+    @JsonIgnore
+    public Optional<Long> reasonID() {
+        return reasonID;
+    }
+
+    /**
+     * Human-readable reason title.
+     */
+    @JsonIgnore
+    public Optional<String> reasonTitle() {
+        return reasonTitle;
+    }
+
     @JsonIgnore
     public Optional<Long> size() {
         return size;
     }
 
     /**
-     * A suggestion on how this hub's contents might be displayed by a client. Some examples include `hero`, `list`, `spotlight`, and `upsell`
+     * A suggestion on how this hub's contents might be displayed by a client. Some examples include
+     * `hero`, `list`, `spotlight`, and `upsell`
      */
     @JsonIgnore
     public Optional<String> style() {
@@ -355,7 +416,9 @@ public class Hub {
     }
 
     /**
-     * A key at which the exact content currently displayed can be fetched again. This is particularly important when a hub is marked as random and requesting the `key` may get different results. It's otherwise optional.
+     * A key at which the exact content currently displayed can be fetched again. This is particularly
+     * important when a hub is marked as random and requesting the `key` may get different results. It's
+     * otherwise optional.
      */
     public Hub withHubKey(String hubKey) {
         Utils.checkNotNull(hubKey, "hubKey");
@@ -365,7 +428,9 @@ public class Hub {
 
 
     /**
-     * A key at which the exact content currently displayed can be fetched again. This is particularly important when a hub is marked as random and requesting the `key` may get different results. It's otherwise optional.
+     * A key at which the exact content currently displayed can be fetched again. This is particularly
+     * important when a hub is marked as random and requesting the `key` may get different results. It's
+     * otherwise optional.
      */
     public Hub withHubKey(Optional<String> hubKey) {
         Utils.checkNotNull(hubKey, "hubKey");
@@ -462,6 +527,63 @@ public class Hub {
         return this;
     }
 
+    /**
+     * Reason for hub inclusion (e.g. "because you watched").
+     */
+    public Hub withReason(String reason) {
+        Utils.checkNotNull(reason, "reason");
+        this.reason = Optional.ofNullable(reason);
+        return this;
+    }
+
+
+    /**
+     * Reason for hub inclusion (e.g. "because you watched").
+     */
+    public Hub withReason(Optional<String> reason) {
+        Utils.checkNotNull(reason, "reason");
+        this.reason = reason;
+        return this;
+    }
+
+    /**
+     * ID of the item that triggered the reason.
+     */
+    public Hub withReasonID(long reasonID) {
+        Utils.checkNotNull(reasonID, "reasonID");
+        this.reasonID = Optional.ofNullable(reasonID);
+        return this;
+    }
+
+
+    /**
+     * ID of the item that triggered the reason.
+     */
+    public Hub withReasonID(Optional<Long> reasonID) {
+        Utils.checkNotNull(reasonID, "reasonID");
+        this.reasonID = reasonID;
+        return this;
+    }
+
+    /**
+     * Human-readable reason title.
+     */
+    public Hub withReasonTitle(String reasonTitle) {
+        Utils.checkNotNull(reasonTitle, "reasonTitle");
+        this.reasonTitle = Optional.ofNullable(reasonTitle);
+        return this;
+    }
+
+
+    /**
+     * Human-readable reason title.
+     */
+    public Hub withReasonTitle(Optional<String> reasonTitle) {
+        Utils.checkNotNull(reasonTitle, "reasonTitle");
+        this.reasonTitle = reasonTitle;
+        return this;
+    }
+
     public Hub withSize(long size) {
         Utils.checkNotNull(size, "size");
         this.size = Optional.ofNullable(size);
@@ -476,7 +598,8 @@ public class Hub {
     }
 
     /**
-     * A suggestion on how this hub's contents might be displayed by a client. Some examples include `hero`, `list`, `spotlight`, and `upsell`
+     * A suggestion on how this hub's contents might be displayed by a client. Some examples include
+     * `hero`, `list`, `spotlight`, and `upsell`
      */
     public Hub withStyle(String style) {
         Utils.checkNotNull(style, "style");
@@ -486,7 +609,8 @@ public class Hub {
 
 
     /**
-     * A suggestion on how this hub's contents might be displayed by a client. Some examples include `hero`, `list`, `spotlight`, and `upsell`
+     * A suggestion on how this hub's contents might be displayed by a client. Some examples include
+     * `hero`, `list`, `spotlight`, and `upsell`
      */
     public Hub withStyle(Optional<String> style) {
         Utils.checkNotNull(style, "style");
@@ -559,6 +683,9 @@ public class Hub {
             Utils.enhancedDeepEquals(this.more, other.more) &&
             Utils.enhancedDeepEquals(this.promoted, other.promoted) &&
             Utils.enhancedDeepEquals(this.random, other.random) &&
+            Utils.enhancedDeepEquals(this.reason, other.reason) &&
+            Utils.enhancedDeepEquals(this.reasonID, other.reasonID) &&
+            Utils.enhancedDeepEquals(this.reasonTitle, other.reasonTitle) &&
             Utils.enhancedDeepEquals(this.size, other.size) &&
             Utils.enhancedDeepEquals(this.style, other.style) &&
             Utils.enhancedDeepEquals(this.subtype, other.subtype) &&
@@ -572,7 +699,8 @@ public class Hub {
             title, type, context,
             hubIdentifier, hubKey, key,
             metadata, more, promoted,
-            random, size, style,
+            random, reason, reasonID,
+            reasonTitle, size, style,
             subtype, totalSize, additionalProperties);
     }
     
@@ -589,6 +717,9 @@ public class Hub {
                 "more", more,
                 "promoted", promoted,
                 "random", random,
+                "reason", reason,
+                "reasonID", reasonID,
+                "reasonTitle", reasonTitle,
                 "size", size,
                 "style", style,
                 "subtype", subtype,
@@ -618,6 +749,12 @@ public class Hub {
         private Optional<Boolean> promoted = Optional.empty();
 
         private Optional<Boolean> random = Optional.empty();
+
+        private Optional<String> reason = Optional.empty();
+
+        private Optional<Long> reasonID = Optional.empty();
+
+        private Optional<String> reasonTitle = Optional.empty();
 
         private Optional<Long> size = Optional.empty();
 
@@ -705,7 +842,9 @@ public class Hub {
 
 
         /**
-         * A key at which the exact content currently displayed can be fetched again. This is particularly important when a hub is marked as random and requesting the `key` may get different results. It's otherwise optional.
+         * A key at which the exact content currently displayed can be fetched again. This is particularly
+         * important when a hub is marked as random and requesting the `key` may get different results. It's
+         * otherwise optional.
          */
         public Builder hubKey(String hubKey) {
             Utils.checkNotNull(hubKey, "hubKey");
@@ -714,7 +853,9 @@ public class Hub {
         }
 
         /**
-         * A key at which the exact content currently displayed can be fetched again. This is particularly important when a hub is marked as random and requesting the `key` may get different results. It's otherwise optional.
+         * A key at which the exact content currently displayed can be fetched again. This is particularly
+         * important when a hub is marked as random and requesting the `key` may get different results. It's
+         * otherwise optional.
          */
         public Builder hubKey(Optional<String> hubKey) {
             Utils.checkNotNull(hubKey, "hubKey");
@@ -812,6 +953,63 @@ public class Hub {
         }
 
 
+        /**
+         * Reason for hub inclusion (e.g. "because you watched").
+         */
+        public Builder reason(String reason) {
+            Utils.checkNotNull(reason, "reason");
+            this.reason = Optional.ofNullable(reason);
+            return this;
+        }
+
+        /**
+         * Reason for hub inclusion (e.g. "because you watched").
+         */
+        public Builder reason(Optional<String> reason) {
+            Utils.checkNotNull(reason, "reason");
+            this.reason = reason;
+            return this;
+        }
+
+
+        /**
+         * ID of the item that triggered the reason.
+         */
+        public Builder reasonID(long reasonID) {
+            Utils.checkNotNull(reasonID, "reasonID");
+            this.reasonID = Optional.ofNullable(reasonID);
+            return this;
+        }
+
+        /**
+         * ID of the item that triggered the reason.
+         */
+        public Builder reasonID(Optional<Long> reasonID) {
+            Utils.checkNotNull(reasonID, "reasonID");
+            this.reasonID = reasonID;
+            return this;
+        }
+
+
+        /**
+         * Human-readable reason title.
+         */
+        public Builder reasonTitle(String reasonTitle) {
+            Utils.checkNotNull(reasonTitle, "reasonTitle");
+            this.reasonTitle = Optional.ofNullable(reasonTitle);
+            return this;
+        }
+
+        /**
+         * Human-readable reason title.
+         */
+        public Builder reasonTitle(Optional<String> reasonTitle) {
+            Utils.checkNotNull(reasonTitle, "reasonTitle");
+            this.reasonTitle = reasonTitle;
+            return this;
+        }
+
+
         public Builder size(long size) {
             Utils.checkNotNull(size, "size");
             this.size = Optional.ofNullable(size);
@@ -826,7 +1024,8 @@ public class Hub {
 
 
         /**
-         * A suggestion on how this hub's contents might be displayed by a client. Some examples include `hero`, `list`, `spotlight`, and `upsell`
+         * A suggestion on how this hub's contents might be displayed by a client. Some examples include
+         * `hero`, `list`, `spotlight`, and `upsell`
          */
         public Builder style(String style) {
             Utils.checkNotNull(style, "style");
@@ -835,7 +1034,8 @@ public class Hub {
         }
 
         /**
-         * A suggestion on how this hub's contents might be displayed by a client. Some examples include `hero`, `list`, `spotlight`, and `upsell`
+         * A suggestion on how this hub's contents might be displayed by a client. Some examples include
+         * `hero`, `list`, `spotlight`, and `upsell`
          */
         public Builder style(Optional<String> style) {
             Utils.checkNotNull(style, "style");
@@ -897,7 +1097,8 @@ public class Hub {
                 title, type, context,
                 hubIdentifier, hubKey, key,
                 metadata, more, promoted,
-                random, size, style,
+                random, reason, reasonID,
+                reasonTitle, size, style,
                 subtype, totalSize)
                 .withAdditionalProperties(additionalProperties);
         }

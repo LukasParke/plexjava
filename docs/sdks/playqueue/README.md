@@ -1,5 +1,4 @@
 # PlayQueue
-(*playQueue()*)
 
 ## Overview
 
@@ -59,7 +58,7 @@ public class Application {
             .build();
 
         CreatePlayQueueRequest req = CreatePlayQueueRequest.builder()
-                .type(Type.AUDIO)
+                .mediaType(Type.AUDIO)
                 .shuffle(BoolInt.True)
                 .repeat(BoolInt.True)
                 .continuous(BoolInt.True)
@@ -71,8 +70,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithPlayQueue().isPresent()) {
+            System.out.println(res.mediaContainerWithPlayQueue().get());
         }
     }
 }
@@ -141,8 +140,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+        if (res.playQueueResponse().isPresent()) {
+            System.out.println(res.playQueueResponse().get());
         }
     }
 }
@@ -210,7 +209,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -243,6 +242,7 @@ Deletes all items in the play queue, and increases the version of the play queue
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ClearPlayQueueRequest;
 import dev.plexapi.sdk.models.operations.ClearPlayQueueResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -250,7 +250,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -276,7 +276,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -296,6 +296,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## resetPlayQueue
@@ -342,7 +343,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -408,7 +409,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -474,7 +475,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -541,7 +542,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -608,7 +609,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }

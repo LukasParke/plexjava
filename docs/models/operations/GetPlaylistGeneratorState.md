@@ -1,5 +1,13 @@
 # GetPlaylistGeneratorState
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.GetPlaylistGeneratorState;
+
+GetPlaylistGeneratorState value = GetPlaylistGeneratorState.PENDING;
+```
+
 
 ## Values
 

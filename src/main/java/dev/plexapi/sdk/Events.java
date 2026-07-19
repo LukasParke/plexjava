@@ -11,16 +11,26 @@ import dev.plexapi.sdk.models.operations.ConnectWebSocketResponse;
 import dev.plexapi.sdk.models.operations.GetNotificationsRequest;
 import dev.plexapi.sdk.models.operations.GetNotificationsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetNotificationsResponse;
+import dev.plexapi.sdk.models.operations.GetWebsocketNotificationsRequest;
+import dev.plexapi.sdk.models.operations.GetWebsocketNotificationsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetWebsocketNotificationsResponse;
 import dev.plexapi.sdk.operations.ConnectWebSocket;
 import dev.plexapi.sdk.operations.GetNotifications;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.GetWebsocketNotifications;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * The server can notify clients in real-time of a wide range of events, from library scanning, to preferences being modified, to changes to media, and many other things. This is also the mechanism by which activity progress is reported.
+ * The server can notify clients in real-time of a wide range of events, from library scanning, to
+ * preferences being modified, to changes to media, and many other things. This is also the mechanism
+ * by which activity progress is reported.
  * 
- * <p>Two protocols for receiving the events are available: EventSource (also known as SSE), and WebSocket.
+ * <p>Two protocols for receiving the events are available: EventSource (also known as SSE), and
+ * WebSocket.
  */
 public class Events {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncEvents asyncSDK;
 
@@ -56,11 +66,25 @@ public class Events {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetNotificationsResponse getNotifications(GetNotificationsRequest request) throws Exception {
+    public GetNotificationsResponse getNotifications(GetNotificationsRequest request) {
+        return getNotifications(request, Optional.empty());
+    }
+
+    /**
+     * Connect to Eventsource
+     * 
+     * <p>Connect to the event source to get a stream of events
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetNotificationsResponse getNotifications(GetNotificationsRequest request, Optional<Options> options) {
         RequestOperation<GetNotificationsRequest, GetNotificationsResponse> operation
-              = new GetNotifications.Sync(sdkConfiguration);
+              = new GetNotifications.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -82,11 +106,68 @@ public class Events {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ConnectWebSocketResponse connectWebSocket(ConnectWebSocketRequest request) throws Exception {
+    public ConnectWebSocketResponse connectWebSocket(ConnectWebSocketRequest request) {
+        return connectWebSocket(request, Optional.empty());
+    }
+
+    /**
+     * Connect to WebSocket
+     * 
+     * <p>Connect to the web socket to get a stream of events
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ConnectWebSocketResponse connectWebSocket(ConnectWebSocketRequest request, Optional<Options> options) {
         RequestOperation<ConnectWebSocketRequest, ConnectWebSocketResponse> operation
-              = new ConnectWebSocket.Sync(sdkConfiguration);
+              = new ConnectWebSocket.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get WebSocket Notifications
+     * 
+     * <p>WebSocket endpoint for real-time notifications (plural alias). Connect with X-Plex-Token header.
+     * Delivers NotificationContainer messages.
+     * 
+     * @return The call builder
+     */
+    public GetWebsocketNotificationsRequestBuilder getWebsocketNotifications() {
+        return new GetWebsocketNotificationsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get WebSocket Notifications
+     * 
+     * <p>WebSocket endpoint for real-time notifications (plural alias). Connect with X-Plex-Token header.
+     * Delivers NotificationContainer messages.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetWebsocketNotificationsResponse getWebsocketNotifications(GetWebsocketNotificationsRequest request) {
+        return getWebsocketNotifications(request, Optional.empty());
+    }
+
+    /**
+     * Get WebSocket Notifications
+     * 
+     * <p>WebSocket endpoint for real-time notifications (plural alias). Connect with X-Plex-Token header.
+     * Delivers NotificationContainer messages.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetWebsocketNotificationsResponse getWebsocketNotifications(GetWebsocketNotificationsRequest request, Optional<Options> options) {
+        RequestOperation<GetWebsocketNotificationsRequest, GetWebsocketNotificationsResponse> operation
+              = new GetWebsocketNotifications.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

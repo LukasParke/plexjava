@@ -36,7 +36,7 @@ public class GetServerResourcesRequest {
     private Optional<? extends IncludeHttps> includeHttps;
 
     /**
-     * Include Relay addresses in the results 
+     * Include Relay addresses in the results
      * E.g: https://10-0-0-25.bbf8e10c7fa20447cacee74cd9914cde.plex.direct:32400
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeRelay")
@@ -99,7 +99,7 @@ public class GetServerResourcesRequest {
     }
 
     /**
-     * Include Relay addresses in the results 
+     * Include Relay addresses in the results
      * E.g: https://10-0-0-25.bbf8e10c7fa20447cacee74cd9914cde.plex.direct:32400
      */
     @SuppressWarnings("unchecked")
@@ -180,7 +180,7 @@ public class GetServerResourcesRequest {
     }
 
     /**
-     * Include Relay addresses in the results 
+     * Include Relay addresses in the results
      * E.g: https://10-0-0-25.bbf8e10c7fa20447cacee74cd9914cde.plex.direct:32400
      */
     public GetServerResourcesRequest withIncludeRelay(IncludeRelay includeRelay) {
@@ -191,7 +191,7 @@ public class GetServerResourcesRequest {
 
 
     /**
-     * Include Relay addresses in the results 
+     * Include Relay addresses in the results
      * E.g: https://10-0-0-25.bbf8e10c7fa20447cacee74cd9914cde.plex.direct:32400
      */
     public GetServerResourcesRequest withIncludeRelay(Optional<? extends IncludeRelay> includeRelay) {
@@ -329,7 +329,7 @@ public class GetServerResourcesRequest {
 
 
         /**
-         * Include Relay addresses in the results 
+         * Include Relay addresses in the results
          * E.g: https://10-0-0-25.bbf8e10c7fa20447cacee74cd9914cde.plex.direct:32400
          */
         public Builder includeRelay(IncludeRelay includeRelay) {
@@ -339,7 +339,7 @@ public class GetServerResourcesRequest {
         }
 
         /**
-         * Include Relay addresses in the results 
+         * Include Relay addresses in the results
          * E.g: https://10-0-0-25.bbf8e10c7fa20447cacee74cd9914cde.plex.direct:32400
          */
         public Builder includeRelay(Optional<? extends IncludeRelay> includeRelay) {

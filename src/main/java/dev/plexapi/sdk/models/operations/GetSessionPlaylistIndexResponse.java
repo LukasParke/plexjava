@@ -11,7 +11,9 @@ import java.io.InputStream;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 
 public class GetSessionPlaylistIndexResponse implements Response {
@@ -30,17 +32,33 @@ public class GetSessionPlaylistIndexResponse implements Response {
      */
     private HttpResponse<InputStream> rawResponse;
 
+    /**
+     * Index playlist for playing HLS content
+     */
+    private Optional<? extends InputStream> binaryResponse;
+
     @JsonCreator
     public GetSessionPlaylistIndexResponse(
             String contentType,
             int statusCode,
-            HttpResponse<InputStream> rawResponse) {
+            HttpResponse<InputStream> rawResponse,
+            Optional<? extends InputStream> binaryResponse) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.binaryResponse = binaryResponse;
+    }
+    
+    public GetSessionPlaylistIndexResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty());
     }
 
     /**
@@ -65,6 +83,15 @@ public class GetSessionPlaylistIndexResponse implements Response {
     @JsonIgnore
     public HttpResponse<InputStream> rawResponse() {
         return rawResponse;
+    }
+
+    /**
+     * Index playlist for playing HLS content
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<InputStream> binaryResponse() {
+        return (Optional<InputStream>) binaryResponse;
     }
 
     public static Builder builder() {
@@ -99,6 +126,25 @@ public class GetSessionPlaylistIndexResponse implements Response {
         return this;
     }
 
+    /**
+     * Index playlist for playing HLS content
+     */
+    public GetSessionPlaylistIndexResponse withBinaryResponse(InputStream binaryResponse) {
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        this.binaryResponse = Optional.ofNullable(binaryResponse);
+        return this;
+    }
+
+
+    /**
+     * Index playlist for playing HLS content
+     */
+    public GetSessionPlaylistIndexResponse withBinaryResponse(Optional<? extends InputStream> binaryResponse) {
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        this.binaryResponse = binaryResponse;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,13 +157,15 @@ public class GetSessionPlaylistIndexResponse implements Response {
         return 
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse);
+            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.binaryResponse, other.binaryResponse);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            contentType, statusCode, rawResponse);
+            contentType, statusCode, rawResponse,
+            binaryResponse);
     }
     
     @Override
@@ -125,7 +173,8 @@ public class GetSessionPlaylistIndexResponse implements Response {
         return Utils.toString(GetSessionPlaylistIndexResponse.class,
                 "contentType", contentType,
                 "statusCode", statusCode,
-                "rawResponse", rawResponse);
+                "rawResponse", rawResponse,
+                "binaryResponse", binaryResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -136,6 +185,8 @@ public class GetSessionPlaylistIndexResponse implements Response {
         private Integer statusCode;
 
         private HttpResponse<InputStream> rawResponse;
+
+        private Optional<? extends InputStream> binaryResponse = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -171,10 +222,30 @@ public class GetSessionPlaylistIndexResponse implements Response {
             return this;
         }
 
+
+        /**
+         * Index playlist for playing HLS content
+         */
+        public Builder binaryResponse(InputStream binaryResponse) {
+            Utils.checkNotNull(binaryResponse, "binaryResponse");
+            this.binaryResponse = Optional.ofNullable(binaryResponse);
+            return this;
+        }
+
+        /**
+         * Index playlist for playing HLS content
+         */
+        public Builder binaryResponse(Optional<? extends InputStream> binaryResponse) {
+            Utils.checkNotNull(binaryResponse, "binaryResponse");
+            this.binaryResponse = binaryResponse;
+            return this;
+        }
+
         public GetSessionPlaylistIndexResponse build() {
 
             return new GetSessionPlaylistIndexResponse(
-                contentType, statusCode, rawResponse);
+                contentType, statusCode, rawResponse,
+                binaryResponse);
         }
 
     }

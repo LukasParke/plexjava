@@ -1,7 +1,8 @@
 # Plex
-(*plex()*)
 
 ## Overview
+
+Plex Plex operations
 
 ### Available Operations
 
@@ -13,23 +14,23 @@ Get Plex server access tokens and server connections
 
 ### Example Usage
 
-<!-- UsageSnippet language="java" operationID="get-server-resources" method="get" path="/resources" -->
+<!-- UsageSnippet language="java" operationID="getServerResources" method="get" path="/resources" -->
 ```java
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
-import dev.plexapi.sdk.models.errors.GetServerResourcesUnauthorized;
+import dev.plexapi.sdk.models.errors.Unauthorized;
 import dev.plexapi.sdk.models.operations.*;
 import dev.plexapi.sdk.models.shared.Accepts;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws GetServerResourcesUnauthorized, Exception {
+    public static void main(String[] args) throws Unauthorized, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
-                .clientIdentifier("3381b62b-9ab7-4e37-827b-203e9809eb58")
+                .clientIdentifier("abc123")
                 .token(System.getenv().getOrDefault("TOKEN", ""))
             .build();
 
@@ -44,7 +45,7 @@ public class Application {
                 .call();
 
         if (res.plexDevices().isPresent()) {
-            // handle response
+            System.out.println(res.plexDevices().get());
         }
     }
 }
@@ -63,7 +64,7 @@ public class Application {
 
 ### Errors
 
-| Error Type                                   | Status Code                                  | Content Type                                 |
-| -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
-| models/errors/GetServerResourcesUnauthorized | 401                                          | application/json                             |
-| models/errors/SDKError                       | 4XX, 5XX                                     | \*/\*                                        |
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/Unauthorized | 401                        | application/json           |
+| models/errors/SDKError     | 4XX, 5XX                   | \*/\*                      |

@@ -1,10 +1,8 @@
 # DVRs
-(*dvRs()*)
 
 ## Overview
 
 The DVR provides means to watch and record live TV.  This section of endpoints describes how to setup the DVR itself
-
 
 ### Available Operations
 
@@ -12,6 +10,10 @@ The DVR provides means to watch and record live TV.  This section of endpoints d
 * [createDVR](#createdvr) - Create a DVR
 * [deleteDVR](#deletedvr) - Delete a single DVR
 * [getDVR](#getdvr) - Get a single DVR
+* [patchDVRSettings](#patchdvrsettings) - Update DVR Settings
+* [updateDVRSettings](#updatedvrsettings) - Update DVR Settings
+* [getDVRChannels](#getdvrchannels) - Get DVR Channels
+* [getDVRGuide](#getdvrguide) - Get DVR Guide
 * [deleteLineup](#deletelineup) - Delete a DVR Lineup
 * [addLineup](#addlineup) - Add a DVR Lineup
 * [setDVRPreferences](#setdvrpreferences) - Set DVR preferences
@@ -32,12 +34,13 @@ Get the list of all available DVRs
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListDVRsResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -46,12 +49,19 @@ public class Application {
         ListDVRsResponse res = sdk.dvRs().listDVRs()
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.dvrResponse().isPresent()) {
+            System.out.println(res.dvrResponse().get());
         }
     }
 }
 ```
+
+### Parameters
+
+| Parameter           | Type                | Required            | Description         |
+| ------------------- | ------------------- | ------------------- | ------------------- |
+| `uuid`              | *Optional\<String>* | :heavy_minus_sign:  | Filter by DVR UUID. |
+| `lineup`            | *Optional\<String>* | :heavy_minus_sign:  | Filter by lineup.   |
 
 ### Response
 
@@ -61,11 +71,12 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## createDVR
 
-Creation of a DVR, after creation of a devcie and a lineup is selected
+Creation of a DVR, after creation of a device and a lineup is selected
 
 ### Example Usage
 
@@ -74,6 +85,7 @@ Creation of a DVR, after creation of a devcie and a lineup is selected
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.CreateDVRRequest;
 import dev.plexapi.sdk.models.operations.CreateDVRResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -82,7 +94,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -163,7 +175,7 @@ public class Application {
                 .call();
 
         if (res.dvrRequestHandlerSlashGetResponses200().isPresent()) {
-            // handle response
+            System.out.println(res.dvrRequestHandlerSlashGetResponses200().get());
         }
     }
 }
@@ -183,6 +195,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## deleteDVR
@@ -196,6 +209,7 @@ Delete a single DVR by its id (key)
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DeleteDVRRequest;
 import dev.plexapi.sdk.models.operations.DeleteDVRResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -203,7 +217,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -247,6 +261,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getDVR
@@ -260,6 +275,7 @@ Get a single DVR by its id (key)
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetDVRRequest;
 import dev.plexapi.sdk.models.operations.GetDVRResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -267,7 +283,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -292,8 +308,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.dvrResponse().isPresent()) {
+            System.out.println(res.dvrResponse().get());
         }
     }
 }
@@ -313,6 +329,279 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## patchDVRSettings
+
+Update DVR settings.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="patchDVRSettings" method="patch" path="/livetv/dvrs/{dvrId}" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.PatchDVRSettingsRequest;
+import dev.plexapi.sdk.models.operations.PatchDVRSettingsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        PatchDVRSettingsRequest req = PatchDVRSettingsRequest.builder()
+                .dvrId(537061L)
+                .build();
+
+        PatchDVRSettingsResponse res = sdk.dvRs().patchDVRSettings()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [PatchDVRSettingsRequest](../../models/operations/PatchDVRSettingsRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[PatchDVRSettingsResponse](../../models/operations/PatchDVRSettingsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## updateDVRSettings
+
+Update DVR settings.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="updateDVRSettings" method="put" path="/livetv/dvrs/{dvrId}" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.UpdateDVRSettingsRequest;
+import dev.plexapi.sdk.models.operations.UpdateDVRSettingsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        UpdateDVRSettingsRequest req = UpdateDVRSettingsRequest.builder()
+                .dvrId(614847L)
+                .build();
+
+        UpdateDVRSettingsResponse res = sdk.dvRs().updateDVRSettings()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [UpdateDVRSettingsRequest](../../models/operations/UpdateDVRSettingsRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+
+### Response
+
+**[UpdateDVRSettingsResponse](../../models/operations/UpdateDVRSettingsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getDVRChannels
+
+List channels directly associated with a DVR.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getDVRChannels" method="get" path="/livetv/dvrs/{dvrId}/channels" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetDVRChannelsRequest;
+import dev.plexapi.sdk.models.operations.GetDVRChannelsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetDVRChannelsRequest req = GetDVRChannelsRequest.builder()
+                .dvrId(901521L)
+                .build();
+
+        GetDVRChannelsResponse res = sdk.dvRs().getDVRChannels()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [GetDVRChannelsRequest](../../models/operations/GetDVRChannelsRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+
+### Response
+
+**[GetDVRChannelsResponse](../../models/operations/GetDVRChannelsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getDVRGuide
+
+Fetch program guide/schedule for a DVR.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getDVRGuide" method="get" path="/livetv/dvrs/{dvrId}/guide" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetDVRGuideRequest;
+import dev.plexapi.sdk.models.operations.GetDVRGuideResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetDVRGuideRequest req = GetDVRGuideRequest.builder()
+                .dvrId(19054L)
+                .build();
+
+        GetDVRGuideResponse res = sdk.dvRs().getDVRGuide()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [GetDVRGuideRequest](../../models/operations/GetDVRGuideRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+
+### Response
+
+**[GetDVRGuideResponse](../../models/operations/GetDVRGuideResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## deleteLineup
@@ -326,6 +615,7 @@ Deletes a DVR device's lineup.
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.DeleteLineupRequest;
 import dev.plexapi.sdk.models.operations.DeleteLineupResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -333,7 +623,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -359,8 +649,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.dvrResponse().isPresent()) {
+            System.out.println(res.dvrResponse().get());
         }
     }
 }
@@ -380,6 +670,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## addLineup
@@ -393,6 +684,7 @@ Add a lineup to a DVR device's set of lineups.
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.AddLineupRequest;
 import dev.plexapi.sdk.models.operations.AddLineupResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -400,7 +692,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -426,8 +718,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.dvrResponse().isPresent()) {
+            System.out.println(res.dvrResponse().get());
         }
     }
 }
@@ -447,11 +739,12 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## setDVRPreferences
 
-Set DVR preferences by name avd value
+Set DVR preferences by name and value
 
 ### Example Usage
 
@@ -460,6 +753,7 @@ Set DVR preferences by name avd value
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.SetDVRPreferencesRequest;
 import dev.plexapi.sdk.models.operations.SetDVRPreferencesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -467,7 +761,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -492,8 +786,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.dvrResponse().isPresent()) {
+            System.out.println(res.dvrResponse().get());
         }
     }
 }
@@ -513,6 +807,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## stopDVRReload
@@ -526,6 +821,7 @@ Tell a DVR to stop reloading program guide
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.StopDVRReloadRequest;
 import dev.plexapi.sdk.models.operations.StopDVRReloadResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -533,7 +829,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -577,6 +873,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## reloadGuide
@@ -590,6 +887,7 @@ Tell a DVR to reload program guide
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ReloadGuideRequest;
 import dev.plexapi.sdk.models.operations.ReloadGuideResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -597,7 +895,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -622,7 +920,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.body().isPresent()) {
+            System.out.println(res.body().get());
+        }
     }
 }
 ```
@@ -641,6 +941,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## tuneChannel
@@ -688,7 +989,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -721,6 +1022,7 @@ Remove a device from an existing DVR
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.RemoveDeviceFromDVRRequest;
 import dev.plexapi.sdk.models.operations.RemoveDeviceFromDVRResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -728,7 +1030,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -755,7 +1057,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -775,6 +1077,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## addDeviceToDVR
@@ -788,6 +1091,7 @@ Add a device to an existing DVR
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.AddDeviceToDVRRequest;
 import dev.plexapi.sdk.models.operations.AddDeviceToDVRResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -795,7 +1099,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -822,7 +1126,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -842,4 +1146,5 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |

@@ -1,5 +1,13 @@
 # MediaContainerWithDecisionDecision
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.MediaContainerWithDecisionDecision;
+
+MediaContainerWithDecisionDecision value = MediaContainerWithDecisionDecision.COPY;
+```
+
 
 ## Values
 

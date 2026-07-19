@@ -8,12 +8,16 @@ import java.net.ConnectException;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Supplier;
 import dev.plexapi.sdk.utils.Blob;
 
 public class AsyncRetries {
+
+    private static final SpeakeasyLogger logger = SpeakeasyLogger.getLogger(AsyncRetries.class);
 
     private final RetryConfig retryConfig;
     private final List<String> retriableStatusCodes;
@@ -54,6 +58,9 @@ public class AsyncRetries {
                              CompletableFuture<HttpResponse<Blob>> result,
                              BackoffStrategy backoff,
                              State state) {
+        if (state.count() > 0) {
+            logger.debug("Async retry attempt {} after backoff", state.count());
+        }
         task.get().whenComplete((response, throwable) -> {
             if (throwable == null) {
                 boolean matched = retriableStatusCodes.stream()
@@ -77,6 +84,7 @@ public class AsyncRetries {
                     return;
                 }
             }
+            logger.debug("Non-retryable exception encountered: {}", e.getClass().getSimpleName());
             result.completeExceptionally(new NonRetryableException(e));
         });
     }
@@ -89,6 +97,34 @@ public class AsyncRetries {
                 || (message.contains("Read timed out") && backoff.retryReadTimeoutError());
     }
 
+    private static long retryAfterMs(HttpResponse<Blob> response) {
+        String retryAfterMs = response.headers().firstValue("retry-after-ms").orElse(null);
+        if (retryAfterMs != null && !retryAfterMs.isEmpty()) {
+            try {
+                long milliseconds = Long.parseLong(retryAfterMs);
+                return milliseconds < 0 ? 0 : milliseconds;
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        String retryAfter = response.headers().firstValue("retry-after").orElse(null);
+        if (retryAfter == null || retryAfter.isEmpty()) {
+            return 0;
+        }
+        try {
+            long seconds = Long.parseLong(retryAfter);
+            return seconds < 0 ? 0 : seconds * 1000;
+        } catch (NumberFormatException ignored) {
+        }
+        try {
+            ZonedDateTime retryDate = ZonedDateTime.parse(retryAfter, DateTimeFormatter.RFC_1123_DATE_TIME);
+            long deltaMs = retryDate.toInstant().toEpochMilli() - System.currentTimeMillis();
+            return deltaMs > 0 ? deltaMs : 0;
+        } catch (Exception ignored) {
+        }
+        return 0;
+    }
+
     private void maybeRetry(Supplier<CompletableFuture<HttpResponse<Blob>>> task,
                             CompletableFuture<HttpResponse<Blob>> result,
                             BackoffStrategy backoff,
@@ -97,6 +133,7 @@ public class AsyncRetries {
         Duration timeSinceStart = Duration.between(state.startedAt(), Instant.now());
         if (timeSinceStart.toMillis() > backoff.maxElapsedTimeMs()) {
             // retry exhausted
+            logger.debug("Async retry exhausted after {}ms, {} attempts", timeSinceStart.toMillis(), state.count() + 1);
             if (e instanceof AsyncRetryableException) {
                 result.complete(((AsyncRetryableException) e).response());
                 return;
@@ -105,14 +142,31 @@ public class AsyncRetries {
             return;
         }
 
-        double intervalMs = backoff.initialIntervalMs() * Math.pow(backoff.baseFactor(), state.count());
-        double jitterMs = backoff.jitterFactor() * intervalMs;
-        intervalMs = intervalMs - jitterMs + Math.random() * (2 * jitterMs + 1);
-        intervalMs = Math.min(intervalMs, backoff.maxIntervalMs());
+        long intervalMs;
+        if (e instanceof AsyncRetryableException) {
+            intervalMs = retryAfterMs(((AsyncRetryableException) e).response());
+        } else {
+            intervalMs = 0;
+        }
+
+        if (intervalMs <= 0) {
+            double computed = backoff.initialIntervalMs() * Math.pow(backoff.baseFactor(), state.count());
+            double jitterMs = backoff.jitterFactor() * computed;
+            computed = computed - jitterMs + Math.random() * (2 * jitterMs + 1);
+            computed = Math.min(computed, backoff.maxIntervalMs());
+            intervalMs = (long) computed;
+        }
+
+        if (logger.isTraceEnabled()) {
+            String reason = e instanceof AsyncRetryableException
+                ? "status " + ((AsyncRetryableException) e).response().statusCode()
+                : e.getClass().getSimpleName();
+            logger.trace("Async retrying due to {} - waiting {}ms before attempt {}", reason, intervalMs, state.count() + 1);
+        }
 
         scheduler.schedule(
                 () -> attempt(task, result, backoff, state.countAttempt()),
-                (long) intervalMs,
+                intervalMs,
                 TimeUnit.MILLISECONDS);
     }
 

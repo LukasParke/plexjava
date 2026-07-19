@@ -2,6 +2,14 @@
 
 The type of the value of this setting
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.Type;
+
+Type value = Type.BOOL;
+```
+
 
 ## Values
 

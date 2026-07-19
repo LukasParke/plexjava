@@ -96,10 +96,10 @@ public class GetSonicallySimilarRequest {
      * The metadata type to fetch (should be 10 for audio track)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private Optional<Long> type;
+    private Optional<Long> mediaType;
 
     /**
-     * The music analysis to center the search.  Typically obtained from the `musicAnalysis` of a track
+     * The music analysis to center the search. Typically obtained from the `musicAnalysis` of a track
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=false,name=values")
     private List<Long> values;
@@ -130,7 +130,7 @@ public class GetSonicallySimilarRequest {
             Optional<String> deviceName,
             Optional<String> marketplace,
             long sectionId,
-            Optional<Long> type,
+            Optional<Long> mediaType,
             List<Long> values,
             Optional<Long> limit,
             Optional<Double> maxDistance) {
@@ -146,7 +146,7 @@ public class GetSonicallySimilarRequest {
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
         Utils.checkNotNull(sectionId, "sectionId");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         Utils.checkNotNull(values, "values");
         Utils.checkNotNull(limit, "limit");
         Utils.checkNotNull(maxDistance, "maxDistance");
@@ -162,7 +162,7 @@ public class GetSonicallySimilarRequest {
         this.deviceName = deviceName;
         this.marketplace = marketplace;
         this.sectionId = sectionId;
-        this.type = type;
+        this.mediaType = mediaType;
         this.values = values;
         this.limit = limit;
         this.maxDistance = maxDistance;
@@ -280,12 +280,12 @@ public class GetSonicallySimilarRequest {
      * The metadata type to fetch (should be 10 for audio track)
      */
     @JsonIgnore
-    public Optional<Long> type() {
-        return type;
+    public Optional<Long> mediaType() {
+        return mediaType;
     }
 
     /**
-     * The music analysis to center the search.  Typically obtained from the `musicAnalysis` of a track
+     * The music analysis to center the search. Typically obtained from the `musicAnalysis` of a track
      */
     @JsonIgnore
     public List<Long> values() {
@@ -534,9 +534,9 @@ public class GetSonicallySimilarRequest {
     /**
      * The metadata type to fetch (should be 10 for audio track)
      */
-    public GetSonicallySimilarRequest withType(long type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
+    public GetSonicallySimilarRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
         return this;
     }
 
@@ -544,14 +544,14 @@ public class GetSonicallySimilarRequest {
     /**
      * The metadata type to fetch (should be 10 for audio track)
      */
-    public GetSonicallySimilarRequest withType(Optional<Long> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public GetSonicallySimilarRequest withMediaType(Optional<Long> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
     /**
-     * The music analysis to center the search.  Typically obtained from the `musicAnalysis` of a track
+     * The music analysis to center the search. Typically obtained from the `musicAnalysis` of a track
      */
     public GetSonicallySimilarRequest withValues(List<Long> values) {
         Utils.checkNotNull(values, "values");
@@ -619,7 +619,7 @@ public class GetSonicallySimilarRequest {
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
             Utils.enhancedDeepEquals(this.values, other.values) &&
             Utils.enhancedDeepEquals(this.limit, other.limit) &&
             Utils.enhancedDeepEquals(this.maxDistance, other.maxDistance);
@@ -632,7 +632,7 @@ public class GetSonicallySimilarRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, sectionId,
-            type, values, limit,
+            mediaType, values, limit,
             maxDistance);
     }
     
@@ -651,7 +651,7 @@ public class GetSonicallySimilarRequest {
                 "deviceName", deviceName,
                 "marketplace", marketplace,
                 "sectionId", sectionId,
-                "type", type,
+                "mediaType", mediaType,
                 "values", values,
                 "limit", limit,
                 "maxDistance", maxDistance);
@@ -684,7 +684,7 @@ public class GetSonicallySimilarRequest {
 
         private Long sectionId;
 
-        private Optional<Long> type = Optional.empty();
+        private Optional<Long> mediaType = Optional.empty();
 
         private List<Long> values;
 
@@ -919,24 +919,24 @@ public class GetSonicallySimilarRequest {
         /**
          * The metadata type to fetch (should be 10 for audio track)
          */
-        public Builder type(long type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
             return this;
         }
 
         /**
          * The metadata type to fetch (should be 10 for audio track)
          */
-        public Builder type(Optional<Long> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(Optional<Long> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
 
         /**
-         * The music analysis to center the search.  Typically obtained from the `musicAnalysis` of a track
+         * The music analysis to center the search. Typically obtained from the `musicAnalysis` of a track
          */
         public Builder values(List<Long> values) {
             Utils.checkNotNull(values, "values");
@@ -992,7 +992,7 @@ public class GetSonicallySimilarRequest {
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, sectionId,
-                type, values, limit,
+                mediaType, values, limit,
                 maxDistance);
         }
 

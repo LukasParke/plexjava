@@ -28,12 +28,16 @@ import dev.plexapi.sdk.operations.GetHistoryItem;
 import dev.plexapi.sdk.operations.ListPlaybackHistory;
 import dev.plexapi.sdk.operations.ListSessions;
 import dev.plexapi.sdk.operations.TerminateSession;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * The status endpoints give you information about current playbacks, play history, and even terminating sessions.
+ * The status endpoints give you information about current playbacks, play history, and even
+ * terminating sessions.
  */
 public class Status {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncStatus asyncSDK;
 
@@ -56,6 +60,8 @@ public class Status {
      * 
      * <p>List all current playbacks on this server
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The call builder
      */
     public ListSessionsRequestBuilder listSessions() {
@@ -67,12 +73,29 @@ public class Status {
      * 
      * <p>List all current playbacks on this server
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListSessionsResponse listSessionsDirect() throws Exception {
+    public ListSessionsResponse listSessionsDirect() {
+        return listSessions(Optional.empty());
+    }
+
+    /**
+     * List Sessions
+     * 
+     * <p>List all current playbacks on this server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListSessionsResponse listSessions(Optional<Options> options) {
         RequestlessOperation<ListSessionsResponse> operation
-            = new ListSessions.Sync(sdkConfiguration);
+            = new ListSessions.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -80,6 +103,8 @@ public class Status {
      * Get background tasks
      * 
      * <p>Get the list of all background tasks
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -92,12 +117,29 @@ public class Status {
      * 
      * <p>Get the list of all background tasks
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetBackgroundTasksResponse getBackgroundTasksDirect() throws Exception {
+    public GetBackgroundTasksResponse getBackgroundTasksDirect() {
+        return getBackgroundTasks(Optional.empty());
+    }
+
+    /**
+     * Get background tasks
+     * 
+     * <p>Get the list of all background tasks
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetBackgroundTasksResponse getBackgroundTasks(Optional<Options> options) {
         RequestlessOperation<GetBackgroundTasksResponse> operation
-            = new GetBackgroundTasks.Sync(sdkConfiguration);
+            = new GetBackgroundTasks.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -105,7 +147,8 @@ public class Status {
      * List Playback History
      * 
      * <p>List all playback history (Admin can see all users, others can only see their own).
-     * Pagination should be used on this endpoint.  Additionally this endpoint supports `includeFields`, `excludeFields`, `includeElements`, and `excludeElements` parameters.
+     * Pagination should be used on this endpoint. Additionally this endpoint supports `includeFields`,
+     * `excludeFields`, `includeElements`, and `excludeElements` parameters.
      * 
      * @return The call builder
      */
@@ -117,15 +160,32 @@ public class Status {
      * List Playback History
      * 
      * <p>List all playback history (Admin can see all users, others can only see their own).
-     * Pagination should be used on this endpoint.  Additionally this endpoint supports `includeFields`, `excludeFields`, `includeElements`, and `excludeElements` parameters.
+     * Pagination should be used on this endpoint. Additionally this endpoint supports `includeFields`,
+     * `excludeFields`, `includeElements`, and `excludeElements` parameters.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListPlaybackHistoryResponse listPlaybackHistory(ListPlaybackHistoryRequest request) throws Exception {
+    public ListPlaybackHistoryResponse listPlaybackHistory(ListPlaybackHistoryRequest request) {
+        return listPlaybackHistory(request, Optional.empty());
+    }
+
+    /**
+     * List Playback History
+     * 
+     * <p>List all playback history (Admin can see all users, others can only see their own).
+     * Pagination should be used on this endpoint. Additionally this endpoint supports `includeFields`,
+     * `excludeFields`, `includeElements`, and `excludeElements` parameters.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListPlaybackHistoryResponse listPlaybackHistory(ListPlaybackHistoryRequest request, Optional<Options> options) {
         RequestOperation<ListPlaybackHistoryRequest, ListPlaybackHistoryResponse> operation
-              = new ListPlaybackHistory.Sync(sdkConfiguration);
+              = new ListPlaybackHistory.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -133,6 +193,8 @@ public class Status {
      * Terminate a session
      * 
      * <p>Terminate a playback session kicking off the user
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -145,13 +207,31 @@ public class Status {
      * 
      * <p>Terminate a playback session kicking off the user
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public TerminateSessionResponse terminateSession(TerminateSessionRequest request) throws Exception {
+    public TerminateSessionResponse terminateSession(TerminateSessionRequest request) {
+        return terminateSession(request, Optional.empty());
+    }
+
+    /**
+     * Terminate a session
+     * 
+     * <p>Terminate a playback session kicking off the user
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public TerminateSessionResponse terminateSession(TerminateSessionRequest request, Optional<Options> options) {
         RequestOperation<TerminateSessionRequest, TerminateSessionResponse> operation
-              = new TerminateSession.Sync(sdkConfiguration);
+              = new TerminateSession.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -159,6 +239,8 @@ public class Status {
      * Delete Single History Item
      * 
      * <p>Delete a single history item by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -171,13 +253,31 @@ public class Status {
      * 
      * <p>Delete a single history item by id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteHistoryResponse deleteHistory(DeleteHistoryRequest request) throws Exception {
+    public DeleteHistoryResponse deleteHistory(DeleteHistoryRequest request) {
+        return deleteHistory(request, Optional.empty());
+    }
+
+    /**
+     * Delete Single History Item
+     * 
+     * <p>Delete a single history item by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteHistoryResponse deleteHistory(DeleteHistoryRequest request, Optional<Options> options) {
         RequestOperation<DeleteHistoryRequest, DeleteHistoryResponse> operation
-              = new DeleteHistory.Sync(sdkConfiguration);
+              = new DeleteHistory.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -185,6 +285,8 @@ public class Status {
      * Get Single History Item
      * 
      * <p>Get a single history item by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -197,13 +299,31 @@ public class Status {
      * 
      * <p>Get a single history item by id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetHistoryItemResponse getHistoryItem(GetHistoryItemRequest request) throws Exception {
+    public GetHistoryItemResponse getHistoryItem(GetHistoryItemRequest request) {
+        return getHistoryItem(request, Optional.empty());
+    }
+
+    /**
+     * Get Single History Item
+     * 
+     * <p>Get a single history item by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHistoryItemResponse getHistoryItem(GetHistoryItemRequest request, Optional<Options> options) {
         RequestOperation<GetHistoryItemRequest, GetHistoryItemResponse> operation
-              = new GetHistoryItem.Sync(sdkConfiguration);
+              = new GetHistoryItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

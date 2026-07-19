@@ -5,6 +5,7 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.MediaContainerWithHubs;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -37,7 +38,7 @@ public class GetAllHubsResponse implements Response {
     /**
      * OK
      */
-    private Optional<? extends GetAllHubsResponseBody> object;
+    private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs;
 
 
     private Map<String, List<String>> headers;
@@ -47,18 +48,18 @@ public class GetAllHubsResponse implements Response {
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends GetAllHubsResponseBody> object,
+            Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithHubs = mediaContainerWithHubs;
         this.headers = headers;
     }
     
@@ -100,8 +101,8 @@ public class GetAllHubsResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetAllHubsResponseBody> object() {
-        return (Optional<GetAllHubsResponseBody>) object;
+    public Optional<MediaContainerWithHubs> mediaContainerWithHubs() {
+        return (Optional<MediaContainerWithHubs>) mediaContainerWithHubs;
     }
 
     @JsonIgnore
@@ -144,9 +145,9 @@ public class GetAllHubsResponse implements Response {
     /**
      * OK
      */
-    public GetAllHubsResponse withObject(GetAllHubsResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public GetAllHubsResponse withMediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+        this.mediaContainerWithHubs = Optional.ofNullable(mediaContainerWithHubs);
         return this;
     }
 
@@ -154,9 +155,9 @@ public class GetAllHubsResponse implements Response {
     /**
      * OK
      */
-    public GetAllHubsResponse withObject(Optional<? extends GetAllHubsResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public GetAllHubsResponse withMediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
+        Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+        this.mediaContainerWithHubs = mediaContainerWithHubs;
         return this;
     }
 
@@ -179,7 +180,7 @@ public class GetAllHubsResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
+            Utils.enhancedDeepEquals(this.mediaContainerWithHubs, other.mediaContainerWithHubs) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -187,7 +188,7 @@ public class GetAllHubsResponse implements Response {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object, headers);
+            mediaContainerWithHubs, headers);
     }
     
     @Override
@@ -196,7 +197,7 @@ public class GetAllHubsResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object,
+                "mediaContainerWithHubs", mediaContainerWithHubs,
                 "headers", headers);
     }
 
@@ -209,7 +210,7 @@ public class GetAllHubsResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends GetAllHubsResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -251,18 +252,18 @@ public class GetAllHubsResponse implements Response {
         /**
          * OK
          */
-        public Builder object(GetAllHubsResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithHubs(MediaContainerWithHubs mediaContainerWithHubs) {
+            Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+            this.mediaContainerWithHubs = Optional.ofNullable(mediaContainerWithHubs);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends GetAllHubsResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithHubs(Optional<? extends MediaContainerWithHubs> mediaContainerWithHubs) {
+            Utils.checkNotNull(mediaContainerWithHubs, "mediaContainerWithHubs");
+            this.mediaContainerWithHubs = mediaContainerWithHubs;
             return this;
         }
 
@@ -277,7 +278,7 @@ public class GetAllHubsResponse implements Response {
 
             return new GetAllHubsResponse(
                 contentType, statusCode, rawResponse,
-                object, headers);
+                mediaContainerWithHubs, headers);
         }
 
     }

@@ -84,12 +84,14 @@ public class DeleteMetadataItemRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
     /**
-     * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+     * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=proxy")
     private Optional<? extends BoolInt> proxy;
@@ -235,13 +237,16 @@ public class DeleteMetadataItemRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
     /**
-     * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+     * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -463,6 +468,9 @@ public class DeleteMetadataItemRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public DeleteMetadataItemRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
@@ -470,7 +478,7 @@ public class DeleteMetadataItemRequest {
     }
 
     /**
-     * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+     * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
      */
     public DeleteMetadataItemRequest withProxy(BoolInt proxy) {
         Utils.checkNotNull(proxy, "proxy");
@@ -480,7 +488,7 @@ public class DeleteMetadataItemRequest {
 
 
     /**
-     * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+     * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
      */
     public DeleteMetadataItemRequest withProxy(Optional<? extends BoolInt> proxy) {
         Utils.checkNotNull(proxy, "proxy");
@@ -784,6 +792,9 @@ public class DeleteMetadataItemRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -792,7 +803,7 @@ public class DeleteMetadataItemRequest {
 
 
         /**
-         * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+         * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
          */
         public Builder proxy(BoolInt proxy) {
             Utils.checkNotNull(proxy, "proxy");
@@ -801,7 +812,7 @@ public class DeleteMetadataItemRequest {
         }
 
         /**
-         * Whether proxy items, such as media optimized versions, should also be deleted.  Defaults to false.
+         * Whether proxy items, such as media optimized versions, should also be deleted. Defaults to false.
          */
         public Builder proxy(Optional<? extends BoolInt> proxy) {
             Utils.checkNotNull(proxy, "proxy");

@@ -84,19 +84,27 @@ public class MatchItemRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The guid
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=guid")
     private Optional<String> guid;
 
-
+    /**
+     * The name
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=name")
     private Optional<String> name;
 
-
+    /**
+     * The year to filter by
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=year")
     private Optional<Long> year;
 
@@ -247,21 +255,33 @@ public class MatchItemRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The guid
+     */
     @JsonIgnore
     public Optional<String> guid() {
         return guid;
     }
 
+    /**
+     * The name
+     */
     @JsonIgnore
     public Optional<String> name() {
         return name;
     }
 
+    /**
+     * The year to filter by
+     */
     @JsonIgnore
     public Optional<Long> year() {
         return year;
@@ -481,12 +501,18 @@ public class MatchItemRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public MatchItemRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The guid
+     */
     public MatchItemRequest withGuid(String guid) {
         Utils.checkNotNull(guid, "guid");
         this.guid = Optional.ofNullable(guid);
@@ -494,12 +520,18 @@ public class MatchItemRequest {
     }
 
 
+    /**
+     * The guid
+     */
     public MatchItemRequest withGuid(Optional<String> guid) {
         Utils.checkNotNull(guid, "guid");
         this.guid = guid;
         return this;
     }
 
+    /**
+     * The name
+     */
     public MatchItemRequest withName(String name) {
         Utils.checkNotNull(name, "name");
         this.name = Optional.ofNullable(name);
@@ -507,12 +539,18 @@ public class MatchItemRequest {
     }
 
 
+    /**
+     * The name
+     */
     public MatchItemRequest withName(Optional<String> name) {
         Utils.checkNotNull(name, "name");
         this.name = name;
         return this;
     }
 
+    /**
+     * The year to filter by
+     */
     public MatchItemRequest withYear(long year) {
         Utils.checkNotNull(year, "year");
         this.year = Optional.ofNullable(year);
@@ -520,6 +558,9 @@ public class MatchItemRequest {
     }
 
 
+    /**
+     * The year to filter by
+     */
     public MatchItemRequest withYear(Optional<Long> year) {
         Utils.checkNotNull(year, "year");
         this.year = year;
@@ -830,6 +871,9 @@ public class MatchItemRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -837,12 +881,18 @@ public class MatchItemRequest {
         }
 
 
+        /**
+         * The guid
+         */
         public Builder guid(String guid) {
             Utils.checkNotNull(guid, "guid");
             this.guid = Optional.ofNullable(guid);
             return this;
         }
 
+        /**
+         * The guid
+         */
         public Builder guid(Optional<String> guid) {
             Utils.checkNotNull(guid, "guid");
             this.guid = guid;
@@ -850,12 +900,18 @@ public class MatchItemRequest {
         }
 
 
+        /**
+         * The name
+         */
         public Builder name(String name) {
             Utils.checkNotNull(name, "name");
             this.name = Optional.ofNullable(name);
             return this;
         }
 
+        /**
+         * The name
+         */
         public Builder name(Optional<String> name) {
             Utils.checkNotNull(name, "name");
             this.name = name;
@@ -863,12 +919,18 @@ public class MatchItemRequest {
         }
 
 
+        /**
+         * The year to filter by
+         */
         public Builder year(long year) {
             Utils.checkNotNull(year, "year");
             this.year = Optional.ofNullable(year);
             return this;
         }
 
+        /**
+         * The year to filter by
+         */
         public Builder year(Optional<Long> year) {
             Utils.checkNotNull(year, "year");
             this.year = year;

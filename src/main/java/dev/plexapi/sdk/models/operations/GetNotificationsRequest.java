@@ -85,7 +85,8 @@ public class GetNotificationsRequest {
     private Optional<String> marketplace;
 
     /**
-     * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients to opt into or out of each event type using the `filters` parameter. For example:
+     * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients
+     * to opt into or out of each event type using the `filters` parameter. For example:
      * 
      * <p>- `filters=-log`: All event types except logs (the default).
      * - `filters=foo,bar`: Only the foo and bar event types.
@@ -232,7 +233,8 @@ public class GetNotificationsRequest {
     }
 
     /**
-     * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients to opt into or out of each event type using the `filters` parameter. For example:
+     * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients
+     * to opt into or out of each event type using the `filters` parameter. For example:
      * 
      * <p>- `filters=-log`: All event types except logs (the default).
      * - `filters=foo,bar`: Only the foo and bar event types.
@@ -460,7 +462,8 @@ public class GetNotificationsRequest {
     }
 
     /**
-     * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients to opt into or out of each event type using the `filters` parameter. For example:
+     * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients
+     * to opt into or out of each event type using the `filters` parameter. For example:
      * 
      * <p>- `filters=-log`: All event types except logs (the default).
      * - `filters=foo,bar`: Only the foo and bar event types.
@@ -475,7 +478,8 @@ public class GetNotificationsRequest {
 
 
     /**
-     * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients to opt into or out of each event type using the `filters` parameter. For example:
+     * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients
+     * to opt into or out of each event type using the `filters` parameter. For example:
      * 
      * <p>- `filters=-log`: All event types except logs (the default).
      * - `filters=foo,bar`: Only the foo and bar event types.
@@ -780,7 +784,8 @@ public class GetNotificationsRequest {
 
 
         /**
-         * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients to opt into or out of each event type using the `filters` parameter. For example:
+         * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients
+         * to opt into or out of each event type using the `filters` parameter. For example:
          * 
          * <p>- `filters=-log`: All event types except logs (the default).
          * - `filters=foo,bar`: Only the foo and bar event types.
@@ -794,7 +799,8 @@ public class GetNotificationsRequest {
         }
 
         /**
-         * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients to opt into or out of each event type using the `filters` parameter. For example:
+         * By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients
+         * to opt into or out of each event type using the `filters` parameter. For example:
          * 
          * <p>- `filters=-log`: All event types except logs (the default).
          * - `filters=foo,bar`: Only the foo and bar event types.

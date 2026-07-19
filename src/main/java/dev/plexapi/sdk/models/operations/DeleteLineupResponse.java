@@ -5,6 +5,7 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.DVRResponse;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -37,7 +38,7 @@ public class DeleteLineupResponse implements Response {
     /**
      * OK
      */
-    private Optional<? extends DeleteLineupResponseBody> object;
+    private Optional<? extends DVRResponse> dvrResponse;
 
 
     private Map<String, List<String>> headers;
@@ -47,18 +48,18 @@ public class DeleteLineupResponse implements Response {
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends DeleteLineupResponseBody> object,
+            Optional<? extends DVRResponse> dvrResponse,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(dvrResponse, "dvrResponse");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.dvrResponse = dvrResponse;
         this.headers = headers;
     }
     
@@ -100,8 +101,8 @@ public class DeleteLineupResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<DeleteLineupResponseBody> object() {
-        return (Optional<DeleteLineupResponseBody>) object;
+    public Optional<DVRResponse> dvrResponse() {
+        return (Optional<DVRResponse>) dvrResponse;
     }
 
     @JsonIgnore
@@ -144,9 +145,9 @@ public class DeleteLineupResponse implements Response {
     /**
      * OK
      */
-    public DeleteLineupResponse withObject(DeleteLineupResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public DeleteLineupResponse withDVRResponse(DVRResponse dvrResponse) {
+        Utils.checkNotNull(dvrResponse, "dvrResponse");
+        this.dvrResponse = Optional.ofNullable(dvrResponse);
         return this;
     }
 
@@ -154,9 +155,9 @@ public class DeleteLineupResponse implements Response {
     /**
      * OK
      */
-    public DeleteLineupResponse withObject(Optional<? extends DeleteLineupResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public DeleteLineupResponse withDVRResponse(Optional<? extends DVRResponse> dvrResponse) {
+        Utils.checkNotNull(dvrResponse, "dvrResponse");
+        this.dvrResponse = dvrResponse;
         return this;
     }
 
@@ -179,7 +180,7 @@ public class DeleteLineupResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
+            Utils.enhancedDeepEquals(this.dvrResponse, other.dvrResponse) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -187,7 +188,7 @@ public class DeleteLineupResponse implements Response {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object, headers);
+            dvrResponse, headers);
     }
     
     @Override
@@ -196,7 +197,7 @@ public class DeleteLineupResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object,
+                "dvrResponse", dvrResponse,
                 "headers", headers);
     }
 
@@ -209,7 +210,7 @@ public class DeleteLineupResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends DeleteLineupResponseBody> object = Optional.empty();
+        private Optional<? extends DVRResponse> dvrResponse = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -251,18 +252,18 @@ public class DeleteLineupResponse implements Response {
         /**
          * OK
          */
-        public Builder object(DeleteLineupResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder dvrResponse(DVRResponse dvrResponse) {
+            Utils.checkNotNull(dvrResponse, "dvrResponse");
+            this.dvrResponse = Optional.ofNullable(dvrResponse);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends DeleteLineupResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder dvrResponse(Optional<? extends DVRResponse> dvrResponse) {
+            Utils.checkNotNull(dvrResponse, "dvrResponse");
+            this.dvrResponse = dvrResponse;
             return this;
         }
 
@@ -277,7 +278,7 @@ public class DeleteLineupResponse implements Response {
 
             return new DeleteLineupResponse(
                 contentType, statusCode, rawResponse,
-                object, headers);
+                dvrResponse, headers);
         }
 
     }

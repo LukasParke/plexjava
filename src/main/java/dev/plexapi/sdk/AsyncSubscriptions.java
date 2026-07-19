@@ -44,12 +44,17 @@ import dev.plexapi.sdk.operations.GetSubscription;
 import dev.plexapi.sdk.operations.GetTemplate;
 import dev.plexapi.sdk.operations.ProcessSubscriptions;
 import dev.plexapi.sdk.operations.ReorderSubscription;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Subscriptions determine which media will be recorded and the criteria for selecting an airing when multiple are available
+ * Subscriptions determine which media will be recorded and the criteria for selecting an airing when
+ * multiple are available
  */
 public class AsyncSubscriptions {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Subscriptions syncSDK;
 
@@ -85,11 +90,26 @@ public class AsyncSubscriptions {
      * <p>Get all subscriptions and potentially the grabs too
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetAllSubscriptionsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAllSubscriptionsResponse>} - The async response
      */
     public CompletableFuture<GetAllSubscriptionsResponse> getAllSubscriptions(GetAllSubscriptionsRequest request) {
+        return getAllSubscriptions(request, Optional.empty());
+    }
+
+    /**
+     * Get all subscriptions
+     * 
+     * <p>Get all subscriptions and potentially the grabs too
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAllSubscriptionsResponse>} - The async response
+     */
+    public CompletableFuture<GetAllSubscriptionsResponse> getAllSubscriptions(GetAllSubscriptionsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetAllSubscriptionsRequest, GetAllSubscriptionsResponse> operation
-              = new GetAllSubscriptions.Async(sdkConfiguration);
+              = new GetAllSubscriptions.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -98,7 +118,8 @@ public class AsyncSubscriptions {
     /**
      * Create a subscription
      * 
-     * <p>Create a subscription. The query parameters should be mostly derived from the [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
+     * <p>Create a subscription. The query parameters should be mostly derived from the
+     * [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
      * 
      * @return The async call builder
      */
@@ -109,14 +130,31 @@ public class AsyncSubscriptions {
     /**
      * Create a subscription
      * 
-     * <p>Create a subscription. The query parameters should be mostly derived from the [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
+     * <p>Create a subscription. The query parameters should be mostly derived from the
+     * [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CreateSubscriptionResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreateSubscriptionResponse>} - The async response
      */
     public CompletableFuture<CreateSubscriptionResponse> createSubscription(CreateSubscriptionRequest request) {
+        return createSubscription(request, Optional.empty());
+    }
+
+    /**
+     * Create a subscription
+     * 
+     * <p>Create a subscription. The query parameters should be mostly derived from the
+     * [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateSubscriptionResponse>} - The async response
+     */
+    public CompletableFuture<CreateSubscriptionResponse> createSubscription(CreateSubscriptionRequest request, Optional<Options> options) {
         AsyncRequestOperation<CreateSubscriptionRequest, CreateSubscriptionResponse> operation
-              = new CreateSubscription.Async(sdkConfiguration);
+              = new CreateSubscription.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -138,11 +176,25 @@ public class AsyncSubscriptions {
      * 
      * <p>Process all subscriptions asynchronously
      * 
-     * @return CompletableFuture&lt;ProcessSubscriptionsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ProcessSubscriptionsResponse>} - The async response
      */
     public CompletableFuture<ProcessSubscriptionsResponse> processSubscriptionsDirect() {
+        return processSubscriptions(Optional.empty());
+    }
+
+    /**
+     * Process all subscriptions
+     * 
+     * <p>Process all subscriptions asynchronously
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<ProcessSubscriptionsResponse>} - The async response
+     */
+    public CompletableFuture<ProcessSubscriptionsResponse> processSubscriptions(Optional<Options> options) {
         AsyncRequestlessOperation<ProcessSubscriptionsResponse> operation
-            = new ProcessSubscriptions.Async(sdkConfiguration);
+            = new ProcessSubscriptions.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -164,11 +216,25 @@ public class AsyncSubscriptions {
      * 
      * <p>Get all scheduled recordings across all subscriptions
      * 
-     * @return CompletableFuture&lt;GetScheduledRecordingsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetScheduledRecordingsResponse>} - The async response
      */
     public CompletableFuture<GetScheduledRecordingsResponse> getScheduledRecordingsDirect() {
+        return getScheduledRecordings(Optional.empty());
+    }
+
+    /**
+     * Get all scheduled recordings
+     * 
+     * <p>Get all scheduled recordings across all subscriptions
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetScheduledRecordingsResponse>} - The async response
+     */
+    public CompletableFuture<GetScheduledRecordingsResponse> getScheduledRecordings(Optional<Options> options) {
         AsyncRequestlessOperation<GetScheduledRecordingsResponse> operation
-            = new GetScheduledRecordings.Async(sdkConfiguration);
+            = new GetScheduledRecordings.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -177,7 +243,8 @@ public class AsyncSubscriptions {
     /**
      * Get the subscription template
      * 
-     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole show, etc.
+     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole
+     * show, etc.
      * 
      * @return The async call builder
      */
@@ -188,14 +255,31 @@ public class AsyncSubscriptions {
     /**
      * Get the subscription template
      * 
-     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole show, etc.
+     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole
+     * show, etc.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetTemplateResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetTemplateResponse>} - The async response
      */
     public CompletableFuture<GetTemplateResponse> getTemplate(GetTemplateRequest request) {
+        return getTemplate(request, Optional.empty());
+    }
+
+    /**
+     * Get the subscription template
+     * 
+     * <p>Get the templates for a piece of media which could include fetching one airing, season, the whole
+     * show, etc.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetTemplateResponse>} - The async response
+     */
+    public CompletableFuture<GetTemplateResponse> getTemplate(GetTemplateRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetTemplateRequest, GetTemplateResponse> operation
-              = new GetTemplate.Async(sdkConfiguration);
+              = new GetTemplate.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -204,8 +288,10 @@ public class AsyncSubscriptions {
     /**
      * Cancel an existing grab
      * 
-     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a rolling subscription.
-     * Note: This cancellation does not persist across a server restart, but neither does a rolling subscription itself.
+     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a
+     * rolling subscription.
+     * Note: This cancellation does not persist across a server restart, but neither does a rolling
+     * subscription itself.
      * 
      * @return The async call builder
      */
@@ -216,15 +302,35 @@ public class AsyncSubscriptions {
     /**
      * Cancel an existing grab
      * 
-     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a rolling subscription.
-     * Note: This cancellation does not persist across a server restart, but neither does a rolling subscription itself.
+     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a
+     * rolling subscription.
+     * Note: This cancellation does not persist across a server restart, but neither does a rolling
+     * subscription itself.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CancelGrabResponse&gt; - The async response
+     * @return {@code CompletableFuture<CancelGrabResponse>} - The async response
      */
     public CompletableFuture<CancelGrabResponse> cancelGrab(CancelGrabRequest request) {
+        return cancelGrab(request, Optional.empty());
+    }
+
+    /**
+     * Cancel an existing grab
+     * 
+     * <p>Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a
+     * rolling subscription.
+     * Note: This cancellation does not persist across a server restart, but neither does a rolling
+     * subscription itself.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CancelGrabResponse>} - The async response
+     */
+    public CompletableFuture<CancelGrabResponse> cancelGrab(CancelGrabRequest request, Optional<Options> options) {
         AsyncRequestOperation<CancelGrabRequest, CancelGrabResponse> operation
-              = new CancelGrab.Async(sdkConfiguration);
+              = new CancelGrab.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -247,11 +353,26 @@ public class AsyncSubscriptions {
      * <p>Delete a subscription, cancelling all of its grabs as well
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteSubscriptionResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteSubscriptionResponse>} - The async response
      */
     public CompletableFuture<DeleteSubscriptionResponse> deleteSubscription(DeleteSubscriptionRequest request) {
+        return deleteSubscription(request, Optional.empty());
+    }
+
+    /**
+     * Delete a subscription
+     * 
+     * <p>Delete a subscription, cancelling all of its grabs as well
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteSubscriptionResponse>} - The async response
+     */
+    public CompletableFuture<DeleteSubscriptionResponse> deleteSubscription(DeleteSubscriptionRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteSubscriptionRequest, DeleteSubscriptionResponse> operation
-              = new DeleteSubscription.Async(sdkConfiguration);
+              = new DeleteSubscription.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -274,11 +395,26 @@ public class AsyncSubscriptions {
      * <p>Get a single subscription and potentially the grabs too
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSubscriptionResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSubscriptionResponse>} - The async response
      */
     public CompletableFuture<GetSubscriptionResponse> getSubscription(GetSubscriptionRequest request) {
+        return getSubscription(request, Optional.empty());
+    }
+
+    /**
+     * Get a single subscription
+     * 
+     * <p>Get a single subscription and potentially the grabs too
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSubscriptionResponse>} - The async response
+     */
+    public CompletableFuture<GetSubscriptionResponse> getSubscription(GetSubscriptionRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSubscriptionRequest, GetSubscriptionResponse> operation
-              = new GetSubscription.Async(sdkConfiguration);
+              = new GetSubscription.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -301,11 +437,26 @@ public class AsyncSubscriptions {
      * <p>Edit a subscription's preferences
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;EditSubscriptionPreferencesResponse&gt; - The async response
+     * @return {@code CompletableFuture<EditSubscriptionPreferencesResponse>} - The async response
      */
     public CompletableFuture<EditSubscriptionPreferencesResponse> editSubscriptionPreferences(EditSubscriptionPreferencesRequest request) {
+        return editSubscriptionPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Edit a subscription
+     * 
+     * <p>Edit a subscription's preferences
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<EditSubscriptionPreferencesResponse>} - The async response
+     */
+    public CompletableFuture<EditSubscriptionPreferencesResponse> editSubscriptionPreferences(EditSubscriptionPreferencesRequest request, Optional<Options> options) {
         AsyncRequestOperation<EditSubscriptionPreferencesRequest, EditSubscriptionPreferencesResponse> operation
-              = new EditSubscriptionPreferences.Async(sdkConfiguration);
+              = new EditSubscriptionPreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -315,6 +466,8 @@ public class AsyncSubscriptions {
      * Re-order a subscription
      * 
      * <p>Re-order a subscription to change its priority
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -327,12 +480,31 @@ public class AsyncSubscriptions {
      * 
      * <p>Re-order a subscription to change its priority
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ReorderSubscriptionResponse&gt; - The async response
+     * @return {@code CompletableFuture<ReorderSubscriptionResponse>} - The async response
      */
     public CompletableFuture<ReorderSubscriptionResponse> reorderSubscription(ReorderSubscriptionRequest request) {
+        return reorderSubscription(request, Optional.empty());
+    }
+
+    /**
+     * Re-order a subscription
+     * 
+     * <p>Re-order a subscription to change its priority
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ReorderSubscriptionResponse>} - The async response
+     */
+    public CompletableFuture<ReorderSubscriptionResponse> reorderSubscription(ReorderSubscriptionRequest request, Optional<Options> options) {
         AsyncRequestOperation<ReorderSubscriptionRequest, ReorderSubscriptionResponse> operation
-              = new ReorderSubscription.Async(sdkConfiguration);
+              = new ReorderSubscription.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

@@ -20,20 +20,19 @@ import java.lang.SuppressWarnings;
 public class AllowSync {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private AllowSync(TypedObject value) {
         this.value = value;
     }
 
     public static AllowSync of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static AllowSync of(Two value) {
         Utils.checkNotNull(value, "value");
-        return new AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Two>(){}));
+        return new AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -56,7 +55,7 @@ public class AllowSync {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -67,7 +66,7 @@ public class AllowSync {
             return false;
         }
         AllowSync other = (AllowSync) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -80,8 +79,8 @@ public class AllowSync {
 
         public _Deserializer() {
             super(AllowSync.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Two>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Two>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -90,6 +89,6 @@ public class AllowSync {
         return Utils.toString(AllowSync.class,
                 "value", value);
     }
- 
+
 }
 

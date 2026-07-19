@@ -57,12 +57,15 @@ import dev.plexapi.sdk.operations.GetSonicPath;
 import dev.plexapi.sdk.operations.GetSonicallySimilar;
 import dev.plexapi.sdk.operations.ListContent;
 import dev.plexapi.sdk.operations.ListMoments;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * The actual content of the media provider
  */
 public class Content {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncContent asyncSDK;
 
@@ -83,7 +86,8 @@ public class Content {
     /**
      * Get items in a collection
      * 
-     * <p>Get items in a collection.  Note if this collection contains more than 100 items, paging must be used.
+     * <p>Get items in a collection. Note if this collection contains more than 100 items, paging must be
+     * used.
      * 
      * @return The call builder
      */
@@ -94,15 +98,31 @@ public class Content {
     /**
      * Get items in a collection
      * 
-     * <p>Get items in a collection.  Note if this collection contains more than 100 items, paging must be used.
+     * <p>Get items in a collection. Note if this collection contains more than 100 items, paging must be
+     * used.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetCollectionItemsResponse getCollectionItems(GetCollectionItemsRequest request) throws Exception {
+    public GetCollectionItemsResponse getCollectionItems(GetCollectionItemsRequest request) {
+        return getCollectionItems(request, Optional.empty());
+    }
+
+    /**
+     * Get items in a collection
+     * 
+     * <p>Get items in a collection. Note if this collection contains more than 100 items, paging must be
+     * used.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCollectionItemsResponse getCollectionItems(GetCollectionItemsRequest request, Optional<Options> options) {
         RequestOperation<GetCollectionItemsRequest, GetCollectionItemsResponse> operation
-              = new GetCollectionItems.Sync(sdkConfiguration);
+              = new GetCollectionItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -124,11 +144,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetMetadataItemResponse getMetadataItem(GetMetadataItemRequest request) throws Exception {
+    public GetMetadataItemResponse getMetadataItem(GetMetadataItemRequest request) {
+        return getMetadataItem(request, Optional.empty());
+    }
+
+    /**
+     * Get a metadata item
+     * 
+     * <p>Get one or more metadata items.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataItemResponse getMetadataItem(GetMetadataItemRequest request, Optional<Options> options) {
         RequestOperation<GetMetadataItemRequest, GetMetadataItemResponse> operation
-              = new GetMetadataItem.Sync(sdkConfiguration);
+              = new GetMetadataItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -150,18 +184,35 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAlbumsResponse getAlbums(GetAlbumsRequest request) throws Exception {
+    public GetAlbumsResponse getAlbums(GetAlbumsRequest request) {
+        return getAlbums(request, Optional.empty());
+    }
+
+    /**
+     * Set section albums
+     * 
+     * <p>Get all albums in a music section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAlbumsResponse getAlbums(GetAlbumsRequest request, Optional<Options> options) {
         RequestOperation<GetAlbumsRequest, GetAlbumsResponse> operation
-              = new GetAlbums.Sync(sdkConfiguration);
+              = new GetAlbums.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get items in the section
      * 
-     * <p>Get the items in a section, potentially filtering them
+     * <p>Get the items in a section, potentially filtering them.
+     * When `includeCollections=1` is passed, the response may also contain `Collection` items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -172,15 +223,35 @@ public class Content {
     /**
      * Get items in the section
      * 
-     * <p>Get the items in a section, potentially filtering them
+     * <p>Get the items in a section, potentially filtering them.
+     * When `includeCollections=1` is passed, the response may also contain `Collection` items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListContentResponse listContent(ListContentRequest request) throws Exception {
+    public ListContentResponse listContent(ListContentRequest request) {
+        return listContent(request, Optional.empty());
+    }
+
+    /**
+     * Get items in the section
+     * 
+     * <p>Get the items in a section, potentially filtering them.
+     * When `includeCollections=1` is passed, the response may also contain `Collection` items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListContentResponse listContent(ListContentRequest request, Optional<Options> options) {
         RequestOperation<ListContentRequest, ListContentResponse> operation
-              = new ListContent.Sync(sdkConfiguration);
+              = new ListContent.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -202,11 +273,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAllLeavesResponse getAllLeaves(GetAllLeavesRequest request) throws Exception {
+    public GetAllLeavesResponse getAllLeaves(GetAllLeavesRequest request) {
+        return getAllLeaves(request, Optional.empty());
+    }
+
+    /**
+     * Set section leaves
+     * 
+     * <p>Get all leaves in a section (such as episodes in a show section)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAllLeavesResponse getAllLeaves(GetAllLeavesRequest request, Optional<Options> options) {
         RequestOperation<GetAllLeavesRequest, GetAllLeavesResponse> operation
-              = new GetAllLeaves.Sync(sdkConfiguration);
+              = new GetAllLeaves.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -228,11 +313,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetArtsResponse getArts(GetArtsRequest request) throws Exception {
+    public GetArtsResponse getArts(GetArtsRequest request) {
+        return getArts(request, Optional.empty());
+    }
+
+    /**
+     * Set section artwork
+     * 
+     * <p>Get artwork for a library section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetArtsResponse getArts(GetArtsRequest request, Optional<Options> options) {
         RequestOperation<GetArtsRequest, GetArtsResponse> operation
-              = new GetArts.Sync(sdkConfiguration);
+              = new GetArts.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -254,11 +353,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetCategoriesResponse getCategories(GetCategoriesRequest request) throws Exception {
+    public GetCategoriesResponse getCategories(GetCategoriesRequest request) {
+        return getCategories(request, Optional.empty());
+    }
+
+    /**
+     * Set section categories
+     * 
+     * <p>Get categories in a library section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCategoriesResponse getCategories(GetCategoriesRequest request, Optional<Options> options) {
         RequestOperation<GetCategoriesRequest, GetCategoriesResponse> operation
-              = new GetCategories.Sync(sdkConfiguration);
+              = new GetCategories.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -280,11 +393,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetClusterResponse getCluster(GetClusterRequest request) throws Exception {
+    public GetClusterResponse getCluster(GetClusterRequest request) {
+        return getCluster(request, Optional.empty());
+    }
+
+    /**
+     * Set section clusters
+     * 
+     * <p>Get clusters in a library section (typically for photos)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetClusterResponse getCluster(GetClusterRequest request, Optional<Options> options) {
         RequestOperation<GetClusterRequest, GetClusterResponse> operation
-              = new GetCluster.Sync(sdkConfiguration);
+              = new GetCluster.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -306,11 +433,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSonicPathResponse getSonicPath(GetSonicPathRequest request) throws Exception {
+    public GetSonicPathResponse getSonicPath(GetSonicPathRequest request) {
+        return getSonicPath(request, Optional.empty());
+    }
+
+    /**
+     * Similar tracks to transition from one to another
+     * 
+     * <p>Get a list of audio tracks starting at one and ending at another which are similar across the path
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSonicPathResponse getSonicPath(GetSonicPathRequest request, Optional<Options> options) {
         RequestOperation<GetSonicPathRequest, GetSonicPathResponse> operation
-              = new GetSonicPath.Sync(sdkConfiguration);
+              = new GetSonicPath.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -332,11 +473,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetFoldersResponse getFolders(GetFoldersRequest request) throws Exception {
+    public GetFoldersResponse getFolders(GetFoldersRequest request) {
+        return getFolders(request, Optional.empty());
+    }
+
+    /**
+     * Get all folder locations
+     * 
+     * <p>Get all folder locations of the media in a section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetFoldersResponse getFolders(GetFoldersRequest request, Optional<Options> options) {
         RequestOperation<GetFoldersRequest, GetFoldersResponse> operation
-              = new GetFolders.Sync(sdkConfiguration);
+              = new GetFolders.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -358,11 +513,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListMomentsResponse listMoments(ListMomentsRequest request) throws Exception {
+    public ListMomentsResponse listMoments(ListMomentsRequest request) {
+        return listMoments(request, Optional.empty());
+    }
+
+    /**
+     * Set section moments
+     * 
+     * <p>Get moments in a library section (typically for photos)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListMomentsResponse listMoments(ListMomentsRequest request, Optional<Options> options) {
         RequestOperation<ListMomentsRequest, ListMomentsResponse> operation
-              = new ListMoments.Sync(sdkConfiguration);
+              = new ListMoments.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -384,11 +553,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSonicallySimilarResponse getSonicallySimilar(GetSonicallySimilarRequest request) throws Exception {
+    public GetSonicallySimilarResponse getSonicallySimilar(GetSonicallySimilarRequest request) {
+        return getSonicallySimilar(request, Optional.empty());
+    }
+
+    /**
+     * The nearest audio tracks
+     * 
+     * <p>Get the nearest audio tracks to a particular analysis
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSonicallySimilarResponse getSonicallySimilar(GetSonicallySimilarRequest request, Optional<Options> options) {
         RequestOperation<GetSonicallySimilarRequest, GetSonicallySimilarResponse> operation
-              = new GetSonicallySimilar.Sync(sdkConfiguration);
+              = new GetSonicallySimilar.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -410,11 +593,25 @@ public class Content {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetCollectionImageResponse getCollectionImage(GetCollectionImageRequest request) throws Exception {
+    public GetCollectionImageResponse getCollectionImage(GetCollectionImageRequest request) {
+        return getCollectionImage(request, Optional.empty());
+    }
+
+    /**
+     * Get a collection's image
+     * 
+     * <p>Get an image for the collection based on the items within
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCollectionImageResponse getCollectionImage(GetCollectionImageRequest request, Optional<Options> options) {
         RequestOperation<GetCollectionImageRequest, GetCollectionImageResponse> operation
-              = new GetCollectionImage.Sync(sdkConfiguration);
+              = new GetCollectionImage.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

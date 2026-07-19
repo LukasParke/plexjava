@@ -97,7 +97,8 @@ public class MovePlaylistItemRequest {
     private long playlistItemId;
 
     /**
-     * The playlist item ID to insert the new item after.  If not provided, item is moved to beginning of playlist
+     * The playlist item ID to insert the new item after. If not provided, item is moved to beginning of
+     * playlist
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=after")
     private Optional<Long> after;
@@ -264,7 +265,8 @@ public class MovePlaylistItemRequest {
     }
 
     /**
-     * The playlist item ID to insert the new item after.  If not provided, item is moved to beginning of playlist
+     * The playlist item ID to insert the new item after. If not provided, item is moved to beginning of
+     * playlist
      */
     @JsonIgnore
     public Optional<Long> after() {
@@ -504,7 +506,8 @@ public class MovePlaylistItemRequest {
     }
 
     /**
-     * The playlist item ID to insert the new item after.  If not provided, item is moved to beginning of playlist
+     * The playlist item ID to insert the new item after. If not provided, item is moved to beginning of
+     * playlist
      */
     public MovePlaylistItemRequest withAfter(long after) {
         Utils.checkNotNull(after, "after");
@@ -514,7 +517,8 @@ public class MovePlaylistItemRequest {
 
 
     /**
-     * The playlist item ID to insert the new item after.  If not provided, item is moved to beginning of playlist
+     * The playlist item ID to insert the new item after. If not provided, item is moved to beginning of
+     * playlist
      */
     public MovePlaylistItemRequest withAfter(Optional<Long> after) {
         Utils.checkNotNull(after, "after");
@@ -843,7 +847,8 @@ public class MovePlaylistItemRequest {
 
 
         /**
-         * The playlist item ID to insert the new item after.  If not provided, item is moved to beginning of playlist
+         * The playlist item ID to insert the new item after. If not provided, item is moved to beginning of
+         * playlist
          */
         public Builder after(long after) {
             Utils.checkNotNull(after, "after");
@@ -852,7 +857,8 @@ public class MovePlaylistItemRequest {
         }
 
         /**
-         * The playlist item ID to insert the new item after.  If not provided, item is moved to beginning of playlist
+         * The playlist item ID to insert the new item after. If not provided, item is moved to beginning of
+         * playlist
          */
         public Builder after(Optional<Long> after) {
             Utils.checkNotNull(after, "after");

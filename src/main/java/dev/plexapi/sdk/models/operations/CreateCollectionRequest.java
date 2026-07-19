@@ -86,12 +86,6 @@ public class CreateCollectionRequest {
     private Optional<String> marketplace;
 
     /**
-     * The section where this collection will be created
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=sectionId")
-    private String sectionId;
-
-    /**
      * The title to filter by or assign
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=title")
@@ -102,12 +96,6 @@ public class CreateCollectionRequest {
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=smart")
     private Optional<Boolean> smart;
-
-    /**
-     * The URI for processing the smart collection.  Required for a smart collection
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=uri")
-    private Optional<String> uri;
 
     /**
      * The type of media to retrieve or filter by.
@@ -122,10 +110,23 @@ public class CreateCollectionRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
     private Optional<? extends MediaType> type;
+
+    /**
+     * The section where this collection will be created
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=sectionId")
+    private String sectionId;
+
+    /**
+     * The URI for processing the smart collection. Required for a smart collection
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=uri")
+    private Optional<String> uri;
 
     @JsonCreator
     public CreateCollectionRequest(
@@ -140,11 +141,11 @@ public class CreateCollectionRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            String sectionId,
             Optional<String> title,
             Optional<Boolean> smart,
-            Optional<String> uri,
-            Optional<? extends MediaType> type) {
+            Optional<? extends MediaType> type,
+            String sectionId,
+            Optional<String> uri) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -156,11 +157,11 @@ public class CreateCollectionRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(sectionId, "sectionId");
         Utils.checkNotNull(title, "title");
         Utils.checkNotNull(smart, "smart");
-        Utils.checkNotNull(uri, "uri");
         Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(sectionId, "sectionId");
+        Utils.checkNotNull(uri, "uri");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -172,11 +173,11 @@ public class CreateCollectionRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.sectionId = sectionId;
         this.title = title;
         this.smart = smart;
-        this.uri = uri;
         this.type = type;
+        this.sectionId = sectionId;
+        this.uri = uri;
     }
     
     public CreateCollectionRequest(
@@ -184,8 +185,8 @@ public class CreateCollectionRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
             Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), sectionId,
             Optional.empty());
     }
 
@@ -279,14 +280,6 @@ public class CreateCollectionRequest {
     }
 
     /**
-     * The section where this collection will be created
-     */
-    @JsonIgnore
-    public String sectionId() {
-        return sectionId;
-    }
-
-    /**
      * The title to filter by or assign
      */
     @JsonIgnore
@@ -303,14 +296,6 @@ public class CreateCollectionRequest {
     }
 
     /**
-     * The URI for processing the smart collection.  Required for a smart collection
-     */
-    @JsonIgnore
-    public Optional<String> uri() {
-        return uri;
-    }
-
-    /**
      * The type of media to retrieve or filter by.
      * 
      * <p>1 = movie
@@ -323,12 +308,29 @@ public class CreateCollectionRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<MediaType> type() {
         return (Optional<MediaType>) type;
+    }
+
+    /**
+     * The section where this collection will be created
+     */
+    @JsonIgnore
+    public String sectionId() {
+        return sectionId;
+    }
+
+    /**
+     * The URI for processing the smart collection. Required for a smart collection
+     */
+    @JsonIgnore
+    public Optional<String> uri() {
+        return uri;
     }
 
     public static Builder builder() {
@@ -546,15 +548,6 @@ public class CreateCollectionRequest {
     }
 
     /**
-     * The section where this collection will be created
-     */
-    public CreateCollectionRequest withSectionId(String sectionId) {
-        Utils.checkNotNull(sectionId, "sectionId");
-        this.sectionId = sectionId;
-        return this;
-    }
-
-    /**
      * The title to filter by or assign
      */
     public CreateCollectionRequest withTitle(String title) {
@@ -593,25 +586,6 @@ public class CreateCollectionRequest {
     }
 
     /**
-     * The URI for processing the smart collection.  Required for a smart collection
-     */
-    public CreateCollectionRequest withUri(String uri) {
-        Utils.checkNotNull(uri, "uri");
-        this.uri = Optional.ofNullable(uri);
-        return this;
-    }
-
-
-    /**
-     * The URI for processing the smart collection.  Required for a smart collection
-     */
-    public CreateCollectionRequest withUri(Optional<String> uri) {
-        Utils.checkNotNull(uri, "uri");
-        this.uri = uri;
-        return this;
-    }
-
-    /**
      * The type of media to retrieve or filter by.
      * 
      * <p>1 = movie
@@ -624,7 +598,8 @@ public class CreateCollectionRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public CreateCollectionRequest withType(MediaType type) {
         Utils.checkNotNull(type, "type");
@@ -646,11 +621,40 @@ public class CreateCollectionRequest {
      * 8 = photo_album
      * 9 = photo
      * 
-     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+     * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+     * libraries
      */
     public CreateCollectionRequest withType(Optional<? extends MediaType> type) {
         Utils.checkNotNull(type, "type");
         this.type = type;
+        return this;
+    }
+
+    /**
+     * The section where this collection will be created
+     */
+    public CreateCollectionRequest withSectionId(String sectionId) {
+        Utils.checkNotNull(sectionId, "sectionId");
+        this.sectionId = sectionId;
+        return this;
+    }
+
+    /**
+     * The URI for processing the smart collection. Required for a smart collection
+     */
+    public CreateCollectionRequest withUri(String uri) {
+        Utils.checkNotNull(uri, "uri");
+        this.uri = Optional.ofNullable(uri);
+        return this;
+    }
+
+
+    /**
+     * The URI for processing the smart collection. Required for a smart collection
+     */
+    public CreateCollectionRequest withUri(Optional<String> uri) {
+        Utils.checkNotNull(uri, "uri");
+        this.uri = uri;
         return this;
     }
 
@@ -675,11 +679,11 @@ public class CreateCollectionRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
             Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.smart, other.smart) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
+            Utils.enhancedDeepEquals(this.uri, other.uri);
     }
     
     @Override
@@ -688,9 +692,9 @@ public class CreateCollectionRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, sectionId,
-            title, smart, uri,
-            type);
+            deviceName, marketplace, title,
+            smart, type, sectionId,
+            uri);
     }
     
     @Override
@@ -707,11 +711,11 @@ public class CreateCollectionRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "sectionId", sectionId,
                 "title", title,
                 "smart", smart,
-                "uri", uri,
-                "type", type);
+                "type", type,
+                "sectionId", sectionId,
+                "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -739,15 +743,15 @@ public class CreateCollectionRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
-        private String sectionId;
-
         private Optional<String> title = Optional.empty();
 
         private Optional<Boolean> smart = Optional.empty();
 
-        private Optional<String> uri = Optional.empty();
-
         private Optional<? extends MediaType> type = Optional.empty();
+
+        private String sectionId;
+
+        private Optional<String> uri = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -964,16 +968,6 @@ public class CreateCollectionRequest {
 
 
         /**
-         * The section where this collection will be created
-         */
-        public Builder sectionId(String sectionId) {
-            Utils.checkNotNull(sectionId, "sectionId");
-            this.sectionId = sectionId;
-            return this;
-        }
-
-
-        /**
          * The title to filter by or assign
          */
         public Builder title(String title) {
@@ -1012,25 +1006,6 @@ public class CreateCollectionRequest {
 
 
         /**
-         * The URI for processing the smart collection.  Required for a smart collection
-         */
-        public Builder uri(String uri) {
-            Utils.checkNotNull(uri, "uri");
-            this.uri = Optional.ofNullable(uri);
-            return this;
-        }
-
-        /**
-         * The URI for processing the smart collection.  Required for a smart collection
-         */
-        public Builder uri(Optional<String> uri) {
-            Utils.checkNotNull(uri, "uri");
-            this.uri = uri;
-            return this;
-        }
-
-
-        /**
          * The type of media to retrieve or filter by.
          * 
          * <p>1 = movie
@@ -1043,7 +1018,8 @@ public class CreateCollectionRequest {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(MediaType type) {
             Utils.checkNotNull(type, "type");
@@ -1064,11 +1040,41 @@ public class CreateCollectionRequest {
          * 8 = photo_album
          * 9 = photo
          * 
-         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+         * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+         * libraries
          */
         public Builder type(Optional<? extends MediaType> type) {
             Utils.checkNotNull(type, "type");
             this.type = type;
+            return this;
+        }
+
+
+        /**
+         * The section where this collection will be created
+         */
+        public Builder sectionId(String sectionId) {
+            Utils.checkNotNull(sectionId, "sectionId");
+            this.sectionId = sectionId;
+            return this;
+        }
+
+
+        /**
+         * The URI for processing the smart collection. Required for a smart collection
+         */
+        public Builder uri(String uri) {
+            Utils.checkNotNull(uri, "uri");
+            this.uri = Optional.ofNullable(uri);
+            return this;
+        }
+
+        /**
+         * The URI for processing the smart collection. Required for a smart collection
+         */
+        public Builder uri(Optional<String> uri) {
+            Utils.checkNotNull(uri, "uri");
+            this.uri = uri;
             return this;
         }
 
@@ -1081,9 +1087,9 @@ public class CreateCollectionRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, sectionId,
-                title, smart, uri,
-                type);
+                deviceName, marketplace, title,
+                smart, type, sectionId,
+                uri);
         }
 
 

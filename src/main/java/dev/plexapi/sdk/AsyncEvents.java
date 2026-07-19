@@ -7,20 +7,31 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
 import dev.plexapi.sdk.models.operations.ConnectWebSocketRequest;
 import dev.plexapi.sdk.models.operations.GetNotificationsRequest;
+import dev.plexapi.sdk.models.operations.GetWebsocketNotificationsRequest;
 import dev.plexapi.sdk.models.operations.async.ConnectWebSocketRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ConnectWebSocketResponse;
 import dev.plexapi.sdk.models.operations.async.GetNotificationsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetNotificationsResponse;
+import dev.plexapi.sdk.models.operations.async.GetWebsocketNotificationsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetWebsocketNotificationsResponse;
 import dev.plexapi.sdk.operations.ConnectWebSocket;
 import dev.plexapi.sdk.operations.GetNotifications;
+import dev.plexapi.sdk.operations.GetWebsocketNotifications;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The server can notify clients in real-time of a wide range of events, from library scanning, to preferences being modified, to changes to media, and many other things. This is also the mechanism by which activity progress is reported.
+ * The server can notify clients in real-time of a wide range of events, from library scanning, to
+ * preferences being modified, to changes to media, and many other things. This is also the mechanism
+ * by which activity progress is reported.
  * 
- * <p>Two protocols for receiving the events are available: EventSource (also known as SSE), and WebSocket.
+ * <p>Two protocols for receiving the events are available: EventSource (also known as SSE), and
+ * WebSocket.
  */
 public class AsyncEvents {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Events syncSDK;
 
@@ -56,11 +67,26 @@ public class AsyncEvents {
      * <p>Connect to the event source to get a stream of events
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetNotificationsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetNotificationsResponse>} - The async response
      */
     public CompletableFuture<GetNotificationsResponse> getNotifications(GetNotificationsRequest request) {
+        return getNotifications(request, Optional.empty());
+    }
+
+    /**
+     * Connect to Eventsource
+     * 
+     * <p>Connect to the event source to get a stream of events
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetNotificationsResponse>} - The async response
+     */
+    public CompletableFuture<GetNotificationsResponse> getNotifications(GetNotificationsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetNotificationsRequest, GetNotificationsResponse> operation
-              = new GetNotifications.Async(sdkConfiguration);
+              = new GetNotifications.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -83,11 +109,71 @@ public class AsyncEvents {
      * <p>Connect to the web socket to get a stream of events
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ConnectWebSocketResponse&gt; - The async response
+     * @return {@code CompletableFuture<ConnectWebSocketResponse>} - The async response
      */
     public CompletableFuture<ConnectWebSocketResponse> connectWebSocket(ConnectWebSocketRequest request) {
+        return connectWebSocket(request, Optional.empty());
+    }
+
+    /**
+     * Connect to WebSocket
+     * 
+     * <p>Connect to the web socket to get a stream of events
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ConnectWebSocketResponse>} - The async response
+     */
+    public CompletableFuture<ConnectWebSocketResponse> connectWebSocket(ConnectWebSocketRequest request, Optional<Options> options) {
         AsyncRequestOperation<ConnectWebSocketRequest, ConnectWebSocketResponse> operation
-              = new ConnectWebSocket.Async(sdkConfiguration);
+              = new ConnectWebSocket.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get WebSocket Notifications
+     * 
+     * <p>WebSocket endpoint for real-time notifications (plural alias). Connect with X-Plex-Token header.
+     * Delivers NotificationContainer messages.
+     * 
+     * @return The async call builder
+     */
+    public GetWebsocketNotificationsRequestBuilder getWebsocketNotifications() {
+        return new GetWebsocketNotificationsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get WebSocket Notifications
+     * 
+     * <p>WebSocket endpoint for real-time notifications (plural alias). Connect with X-Plex-Token header.
+     * Delivers NotificationContainer messages.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetWebsocketNotificationsResponse>} - The async response
+     */
+    public CompletableFuture<GetWebsocketNotificationsResponse> getWebsocketNotifications(GetWebsocketNotificationsRequest request) {
+        return getWebsocketNotifications(request, Optional.empty());
+    }
+
+    /**
+     * Get WebSocket Notifications
+     * 
+     * <p>WebSocket endpoint for real-time notifications (plural alias). Connect with X-Plex-Token header.
+     * Delivers NotificationContainer messages.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetWebsocketNotificationsResponse>} - The async response
+     */
+    public CompletableFuture<GetWebsocketNotificationsResponse> getWebsocketNotifications(GetWebsocketNotificationsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetWebsocketNotificationsRequest, GetWebsocketNotificationsResponse> operation
+              = new GetWebsocketNotifications.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

@@ -16,12 +16,15 @@ import dev.plexapi.sdk.models.operations.WriteMessageResponse;
 import dev.plexapi.sdk.operations.EnablePapertrail;
 import dev.plexapi.sdk.operations.WriteLog;
 import dev.plexapi.sdk.operations.WriteMessage;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * Logging mechanism to allow clients to log to the server
  */
 public class Log {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncLog asyncSDK;
 
@@ -42,7 +45,11 @@ public class Log {
     /**
      * Logging a multi-line message to the Plex Media Server log
      * 
-     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It takes a set of query strings as would normally sent to the above PUT endpoint as a linefeed-separated block of POST data. The parameters for each query string match as above.
+     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It
+     * takes a set of query strings as would normally sent to the above PUT endpoint as a
+     * linefeed-separated block of POST data. The parameters for each query string match as above.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -53,24 +60,49 @@ public class Log {
     /**
      * Logging a multi-line message to the Plex Media Server log
      * 
-     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It takes a set of query strings as would normally sent to the above PUT endpoint as a linefeed-separated block of POST data. The parameters for each query string match as above.
+     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It
+     * takes a set of query strings as would normally sent to the above PUT endpoint as a
+     * linefeed-separated block of POST data. The parameters for each query string match as above.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public WriteLogResponse writeLog(byte[] request) throws Exception {
+    public WriteLogResponse writeLog(byte[] request) {
+        return writeLog(request, Optional.empty());
+    }
+
+    /**
+     * Logging a multi-line message to the Plex Media Server log
+     * 
+     * <p>This endpoint will write multiple lines to the main Plex Media Server log in a single request. It
+     * takes a set of query strings as would normally sent to the above PUT endpoint as a
+     * linefeed-separated block of POST data. The parameters for each query string match as above.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public WriteLogResponse writeLog(byte[] request, Optional<Options> options) {
         RequestOperation<byte[], WriteLogResponse> operation
-              = new WriteLog.Sync(sdkConfiguration);
+              = new WriteLog.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Logging a single-line message to the Plex Media Server log
      * 
-     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex Media Server log.
+     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex
+     * Media Server log.
      * 
      * <p>Note: This endpoint responds to all HTTP verbs **except POST** but PUT is preferred
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -81,26 +113,51 @@ public class Log {
     /**
      * Logging a single-line message to the Plex Media Server log
      * 
-     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex Media Server log.
+     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex
+     * Media Server log.
      * 
      * <p>Note: This endpoint responds to all HTTP verbs **except POST** but PUT is preferred
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public WriteMessageResponse writeMessage(WriteMessageRequest request) throws Exception {
+    public WriteMessageResponse writeMessage(WriteMessageRequest request) {
+        return writeMessage(request, Optional.empty());
+    }
+
+    /**
+     * Logging a single-line message to the Plex Media Server log
+     * 
+     * <p>This endpoint will write a single-line log message, including a level and source to the main Plex
+     * Media Server log.
+     * 
+     * <p>Note: This endpoint responds to all HTTP verbs **except POST** but PUT is preferred
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public WriteMessageResponse writeMessage(WriteMessageRequest request, Optional<Options> options) {
         RequestOperation<WriteMessageRequest, WriteMessageResponse> operation
-              = new WriteMessage.Sync(sdkConfiguration);
+              = new WriteMessage.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Enabling Papertrail
      * 
-     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging site for a period of time
+     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging
+     * site for a period of time
      * 
      * <p>Note: This endpoint responds to all HTTP verbs but POST is preferred
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -111,17 +168,39 @@ public class Log {
     /**
      * Enabling Papertrail
      * 
-     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging site for a period of time
+     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging
+     * site for a period of time
      * 
      * <p>Note: This endpoint responds to all HTTP verbs but POST is preferred
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public EnablePapertrailResponse enablePapertrail(EnablePapertrailRequest request) throws Exception {
+    public EnablePapertrailResponse enablePapertrail(EnablePapertrailRequest request) {
+        return enablePapertrail(request, Optional.empty());
+    }
+
+    /**
+     * Enabling Papertrail
+     * 
+     * <p>This endpoint will enable all Plex Media Server logs to be sent to the Papertrail networked logging
+     * site for a period of time
+     * 
+     * <p>Note: This endpoint responds to all HTTP verbs but POST is preferred
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EnablePapertrailResponse enablePapertrail(EnablePapertrailRequest request, Optional<Options> options) {
         RequestOperation<EnablePapertrailRequest, EnablePapertrailResponse> operation
-              = new EnablePapertrail.Sync(sdkConfiguration);
+              = new EnablePapertrail.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

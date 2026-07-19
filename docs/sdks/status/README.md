@@ -1,5 +1,4 @@
 # Status
-(*status()*)
 
 ## Overview
 
@@ -25,12 +24,13 @@ List all current playbacks on this server
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListSessionsResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -40,7 +40,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -54,6 +54,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getBackgroundTasks
@@ -67,12 +68,13 @@ Get the list of all background tasks
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetBackgroundTasksResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -82,7 +84,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -96,6 +98,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## listPlaybackHistory
@@ -110,6 +113,7 @@ Pagination should be used on this endpoint.  Additionally this endpoint supports
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListPlaybackHistoryRequest;
 import dev.plexapi.sdk.models.operations.ListPlaybackHistoryResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -118,7 +122,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -167,7 +171,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -187,6 +191,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## terminateSession
@@ -298,7 +303,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainer().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainer().get());
         }
     }
 }
@@ -364,7 +369,7 @@ public class Application {
                 .call();
 
         if (res.historyAllGetResponses200().isPresent()) {
-            // handle response
+            System.out.println(res.historyAllGetResponses200().get());
         }
     }
 }

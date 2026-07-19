@@ -1,5 +1,13 @@
 # OptimizedForStreaming
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.OptimizedForStreaming;
+
+OptimizedForStreaming value = OptimizedForStreaming.ZERO;
+```
+
 
 ## Values
 

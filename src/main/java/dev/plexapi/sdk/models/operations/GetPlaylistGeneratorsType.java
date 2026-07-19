@@ -12,8 +12,8 @@ import java.util.Optional;
  * 
  * <p>The type of playlist generator.
  * 
- * <p>  - -1: A smart playlist generator
- *   - 42: A optimized version generator
+ * <p>- -1: A smart playlist generator
+ * - 42: A optimized version generator
  */
 public enum GetPlaylistGeneratorsType {
     MINUS1(-1L),

@@ -7,11 +7,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 
 public class ApplyUpdatesResponse implements Response {
@@ -30,17 +33,31 @@ public class ApplyUpdatesResponse implements Response {
      */
     private HttpResponse<InputStream> rawResponse;
 
+
+    private Optional<byte[]> body;
+
     @JsonCreator
     public ApplyUpdatesResponse(
             String contentType,
             int statusCode,
-            HttpResponse<InputStream> rawResponse) {
+            HttpResponse<InputStream> rawResponse,
+            Optional<byte[]> body) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(body, "body");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.body = body;
+    }
+    
+    public ApplyUpdatesResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty());
     }
 
     /**
@@ -65,6 +82,19 @@ public class ApplyUpdatesResponse implements Response {
     @JsonIgnore
     public HttpResponse<InputStream> rawResponse() {
         return rawResponse;
+    }
+
+    @JsonIgnore
+    public Optional<byte[]> body() {
+        this.body = body
+            .or(() -> {
+                try {
+                    return Optional.of(Utils.extractByteArrayFromBody(rawResponse));
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
+        return  this.body;
     }
 
     public static Builder builder() {
@@ -99,6 +129,19 @@ public class ApplyUpdatesResponse implements Response {
         return this;
     }
 
+    public ApplyUpdatesResponse withBody(byte[] body) {
+        Utils.checkNotNull(body, "body");
+        this.body = Optional.ofNullable(body);
+        return this;
+    }
+
+
+    public ApplyUpdatesResponse withBody(Optional<byte[]> body) {
+        Utils.checkNotNull(body, "body");
+        this.body = body;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,13 +154,15 @@ public class ApplyUpdatesResponse implements Response {
         return 
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse);
+            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.body, other.body);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            contentType, statusCode, rawResponse);
+            contentType, statusCode, rawResponse,
+            body);
     }
     
     @Override
@@ -125,7 +170,8 @@ public class ApplyUpdatesResponse implements Response {
         return Utils.toString(ApplyUpdatesResponse.class,
                 "contentType", contentType,
                 "statusCode", statusCode,
-                "rawResponse", rawResponse);
+                "rawResponse", rawResponse,
+                "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -136,6 +182,8 @@ public class ApplyUpdatesResponse implements Response {
         private Integer statusCode;
 
         private HttpResponse<InputStream> rawResponse;
+
+        private Optional<byte[]> body = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -171,10 +219,24 @@ public class ApplyUpdatesResponse implements Response {
             return this;
         }
 
+
+        public Builder body(byte[] body) {
+            Utils.checkNotNull(body, "body");
+            this.body = Optional.ofNullable(body);
+            return this;
+        }
+
+        public Builder body(Optional<byte[]> body) {
+            Utils.checkNotNull(body, "body");
+            this.body = body;
+            return this;
+        }
+
         public ApplyUpdatesResponse build() {
 
             return new ApplyUpdatesResponse(
-                contentType, statusCode, rawResponse);
+                contentType, statusCode, rawResponse,
+                body);
         }
 
     }

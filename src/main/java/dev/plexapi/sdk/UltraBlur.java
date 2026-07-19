@@ -13,12 +13,15 @@ import dev.plexapi.sdk.models.operations.GetImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetImageResponse;
 import dev.plexapi.sdk.operations.GetColors;
 import dev.plexapi.sdk.operations.GetImage;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * Service provided to compute UltraBlur colors and images.
  */
 public class UltraBlur {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncUltraBlur asyncSDK;
 
@@ -54,18 +57,33 @@ public class UltraBlur {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetColorsResponse getColors(GetColorsRequest request) throws Exception {
+    public GetColorsResponse getColors(GetColorsRequest request) {
+        return getColors(request, Optional.empty());
+    }
+
+    /**
+     * Get UltraBlur Colors
+     * 
+     * <p>Retrieves the four colors extracted from an image for clients to use to generate an ultrablur image.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetColorsResponse getColors(GetColorsRequest request, Optional<Options> options) {
         RequestOperation<GetColorsRequest, GetColorsResponse> operation
-              = new GetColors.Sync(sdkConfiguration);
+              = new GetColors.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get UltraBlur Image
      * 
-     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should always call this via the photo transcoder endpoint.
+     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should
+     * always call this via the photo transcoder endpoint.
      * 
      * @return The call builder
      */
@@ -76,15 +94,31 @@ public class UltraBlur {
     /**
      * Get UltraBlur Image
      * 
-     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should always call this via the photo transcoder endpoint.
+     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should
+     * always call this via the photo transcoder endpoint.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetImageResponse getImage(GetImageRequest request) throws Exception {
+    public GetImageResponse getImage(GetImageRequest request) {
+        return getImage(request, Optional.empty());
+    }
+
+    /**
+     * Get UltraBlur Image
+     * 
+     * <p>Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should
+     * always call this via the photo transcoder endpoint.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetImageResponse getImage(GetImageRequest request, Optional<Options> options) {
         RequestOperation<GetImageRequest, GetImageResponse> operation
-              = new GetImage.Sync(sdkConfiguration);
+              = new GetImage.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

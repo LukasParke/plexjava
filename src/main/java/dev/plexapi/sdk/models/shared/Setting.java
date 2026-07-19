@@ -43,7 +43,8 @@ public class Setting {
     private Optional<Boolean> advanced;
 
     /**
-     * The possible values for this setting if restricted. The list is `|` separated with `value:name` entries.
+     * The possible values for this setting if restricted. The list is `|` separated with `value:name`
+     * entries.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("enumValues")
@@ -159,7 +160,8 @@ public class Setting {
     }
 
     /**
-     * The possible values for this setting if restricted. The list is `|` separated with `value:name` entries.
+     * The possible values for this setting if restricted. The list is `|` separated with `value:name`
+     * entries.
      */
     @JsonIgnore
     public Optional<String> enumValues() {
@@ -278,7 +280,8 @@ public class Setting {
     }
 
     /**
-     * The possible values for this setting if restricted. The list is `|` separated with `value:name` entries.
+     * The possible values for this setting if restricted. The list is `|` separated with `value:name`
+     * entries.
      */
     public Setting withEnumValues(String enumValues) {
         Utils.checkNotNull(enumValues, "enumValues");
@@ -288,7 +291,8 @@ public class Setting {
 
 
     /**
-     * The possible values for this setting if restricted. The list is `|` separated with `value:name` entries.
+     * The possible values for this setting if restricted. The list is `|` separated with `value:name`
+     * entries.
      */
     public Setting withEnumValues(Optional<String> enumValues) {
         Utils.checkNotNull(enumValues, "enumValues");
@@ -542,7 +546,8 @@ public class Setting {
 
 
         /**
-         * The possible values for this setting if restricted. The list is `|` separated with `value:name` entries.
+         * The possible values for this setting if restricted. The list is `|` separated with `value:name`
+         * entries.
          */
         public Builder enumValues(String enumValues) {
             Utils.checkNotNull(enumValues, "enumValues");
@@ -551,7 +556,8 @@ public class Setting {
         }
 
         /**
-         * The possible values for this setting if restricted. The list is `|` separated with `value:name` entries.
+         * The possible values for this setting if restricted. The list is `|` separated with `value:name`
+         * entries.
          */
         public Builder enumValues(Optional<String> enumValues) {
             Utils.checkNotNull(enumValues, "enumValues");

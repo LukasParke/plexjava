@@ -20,20 +20,19 @@ import java.lang.SuppressWarnings;
 public class SlashGetResponses200AllowSync {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private SlashGetResponses200AllowSync(TypedObject value) {
         this.value = value;
     }
 
     public static SlashGetResponses200AllowSync of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new SlashGetResponses200AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new SlashGetResponses200AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static SlashGetResponses200AllowSync of(SlashGetResponses200AllowSync2 value) {
         Utils.checkNotNull(value, "value");
-        return new SlashGetResponses200AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<SlashGetResponses200AllowSync2>(){}));
+        return new SlashGetResponses200AllowSync(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -56,7 +55,7 @@ public class SlashGetResponses200AllowSync {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -67,7 +66,7 @@ public class SlashGetResponses200AllowSync {
             return false;
         }
         SlashGetResponses200AllowSync other = (SlashGetResponses200AllowSync) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -80,8 +79,8 @@ public class SlashGetResponses200AllowSync {
 
         public _Deserializer() {
             super(SlashGetResponses200AllowSync.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<SlashGetResponses200AllowSync2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<SlashGetResponses200AllowSync2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -90,6 +89,6 @@ public class SlashGetResponses200AllowSync {
         return Utils.toString(SlashGetResponses200AllowSync.class,
                 "value", value);
     }
- 
+
 }
 

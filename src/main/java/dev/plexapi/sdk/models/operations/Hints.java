@@ -11,7 +11,8 @@ import java.lang.String;
 /**
  * Hints
  * 
- * <p>Hints describing what we're looking for.  Note: The hint `ratingKey` is required for downloading from a PMS remote.
+ * <p>Hints describing what we're looking for. Note: The hint `ratingKey` is required for downloading from
+ * a PMS remote.
  */
 public class Hints {
     @JsonCreator

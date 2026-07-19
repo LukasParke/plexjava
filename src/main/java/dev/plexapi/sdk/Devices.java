@@ -9,6 +9,7 @@ import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 import dev.plexapi.sdk.models.operations.AddDeviceRequest;
 import dev.plexapi.sdk.models.operations.AddDeviceRequestBuilder;
 import dev.plexapi.sdk.models.operations.AddDeviceResponse;
+import dev.plexapi.sdk.models.operations.DiscoverDevicesRequest;
 import dev.plexapi.sdk.models.operations.DiscoverDevicesRequestBuilder;
 import dev.plexapi.sdk.models.operations.DiscoverDevicesResponse;
 import dev.plexapi.sdk.models.operations.GetAvailableGrabbersRequest;
@@ -28,6 +29,7 @@ import dev.plexapi.sdk.models.operations.ListDevicesResponse;
 import dev.plexapi.sdk.models.operations.ModifyDeviceRequest;
 import dev.plexapi.sdk.models.operations.ModifyDeviceRequestBuilder;
 import dev.plexapi.sdk.models.operations.ModifyDeviceResponse;
+import dev.plexapi.sdk.models.operations.Protocol;
 import dev.plexapi.sdk.models.operations.RemoveDeviceRequest;
 import dev.plexapi.sdk.models.operations.RemoveDeviceRequestBuilder;
 import dev.plexapi.sdk.models.operations.RemoveDeviceResponse;
@@ -56,45 +58,59 @@ import dev.plexapi.sdk.operations.Scan;
 import dev.plexapi.sdk.operations.SetChannelmap;
 import dev.plexapi.sdk.operations.SetDevicePreferences;
 import dev.plexapi.sdk.operations.StopScan;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.String;
+import java.util.Optional;
 
 /**
- * Media grabbers provide ways for media to be obtained for a given protocol. The simplest ones are `stream` and `download`. More complex grabbers can have associated devices
+ * Media grabbers provide ways for media to be obtained for a given protocol. The simplest ones are
+ * `stream` and `download`. More complex grabbers can have associated devices
  * 
- * <p>Network tuners can present themselves on the network using the Simple Service Discovery Protocol and Plex Media Server will discover them. The following XML is an example of the data returned from SSDP. The `deviceType`, `serviceType`, and `serviceId` values must remain as they are in the example in order for PMS to properly discover the device. Other less-obvious fields are described in the parameters section below.
+ * <p>Network tuners can present themselves on the network using the Simple Service Discovery Protocol and
+ * Plex Media Server will discover them. The following XML is an example of the data returned from
+ * SSDP. The `deviceType`, `serviceType`, and `serviceId` values must remain as they are in the example
+ * in order for PMS to properly discover the device.
+ * 
+ * <p>Other less-obvious fields are described in the parameters section below.
  * 
  * <p>Example SSDP output
  * ```
  * &lt;root xmlns="urn:schemas-upnp-org:device-1-0"&gt;
- *     &lt;specVersion&gt;
- *         &lt;major&gt;1&lt;/major&gt;
- *         &lt;minor&gt;0&lt;/minor&gt;
- *     &lt;/specVersion&gt;
- *     &lt;device&gt;
- *         &lt;deviceType&gt;urn:plex-tv:device:Media:1&lt;/deviceType&gt;
- *         &lt;friendlyName&gt;Turing Hopper 3000&lt;/friendlyName&gt;
- *         &lt;manufacturer&gt;Plex, Inc.&lt;/manufacturer&gt;
- *         &lt;manufacturerURL&gt;https://plex.tv/&lt;/manufacturerURL&gt;
- *         &lt;modelDescription&gt;Turing Hopper 3000 Media Grabber&lt;/modelDescription&gt;
- *         &lt;modelName&gt;Plex Media Grabber&lt;/modelName&gt;
- *         &lt;modelNumber&gt;1&lt;/modelNumber&gt;
- *         &lt;modelURL&gt;https://plex.tv&lt;/modelURL&gt;
- *         &lt;UDN&gt;uuid:42fde8e4-93b6-41e5-8a63-12d848655811&lt;/UDN&gt;
- *         &lt;serviceList&gt;
- *             &lt;service&gt;
- *                 &lt;URLBase&gt;http://10.0.0.5:8088&lt;/URLBase&gt;
- *                 &lt;serviceType&gt;urn:plex-tv:service:MediaGrabber:1&lt;/serviceType&gt;
- *                 &lt;serviceId&gt;urn:plex-tv:serviceId:MediaGrabber&lt;/serviceId&gt;
- *             &lt;/service&gt;
- *         &lt;/serviceList&gt;
- *     &lt;/device&gt;
+ * &lt;specVersion&gt;
+ * &lt;major&gt;1&lt;/major&gt;
+ * &lt;minor&gt;0&lt;/minor&gt;
+ * &lt;/specVersion&gt;
+ * &lt;device&gt;
+ * &lt;deviceType&gt;urn:plex-tv:device:Media:1&lt;/deviceType&gt;
+ * &lt;friendlyName&gt;Turing Hopper 3000&lt;/friendlyName&gt;
+ * &lt;manufacturer&gt;Plex, Inc.&lt;/manufacturer&gt;
+ * &lt;manufacturerURL&gt;https://plex.tv/&lt;/manufacturerURL&gt;
+ * &lt;modelDescription&gt;Turing Hopper 3000 Media Grabber&lt;/modelDescription&gt;
+ * &lt;modelName&gt;Plex Media Grabber&lt;/modelName&gt;
+ * &lt;modelNumber&gt;1&lt;/modelNumber&gt;
+ * &lt;modelURL&gt;https://plex.tv&lt;/modelURL&gt;
+ * &lt;UDN&gt;uuid:42fde8e4-93b6-41e5-8a63-12d848655811&lt;/UDN&gt;
+ * &lt;serviceList&gt;
+ * &lt;service&gt;
+ * &lt;URLBase&gt;http://10.0.0.5:8088&lt;/URLBase&gt;
+ * &lt;serviceType&gt;urn:plex-tv:service:MediaGrabber:1&lt;/serviceType&gt;
+ * &lt;serviceId&gt;urn:plex-tv:serviceId:MediaGrabber&lt;/serviceId&gt;
+ * &lt;/service&gt;
+ * &lt;/serviceList&gt;
+ * &lt;/device&gt;
  * &lt;/root&gt;
  * ```
  * 
- * <p>  - UDN: (string) A UUID for the device. This should be unique across models of a device at minimum.
- *   - URLBase: (string) The base HTTP URL for the device from which all of the other endpoints are hosted.
+ * <p>- UDN: (string) A UUID for the device. This should be unique across models of a device at minimum.
+ * - URLBase: (string) The base HTTP URL for the device from which all of the other endpoints are
+ * hosted.
+ * 
+ * <p>Note: This tag covers media grabber and network tuner devices only. For client device discovery, use
+ * `/clients` or `/resources`.
  */
 public class Devices {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncDevices asyncSDK;
 
@@ -130,11 +146,25 @@ public class Devices {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAvailableGrabbersResponse getAvailableGrabbers(GetAvailableGrabbersRequest request) throws Exception {
+    public GetAvailableGrabbersResponse getAvailableGrabbers(GetAvailableGrabbersRequest request) {
+        return getAvailableGrabbers(request, Optional.empty());
+    }
+
+    /**
+     * Get available grabbers
+     * 
+     * <p>Get available grabbers visible to the server
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAvailableGrabbersResponse getAvailableGrabbers(GetAvailableGrabbersRequest request, Optional<Options> options) {
         RequestOperation<GetAvailableGrabbersRequest, GetAvailableGrabbersResponse> operation
-              = new GetAvailableGrabbers.Sync(sdkConfiguration);
+              = new GetAvailableGrabbers.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -142,6 +172,8 @@ public class Devices {
      * Get all devices
      * 
      * <p>Get the list of all devices present
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -154,19 +186,39 @@ public class Devices {
      * 
      * <p>Get the list of all devices present
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListDevicesResponse listDevicesDirect() throws Exception {
+    public ListDevicesResponse listDevicesDirect() {
+        return listDevices(Optional.empty());
+    }
+
+    /**
+     * Get all devices
+     * 
+     * <p>Get the list of all devices present
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListDevicesResponse listDevices(Optional<Options> options) {
         RequestlessOperation<ListDevicesResponse> operation
-            = new ListDevices.Sync(sdkConfiguration);
+            = new ListDevices.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Add a device
      * 
-     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the correct grabber.
+     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the
+     * correct grabber.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -177,15 +229,35 @@ public class Devices {
     /**
      * Add a device
      * 
-     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the correct grabber.
+     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the
+     * correct grabber.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddDeviceResponse addDevice(AddDeviceRequest request) throws Exception {
+    public AddDeviceResponse addDevice(AddDeviceRequest request) {
+        return addDevice(request, Optional.empty());
+    }
+
+    /**
+     * Add a device
+     * 
+     * <p>This endpoint adds a device to an existing grabber. The device is identified, and added to the
+     * correct grabber.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddDeviceResponse addDevice(AddDeviceRequest request, Optional<Options> options) {
         RequestOperation<AddDeviceRequest, AddDeviceResponse> operation
-              = new AddDevice.Sync(sdkConfiguration);
+              = new AddDevice.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -193,6 +265,8 @@ public class Devices {
      * Tell grabbers to discover devices
      * 
      * <p>Tell grabbers to discover devices
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -205,19 +279,48 @@ public class Devices {
      * 
      * <p>Tell grabbers to discover devices
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DiscoverDevicesResponse discoverDevicesDirect() throws Exception {
-        RequestlessOperation<DiscoverDevicesResponse> operation
-            = new DiscoverDevices.Sync(sdkConfiguration);
-        return operation.handleResponse(operation.doRequest());
+    public DiscoverDevicesResponse discoverDevicesDirect() {
+        return discoverDevices(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Tell grabbers to discover devices
+     * 
+     * <p>Tell grabbers to discover devices
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param protocol Protocol to filter discovery.
+     * @param grabberIdentifier Targeted grabber identifier.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DiscoverDevicesResponse discoverDevices(
+            Optional<? extends Protocol> protocol, Optional<String> grabberIdentifier,
+            Optional<Options> options) {
+        DiscoverDevicesRequest request =
+            DiscoverDevicesRequest
+                .builder()
+                .protocol(protocol)
+                .grabberIdentifier(grabberIdentifier)
+                .build();
+        RequestOperation<DiscoverDevicesRequest, DiscoverDevicesResponse> operation
+              = new DiscoverDevices.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Remove a device
      * 
      * <p>Remove a devices by its id along with its channel mappings
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -230,13 +333,31 @@ public class Devices {
      * 
      * <p>Remove a devices by its id along with its channel mappings
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RemoveDeviceResponse removeDevice(RemoveDeviceRequest request) throws Exception {
+    public RemoveDeviceResponse removeDevice(RemoveDeviceRequest request) {
+        return removeDevice(request, Optional.empty());
+    }
+
+    /**
+     * Remove a device
+     * 
+     * <p>Remove a devices by its id along with its channel mappings
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RemoveDeviceResponse removeDevice(RemoveDeviceRequest request, Optional<Options> options) {
         RequestOperation<RemoveDeviceRequest, RemoveDeviceResponse> operation
-              = new RemoveDevice.Sync(sdkConfiguration);
+              = new RemoveDevice.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -244,6 +365,8 @@ public class Devices {
      * Get device details
      * 
      * <p>Get a device's details by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -256,13 +379,31 @@ public class Devices {
      * 
      * <p>Get a device's details by its id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetDeviceDetailsResponse getDeviceDetails(GetDeviceDetailsRequest request) throws Exception {
+    public GetDeviceDetailsResponse getDeviceDetails(GetDeviceDetailsRequest request) {
+        return getDeviceDetails(request, Optional.empty());
+    }
+
+    /**
+     * Get device details
+     * 
+     * <p>Get a device's details by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDeviceDetailsResponse getDeviceDetails(GetDeviceDetailsRequest request, Optional<Options> options) {
         RequestOperation<GetDeviceDetailsRequest, GetDeviceDetailsResponse> operation
-              = new GetDeviceDetails.Sync(sdkConfiguration);
+              = new GetDeviceDetails.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -270,6 +411,8 @@ public class Devices {
      * Enable or disable a device
      * 
      * <p>Enable or disable a device by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -282,13 +425,31 @@ public class Devices {
      * 
      * <p>Enable or disable a device by its id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ModifyDeviceResponse modifyDevice(ModifyDeviceRequest request) throws Exception {
+    public ModifyDeviceResponse modifyDevice(ModifyDeviceRequest request) {
+        return modifyDevice(request, Optional.empty());
+    }
+
+    /**
+     * Enable or disable a device
+     * 
+     * <p>Enable or disable a device by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ModifyDeviceResponse modifyDevice(ModifyDeviceRequest request, Optional<Options> options) {
         RequestOperation<ModifyDeviceRequest, ModifyDeviceResponse> operation
-              = new ModifyDevice.Sync(sdkConfiguration);
+              = new ModifyDevice.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -310,11 +471,25 @@ public class Devices {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetChannelmapResponse setChannelmap(SetChannelmapRequest request) throws Exception {
+    public SetChannelmapResponse setChannelmap(SetChannelmapRequest request) {
+        return setChannelmap(request, Optional.empty());
+    }
+
+    /**
+     * Set a device's channel mapping
+     * 
+     * <p>Set a device's channel mapping
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetChannelmapResponse setChannelmap(SetChannelmapRequest request, Optional<Options> options) {
         RequestOperation<SetChannelmapRequest, SetChannelmapResponse> operation
-              = new SetChannelmap.Sync(sdkConfiguration);
+              = new SetChannelmap.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -322,6 +497,8 @@ public class Devices {
      * Get a device's channels
      * 
      * <p>Get a device's channels by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -334,13 +511,31 @@ public class Devices {
      * 
      * <p>Get a device's channels by its id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetDevicesChannelsResponse getDevicesChannels(GetDevicesChannelsRequest request) throws Exception {
+    public GetDevicesChannelsResponse getDevicesChannels(GetDevicesChannelsRequest request) {
+        return getDevicesChannels(request, Optional.empty());
+    }
+
+    /**
+     * Get a device's channels
+     * 
+     * <p>Get a device's channels by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDevicesChannelsResponse getDevicesChannels(GetDevicesChannelsRequest request, Optional<Options> options) {
         RequestOperation<GetDevicesChannelsRequest, GetDevicesChannelsResponse> operation
-              = new GetDevicesChannels.Sync(sdkConfiguration);
+              = new GetDevicesChannels.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -348,6 +543,8 @@ public class Devices {
      * Set device preferences
      * 
      * <p>Set device preferences by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -360,13 +557,31 @@ public class Devices {
      * 
      * <p>Set device preferences by its id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetDevicePreferencesResponse setDevicePreferences(SetDevicePreferencesRequest request) throws Exception {
+    public SetDevicePreferencesResponse setDevicePreferences(SetDevicePreferencesRequest request) {
+        return setDevicePreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set device preferences
+     * 
+     * <p>Set device preferences by its id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetDevicePreferencesResponse setDevicePreferences(SetDevicePreferencesRequest request, Optional<Options> options) {
         RequestOperation<SetDevicePreferencesRequest, SetDevicePreferencesResponse> operation
-              = new SetDevicePreferences.Sync(sdkConfiguration);
+              = new SetDevicePreferences.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -388,11 +603,25 @@ public class Devices {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StopScanResponse stopScan(StopScanRequest request) throws Exception {
+    public StopScanResponse stopScan(StopScanRequest request) {
+        return stopScan(request, Optional.empty());
+    }
+
+    /**
+     * Tell a device to stop scanning for channels
+     * 
+     * <p>Tell a device to stop scanning for channels
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StopScanResponse stopScan(StopScanRequest request, Optional<Options> options) {
         RequestOperation<StopScanRequest, StopScanResponse> operation
-              = new StopScan.Sync(sdkConfiguration);
+              = new StopScan.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -414,11 +643,25 @@ public class Devices {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ScanResponse scan(ScanRequest request) throws Exception {
+    public ScanResponse scan(ScanRequest request) {
+        return scan(request, Optional.empty());
+    }
+
+    /**
+     * Tell a device to scan for channels
+     * 
+     * <p>Tell a device to scan for channels
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ScanResponse scan(ScanRequest request, Optional<Options> options) {
         RequestOperation<ScanRequest, ScanResponse> operation
-              = new Scan.Sync(sdkConfiguration);
+              = new Scan.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -426,6 +669,8 @@ public class Devices {
      * Get device thumb
      * 
      * <p>Get a device's thumb for display to the user
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -438,13 +683,31 @@ public class Devices {
      * 
      * <p>Get a device's thumb for display to the user
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetThumbResponse getThumb(GetThumbRequest request) throws Exception {
+    public GetThumbResponse getThumb(GetThumbRequest request) {
+        return getThumb(request, Optional.empty());
+    }
+
+    /**
+     * Get device thumb
+     * 
+     * <p>Get a device's thumb for display to the user
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetThumbResponse getThumb(GetThumbRequest request, Optional<Options> options) {
         RequestOperation<GetThumbRequest, GetThumbResponse> operation
-              = new GetThumb.Sync(sdkConfiguration);
+              = new GetThumb.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

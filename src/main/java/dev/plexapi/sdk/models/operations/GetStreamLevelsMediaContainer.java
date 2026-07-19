@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.Level;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Long;
 import java.lang.Override;
@@ -19,9 +20,15 @@ import java.util.Optional;
 /**
  * GetStreamLevelsMediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class GetStreamLevelsMediaContainer {
 
@@ -30,7 +37,8 @@ public class GetStreamLevelsMediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -51,7 +59,7 @@ public class GetStreamLevelsMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Level")
-    private Optional<? extends List<GetStreamLevelsLevel>> level;
+    private Optional<? extends List<Level>> level;
 
     /**
      * The total number of samples (as a string)
@@ -66,7 +74,7 @@ public class GetStreamLevelsMediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("Level") Optional<? extends List<GetStreamLevelsLevel>> level,
+            @JsonProperty("Level") Optional<? extends List<Level>> level,
             @JsonProperty("totalSamples") Optional<String> totalSamples) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
@@ -93,7 +101,8 @@ public class GetStreamLevelsMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -115,8 +124,8 @@ public class GetStreamLevelsMediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<GetStreamLevelsLevel>> level() {
-        return (Optional<List<GetStreamLevelsLevel>>) level;
+    public Optional<List<Level>> level() {
+        return (Optional<List<Level>>) level;
     }
 
     /**
@@ -146,7 +155,8 @@ public class GetStreamLevelsMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetStreamLevelsMediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -156,7 +166,8 @@ public class GetStreamLevelsMediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetStreamLevelsMediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -196,14 +207,14 @@ public class GetStreamLevelsMediaContainer {
         return this;
     }
 
-    public GetStreamLevelsMediaContainer withLevel(List<GetStreamLevelsLevel> level) {
+    public GetStreamLevelsMediaContainer withLevel(List<Level> level) {
         Utils.checkNotNull(level, "level");
         this.level = Optional.ofNullable(level);
         return this;
     }
 
 
-    public GetStreamLevelsMediaContainer withLevel(Optional<? extends List<GetStreamLevelsLevel>> level) {
+    public GetStreamLevelsMediaContainer withLevel(Optional<? extends List<Level>> level) {
         Utils.checkNotNull(level, "level");
         this.level = level;
         return this;
@@ -275,7 +286,7 @@ public class GetStreamLevelsMediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<? extends List<GetStreamLevelsLevel>> level = Optional.empty();
+        private Optional<? extends List<Level>> level = Optional.empty();
 
         private Optional<String> totalSamples = Optional.empty();
 
@@ -298,7 +309,8 @@ public class GetStreamLevelsMediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -307,7 +319,8 @@ public class GetStreamLevelsMediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -348,13 +361,13 @@ public class GetStreamLevelsMediaContainer {
         }
 
 
-        public Builder level(List<GetStreamLevelsLevel> level) {
+        public Builder level(List<Level> level) {
             Utils.checkNotNull(level, "level");
             this.level = Optional.ofNullable(level);
             return this;
         }
 
-        public Builder level(Optional<? extends List<GetStreamLevelsLevel>> level) {
+        public Builder level(Optional<? extends List<Level>> level) {
             Utils.checkNotNull(level, "level");
             this.level = level;
             return this;

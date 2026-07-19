@@ -5,7 +5,7 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.plexapi.sdk.models.shared.MediaContainerWithPlaylistMetadata;
+import dev.plexapi.sdk.models.shared.PlayQueueResponse;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -34,24 +34,24 @@ public class GetPlayQueueResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * OK
+     * The play queue
      */
-    private Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata;
+    private Optional<? extends PlayQueueResponse> playQueueResponse;
 
     @JsonCreator
     public GetPlayQueueResponse(
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata) {
+            Optional<? extends PlayQueueResponse> playQueueResponse) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
+        Utils.checkNotNull(playQueueResponse, "playQueueResponse");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.mediaContainerWithPlaylistMetadata = mediaContainerWithPlaylistMetadata;
+        this.playQueueResponse = playQueueResponse;
     }
     
     public GetPlayQueueResponse(
@@ -87,12 +87,12 @@ public class GetPlayQueueResponse implements Response {
     }
 
     /**
-     * OK
+     * The play queue
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata() {
-        return (Optional<MediaContainerWithPlaylistMetadata>) mediaContainerWithPlaylistMetadata;
+    public Optional<PlayQueueResponse> playQueueResponse() {
+        return (Optional<PlayQueueResponse>) playQueueResponse;
     }
 
     public static Builder builder() {
@@ -128,21 +128,21 @@ public class GetPlayQueueResponse implements Response {
     }
 
     /**
-     * OK
+     * The play queue
      */
-    public GetPlayQueueResponse withMediaContainerWithPlaylistMetadata(MediaContainerWithPlaylistMetadata mediaContainerWithPlaylistMetadata) {
-        Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
-        this.mediaContainerWithPlaylistMetadata = Optional.ofNullable(mediaContainerWithPlaylistMetadata);
+    public GetPlayQueueResponse withPlayQueueResponse(PlayQueueResponse playQueueResponse) {
+        Utils.checkNotNull(playQueueResponse, "playQueueResponse");
+        this.playQueueResponse = Optional.ofNullable(playQueueResponse);
         return this;
     }
 
 
     /**
-     * OK
+     * The play queue
      */
-    public GetPlayQueueResponse withMediaContainerWithPlaylistMetadata(Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata) {
-        Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
-        this.mediaContainerWithPlaylistMetadata = mediaContainerWithPlaylistMetadata;
+    public GetPlayQueueResponse withPlayQueueResponse(Optional<? extends PlayQueueResponse> playQueueResponse) {
+        Utils.checkNotNull(playQueueResponse, "playQueueResponse");
+        this.playQueueResponse = playQueueResponse;
         return this;
     }
 
@@ -159,14 +159,14 @@ public class GetPlayQueueResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.mediaContainerWithPlaylistMetadata, other.mediaContainerWithPlaylistMetadata);
+            Utils.enhancedDeepEquals(this.playQueueResponse, other.playQueueResponse);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            mediaContainerWithPlaylistMetadata);
+            playQueueResponse);
     }
     
     @Override
@@ -175,7 +175,7 @@ public class GetPlayQueueResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "mediaContainerWithPlaylistMetadata", mediaContainerWithPlaylistMetadata);
+                "playQueueResponse", playQueueResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -187,7 +187,7 @@ public class GetPlayQueueResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata = Optional.empty();
+        private Optional<? extends PlayQueueResponse> playQueueResponse = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -225,20 +225,20 @@ public class GetPlayQueueResponse implements Response {
 
 
         /**
-         * OK
+         * The play queue
          */
-        public Builder mediaContainerWithPlaylistMetadata(MediaContainerWithPlaylistMetadata mediaContainerWithPlaylistMetadata) {
-            Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
-            this.mediaContainerWithPlaylistMetadata = Optional.ofNullable(mediaContainerWithPlaylistMetadata);
+        public Builder playQueueResponse(PlayQueueResponse playQueueResponse) {
+            Utils.checkNotNull(playQueueResponse, "playQueueResponse");
+            this.playQueueResponse = Optional.ofNullable(playQueueResponse);
             return this;
         }
 
         /**
-         * OK
+         * The play queue
          */
-        public Builder mediaContainerWithPlaylistMetadata(Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata) {
-            Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
-            this.mediaContainerWithPlaylistMetadata = mediaContainerWithPlaylistMetadata;
+        public Builder playQueueResponse(Optional<? extends PlayQueueResponse> playQueueResponse) {
+            Utils.checkNotNull(playQueueResponse, "playQueueResponse");
+            this.playQueueResponse = playQueueResponse;
             return this;
         }
 
@@ -246,7 +246,7 @@ public class GetPlayQueueResponse implements Response {
 
             return new GetPlayQueueResponse(
                 contentType, statusCode, rawResponse,
-                mediaContainerWithPlaylistMetadata);
+                playQueueResponse);
         }
 
     }

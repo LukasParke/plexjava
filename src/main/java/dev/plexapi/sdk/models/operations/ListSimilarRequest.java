@@ -84,15 +84,17 @@ public class ListSimilarRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
-    private String ids;
-
     /**
      * Limit results to count items
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=count")
     private Optional<Long> count;
+
+    /**
+     * Comma-separated list of IDs
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
+    private String ids;
 
     @JsonCreator
     public ListSimilarRequest(
@@ -107,8 +109,8 @@ public class ListSimilarRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            String ids,
-            Optional<Long> count) {
+            Optional<Long> count,
+            String ids) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -120,8 +122,8 @@ public class ListSimilarRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(ids, "ids");
         Utils.checkNotNull(count, "count");
+        Utils.checkNotNull(ids, "ids");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -133,8 +135,8 @@ public class ListSimilarRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.ids = ids;
         this.count = count;
+        this.ids = ids;
     }
     
     public ListSimilarRequest(
@@ -142,8 +144,8 @@ public class ListSimilarRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), ids,
-            Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            ids);
     }
 
     /**
@@ -235,17 +237,20 @@ public class ListSimilarRequest {
         return marketplace;
     }
 
-    @JsonIgnore
-    public String ids() {
-        return ids;
-    }
-
     /**
      * Limit results to count items
      */
     @JsonIgnore
     public Optional<Long> count() {
         return count;
+    }
+
+    /**
+     * Comma-separated list of IDs
+     */
+    @JsonIgnore
+    public String ids() {
+        return ids;
     }
 
     public static Builder builder() {
@@ -462,12 +467,6 @@ public class ListSimilarRequest {
         return this;
     }
 
-    public ListSimilarRequest withIds(String ids) {
-        Utils.checkNotNull(ids, "ids");
-        this.ids = ids;
-        return this;
-    }
-
     /**
      * Limit results to count items
      */
@@ -484,6 +483,15 @@ public class ListSimilarRequest {
     public ListSimilarRequest withCount(Optional<Long> count) {
         Utils.checkNotNull(count, "count");
         this.count = count;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of IDs
+     */
+    public ListSimilarRequest withIds(String ids) {
+        Utils.checkNotNull(ids, "ids");
+        this.ids = ids;
         return this;
     }
 
@@ -508,8 +516,8 @@ public class ListSimilarRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.ids, other.ids) &&
-            Utils.enhancedDeepEquals(this.count, other.count);
+            Utils.enhancedDeepEquals(this.count, other.count) &&
+            Utils.enhancedDeepEquals(this.ids, other.ids);
     }
     
     @Override
@@ -518,8 +526,8 @@ public class ListSimilarRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, ids,
-            count);
+            deviceName, marketplace, count,
+            ids);
     }
     
     @Override
@@ -536,8 +544,8 @@ public class ListSimilarRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "ids", ids,
-                "count", count);
+                "count", count,
+                "ids", ids);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -565,9 +573,9 @@ public class ListSimilarRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
-        private String ids;
-
         private Optional<Long> count = Optional.empty();
+
+        private String ids;
 
         private Builder() {
           // force use of static builder() method
@@ -783,13 +791,6 @@ public class ListSimilarRequest {
         }
 
 
-        public Builder ids(String ids) {
-            Utils.checkNotNull(ids, "ids");
-            this.ids = ids;
-            return this;
-        }
-
-
         /**
          * Limit results to count items
          */
@@ -808,6 +809,16 @@ public class ListSimilarRequest {
             return this;
         }
 
+
+        /**
+         * Comma-separated list of IDs
+         */
+        public Builder ids(String ids) {
+            Utils.checkNotNull(ids, "ids");
+            this.ids = ids;
+            return this;
+        }
+
         public ListSimilarRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -817,8 +828,8 @@ public class ListSimilarRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, ids,
-                count);
+                deviceName, marketplace, count,
+                ids);
         }
 
 

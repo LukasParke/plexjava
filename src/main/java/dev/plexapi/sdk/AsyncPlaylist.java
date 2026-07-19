@@ -17,12 +17,16 @@ import dev.plexapi.sdk.models.operations.async.ListPlaylistsResponse;
 import dev.plexapi.sdk.operations.GetPlaylist;
 import dev.plexapi.sdk.operations.GetPlaylistItems;
 import dev.plexapi.sdk.operations.ListPlaylists;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Media playlists that can be created and played back
  */
 public class AsyncPlaylist {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Playlist syncSDK;
 
@@ -44,7 +48,9 @@ public class AsyncPlaylist {
     /**
      * List playlists
      * 
-     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the collection to just playlists.
+     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as
+     * `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the
+     * collection to just playlists.
      * 
      * @return The async call builder
      */
@@ -55,14 +61,33 @@ public class AsyncPlaylist {
     /**
      * List playlists
      * 
-     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the collection to just playlists.
+     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as
+     * `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the
+     * collection to just playlists.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListPlaylistsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListPlaylistsResponse>} - The async response
      */
     public CompletableFuture<ListPlaylistsResponse> listPlaylists(ListPlaylistsRequest request) {
+        return listPlaylists(request, Optional.empty());
+    }
+
+    /**
+     * List playlists
+     * 
+     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as
+     * `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the
+     * collection to just playlists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListPlaylistsResponse>} - The async response
+     */
+    public CompletableFuture<ListPlaylistsResponse> listPlaylists(ListPlaylistsRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListPlaylistsRequest, ListPlaylistsResponse> operation
-              = new ListPlaylists.Async(sdkConfiguration);
+              = new ListPlaylists.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -71,8 +96,10 @@ public class AsyncPlaylist {
     /**
      * Retrieve Playlist
      * 
-     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata, tagging), can be treated like a regular metadata item:
-     * Smart playlist details contain the `content` attribute. This is the content URI for the generator. This can then be parsed by a client to provide smart playlist editing.
+     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata,
+     * tagging), can be treated like a regular metadata item:
+     * Smart playlist details contain the `content` attribute. This is the content URI for the generator.
+     * This can then be parsed by a client to provide smart playlist editing.
      * 
      * @return The async call builder
      */
@@ -83,15 +110,35 @@ public class AsyncPlaylist {
     /**
      * Retrieve Playlist
      * 
-     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata, tagging), can be treated like a regular metadata item:
-     * Smart playlist details contain the `content` attribute. This is the content URI for the generator. This can then be parsed by a client to provide smart playlist editing.
+     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata,
+     * tagging), can be treated like a regular metadata item:
+     * Smart playlist details contain the `content` attribute. This is the content URI for the generator.
+     * This can then be parsed by a client to provide smart playlist editing.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPlaylistResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPlaylistResponse>} - The async response
      */
     public CompletableFuture<GetPlaylistResponse> getPlaylist(GetPlaylistRequest request) {
+        return getPlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Retrieve Playlist
+     * 
+     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata,
+     * tagging), can be treated like a regular metadata item:
+     * Smart playlist details contain the `content` attribute. This is the content URI for the generator.
+     * This can then be parsed by a client to provide smart playlist editing.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPlaylistResponse>} - The async response
+     */
+    public CompletableFuture<GetPlaylistResponse> getPlaylist(GetPlaylistRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPlaylistRequest, GetPlaylistResponse> operation
-              = new GetPlaylist.Async(sdkConfiguration);
+              = new GetPlaylist.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -100,7 +147,14 @@ public class AsyncPlaylist {
     /**
      * Retrieve Playlist Contents
      * 
-     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default leaves are returned (e.g. episodes, movies). In order to return other types you can use the `type` parameter. For example, you could use this to display a list of recently added albums vis a smart playlist. Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or moving items.
+     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default
+     * leaves are returned (e.g.
+     * 
+     * <p>episodes, movies). In order to return other types you can use the `type` parameter. For example, you
+     * could use this to display a list of recently added albums vis a smart playlist.
+     * 
+     * <p>Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or
+     * moving items.
      * 
      * @return The async call builder
      */
@@ -111,14 +165,43 @@ public class AsyncPlaylist {
     /**
      * Retrieve Playlist Contents
      * 
-     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default leaves are returned (e.g. episodes, movies). In order to return other types you can use the `type` parameter. For example, you could use this to display a list of recently added albums vis a smart playlist. Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or moving items.
+     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default
+     * leaves are returned (e.g.
+     * 
+     * <p>episodes, movies). In order to return other types you can use the `type` parameter. For example, you
+     * could use this to display a list of recently added albums vis a smart playlist.
+     * 
+     * <p>Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or
+     * moving items.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPlaylistItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPlaylistItemsResponse>} - The async response
      */
     public CompletableFuture<GetPlaylistItemsResponse> getPlaylistItems(GetPlaylistItemsRequest request) {
+        return getPlaylistItems(request, Optional.empty());
+    }
+
+    /**
+     * Retrieve Playlist Contents
+     * 
+     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default
+     * leaves are returned (e.g.
+     * 
+     * <p>episodes, movies). In order to return other types you can use the `type` parameter. For example, you
+     * could use this to display a list of recently added albums vis a smart playlist.
+     * 
+     * <p>Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or
+     * moving items.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPlaylistItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetPlaylistItemsResponse> getPlaylistItems(GetPlaylistItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPlaylistItemsRequest, GetPlaylistItemsResponse> operation
-              = new GetPlaylistItems.Async(sdkConfiguration);
+              = new GetPlaylistItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

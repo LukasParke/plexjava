@@ -26,20 +26,19 @@ import java.lang.SuppressWarnings;
 public class HasVoiceActivity {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private HasVoiceActivity(TypedObject value) {
         this.value = value;
     }
 
     public static HasVoiceActivity of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new HasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new HasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static HasVoiceActivity of(Two value) {
         Utils.checkNotNull(value, "value");
-        return new HasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Two>(){}));
+        return new HasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -62,7 +61,7 @@ public class HasVoiceActivity {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -73,7 +72,7 @@ public class HasVoiceActivity {
             return false;
         }
         HasVoiceActivity other = (HasVoiceActivity) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -86,8 +85,8 @@ public class HasVoiceActivity {
 
         public _Deserializer() {
             super(HasVoiceActivity.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Two>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Two>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -96,6 +95,6 @@ public class HasVoiceActivity {
         return Utils.toString(HasVoiceActivity.class,
                 "value", value);
     }
- 
+
 }
 

@@ -2,6 +2,14 @@
 
 Whether or not media watched indicators are enabled (little orange dot on media)
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.WatchedIndicator;
+
+WatchedIndicator value = WatchedIndicator.None;
+```
+
 
 ## Values
 

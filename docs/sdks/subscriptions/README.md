@@ -1,10 +1,8 @@
 # Subscriptions
-(*subscriptions()*)
 
 ## Overview
 
 Subscriptions determine which media will be recorded and the criteria for selecting an airing when multiple are available
-
 
 ### Available Operations
 
@@ -65,7 +63,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithSubscription().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithSubscription().get());
         }
     }
 }
@@ -124,7 +122,7 @@ public class Application {
         CreateSubscriptionRequest req = CreateSubscriptionRequest.builder()
                 .targetLibrarySectionID(1L)
                 .targetSectionLocationID(3L)
-                .type(2L)
+                .mediaType(2L)
                 .hints(Hints.builder()
                     .build())
                 .prefs(CreateSubscriptionQueryParamPrefs.builder()
@@ -138,7 +136,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -185,7 +183,9 @@ public class Application {
         ProcessSubscriptionsResponse res = sdk.subscriptions().processSubscriptions()
                 .call();
 
-        // handle response
+        if (res.body().isPresent()) {
+            System.out.println(res.body().get());
+        }
     }
 }
 ```
@@ -225,8 +225,8 @@ public class Application {
         GetScheduledRecordingsResponse res = sdk.subscriptions().getScheduledRecordings()
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithMediaGrabOperation().isPresent()) {
+            System.out.println(res.mediaContainerWithMediaGrabOperation().get());
         }
     }
 }
@@ -286,7 +286,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -484,7 +484,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithSubscription().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithSubscription().get());
         }
     }
 }
@@ -551,7 +551,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithSubscription().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithSubscription().get());
         }
     }
 }
@@ -617,7 +617,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithSubscription().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithSubscription().get());
         }
     }
 }

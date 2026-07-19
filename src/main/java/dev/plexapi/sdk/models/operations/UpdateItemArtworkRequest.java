@@ -83,11 +83,15 @@ public class UpdateItemArtworkRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=element")
     private PathParamElement element;
 
@@ -242,11 +246,17 @@ public class UpdateItemArtworkRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     @JsonIgnore
     public PathParamElement element() {
         return element;
@@ -474,12 +484,18 @@ public class UpdateItemArtworkRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public UpdateItemArtworkRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     public UpdateItemArtworkRequest withElement(PathParamElement element) {
         Utils.checkNotNull(element, "element");
         this.element = element;
@@ -805,6 +821,9 @@ public class UpdateItemArtworkRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -812,6 +831,9 @@ public class UpdateItemArtworkRequest {
         }
 
 
+        /**
+         * The type of artwork element (e.g., art, poster, thumb)
+         */
         public Builder element(PathParamElement element) {
             Utils.checkNotNull(element, "element");
             this.element = element;

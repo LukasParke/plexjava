@@ -22,7 +22,8 @@ import java.util.Optional;
  * 8 = photo_album
  * 9 = photo
  * 
- * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie libraries
+ * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
+ * libraries
  */
 public enum MediaType {
     Movie(1L),

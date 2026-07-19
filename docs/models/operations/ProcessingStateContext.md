@@ -2,6 +2,14 @@
 
 The error which could have occurred (or `good`)
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.ProcessingStateContext;
+
+ProcessingStateContext value = ProcessingStateContext.GOOD;
+```
+
 
 ## Values
 

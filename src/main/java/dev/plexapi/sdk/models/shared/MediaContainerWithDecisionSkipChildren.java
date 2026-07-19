@@ -19,26 +19,26 @@ import java.lang.SuppressWarnings;
 /**
  * MediaContainerWithDecisionSkipChildren
  * 
- * <p>When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
+ * <p>When found on a show item, indicates that the children (seasons) should be skipped in favor of the
+ * grandchildren (episodes). Useful for mini-series, etc.
  */
 @JsonDeserialize(using = MediaContainerWithDecisionSkipChildren._Deserializer.class)
 public class MediaContainerWithDecisionSkipChildren {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private MediaContainerWithDecisionSkipChildren(TypedObject value) {
         this.value = value;
     }
 
     public static MediaContainerWithDecisionSkipChildren of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new MediaContainerWithDecisionSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new MediaContainerWithDecisionSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static MediaContainerWithDecisionSkipChildren of(MediaContainerWithDecisionSkipChildren2 value) {
         Utils.checkNotNull(value, "value");
-        return new MediaContainerWithDecisionSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaContainerWithDecisionSkipChildren2>(){}));
+        return new MediaContainerWithDecisionSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +61,7 @@ public class MediaContainerWithDecisionSkipChildren {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +72,7 @@ public class MediaContainerWithDecisionSkipChildren {
             return false;
         }
         MediaContainerWithDecisionSkipChildren other = (MediaContainerWithDecisionSkipChildren) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +85,8 @@ public class MediaContainerWithDecisionSkipChildren {
 
         public _Deserializer() {
             super(MediaContainerWithDecisionSkipChildren.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithDecisionSkipChildren2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithDecisionSkipChildren2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +95,6 @@ public class MediaContainerWithDecisionSkipChildren {
         return Utils.toString(MediaContainerWithDecisionSkipChildren.class,
                 "value", value);
     }
- 
+
 }
 

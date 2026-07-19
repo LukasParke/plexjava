@@ -1,9 +1,9 @@
 # DownloadQueue
-(*downloadQueue()*)
 
 ## Overview
 
-API Operations against the Download Queue
+API Operations against the Download Queue.
+Note: The Download Queue is distinct from the Play Queue. The Download Queue manages offline/downloaded content, while the Play Queue manages active playback sessions.
 
 ### Available Operations
 
@@ -23,7 +23,6 @@ Available: 0.2.0
 
 Creates a download queue for this client if one doesn't exist, or returns the existing queue for this client and user.
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="createDownloadQueue" method="post" path="/downloadQueue" -->
@@ -31,12 +30,13 @@ Creates a download queue for this client if one doesn't exist, or returns the ex
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.CreateDownloadQueueResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -46,7 +46,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -60,6 +60,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getDownloadQueue
@@ -68,7 +69,6 @@ Available: 0.2.0
 
 Get a download queue by its id
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="getDownloadQueue" method="get" path="/downloadQueue/{queueId}" -->
@@ -76,6 +76,7 @@ Get a download queue by its id
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetDownloadQueueRequest;
 import dev.plexapi.sdk.models.operations.GetDownloadQueueResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -83,7 +84,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -109,7 +110,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -129,6 +130,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## addDownloadQueueItems
@@ -137,7 +139,6 @@ Available: 0.2.0
 
 Add items to the download queue
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="addDownloadQueueItems" method="post" path="/downloadQueue/{queueId}/add" -->
@@ -145,6 +146,7 @@ Add items to the download queue
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.AddDownloadQueueItemsRequest;
 import dev.plexapi.sdk.models.operations.AddDownloadQueueItemsResponse;
 import dev.plexapi.sdk.models.shared.*;
@@ -153,7 +155,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -197,6 +199,7 @@ public class Application {
                 .protocol(Protocol.DASH)
                 .secondsPerSegment(5L)
                 .subtitleSize(50L)
+                .subtitles(Subtitles.BURN)
                 .videoBitrate(12000L)
                 .videoQuality(50L)
                 .videoResolution("1080x1080")
@@ -207,7 +210,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -227,6 +230,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## listDownloadQueueItems
@@ -235,7 +239,6 @@ Available: 0.2.0
 
 Get items from a download queue
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="listDownloadQueueItems" method="get" path="/downloadQueue/{queueId}/items" -->
@@ -243,6 +246,7 @@ Get items from a download queue
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListDownloadQueueItemsRequest;
 import dev.plexapi.sdk.models.operations.ListDownloadQueueItemsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -250,7 +254,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -276,7 +280,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -296,6 +300,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getItemDecision
@@ -303,7 +308,6 @@ public class Application {
 Available: 0.2.0
 
 Grab the decision for a download queue item
-
 
 ### Example Usage
 
@@ -346,7 +350,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithDecision().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithDecision().get());
         }
     }
 }
@@ -373,7 +377,6 @@ public class Application {
 Available: 0.2.0
 
 Grab the media for a download queue item
-
 
 ### Example Usage
 
@@ -415,7 +418,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.binaryResponse().isPresent()) {
+            // handle response
+        }
     }
 }
 ```
@@ -447,6 +452,7 @@ delete items from a download queue
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.RemoveDownloadQueueItemsRequest;
 import dev.plexapi.sdk.models.operations.RemoveDownloadQueueItemsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -455,7 +461,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -503,6 +509,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getDownloadQueueItems
@@ -511,7 +518,6 @@ Available: 0.2.0
 
 Get items from a download queue
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="getDownloadQueueItems" method="get" path="/downloadQueue/{queueId}/items/{itemId}" -->
@@ -519,6 +525,7 @@ Get items from a download queue
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetDownloadQueueItemsRequest;
 import dev.plexapi.sdk.models.operations.GetDownloadQueueItemsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -527,7 +534,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -557,7 +564,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -577,6 +584,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## restartProcessingDownloadQueueItems
@@ -585,7 +593,6 @@ Available: 0.2.0
 
 Reprocess download queue items with previous decision parameters
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="restartProcessingDownloadQueueItems" method="post" path="/downloadQueue/{queueId}/items/{itemId}/restart" -->
@@ -593,6 +600,7 @@ Reprocess download queue items with previous decision parameters
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.RestartProcessingDownloadQueueItemsRequest;
 import dev.plexapi.sdk.models.operations.RestartProcessingDownloadQueueItemsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -601,7 +609,7 @@ import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -649,4 +657,5 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |

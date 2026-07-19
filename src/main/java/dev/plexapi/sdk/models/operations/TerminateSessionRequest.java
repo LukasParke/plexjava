@@ -84,7 +84,8 @@ public class TerminateSessionRequest {
     private Optional<String> marketplace;
 
     /**
-     * The session id (found in the `Session` element in [/status/sessions](#tag/Status/operation/statusGetSlash))
+     * The session id (found in the `Session` element in
+     * [/status/sessions](#tag/Status/operation/statusGetSlash))
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=sessionId")
     private String sessionId;
@@ -237,7 +238,8 @@ public class TerminateSessionRequest {
     }
 
     /**
-     * The session id (found in the `Session` element in [/status/sessions](#tag/Status/operation/statusGetSlash))
+     * The session id (found in the `Session` element in
+     * [/status/sessions](#tag/Status/operation/statusGetSlash))
      */
     @JsonIgnore
     public String sessionId() {
@@ -467,7 +469,8 @@ public class TerminateSessionRequest {
     }
 
     /**
-     * The session id (found in the `Session` element in [/status/sessions](#tag/Status/operation/statusGetSlash))
+     * The session id (found in the `Session` element in
+     * [/status/sessions](#tag/Status/operation/statusGetSlash))
      */
     public TerminateSessionRequest withSessionId(String sessionId) {
         Utils.checkNotNull(sessionId, "sessionId");
@@ -791,7 +794,8 @@ public class TerminateSessionRequest {
 
 
         /**
-         * The session id (found in the `Session` element in [/status/sessions](#tag/Status/operation/statusGetSlash))
+         * The session id (found in the `Session` element in
+         * [/status/sessions](#tag/Status/operation/statusGetSlash))
          */
         public Builder sessionId(String sessionId) {
             Utils.checkNotNull(sessionId, "sessionId");

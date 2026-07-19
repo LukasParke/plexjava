@@ -2,6 +2,14 @@
 
 The task name
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.PathParamButlerTask;
+
+PathParamButlerTask value = PathParamButlerTask.AUTOMATIC_UPDATES;
+```
+
 
 ## Values
 

@@ -13,12 +13,15 @@ import dev.plexapi.sdk.models.operations.VoiceSearchHubsRequestBuilder;
 import dev.plexapi.sdk.models.operations.VoiceSearchHubsResponse;
 import dev.plexapi.sdk.operations.SearchHubs;
 import dev.plexapi.sdk.operations.VoiceSearchHubs;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * The search feature within a media provider
  */
 public class Search {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncSearch asyncSDK;
 
@@ -41,16 +44,31 @@ public class Search {
      * 
      * <p>Perform a search and get the result as hubs
      * 
-     * <p>This endpoint performs a search across all library sections, or a single section, and returns matches as hubs, split up by type. It performs spell checking, looks for partial matches, and orders the hubs based on quality of results. In addition, based on matches, it will return other related matches (e.g. for a genre match, it may return movies in that genre, or for an actor match, movies with that actor).
+     * <p>This endpoint performs a search across all library sections, or a single section, and returns
+     * matches as hubs, split up by type. It performs spell checking, looks for partial matches, and orders
+     * the hubs based on quality of results. In addition, based on matches, it will return other related
+     * matches (e.g.
      * 
-     * <p>In the response's items, the following extra attributes are returned to further describe or disambiguate the result:
+     * <p>for a genre match, it may return movies in that genre, or for an actor match, movies with that
+     * actor).
+     * 
+     * <p>In the response's items, the following extra attributes are returned to further describe or
+     * disambiguate the result:
      * 
      * <p>- `reason`: The reason for the result, if not because of a direct search term match; can be either:
-     *   - `section`: There are multiple identical results from different sections.
-     *   - `originalTitle`: There was a search term match from the original title field (sometimes those can be very different or in a foreign language).
-     *   - `&lt;hub identifier&gt;`: If the reason for the result is due to a result in another hub, the source hub identifier is returned. For example, if the search is for "dylan" then Bob Dylan may be returned as an artist result, an a few of his albums returned as album results with a reason code of `artist` (the identifier of that particular hub). Or if the search is for "arnold", there might be movie results returned with a reason of `actor`
-     * - `reasonTitle`: The string associated with the reason code. For a section reason, it'll be the section name; For a hub identifier, it'll be a string associated with the match (e.g. `Arnold Schwarzenegger` for movies which were returned because the search was for "arnold").
-     * - `reasonID`: The ID of the item associated with the reason for the result. This might be a section ID, a tag ID, an artist ID, or a show ID.
+     * - `section`: There are multiple identical results from different sections.
+     * - `originalTitle`: There was a search term match from the original title field (sometimes those can
+     * be very different or in a foreign language).
+     * - `&lt;hub identifier&gt;`: If the reason for the result is due to a result in another hub, the
+     * source hub identifier is returned. For example, if the search is for "dylan" then Bob Dylan may be
+     * returned as an artist result, an a few of his albums returned as album results with a reason code of
+     * `artist` (the identifier of that particular hub). Or if the search is for "arnold", there might be
+     * movie results returned with a reason of `actor`
+     * - `reasonTitle`: The string associated with the reason code. For a section reason, it'll be the
+     * section name; For a hub identifier, it'll be a string associated with the match (e.g. `Arnold
+     * Schwarzenegger` for movies which were returned because the search was for "arnold").
+     * - `reasonID`: The ID of the item associated with the reason for the result. This might be a section
+     * ID, a tag ID, an artist ID, or a show ID.
      * 
      * <p>This request is intended to be very fast, and called as the user types.
      * 
@@ -65,26 +83,83 @@ public class Search {
      * 
      * <p>Perform a search and get the result as hubs
      * 
-     * <p>This endpoint performs a search across all library sections, or a single section, and returns matches as hubs, split up by type. It performs spell checking, looks for partial matches, and orders the hubs based on quality of results. In addition, based on matches, it will return other related matches (e.g. for a genre match, it may return movies in that genre, or for an actor match, movies with that actor).
+     * <p>This endpoint performs a search across all library sections, or a single section, and returns
+     * matches as hubs, split up by type. It performs spell checking, looks for partial matches, and orders
+     * the hubs based on quality of results. In addition, based on matches, it will return other related
+     * matches (e.g.
      * 
-     * <p>In the response's items, the following extra attributes are returned to further describe or disambiguate the result:
+     * <p>for a genre match, it may return movies in that genre, or for an actor match, movies with that
+     * actor).
+     * 
+     * <p>In the response's items, the following extra attributes are returned to further describe or
+     * disambiguate the result:
      * 
      * <p>- `reason`: The reason for the result, if not because of a direct search term match; can be either:
-     *   - `section`: There are multiple identical results from different sections.
-     *   - `originalTitle`: There was a search term match from the original title field (sometimes those can be very different or in a foreign language).
-     *   - `&lt;hub identifier&gt;`: If the reason for the result is due to a result in another hub, the source hub identifier is returned. For example, if the search is for "dylan" then Bob Dylan may be returned as an artist result, an a few of his albums returned as album results with a reason code of `artist` (the identifier of that particular hub). Or if the search is for "arnold", there might be movie results returned with a reason of `actor`
-     * - `reasonTitle`: The string associated with the reason code. For a section reason, it'll be the section name; For a hub identifier, it'll be a string associated with the match (e.g. `Arnold Schwarzenegger` for movies which were returned because the search was for "arnold").
-     * - `reasonID`: The ID of the item associated with the reason for the result. This might be a section ID, a tag ID, an artist ID, or a show ID.
+     * - `section`: There are multiple identical results from different sections.
+     * - `originalTitle`: There was a search term match from the original title field (sometimes those can
+     * be very different or in a foreign language).
+     * - `&lt;hub identifier&gt;`: If the reason for the result is due to a result in another hub, the
+     * source hub identifier is returned. For example, if the search is for "dylan" then Bob Dylan may be
+     * returned as an artist result, an a few of his albums returned as album results with a reason code of
+     * `artist` (the identifier of that particular hub). Or if the search is for "arnold", there might be
+     * movie results returned with a reason of `actor`
+     * - `reasonTitle`: The string associated with the reason code. For a section reason, it'll be the
+     * section name; For a hub identifier, it'll be a string associated with the match (e.g. `Arnold
+     * Schwarzenegger` for movies which were returned because the search was for "arnold").
+     * - `reasonID`: The ID of the item associated with the reason for the result. This might be a section
+     * ID, a tag ID, an artist ID, or a show ID.
      * 
      * <p>This request is intended to be very fast, and called as the user types.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SearchHubsResponse searchHubs(SearchHubsRequest request) throws Exception {
+    public SearchHubsResponse searchHubs(SearchHubsRequest request) {
+        return searchHubs(request, Optional.empty());
+    }
+
+    /**
+     * Search Hub
+     * 
+     * <p>Perform a search and get the result as hubs
+     * 
+     * <p>This endpoint performs a search across all library sections, or a single section, and returns
+     * matches as hubs, split up by type. It performs spell checking, looks for partial matches, and orders
+     * the hubs based on quality of results. In addition, based on matches, it will return other related
+     * matches (e.g.
+     * 
+     * <p>for a genre match, it may return movies in that genre, or for an actor match, movies with that
+     * actor).
+     * 
+     * <p>In the response's items, the following extra attributes are returned to further describe or
+     * disambiguate the result:
+     * 
+     * <p>- `reason`: The reason for the result, if not because of a direct search term match; can be either:
+     * - `section`: There are multiple identical results from different sections.
+     * - `originalTitle`: There was a search term match from the original title field (sometimes those can
+     * be very different or in a foreign language).
+     * - `&lt;hub identifier&gt;`: If the reason for the result is due to a result in another hub, the
+     * source hub identifier is returned. For example, if the search is for "dylan" then Bob Dylan may be
+     * returned as an artist result, an a few of his albums returned as album results with a reason code of
+     * `artist` (the identifier of that particular hub). Or if the search is for "arnold", there might be
+     * movie results returned with a reason of `actor`
+     * - `reasonTitle`: The string associated with the reason code. For a section reason, it'll be the
+     * section name; For a hub identifier, it'll be a string associated with the match (e.g. `Arnold
+     * Schwarzenegger` for movies which were returned because the search was for "arnold").
+     * - `reasonID`: The ID of the item associated with the reason for the result. This might be a section
+     * ID, a tag ID, an artist ID, or a show ID.
+     * 
+     * <p>This request is intended to be very fast, and called as the user types.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SearchHubsResponse searchHubs(SearchHubsRequest request, Optional<Options> options) {
         RequestOperation<SearchHubsRequest, SearchHubsResponse> operation
-              = new SearchHubs.Sync(sdkConfiguration);
+              = new SearchHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -93,9 +168,14 @@ public class Search {
      * 
      * <p>Perform a search tailored to voice input and get the result as hubs
      * 
-     * <p>This endpoint performs a search specifically tailored towards voice or other imprecise input which may work badly with the substring and spell-checking heuristics used by the `/hubs/search` endpoint. It uses a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) heuristic to search titles, and as such is much slower than the other search endpoint. Whenever possible, clients should limit the search to the appropriate type.
+     * <p>This endpoint performs a search specifically tailored towards voice or other imprecise input which
+     * may work badly with the substring and spell-checking heuristics used by the `/hubs/search` endpoint.
+     * It uses a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) heuristic to
+     * search titles, and as such is much slower than the other search endpoint. Whenever possible, clients
+     * should limit the search to the appropriate type.
      * 
-     * <p>Results, as well as their containing per-type hubs, contain a `distance` attribute which can be used to judge result quality.
+     * <p>Results, as well as their containing per-type hubs, contain a `distance` attribute which can be used
+     * to judge result quality.
      * 
      * @return The call builder
      */
@@ -108,17 +188,45 @@ public class Search {
      * 
      * <p>Perform a search tailored to voice input and get the result as hubs
      * 
-     * <p>This endpoint performs a search specifically tailored towards voice or other imprecise input which may work badly with the substring and spell-checking heuristics used by the `/hubs/search` endpoint. It uses a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) heuristic to search titles, and as such is much slower than the other search endpoint. Whenever possible, clients should limit the search to the appropriate type.
+     * <p>This endpoint performs a search specifically tailored towards voice or other imprecise input which
+     * may work badly with the substring and spell-checking heuristics used by the `/hubs/search` endpoint.
+     * It uses a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) heuristic to
+     * search titles, and as such is much slower than the other search endpoint. Whenever possible, clients
+     * should limit the search to the appropriate type.
      * 
-     * <p>Results, as well as their containing per-type hubs, contain a `distance` attribute which can be used to judge result quality.
+     * <p>Results, as well as their containing per-type hubs, contain a `distance` attribute which can be used
+     * to judge result quality.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public VoiceSearchHubsResponse voiceSearchHubs(VoiceSearchHubsRequest request) throws Exception {
+    public VoiceSearchHubsResponse voiceSearchHubs(VoiceSearchHubsRequest request) {
+        return voiceSearchHubs(request, Optional.empty());
+    }
+
+    /**
+     * Voice Search Hub
+     * 
+     * <p>Perform a search tailored to voice input and get the result as hubs
+     * 
+     * <p>This endpoint performs a search specifically tailored towards voice or other imprecise input which
+     * may work badly with the substring and spell-checking heuristics used by the `/hubs/search` endpoint.
+     * It uses a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) heuristic to
+     * search titles, and as such is much slower than the other search endpoint. Whenever possible, clients
+     * should limit the search to the appropriate type.
+     * 
+     * <p>Results, as well as their containing per-type hubs, contain a `distance` attribute which can be used
+     * to judge result quality.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public VoiceSearchHubsResponse voiceSearchHubs(VoiceSearchHubsRequest request, Optional<Options> options) {
         RequestOperation<VoiceSearchHubsRequest, VoiceSearchHubsResponse> operation
-              = new VoiceSearchHubs.Sync(sdkConfiguration);
+              = new VoiceSearchHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

@@ -1,5 +1,4 @@
 # Butler
-(*butler()*)
 
 ## Overview
 
@@ -24,12 +23,13 @@ This endpoint will stop all currently running tasks and remove any scheduled tas
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.StopTasksResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -51,12 +51,12 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getTasks
 
 Get the list of butler tasks and their scheduling
-
 
 ### Example Usage
 
@@ -65,12 +65,13 @@ Get the list of butler tasks and their scheduling
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetTasksResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -80,7 +81,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -94,6 +95,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## startTasks
@@ -105,7 +107,6 @@ This endpoint will attempt to start all Butler tasks that are enabled in the set
   3. If a task is configured to run at a random time during the configured window and we are within that window, the task will be scheduled at a random time within the window.
   4. If we are outside the configured window, the task will start immediately.
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="startTasks" method="post" path="/butler" -->
@@ -113,12 +114,13 @@ This endpoint will attempt to start all Butler tasks that are enabled in the set
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.StartTasksResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -140,12 +142,12 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## stopTask
 
 This endpoint will stop a currently running task by name, or remove it from the list of scheduled tasks if it exists
-
 
 ### Example Usage
 
@@ -210,7 +212,6 @@ public class Application {
 
 This endpoint will attempt to start a specific Butler task by name.
 
-
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="startTask" method="post" path="/butler/{butlerTask}" -->
@@ -249,7 +250,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.body().isPresent()) {
+            System.out.println(res.body().get());
+        }
     }
 }
 ```

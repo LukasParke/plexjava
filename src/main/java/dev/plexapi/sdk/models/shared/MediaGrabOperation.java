@@ -19,7 +19,7 @@ import java.util.Optional;
 /**
  * MediaGrabOperation
  * 
- * <p>A media grab opration represents a scheduled or active recording of media
+ * <p>A media grab operation represents a scheduled or active recording of media
  */
 public class MediaGrabOperation {
 
@@ -58,11 +58,39 @@ public class MediaGrabOperation {
     private Optional<Long> mediaSubscriptionID;
 
     /**
-     * Items in a library are referred to as "metadata items." These metadata items are distinct from "media items" which represent actual instances of media that can be consumed. Consider a TV library that has a single video file in it for a particular episode of a show. The library has a single media item, but it has three metadata items: one for the show, one for the season, and one for the episode. Consider a movie library that has two video files in it: the same movie, but two different resolutions. The library has a single metadata item for the movie, but that metadata item has two media items, one for each resolution. Additionally a "media item" will have one or more "media parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the same movie.
+     * Items in a library are referred to as "metadata items." These metadata items are distinct from
+     * "media items" which represent actual instances of media that can be consumed. Consider a TV library
+     * that has a single video file in it for a particular episode of a show. The library has a single
+     * media item, but it has three metadata items: one for the show, one for the season, and one for the
+     * episode.
      * 
-     * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic. That is, a 4K version and 1080p version of a movie are different versions of the same movie. They have the same duration, same summary, same rating, etc. and they can generally be considered interchangeable. A theatrical release vs. director's cut vs. unrated version on the other hand would be separate metadata items.
+     * <p>Consider a movie library that has two video files in it: the same movie, but two different
+     * resolutions. The library has a single metadata item for the movie, but that metadata item has two
+     * media items, one for each resolution. Additionally a "media item" will have one or more "media
+     * parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the
+     * same movie.
      * 
-     * <p>Metadata items can often live in a hierarchy with relationships between them.  For example, the metadata item for an episodes is associated with a season metadata item which is associated with a show metadata item.  A similar hierarchy exists with track, album, and artist and photos and photo album.  The relationships may be expressed via relative terms and absolute terms.  For example, "leaves" refer to metadata items which has associated media (there is no media for a season nor show).  A show will have "children" in the form of seasons and a season will have "children" in the form of episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a show.  Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in the form of a show.
+     * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic.
+     * That is, a 4K version and 1080p version of a movie are different versions of the same movie. They
+     * have the same duration, same summary, same rating, etc.
+     * 
+     * <p>and they can generally be considered interchangeable. A theatrical release vs. director's cut vs.
+     * 
+     * <p>unrated version on the other hand would be separate metadata items.
+     * 
+     * <p>Metadata items can often live in a hierarchy with relationships between them. For example, the
+     * metadata item for an episodes is associated with a season metadata item which is associated with a
+     * show metadata item. A similar hierarchy exists with track, album, and artist and photos and photo
+     * album.
+     * 
+     * <p>The relationships may be expressed via relative terms and absolute terms. For example, "leaves"
+     * refer to metadata items which has associated media (there is no media for a season nor show). A show
+     * will have "children" in the form of seasons and a season will have "children" in the form of
+     * episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a
+     * show.
+     * 
+     * <p>Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in
+     * the form of a show.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Metadata")
@@ -81,7 +109,7 @@ public class MediaGrabOperation {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("status")
-    private Optional<? extends Status> status;
+    private Optional<? extends MediaGrabOperationStatus> status;
 
     @JsonCreator
     public MediaGrabOperation(
@@ -95,7 +123,7 @@ public class MediaGrabOperation {
             @JsonProperty("Metadata") Optional<? extends Metadata> metadata,
             @JsonProperty("percent") Optional<Double> percent,
             @JsonProperty("provider") Optional<String> provider,
-            @JsonProperty("status") Optional<? extends Status> status) {
+            @JsonProperty("status") Optional<? extends MediaGrabOperationStatus> status) {
         Utils.checkNotNull(currentSize, "currentSize");
         Utils.checkNotNull(grabberIdentifier, "grabberIdentifier");
         Utils.checkNotNull(grabberProtocol, "grabberProtocol");
@@ -163,11 +191,39 @@ public class MediaGrabOperation {
     }
 
     /**
-     * Items in a library are referred to as "metadata items." These metadata items are distinct from "media items" which represent actual instances of media that can be consumed. Consider a TV library that has a single video file in it for a particular episode of a show. The library has a single media item, but it has three metadata items: one for the show, one for the season, and one for the episode. Consider a movie library that has two video files in it: the same movie, but two different resolutions. The library has a single metadata item for the movie, but that metadata item has two media items, one for each resolution. Additionally a "media item" will have one or more "media parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the same movie.
+     * Items in a library are referred to as "metadata items." These metadata items are distinct from
+     * "media items" which represent actual instances of media that can be consumed. Consider a TV library
+     * that has a single video file in it for a particular episode of a show. The library has a single
+     * media item, but it has three metadata items: one for the show, one for the season, and one for the
+     * episode.
      * 
-     * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic. That is, a 4K version and 1080p version of a movie are different versions of the same movie. They have the same duration, same summary, same rating, etc. and they can generally be considered interchangeable. A theatrical release vs. director's cut vs. unrated version on the other hand would be separate metadata items.
+     * <p>Consider a movie library that has two video files in it: the same movie, but two different
+     * resolutions. The library has a single metadata item for the movie, but that metadata item has two
+     * media items, one for each resolution. Additionally a "media item" will have one or more "media
+     * parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the
+     * same movie.
      * 
-     * <p>Metadata items can often live in a hierarchy with relationships between them.  For example, the metadata item for an episodes is associated with a season metadata item which is associated with a show metadata item.  A similar hierarchy exists with track, album, and artist and photos and photo album.  The relationships may be expressed via relative terms and absolute terms.  For example, "leaves" refer to metadata items which has associated media (there is no media for a season nor show).  A show will have "children" in the form of seasons and a season will have "children" in the form of episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a show.  Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in the form of a show.
+     * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic.
+     * That is, a 4K version and 1080p version of a movie are different versions of the same movie. They
+     * have the same duration, same summary, same rating, etc.
+     * 
+     * <p>and they can generally be considered interchangeable. A theatrical release vs. director's cut vs.
+     * 
+     * <p>unrated version on the other hand would be separate metadata items.
+     * 
+     * <p>Metadata items can often live in a hierarchy with relationships between them. For example, the
+     * metadata item for an episodes is associated with a season metadata item which is associated with a
+     * show metadata item. A similar hierarchy exists with track, album, and artist and photos and photo
+     * album.
+     * 
+     * <p>The relationships may be expressed via relative terms and absolute terms. For example, "leaves"
+     * refer to metadata items which has associated media (there is no media for a season nor show). A show
+     * will have "children" in the form of seasons and a season will have "children" in the form of
+     * episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a
+     * show.
+     * 
+     * <p>Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in
+     * the form of a show.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -187,8 +243,8 @@ public class MediaGrabOperation {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Status> status() {
-        return (Optional<Status>) status;
+    public Optional<MediaGrabOperationStatus> status() {
+        return (Optional<MediaGrabOperationStatus>) status;
     }
 
     public static Builder builder() {
@@ -288,11 +344,39 @@ public class MediaGrabOperation {
     }
 
     /**
-     * Items in a library are referred to as "metadata items." These metadata items are distinct from "media items" which represent actual instances of media that can be consumed. Consider a TV library that has a single video file in it for a particular episode of a show. The library has a single media item, but it has three metadata items: one for the show, one for the season, and one for the episode. Consider a movie library that has two video files in it: the same movie, but two different resolutions. The library has a single metadata item for the movie, but that metadata item has two media items, one for each resolution. Additionally a "media item" will have one or more "media parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the same movie.
+     * Items in a library are referred to as "metadata items." These metadata items are distinct from
+     * "media items" which represent actual instances of media that can be consumed. Consider a TV library
+     * that has a single video file in it for a particular episode of a show. The library has a single
+     * media item, but it has three metadata items: one for the show, one for the season, and one for the
+     * episode.
      * 
-     * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic. That is, a 4K version and 1080p version of a movie are different versions of the same movie. They have the same duration, same summary, same rating, etc. and they can generally be considered interchangeable. A theatrical release vs. director's cut vs. unrated version on the other hand would be separate metadata items.
+     * <p>Consider a movie library that has two video files in it: the same movie, but two different
+     * resolutions. The library has a single metadata item for the movie, but that metadata item has two
+     * media items, one for each resolution. Additionally a "media item" will have one or more "media
+     * parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the
+     * same movie.
      * 
-     * <p>Metadata items can often live in a hierarchy with relationships between them.  For example, the metadata item for an episodes is associated with a season metadata item which is associated with a show metadata item.  A similar hierarchy exists with track, album, and artist and photos and photo album.  The relationships may be expressed via relative terms and absolute terms.  For example, "leaves" refer to metadata items which has associated media (there is no media for a season nor show).  A show will have "children" in the form of seasons and a season will have "children" in the form of episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a show.  Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in the form of a show.
+     * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic.
+     * That is, a 4K version and 1080p version of a movie are different versions of the same movie. They
+     * have the same duration, same summary, same rating, etc.
+     * 
+     * <p>and they can generally be considered interchangeable. A theatrical release vs. director's cut vs.
+     * 
+     * <p>unrated version on the other hand would be separate metadata items.
+     * 
+     * <p>Metadata items can often live in a hierarchy with relationships between them. For example, the
+     * metadata item for an episodes is associated with a season metadata item which is associated with a
+     * show metadata item. A similar hierarchy exists with track, album, and artist and photos and photo
+     * album.
+     * 
+     * <p>The relationships may be expressed via relative terms and absolute terms. For example, "leaves"
+     * refer to metadata items which has associated media (there is no media for a season nor show). A show
+     * will have "children" in the form of seasons and a season will have "children" in the form of
+     * episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a
+     * show.
+     * 
+     * <p>Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in
+     * the form of a show.
      */
     public MediaGrabOperation withMetadata(Metadata metadata) {
         Utils.checkNotNull(metadata, "metadata");
@@ -302,11 +386,39 @@ public class MediaGrabOperation {
 
 
     /**
-     * Items in a library are referred to as "metadata items." These metadata items are distinct from "media items" which represent actual instances of media that can be consumed. Consider a TV library that has a single video file in it for a particular episode of a show. The library has a single media item, but it has three metadata items: one for the show, one for the season, and one for the episode. Consider a movie library that has two video files in it: the same movie, but two different resolutions. The library has a single metadata item for the movie, but that metadata item has two media items, one for each resolution. Additionally a "media item" will have one or more "media parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the same movie.
+     * Items in a library are referred to as "metadata items." These metadata items are distinct from
+     * "media items" which represent actual instances of media that can be consumed. Consider a TV library
+     * that has a single video file in it for a particular episode of a show. The library has a single
+     * media item, but it has three metadata items: one for the show, one for the season, and one for the
+     * episode.
      * 
-     * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic. That is, a 4K version and 1080p version of a movie are different versions of the same movie. They have the same duration, same summary, same rating, etc. and they can generally be considered interchangeable. A theatrical release vs. director's cut vs. unrated version on the other hand would be separate metadata items.
+     * <p>Consider a movie library that has two video files in it: the same movie, but two different
+     * resolutions. The library has a single metadata item for the movie, but that metadata item has two
+     * media items, one for each resolution. Additionally a "media item" will have one or more "media
+     * parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the
+     * same movie.
      * 
-     * <p>Metadata items can often live in a hierarchy with relationships between them.  For example, the metadata item for an episodes is associated with a season metadata item which is associated with a show metadata item.  A similar hierarchy exists with track, album, and artist and photos and photo album.  The relationships may be expressed via relative terms and absolute terms.  For example, "leaves" refer to metadata items which has associated media (there is no media for a season nor show).  A show will have "children" in the form of seasons and a season will have "children" in the form of episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a show.  Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in the form of a show.
+     * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic.
+     * That is, a 4K version and 1080p version of a movie are different versions of the same movie. They
+     * have the same duration, same summary, same rating, etc.
+     * 
+     * <p>and they can generally be considered interchangeable. A theatrical release vs. director's cut vs.
+     * 
+     * <p>unrated version on the other hand would be separate metadata items.
+     * 
+     * <p>Metadata items can often live in a hierarchy with relationships between them. For example, the
+     * metadata item for an episodes is associated with a season metadata item which is associated with a
+     * show metadata item. A similar hierarchy exists with track, album, and artist and photos and photo
+     * album.
+     * 
+     * <p>The relationships may be expressed via relative terms and absolute terms. For example, "leaves"
+     * refer to metadata items which has associated media (there is no media for a season nor show). A show
+     * will have "children" in the form of seasons and a season will have "children" in the form of
+     * episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a
+     * show.
+     * 
+     * <p>Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in
+     * the form of a show.
      */
     public MediaGrabOperation withMetadata(Optional<? extends Metadata> metadata) {
         Utils.checkNotNull(metadata, "metadata");
@@ -340,14 +452,14 @@ public class MediaGrabOperation {
         return this;
     }
 
-    public MediaGrabOperation withStatus(Status status) {
+    public MediaGrabOperation withStatus(MediaGrabOperationStatus status) {
         Utils.checkNotNull(status, "status");
         this.status = Optional.ofNullable(status);
         return this;
     }
 
 
-    public MediaGrabOperation withStatus(Optional<? extends Status> status) {
+    public MediaGrabOperation withStatus(Optional<? extends MediaGrabOperationStatus> status) {
         Utils.checkNotNull(status, "status");
         this.status = status;
         return this;
@@ -424,7 +536,7 @@ public class MediaGrabOperation {
 
         private Optional<String> provider = Optional.empty();
 
-        private Optional<? extends Status> status = Optional.empty();
+        private Optional<? extends MediaGrabOperationStatus> status = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -523,11 +635,39 @@ public class MediaGrabOperation {
 
 
         /**
-         * Items in a library are referred to as "metadata items." These metadata items are distinct from "media items" which represent actual instances of media that can be consumed. Consider a TV library that has a single video file in it for a particular episode of a show. The library has a single media item, but it has three metadata items: one for the show, one for the season, and one for the episode. Consider a movie library that has two video files in it: the same movie, but two different resolutions. The library has a single metadata item for the movie, but that metadata item has two media items, one for each resolution. Additionally a "media item" will have one or more "media parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the same movie.
+         * Items in a library are referred to as "metadata items." These metadata items are distinct from
+         * "media items" which represent actual instances of media that can be consumed. Consider a TV library
+         * that has a single video file in it for a particular episode of a show. The library has a single
+         * media item, but it has three metadata items: one for the show, one for the season, and one for the
+         * episode.
          * 
-         * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic. That is, a 4K version and 1080p version of a movie are different versions of the same movie. They have the same duration, same summary, same rating, etc. and they can generally be considered interchangeable. A theatrical release vs. director's cut vs. unrated version on the other hand would be separate metadata items.
+         * <p>Consider a movie library that has two video files in it: the same movie, but two different
+         * resolutions. The library has a single metadata item for the movie, but that metadata item has two
+         * media items, one for each resolution. Additionally a "media item" will have one or more "media
+         * parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the
+         * same movie.
          * 
-         * <p>Metadata items can often live in a hierarchy with relationships between them.  For example, the metadata item for an episodes is associated with a season metadata item which is associated with a show metadata item.  A similar hierarchy exists with track, album, and artist and photos and photo album.  The relationships may be expressed via relative terms and absolute terms.  For example, "leaves" refer to metadata items which has associated media (there is no media for a season nor show).  A show will have "children" in the form of seasons and a season will have "children" in the form of episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a show.  Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in the form of a show.
+         * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic.
+         * That is, a 4K version and 1080p version of a movie are different versions of the same movie. They
+         * have the same duration, same summary, same rating, etc.
+         * 
+         * <p>and they can generally be considered interchangeable. A theatrical release vs. director's cut vs.
+         * 
+         * <p>unrated version on the other hand would be separate metadata items.
+         * 
+         * <p>Metadata items can often live in a hierarchy with relationships between them. For example, the
+         * metadata item for an episodes is associated with a season metadata item which is associated with a
+         * show metadata item. A similar hierarchy exists with track, album, and artist and photos and photo
+         * album.
+         * 
+         * <p>The relationships may be expressed via relative terms and absolute terms. For example, "leaves"
+         * refer to metadata items which has associated media (there is no media for a season nor show). A show
+         * will have "children" in the form of seasons and a season will have "children" in the form of
+         * episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a
+         * show.
+         * 
+         * <p>Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in
+         * the form of a show.
          */
         public Builder metadata(Metadata metadata) {
             Utils.checkNotNull(metadata, "metadata");
@@ -536,11 +676,39 @@ public class MediaGrabOperation {
         }
 
         /**
-         * Items in a library are referred to as "metadata items." These metadata items are distinct from "media items" which represent actual instances of media that can be consumed. Consider a TV library that has a single video file in it for a particular episode of a show. The library has a single media item, but it has three metadata items: one for the show, one for the season, and one for the episode. Consider a movie library that has two video files in it: the same movie, but two different resolutions. The library has a single metadata item for the movie, but that metadata item has two media items, one for each resolution. Additionally a "media item" will have one or more "media parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the same movie.
+         * Items in a library are referred to as "metadata items." These metadata items are distinct from
+         * "media items" which represent actual instances of media that can be consumed. Consider a TV library
+         * that has a single video file in it for a particular episode of a show. The library has a single
+         * media item, but it has three metadata items: one for the show, one for the season, and one for the
+         * episode.
          * 
-         * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic. That is, a 4K version and 1080p version of a movie are different versions of the same movie. They have the same duration, same summary, same rating, etc. and they can generally be considered interchangeable. A theatrical release vs. director's cut vs. unrated version on the other hand would be separate metadata items.
+         * <p>Consider a movie library that has two video files in it: the same movie, but two different
+         * resolutions. The library has a single metadata item for the movie, but that metadata item has two
+         * media items, one for each resolution. Additionally a "media item" will have one or more "media
+         * parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the
+         * same movie.
          * 
-         * <p>Metadata items can often live in a hierarchy with relationships between them.  For example, the metadata item for an episodes is associated with a season metadata item which is associated with a show metadata item.  A similar hierarchy exists with track, album, and artist and photos and photo album.  The relationships may be expressed via relative terms and absolute terms.  For example, "leaves" refer to metadata items which has associated media (there is no media for a season nor show).  A show will have "children" in the form of seasons and a season will have "children" in the form of episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a show.  Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in the form of a show.
+         * <p>Note that when a metadata item has multiple media items, those media items should be isomorphic.
+         * That is, a 4K version and 1080p version of a movie are different versions of the same movie. They
+         * have the same duration, same summary, same rating, etc.
+         * 
+         * <p>and they can generally be considered interchangeable. A theatrical release vs. director's cut vs.
+         * 
+         * <p>unrated version on the other hand would be separate metadata items.
+         * 
+         * <p>Metadata items can often live in a hierarchy with relationships between them. For example, the
+         * metadata item for an episodes is associated with a season metadata item which is associated with a
+         * show metadata item. A similar hierarchy exists with track, album, and artist and photos and photo
+         * album.
+         * 
+         * <p>The relationships may be expressed via relative terms and absolute terms. For example, "leaves"
+         * refer to metadata items which has associated media (there is no media for a season nor show). A show
+         * will have "children" in the form of seasons and a season will have "children" in the form of
+         * episodes and episodes have "parent" in the form of a season which has a "parent" in the form of a
+         * show.
+         * 
+         * <p>Similarly, a show has "grandchildren" in the form of episodse and an episode has a "grandparent" in
+         * the form of a show.
          */
         public Builder metadata(Optional<? extends Metadata> metadata) {
             Utils.checkNotNull(metadata, "metadata");
@@ -575,13 +743,13 @@ public class MediaGrabOperation {
         }
 
 
-        public Builder status(Status status) {
+        public Builder status(MediaGrabOperationStatus status) {
             Utils.checkNotNull(status, "status");
             this.status = Optional.ofNullable(status);
             return this;
         }
 
-        public Builder status(Optional<? extends Status> status) {
+        public Builder status(Optional<? extends MediaGrabOperationStatus> status) {
             Utils.checkNotNull(status, "status");
             this.status = status;
             return this;

@@ -22,61 +22,10 @@ import org.openapitools.jackson.nullable.JsonNullable;
 
 public class User {
     /**
-     * User's unique ID.
-     */
-    @JsonProperty("id")
-    private long id;
-
-    /**
      * User's display name.
      */
     @JsonProperty("title")
     private String title;
-
-    /**
-     * User's username.
-     */
-    @JsonProperty("username")
-    private String username;
-
-    /**
-     * User's email address.
-     */
-    @JsonProperty("email")
-    private String email;
-
-    /**
-     * ID of the user's recommendation playlist.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("recommendationsPlaylistId")
-    private JsonNullable<String> recommendationsPlaylistId;
-
-    /**
-     * URL to the user's avatar image.
-     */
-    @JsonProperty("thumb")
-    private String thumb;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("protected")
-    private Optional<? extends Protected> protected_;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("home")
-    private Optional<? extends Home> home;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("allowTuners")
-    private Optional<? extends AllowTuners> allowTuners;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("allowSync")
-    private Optional<? extends GetUsersAllowSync> allowSync;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -92,6 +41,22 @@ public class User {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("allowSubtitleAdmin")
     private Optional<? extends AllowSubtitleAdmin> allowSubtitleAdmin;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("allowSync")
+    private Optional<? extends GetUsersAllowSync> allowSync;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("allowTuners")
+    private Optional<? extends AllowTuners> allowTuners;
+
+    /**
+     * User's email address.
+     */
+    @JsonProperty("email")
+    private String email;
 
     /**
      * Filters applied for all content.
@@ -130,6 +95,29 @@ public class User {
 
 
     @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("home")
+    private Optional<? extends Home> home;
+
+    /**
+     * User's unique ID.
+     */
+    @JsonProperty("id")
+    private long id;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("protected")
+    private Optional<? extends Protected> protected_;
+
+    /**
+     * ID of the user's recommendation playlist.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("recommendationsPlaylistId")
+    private JsonNullable<String> recommendationsPlaylistId;
+
+
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("restricted")
     private Optional<? extends Restricted> restricted;
 
@@ -139,92 +127,96 @@ public class User {
     @JsonProperty("Server")
     private List<Server> server;
 
+    /**
+     * URL to the user's avatar image.
+     */
+    @JsonProperty("thumb")
+    private String thumb;
+
+    /**
+     * User's username.
+     */
+    @JsonProperty("username")
+    private String username;
+
     @JsonCreator
     public User(
-            @JsonProperty("id") long id,
             @JsonProperty("title") String title,
-            @JsonProperty("username") String username,
-            @JsonProperty("email") String email,
-            @JsonProperty("recommendationsPlaylistId") JsonNullable<String> recommendationsPlaylistId,
-            @JsonProperty("thumb") String thumb,
-            @JsonProperty("protected") Optional<? extends Protected> protected_,
-            @JsonProperty("home") Optional<? extends Home> home,
-            @JsonProperty("allowTuners") Optional<? extends AllowTuners> allowTuners,
-            @JsonProperty("allowSync") Optional<? extends GetUsersAllowSync> allowSync,
             @JsonProperty("allowCameraUpload") Optional<? extends AllowCameraUpload> allowCameraUpload,
             @JsonProperty("allowChannels") Optional<? extends AllowChannels> allowChannels,
             @JsonProperty("allowSubtitleAdmin") Optional<? extends AllowSubtitleAdmin> allowSubtitleAdmin,
+            @JsonProperty("allowSync") Optional<? extends GetUsersAllowSync> allowSync,
+            @JsonProperty("allowTuners") Optional<? extends AllowTuners> allowTuners,
+            @JsonProperty("email") String email,
             @JsonProperty("filterAll") JsonNullable<String> filterAll,
             @JsonProperty("filterMovies") JsonNullable<String> filterMovies,
             @JsonProperty("filterMusic") JsonNullable<String> filterMusic,
             @JsonProperty("filterPhotos") JsonNullable<String> filterPhotos,
             @JsonProperty("filterTelevision") Optional<String> filterTelevision,
+            @JsonProperty("home") Optional<? extends Home> home,
+            @JsonProperty("id") long id,
+            @JsonProperty("protected") Optional<? extends Protected> protected_,
+            @JsonProperty("recommendationsPlaylistId") JsonNullable<String> recommendationsPlaylistId,
             @JsonProperty("restricted") Optional<? extends Restricted> restricted,
-            @JsonProperty("Server") List<Server> server) {
-        Utils.checkNotNull(id, "id");
+            @JsonProperty("Server") List<Server> server,
+            @JsonProperty("thumb") String thumb,
+            @JsonProperty("username") String username) {
         Utils.checkNotNull(title, "title");
-        Utils.checkNotNull(username, "username");
-        Utils.checkNotNull(email, "email");
-        Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
-        Utils.checkNotNull(thumb, "thumb");
-        Utils.checkNotNull(protected_, "protected_");
-        Utils.checkNotNull(home, "home");
-        Utils.checkNotNull(allowTuners, "allowTuners");
-        Utils.checkNotNull(allowSync, "allowSync");
         Utils.checkNotNull(allowCameraUpload, "allowCameraUpload");
         Utils.checkNotNull(allowChannels, "allowChannels");
         Utils.checkNotNull(allowSubtitleAdmin, "allowSubtitleAdmin");
+        Utils.checkNotNull(allowSync, "allowSync");
+        Utils.checkNotNull(allowTuners, "allowTuners");
+        Utils.checkNotNull(email, "email");
         Utils.checkNotNull(filterAll, "filterAll");
         Utils.checkNotNull(filterMovies, "filterMovies");
         Utils.checkNotNull(filterMusic, "filterMusic");
         Utils.checkNotNull(filterPhotos, "filterPhotos");
         Utils.checkNotNull(filterTelevision, "filterTelevision");
+        Utils.checkNotNull(home, "home");
+        Utils.checkNotNull(id, "id");
+        Utils.checkNotNull(protected_, "protected_");
+        Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
         Utils.checkNotNull(restricted, "restricted");
         Utils.checkNotNull(server, "server");
-        this.id = id;
+        Utils.checkNotNull(thumb, "thumb");
+        Utils.checkNotNull(username, "username");
         this.title = title;
-        this.username = username;
-        this.email = email;
-        this.recommendationsPlaylistId = recommendationsPlaylistId;
-        this.thumb = thumb;
-        this.protected_ = protected_;
-        this.home = home;
-        this.allowTuners = allowTuners;
-        this.allowSync = allowSync;
         this.allowCameraUpload = allowCameraUpload;
         this.allowChannels = allowChannels;
         this.allowSubtitleAdmin = allowSubtitleAdmin;
+        this.allowSync = allowSync;
+        this.allowTuners = allowTuners;
+        this.email = email;
         this.filterAll = filterAll;
         this.filterMovies = filterMovies;
         this.filterMusic = filterMusic;
         this.filterPhotos = filterPhotos;
         this.filterTelevision = filterTelevision;
+        this.home = home;
+        this.id = id;
+        this.protected_ = protected_;
+        this.recommendationsPlaylistId = recommendationsPlaylistId;
         this.restricted = restricted;
         this.server = server;
+        this.thumb = thumb;
+        this.username = username;
     }
     
     public User(
-            long id,
             String title,
-            String username,
             String email,
+            long id,
+            List<Server> server,
             String thumb,
-            List<Server> server) {
-        this(id, title, username,
-            email, JsonNullable.undefined(), thumb,
+            String username) {
+        this(title, Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), JsonNullable.undefined(), JsonNullable.undefined(),
+            email, JsonNullable.undefined(), JsonNullable.undefined(),
             JsonNullable.undefined(), JsonNullable.undefined(), Optional.empty(),
-            Optional.empty(), server);
-    }
-
-    /**
-     * User's unique ID.
-     */
-    @JsonIgnore
-    public long id() {
-        return id;
+            Optional.empty(), id, Optional.empty(),
+            JsonNullable.undefined(), Optional.empty(), server,
+            thumb, username);
     }
 
     /**
@@ -233,62 +225,6 @@ public class User {
     @JsonIgnore
     public String title() {
         return title;
-    }
-
-    /**
-     * User's username.
-     */
-    @JsonIgnore
-    public String username() {
-        return username;
-    }
-
-    /**
-     * User's email address.
-     */
-    @JsonIgnore
-    public String email() {
-        return email;
-    }
-
-    /**
-     * ID of the user's recommendation playlist.
-     */
-    @JsonIgnore
-    public JsonNullable<String> recommendationsPlaylistId() {
-        return recommendationsPlaylistId;
-    }
-
-    /**
-     * URL to the user's avatar image.
-     */
-    @JsonIgnore
-    public String thumb() {
-        return thumb;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<Protected> protected_() {
-        return (Optional<Protected>) protected_;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<Home> home() {
-        return (Optional<Home>) home;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<AllowTuners> allowTuners() {
-        return (Optional<AllowTuners>) allowTuners;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<GetUsersAllowSync> allowSync() {
-        return (Optional<GetUsersAllowSync>) allowSync;
     }
 
     @SuppressWarnings("unchecked")
@@ -307,6 +243,26 @@ public class User {
     @JsonIgnore
     public Optional<AllowSubtitleAdmin> allowSubtitleAdmin() {
         return (Optional<AllowSubtitleAdmin>) allowSubtitleAdmin;
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<GetUsersAllowSync> allowSync() {
+        return (Optional<GetUsersAllowSync>) allowSync;
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<AllowTuners> allowTuners() {
+        return (Optional<AllowTuners>) allowTuners;
+    }
+
+    /**
+     * User's email address.
+     */
+    @JsonIgnore
+    public String email() {
+        return email;
     }
 
     /**
@@ -351,6 +307,34 @@ public class User {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
+    public Optional<Home> home() {
+        return (Optional<Home>) home;
+    }
+
+    /**
+     * User's unique ID.
+     */
+    @JsonIgnore
+    public long id() {
+        return id;
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<Protected> protected_() {
+        return (Optional<Protected>) protected_;
+    }
+
+    /**
+     * ID of the user's recommendation playlist.
+     */
+    @JsonIgnore
+    public JsonNullable<String> recommendationsPlaylistId() {
+        return recommendationsPlaylistId;
+    }
+
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
     public Optional<Restricted> restricted() {
         return (Optional<Restricted>) restricted;
     }
@@ -363,19 +347,26 @@ public class User {
         return server;
     }
 
+    /**
+     * URL to the user's avatar image.
+     */
+    @JsonIgnore
+    public String thumb() {
+        return thumb;
+    }
+
+    /**
+     * User's username.
+     */
+    @JsonIgnore
+    public String username() {
+        return username;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
-
-    /**
-     * User's unique ID.
-     */
-    public User withId(long id) {
-        Utils.checkNotNull(id, "id");
-        this.id = id;
-        return this;
-    }
 
     /**
      * User's display name.
@@ -383,103 +374,6 @@ public class User {
     public User withTitle(String title) {
         Utils.checkNotNull(title, "title");
         this.title = title;
-        return this;
-    }
-
-    /**
-     * User's username.
-     */
-    public User withUsername(String username) {
-        Utils.checkNotNull(username, "username");
-        this.username = username;
-        return this;
-    }
-
-    /**
-     * User's email address.
-     */
-    public User withEmail(String email) {
-        Utils.checkNotNull(email, "email");
-        this.email = email;
-        return this;
-    }
-
-    /**
-     * ID of the user's recommendation playlist.
-     */
-    public User withRecommendationsPlaylistId(String recommendationsPlaylistId) {
-        Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
-        this.recommendationsPlaylistId = JsonNullable.of(recommendationsPlaylistId);
-        return this;
-    }
-
-    /**
-     * ID of the user's recommendation playlist.
-     */
-    public User withRecommendationsPlaylistId(JsonNullable<String> recommendationsPlaylistId) {
-        Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
-        this.recommendationsPlaylistId = recommendationsPlaylistId;
-        return this;
-    }
-
-    /**
-     * URL to the user's avatar image.
-     */
-    public User withThumb(String thumb) {
-        Utils.checkNotNull(thumb, "thumb");
-        this.thumb = thumb;
-        return this;
-    }
-
-    public User withProtected(Protected protected_) {
-        Utils.checkNotNull(protected_, "protected_");
-        this.protected_ = Optional.ofNullable(protected_);
-        return this;
-    }
-
-
-    public User withProtected(Optional<? extends Protected> protected_) {
-        Utils.checkNotNull(protected_, "protected_");
-        this.protected_ = protected_;
-        return this;
-    }
-
-    public User withHome(Home home) {
-        Utils.checkNotNull(home, "home");
-        this.home = Optional.ofNullable(home);
-        return this;
-    }
-
-
-    public User withHome(Optional<? extends Home> home) {
-        Utils.checkNotNull(home, "home");
-        this.home = home;
-        return this;
-    }
-
-    public User withAllowTuners(AllowTuners allowTuners) {
-        Utils.checkNotNull(allowTuners, "allowTuners");
-        this.allowTuners = Optional.ofNullable(allowTuners);
-        return this;
-    }
-
-
-    public User withAllowTuners(Optional<? extends AllowTuners> allowTuners) {
-        Utils.checkNotNull(allowTuners, "allowTuners");
-        this.allowTuners = allowTuners;
-        return this;
-    }
-
-    public User withAllowSync(GetUsersAllowSync allowSync) {
-        Utils.checkNotNull(allowSync, "allowSync");
-        this.allowSync = Optional.ofNullable(allowSync);
-        return this;
-    }
-
-
-    public User withAllowSync(Optional<? extends GetUsersAllowSync> allowSync) {
-        Utils.checkNotNull(allowSync, "allowSync");
-        this.allowSync = allowSync;
         return this;
     }
 
@@ -519,6 +413,41 @@ public class User {
     public User withAllowSubtitleAdmin(Optional<? extends AllowSubtitleAdmin> allowSubtitleAdmin) {
         Utils.checkNotNull(allowSubtitleAdmin, "allowSubtitleAdmin");
         this.allowSubtitleAdmin = allowSubtitleAdmin;
+        return this;
+    }
+
+    public User withAllowSync(GetUsersAllowSync allowSync) {
+        Utils.checkNotNull(allowSync, "allowSync");
+        this.allowSync = Optional.ofNullable(allowSync);
+        return this;
+    }
+
+
+    public User withAllowSync(Optional<? extends GetUsersAllowSync> allowSync) {
+        Utils.checkNotNull(allowSync, "allowSync");
+        this.allowSync = allowSync;
+        return this;
+    }
+
+    public User withAllowTuners(AllowTuners allowTuners) {
+        Utils.checkNotNull(allowTuners, "allowTuners");
+        this.allowTuners = Optional.ofNullable(allowTuners);
+        return this;
+    }
+
+
+    public User withAllowTuners(Optional<? extends AllowTuners> allowTuners) {
+        Utils.checkNotNull(allowTuners, "allowTuners");
+        this.allowTuners = allowTuners;
+        return this;
+    }
+
+    /**
+     * User's email address.
+     */
+    public User withEmail(String email) {
+        Utils.checkNotNull(email, "email");
+        this.email = email;
         return this;
     }
 
@@ -613,6 +542,59 @@ public class User {
         return this;
     }
 
+    public User withHome(Home home) {
+        Utils.checkNotNull(home, "home");
+        this.home = Optional.ofNullable(home);
+        return this;
+    }
+
+
+    public User withHome(Optional<? extends Home> home) {
+        Utils.checkNotNull(home, "home");
+        this.home = home;
+        return this;
+    }
+
+    /**
+     * User's unique ID.
+     */
+    public User withId(long id) {
+        Utils.checkNotNull(id, "id");
+        this.id = id;
+        return this;
+    }
+
+    public User withProtected(Protected protected_) {
+        Utils.checkNotNull(protected_, "protected_");
+        this.protected_ = Optional.ofNullable(protected_);
+        return this;
+    }
+
+
+    public User withProtected(Optional<? extends Protected> protected_) {
+        Utils.checkNotNull(protected_, "protected_");
+        this.protected_ = protected_;
+        return this;
+    }
+
+    /**
+     * ID of the user's recommendation playlist.
+     */
+    public User withRecommendationsPlaylistId(String recommendationsPlaylistId) {
+        Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
+        this.recommendationsPlaylistId = JsonNullable.of(recommendationsPlaylistId);
+        return this;
+    }
+
+    /**
+     * ID of the user's recommendation playlist.
+     */
+    public User withRecommendationsPlaylistId(JsonNullable<String> recommendationsPlaylistId) {
+        Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
+        this.recommendationsPlaylistId = recommendationsPlaylistId;
+        return this;
+    }
+
     public User withRestricted(Restricted restricted) {
         Utils.checkNotNull(restricted, "restricted");
         this.restricted = Optional.ofNullable(restricted);
@@ -635,6 +617,24 @@ public class User {
         return this;
     }
 
+    /**
+     * URL to the user's avatar image.
+     */
+    public User withThumb(String thumb) {
+        Utils.checkNotNull(thumb, "thumb");
+        this.thumb = thumb;
+        return this;
+    }
+
+    /**
+     * User's username.
+     */
+    public User withUsername(String username) {
+        Utils.checkNotNull(username, "username");
+        this.username = username;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -645,93 +645,81 @@ public class User {
         }
         User other = (User) o;
         return 
-            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.title, other.title) &&
-            Utils.enhancedDeepEquals(this.username, other.username) &&
-            Utils.enhancedDeepEquals(this.email, other.email) &&
-            Utils.enhancedDeepEquals(this.recommendationsPlaylistId, other.recommendationsPlaylistId) &&
-            Utils.enhancedDeepEquals(this.thumb, other.thumb) &&
-            Utils.enhancedDeepEquals(this.protected_, other.protected_) &&
-            Utils.enhancedDeepEquals(this.home, other.home) &&
-            Utils.enhancedDeepEquals(this.allowTuners, other.allowTuners) &&
-            Utils.enhancedDeepEquals(this.allowSync, other.allowSync) &&
             Utils.enhancedDeepEquals(this.allowCameraUpload, other.allowCameraUpload) &&
             Utils.enhancedDeepEquals(this.allowChannels, other.allowChannels) &&
             Utils.enhancedDeepEquals(this.allowSubtitleAdmin, other.allowSubtitleAdmin) &&
+            Utils.enhancedDeepEquals(this.allowSync, other.allowSync) &&
+            Utils.enhancedDeepEquals(this.allowTuners, other.allowTuners) &&
+            Utils.enhancedDeepEquals(this.email, other.email) &&
             Utils.enhancedDeepEquals(this.filterAll, other.filterAll) &&
             Utils.enhancedDeepEquals(this.filterMovies, other.filterMovies) &&
             Utils.enhancedDeepEquals(this.filterMusic, other.filterMusic) &&
             Utils.enhancedDeepEquals(this.filterPhotos, other.filterPhotos) &&
             Utils.enhancedDeepEquals(this.filterTelevision, other.filterTelevision) &&
+            Utils.enhancedDeepEquals(this.home, other.home) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.protected_, other.protected_) &&
+            Utils.enhancedDeepEquals(this.recommendationsPlaylistId, other.recommendationsPlaylistId) &&
             Utils.enhancedDeepEquals(this.restricted, other.restricted) &&
-            Utils.enhancedDeepEquals(this.server, other.server);
+            Utils.enhancedDeepEquals(this.server, other.server) &&
+            Utils.enhancedDeepEquals(this.thumb, other.thumb) &&
+            Utils.enhancedDeepEquals(this.username, other.username);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, title, username,
-            email, recommendationsPlaylistId, thumb,
-            protected_, home, allowTuners,
-            allowSync, allowCameraUpload, allowChannels,
-            allowSubtitleAdmin, filterAll, filterMovies,
+            title, allowCameraUpload, allowChannels,
+            allowSubtitleAdmin, allowSync, allowTuners,
+            email, filterAll, filterMovies,
             filterMusic, filterPhotos, filterTelevision,
-            restricted, server);
+            home, id, protected_,
+            recommendationsPlaylistId, restricted, server,
+            thumb, username);
     }
     
     @Override
     public String toString() {
         return Utils.toString(User.class,
-                "id", id,
                 "title", title,
-                "username", username,
-                "email", email,
-                "recommendationsPlaylistId", recommendationsPlaylistId,
-                "thumb", thumb,
-                "protected_", protected_,
-                "home", home,
-                "allowTuners", allowTuners,
-                "allowSync", allowSync,
                 "allowCameraUpload", allowCameraUpload,
                 "allowChannels", allowChannels,
                 "allowSubtitleAdmin", allowSubtitleAdmin,
+                "allowSync", allowSync,
+                "allowTuners", allowTuners,
+                "email", email,
                 "filterAll", filterAll,
                 "filterMovies", filterMovies,
                 "filterMusic", filterMusic,
                 "filterPhotos", filterPhotos,
                 "filterTelevision", filterTelevision,
+                "home", home,
+                "id", id,
+                "protected_", protected_,
+                "recommendationsPlaylistId", recommendationsPlaylistId,
                 "restricted", restricted,
-                "server", server);
+                "server", server,
+                "thumb", thumb,
+                "username", username);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Long id;
-
         private String title;
-
-        private String username;
-
-        private String email;
-
-        private JsonNullable<String> recommendationsPlaylistId = JsonNullable.undefined();
-
-        private String thumb;
-
-        private Optional<? extends Protected> protected_;
-
-        private Optional<? extends Home> home;
-
-        private Optional<? extends AllowTuners> allowTuners;
-
-        private Optional<? extends GetUsersAllowSync> allowSync;
 
         private Optional<? extends AllowCameraUpload> allowCameraUpload;
 
         private Optional<? extends AllowChannels> allowChannels;
 
         private Optional<? extends AllowSubtitleAdmin> allowSubtitleAdmin;
+
+        private Optional<? extends GetUsersAllowSync> allowSync;
+
+        private Optional<? extends AllowTuners> allowTuners;
+
+        private String email;
 
         private JsonNullable<String> filterAll = JsonNullable.undefined();
 
@@ -743,22 +731,24 @@ public class User {
 
         private Optional<String> filterTelevision = Optional.empty();
 
+        private Optional<? extends Home> home;
+
+        private Long id;
+
+        private Optional<? extends Protected> protected_;
+
+        private JsonNullable<String> recommendationsPlaylistId = JsonNullable.undefined();
+
         private Optional<? extends Restricted> restricted;
 
         private List<Server> server;
 
+        private String thumb;
+
+        private String username;
+
         private Builder() {
           // force use of static builder() method
-        }
-
-
-        /**
-         * User's unique ID.
-         */
-        public Builder id(long id) {
-            Utils.checkNotNull(id, "id");
-            this.id = id;
-            return this;
         }
 
 
@@ -768,107 +758,6 @@ public class User {
         public Builder title(String title) {
             Utils.checkNotNull(title, "title");
             this.title = title;
-            return this;
-        }
-
-
-        /**
-         * User's username.
-         */
-        public Builder username(String username) {
-            Utils.checkNotNull(username, "username");
-            this.username = username;
-            return this;
-        }
-
-
-        /**
-         * User's email address.
-         */
-        public Builder email(String email) {
-            Utils.checkNotNull(email, "email");
-            this.email = email;
-            return this;
-        }
-
-
-        /**
-         * ID of the user's recommendation playlist.
-         */
-        public Builder recommendationsPlaylistId(String recommendationsPlaylistId) {
-            Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
-            this.recommendationsPlaylistId = JsonNullable.of(recommendationsPlaylistId);
-            return this;
-        }
-
-        /**
-         * ID of the user's recommendation playlist.
-         */
-        public Builder recommendationsPlaylistId(JsonNullable<String> recommendationsPlaylistId) {
-            Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
-            this.recommendationsPlaylistId = recommendationsPlaylistId;
-            return this;
-        }
-
-
-        /**
-         * URL to the user's avatar image.
-         */
-        public Builder thumb(String thumb) {
-            Utils.checkNotNull(thumb, "thumb");
-            this.thumb = thumb;
-            return this;
-        }
-
-
-        public Builder protected_(Protected protected_) {
-            Utils.checkNotNull(protected_, "protected_");
-            this.protected_ = Optional.ofNullable(protected_);
-            return this;
-        }
-
-        public Builder protected_(Optional<? extends Protected> protected_) {
-            Utils.checkNotNull(protected_, "protected_");
-            this.protected_ = protected_;
-            return this;
-        }
-
-
-        public Builder home(Home home) {
-            Utils.checkNotNull(home, "home");
-            this.home = Optional.ofNullable(home);
-            return this;
-        }
-
-        public Builder home(Optional<? extends Home> home) {
-            Utils.checkNotNull(home, "home");
-            this.home = home;
-            return this;
-        }
-
-
-        public Builder allowTuners(AllowTuners allowTuners) {
-            Utils.checkNotNull(allowTuners, "allowTuners");
-            this.allowTuners = Optional.ofNullable(allowTuners);
-            return this;
-        }
-
-        public Builder allowTuners(Optional<? extends AllowTuners> allowTuners) {
-            Utils.checkNotNull(allowTuners, "allowTuners");
-            this.allowTuners = allowTuners;
-            return this;
-        }
-
-
-        public Builder allowSync(GetUsersAllowSync allowSync) {
-            Utils.checkNotNull(allowSync, "allowSync");
-            this.allowSync = Optional.ofNullable(allowSync);
-            return this;
-        }
-
-        public Builder allowSync(Optional<? extends GetUsersAllowSync> allowSync) {
-            Utils.checkNotNull(allowSync, "allowSync");
-            this.allowSync = allowSync;
             return this;
         }
 
@@ -908,6 +797,42 @@ public class User {
         public Builder allowSubtitleAdmin(Optional<? extends AllowSubtitleAdmin> allowSubtitleAdmin) {
             Utils.checkNotNull(allowSubtitleAdmin, "allowSubtitleAdmin");
             this.allowSubtitleAdmin = allowSubtitleAdmin;
+            return this;
+        }
+
+
+        public Builder allowSync(GetUsersAllowSync allowSync) {
+            Utils.checkNotNull(allowSync, "allowSync");
+            this.allowSync = Optional.ofNullable(allowSync);
+            return this;
+        }
+
+        public Builder allowSync(Optional<? extends GetUsersAllowSync> allowSync) {
+            Utils.checkNotNull(allowSync, "allowSync");
+            this.allowSync = allowSync;
+            return this;
+        }
+
+
+        public Builder allowTuners(AllowTuners allowTuners) {
+            Utils.checkNotNull(allowTuners, "allowTuners");
+            this.allowTuners = Optional.ofNullable(allowTuners);
+            return this;
+        }
+
+        public Builder allowTuners(Optional<? extends AllowTuners> allowTuners) {
+            Utils.checkNotNull(allowTuners, "allowTuners");
+            this.allowTuners = allowTuners;
+            return this;
+        }
+
+
+        /**
+         * User's email address.
+         */
+        public Builder email(String email) {
+            Utils.checkNotNull(email, "email");
+            this.email = email;
             return this;
         }
 
@@ -1007,6 +932,61 @@ public class User {
         }
 
 
+        public Builder home(Home home) {
+            Utils.checkNotNull(home, "home");
+            this.home = Optional.ofNullable(home);
+            return this;
+        }
+
+        public Builder home(Optional<? extends Home> home) {
+            Utils.checkNotNull(home, "home");
+            this.home = home;
+            return this;
+        }
+
+
+        /**
+         * User's unique ID.
+         */
+        public Builder id(long id) {
+            Utils.checkNotNull(id, "id");
+            this.id = id;
+            return this;
+        }
+
+
+        public Builder protected_(Protected protected_) {
+            Utils.checkNotNull(protected_, "protected_");
+            this.protected_ = Optional.ofNullable(protected_);
+            return this;
+        }
+
+        public Builder protected_(Optional<? extends Protected> protected_) {
+            Utils.checkNotNull(protected_, "protected_");
+            this.protected_ = protected_;
+            return this;
+        }
+
+
+        /**
+         * ID of the user's recommendation playlist.
+         */
+        public Builder recommendationsPlaylistId(String recommendationsPlaylistId) {
+            Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
+            this.recommendationsPlaylistId = JsonNullable.of(recommendationsPlaylistId);
+            return this;
+        }
+
+        /**
+         * ID of the user's recommendation playlist.
+         */
+        public Builder recommendationsPlaylistId(JsonNullable<String> recommendationsPlaylistId) {
+            Utils.checkNotNull(recommendationsPlaylistId, "recommendationsPlaylistId");
+            this.recommendationsPlaylistId = recommendationsPlaylistId;
+            return this;
+        }
+
+
         public Builder restricted(Restricted restricted) {
             Utils.checkNotNull(restricted, "restricted");
             this.restricted = Optional.ofNullable(restricted);
@@ -1029,19 +1009,27 @@ public class User {
             return this;
         }
 
+
+        /**
+         * URL to the user's avatar image.
+         */
+        public Builder thumb(String thumb) {
+            Utils.checkNotNull(thumb, "thumb");
+            this.thumb = thumb;
+            return this;
+        }
+
+
+        /**
+         * User's username.
+         */
+        public Builder username(String username) {
+            Utils.checkNotNull(username, "username");
+            this.username = username;
+            return this;
+        }
+
         public User build() {
-            if (protected_ == null) {
-                protected_ = _SINGLETON_VALUE_Protected.value();
-            }
-            if (home == null) {
-                home = _SINGLETON_VALUE_Home.value();
-            }
-            if (allowTuners == null) {
-                allowTuners = _SINGLETON_VALUE_AllowTuners.value();
-            }
-            if (allowSync == null) {
-                allowSync = _SINGLETON_VALUE_AllowSync.value();
-            }
             if (allowCameraUpload == null) {
                 allowCameraUpload = _SINGLETON_VALUE_AllowCameraUpload.value();
             }
@@ -1051,44 +1039,32 @@ public class User {
             if (allowSubtitleAdmin == null) {
                 allowSubtitleAdmin = _SINGLETON_VALUE_AllowSubtitleAdmin.value();
             }
+            if (allowSync == null) {
+                allowSync = _SINGLETON_VALUE_AllowSync.value();
+            }
+            if (allowTuners == null) {
+                allowTuners = _SINGLETON_VALUE_AllowTuners.value();
+            }
+            if (home == null) {
+                home = _SINGLETON_VALUE_Home.value();
+            }
+            if (protected_ == null) {
+                protected_ = _SINGLETON_VALUE_Protected.value();
+            }
             if (restricted == null) {
                 restricted = _SINGLETON_VALUE_Restricted.value();
             }
 
             return new User(
-                id, title, username,
-                email, recommendationsPlaylistId, thumb,
-                protected_, home, allowTuners,
-                allowSync, allowCameraUpload, allowChannels,
-                allowSubtitleAdmin, filterAll, filterMovies,
+                title, allowCameraUpload, allowChannels,
+                allowSubtitleAdmin, allowSync, allowTuners,
+                email, filterAll, filterMovies,
                 filterMusic, filterPhotos, filterTelevision,
-                restricted, server);
+                home, id, protected_,
+                recommendationsPlaylistId, restricted, server,
+                thumb, username);
         }
 
-
-        private static final LazySingletonValue<Optional<? extends Protected>> _SINGLETON_VALUE_Protected =
-                new LazySingletonValue<>(
-                        "protected",
-                        "0",
-                        new TypeReference<Optional<? extends Protected>>() {});
-
-        private static final LazySingletonValue<Optional<? extends Home>> _SINGLETON_VALUE_Home =
-                new LazySingletonValue<>(
-                        "home",
-                        "0",
-                        new TypeReference<Optional<? extends Home>>() {});
-
-        private static final LazySingletonValue<Optional<? extends AllowTuners>> _SINGLETON_VALUE_AllowTuners =
-                new LazySingletonValue<>(
-                        "allowTuners",
-                        "0",
-                        new TypeReference<Optional<? extends AllowTuners>>() {});
-
-        private static final LazySingletonValue<Optional<? extends GetUsersAllowSync>> _SINGLETON_VALUE_AllowSync =
-                new LazySingletonValue<>(
-                        "allowSync",
-                        "0",
-                        new TypeReference<Optional<? extends GetUsersAllowSync>>() {});
 
         private static final LazySingletonValue<Optional<? extends AllowCameraUpload>> _SINGLETON_VALUE_AllowCameraUpload =
                 new LazySingletonValue<>(
@@ -1107,6 +1083,30 @@ public class User {
                         "allowSubtitleAdmin",
                         "0",
                         new TypeReference<Optional<? extends AllowSubtitleAdmin>>() {});
+
+        private static final LazySingletonValue<Optional<? extends GetUsersAllowSync>> _SINGLETON_VALUE_AllowSync =
+                new LazySingletonValue<>(
+                        "allowSync",
+                        "0",
+                        new TypeReference<Optional<? extends GetUsersAllowSync>>() {});
+
+        private static final LazySingletonValue<Optional<? extends AllowTuners>> _SINGLETON_VALUE_AllowTuners =
+                new LazySingletonValue<>(
+                        "allowTuners",
+                        "0",
+                        new TypeReference<Optional<? extends AllowTuners>>() {});
+
+        private static final LazySingletonValue<Optional<? extends Home>> _SINGLETON_VALUE_Home =
+                new LazySingletonValue<>(
+                        "home",
+                        "0",
+                        new TypeReference<Optional<? extends Home>>() {});
+
+        private static final LazySingletonValue<Optional<? extends Protected>> _SINGLETON_VALUE_Protected =
+                new LazySingletonValue<>(
+                        "protected",
+                        "0",
+                        new TypeReference<Optional<? extends Protected>>() {});
 
         private static final LazySingletonValue<Optional<? extends Restricted>> _SINGLETON_VALUE_Restricted =
                 new LazySingletonValue<>(

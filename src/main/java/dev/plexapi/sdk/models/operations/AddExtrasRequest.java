@@ -84,7 +84,15 @@ public class AddExtrasRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
+    /**
+     * The title to filter by or assign
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=title")
+    private Optional<String> title;
 
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
@@ -100,12 +108,6 @@ public class AddExtrasRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=url")
     private String url;
 
-    /**
-     * The title to filter by or assign
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=title")
-    private Optional<String> title;
-
     @JsonCreator
     public AddExtrasRequest(
             Optional<? extends Accepts> accepts,
@@ -119,10 +121,10 @@ public class AddExtrasRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<String> title,
             String ids,
             Optional<Long> extraType,
-            String url,
-            Optional<String> title) {
+            String url) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -134,10 +136,10 @@ public class AddExtrasRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
+        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(ids, "ids");
         Utils.checkNotNull(extraType, "extraType");
         Utils.checkNotNull(url, "url");
-        Utils.checkNotNull(title, "title");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -149,10 +151,10 @@ public class AddExtrasRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
+        this.title = title;
         this.ids = ids;
         this.extraType = extraType;
         this.url = url;
-        this.title = title;
     }
     
     public AddExtrasRequest(
@@ -161,8 +163,8 @@ public class AddExtrasRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), ids,
-            Optional.empty(), url, Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            ids, Optional.empty(), url);
     }
 
     /**
@@ -254,6 +256,17 @@ public class AddExtrasRequest {
         return marketplace;
     }
 
+    /**
+     * The title to filter by or assign
+     */
+    @JsonIgnore
+    public Optional<String> title() {
+        return title;
+    }
+
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
@@ -273,14 +286,6 @@ public class AddExtrasRequest {
     @JsonIgnore
     public String url() {
         return url;
-    }
-
-    /**
-     * The title to filter by or assign
-     */
-    @JsonIgnore
-    public Optional<String> title() {
-        return title;
     }
 
     public static Builder builder() {
@@ -497,6 +502,28 @@ public class AddExtrasRequest {
         return this;
     }
 
+    /**
+     * The title to filter by or assign
+     */
+    public AddExtrasRequest withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = Optional.ofNullable(title);
+        return this;
+    }
+
+
+    /**
+     * The title to filter by or assign
+     */
+    public AddExtrasRequest withTitle(Optional<String> title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of IDs
+     */
     public AddExtrasRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
@@ -531,25 +558,6 @@ public class AddExtrasRequest {
         return this;
     }
 
-    /**
-     * The title to filter by or assign
-     */
-    public AddExtrasRequest withTitle(String title) {
-        Utils.checkNotNull(title, "title");
-        this.title = Optional.ofNullable(title);
-        return this;
-    }
-
-
-    /**
-     * The title to filter by or assign
-     */
-    public AddExtrasRequest withTitle(Optional<String> title) {
-        Utils.checkNotNull(title, "title");
-        this.title = title;
-        return this;
-    }
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -571,10 +579,10 @@ public class AddExtrasRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.ids, other.ids) &&
             Utils.enhancedDeepEquals(this.extraType, other.extraType) &&
-            Utils.enhancedDeepEquals(this.url, other.url) &&
-            Utils.enhancedDeepEquals(this.title, other.title);
+            Utils.enhancedDeepEquals(this.url, other.url);
     }
     
     @Override
@@ -583,8 +591,8 @@ public class AddExtrasRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, ids,
-            extraType, url, title);
+            deviceName, marketplace, title,
+            ids, extraType, url);
     }
     
     @Override
@@ -601,10 +609,10 @@ public class AddExtrasRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "title", title,
                 "ids", ids,
                 "extraType", extraType,
-                "url", url,
-                "title", title);
+                "url", url);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -632,13 +640,13 @@ public class AddExtrasRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
+        private Optional<String> title = Optional.empty();
+
         private String ids;
 
         private Optional<Long> extraType = Optional.empty();
 
         private String url;
-
-        private Optional<String> title = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -854,6 +862,28 @@ public class AddExtrasRequest {
         }
 
 
+        /**
+         * The title to filter by or assign
+         */
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = Optional.ofNullable(title);
+            return this;
+        }
+
+        /**
+         * The title to filter by or assign
+         */
+        public Builder title(Optional<String> title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
+        }
+
+
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -889,25 +919,6 @@ public class AddExtrasRequest {
             return this;
         }
 
-
-        /**
-         * The title to filter by or assign
-         */
-        public Builder title(String title) {
-            Utils.checkNotNull(title, "title");
-            this.title = Optional.ofNullable(title);
-            return this;
-        }
-
-        /**
-         * The title to filter by or assign
-         */
-        public Builder title(Optional<String> title) {
-            Utils.checkNotNull(title, "title");
-            this.title = title;
-            return this;
-        }
-
         public AddExtrasRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -917,8 +928,8 @@ public class AddExtrasRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, ids,
-                extraType, url, title);
+                deviceName, marketplace, title,
+                ids, extraType, url);
         }
 
 

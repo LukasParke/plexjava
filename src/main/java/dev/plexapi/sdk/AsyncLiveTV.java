@@ -3,12 +3,21 @@
  */
 package dev.plexapi.sdk;
 
-import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
+import dev.plexapi.sdk.models.operations.DeleteLiveTVSessionRequest;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsByDVRRequest;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsRequest;
 import dev.plexapi.sdk.models.operations.GetLiveTVSessionRequest;
 import dev.plexapi.sdk.models.operations.GetSessionPlaylistIndexRequest;
 import dev.plexapi.sdk.models.operations.GetSessionSegmentRequest;
+import dev.plexapi.sdk.models.operations.GetSessionsRequest;
+import dev.plexapi.sdk.models.operations.async.DeleteLiveTVSessionRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.DeleteLiveTVSessionResponse;
+import dev.plexapi.sdk.models.operations.async.GetDVRRecordingsByDVRRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetDVRRecordingsByDVRResponse;
+import dev.plexapi.sdk.models.operations.async.GetDVRRecordingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetDVRRecordingsResponse;
 import dev.plexapi.sdk.models.operations.async.GetLiveTVSessionRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetLiveTVSessionResponse;
 import dev.plexapi.sdk.models.operations.async.GetSessionPlaylistIndexRequestBuilder;
@@ -17,16 +26,24 @@ import dev.plexapi.sdk.models.operations.async.GetSessionSegmentRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSessionSegmentResponse;
 import dev.plexapi.sdk.models.operations.async.GetSessionsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSessionsResponse;
+import dev.plexapi.sdk.operations.DeleteLiveTVSession;
+import dev.plexapi.sdk.operations.GetDVRRecordings;
+import dev.plexapi.sdk.operations.GetDVRRecordingsByDVR;
 import dev.plexapi.sdk.operations.GetLiveTVSession;
 import dev.plexapi.sdk.operations.GetSessionPlaylistIndex;
 import dev.plexapi.sdk.operations.GetSessionSegment;
 import dev.plexapi.sdk.operations.GetSessions;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.Long;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * LiveTV contains the playback sessions of a channel from a DVR device
  */
 public class AsyncLiveTV {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final LiveTV syncSDK;
 
@@ -46,6 +63,54 @@ public class AsyncLiveTV {
 
 
     /**
+     * Get DVR Recordings
+     * 
+     * <p>List completed DVR recordings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetDVRRecordingsRequestBuilder getDVRRecordings() {
+        return new GetDVRRecordingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DVR Recordings
+     * 
+     * <p>List completed DVR recordings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetDVRRecordingsResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRRecordingsResponse> getDVRRecordings(GetDVRRecordingsRequest request) {
+        return getDVRRecordings(request, Optional.empty());
+    }
+
+    /**
+     * Get DVR Recordings
+     * 
+     * <p>List completed DVR recordings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDVRRecordingsResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRRecordingsResponse> getDVRRecordings(GetDVRRecordingsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetDVRRecordingsRequest, GetDVRRecordingsResponse> operation
+              = new GetDVRRecordings.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
      * Get all sessions
      * 
      * <p>Get all livetv sessions and metadata
@@ -61,12 +126,132 @@ public class AsyncLiveTV {
      * 
      * <p>Get all livetv sessions and metadata
      * 
-     * @return CompletableFuture&lt;GetSessionsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSessionsResponse>} - The async response
      */
     public CompletableFuture<GetSessionsResponse> getSessionsDirect() {
-        AsyncRequestlessOperation<GetSessionsResponse> operation
-            = new GetSessions.Async(sdkConfiguration);
-        return operation.doRequest()
+        return getSessions(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get all sessions
+     * 
+     * <p>Get all livetv sessions and metadata
+     * 
+     * @param dvrId Filter by DVR ID.
+     * @param channel Filter by channel ID.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSessionsResponse>} - The async response
+     */
+    public CompletableFuture<GetSessionsResponse> getSessions(
+            Optional<Long> dvrId, Optional<Long> channel,
+            Optional<Options> options) {
+        GetSessionsRequest request =
+            GetSessionsRequest
+                .builder()
+                .dvrId(dvrId)
+                .channel(channel)
+                .build();
+        AsyncRequestOperation<GetSessionsRequest, GetSessionsResponse> operation
+              = new GetSessions.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get DVR Recordings by DVR
+     * 
+     * <p>List completed DVR recordings for a specific DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetDVRRecordingsByDVRRequestBuilder getDVRRecordingsByDVR() {
+        return new GetDVRRecordingsByDVRRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DVR Recordings by DVR
+     * 
+     * <p>List completed DVR recordings for a specific DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetDVRRecordingsByDVRResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRRecordingsByDVRResponse> getDVRRecordingsByDVR(GetDVRRecordingsByDVRRequest request) {
+        return getDVRRecordingsByDVR(request, Optional.empty());
+    }
+
+    /**
+     * Get DVR Recordings by DVR
+     * 
+     * <p>List completed DVR recordings for a specific DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDVRRecordingsByDVRResponse>} - The async response
+     */
+    public CompletableFuture<GetDVRRecordingsByDVRResponse> getDVRRecordingsByDVR(GetDVRRecordingsByDVRRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetDVRRecordingsByDVRRequest, GetDVRRecordingsByDVRResponse> operation
+              = new GetDVRRecordingsByDVR.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Delete Live TV Session
+     * 
+     * <p>Terminate a Live TV session.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public DeleteLiveTVSessionRequestBuilder deleteLiveTVSession() {
+        return new DeleteLiveTVSessionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Delete Live TV Session
+     * 
+     * <p>Terminate a Live TV session.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<DeleteLiveTVSessionResponse>} - The async response
+     */
+    public CompletableFuture<DeleteLiveTVSessionResponse> deleteLiveTVSession(DeleteLiveTVSessionRequest request) {
+        return deleteLiveTVSession(request, Optional.empty());
+    }
+
+    /**
+     * Delete Live TV Session
+     * 
+     * <p>Terminate a Live TV session.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteLiveTVSessionResponse>} - The async response
+     */
+    public CompletableFuture<DeleteLiveTVSessionResponse> deleteLiveTVSession(DeleteLiveTVSessionRequest request, Optional<Options> options) {
+        AsyncRequestOperation<DeleteLiveTVSessionRequest, DeleteLiveTVSessionResponse> operation
+              = new DeleteLiveTVSession.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
@@ -88,11 +273,26 @@ public class AsyncLiveTV {
      * <p>Get a single livetv session and metadata
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetLiveTVSessionResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetLiveTVSessionResponse>} - The async response
      */
     public CompletableFuture<GetLiveTVSessionResponse> getLiveTVSession(GetLiveTVSessionRequest request) {
+        return getLiveTVSession(request, Optional.empty());
+    }
+
+    /**
+     * Get a single session
+     * 
+     * <p>Get a single livetv session and metadata
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLiveTVSessionResponse>} - The async response
+     */
+    public CompletableFuture<GetLiveTVSessionResponse> getLiveTVSession(GetLiveTVSessionRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetLiveTVSessionRequest, GetLiveTVSessionResponse> operation
-              = new GetLiveTVSession.Async(sdkConfiguration);
+              = new GetLiveTVSession.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -115,11 +315,26 @@ public class AsyncLiveTV {
      * <p>Get a playlist index for playing this session
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSessionPlaylistIndexResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSessionPlaylistIndexResponse>} - The async response
      */
     public CompletableFuture<GetSessionPlaylistIndexResponse> getSessionPlaylistIndex(GetSessionPlaylistIndexRequest request) {
+        return getSessionPlaylistIndex(request, Optional.empty());
+    }
+
+    /**
+     * Get a session playlist index
+     * 
+     * <p>Get a playlist index for playing this session
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSessionPlaylistIndexResponse>} - The async response
+     */
+    public CompletableFuture<GetSessionPlaylistIndexResponse> getSessionPlaylistIndex(GetSessionPlaylistIndexRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSessionPlaylistIndexRequest, GetSessionPlaylistIndexResponse> operation
-              = new GetSessionPlaylistIndex.Async(sdkConfiguration);
+              = new GetSessionPlaylistIndex.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -142,11 +357,26 @@ public class AsyncLiveTV {
      * <p>Get a single LiveTV session segment
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSessionSegmentResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSessionSegmentResponse>} - The async response
      */
     public CompletableFuture<GetSessionSegmentResponse> getSessionSegment(GetSessionSegmentRequest request) {
+        return getSessionSegment(request, Optional.empty());
+    }
+
+    /**
+     * Get a single session segment
+     * 
+     * <p>Get a single LiveTV session segment
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSessionSegmentResponse>} - The async response
+     */
+    public CompletableFuture<GetSessionSegmentResponse> getSessionSegment(GetSessionSegmentRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSessionSegmentRequest, GetSessionSegmentResponse> operation
-              = new GetSessionSegment.Async(sdkConfiguration);
+              = new GetSessionSegment.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

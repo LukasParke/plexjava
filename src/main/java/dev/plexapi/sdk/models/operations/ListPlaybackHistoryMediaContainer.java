@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.PlaybackHistoryMetadata;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Long;
 import java.lang.Override;
@@ -19,9 +20,15 @@ import java.util.Optional;
 /**
  * ListPlaybackHistoryMediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class ListPlaybackHistoryMediaContainer {
 
@@ -30,7 +37,8 @@ public class ListPlaybackHistoryMediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -51,7 +59,7 @@ public class ListPlaybackHistoryMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Metadata")
-    private Optional<? extends List<ListPlaybackHistoryMetadata>> metadata;
+    private Optional<? extends List<PlaybackHistoryMetadata>> metadata;
 
     @JsonCreator
     public ListPlaybackHistoryMediaContainer(
@@ -59,7 +67,7 @@ public class ListPlaybackHistoryMediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("Metadata") Optional<? extends List<ListPlaybackHistoryMetadata>> metadata) {
+            @JsonProperty("Metadata") Optional<? extends List<PlaybackHistoryMetadata>> metadata) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
@@ -83,7 +91,8 @@ public class ListPlaybackHistoryMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -105,8 +114,8 @@ public class ListPlaybackHistoryMediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<ListPlaybackHistoryMetadata>> metadata() {
-        return (Optional<List<ListPlaybackHistoryMetadata>>) metadata;
+    public Optional<List<PlaybackHistoryMetadata>> metadata() {
+        return (Optional<List<PlaybackHistoryMetadata>>) metadata;
     }
 
     public static Builder builder() {
@@ -128,7 +137,8 @@ public class ListPlaybackHistoryMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public ListPlaybackHistoryMediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -138,7 +148,8 @@ public class ListPlaybackHistoryMediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public ListPlaybackHistoryMediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -178,14 +189,14 @@ public class ListPlaybackHistoryMediaContainer {
         return this;
     }
 
-    public ListPlaybackHistoryMediaContainer withMetadata(List<ListPlaybackHistoryMetadata> metadata) {
+    public ListPlaybackHistoryMediaContainer withMetadata(List<PlaybackHistoryMetadata> metadata) {
         Utils.checkNotNull(metadata, "metadata");
         this.metadata = Optional.ofNullable(metadata);
         return this;
     }
 
 
-    public ListPlaybackHistoryMediaContainer withMetadata(Optional<? extends List<ListPlaybackHistoryMetadata>> metadata) {
+    public ListPlaybackHistoryMediaContainer withMetadata(Optional<? extends List<PlaybackHistoryMetadata>> metadata) {
         Utils.checkNotNull(metadata, "metadata");
         this.metadata = metadata;
         return this;
@@ -236,7 +247,7 @@ public class ListPlaybackHistoryMediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<? extends List<ListPlaybackHistoryMetadata>> metadata = Optional.empty();
+        private Optional<? extends List<PlaybackHistoryMetadata>> metadata = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -257,7 +268,8 @@ public class ListPlaybackHistoryMediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -266,7 +278,8 @@ public class ListPlaybackHistoryMediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -307,13 +320,13 @@ public class ListPlaybackHistoryMediaContainer {
         }
 
 
-        public Builder metadata(List<ListPlaybackHistoryMetadata> metadata) {
+        public Builder metadata(List<PlaybackHistoryMetadata> metadata) {
             Utils.checkNotNull(metadata, "metadata");
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
-        public Builder metadata(Optional<? extends List<ListPlaybackHistoryMetadata>> metadata) {
+        public Builder metadata(Optional<? extends List<PlaybackHistoryMetadata>> metadata) {
             Utils.checkNotNull(metadata, "metadata");
             this.metadata = metadata;
             return this;

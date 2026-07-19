@@ -1,19 +1,19 @@
 # Epg
-(*epg()*)
 
 ## Overview
 
 The EPG (Electronic Program Guide) is responsible for obtaining metadata for what is airing on each channel and when
-
 
 ### Available Operations
 
 * [computeChannelMap](#computechannelmap) - Compute the best channel map
 * [getChannels](#getchannels) - Get channels for a lineup
 * [getCountries](#getcountries) - Get all countries
+* [getEPGGuide](#getepgguide) - Get EPG Guide
 * [getAllLanguages](#getalllanguages) - Get all languages
 * [getLineup](#getlineup) - Compute the best lineup
-* [getLineupChannels](#getlineupchannels) - Get the channels for mulitple lineups
+* [getLineupChannels](#getlineupchannels) - Get the channels for multiple lineups
+* [searchEPG](#searchepg) - Search EPG
 * [getCountriesLineups](#getcountrieslineups) - Get lineups for a country via postal code
 * [getCountryRegions](#getcountryregions) - Get regions for a country
 * [listLineups](#listlineups) - Get lineups for a region
@@ -63,7 +63,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -128,8 +128,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.channelResponse().isPresent()) {
+            System.out.println(res.channelResponse().get());
         }
     }
 }
@@ -162,12 +162,13 @@ This endpoint returns a list of countries which EPG data is available for. There
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetCountriesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -177,7 +178,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -191,6 +192,51 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getEPGGuide
+
+Fetch the global electronic program guide.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getEPGGuide" method="get" path="/livetv/epg/guide" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetEPGGuideResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetEPGGuideResponse res = sdk.epg().getEPGGuide()
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Response
+
+**[GetEPGGuideResponse](../../models/operations/GetEPGGuideResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getAllLanguages
@@ -204,12 +250,13 @@ Returns a list of all possible languages for EPG data.
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetAllLanguagesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -219,7 +266,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -233,6 +280,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getLineup
@@ -279,7 +327,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.mediaContainerWithLineup().isPresent()) {
+            System.out.println(res.mediaContainerWithLineup().get());
+        }
     }
 }
 ```
@@ -347,7 +397,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -367,6 +417,73 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## searchEPG
+
+Search the electronic program guide for upcoming airings.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="searchEPG" method="get" path="/livetv/epg/search" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.SearchEPGRequest;
+import dev.plexapi.sdk.models.operations.SearchEPGResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        SearchEPGRequest req = SearchEPGRequest.builder()
+                .build();
+
+        SearchEPGResponse res = sdk.epg().searchEPG()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `request`                                                       | [SearchEPGRequest](../../models/operations/SearchEPGRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
+
+### Response
+
+**[SearchEPGResponse](../../models/operations/SearchEPGResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getCountriesLineups
@@ -414,7 +531,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithLineup().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithLineup().get());
         }
     }
 }
@@ -481,7 +598,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -549,7 +666,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithLineup().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithLineup().get());
         }
     }
 }

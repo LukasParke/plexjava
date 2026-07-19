@@ -86,7 +86,8 @@ public class TranscodeImageRequest {
     private Optional<String> marketplace;
 
     /**
-     * The source URL for the image to transcode.  Note, if this URL requires a token such as `X-Plex-Token`, it should be given as a query parameter to this url.
+     * The source URL for the image to transcode. Note, if this URL requires a token such as
+     * `X-Plex-Token`, it should be given as a query parameter to this url.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=url")
     private Optional<String> url;
@@ -110,31 +111,35 @@ public class TranscodeImageRequest {
     private Optional<Long> height;
 
     /**
-     * The desired quality of the output.  -1 means the highest quality.  Defaults to -1
+     * The desired quality of the output. -1 means the highest quality. Defaults to -1
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=quality")
     private Optional<Long> quality;
 
     /**
-     * The background color to apply before painting the image.  Only really applicable if image has transparency.  Defaults to none
+     * The background color to apply before painting the image. Only really applicable if image has
+     * transparency. Defaults to none
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=background")
     private Optional<String> background;
 
     /**
-     * Indicates if image should be upscaled to the desired width/height.  Defaults to false
+     * Indicates if image should be upscaled to the desired width/height. Defaults to false
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=upscale")
     private Optional<? extends BoolInt> upscale;
 
     /**
-     * Indicates if image should be scaled to fit the smaller dimension.  By default (false) the image is scaled to fit within the width/height specified but if this parameter is true, it will allow overflowing one dimension to fit the other.  Essentially it is making the width/height minimum sizes of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
+     * Indicates if image should be scaled to fit the smaller dimension. By default (false) the image is
+     * scaled to fit within the width/height specified but if this parameter is true, it will allow
+     * overflowing one dimension to fit the other. Essentially it is making the width/height minimum sizes
+     * of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=minSize")
     private Optional<? extends BoolInt> minSize;
 
     /**
-     * Obey the rotation values specified in EXIF data.  Defaults to true.
+     * Obey the rotation values specified in EXIF data. Defaults to true.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=rotate")
     private Optional<? extends BoolInt> rotate;
@@ -146,30 +151,30 @@ public class TranscodeImageRequest {
     private Optional<Long> blur;
 
     /**
-     * Scale the image saturation by the specified percentage.  Defaults to 100
+     * Scale the image saturation by the specified percentage. Defaults to 100
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=saturation")
     private Optional<Long> saturation;
 
     /**
-     * Render the image at the specified opacity percentage.  Defaults to 100
+     * Render the image at the specified opacity percentage. Defaults to 100
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=opacity")
     private Optional<Long> opacity;
 
     /**
      * Use the specified chroma subsambling.
-     *   - 0: 411
-     *   - 1: 420
-     *   - 2: 422
-     *   - 3: 444
+     * - 0: 411
+     * - 1: 420
+     * - 2: 422
+     * - 3: 444
      * Defaults to 3 (444)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=chromaSubsampling")
     private Optional<? extends ChromaSubsampling> chromaSubsampling;
 
     /**
-     * The color to blend with the image.  Defaults to none
+     * The color to blend with the image. Defaults to none
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=blendColor")
     private Optional<String> blendColor;
@@ -355,7 +360,8 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * The source URL for the image to transcode.  Note, if this URL requires a token such as `X-Plex-Token`, it should be given as a query parameter to this url.
+     * The source URL for the image to transcode. Note, if this URL requires a token such as
+     * `X-Plex-Token`, it should be given as a query parameter to this url.
      */
     @JsonIgnore
     public Optional<String> url() {
@@ -388,7 +394,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * The desired quality of the output.  -1 means the highest quality.  Defaults to -1
+     * The desired quality of the output. -1 means the highest quality. Defaults to -1
      */
     @JsonIgnore
     public Optional<Long> quality() {
@@ -396,7 +402,8 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * The background color to apply before painting the image.  Only really applicable if image has transparency.  Defaults to none
+     * The background color to apply before painting the image. Only really applicable if image has
+     * transparency. Defaults to none
      */
     @JsonIgnore
     public Optional<String> background() {
@@ -404,7 +411,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Indicates if image should be upscaled to the desired width/height.  Defaults to false
+     * Indicates if image should be upscaled to the desired width/height. Defaults to false
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -413,7 +420,10 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Indicates if image should be scaled to fit the smaller dimension.  By default (false) the image is scaled to fit within the width/height specified but if this parameter is true, it will allow overflowing one dimension to fit the other.  Essentially it is making the width/height minimum sizes of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
+     * Indicates if image should be scaled to fit the smaller dimension. By default (false) the image is
+     * scaled to fit within the width/height specified but if this parameter is true, it will allow
+     * overflowing one dimension to fit the other. Essentially it is making the width/height minimum sizes
+     * of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -422,7 +432,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Obey the rotation values specified in EXIF data.  Defaults to true.
+     * Obey the rotation values specified in EXIF data. Defaults to true.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -439,7 +449,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Scale the image saturation by the specified percentage.  Defaults to 100
+     * Scale the image saturation by the specified percentage. Defaults to 100
      */
     @JsonIgnore
     public Optional<Long> saturation() {
@@ -447,7 +457,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Render the image at the specified opacity percentage.  Defaults to 100
+     * Render the image at the specified opacity percentage. Defaults to 100
      */
     @JsonIgnore
     public Optional<Long> opacity() {
@@ -456,10 +466,10 @@ public class TranscodeImageRequest {
 
     /**
      * Use the specified chroma subsambling.
-     *   - 0: 411
-     *   - 1: 420
-     *   - 2: 422
-     *   - 3: 444
+     * - 0: 411
+     * - 1: 420
+     * - 2: 422
+     * - 3: 444
      * Defaults to 3 (444)
      */
     @SuppressWarnings("unchecked")
@@ -469,7 +479,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * The color to blend with the image.  Defaults to none
+     * The color to blend with the image. Defaults to none
      */
     @JsonIgnore
     public Optional<String> blendColor() {
@@ -691,7 +701,8 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * The source URL for the image to transcode.  Note, if this URL requires a token such as `X-Plex-Token`, it should be given as a query parameter to this url.
+     * The source URL for the image to transcode. Note, if this URL requires a token such as
+     * `X-Plex-Token`, it should be given as a query parameter to this url.
      */
     public TranscodeImageRequest withUrl(String url) {
         Utils.checkNotNull(url, "url");
@@ -701,7 +712,8 @@ public class TranscodeImageRequest {
 
 
     /**
-     * The source URL for the image to transcode.  Note, if this URL requires a token such as `X-Plex-Token`, it should be given as a query parameter to this url.
+     * The source URL for the image to transcode. Note, if this URL requires a token such as
+     * `X-Plex-Token`, it should be given as a query parameter to this url.
      */
     public TranscodeImageRequest withUrl(Optional<String> url) {
         Utils.checkNotNull(url, "url");
@@ -767,7 +779,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * The desired quality of the output.  -1 means the highest quality.  Defaults to -1
+     * The desired quality of the output. -1 means the highest quality. Defaults to -1
      */
     public TranscodeImageRequest withQuality(long quality) {
         Utils.checkNotNull(quality, "quality");
@@ -777,7 +789,7 @@ public class TranscodeImageRequest {
 
 
     /**
-     * The desired quality of the output.  -1 means the highest quality.  Defaults to -1
+     * The desired quality of the output. -1 means the highest quality. Defaults to -1
      */
     public TranscodeImageRequest withQuality(Optional<Long> quality) {
         Utils.checkNotNull(quality, "quality");
@@ -786,7 +798,8 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * The background color to apply before painting the image.  Only really applicable if image has transparency.  Defaults to none
+     * The background color to apply before painting the image. Only really applicable if image has
+     * transparency. Defaults to none
      */
     public TranscodeImageRequest withBackground(String background) {
         Utils.checkNotNull(background, "background");
@@ -796,7 +809,8 @@ public class TranscodeImageRequest {
 
 
     /**
-     * The background color to apply before painting the image.  Only really applicable if image has transparency.  Defaults to none
+     * The background color to apply before painting the image. Only really applicable if image has
+     * transparency. Defaults to none
      */
     public TranscodeImageRequest withBackground(Optional<String> background) {
         Utils.checkNotNull(background, "background");
@@ -805,7 +819,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Indicates if image should be upscaled to the desired width/height.  Defaults to false
+     * Indicates if image should be upscaled to the desired width/height. Defaults to false
      */
     public TranscodeImageRequest withUpscale(BoolInt upscale) {
         Utils.checkNotNull(upscale, "upscale");
@@ -815,7 +829,7 @@ public class TranscodeImageRequest {
 
 
     /**
-     * Indicates if image should be upscaled to the desired width/height.  Defaults to false
+     * Indicates if image should be upscaled to the desired width/height. Defaults to false
      */
     public TranscodeImageRequest withUpscale(Optional<? extends BoolInt> upscale) {
         Utils.checkNotNull(upscale, "upscale");
@@ -824,7 +838,10 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Indicates if image should be scaled to fit the smaller dimension.  By default (false) the image is scaled to fit within the width/height specified but if this parameter is true, it will allow overflowing one dimension to fit the other.  Essentially it is making the width/height minimum sizes of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
+     * Indicates if image should be scaled to fit the smaller dimension. By default (false) the image is
+     * scaled to fit within the width/height specified but if this parameter is true, it will allow
+     * overflowing one dimension to fit the other. Essentially it is making the width/height minimum sizes
+     * of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
      */
     public TranscodeImageRequest withMinSize(BoolInt minSize) {
         Utils.checkNotNull(minSize, "minSize");
@@ -834,7 +851,10 @@ public class TranscodeImageRequest {
 
 
     /**
-     * Indicates if image should be scaled to fit the smaller dimension.  By default (false) the image is scaled to fit within the width/height specified but if this parameter is true, it will allow overflowing one dimension to fit the other.  Essentially it is making the width/height minimum sizes of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
+     * Indicates if image should be scaled to fit the smaller dimension. By default (false) the image is
+     * scaled to fit within the width/height specified but if this parameter is true, it will allow
+     * overflowing one dimension to fit the other. Essentially it is making the width/height minimum sizes
+     * of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
      */
     public TranscodeImageRequest withMinSize(Optional<? extends BoolInt> minSize) {
         Utils.checkNotNull(minSize, "minSize");
@@ -843,7 +863,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Obey the rotation values specified in EXIF data.  Defaults to true.
+     * Obey the rotation values specified in EXIF data. Defaults to true.
      */
     public TranscodeImageRequest withRotate(BoolInt rotate) {
         Utils.checkNotNull(rotate, "rotate");
@@ -853,7 +873,7 @@ public class TranscodeImageRequest {
 
 
     /**
-     * Obey the rotation values specified in EXIF data.  Defaults to true.
+     * Obey the rotation values specified in EXIF data. Defaults to true.
      */
     public TranscodeImageRequest withRotate(Optional<? extends BoolInt> rotate) {
         Utils.checkNotNull(rotate, "rotate");
@@ -881,7 +901,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Scale the image saturation by the specified percentage.  Defaults to 100
+     * Scale the image saturation by the specified percentage. Defaults to 100
      */
     public TranscodeImageRequest withSaturation(long saturation) {
         Utils.checkNotNull(saturation, "saturation");
@@ -891,7 +911,7 @@ public class TranscodeImageRequest {
 
 
     /**
-     * Scale the image saturation by the specified percentage.  Defaults to 100
+     * Scale the image saturation by the specified percentage. Defaults to 100
      */
     public TranscodeImageRequest withSaturation(Optional<Long> saturation) {
         Utils.checkNotNull(saturation, "saturation");
@@ -900,7 +920,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * Render the image at the specified opacity percentage.  Defaults to 100
+     * Render the image at the specified opacity percentage. Defaults to 100
      */
     public TranscodeImageRequest withOpacity(long opacity) {
         Utils.checkNotNull(opacity, "opacity");
@@ -910,7 +930,7 @@ public class TranscodeImageRequest {
 
 
     /**
-     * Render the image at the specified opacity percentage.  Defaults to 100
+     * Render the image at the specified opacity percentage. Defaults to 100
      */
     public TranscodeImageRequest withOpacity(Optional<Long> opacity) {
         Utils.checkNotNull(opacity, "opacity");
@@ -920,10 +940,10 @@ public class TranscodeImageRequest {
 
     /**
      * Use the specified chroma subsambling.
-     *   - 0: 411
-     *   - 1: 420
-     *   - 2: 422
-     *   - 3: 444
+     * - 0: 411
+     * - 1: 420
+     * - 2: 422
+     * - 3: 444
      * Defaults to 3 (444)
      */
     public TranscodeImageRequest withChromaSubsampling(ChromaSubsampling chromaSubsampling) {
@@ -935,10 +955,10 @@ public class TranscodeImageRequest {
 
     /**
      * Use the specified chroma subsambling.
-     *   - 0: 411
-     *   - 1: 420
-     *   - 2: 422
-     *   - 3: 444
+     * - 0: 411
+     * - 1: 420
+     * - 2: 422
+     * - 3: 444
      * Defaults to 3 (444)
      */
     public TranscodeImageRequest withChromaSubsampling(Optional<? extends ChromaSubsampling> chromaSubsampling) {
@@ -948,7 +968,7 @@ public class TranscodeImageRequest {
     }
 
     /**
-     * The color to blend with the image.  Defaults to none
+     * The color to blend with the image. Defaults to none
      */
     public TranscodeImageRequest withBlendColor(String blendColor) {
         Utils.checkNotNull(blendColor, "blendColor");
@@ -958,7 +978,7 @@ public class TranscodeImageRequest {
 
 
     /**
-     * The color to blend with the image.  Defaults to none
+     * The color to blend with the image. Defaults to none
      */
     public TranscodeImageRequest withBlendColor(Optional<String> blendColor) {
         Utils.checkNotNull(blendColor, "blendColor");
@@ -1315,7 +1335,8 @@ public class TranscodeImageRequest {
 
 
         /**
-         * The source URL for the image to transcode.  Note, if this URL requires a token such as `X-Plex-Token`, it should be given as a query parameter to this url.
+         * The source URL for the image to transcode. Note, if this URL requires a token such as
+         * `X-Plex-Token`, it should be given as a query parameter to this url.
          */
         public Builder url(String url) {
             Utils.checkNotNull(url, "url");
@@ -1324,7 +1345,8 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * The source URL for the image to transcode.  Note, if this URL requires a token such as `X-Plex-Token`, it should be given as a query parameter to this url.
+         * The source URL for the image to transcode. Note, if this URL requires a token such as
+         * `X-Plex-Token`, it should be given as a query parameter to this url.
          */
         public Builder url(Optional<String> url) {
             Utils.checkNotNull(url, "url");
@@ -1391,7 +1413,7 @@ public class TranscodeImageRequest {
 
 
         /**
-         * The desired quality of the output.  -1 means the highest quality.  Defaults to -1
+         * The desired quality of the output. -1 means the highest quality. Defaults to -1
          */
         public Builder quality(long quality) {
             Utils.checkNotNull(quality, "quality");
@@ -1400,7 +1422,7 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * The desired quality of the output.  -1 means the highest quality.  Defaults to -1
+         * The desired quality of the output. -1 means the highest quality. Defaults to -1
          */
         public Builder quality(Optional<Long> quality) {
             Utils.checkNotNull(quality, "quality");
@@ -1410,7 +1432,8 @@ public class TranscodeImageRequest {
 
 
         /**
-         * The background color to apply before painting the image.  Only really applicable if image has transparency.  Defaults to none
+         * The background color to apply before painting the image. Only really applicable if image has
+         * transparency. Defaults to none
          */
         public Builder background(String background) {
             Utils.checkNotNull(background, "background");
@@ -1419,7 +1442,8 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * The background color to apply before painting the image.  Only really applicable if image has transparency.  Defaults to none
+         * The background color to apply before painting the image. Only really applicable if image has
+         * transparency. Defaults to none
          */
         public Builder background(Optional<String> background) {
             Utils.checkNotNull(background, "background");
@@ -1429,7 +1453,7 @@ public class TranscodeImageRequest {
 
 
         /**
-         * Indicates if image should be upscaled to the desired width/height.  Defaults to false
+         * Indicates if image should be upscaled to the desired width/height. Defaults to false
          */
         public Builder upscale(BoolInt upscale) {
             Utils.checkNotNull(upscale, "upscale");
@@ -1438,7 +1462,7 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * Indicates if image should be upscaled to the desired width/height.  Defaults to false
+         * Indicates if image should be upscaled to the desired width/height. Defaults to false
          */
         public Builder upscale(Optional<? extends BoolInt> upscale) {
             Utils.checkNotNull(upscale, "upscale");
@@ -1448,7 +1472,10 @@ public class TranscodeImageRequest {
 
 
         /**
-         * Indicates if image should be scaled to fit the smaller dimension.  By default (false) the image is scaled to fit within the width/height specified but if this parameter is true, it will allow overflowing one dimension to fit the other.  Essentially it is making the width/height minimum sizes of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
+         * Indicates if image should be scaled to fit the smaller dimension. By default (false) the image is
+         * scaled to fit within the width/height specified but if this parameter is true, it will allow
+         * overflowing one dimension to fit the other. Essentially it is making the width/height minimum sizes
+         * of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
          */
         public Builder minSize(BoolInt minSize) {
             Utils.checkNotNull(minSize, "minSize");
@@ -1457,7 +1484,10 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * Indicates if image should be scaled to fit the smaller dimension.  By default (false) the image is scaled to fit within the width/height specified but if this parameter is true, it will allow overflowing one dimension to fit the other.  Essentially it is making the width/height minimum sizes of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
+         * Indicates if image should be scaled to fit the smaller dimension. By default (false) the image is
+         * scaled to fit within the width/height specified but if this parameter is true, it will allow
+         * overflowing one dimension to fit the other. Essentially it is making the width/height minimum sizes
+         * of the image or sizing the image to fill the entire width/height even if it overflows one dimension.
          */
         public Builder minSize(Optional<? extends BoolInt> minSize) {
             Utils.checkNotNull(minSize, "minSize");
@@ -1467,7 +1497,7 @@ public class TranscodeImageRequest {
 
 
         /**
-         * Obey the rotation values specified in EXIF data.  Defaults to true.
+         * Obey the rotation values specified in EXIF data. Defaults to true.
          */
         public Builder rotate(BoolInt rotate) {
             Utils.checkNotNull(rotate, "rotate");
@@ -1476,7 +1506,7 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * Obey the rotation values specified in EXIF data.  Defaults to true.
+         * Obey the rotation values specified in EXIF data. Defaults to true.
          */
         public Builder rotate(Optional<? extends BoolInt> rotate) {
             Utils.checkNotNull(rotate, "rotate");
@@ -1505,7 +1535,7 @@ public class TranscodeImageRequest {
 
 
         /**
-         * Scale the image saturation by the specified percentage.  Defaults to 100
+         * Scale the image saturation by the specified percentage. Defaults to 100
          */
         public Builder saturation(long saturation) {
             Utils.checkNotNull(saturation, "saturation");
@@ -1514,7 +1544,7 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * Scale the image saturation by the specified percentage.  Defaults to 100
+         * Scale the image saturation by the specified percentage. Defaults to 100
          */
         public Builder saturation(Optional<Long> saturation) {
             Utils.checkNotNull(saturation, "saturation");
@@ -1524,7 +1554,7 @@ public class TranscodeImageRequest {
 
 
         /**
-         * Render the image at the specified opacity percentage.  Defaults to 100
+         * Render the image at the specified opacity percentage. Defaults to 100
          */
         public Builder opacity(long opacity) {
             Utils.checkNotNull(opacity, "opacity");
@@ -1533,7 +1563,7 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * Render the image at the specified opacity percentage.  Defaults to 100
+         * Render the image at the specified opacity percentage. Defaults to 100
          */
         public Builder opacity(Optional<Long> opacity) {
             Utils.checkNotNull(opacity, "opacity");
@@ -1544,10 +1574,10 @@ public class TranscodeImageRequest {
 
         /**
          * Use the specified chroma subsambling.
-         *   - 0: 411
-         *   - 1: 420
-         *   - 2: 422
-         *   - 3: 444
+         * - 0: 411
+         * - 1: 420
+         * - 2: 422
+         * - 3: 444
          * Defaults to 3 (444)
          */
         public Builder chromaSubsampling(ChromaSubsampling chromaSubsampling) {
@@ -1558,10 +1588,10 @@ public class TranscodeImageRequest {
 
         /**
          * Use the specified chroma subsambling.
-         *   - 0: 411
-         *   - 1: 420
-         *   - 2: 422
-         *   - 3: 444
+         * - 0: 411
+         * - 1: 420
+         * - 2: 422
+         * - 3: 444
          * Defaults to 3 (444)
          */
         public Builder chromaSubsampling(Optional<? extends ChromaSubsampling> chromaSubsampling) {
@@ -1572,7 +1602,7 @@ public class TranscodeImageRequest {
 
 
         /**
-         * The color to blend with the image.  Defaults to none
+         * The color to blend with the image. Defaults to none
          */
         public Builder blendColor(String blendColor) {
             Utils.checkNotNull(blendColor, "blendColor");
@@ -1581,7 +1611,7 @@ public class TranscodeImageRequest {
         }
 
         /**
-         * The color to blend with the image.  Defaults to none
+         * The color to blend with the image. Defaults to none
          */
         public Builder blendColor(Optional<String> blendColor) {
             Utils.checkNotNull(blendColor, "blendColor");

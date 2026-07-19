@@ -84,17 +84,29 @@ public class RefreshItemsMetadataRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The identifier of the metadata agent to use
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=agent")
     private Optional<String> agent;
 
-
+    /**
+     * The markUpdated
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=markUpdated")
     private Optional<? extends BoolInt> markUpdated;
+
+    /**
+     * Skip synchronous refresh
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=skipRefresh")
+    private Optional<? extends BoolInt> skipRefresh;
 
     @JsonCreator
     public RefreshItemsMetadataRequest(
@@ -111,7 +123,8 @@ public class RefreshItemsMetadataRequest {
             Optional<String> marketplace,
             String ids,
             Optional<String> agent,
-            Optional<? extends BoolInt> markUpdated) {
+            Optional<? extends BoolInt> markUpdated,
+            Optional<? extends BoolInt> skipRefresh) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -126,6 +139,7 @@ public class RefreshItemsMetadataRequest {
         Utils.checkNotNull(ids, "ids");
         Utils.checkNotNull(agent, "agent");
         Utils.checkNotNull(markUpdated, "markUpdated");
+        Utils.checkNotNull(skipRefresh, "skipRefresh");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -140,6 +154,7 @@ public class RefreshItemsMetadataRequest {
         this.ids = ids;
         this.agent = agent;
         this.markUpdated = markUpdated;
+        this.skipRefresh = skipRefresh;
     }
     
     public RefreshItemsMetadataRequest(
@@ -148,7 +163,7 @@ public class RefreshItemsMetadataRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), ids,
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     /**
@@ -240,20 +255,38 @@ public class RefreshItemsMetadataRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     @JsonIgnore
     public Optional<String> agent() {
         return agent;
     }
 
+    /**
+     * The markUpdated
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<BoolInt> markUpdated() {
         return (Optional<BoolInt>) markUpdated;
+    }
+
+    /**
+     * Skip synchronous refresh
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> skipRefresh() {
+        return (Optional<BoolInt>) skipRefresh;
     }
 
     public static Builder builder() {
@@ -470,12 +503,18 @@ public class RefreshItemsMetadataRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public RefreshItemsMetadataRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     public RefreshItemsMetadataRequest withAgent(String agent) {
         Utils.checkNotNull(agent, "agent");
         this.agent = Optional.ofNullable(agent);
@@ -483,12 +522,18 @@ public class RefreshItemsMetadataRequest {
     }
 
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     public RefreshItemsMetadataRequest withAgent(Optional<String> agent) {
         Utils.checkNotNull(agent, "agent");
         this.agent = agent;
         return this;
     }
 
+    /**
+     * The markUpdated
+     */
     public RefreshItemsMetadataRequest withMarkUpdated(BoolInt markUpdated) {
         Utils.checkNotNull(markUpdated, "markUpdated");
         this.markUpdated = Optional.ofNullable(markUpdated);
@@ -496,9 +541,31 @@ public class RefreshItemsMetadataRequest {
     }
 
 
+    /**
+     * The markUpdated
+     */
     public RefreshItemsMetadataRequest withMarkUpdated(Optional<? extends BoolInt> markUpdated) {
         Utils.checkNotNull(markUpdated, "markUpdated");
         this.markUpdated = markUpdated;
+        return this;
+    }
+
+    /**
+     * Skip synchronous refresh
+     */
+    public RefreshItemsMetadataRequest withSkipRefresh(BoolInt skipRefresh) {
+        Utils.checkNotNull(skipRefresh, "skipRefresh");
+        this.skipRefresh = Optional.ofNullable(skipRefresh);
+        return this;
+    }
+
+
+    /**
+     * Skip synchronous refresh
+     */
+    public RefreshItemsMetadataRequest withSkipRefresh(Optional<? extends BoolInt> skipRefresh) {
+        Utils.checkNotNull(skipRefresh, "skipRefresh");
+        this.skipRefresh = skipRefresh;
         return this;
     }
 
@@ -525,7 +592,8 @@ public class RefreshItemsMetadataRequest {
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
             Utils.enhancedDeepEquals(this.ids, other.ids) &&
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
-            Utils.enhancedDeepEquals(this.markUpdated, other.markUpdated);
+            Utils.enhancedDeepEquals(this.markUpdated, other.markUpdated) &&
+            Utils.enhancedDeepEquals(this.skipRefresh, other.skipRefresh);
     }
     
     @Override
@@ -535,7 +603,7 @@ public class RefreshItemsMetadataRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, ids,
-            agent, markUpdated);
+            agent, markUpdated, skipRefresh);
     }
     
     @Override
@@ -554,7 +622,8 @@ public class RefreshItemsMetadataRequest {
                 "marketplace", marketplace,
                 "ids", ids,
                 "agent", agent,
-                "markUpdated", markUpdated);
+                "markUpdated", markUpdated,
+                "skipRefresh", skipRefresh);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -587,6 +656,8 @@ public class RefreshItemsMetadataRequest {
         private Optional<String> agent = Optional.empty();
 
         private Optional<? extends BoolInt> markUpdated;
+
+        private Optional<? extends BoolInt> skipRefresh;
 
         private Builder() {
           // force use of static builder() method
@@ -802,6 +873,9 @@ public class RefreshItemsMetadataRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -809,12 +883,18 @@ public class RefreshItemsMetadataRequest {
         }
 
 
+        /**
+         * The identifier of the metadata agent to use
+         */
         public Builder agent(String agent) {
             Utils.checkNotNull(agent, "agent");
             this.agent = Optional.ofNullable(agent);
             return this;
         }
 
+        /**
+         * The identifier of the metadata agent to use
+         */
         public Builder agent(Optional<String> agent) {
             Utils.checkNotNull(agent, "agent");
             this.agent = agent;
@@ -822,15 +902,40 @@ public class RefreshItemsMetadataRequest {
         }
 
 
+        /**
+         * The markUpdated
+         */
         public Builder markUpdated(BoolInt markUpdated) {
             Utils.checkNotNull(markUpdated, "markUpdated");
             this.markUpdated = Optional.ofNullable(markUpdated);
             return this;
         }
 
+        /**
+         * The markUpdated
+         */
         public Builder markUpdated(Optional<? extends BoolInt> markUpdated) {
             Utils.checkNotNull(markUpdated, "markUpdated");
             this.markUpdated = markUpdated;
+            return this;
+        }
+
+
+        /**
+         * Skip synchronous refresh
+         */
+        public Builder skipRefresh(BoolInt skipRefresh) {
+            Utils.checkNotNull(skipRefresh, "skipRefresh");
+            this.skipRefresh = Optional.ofNullable(skipRefresh);
+            return this;
+        }
+
+        /**
+         * Skip synchronous refresh
+         */
+        public Builder skipRefresh(Optional<? extends BoolInt> skipRefresh) {
+            Utils.checkNotNull(skipRefresh, "skipRefresh");
+            this.skipRefresh = skipRefresh;
             return this;
         }
 
@@ -841,13 +946,16 @@ public class RefreshItemsMetadataRequest {
             if (markUpdated == null) {
                 markUpdated = _SINGLETON_VALUE_MarkUpdated.value();
             }
+            if (skipRefresh == null) {
+                skipRefresh = _SINGLETON_VALUE_SkipRefresh.value();
+            }
 
             return new RefreshItemsMetadataRequest(
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, ids,
-                agent, markUpdated);
+                agent, markUpdated, skipRefresh);
         }
 
 
@@ -860,6 +968,12 @@ public class RefreshItemsMetadataRequest {
         private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_MarkUpdated =
                 new LazySingletonValue<>(
                         "markUpdated",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_SkipRefresh =
+                new LazySingletonValue<>(
+                        "skipRefresh",
                         "0",
                         new TypeReference<Optional<? extends BoolInt>>() {});
     }

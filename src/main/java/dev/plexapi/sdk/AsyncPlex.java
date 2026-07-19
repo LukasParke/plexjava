@@ -9,12 +9,17 @@ import dev.plexapi.sdk.models.operations.GetServerResourcesRequest;
 import dev.plexapi.sdk.models.operations.async.GetServerResourcesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetServerResourcesResponse;
 import dev.plexapi.sdk.operations.GetServerResources;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
 import java.lang.String;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-
+/**
+ * Plex Plex operations
+ */
 public class AsyncPlex {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Plex syncSDK;
 
@@ -50,10 +55,10 @@ public class AsyncPlex {
      * <p>Get Plex server access tokens and server connections
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetServerResourcesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetServerResourcesResponse>} - The async response
      */
     public CompletableFuture<GetServerResourcesResponse> getServerResources(GetServerResourcesRequest request) {
-        return getServerResources(request, Optional.empty());
+        return getServerResources(request, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -63,11 +68,16 @@ public class AsyncPlex {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param serverURL Overrides the server URL.
-     * @return CompletableFuture&lt;GetServerResourcesResponse&gt; - The async response
+     * @param options additional options
+     * @return {@code CompletableFuture<GetServerResourcesResponse>} - The async response
      */
-    public CompletableFuture<GetServerResourcesResponse> getServerResources(GetServerResourcesRequest request, Optional<String> serverURL) {
+    public CompletableFuture<GetServerResourcesResponse> getServerResources(
+            GetServerResourcesRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
         AsyncRequestOperation<GetServerResourcesRequest, GetServerResourcesResponse> operation
-              = new GetServerResources.Async(sdkConfiguration, serverURL);
+              = new GetServerResources.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

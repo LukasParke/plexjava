@@ -1,5 +1,4 @@
 # Hubs
-(*hubs()*)
 
 ## Overview
 
@@ -9,6 +8,8 @@ The hubs within a media provider
 
 * [getAllHubs](#getallhubs) - Get global hubs
 * [getContinueWatching](#getcontinuewatching) - Get the continue watching hub
+* [getContinueWatchingItems](#getcontinuewatchingitems) - Get Continue Watching Items
+* [getHomeRecentlyAdded](#gethomerecentlyadded) - Get home hubs Recently Added
 * [getHubItems](#gethubitems) - Get a hub's items
 * [getPromotedHubs](#getpromotedhubs) - Get the hubs which are promoted
 * [getMetadataHubs](#getmetadatahubs) - Get hubs for section by metadata item
@@ -33,6 +34,7 @@ Get the global hubs in this PMS
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetAllHubsRequest;
 import dev.plexapi.sdk.models.operations.GetAllHubsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -41,7 +43,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -66,8 +68,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -87,6 +89,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getContinueWatching
@@ -100,6 +103,7 @@ Get the global continue watching hub
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetContinueWatchingRequest;
 import dev.plexapi.sdk.models.operations.GetContinueWatchingResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -107,7 +111,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -131,8 +135,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -152,6 +156,141 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getContinueWatchingItems
+
+Get direct access to Continue Watching items.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getContinueWatchingItems" method="get" path="/hubs/continueWatching/items" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetContinueWatchingItemsRequest;
+import dev.plexapi.sdk.models.operations.GetContinueWatchingItemsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetContinueWatchingItemsRequest req = GetContinueWatchingItemsRequest.builder()
+                .build();
+
+        GetContinueWatchingItemsResponse res = sdk.hubs().getContinueWatchingItems()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `request`                                                                                     | [GetContinueWatchingItemsRequest](../../models/operations/GetContinueWatchingItemsRequest.md) | :heavy_check_mark:                                                                            | The request object to use for the request.                                                    |
+
+### Response
+
+**[GetContinueWatchingItemsResponse](../../models/operations/GetContinueWatchingItemsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getHomeRecentlyAdded
+
+Get the recently added hub for the home screen.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getHomeRecentlyAdded" method="get" path="/hubs/home/recentlyAdded" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetHomeRecentlyAddedRequest;
+import dev.plexapi.sdk.models.operations.GetHomeRecentlyAddedResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetHomeRecentlyAddedRequest req = GetHomeRecentlyAddedRequest.builder()
+                .build();
+
+        GetHomeRecentlyAddedResponse res = sdk.hubs().getHomeRecentlyAdded()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [GetHomeRecentlyAddedRequest](../../models/operations/GetHomeRecentlyAddedRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+
+### Response
+
+**[GetHomeRecentlyAddedResponse](../../models/operations/GetHomeRecentlyAddedResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getHubItems
@@ -202,7 +341,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -235,6 +374,7 @@ Get the global hubs which are promoted (should be displayed on the home screen)
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetPromotedHubsRequest;
 import dev.plexapi.sdk.models.operations.GetPromotedHubsResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -242,7 +382,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -266,8 +406,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -287,6 +427,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getMetadataHubs
@@ -335,7 +476,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithHubs().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -403,7 +544,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithHubs().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -471,7 +612,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithHubs().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -538,8 +679,8 @@ public class Application {
                 .request(req)
                 .call();
 
-        if (res.object().isPresent()) {
-            // handle response
+        if (res.mediaContainerWithHubs().isPresent()) {
+            System.out.println(res.mediaContainerWithHubs().get());
         }
     }
 }
@@ -669,7 +810,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -805,7 +946,7 @@ public class Application {
                 .call();
 
         if (res.getResponses200().isPresent()) {
-            // handle response
+            System.out.println(res.getResponses200().get());
         }
     }
 }

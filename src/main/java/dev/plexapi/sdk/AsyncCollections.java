@@ -9,12 +9,16 @@ import dev.plexapi.sdk.models.operations.CreateCollectionRequest;
 import dev.plexapi.sdk.models.operations.async.CreateCollectionRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.CreateCollectionResponse;
 import dev.plexapi.sdk.operations.CreateCollection;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * API Operations against the Collections
  */
 public class AsyncCollections {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Collections syncSDK;
 
@@ -50,11 +54,26 @@ public class AsyncCollections {
      * <p>Create a collection in the library
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CreateCollectionResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreateCollectionResponse>} - The async response
      */
     public CompletableFuture<CreateCollectionResponse> createCollection(CreateCollectionRequest request) {
+        return createCollection(request, Optional.empty());
+    }
+
+    /**
+     * Create collection
+     * 
+     * <p>Create a collection in the library
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateCollectionResponse>} - The async response
+     */
+    public CompletableFuture<CreateCollectionResponse> createCollection(CreateCollectionRequest request, Optional<Options> options) {
         AsyncRequestOperation<CreateCollectionRequest, CreateCollectionResponse> operation
-              = new CreateCollection.Async(sdkConfiguration);
+              = new CreateCollection.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

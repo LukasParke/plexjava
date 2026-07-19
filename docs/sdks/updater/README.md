@@ -1,11 +1,9 @@
 # Updater
-(*updater()*)
 
 ## Overview
 
 This describes the API for searching and applying updates to the Plex Media Server.
 Updates to the status can be observed via the Event API.
-
 
 ### Available Operations
 
@@ -58,7 +56,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.body().isPresent()) {
+            System.out.println(res.body().get());
+        }
     }
 }
 ```
@@ -90,6 +90,7 @@ Perform an update check and potentially download
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.CheckUpdatesRequest;
 import dev.plexapi.sdk.models.operations.CheckUpdatesResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -98,7 +99,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -142,6 +143,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getUpdatesStatus
@@ -155,12 +157,13 @@ Get the status of updating the server
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetUpdatesStatusResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -170,7 +173,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -184,4 +187,5 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |

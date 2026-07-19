@@ -17,7 +17,7 @@ import java.util.Optional;
 /**
  * ListProvidersResponseBody
  * 
- * <p>OK
+ * <p>A feature supported by a media provider.
  */
 public class ListProvidersResponseBody {
 
@@ -25,21 +25,77 @@ public class ListProvidersResponseBody {
     @JsonProperty("MediaContainer")
     private Optional<? extends ListProvidersMediaContainer> mediaContainer;
 
+    /**
+     * Human-readable feature title.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("title")
+    private Optional<String> title;
+
+    /**
+     * Feature type.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("type")
+    private Optional<String> type;
+
+    /**
+     * Feature key identifier.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("key")
+    private Optional<? extends Key> key;
+
     @JsonCreator
     public ListProvidersResponseBody(
-            @JsonProperty("MediaContainer") Optional<? extends ListProvidersMediaContainer> mediaContainer) {
+            @JsonProperty("MediaContainer") Optional<? extends ListProvidersMediaContainer> mediaContainer,
+            @JsonProperty("title") Optional<String> title,
+            @JsonProperty("type") Optional<String> type,
+            @JsonProperty("key") Optional<? extends Key> key) {
         Utils.checkNotNull(mediaContainer, "mediaContainer");
+        Utils.checkNotNull(title, "title");
+        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(key, "key");
         this.mediaContainer = mediaContainer;
+        this.title = title;
+        this.type = type;
+        this.key = key;
     }
     
     public ListProvidersResponseBody() {
-        this(Optional.empty());
+        this(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<ListProvidersMediaContainer> mediaContainer() {
         return (Optional<ListProvidersMediaContainer>) mediaContainer;
+    }
+
+    /**
+     * Human-readable feature title.
+     */
+    @JsonIgnore
+    public Optional<String> title() {
+        return title;
+    }
+
+    /**
+     * Feature type.
+     */
+    @JsonIgnore
+    public Optional<String> type() {
+        return type;
+    }
+
+    /**
+     * Feature key identifier.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<Key> key() {
+        return (Optional<Key>) key;
     }
 
     public static Builder builder() {
@@ -60,6 +116,63 @@ public class ListProvidersResponseBody {
         return this;
     }
 
+    /**
+     * Human-readable feature title.
+     */
+    public ListProvidersResponseBody withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = Optional.ofNullable(title);
+        return this;
+    }
+
+
+    /**
+     * Human-readable feature title.
+     */
+    public ListProvidersResponseBody withTitle(Optional<String> title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
+    }
+
+    /**
+     * Feature type.
+     */
+    public ListProvidersResponseBody withType(String type) {
+        Utils.checkNotNull(type, "type");
+        this.type = Optional.ofNullable(type);
+        return this;
+    }
+
+
+    /**
+     * Feature type.
+     */
+    public ListProvidersResponseBody withType(Optional<String> type) {
+        Utils.checkNotNull(type, "type");
+        this.type = type;
+        return this;
+    }
+
+    /**
+     * Feature key identifier.
+     */
+    public ListProvidersResponseBody withKey(Key key) {
+        Utils.checkNotNull(key, "key");
+        this.key = Optional.ofNullable(key);
+        return this;
+    }
+
+
+    /**
+     * Feature key identifier.
+     */
+    public ListProvidersResponseBody withKey(Optional<? extends Key> key) {
+        Utils.checkNotNull(key, "key");
+        this.key = key;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -70,25 +183,38 @@ public class ListProvidersResponseBody {
         }
         ListProvidersResponseBody other = (ListProvidersResponseBody) o;
         return 
-            Utils.enhancedDeepEquals(this.mediaContainer, other.mediaContainer);
+            Utils.enhancedDeepEquals(this.mediaContainer, other.mediaContainer) &&
+            Utils.enhancedDeepEquals(this.title, other.title) &&
+            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.key, other.key);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            mediaContainer);
+            mediaContainer, title, type,
+            key);
     }
     
     @Override
     public String toString() {
         return Utils.toString(ListProvidersResponseBody.class,
-                "mediaContainer", mediaContainer);
+                "mediaContainer", mediaContainer,
+                "title", title,
+                "type", type,
+                "key", key);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
         private Optional<? extends ListProvidersMediaContainer> mediaContainer = Optional.empty();
+
+        private Optional<String> title = Optional.empty();
+
+        private Optional<String> type = Optional.empty();
+
+        private Optional<? extends Key> key = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -107,10 +233,68 @@ public class ListProvidersResponseBody {
             return this;
         }
 
+
+        /**
+         * Human-readable feature title.
+         */
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = Optional.ofNullable(title);
+            return this;
+        }
+
+        /**
+         * Human-readable feature title.
+         */
+        public Builder title(Optional<String> title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
+        }
+
+
+        /**
+         * Feature type.
+         */
+        public Builder type(String type) {
+            Utils.checkNotNull(type, "type");
+            this.type = Optional.ofNullable(type);
+            return this;
+        }
+
+        /**
+         * Feature type.
+         */
+        public Builder type(Optional<String> type) {
+            Utils.checkNotNull(type, "type");
+            this.type = type;
+            return this;
+        }
+
+
+        /**
+         * Feature key identifier.
+         */
+        public Builder key(Key key) {
+            Utils.checkNotNull(key, "key");
+            this.key = Optional.ofNullable(key);
+            return this;
+        }
+
+        /**
+         * Feature key identifier.
+         */
+        public Builder key(Optional<? extends Key> key) {
+            Utils.checkNotNull(key, "key");
+            this.key = key;
+            return this;
+        }
+
         public ListProvidersResponseBody build() {
 
             return new ListProvidersResponseBody(
-                mediaContainer);
+                mediaContainer, title, type,
+                key);
         }
 
     }

@@ -36,7 +36,7 @@ public class CreateDVRResponse implements AsyncResponse {
     private HttpResponse<Blob> rawResponse;
 
     /**
-     * OK
+     * Successfully created/executed create a dvr
      */
     private Optional<? extends DvrRequestHandlerSlashGetResponses200> dvrRequestHandlerSlashGetResponses200;
 
@@ -97,7 +97,7 @@ public class CreateDVRResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully created/executed create a dvr
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -143,7 +143,7 @@ public class CreateDVRResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully created/executed create a dvr
      */
     public CreateDVRResponse withDvrRequestHandlerSlashGetResponses200(DvrRequestHandlerSlashGetResponses200 dvrRequestHandlerSlashGetResponses200) {
         Utils.checkNotNull(dvrRequestHandlerSlashGetResponses200, "dvrRequestHandlerSlashGetResponses200");
@@ -153,7 +153,7 @@ public class CreateDVRResponse implements AsyncResponse {
 
 
     /**
-     * OK
+     * Successfully created/executed create a dvr
      */
     public CreateDVRResponse withDvrRequestHandlerSlashGetResponses200(Optional<? extends DvrRequestHandlerSlashGetResponses200> dvrRequestHandlerSlashGetResponses200) {
         Utils.checkNotNull(dvrRequestHandlerSlashGetResponses200, "dvrRequestHandlerSlashGetResponses200");
@@ -250,7 +250,7 @@ public class CreateDVRResponse implements AsyncResponse {
 
 
         /**
-         * OK
+         * Successfully created/executed create a dvr
          */
         public Builder dvrRequestHandlerSlashGetResponses200(DvrRequestHandlerSlashGetResponses200 dvrRequestHandlerSlashGetResponses200) {
             Utils.checkNotNull(dvrRequestHandlerSlashGetResponses200, "dvrRequestHandlerSlashGetResponses200");
@@ -259,7 +259,7 @@ public class CreateDVRResponse implements AsyncResponse {
         }
 
         /**
-         * OK
+         * Successfully created/executed create a dvr
          */
         public Builder dvrRequestHandlerSlashGetResponses200(Optional<? extends DvrRequestHandlerSlashGetResponses200> dvrRequestHandlerSlashGetResponses200) {
             Utils.checkNotNull(dvrRequestHandlerSlashGetResponses200, "dvrRequestHandlerSlashGetResponses200");

@@ -26,20 +26,19 @@ import java.lang.SuppressWarnings;
 public class MediaContainerWithDecisionHasVoiceActivity {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private MediaContainerWithDecisionHasVoiceActivity(TypedObject value) {
         this.value = value;
     }
 
     public static MediaContainerWithDecisionHasVoiceActivity of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new MediaContainerWithDecisionHasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new MediaContainerWithDecisionHasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static MediaContainerWithDecisionHasVoiceActivity of(HasVoiceActivity2 value) {
         Utils.checkNotNull(value, "value");
-        return new MediaContainerWithDecisionHasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<HasVoiceActivity2>(){}));
+        return new MediaContainerWithDecisionHasVoiceActivity(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -62,7 +61,7 @@ public class MediaContainerWithDecisionHasVoiceActivity {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -73,7 +72,7 @@ public class MediaContainerWithDecisionHasVoiceActivity {
             return false;
         }
         MediaContainerWithDecisionHasVoiceActivity other = (MediaContainerWithDecisionHasVoiceActivity) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -86,8 +85,8 @@ public class MediaContainerWithDecisionHasVoiceActivity {
 
         public _Deserializer() {
             super(MediaContainerWithDecisionHasVoiceActivity.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<HasVoiceActivity2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<HasVoiceActivity2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -96,6 +95,6 @@ public class MediaContainerWithDecisionHasVoiceActivity {
         return Utils.toString(MediaContainerWithDecisionHasVoiceActivity.class,
                 "value", value);
     }
- 
+
 }
 

@@ -3,18 +3,103 @@
  */
 package dev.plexapi.sdk;
 
+import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
+import dev.plexapi.sdk.models.operations.CreateHomeUserRequest;
+import dev.plexapi.sdk.models.operations.CreateHomeUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.CreateHomeUserResponse;
+import dev.plexapi.sdk.models.operations.DeleteHomeUserRequest;
+import dev.plexapi.sdk.models.operations.DeleteHomeUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.DeleteHomeUserResponse;
+import dev.plexapi.sdk.models.operations.GetAccountJSONRequest;
+import dev.plexapi.sdk.models.operations.GetAccountJSONRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetAccountJSONResponse;
+import dev.plexapi.sdk.models.operations.GetAccountXMLRequest;
+import dev.plexapi.sdk.models.operations.GetAccountXMLRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetAccountXMLResponse;
+import dev.plexapi.sdk.models.operations.GetFriendsRequest;
+import dev.plexapi.sdk.models.operations.GetFriendsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetFriendsResponse;
+import dev.plexapi.sdk.models.operations.GetHomeRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetHomeResponse;
+import dev.plexapi.sdk.models.operations.GetHomeUsersRequest;
+import dev.plexapi.sdk.models.operations.GetHomeUsersRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetHomeUsersResponse;
+import dev.plexapi.sdk.models.operations.GetLegacyResourcesRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetLegacyResourcesResponse;
+import dev.plexapi.sdk.models.operations.GetLegacyUsersRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetLegacyUsersResponse;
+import dev.plexapi.sdk.models.operations.GetMyPlexAccountRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMyPlexAccountResponse;
+import dev.plexapi.sdk.models.operations.GetServerDetailsRequest;
+import dev.plexapi.sdk.models.operations.GetServerDetailsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetServerDetailsResponse;
+import dev.plexapi.sdk.models.operations.GetServerUserFeaturesRequest;
+import dev.plexapi.sdk.models.operations.GetServerUserFeaturesRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetServerUserFeaturesResponse;
+import dev.plexapi.sdk.models.operations.GetUserOptOutsRequest;
+import dev.plexapi.sdk.models.operations.GetUserOptOutsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetUserOptOutsResponse;
+import dev.plexapi.sdk.models.operations.GetUserServerRequest;
+import dev.plexapi.sdk.models.operations.GetUserServerRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetUserServerResponse;
 import dev.plexapi.sdk.models.operations.GetUsersRequest;
 import dev.plexapi.sdk.models.operations.GetUsersRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetUsersResponse;
+import dev.plexapi.sdk.models.operations.RemoveShareRequest;
+import dev.plexapi.sdk.models.operations.RemoveShareRequestBuilder;
+import dev.plexapi.sdk.models.operations.RemoveShareResponse;
+import dev.plexapi.sdk.models.operations.ShareServerLegacyRequest;
+import dev.plexapi.sdk.models.operations.ShareServerLegacyRequestBuilder;
+import dev.plexapi.sdk.models.operations.ShareServerLegacyResponse;
+import dev.plexapi.sdk.models.operations.ShareServerRequest;
+import dev.plexapi.sdk.models.operations.ShareServerRequestBuilder;
+import dev.plexapi.sdk.models.operations.ShareServerResponse;
+import dev.plexapi.sdk.models.operations.UpdateHomeUserRequest;
+import dev.plexapi.sdk.models.operations.UpdateHomeUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.UpdateHomeUserResponse;
+import dev.plexapi.sdk.models.operations.UpdateRestrictedUserRequest;
+import dev.plexapi.sdk.models.operations.UpdateRestrictedUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.UpdateRestrictedUserResponse;
+import dev.plexapi.sdk.models.operations.UpdateShareRequest;
+import dev.plexapi.sdk.models.operations.UpdateShareRequestBuilder;
+import dev.plexapi.sdk.models.operations.UpdateShareResponse;
+import dev.plexapi.sdk.models.operations.UpdateViewStateSyncRequest;
+import dev.plexapi.sdk.models.operations.UpdateViewStateSyncRequestBuilder;
+import dev.plexapi.sdk.models.operations.UpdateViewStateSyncResponse;
+import dev.plexapi.sdk.operations.CreateHomeUser;
+import dev.plexapi.sdk.operations.DeleteHomeUser;
+import dev.plexapi.sdk.operations.GetAccountJSON;
+import dev.plexapi.sdk.operations.GetAccountXML;
+import dev.plexapi.sdk.operations.GetFriends;
+import dev.plexapi.sdk.operations.GetHome;
+import dev.plexapi.sdk.operations.GetHomeUsers;
+import dev.plexapi.sdk.operations.GetLegacyResources;
+import dev.plexapi.sdk.operations.GetLegacyUsers;
+import dev.plexapi.sdk.operations.GetMyPlexAccount;
+import dev.plexapi.sdk.operations.GetServerDetails;
+import dev.plexapi.sdk.operations.GetServerUserFeatures;
+import dev.plexapi.sdk.operations.GetUserOptOuts;
+import dev.plexapi.sdk.operations.GetUserServer;
 import dev.plexapi.sdk.operations.GetUsers;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.RemoveShare;
+import dev.plexapi.sdk.operations.ShareServer;
+import dev.plexapi.sdk.operations.ShareServerLegacy;
+import dev.plexapi.sdk.operations.UpdateHomeUser;
+import dev.plexapi.sdk.operations.UpdateRestrictedUser;
+import dev.plexapi.sdk.operations.UpdateShare;
+import dev.plexapi.sdk.operations.UpdateViewStateSync;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
 import java.lang.String;
 import java.util.Optional;
 
-
+/**
+ * Plex Users operations
+ */
 public class Users {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncUsers asyncSDK;
 
@@ -33,9 +118,492 @@ public class Users {
     }
 
     /**
+     * Get Legacy Resources
+     * 
+     * <p>Get legacy published server connections (XML).
+     * 
+     * @return The call builder
+     */
+    public GetLegacyResourcesRequestBuilder getLegacyResources() {
+        return new GetLegacyResourcesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Legacy Resources
+     * 
+     * <p>Get legacy published server connections (XML).
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLegacyResourcesResponse getLegacyResourcesDirect() {
+        return getLegacyResources(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Legacy Resources
+     * 
+     * <p>Get legacy published server connections (XML).
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLegacyResourcesResponse getLegacyResources(Optional<String> serverURL, Optional<Options> options) {
+        RequestlessOperation<GetLegacyResourcesResponse> operation
+            = new GetLegacyResources.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Get Legacy Users
+     * 
+     * <p>Get legacy friends list (XML).
+     * 
+     * @return The call builder
+     */
+    public GetLegacyUsersRequestBuilder getLegacyUsers() {
+        return new GetLegacyUsersRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Legacy Users
+     * 
+     * <p>Get legacy friends list (XML).
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLegacyUsersResponse getLegacyUsersDirect() {
+        return getLegacyUsers(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Legacy Users
+     * 
+     * <p>Get legacy friends list (XML).
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLegacyUsersResponse getLegacyUsers(Optional<String> serverURL, Optional<Options> options) {
+        RequestlessOperation<GetLegacyUsersResponse> operation
+            = new GetLegacyUsers.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Get Friends
+     * 
+     * <p>Get the list of friends and shared users.
+     * 
+     * @return The call builder
+     */
+    public GetFriendsRequestBuilder getFriends() {
+        return new GetFriendsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Friends
+     * 
+     * <p>Get the list of friends and shared users.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetFriendsResponse getFriends(GetFriendsRequest request) {
+        return getFriends(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Friends
+     * 
+     * <p>Get the list of friends and shared users.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetFriendsResponse getFriends(
+            GetFriendsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetFriendsRequest, GetFriendsResponse> operation
+              = new GetFriends.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get home hubs
+     * 
+     * <p>Get Plex Home user list.
+     * 
+     * @return The call builder
+     */
+    public GetHomeRequestBuilder getHome() {
+        return new GetHomeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get home hubs
+     * 
+     * <p>Get Plex Home user list.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHomeResponse getHomeDirect() {
+        return getHome(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get home hubs
+     * 
+     * <p>Get Plex Home user list.
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHomeResponse getHome(Optional<String> serverURL, Optional<Options> options) {
+        RequestlessOperation<GetHomeResponse> operation
+            = new GetHome.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Get home hubs Users
+     * 
+     * <p>Get the list of Plex Home users.
+     * 
+     * @return The call builder
+     */
+    public GetHomeUsersRequestBuilder getHomeUsers() {
+        return new GetHomeUsersRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get home hubs Users
+     * 
+     * <p>Get the list of Plex Home users.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHomeUsersResponse getHomeUsers(GetHomeUsersRequest request) {
+        return getHomeUsers(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get home hubs Users
+     * 
+     * <p>Get the list of Plex Home users.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetHomeUsersResponse getHomeUsers(
+            GetHomeUsersRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetHomeUsersRequest, GetHomeUsersResponse> operation
+              = new GetHomeUsers.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Create Home User
+     * 
+     * <p>Create a new Plex Home user.
+     * 
+     * @return The call builder
+     */
+    public CreateHomeUserRequestBuilder createHomeUser() {
+        return new CreateHomeUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create Home User
+     * 
+     * <p>Create a new Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateHomeUserResponse createHomeUser(CreateHomeUserRequest request) {
+        return createHomeUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Create Home User
+     * 
+     * <p>Create a new Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateHomeUserResponse createHomeUser(
+            CreateHomeUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<CreateHomeUserRequest, CreateHomeUserResponse> operation
+              = new CreateHomeUser.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get MyPlex Account
+     * 
+     * <p>Get linked MyPlex account info on PMS.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMyPlexAccountRequestBuilder getMyPlexAccount() {
+        return new GetMyPlexAccountRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get MyPlex Account
+     * 
+     * <p>Get linked MyPlex account info on PMS.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMyPlexAccountResponse getMyPlexAccountDirect() {
+        return getMyPlexAccount(Optional.empty());
+    }
+
+    /**
+     * Get MyPlex Account
+     * 
+     * <p>Get linked MyPlex account info on PMS.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMyPlexAccountResponse getMyPlexAccount(Optional<Options> options) {
+        RequestlessOperation<GetMyPlexAccountResponse> operation
+            = new GetMyPlexAccount.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Get User Server Association
+     * 
+     * <p>Get server association information for the logged-in user.
+     * 
+     * @return The call builder
+     */
+    public GetUserServerRequestBuilder getUserServer() {
+        return new GetUserServerRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get User Server Association
+     * 
+     * <p>Get server association information for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUserServerResponse getUserServer(GetUserServerRequest request) {
+        return getUserServer(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get User Server Association
+     * 
+     * <p>Get server association information for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUserServerResponse getUserServer(
+            GetUserServerRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetUserServerRequest, GetUserServerResponse> operation
+              = new GetUserServer.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Server User Features
+     * 
+     * <p>Get features enabled per shared user for the server.
+     * 
+     * @return The call builder
+     */
+    public GetServerUserFeaturesRequestBuilder getServerUserFeatures() {
+        return new GetServerUserFeaturesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Server User Features
+     * 
+     * <p>Get features enabled per shared user for the server.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetServerUserFeaturesResponse getServerUserFeatures(GetServerUserFeaturesRequest request) {
+        return getServerUserFeatures(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Server User Features
+     * 
+     * <p>Get features enabled per shared user for the server.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetServerUserFeaturesResponse getServerUserFeatures(
+            GetServerUserFeaturesRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetServerUserFeaturesRequest, GetServerUserFeaturesResponse> operation
+              = new GetServerUserFeatures.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Share Server
+     * 
+     * <p>Share a server with a friend or managed user.
+     * 
+     * @return The call builder
+     */
+    public ShareServerRequestBuilder shareServer() {
+        return new ShareServerRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Share Server
+     * 
+     * <p>Share a server with a friend or managed user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ShareServerResponse shareServer(ShareServerRequest request) {
+        return shareServer(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Share Server
+     * 
+     * <p>Share a server with a friend or managed user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ShareServerResponse shareServer(
+            ShareServerRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<ShareServerRequest, ShareServerResponse> operation
+              = new ShareServer.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Update View State Sync
+     * 
+     * <p>Enable or disable watch-state sync consent for the logged-in user.
+     * 
+     * @return The call builder
+     */
+    public UpdateViewStateSyncRequestBuilder updateViewStateSync() {
+        return new UpdateViewStateSyncRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update View State Sync
+     * 
+     * <p>Enable or disable watch-state sync consent for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateViewStateSyncResponse updateViewStateSync(UpdateViewStateSyncRequest request) {
+        return updateViewStateSync(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Update View State Sync
+     * 
+     * <p>Enable or disable watch-state sync consent for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateViewStateSyncResponse updateViewStateSync(
+            UpdateViewStateSyncRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<UpdateViewStateSyncRequest, UpdateViewStateSyncResponse> operation
+              = new UpdateViewStateSync.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
      * Get list of all connected users
      * 
-     * <p>Get list of all users that are friends and have library access with the provided Plex authentication token
+     * <p>Get list of all users that are friends and have library access with the provided Plex authentication
+     * token
      * 
      * @return The call builder
      */
@@ -46,29 +614,486 @@ public class Users {
     /**
      * Get list of all connected users
      * 
-     * <p>Get list of all users that are friends and have library access with the provided Plex authentication token
+     * <p>Get list of all users that are friends and have library access with the provided Plex authentication
+     * token
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetUsersResponse getUsers(GetUsersRequest request) throws Exception {
-        return getUsers(request, Optional.empty());
+    public GetUsersResponse getUsers(GetUsersRequest request) {
+        return getUsers(request, Optional.empty(), Optional.empty());
     }
 
     /**
      * Get list of all connected users
      * 
-     * <p>Get list of all users that are friends and have library access with the provided Plex authentication token
+     * <p>Get list of all users that are friends and have library access with the provided Plex authentication
+     * token
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param serverURL Overrides the server URL.
+     * @param options additional options
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetUsersResponse getUsers(GetUsersRequest request, Optional<String> serverURL) throws Exception {
+    public GetUsersResponse getUsers(
+            GetUsersRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
         RequestOperation<GetUsersRequest, GetUsersResponse> operation
-              = new GetUsers.Sync(sdkConfiguration, serverURL);
+              = new GetUsers.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Account (XML)
+     * 
+     * <p>Get the logged-in user's account details in XML format (legacy v1 endpoint).
+     * 
+     * @return The call builder
+     */
+    public GetAccountXMLRequestBuilder getAccountXML() {
+        return new GetAccountXMLRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Account (XML)
+     * 
+     * <p>Get the logged-in user's account details in XML format (legacy v1 endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAccountXMLResponse getAccountXML(GetAccountXMLRequest request) {
+        return getAccountXML(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Account (XML)
+     * 
+     * <p>Get the logged-in user's account details in XML format (legacy v1 endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAccountXMLResponse getAccountXML(
+            GetAccountXMLRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetAccountXMLRequest, GetAccountXMLResponse> operation
+              = new GetAccountXML.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Account (JSON)
+     * 
+     * <p>Get the logged-in user's account details in JSON format (legacy v1 endpoint).
+     * 
+     * @return The call builder
+     */
+    public GetAccountJSONRequestBuilder getAccountJSON() {
+        return new GetAccountJSONRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Account (JSON)
+     * 
+     * <p>Get the logged-in user's account details in JSON format (legacy v1 endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAccountJSONResponse getAccountJSON(GetAccountJSONRequest request) {
+        return getAccountJSON(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Account (JSON)
+     * 
+     * <p>Get the logged-in user's account details in JSON format (legacy v1 endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAccountJSONResponse getAccountJSON(
+            GetAccountJSONRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetAccountJSONRequest, GetAccountJSONResponse> operation
+              = new GetAccountJSON.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Delete Home User
+     * 
+     * <p>Remove a Plex Home user.
+     * 
+     * @return The call builder
+     */
+    public DeleteHomeUserRequestBuilder deleteHomeUser() {
+        return new DeleteHomeUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Delete Home User
+     * 
+     * <p>Remove a Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteHomeUserResponse deleteHomeUser(DeleteHomeUserRequest request) {
+        return deleteHomeUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Delete Home User
+     * 
+     * <p>Remove a Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteHomeUserResponse deleteHomeUser(
+            DeleteHomeUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<DeleteHomeUserRequest, DeleteHomeUserResponse> operation
+              = new DeleteHomeUser.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Update Home User
+     * 
+     * <p>Update a Plex Home user.
+     * 
+     * @return The call builder
+     */
+    public UpdateHomeUserRequestBuilder updateHomeUser() {
+        return new UpdateHomeUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update Home User
+     * 
+     * <p>Update a Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateHomeUserResponse updateHomeUser(UpdateHomeUserRequest request) {
+        return updateHomeUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Update Home User
+     * 
+     * <p>Update a Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateHomeUserResponse updateHomeUser(
+            UpdateHomeUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<UpdateHomeUserRequest, UpdateHomeUserResponse> operation
+              = new UpdateHomeUser.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Update Restricted User
+     * 
+     * <p>Update restricted (managed) home user settings.
+     * 
+     * @return The call builder
+     */
+    public UpdateRestrictedUserRequestBuilder updateRestrictedUser() {
+        return new UpdateRestrictedUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update Restricted User
+     * 
+     * <p>Update restricted (managed) home user settings.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateRestrictedUserResponse updateRestrictedUser(UpdateRestrictedUserRequest request) {
+        return updateRestrictedUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Update Restricted User
+     * 
+     * <p>Update restricted (managed) home user settings.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateRestrictedUserResponse updateRestrictedUser(
+            UpdateRestrictedUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<UpdateRestrictedUserRequest, UpdateRestrictedUserResponse> operation
+              = new UpdateRestrictedUser.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Server Details
+     * 
+     * <p>Get server details for sharing.
+     * 
+     * @return The call builder
+     */
+    public GetServerDetailsRequestBuilder getServerDetails() {
+        return new GetServerDetailsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Server Details
+     * 
+     * <p>Get server details for sharing.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetServerDetailsResponse getServerDetails(GetServerDetailsRequest request) {
+        return getServerDetails(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Server Details
+     * 
+     * <p>Get server details for sharing.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetServerDetailsResponse getServerDetails(
+            GetServerDetailsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetServerDetailsRequest, GetServerDetailsResponse> operation
+              = new GetServerDetails.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Share Server (Legacy v1)
+     * 
+     * <p>Share a library with a friend (legacy v1 XML endpoint).
+     * 
+     * @return The call builder
+     */
+    public ShareServerLegacyRequestBuilder shareServerLegacy() {
+        return new ShareServerLegacyRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Share Server (Legacy v1)
+     * 
+     * <p>Share a library with a friend (legacy v1 XML endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ShareServerLegacyResponse shareServerLegacy(ShareServerLegacyRequest request) {
+        return shareServerLegacy(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Share Server (Legacy v1)
+     * 
+     * <p>Share a library with a friend (legacy v1 XML endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ShareServerLegacyResponse shareServerLegacy(
+            ShareServerLegacyRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<ShareServerLegacyRequest, ShareServerLegacyResponse> operation
+              = new ShareServerLegacy.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Remove Share
+     * 
+     * <p>Remove a share / friend.
+     * 
+     * @return The call builder
+     */
+    public RemoveShareRequestBuilder removeShare() {
+        return new RemoveShareRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Remove Share
+     * 
+     * <p>Remove a share / friend.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RemoveShareResponse removeShare(RemoveShareRequest request) {
+        return removeShare(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Remove Share
+     * 
+     * <p>Remove a share / friend.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RemoveShareResponse removeShare(
+            RemoveShareRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<RemoveShareRequest, RemoveShareResponse> operation
+              = new RemoveShare.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Update Share
+     * 
+     * <p>Update friend filters (allowSync, filterMovies, etc.).
+     * 
+     * @return The call builder
+     */
+    public UpdateShareRequestBuilder updateShare() {
+        return new UpdateShareRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update Share
+     * 
+     * <p>Update friend filters (allowSync, filterMovies, etc.).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateShareResponse updateShare(UpdateShareRequest request) {
+        return updateShare(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Update Share
+     * 
+     * <p>Update friend filters (allowSync, filterMovies, etc.).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateShareResponse updateShare(
+            UpdateShareRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<UpdateShareRequest, UpdateShareResponse> operation
+              = new UpdateShare.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get User Opt-Outs
+     * 
+     * <p>Get online media source opt-out settings for a user.
+     * 
+     * @return The call builder
+     */
+    public GetUserOptOutsRequestBuilder getUserOptOuts() {
+        return new GetUserOptOutsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get User Opt-Outs
+     * 
+     * <p>Get online media source opt-out settings for a user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUserOptOutsResponse getUserOptOuts(GetUserOptOutsRequest request) {
+        return getUserOptOuts(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get User Opt-Outs
+     * 
+     * <p>Get online media source opt-out settings for a user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUserOptOutsResponse getUserOptOuts(
+            GetUserOptOutsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetUserOptOutsRequest, GetUserOptOutsResponse> operation
+              = new GetUserOptOuts.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

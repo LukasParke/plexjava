@@ -34,7 +34,7 @@ public class AddPlaylistItemsResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * OK
+     * Successfully updated adding to  a playlist
      */
     private Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata;
 
@@ -87,7 +87,7 @@ public class AddPlaylistItemsResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully updated adding to  a playlist
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -128,7 +128,7 @@ public class AddPlaylistItemsResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully updated adding to  a playlist
      */
     public AddPlaylistItemsResponse withMediaContainerWithPlaylistMetadata(MediaContainerWithPlaylistMetadata mediaContainerWithPlaylistMetadata) {
         Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
@@ -138,7 +138,7 @@ public class AddPlaylistItemsResponse implements Response {
 
 
     /**
-     * OK
+     * Successfully updated adding to  a playlist
      */
     public AddPlaylistItemsResponse withMediaContainerWithPlaylistMetadata(Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata) {
         Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
@@ -225,7 +225,7 @@ public class AddPlaylistItemsResponse implements Response {
 
 
         /**
-         * OK
+         * Successfully updated adding to  a playlist
          */
         public Builder mediaContainerWithPlaylistMetadata(MediaContainerWithPlaylistMetadata mediaContainerWithPlaylistMetadata) {
             Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");
@@ -234,7 +234,7 @@ public class AddPlaylistItemsResponse implements Response {
         }
 
         /**
-         * OK
+         * Successfully updated adding to  a playlist
          */
         public Builder mediaContainerWithPlaylistMetadata(Optional<? extends MediaContainerWithPlaylistMetadata> mediaContainerWithPlaylistMetadata) {
             Utils.checkNotNull(mediaContainerWithPlaylistMetadata, "mediaContainerWithPlaylistMetadata");

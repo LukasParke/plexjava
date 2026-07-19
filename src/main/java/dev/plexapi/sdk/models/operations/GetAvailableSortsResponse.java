@@ -5,6 +5,7 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.MediaContainerWithSorts;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -35,22 +36,22 @@ public class GetAvailableSortsResponse implements Response {
     /**
      * OK
      */
-    private Optional<? extends GetAvailableSortsResponseBody> object;
+    private Optional<? extends MediaContainerWithSorts> mediaContainerWithSorts;
 
     @JsonCreator
     public GetAvailableSortsResponse(
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends GetAvailableSortsResponseBody> object) {
+            Optional<? extends MediaContainerWithSorts> mediaContainerWithSorts) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithSorts, "mediaContainerWithSorts");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithSorts = mediaContainerWithSorts;
     }
     
     public GetAvailableSortsResponse(
@@ -90,8 +91,8 @@ public class GetAvailableSortsResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetAvailableSortsResponseBody> object() {
-        return (Optional<GetAvailableSortsResponseBody>) object;
+    public Optional<MediaContainerWithSorts> mediaContainerWithSorts() {
+        return (Optional<MediaContainerWithSorts>) mediaContainerWithSorts;
     }
 
     public static Builder builder() {
@@ -129,9 +130,9 @@ public class GetAvailableSortsResponse implements Response {
     /**
      * OK
      */
-    public GetAvailableSortsResponse withObject(GetAvailableSortsResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public GetAvailableSortsResponse withMediaContainerWithSorts(MediaContainerWithSorts mediaContainerWithSorts) {
+        Utils.checkNotNull(mediaContainerWithSorts, "mediaContainerWithSorts");
+        this.mediaContainerWithSorts = Optional.ofNullable(mediaContainerWithSorts);
         return this;
     }
 
@@ -139,9 +140,9 @@ public class GetAvailableSortsResponse implements Response {
     /**
      * OK
      */
-    public GetAvailableSortsResponse withObject(Optional<? extends GetAvailableSortsResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public GetAvailableSortsResponse withMediaContainerWithSorts(Optional<? extends MediaContainerWithSorts> mediaContainerWithSorts) {
+        Utils.checkNotNull(mediaContainerWithSorts, "mediaContainerWithSorts");
+        this.mediaContainerWithSorts = mediaContainerWithSorts;
         return this;
     }
 
@@ -158,14 +159,14 @@ public class GetAvailableSortsResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object);
+            Utils.enhancedDeepEquals(this.mediaContainerWithSorts, other.mediaContainerWithSorts);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object);
+            mediaContainerWithSorts);
     }
     
     @Override
@@ -174,7 +175,7 @@ public class GetAvailableSortsResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object);
+                "mediaContainerWithSorts", mediaContainerWithSorts);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -186,7 +187,7 @@ public class GetAvailableSortsResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends GetAvailableSortsResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithSorts> mediaContainerWithSorts = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -226,18 +227,18 @@ public class GetAvailableSortsResponse implements Response {
         /**
          * OK
          */
-        public Builder object(GetAvailableSortsResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithSorts(MediaContainerWithSorts mediaContainerWithSorts) {
+            Utils.checkNotNull(mediaContainerWithSorts, "mediaContainerWithSorts");
+            this.mediaContainerWithSorts = Optional.ofNullable(mediaContainerWithSorts);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends GetAvailableSortsResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithSorts(Optional<? extends MediaContainerWithSorts> mediaContainerWithSorts) {
+            Utils.checkNotNull(mediaContainerWithSorts, "mediaContainerWithSorts");
+            this.mediaContainerWithSorts = mediaContainerWithSorts;
             return this;
         }
 
@@ -245,7 +246,7 @@ public class GetAvailableSortsResponse implements Response {
 
             return new GetAvailableSortsResponse(
                 contentType, statusCode, rawResponse,
-                object);
+                mediaContainerWithSorts);
         }
 
     }

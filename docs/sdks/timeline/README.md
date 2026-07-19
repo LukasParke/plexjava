@@ -1,5 +1,4 @@
 # Timeline
-(*timeline()*)
 
 ## Overview
 
@@ -10,6 +9,7 @@ The actions feature within a media provider
 * [markPlayed](#markplayed) - Mark an item as played
 * [report](#report) - Report media timeline
 * [unscrobble](#unscrobble) - Mark an item as unplayed
+* [getConversionQueue](#getconversionqueue) - Get Conversion Queue
 
 ## markPlayed
 
@@ -49,6 +49,7 @@ public class Application {
 
         MarkPlayedRequest req = MarkPlayedRequest.builder()
                 .identifier("<value>")
+                .uri("https://mad-dredger.name")
                 .key("59398")
                 .build();
 
@@ -80,7 +81,6 @@ public class Application {
 ## report
 
 This endpoint is hit during media playback for an item. It must be hit whenever the play state changes, or in the absence of a play state change, in a regular fashion (generally this means every 10 seconds on a LAN/WAN, and every 20 seconds over cellular).
-
 
 ### Example Usage
 
@@ -135,7 +135,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -195,6 +195,7 @@ public class Application {
 
         UnscrobbleRequest req = UnscrobbleRequest.builder()
                 .identifier("<value>")
+                .uri("https://qualified-order.org")
                 .build();
 
         UnscrobbleResponse res = sdk.timeline().unscrobble()
@@ -220,4 +221,71 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getConversionQueue
+
+Get the conversion/optimization queue.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getConversionQueue" method="get" path="/playQueues/1" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetConversionQueueRequest;
+import dev.plexapi.sdk.models.operations.GetConversionQueueResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetConversionQueueRequest req = GetConversionQueueRequest.builder()
+                .build();
+
+        GetConversionQueueResponse res = sdk.timeline().getConversionQueue()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithPlayQueue().isPresent()) {
+            System.out.println(res.mediaContainerWithPlayQueue().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetConversionQueueRequest](../../models/operations/GetConversionQueueRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+
+### Response
+
+**[GetConversionQueueResponse](../../models/operations/GetConversionQueueResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |

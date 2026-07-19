@@ -17,12 +17,16 @@ import dev.plexapi.sdk.models.operations.async.SetPreferencesResponse;
 import dev.plexapi.sdk.operations.GetAllPreferences;
 import dev.plexapi.sdk.operations.GetPreference;
 import dev.plexapi.sdk.operations.SetPreferences;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * API Operations against the Preferences
  */
 public class AsyncPreferences {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Preferences syncSDK;
 
@@ -57,11 +61,25 @@ public class AsyncPreferences {
      * 
      * <p>Get the list of all preferences
      * 
-     * @return CompletableFuture&lt;GetAllPreferencesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAllPreferencesResponse>} - The async response
      */
     public CompletableFuture<GetAllPreferencesResponse> getAllPreferencesDirect() {
+        return getAllPreferences(Optional.empty());
+    }
+
+    /**
+     * Get all preferences
+     * 
+     * <p>Get the list of all preferences
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAllPreferencesResponse>} - The async response
+     */
+    public CompletableFuture<GetAllPreferencesResponse> getAllPreferences(Optional<Options> options) {
         AsyncRequestlessOperation<GetAllPreferencesResponse> operation
-            = new GetAllPreferences.Async(sdkConfiguration);
+            = new GetAllPreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -84,11 +102,26 @@ public class AsyncPreferences {
      * <p>Set a set of preferences in query parameters
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;SetPreferencesResponse&gt; - The async response
+     * @return {@code CompletableFuture<SetPreferencesResponse>} - The async response
      */
     public CompletableFuture<SetPreferencesResponse> setPreferences(SetPreferencesRequest request) {
+        return setPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set preferences
+     * 
+     * <p>Set a set of preferences in query parameters
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<SetPreferencesResponse>} - The async response
+     */
+    public CompletableFuture<SetPreferencesResponse> setPreferences(SetPreferencesRequest request, Optional<Options> options) {
         AsyncRequestOperation<SetPreferencesRequest, SetPreferencesResponse> operation
-              = new SetPreferences.Async(sdkConfiguration);
+              = new SetPreferences.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -111,11 +144,26 @@ public class AsyncPreferences {
      * <p>Get a single preference and value
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPreferenceResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPreferenceResponse>} - The async response
      */
     public CompletableFuture<GetPreferenceResponse> getPreference(GetPreferenceRequest request) {
+        return getPreference(request, Optional.empty());
+    }
+
+    /**
+     * Get a preferences
+     * 
+     * <p>Get a single preference and value
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPreferenceResponse>} - The async response
+     */
+    public CompletableFuture<GetPreferenceResponse> getPreference(GetPreferenceRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPreferenceRequest, GetPreferenceResponse> operation
-              = new GetPreference.Async(sdkConfiguration);
+              = new GetPreference.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

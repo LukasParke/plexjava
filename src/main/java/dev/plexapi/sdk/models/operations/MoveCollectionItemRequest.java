@@ -97,7 +97,7 @@ public class MoveCollectionItemRequest {
     private long itemId;
 
     /**
-     * The item to move this item after.  If not provided, this item will be moved to the beginning
+     * The item to move this item after. If not provided, this item will be moved to the beginning
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=after")
     private Optional<Long> after;
@@ -264,7 +264,7 @@ public class MoveCollectionItemRequest {
     }
 
     /**
-     * The item to move this item after.  If not provided, this item will be moved to the beginning
+     * The item to move this item after. If not provided, this item will be moved to the beginning
      */
     @JsonIgnore
     public Optional<Long> after() {
@@ -504,7 +504,7 @@ public class MoveCollectionItemRequest {
     }
 
     /**
-     * The item to move this item after.  If not provided, this item will be moved to the beginning
+     * The item to move this item after. If not provided, this item will be moved to the beginning
      */
     public MoveCollectionItemRequest withAfter(long after) {
         Utils.checkNotNull(after, "after");
@@ -514,7 +514,7 @@ public class MoveCollectionItemRequest {
 
 
     /**
-     * The item to move this item after.  If not provided, this item will be moved to the beginning
+     * The item to move this item after. If not provided, this item will be moved to the beginning
      */
     public MoveCollectionItemRequest withAfter(Optional<Long> after) {
         Utils.checkNotNull(after, "after");
@@ -843,7 +843,7 @@ public class MoveCollectionItemRequest {
 
 
         /**
-         * The item to move this item after.  If not provided, this item will be moved to the beginning
+         * The item to move this item after. If not provided, this item will be moved to the beginning
          */
         public Builder after(long after) {
             Utils.checkNotNull(after, "after");
@@ -852,7 +852,7 @@ public class MoveCollectionItemRequest {
         }
 
         /**
-         * The item to move this item after.  If not provided, this item will be moved to the beginning
+         * The item to move this item after. If not provided, this item will be moved to the beginning
          */
         public Builder after(Optional<Long> after) {
             Utils.checkNotNull(after, "after");

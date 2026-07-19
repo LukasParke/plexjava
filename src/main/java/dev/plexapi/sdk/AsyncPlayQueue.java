@@ -41,17 +41,43 @@ import dev.plexapi.sdk.operations.MovePlayQueueItem;
 import dev.plexapi.sdk.operations.ResetPlayQueue;
 import dev.plexapi.sdk.operations.Shuffle;
 import dev.plexapi.sdk.operations.Unshuffle;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * The playqueue feature within a media provider
- * A play queue represents the current list of media for playback. Although queues are persisted by the server, they should be regarded by the user as a fairly lightweight, an ephemeral list of items queued up for playback in a session.  There is generally one active queue for each type of media (music, video, photos) that can be added to or destroyed and replaced with a fresh queue.
- * Play Queues has a region, which we refer to in this doc (partially for historical reasons) as "Up Next". This region is defined by `playQueueLastAddedItemID` existing on the media container. This follows iTunes' terminology. It is a special region after the currently playing item but before the originally-played items. This enables "Party Mode" listening/viewing, where items can be added on-the-fly, and normal queue playback resumed when completed. 
- * You can visualize the play queue as a sliding window in the complete list of media queued for playback. This model is important when scaling to larger play queues (e.g. shuffling 40,000 audio tracks). The client only needs visibility into small areas of the queue at any given time, and the server can optimize access in this fashion.
- * All created play queues will have an empty "Up Next" area - unless the item is an album and no `key` is provided. In this case the "Up Next" area will be populated by the contents of the album. This is to allow queueing of multiple albums - since the 'Add to Up Next' will insert after all the tracks. This means that If you're creating a PQ from an album, you can only shuffle it if you set `key`. This is due to the above implicit queueing of albums when no `key` is provided as well as the current limitation that you cannot shuffle a PQ with an "Up Next" area.
- * The play queue window advances as the server receives timeline requests. The client needs to retrieve the play queue as the “now playing” item changes. There is no play queue API to update the playing item.
+ * A play queue represents the current list of media for playback. Although queues are persisted by the
+ * server, they should be regarded by the user as a fairly lightweight, an ephemeral list of items
+ * queued up for playback in a session. There is generally one active queue for each type of media
+ * (music, video, photos) that can be added to or destroyed and replaced with a fresh queue.
+ * Play Queues has a region, which we refer to in this doc (partially for historical reasons) as "Up
+ * Next". This region is defined by `playQueueLastAddedItemID` existing on the media container. This
+ * follows iTunes' terminology.
+ * 
+ * <p>It is a special region after the currently playing item but before the originally-played items. This
+ * enables "Party Mode" listening/viewing, where items can be added on-the-fly, and normal queue
+ * playback resumed when completed.
+ * You can visualize the play queue as a sliding window in the complete list of media queued for
+ * playback. This model is important when scaling to larger play queues (e.g. shuffling 40,000 audio
+ * tracks).
+ * 
+ * <p>The client only needs visibility into small areas of the queue at any given time, and the server can
+ * optimize access in this fashion.
+ * All created play queues will have an empty "Up Next" area - unless the item is an album and no `key`
+ * is provided. In this case the "Up Next" area will be populated by the contents of the album. This is
+ * to allow queueing of multiple albums - since the 'Add to Up Next' will insert after all the tracks.
+ * 
+ * <p>This means that If you're creating a PQ from an album, you can only shuffle it if you set `key`.
+ * This is due to the above implicit queueing of albums when no `key` is provided as well as the
+ * current limitation that you cannot shuffle a PQ with an "Up Next" area.
+ * The play queue window advances as the server receives timeline requests. The client needs to
+ * retrieve the play queue as the “now playing” item changes. There is no play queue API to update the
+ * playing item.
  */
 public class AsyncPlayQueue {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final PlayQueue syncSDK;
 
@@ -73,7 +99,11 @@ public class AsyncPlayQueue {
     /**
      * Create a play queue
      * 
-     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist. The response is a media container with the initial items in the queue. Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the queue could have repeated items with the same `ratingKey`.
+     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist.
+     * The response is a media container with the initial items in the queue.
+     * 
+     * <p>Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the
+     * queue could have repeated items with the same `ratingKey`.
      * Note: Either `uri` or `playlistID` must be specified
      * 
      * @return The async call builder
@@ -85,15 +115,39 @@ public class AsyncPlayQueue {
     /**
      * Create a play queue
      * 
-     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist. The response is a media container with the initial items in the queue. Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the queue could have repeated items with the same `ratingKey`.
+     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist.
+     * The response is a media container with the initial items in the queue.
+     * 
+     * <p>Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the
+     * queue could have repeated items with the same `ratingKey`.
      * Note: Either `uri` or `playlistID` must be specified
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CreatePlayQueueResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreatePlayQueueResponse>} - The async response
      */
     public CompletableFuture<CreatePlayQueueResponse> createPlayQueue(CreatePlayQueueRequest request) {
+        return createPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Create a play queue
+     * 
+     * <p>Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist.
+     * The response is a media container with the initial items in the queue.
+     * 
+     * <p>Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the
+     * queue could have repeated items with the same `ratingKey`.
+     * Note: Either `uri` or `playlistID` must be specified
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreatePlayQueueResponse>} - The async response
+     */
+    public CompletableFuture<CreatePlayQueueResponse> createPlayQueue(CreatePlayQueueRequest request, Optional<Options> options) {
         AsyncRequestOperation<CreatePlayQueueRequest, CreatePlayQueueResponse> operation
-              = new CreatePlayQueue.Async(sdkConfiguration);
+              = new CreatePlayQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -102,7 +156,9 @@ public class AsyncPlayQueue {
     /**
      * Retrieve a play queue
      * 
-     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by play queue-oblivious clients, but they may wish to request a large window onto the queue since they won't know to refresh.
+     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by
+     * play queue-oblivious clients, but they may wish to request a large window onto the queue since they
+     * won't know to refresh.
      * 
      * @return The async call builder
      */
@@ -113,14 +169,33 @@ public class AsyncPlayQueue {
     /**
      * Retrieve a play queue
      * 
-     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by play queue-oblivious clients, but they may wish to request a large window onto the queue since they won't know to refresh.
+     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by
+     * play queue-oblivious clients, but they may wish to request a large window onto the queue since they
+     * won't know to refresh.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPlayQueueResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPlayQueueResponse>} - The async response
      */
     public CompletableFuture<GetPlayQueueResponse> getPlayQueue(GetPlayQueueRequest request) {
+        return getPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Retrieve a play queue
+     * 
+     * <p>Retrieves the play queue, centered at current item. This can be treated as a regular container by
+     * play queue-oblivious clients, but they may wish to request a large window onto the queue since they
+     * won't know to refresh.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPlayQueueResponse>} - The async response
+     */
+    public CompletableFuture<GetPlayQueueResponse> getPlayQueue(GetPlayQueueRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPlayQueueRequest, GetPlayQueueResponse> operation
-              = new GetPlayQueue.Async(sdkConfiguration);
+              = new GetPlayQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -129,7 +204,10 @@ public class AsyncPlayQueue {
     /**
      * Add a generator or playlist to a play queue
      * 
-     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue. Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified play queue.
+     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue.
+     * 
+     * <p>Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified
+     * play queue.
      * 
      * @return The async call builder
      */
@@ -140,14 +218,35 @@ public class AsyncPlayQueue {
     /**
      * Add a generator or playlist to a play queue
      * 
-     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue. Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified play queue.
+     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue.
+     * 
+     * <p>Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified
+     * play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddToPlayQueueResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddToPlayQueueResponse>} - The async response
      */
     public CompletableFuture<AddToPlayQueueResponse> addToPlayQueue(AddToPlayQueueRequest request) {
+        return addToPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Add a generator or playlist to a play queue
+     * 
+     * <p>Adds an item to a play queue (e.g. party mode). Increments the version of the play queue.
+     * 
+     * <p>Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified
+     * play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddToPlayQueueResponse>} - The async response
+     */
+    public CompletableFuture<AddToPlayQueueResponse> addToPlayQueue(AddToPlayQueueRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddToPlayQueueRequest, AddToPlayQueueResponse> operation
-              = new AddToPlayQueue.Async(sdkConfiguration);
+              = new AddToPlayQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -170,11 +269,26 @@ public class AsyncPlayQueue {
      * <p>Deletes all items in the play queue, and increases the version of the play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ClearPlayQueueResponse&gt; - The async response
+     * @return {@code CompletableFuture<ClearPlayQueueResponse>} - The async response
      */
     public CompletableFuture<ClearPlayQueueResponse> clearPlayQueue(ClearPlayQueueRequest request) {
+        return clearPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Clear a play queue
+     * 
+     * <p>Deletes all items in the play queue, and increases the version of the play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ClearPlayQueueResponse>} - The async response
+     */
+    public CompletableFuture<ClearPlayQueueResponse> clearPlayQueue(ClearPlayQueueRequest request, Optional<Options> options) {
         AsyncRequestOperation<ClearPlayQueueRequest, ClearPlayQueueResponse> operation
-              = new ClearPlayQueue.Async(sdkConfiguration);
+              = new ClearPlayQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -197,11 +311,26 @@ public class AsyncPlayQueue {
      * <p>Reset a play queue to the first item being the current item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ResetPlayQueueResponse&gt; - The async response
+     * @return {@code CompletableFuture<ResetPlayQueueResponse>} - The async response
      */
     public CompletableFuture<ResetPlayQueueResponse> resetPlayQueue(ResetPlayQueueRequest request) {
+        return resetPlayQueue(request, Optional.empty());
+    }
+
+    /**
+     * Reset a play queue
+     * 
+     * <p>Reset a play queue to the first item being the current item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ResetPlayQueueResponse>} - The async response
+     */
+    public CompletableFuture<ResetPlayQueueResponse> resetPlayQueue(ResetPlayQueueRequest request, Optional<Options> options) {
         AsyncRequestOperation<ResetPlayQueueRequest, ResetPlayQueueResponse> operation
-              = new ResetPlayQueue.Async(sdkConfiguration);
+              = new ResetPlayQueue.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -210,7 +339,10 @@ public class AsyncPlayQueue {
     /**
      * Shuffle a play queue
      * 
-     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained. Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue.
+     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained.
+     * Note that this is currently only supported for play queues *without* an Up Next area.
+     * 
+     * <p>Returns the modified play queue.
      * 
      * @return The async call builder
      */
@@ -221,14 +353,35 @@ public class AsyncPlayQueue {
     /**
      * Shuffle a play queue
      * 
-     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained. Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue.
+     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained.
+     * Note that this is currently only supported for play queues *without* an Up Next area.
+     * 
+     * <p>Returns the modified play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ShuffleResponse&gt; - The async response
+     * @return {@code CompletableFuture<ShuffleResponse>} - The async response
      */
     public CompletableFuture<ShuffleResponse> shuffle(ShuffleRequest request) {
+        return shuffle(request, Optional.empty());
+    }
+
+    /**
+     * Shuffle a play queue
+     * 
+     * <p>Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained.
+     * Note that this is currently only supported for play queues *without* an Up Next area.
+     * 
+     * <p>Returns the modified play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ShuffleResponse>} - The async response
+     */
+    public CompletableFuture<ShuffleResponse> shuffle(ShuffleRequest request, Optional<Options> options) {
         AsyncRequestOperation<ShuffleRequest, ShuffleResponse> operation
-              = new Shuffle.Async(sdkConfiguration);
+              = new Shuffle.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -237,7 +390,8 @@ public class AsyncPlayQueue {
     /**
      * Unshuffle a play queue
      * 
-     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue.
+     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for
+     * play queues *without* an Up Next area. Returns the modified play queue.
      * 
      * @return The async call builder
      */
@@ -248,14 +402,31 @@ public class AsyncPlayQueue {
     /**
      * Unshuffle a play queue
      * 
-     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue.
+     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for
+     * play queues *without* an Up Next area. Returns the modified play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;UnshuffleResponse&gt; - The async response
+     * @return {@code CompletableFuture<UnshuffleResponse>} - The async response
      */
     public CompletableFuture<UnshuffleResponse> unshuffle(UnshuffleRequest request) {
+        return unshuffle(request, Optional.empty());
+    }
+
+    /**
+     * Unshuffle a play queue
+     * 
+     * <p>Unshuffles a play queue and restores "natural order". Note that this is currently only supported for
+     * play queues *without* an Up Next area. Returns the modified play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UnshuffleResponse>} - The async response
+     */
+    public CompletableFuture<UnshuffleResponse> unshuffle(UnshuffleRequest request, Optional<Options> options) {
         AsyncRequestOperation<UnshuffleRequest, UnshuffleResponse> operation
-              = new Unshuffle.Async(sdkConfiguration);
+              = new Unshuffle.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -264,7 +435,8 @@ public class AsyncPlayQueue {
     /**
      * Delete an item from a play queue
      * 
-     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play queue.
+     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play
+     * queue.
      * 
      * @return The async call builder
      */
@@ -275,14 +447,31 @@ public class AsyncPlayQueue {
     /**
      * Delete an item from a play queue
      * 
-     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play queue.
+     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play
+     * queue.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeletePlayQueueItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeletePlayQueueItemResponse>} - The async response
      */
     public CompletableFuture<DeletePlayQueueItemResponse> deletePlayQueueItem(DeletePlayQueueItemRequest request) {
+        return deletePlayQueueItem(request, Optional.empty());
+    }
+
+    /**
+     * Delete an item from a play queue
+     * 
+     * <p>Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play
+     * queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeletePlayQueueItemResponse>} - The async response
+     */
+    public CompletableFuture<DeletePlayQueueItemResponse> deletePlayQueueItem(DeletePlayQueueItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeletePlayQueueItemRequest, DeletePlayQueueItemResponse> operation
-              = new DeletePlayQueueItem.Async(sdkConfiguration);
+              = new DeletePlayQueueItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -291,7 +480,8 @@ public class AsyncPlayQueue {
     /**
      * Move an item in a play queue
      * 
-     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified play queue.
+     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified
+     * play queue.
      * 
      * @return The async call builder
      */
@@ -302,14 +492,31 @@ public class AsyncPlayQueue {
     /**
      * Move an item in a play queue
      * 
-     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified play queue.
+     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified
+     * play queue.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;MovePlayQueueItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<MovePlayQueueItemResponse>} - The async response
      */
     public CompletableFuture<MovePlayQueueItemResponse> movePlayQueueItem(MovePlayQueueItemRequest request) {
+        return movePlayQueueItem(request, Optional.empty());
+    }
+
+    /**
+     * Move an item in a play queue
+     * 
+     * <p>Moves an item in a play queue, and increases the version of the play queue. Returns the modified
+     * play queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MovePlayQueueItemResponse>} - The async response
+     */
+    public CompletableFuture<MovePlayQueueItemResponse> movePlayQueueItem(MovePlayQueueItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<MovePlayQueueItemRequest, MovePlayQueueItemResponse> operation
-              = new MovePlayQueueItem.Async(sdkConfiguration);
+              = new MovePlayQueueItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

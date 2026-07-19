@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Boolean;
+import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
@@ -31,6 +32,20 @@ public class Channel {
     @JsonProperty("channelVcn")
     private Optional<String> channelVcn;
 
+    /**
+     * Whether the channel requires DRM.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("drm")
+    private Optional<Boolean> drm;
+
+    /**
+     * Whether the channel is marked as a favorite.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("favorite")
+    private Optional<Boolean> favorite;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("hd")
@@ -51,6 +66,20 @@ public class Channel {
     @JsonProperty("language")
     private Optional<String> language;
 
+    /**
+     * Signal quality percentage (0-100).
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("signalQuality")
+    private Optional<Long> signalQuality;
+
+    /**
+     * Signal strength percentage (0-100).
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("signalStrength")
+    private Optional<Long> signalStrength;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("thumb")
@@ -61,33 +90,46 @@ public class Channel {
             @JsonProperty("title") Optional<String> title,
             @JsonProperty("callSign") Optional<String> callSign,
             @JsonProperty("channelVcn") Optional<String> channelVcn,
+            @JsonProperty("drm") Optional<Boolean> drm,
+            @JsonProperty("favorite") Optional<Boolean> favorite,
             @JsonProperty("hd") Optional<Boolean> hd,
             @JsonProperty("identifier") Optional<String> identifier,
             @JsonProperty("key") Optional<String> key,
             @JsonProperty("language") Optional<String> language,
+            @JsonProperty("signalQuality") Optional<Long> signalQuality,
+            @JsonProperty("signalStrength") Optional<Long> signalStrength,
             @JsonProperty("thumb") Optional<String> thumb) {
         Utils.checkNotNull(title, "title");
         Utils.checkNotNull(callSign, "callSign");
         Utils.checkNotNull(channelVcn, "channelVcn");
+        Utils.checkNotNull(drm, "drm");
+        Utils.checkNotNull(favorite, "favorite");
         Utils.checkNotNull(hd, "hd");
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(key, "key");
         Utils.checkNotNull(language, "language");
+        Utils.checkNotNull(signalQuality, "signalQuality");
+        Utils.checkNotNull(signalStrength, "signalStrength");
         Utils.checkNotNull(thumb, "thumb");
         this.title = title;
         this.callSign = callSign;
         this.channelVcn = channelVcn;
+        this.drm = drm;
+        this.favorite = favorite;
         this.hd = hd;
         this.identifier = identifier;
         this.key = key;
         this.language = language;
+        this.signalQuality = signalQuality;
+        this.signalStrength = signalStrength;
         this.thumb = thumb;
     }
     
     public Channel() {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     @JsonIgnore
@@ -103,6 +145,22 @@ public class Channel {
     @JsonIgnore
     public Optional<String> channelVcn() {
         return channelVcn;
+    }
+
+    /**
+     * Whether the channel requires DRM.
+     */
+    @JsonIgnore
+    public Optional<Boolean> drm() {
+        return drm;
+    }
+
+    /**
+     * Whether the channel is marked as a favorite.
+     */
+    @JsonIgnore
+    public Optional<Boolean> favorite() {
+        return favorite;
     }
 
     @JsonIgnore
@@ -123,6 +181,22 @@ public class Channel {
     @JsonIgnore
     public Optional<String> language() {
         return language;
+    }
+
+    /**
+     * Signal quality percentage (0-100).
+     */
+    @JsonIgnore
+    public Optional<Long> signalQuality() {
+        return signalQuality;
+    }
+
+    /**
+     * Signal strength percentage (0-100).
+     */
+    @JsonIgnore
+    public Optional<Long> signalStrength() {
+        return signalStrength;
     }
 
     @JsonIgnore
@@ -171,6 +245,44 @@ public class Channel {
     public Channel withChannelVcn(Optional<String> channelVcn) {
         Utils.checkNotNull(channelVcn, "channelVcn");
         this.channelVcn = channelVcn;
+        return this;
+    }
+
+    /**
+     * Whether the channel requires DRM.
+     */
+    public Channel withDrm(boolean drm) {
+        Utils.checkNotNull(drm, "drm");
+        this.drm = Optional.ofNullable(drm);
+        return this;
+    }
+
+
+    /**
+     * Whether the channel requires DRM.
+     */
+    public Channel withDrm(Optional<Boolean> drm) {
+        Utils.checkNotNull(drm, "drm");
+        this.drm = drm;
+        return this;
+    }
+
+    /**
+     * Whether the channel is marked as a favorite.
+     */
+    public Channel withFavorite(boolean favorite) {
+        Utils.checkNotNull(favorite, "favorite");
+        this.favorite = Optional.ofNullable(favorite);
+        return this;
+    }
+
+
+    /**
+     * Whether the channel is marked as a favorite.
+     */
+    public Channel withFavorite(Optional<Boolean> favorite) {
+        Utils.checkNotNull(favorite, "favorite");
+        this.favorite = favorite;
         return this;
     }
 
@@ -226,6 +338,44 @@ public class Channel {
         return this;
     }
 
+    /**
+     * Signal quality percentage (0-100).
+     */
+    public Channel withSignalQuality(long signalQuality) {
+        Utils.checkNotNull(signalQuality, "signalQuality");
+        this.signalQuality = Optional.ofNullable(signalQuality);
+        return this;
+    }
+
+
+    /**
+     * Signal quality percentage (0-100).
+     */
+    public Channel withSignalQuality(Optional<Long> signalQuality) {
+        Utils.checkNotNull(signalQuality, "signalQuality");
+        this.signalQuality = signalQuality;
+        return this;
+    }
+
+    /**
+     * Signal strength percentage (0-100).
+     */
+    public Channel withSignalStrength(long signalStrength) {
+        Utils.checkNotNull(signalStrength, "signalStrength");
+        this.signalStrength = Optional.ofNullable(signalStrength);
+        return this;
+    }
+
+
+    /**
+     * Signal strength percentage (0-100).
+     */
+    public Channel withSignalStrength(Optional<Long> signalStrength) {
+        Utils.checkNotNull(signalStrength, "signalStrength");
+        this.signalStrength = signalStrength;
+        return this;
+    }
+
     public Channel withThumb(String thumb) {
         Utils.checkNotNull(thumb, "thumb");
         this.thumb = Optional.ofNullable(thumb);
@@ -252,10 +402,14 @@ public class Channel {
             Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.callSign, other.callSign) &&
             Utils.enhancedDeepEquals(this.channelVcn, other.channelVcn) &&
+            Utils.enhancedDeepEquals(this.drm, other.drm) &&
+            Utils.enhancedDeepEquals(this.favorite, other.favorite) &&
             Utils.enhancedDeepEquals(this.hd, other.hd) &&
             Utils.enhancedDeepEquals(this.identifier, other.identifier) &&
             Utils.enhancedDeepEquals(this.key, other.key) &&
             Utils.enhancedDeepEquals(this.language, other.language) &&
+            Utils.enhancedDeepEquals(this.signalQuality, other.signalQuality) &&
+            Utils.enhancedDeepEquals(this.signalStrength, other.signalStrength) &&
             Utils.enhancedDeepEquals(this.thumb, other.thumb);
     }
     
@@ -263,8 +417,9 @@ public class Channel {
     public int hashCode() {
         return Utils.enhancedHash(
             title, callSign, channelVcn,
-            hd, identifier, key,
-            language, thumb);
+            drm, favorite, hd,
+            identifier, key, language,
+            signalQuality, signalStrength, thumb);
     }
     
     @Override
@@ -273,10 +428,14 @@ public class Channel {
                 "title", title,
                 "callSign", callSign,
                 "channelVcn", channelVcn,
+                "drm", drm,
+                "favorite", favorite,
                 "hd", hd,
                 "identifier", identifier,
                 "key", key,
                 "language", language,
+                "signalQuality", signalQuality,
+                "signalStrength", signalStrength,
                 "thumb", thumb);
     }
 
@@ -289,6 +448,10 @@ public class Channel {
 
         private Optional<String> channelVcn = Optional.empty();
 
+        private Optional<Boolean> drm = Optional.empty();
+
+        private Optional<Boolean> favorite = Optional.empty();
+
         private Optional<Boolean> hd = Optional.empty();
 
         private Optional<String> identifier = Optional.empty();
@@ -296,6 +459,10 @@ public class Channel {
         private Optional<String> key = Optional.empty();
 
         private Optional<String> language = Optional.empty();
+
+        private Optional<Long> signalQuality = Optional.empty();
+
+        private Optional<Long> signalStrength = Optional.empty();
 
         private Optional<String> thumb = Optional.empty();
 
@@ -339,6 +506,44 @@ public class Channel {
         public Builder channelVcn(Optional<String> channelVcn) {
             Utils.checkNotNull(channelVcn, "channelVcn");
             this.channelVcn = channelVcn;
+            return this;
+        }
+
+
+        /**
+         * Whether the channel requires DRM.
+         */
+        public Builder drm(boolean drm) {
+            Utils.checkNotNull(drm, "drm");
+            this.drm = Optional.ofNullable(drm);
+            return this;
+        }
+
+        /**
+         * Whether the channel requires DRM.
+         */
+        public Builder drm(Optional<Boolean> drm) {
+            Utils.checkNotNull(drm, "drm");
+            this.drm = drm;
+            return this;
+        }
+
+
+        /**
+         * Whether the channel is marked as a favorite.
+         */
+        public Builder favorite(boolean favorite) {
+            Utils.checkNotNull(favorite, "favorite");
+            this.favorite = Optional.ofNullable(favorite);
+            return this;
+        }
+
+        /**
+         * Whether the channel is marked as a favorite.
+         */
+        public Builder favorite(Optional<Boolean> favorite) {
+            Utils.checkNotNull(favorite, "favorite");
+            this.favorite = favorite;
             return this;
         }
 
@@ -395,6 +600,44 @@ public class Channel {
         }
 
 
+        /**
+         * Signal quality percentage (0-100).
+         */
+        public Builder signalQuality(long signalQuality) {
+            Utils.checkNotNull(signalQuality, "signalQuality");
+            this.signalQuality = Optional.ofNullable(signalQuality);
+            return this;
+        }
+
+        /**
+         * Signal quality percentage (0-100).
+         */
+        public Builder signalQuality(Optional<Long> signalQuality) {
+            Utils.checkNotNull(signalQuality, "signalQuality");
+            this.signalQuality = signalQuality;
+            return this;
+        }
+
+
+        /**
+         * Signal strength percentage (0-100).
+         */
+        public Builder signalStrength(long signalStrength) {
+            Utils.checkNotNull(signalStrength, "signalStrength");
+            this.signalStrength = Optional.ofNullable(signalStrength);
+            return this;
+        }
+
+        /**
+         * Signal strength percentage (0-100).
+         */
+        public Builder signalStrength(Optional<Long> signalStrength) {
+            Utils.checkNotNull(signalStrength, "signalStrength");
+            this.signalStrength = signalStrength;
+            return this;
+        }
+
+
         public Builder thumb(String thumb) {
             Utils.checkNotNull(thumb, "thumb");
             this.thumb = Optional.ofNullable(thumb);
@@ -411,8 +654,9 @@ public class Channel {
 
             return new Channel(
                 title, callSign, channelVcn,
-                hd, identifier, key,
-                language, thumb);
+                drm, favorite, hd,
+                identifier, key, language,
+                signalQuality, signalStrength, thumb);
         }
 
     }

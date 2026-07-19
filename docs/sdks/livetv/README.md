@@ -1,17 +1,85 @@
 # LiveTV
-(*liveTV()*)
 
 ## Overview
 
 LiveTV contains the playback sessions of a channel from a DVR device
 
-
 ### Available Operations
 
+* [getDVRRecordings](#getdvrrecordings) - Get DVR Recordings
 * [getSessions](#getsessions) - Get all sessions
+* [getDVRRecordingsByDVR](#getdvrrecordingsbydvr) - Get DVR Recordings by DVR
+* [deleteLiveTVSession](#deletelivetvsession) - Delete Live TV Session
 * [getLiveTVSession](#getlivetvsession) - Get a single session
 * [getSessionPlaylistIndex](#getsessionplaylistindex) - Get a session playlist index
 * [getSessionSegment](#getsessionsegment) - Get a single session segment
+
+## getDVRRecordings
+
+List completed DVR recordings.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getDVRRecordings" method="get" path="/livetv/recordings" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsRequest;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetDVRRecordingsRequest req = GetDVRRecordingsRequest.builder()
+                .build();
+
+        GetDVRRecordingsResponse res = sdk.liveTV().getDVRRecordings()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [GetDVRRecordingsRequest](../../models/operations/GetDVRRecordingsRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[GetDVRRecordingsResponse](../../models/operations/GetDVRRecordingsResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getSessions
 
@@ -24,12 +92,13 @@ Get all livetv sessions and metadata
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetSessionsResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -39,11 +108,18 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
 ```
+
+### Parameters
+
+| Parameter             | Type                  | Required              | Description           |
+| --------------------- | --------------------- | --------------------- | --------------------- |
+| `dvrId`               | *Optional\<Long>*     | :heavy_minus_sign:    | Filter by DVR ID.     |
+| `channel`             | *Optional\<Long>*     | :heavy_minus_sign:    | Filter by channel ID. |
 
 ### Response
 
@@ -53,6 +129,143 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getDVRRecordingsByDVR
+
+List completed DVR recordings for a specific DVR.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getDVRRecordingsByDVR" method="get" path="/livetv/dvrs/{dvrId}/recordings" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsByDVRRequest;
+import dev.plexapi.sdk.models.operations.GetDVRRecordingsByDVRResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetDVRRecordingsByDVRRequest req = GetDVRRecordingsByDVRRequest.builder()
+                .dvrId(83756L)
+                .build();
+
+        GetDVRRecordingsByDVRResponse res = sdk.liveTV().getDVRRecordingsByDVR()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `request`                                                                               | [GetDVRRecordingsByDVRRequest](../../models/operations/GetDVRRecordingsByDVRRequest.md) | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
+
+### Response
+
+**[GetDVRRecordingsByDVRResponse](../../models/operations/GetDVRRecordingsByDVRResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## deleteLiveTVSession
+
+Terminate a Live TV session.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="deleteLiveTVSession" method="delete" path="/livetv/sessions/{sessionId}" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.DeleteLiveTVSessionRequest;
+import dev.plexapi.sdk.models.operations.DeleteLiveTVSessionResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .clientIdentifier("abc123")
+                .product("Plex for Roku")
+                .version("2.4.1")
+                .platform("Roku")
+                .platformVersion("4.3 build 1057")
+                .device("Roku 3")
+                .model("4200X")
+                .deviceVendor("Roku")
+                .deviceName("Living Room TV")
+                .marketplace("googlePlay")
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        DeleteLiveTVSessionRequest req = DeleteLiveTVSessionRequest.builder()
+                .sessionId("<id>")
+                .build();
+
+        DeleteLiveTVSessionResponse res = sdk.liveTV().deleteLiveTVSession()
+                .request(req)
+                .call();
+
+        if (res.successResponse().isPresent()) {
+            System.out.println(res.successResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [DeleteLiveTVSessionRequest](../../models/operations/DeleteLiveTVSessionRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[DeleteLiveTVSessionResponse](../../models/operations/DeleteLiveTVSessionResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getLiveTVSession
@@ -66,6 +279,7 @@ Get a single livetv session and metadata
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetLiveTVSessionRequest;
 import dev.plexapi.sdk.models.operations.GetLiveTVSessionResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
@@ -73,7 +287,7 @@ import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .accepts(Accepts.APPLICATION_XML)
@@ -99,7 +313,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithMetadata().get());
         }
     }
 }
@@ -119,6 +333,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## getSessionPlaylistIndex
@@ -165,7 +380,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.binaryResponse().isPresent()) {
+            // handle response
+        }
     }
 }
 ```
@@ -231,7 +448,9 @@ public class Application {
                 .request(req)
                 .call();
 
-        // handle response
+        if (res.binaryResponse().isPresent()) {
+            // handle response
+        }
     }
 }
 ```

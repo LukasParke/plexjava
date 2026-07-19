@@ -1,9 +1,0 @@
-# DeleteLineupMediaContainer
-
-
-## Fields
-
-| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
-| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| `mediaContainer`                                                                                       | [Optional\<DeleteLineupDVRsMediaContainer>](../../models/operations/DeleteLineupDVRsMediaContainer.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
-| `dvr`                                                                                                  | List\<[DeleteLineupDVR](../../models/operations/DeleteLineupDVR.md)>                                   | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |

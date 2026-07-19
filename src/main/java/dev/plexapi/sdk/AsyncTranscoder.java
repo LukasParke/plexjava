@@ -4,33 +4,53 @@
 package dev.plexapi.sdk;
 
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
+import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 
+import dev.plexapi.sdk.models.operations.GetDASHSegmentRequest;
+import dev.plexapi.sdk.models.operations.GetHLSSegmentRequest;
 import dev.plexapi.sdk.models.operations.MakeDecisionRequest;
 import dev.plexapi.sdk.models.operations.StartTranscodeSessionRequest;
 import dev.plexapi.sdk.models.operations.TranscodeImageRequest;
+import dev.plexapi.sdk.models.operations.TranscodeMusicRequest;
 import dev.plexapi.sdk.models.operations.TranscodeSubtitlesRequest;
 import dev.plexapi.sdk.models.operations.TriggerFallbackRequest;
+import dev.plexapi.sdk.models.operations.async.GetDASHSegmentRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetDASHSegmentResponse;
+import dev.plexapi.sdk.models.operations.async.GetHLSSegmentRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetHLSSegmentResponse;
+import dev.plexapi.sdk.models.operations.async.GetTranscodeSessionsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetTranscodeSessionsResponse;
 import dev.plexapi.sdk.models.operations.async.MakeDecisionRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.MakeDecisionResponse;
 import dev.plexapi.sdk.models.operations.async.StartTranscodeSessionRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.StartTranscodeSessionResponse;
 import dev.plexapi.sdk.models.operations.async.TranscodeImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.TranscodeImageResponse;
+import dev.plexapi.sdk.models.operations.async.TranscodeMusicRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.TranscodeMusicResponse;
 import dev.plexapi.sdk.models.operations.async.TranscodeSubtitlesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.TranscodeSubtitlesResponse;
 import dev.plexapi.sdk.models.operations.async.TriggerFallbackRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.TriggerFallbackResponse;
+import dev.plexapi.sdk.operations.GetDASHSegment;
+import dev.plexapi.sdk.operations.GetHLSSegment;
+import dev.plexapi.sdk.operations.GetTranscodeSessions;
 import dev.plexapi.sdk.operations.MakeDecision;
 import dev.plexapi.sdk.operations.StartTranscodeSession;
 import dev.plexapi.sdk.operations.TranscodeImage;
+import dev.plexapi.sdk.operations.TranscodeMusic;
 import dev.plexapi.sdk.operations.TranscodeSubtitles;
 import dev.plexapi.sdk.operations.TriggerFallback;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * API Operations against the Transcoder
  */
 public class AsyncTranscoder {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Transcoder syncSDK;
 
@@ -46,6 +66,54 @@ public class AsyncTranscoder {
      */
     public Transcoder sync() {
         return syncSDK;
+    }
+
+
+    /**
+     * Transcode Music
+     * 
+     * <p>Audio transcode endpoint for music playback.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public TranscodeMusicRequestBuilder transcodeMusic() {
+        return new TranscodeMusicRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Transcode Music
+     * 
+     * <p>Audio transcode endpoint for music playback.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<TranscodeMusicResponse>} - The async response
+     */
+    public CompletableFuture<TranscodeMusicResponse> transcodeMusic(TranscodeMusicRequest request) {
+        return transcodeMusic(request, Optional.empty());
+    }
+
+    /**
+     * Transcode Music
+     * 
+     * <p>Audio transcode endpoint for music playback.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<TranscodeMusicResponse>} - The async response
+     */
+    public CompletableFuture<TranscodeMusicResponse> transcodeMusic(TranscodeMusicRequest request, Optional<Options> options) {
+        AsyncRequestOperation<TranscodeMusicRequest, TranscodeMusicResponse> operation
+              = new TranscodeMusic.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
     }
 
 
@@ -66,12 +134,73 @@ public class AsyncTranscoder {
      * <p>Transcode an image, possibly changing format or size
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;TranscodeImageResponse&gt; - The async response
+     * @return {@code CompletableFuture<TranscodeImageResponse>} - The async response
      */
     public CompletableFuture<TranscodeImageResponse> transcodeImage(TranscodeImageRequest request) {
+        return transcodeImage(request, Optional.empty());
+    }
+
+    /**
+     * Transcode an image
+     * 
+     * <p>Transcode an image, possibly changing format or size
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<TranscodeImageResponse>} - The async response
+     */
+    public CompletableFuture<TranscodeImageResponse> transcodeImage(TranscodeImageRequest request, Optional<Options> options) {
         AsyncRequestOperation<TranscodeImageRequest, TranscodeImageResponse> operation
-              = new TranscodeImage.Async(sdkConfiguration);
+              = new TranscodeImage.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Transcode Sessions
+     * 
+     * <p>Get active transcode sessions.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetTranscodeSessionsRequestBuilder getTranscodeSessions() {
+        return new GetTranscodeSessionsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Transcode Sessions
+     * 
+     * <p>Get active transcode sessions.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<GetTranscodeSessionsResponse>} - The async response
+     */
+    public CompletableFuture<GetTranscodeSessionsResponse> getTranscodeSessionsDirect() {
+        return getTranscodeSessions(Optional.empty());
+    }
+
+    /**
+     * Get Transcode Sessions
+     * 
+     * <p>Get active transcode sessions.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetTranscodeSessionsResponse>} - The async response
+     */
+    public CompletableFuture<GetTranscodeSessionsResponse> getTranscodeSessions(Optional<Options> options) {
+        AsyncRequestlessOperation<GetTranscodeSessionsResponse> operation
+            = new GetTranscodeSessions.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
 
@@ -79,7 +208,8 @@ public class AsyncTranscoder {
     /**
      * Make a decision on media playback
      * 
-     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth and resolution.
+     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth
+     * and resolution.
      * 
      * @return The async call builder
      */
@@ -90,14 +220,31 @@ public class AsyncTranscoder {
     /**
      * Make a decision on media playback
      * 
-     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth and resolution.
+     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth
+     * and resolution.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;MakeDecisionResponse&gt; - The async response
+     * @return {@code CompletableFuture<MakeDecisionResponse>} - The async response
      */
     public CompletableFuture<MakeDecisionResponse> makeDecision(MakeDecisionRequest request) {
+        return makeDecision(request, Optional.empty());
+    }
+
+    /**
+     * Make a decision on media playback
+     * 
+     * <p>Make a decision on media playback based on client profile, and requested settings such as bandwidth
+     * and resolution.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MakeDecisionResponse>} - The async response
+     */
+    public CompletableFuture<MakeDecisionResponse> makeDecision(MakeDecisionRequest request, Optional<Options> options) {
         AsyncRequestOperation<MakeDecisionRequest, MakeDecisionResponse> operation
-              = new MakeDecision.Async(sdkConfiguration);
+              = new MakeDecision.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -120,11 +267,26 @@ public class AsyncTranscoder {
      * <p>Manually trigger a transcoder fallback ex: HEVC to h.264 or hw to sw
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;TriggerFallbackResponse&gt; - The async response
+     * @return {@code CompletableFuture<TriggerFallbackResponse>} - The async response
      */
     public CompletableFuture<TriggerFallbackResponse> triggerFallback(TriggerFallbackRequest request) {
+        return triggerFallback(request, Optional.empty());
+    }
+
+    /**
+     * Manually trigger a transcoder fallback
+     * 
+     * <p>Manually trigger a transcoder fallback ex: HEVC to h.264 or hw to sw
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<TriggerFallbackResponse>} - The async response
+     */
+    public CompletableFuture<TriggerFallbackResponse> triggerFallback(TriggerFallbackRequest request, Optional<Options> options) {
         AsyncRequestOperation<TriggerFallbackRequest, TriggerFallbackResponse> operation
-              = new TriggerFallback.Async(sdkConfiguration);
+              = new TriggerFallback.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -147,11 +309,26 @@ public class AsyncTranscoder {
      * <p>Only transcode subtitle streams.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;TranscodeSubtitlesResponse&gt; - The async response
+     * @return {@code CompletableFuture<TranscodeSubtitlesResponse>} - The async response
      */
     public CompletableFuture<TranscodeSubtitlesResponse> transcodeSubtitles(TranscodeSubtitlesRequest request) {
+        return transcodeSubtitles(request, Optional.empty());
+    }
+
+    /**
+     * Transcode subtitles
+     * 
+     * <p>Only transcode subtitle streams.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<TranscodeSubtitlesResponse>} - The async response
+     */
+    public CompletableFuture<TranscodeSubtitlesResponse> transcodeSubtitles(TranscodeSubtitlesRequest request, Optional<Options> options) {
         AsyncRequestOperation<TranscodeSubtitlesRequest, TranscodeSubtitlesResponse> operation
-              = new TranscodeSubtitles.Async(sdkConfiguration);
+              = new TranscodeSubtitles.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -174,11 +351,122 @@ public class AsyncTranscoder {
      * <p>Starts the transcoder and returns the corresponding streaming resource document.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;StartTranscodeSessionResponse&gt; - The async response
+     * @return {@code CompletableFuture<StartTranscodeSessionResponse>} - The async response
      */
     public CompletableFuture<StartTranscodeSessionResponse> startTranscodeSession(StartTranscodeSessionRequest request) {
+        return startTranscodeSession(request, Optional.empty());
+    }
+
+    /**
+     * Start A Transcoding Session
+     * 
+     * <p>Starts the transcoder and returns the corresponding streaming resource document.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<StartTranscodeSessionResponse>} - The async response
+     */
+    public CompletableFuture<StartTranscodeSessionResponse> startTranscodeSession(StartTranscodeSessionRequest request, Optional<Options> options) {
         AsyncRequestOperation<StartTranscodeSessionRequest, StartTranscodeSessionResponse> operation
-              = new StartTranscodeSession.Async(sdkConfiguration);
+              = new StartTranscodeSession.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get DASH Segment
+     * 
+     * <p>DASH segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetDASHSegmentRequestBuilder getDASHSegment() {
+        return new GetDASHSegmentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DASH Segment
+     * 
+     * <p>DASH segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetDASHSegmentResponse>} - The async response
+     */
+    public CompletableFuture<GetDASHSegmentResponse> getDASHSegment(GetDASHSegmentRequest request) {
+        return getDASHSegment(request, Optional.empty());
+    }
+
+    /**
+     * Get DASH Segment
+     * 
+     * <p>DASH segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetDASHSegmentResponse>} - The async response
+     */
+    public CompletableFuture<GetDASHSegmentResponse> getDASHSegment(GetDASHSegmentRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetDASHSegmentRequest, GetDASHSegmentResponse> operation
+              = new GetDASHSegment.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get HLS Segment
+     * 
+     * <p>HLS TS segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetHLSSegmentRequestBuilder getHLSSegment() {
+        return new GetHLSSegmentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get HLS Segment
+     * 
+     * <p>HLS TS segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetHLSSegmentResponse>} - The async response
+     */
+    public CompletableFuture<GetHLSSegmentResponse> getHLSSegment(GetHLSSegmentRequest request) {
+        return getHLSSegment(request, Optional.empty());
+    }
+
+    /**
+     * Get HLS Segment
+     * 
+     * <p>HLS TS segment delivery for adaptive streaming.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetHLSSegmentResponse>} - The async response
+     */
+    public CompletableFuture<GetHLSSegmentResponse> getHLSSegment(GetHLSSegmentRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetHLSSegmentRequest, GetHLSSegmentResponse> operation
+              = new GetHLSSegment.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

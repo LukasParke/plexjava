@@ -17,12 +17,15 @@ import dev.plexapi.sdk.models.operations.ListPlaylistsResponse;
 import dev.plexapi.sdk.operations.GetPlaylist;
 import dev.plexapi.sdk.operations.GetPlaylistItems;
 import dev.plexapi.sdk.operations.ListPlaylists;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * Media playlists that can be created and played back
  */
 public class Playlist {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncPlaylist asyncSDK;
 
@@ -43,7 +46,9 @@ public class Playlist {
     /**
      * List playlists
      * 
-     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the collection to just playlists.
+     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as
+     * `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the
+     * collection to just playlists.
      * 
      * @return The call builder
      */
@@ -54,23 +59,43 @@ public class Playlist {
     /**
      * List playlists
      * 
-     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the collection to just playlists.
+     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as
+     * `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the
+     * collection to just playlists.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListPlaylistsResponse listPlaylists(ListPlaylistsRequest request) throws Exception {
+    public ListPlaylistsResponse listPlaylists(ListPlaylistsRequest request) {
+        return listPlaylists(request, Optional.empty());
+    }
+
+    /**
+     * List playlists
+     * 
+     * <p>Gets a list of playlists and playlist folders for a user. General filters are permitted, such as
+     * `sort=lastViewedAt:desc`. A flat playlist list can be retrieved using `type=15` to limit the
+     * collection to just playlists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListPlaylistsResponse listPlaylists(ListPlaylistsRequest request, Optional<Options> options) {
         RequestOperation<ListPlaylistsRequest, ListPlaylistsResponse> operation
-              = new ListPlaylists.Sync(sdkConfiguration);
+              = new ListPlaylists.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Retrieve Playlist
      * 
-     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata, tagging), can be treated like a regular metadata item:
-     * Smart playlist details contain the `content` attribute. This is the content URI for the generator. This can then be parsed by a client to provide smart playlist editing.
+     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata,
+     * tagging), can be treated like a regular metadata item:
+     * Smart playlist details contain the `content` attribute. This is the content URI for the generator.
+     * This can then be parsed by a client to provide smart playlist editing.
      * 
      * @return The call builder
      */
@@ -81,23 +106,49 @@ public class Playlist {
     /**
      * Retrieve Playlist
      * 
-     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata, tagging), can be treated like a regular metadata item:
-     * Smart playlist details contain the `content` attribute. This is the content URI for the generator. This can then be parsed by a client to provide smart playlist editing.
+     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata,
+     * tagging), can be treated like a regular metadata item:
+     * Smart playlist details contain the `content` attribute. This is the content URI for the generator.
+     * This can then be parsed by a client to provide smart playlist editing.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPlaylistResponse getPlaylist(GetPlaylistRequest request) throws Exception {
+    public GetPlaylistResponse getPlaylist(GetPlaylistRequest request) {
+        return getPlaylist(request, Optional.empty());
+    }
+
+    /**
+     * Retrieve Playlist
+     * 
+     * <p>Gets detailed metadata for a playlist. A playlist for many purposes (rating, editing metadata,
+     * tagging), can be treated like a regular metadata item:
+     * Smart playlist details contain the `content` attribute. This is the content URI for the generator.
+     * This can then be parsed by a client to provide smart playlist editing.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPlaylistResponse getPlaylist(GetPlaylistRequest request, Optional<Options> options) {
         RequestOperation<GetPlaylistRequest, GetPlaylistResponse> operation
-              = new GetPlaylist.Sync(sdkConfiguration);
+              = new GetPlaylist.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Retrieve Playlist Contents
      * 
-     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default leaves are returned (e.g. episodes, movies). In order to return other types you can use the `type` parameter. For example, you could use this to display a list of recently added albums vis a smart playlist. Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or moving items.
+     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default
+     * leaves are returned (e.g.
+     * 
+     * <p>episodes, movies). In order to return other types you can use the `type` parameter. For example, you
+     * could use this to display a list of recently added albums vis a smart playlist.
+     * 
+     * <p>Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or
+     * moving items.
      * 
      * @return The call builder
      */
@@ -108,15 +159,43 @@ public class Playlist {
     /**
      * Retrieve Playlist Contents
      * 
-     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default leaves are returned (e.g. episodes, movies). In order to return other types you can use the `type` parameter. For example, you could use this to display a list of recently added albums vis a smart playlist. Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or moving items.
+     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default
+     * leaves are returned (e.g.
+     * 
+     * <p>episodes, movies). In order to return other types you can use the `type` parameter. For example, you
+     * could use this to display a list of recently added albums vis a smart playlist.
+     * 
+     * <p>Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or
+     * moving items.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPlaylistItemsResponse getPlaylistItems(GetPlaylistItemsRequest request) throws Exception {
+    public GetPlaylistItemsResponse getPlaylistItems(GetPlaylistItemsRequest request) {
+        return getPlaylistItems(request, Optional.empty());
+    }
+
+    /**
+     * Retrieve Playlist Contents
+     * 
+     * <p>Gets the contents of a playlist. Should be paged by clients via standard mechanisms. By default
+     * leaves are returned (e.g.
+     * 
+     * <p>episodes, movies). In order to return other types you can use the `type` parameter. For example, you
+     * could use this to display a list of recently added albums vis a smart playlist.
+     * 
+     * <p>Note that for dumb playlists, items have a `playlistItemID` attribute which is used for deleting or
+     * moving items.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPlaylistItemsResponse getPlaylistItems(GetPlaylistItemsRequest request, Optional<Options> options) {
         RequestOperation<GetPlaylistItemsRequest, GetPlaylistItemsResponse> operation
-              = new GetPlaylistItems.Sync(sdkConfiguration);
+              = new GetPlaylistItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

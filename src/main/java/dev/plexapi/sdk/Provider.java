@@ -3,29 +3,57 @@
  */
 package dev.plexapi.sdk;
 
-import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
+import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 
 import dev.plexapi.sdk.models.operations.AddProviderRequest;
 import dev.plexapi.sdk.models.operations.AddProviderRequestBuilder;
 import dev.plexapi.sdk.models.operations.AddProviderResponse;
+import dev.plexapi.sdk.models.operations.AddToWatchlistRequest;
+import dev.plexapi.sdk.models.operations.AddToWatchlistRequestBuilder;
+import dev.plexapi.sdk.models.operations.AddToWatchlistResponse;
 import dev.plexapi.sdk.models.operations.DeleteMediaProviderRequest;
 import dev.plexapi.sdk.models.operations.DeleteMediaProviderRequestBuilder;
 import dev.plexapi.sdk.models.operations.DeleteMediaProviderResponse;
+import dev.plexapi.sdk.models.operations.GetWatchlistRequest;
+import dev.plexapi.sdk.models.operations.GetWatchlistRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetWatchlistResponse;
 import dev.plexapi.sdk.models.operations.ListProvidersRequestBuilder;
 import dev.plexapi.sdk.models.operations.ListProvidersResponse;
 import dev.plexapi.sdk.models.operations.RefreshProvidersRequestBuilder;
 import dev.plexapi.sdk.models.operations.RefreshProvidersResponse;
+import dev.plexapi.sdk.models.operations.RemoveFromWatchlistRequest;
+import dev.plexapi.sdk.models.operations.RemoveFromWatchlistRequestBuilder;
+import dev.plexapi.sdk.models.operations.RemoveFromWatchlistResponse;
+import dev.plexapi.sdk.models.operations.SearchDiscoverRequest;
+import dev.plexapi.sdk.models.operations.SearchDiscoverRequestBuilder;
+import dev.plexapi.sdk.models.operations.SearchDiscoverResponse;
 import dev.plexapi.sdk.operations.AddProvider;
+import dev.plexapi.sdk.operations.AddToWatchlist;
 import dev.plexapi.sdk.operations.DeleteMediaProvider;
+import dev.plexapi.sdk.operations.GetWatchlist;
 import dev.plexapi.sdk.operations.ListProviders;
 import dev.plexapi.sdk.operations.RefreshProviders;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.RemoveFromWatchlist;
+import dev.plexapi.sdk.operations.SearchDiscover;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.String;
+import java.util.Optional;
 
 /**
- * Media providers are the starting points for the entire Plex Media Server media library API.  It defines the paths for the groups of endpoints.  The `/media/providers` should be the only hard-coded path in clients when accessing the media library.  Non-media library endpoints are outside the scope of the media provider.  See the description in See [the section in API Info](#section/API-Info/Media-Providers) for more information on how to use media providers.
+ * Media providers are the starting points for the entire Plex Media Server media library API. It
+ * defines the paths for the groups of endpoints. The `/media/providers` should be the only hard-coded
+ * path in clients when accessing the media library.
+ * 
+ * <p>Non-media library endpoints are outside the scope of the media provider. See the description in See
+ * [the section in API Info](#section/API-Info/Media-Providers) for more information on how to use
+ * media providers.
+ * Note: Dynamic proxy paths such as `/{provider}/search`, `/{provider}/metadata`, and other
+ * provider-relative routes are resolved through the media provider API.
  */
 public class Provider {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncProvider asyncSDK;
 
@@ -44,9 +72,190 @@ public class Provider {
     }
 
     /**
+     * Add to Watchlist
+     * 
+     * <p>Add an item to the user's Plex Discover watchlist.
+     * 
+     * @return The call builder
+     */
+    public AddToWatchlistRequestBuilder addToWatchlist() {
+        return new AddToWatchlistRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Add to Watchlist
+     * 
+     * <p>Add an item to the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddToWatchlistResponse addToWatchlist(AddToWatchlistRequest request) {
+        return addToWatchlist(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Add to Watchlist
+     * 
+     * <p>Add an item to the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddToWatchlistResponse addToWatchlist(
+            AddToWatchlistRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<AddToWatchlistRequest, AddToWatchlistResponse> operation
+              = new AddToWatchlist.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Remove from Watchlist
+     * 
+     * <p>Remove an item from the user's Plex Discover watchlist.
+     * 
+     * @return The call builder
+     */
+    public RemoveFromWatchlistRequestBuilder removeFromWatchlist() {
+        return new RemoveFromWatchlistRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Remove from Watchlist
+     * 
+     * <p>Remove an item from the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RemoveFromWatchlistResponse removeFromWatchlist(RemoveFromWatchlistRequest request) {
+        return removeFromWatchlist(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Remove from Watchlist
+     * 
+     * <p>Remove an item from the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RemoveFromWatchlistResponse removeFromWatchlist(
+            RemoveFromWatchlistRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<RemoveFromWatchlistRequest, RemoveFromWatchlistResponse> operation
+              = new RemoveFromWatchlist.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Search Discover
+     * 
+     * <p>Search movies and shows in Plex Discover.
+     * 
+     * @return The call builder
+     */
+    public SearchDiscoverRequestBuilder searchDiscover() {
+        return new SearchDiscoverRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Search Discover
+     * 
+     * <p>Search movies and shows in Plex Discover.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SearchDiscoverResponse searchDiscover(SearchDiscoverRequest request) {
+        return searchDiscover(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Search Discover
+     * 
+     * <p>Search movies and shows in Plex Discover.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SearchDiscoverResponse searchDiscover(
+            SearchDiscoverRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<SearchDiscoverRequest, SearchDiscoverResponse> operation
+              = new SearchDiscover.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Watchlist
+     * 
+     * <p>Get the user's Plex Discover watchlist.
+     * 
+     * @return The call builder
+     */
+    public GetWatchlistRequestBuilder getWatchlist() {
+        return new GetWatchlistRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Watchlist
+     * 
+     * <p>Get the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetWatchlistResponse getWatchlist(GetWatchlistRequest request) {
+        return getWatchlist(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Watchlist
+     * 
+     * <p>Get the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetWatchlistResponse getWatchlist(
+            GetWatchlistRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetWatchlistRequest, GetWatchlistResponse> operation
+              = new GetWatchlist.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
      * Get the list of available media providers
      * 
-     * <p>Get the list of all available media providers for this PMS.  This will generally include the library provider and possibly EPG if DVR is set up.
+     * <p>Get the list of all available media providers for this PMS. This will generally include the library
+     * provider and possibly EPG if DVR is set up.
      * 
      * @return The call builder
      */
@@ -57,21 +266,37 @@ public class Provider {
     /**
      * Get the list of available media providers
      * 
-     * <p>Get the list of all available media providers for this PMS.  This will generally include the library provider and possibly EPG if DVR is set up.
+     * <p>Get the list of all available media providers for this PMS. This will generally include the library
+     * provider and possibly EPG if DVR is set up.
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListProvidersResponse listProvidersDirect() throws Exception {
+    public ListProvidersResponse listProvidersDirect() {
+        return listProviders(Optional.empty());
+    }
+
+    /**
+     * Get the list of available media providers
+     * 
+     * <p>Get the list of all available media providers for this PMS. This will generally include the library
+     * provider and possibly EPG if DVR is set up.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListProvidersResponse listProviders(Optional<Options> options) {
         RequestlessOperation<ListProvidersResponse> operation
-            = new ListProviders.Sync(sdkConfiguration);
+            = new ListProviders.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Add a media provider
      * 
-     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as a reverse proxy to the provider, allowing both local and remote providers to work.
+     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as
+     * a reverse proxy to the provider, allowing both local and remote providers to work.
      * 
      * @return The call builder
      */
@@ -82,15 +307,31 @@ public class Provider {
     /**
      * Add a media provider
      * 
-     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as a reverse proxy to the provider, allowing both local and remote providers to work.
+     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as
+     * a reverse proxy to the provider, allowing both local and remote providers to work.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddProviderResponse addProvider(AddProviderRequest request) throws Exception {
+    public AddProviderResponse addProvider(AddProviderRequest request) {
+        return addProvider(request, Optional.empty());
+    }
+
+    /**
+     * Add a media provider
+     * 
+     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as
+     * a reverse proxy to the provider, allowing both local and remote providers to work.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddProviderResponse addProvider(AddProviderRequest request, Optional<Options> options) {
         RequestOperation<AddProviderRequest, AddProviderResponse> operation
-              = new AddProvider.Sync(sdkConfiguration);
+              = new AddProvider.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -111,11 +352,24 @@ public class Provider {
      * <p>Refresh all known media providers. This is useful in case a provider has updated features.
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RefreshProvidersResponse refreshProvidersDirect() throws Exception {
+    public RefreshProvidersResponse refreshProvidersDirect() {
+        return refreshProviders(Optional.empty());
+    }
+
+    /**
+     * Refresh media providers
+     * 
+     * <p>Refresh all known media providers. This is useful in case a provider has updated features.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshProvidersResponse refreshProviders(Optional<Options> options) {
         RequestlessOperation<RefreshProvidersResponse> operation
-            = new RefreshProviders.Sync(sdkConfiguration);
+            = new RefreshProviders.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -137,11 +391,25 @@ public class Provider {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteMediaProviderResponse deleteMediaProvider(DeleteMediaProviderRequest request) throws Exception {
+    public DeleteMediaProviderResponse deleteMediaProvider(DeleteMediaProviderRequest request) {
+        return deleteMediaProvider(request, Optional.empty());
+    }
+
+    /**
+     * Delete a media provider
+     * 
+     * <p>Deletes a media provider with the given id
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteMediaProviderResponse deleteMediaProvider(DeleteMediaProviderRequest request, Optional<Options> options) {
         RequestOperation<DeleteMediaProviderRequest, DeleteMediaProviderResponse> operation
-              = new DeleteMediaProvider.Sync(sdkConfiguration);
+              = new DeleteMediaProvider.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

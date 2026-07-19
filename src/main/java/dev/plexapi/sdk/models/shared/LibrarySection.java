@@ -57,12 +57,16 @@ public class LibrarySection {
     @JsonProperty("content")
     private Optional<Boolean> content;
 
-
+    /**
+     * Unix epoch datetime in seconds
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("contentChangedAt")
     private Optional<Long> contentChangedAt;
 
-
+    /**
+     * Unix epoch datetime in seconds
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("createdAt")
     private Optional<Long> createdAt;
@@ -93,12 +97,6 @@ public class LibrarySection {
     @JsonProperty("language")
     private String language;
 
-    /**
-     * The universally unique identifier for the library.
-     */
-    @JsonProperty("uuid")
-    private String uuid;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Location")
@@ -111,7 +109,9 @@ public class LibrarySection {
     @JsonProperty("refreshing")
     private Optional<Boolean> refreshing;
 
-
+    /**
+     * Unix epoch datetime in seconds
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("scannedAt")
     private Optional<Long> scannedAt;
@@ -126,10 +126,18 @@ public class LibrarySection {
     @JsonProperty("thumb")
     private Optional<String> thumb;
 
-
+    /**
+     * Unix epoch datetime in seconds
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("updatedAt")
     private Optional<Long> updatedAt;
+
+    /**
+     * The universally unique identifier for the library.
+     */
+    @JsonProperty("uuid")
+    private String uuid;
 
     @JsonCreator
     public LibrarySection(
@@ -147,13 +155,13 @@ public class LibrarySection {
             @JsonProperty("hidden") Optional<Boolean> hidden,
             @JsonProperty("key") Optional<String> key,
             @JsonProperty("language") String language,
-            @JsonProperty("uuid") String uuid,
             @JsonProperty("Location") Optional<? extends List<LibrarySectionLocation>> location,
             @JsonProperty("refreshing") Optional<Boolean> refreshing,
             @JsonProperty("scannedAt") Optional<Long> scannedAt,
             @JsonProperty("scanner") Optional<String> scanner,
             @JsonProperty("thumb") Optional<String> thumb,
-            @JsonProperty("updatedAt") Optional<Long> updatedAt) {
+            @JsonProperty("updatedAt") Optional<Long> updatedAt,
+            @JsonProperty("uuid") String uuid) {
         Utils.checkNotNull(title, "title");
         Utils.checkNotNull(type, "type");
         Utils.checkNotNull(agent, "agent");
@@ -168,13 +176,13 @@ public class LibrarySection {
         Utils.checkNotNull(hidden, "hidden");
         Utils.checkNotNull(key, "key");
         Utils.checkNotNull(language, "language");
-        Utils.checkNotNull(uuid, "uuid");
         Utils.checkNotNull(location, "location");
         Utils.checkNotNull(refreshing, "refreshing");
         Utils.checkNotNull(scannedAt, "scannedAt");
         Utils.checkNotNull(scanner, "scanner");
         Utils.checkNotNull(thumb, "thumb");
         Utils.checkNotNull(updatedAt, "updatedAt");
+        Utils.checkNotNull(uuid, "uuid");
         this.title = title;
         this.type = type;
         this.agent = agent;
@@ -189,13 +197,13 @@ public class LibrarySection {
         this.hidden = hidden;
         this.key = key;
         this.language = language;
-        this.uuid = uuid;
         this.location = location;
         this.refreshing = refreshing;
         this.scannedAt = scannedAt;
         this.scanner = scanner;
         this.thumb = thumb;
         this.updatedAt = updatedAt;
+        this.uuid = uuid;
     }
     
     public LibrarySection(
@@ -206,9 +214,9 @@ public class LibrarySection {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), language, uuid,
+            Optional.empty(), language, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), uuid);
     }
 
     /**
@@ -253,11 +261,17 @@ public class LibrarySection {
         return content;
     }
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     @JsonIgnore
     public Optional<Long> contentChangedAt() {
         return contentChangedAt;
     }
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     @JsonIgnore
     public Optional<Long> createdAt() {
         return createdAt;
@@ -291,14 +305,6 @@ public class LibrarySection {
         return language;
     }
 
-    /**
-     * The universally unique identifier for the library.
-     */
-    @JsonIgnore
-    public String uuid() {
-        return uuid;
-    }
-
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<List<LibrarySectionLocation>> location() {
@@ -313,6 +319,9 @@ public class LibrarySection {
         return refreshing;
     }
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     @JsonIgnore
     public Optional<Long> scannedAt() {
         return scannedAt;
@@ -328,9 +337,20 @@ public class LibrarySection {
         return thumb;
     }
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     @JsonIgnore
     public Optional<Long> updatedAt() {
         return updatedAt;
+    }
+
+    /**
+     * The universally unique identifier for the library.
+     */
+    @JsonIgnore
+    public String uuid() {
+        return uuid;
     }
 
     public static Builder builder() {
@@ -431,6 +451,9 @@ public class LibrarySection {
         return this;
     }
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     public LibrarySection withContentChangedAt(long contentChangedAt) {
         Utils.checkNotNull(contentChangedAt, "contentChangedAt");
         this.contentChangedAt = Optional.ofNullable(contentChangedAt);
@@ -438,12 +461,18 @@ public class LibrarySection {
     }
 
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     public LibrarySection withContentChangedAt(Optional<Long> contentChangedAt) {
         Utils.checkNotNull(contentChangedAt, "contentChangedAt");
         this.contentChangedAt = contentChangedAt;
         return this;
     }
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     public LibrarySection withCreatedAt(long createdAt) {
         Utils.checkNotNull(createdAt, "createdAt");
         this.createdAt = Optional.ofNullable(createdAt);
@@ -451,6 +480,9 @@ public class LibrarySection {
     }
 
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     public LibrarySection withCreatedAt(Optional<Long> createdAt) {
         Utils.checkNotNull(createdAt, "createdAt");
         this.createdAt = createdAt;
@@ -521,15 +553,6 @@ public class LibrarySection {
         return this;
     }
 
-    /**
-     * The universally unique identifier for the library.
-     */
-    public LibrarySection withUuid(String uuid) {
-        Utils.checkNotNull(uuid, "uuid");
-        this.uuid = uuid;
-        return this;
-    }
-
     public LibrarySection withLocation(List<LibrarySectionLocation> location) {
         Utils.checkNotNull(location, "location");
         this.location = Optional.ofNullable(location);
@@ -562,6 +585,9 @@ public class LibrarySection {
         return this;
     }
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     public LibrarySection withScannedAt(long scannedAt) {
         Utils.checkNotNull(scannedAt, "scannedAt");
         this.scannedAt = Optional.ofNullable(scannedAt);
@@ -569,6 +595,9 @@ public class LibrarySection {
     }
 
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     public LibrarySection withScannedAt(Optional<Long> scannedAt) {
         Utils.checkNotNull(scannedAt, "scannedAt");
         this.scannedAt = scannedAt;
@@ -601,6 +630,9 @@ public class LibrarySection {
         return this;
     }
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     public LibrarySection withUpdatedAt(long updatedAt) {
         Utils.checkNotNull(updatedAt, "updatedAt");
         this.updatedAt = Optional.ofNullable(updatedAt);
@@ -608,9 +640,21 @@ public class LibrarySection {
     }
 
 
+    /**
+     * Unix epoch datetime in seconds
+     */
     public LibrarySection withUpdatedAt(Optional<Long> updatedAt) {
         Utils.checkNotNull(updatedAt, "updatedAt");
         this.updatedAt = updatedAt;
+        return this;
+    }
+
+    /**
+     * The universally unique identifier for the library.
+     */
+    public LibrarySection withUuid(String uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = uuid;
         return this;
     }
 
@@ -638,13 +682,13 @@ public class LibrarySection {
             Utils.enhancedDeepEquals(this.hidden, other.hidden) &&
             Utils.enhancedDeepEquals(this.key, other.key) &&
             Utils.enhancedDeepEquals(this.language, other.language) &&
-            Utils.enhancedDeepEquals(this.uuid, other.uuid) &&
             Utils.enhancedDeepEquals(this.location, other.location) &&
             Utils.enhancedDeepEquals(this.refreshing, other.refreshing) &&
             Utils.enhancedDeepEquals(this.scannedAt, other.scannedAt) &&
             Utils.enhancedDeepEquals(this.scanner, other.scanner) &&
             Utils.enhancedDeepEquals(this.thumb, other.thumb) &&
-            Utils.enhancedDeepEquals(this.updatedAt, other.updatedAt);
+            Utils.enhancedDeepEquals(this.updatedAt, other.updatedAt) &&
+            Utils.enhancedDeepEquals(this.uuid, other.uuid);
     }
     
     @Override
@@ -654,9 +698,9 @@ public class LibrarySection {
             allowSync, art, composite,
             content, contentChangedAt, createdAt,
             directory, filters, hidden,
-            key, language, uuid,
-            location, refreshing, scannedAt,
-            scanner, thumb, updatedAt);
+            key, language, location,
+            refreshing, scannedAt, scanner,
+            thumb, updatedAt, uuid);
     }
     
     @Override
@@ -676,13 +720,13 @@ public class LibrarySection {
                 "hidden", hidden,
                 "key", key,
                 "language", language,
-                "uuid", uuid,
                 "location", location,
                 "refreshing", refreshing,
                 "scannedAt", scannedAt,
                 "scanner", scanner,
                 "thumb", thumb,
-                "updatedAt", updatedAt);
+                "updatedAt", updatedAt,
+                "uuid", uuid);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -716,8 +760,6 @@ public class LibrarySection {
 
         private String language;
 
-        private String uuid;
-
         private Optional<? extends List<LibrarySectionLocation>> location = Optional.empty();
 
         private Optional<Boolean> refreshing = Optional.empty();
@@ -729,6 +771,8 @@ public class LibrarySection {
         private Optional<String> thumb = Optional.empty();
 
         private Optional<Long> updatedAt = Optional.empty();
+
+        private String uuid;
 
         private Builder() {
           // force use of static builder() method
@@ -829,12 +873,18 @@ public class LibrarySection {
         }
 
 
+        /**
+         * Unix epoch datetime in seconds
+         */
         public Builder contentChangedAt(long contentChangedAt) {
             Utils.checkNotNull(contentChangedAt, "contentChangedAt");
             this.contentChangedAt = Optional.ofNullable(contentChangedAt);
             return this;
         }
 
+        /**
+         * Unix epoch datetime in seconds
+         */
         public Builder contentChangedAt(Optional<Long> contentChangedAt) {
             Utils.checkNotNull(contentChangedAt, "contentChangedAt");
             this.contentChangedAt = contentChangedAt;
@@ -842,12 +892,18 @@ public class LibrarySection {
         }
 
 
+        /**
+         * Unix epoch datetime in seconds
+         */
         public Builder createdAt(long createdAt) {
             Utils.checkNotNull(createdAt, "createdAt");
             this.createdAt = Optional.ofNullable(createdAt);
             return this;
         }
 
+        /**
+         * Unix epoch datetime in seconds
+         */
         public Builder createdAt(Optional<Long> createdAt) {
             Utils.checkNotNull(createdAt, "createdAt");
             this.createdAt = createdAt;
@@ -920,16 +976,6 @@ public class LibrarySection {
         }
 
 
-        /**
-         * The universally unique identifier for the library.
-         */
-        public Builder uuid(String uuid) {
-            Utils.checkNotNull(uuid, "uuid");
-            this.uuid = uuid;
-            return this;
-        }
-
-
         public Builder location(List<LibrarySectionLocation> location) {
             Utils.checkNotNull(location, "location");
             this.location = Optional.ofNullable(location);
@@ -962,12 +1008,18 @@ public class LibrarySection {
         }
 
 
+        /**
+         * Unix epoch datetime in seconds
+         */
         public Builder scannedAt(long scannedAt) {
             Utils.checkNotNull(scannedAt, "scannedAt");
             this.scannedAt = Optional.ofNullable(scannedAt);
             return this;
         }
 
+        /**
+         * Unix epoch datetime in seconds
+         */
         public Builder scannedAt(Optional<Long> scannedAt) {
             Utils.checkNotNull(scannedAt, "scannedAt");
             this.scannedAt = scannedAt;
@@ -1001,15 +1053,31 @@ public class LibrarySection {
         }
 
 
+        /**
+         * Unix epoch datetime in seconds
+         */
         public Builder updatedAt(long updatedAt) {
             Utils.checkNotNull(updatedAt, "updatedAt");
             this.updatedAt = Optional.ofNullable(updatedAt);
             return this;
         }
 
+        /**
+         * Unix epoch datetime in seconds
+         */
         public Builder updatedAt(Optional<Long> updatedAt) {
             Utils.checkNotNull(updatedAt, "updatedAt");
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+
+        /**
+         * The universally unique identifier for the library.
+         */
+        public Builder uuid(String uuid) {
+            Utils.checkNotNull(uuid, "uuid");
+            this.uuid = uuid;
             return this;
         }
 
@@ -1020,9 +1088,9 @@ public class LibrarySection {
                 allowSync, art, composite,
                 content, contentChangedAt, createdAt,
                 directory, filters, hidden,
-                key, language, uuid,
-                location, refreshing, scannedAt,
-                scanner, thumb, updatedAt);
+                key, language, location,
+                refreshing, scannedAt, scanner,
+                thumb, updatedAt, uuid);
         }
 
     }

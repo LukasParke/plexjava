@@ -1,5 +1,13 @@
 # Two
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.shared.Two;
+
+Two value = Two.ZERO;
+```
+
 
 ## Values
 

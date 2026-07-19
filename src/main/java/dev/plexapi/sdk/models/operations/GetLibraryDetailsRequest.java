@@ -91,7 +91,8 @@ public class GetLibraryDetailsRequest {
     private String sectionId;
 
     /**
-     * Whether or not to include details for a section (types, filters, and sorts). Only exists for backwards compatibility, media providers other than the server libraries have it on always.
+     * Whether or not to include details for a section (types, filters, and sorts). Only exists for
+     * backwards compatibility, media providers other than the server libraries have it on always.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeDetails")
     private Optional<? extends BoolInt> includeDetails;
@@ -246,7 +247,8 @@ public class GetLibraryDetailsRequest {
     }
 
     /**
-     * Whether or not to include details for a section (types, filters, and sorts). Only exists for backwards compatibility, media providers other than the server libraries have it on always.
+     * Whether or not to include details for a section (types, filters, and sorts). Only exists for
+     * backwards compatibility, media providers other than the server libraries have it on always.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -478,7 +480,8 @@ public class GetLibraryDetailsRequest {
     }
 
     /**
-     * Whether or not to include details for a section (types, filters, and sorts). Only exists for backwards compatibility, media providers other than the server libraries have it on always.
+     * Whether or not to include details for a section (types, filters, and sorts). Only exists for
+     * backwards compatibility, media providers other than the server libraries have it on always.
      */
     public GetLibraryDetailsRequest withIncludeDetails(BoolInt includeDetails) {
         Utils.checkNotNull(includeDetails, "includeDetails");
@@ -488,7 +491,8 @@ public class GetLibraryDetailsRequest {
 
 
     /**
-     * Whether or not to include details for a section (types, filters, and sorts). Only exists for backwards compatibility, media providers other than the server libraries have it on always.
+     * Whether or not to include details for a section (types, filters, and sorts). Only exists for
+     * backwards compatibility, media providers other than the server libraries have it on always.
      */
     public GetLibraryDetailsRequest withIncludeDetails(Optional<? extends BoolInt> includeDetails) {
         Utils.checkNotNull(includeDetails, "includeDetails");
@@ -803,7 +807,8 @@ public class GetLibraryDetailsRequest {
 
 
         /**
-         * Whether or not to include details for a section (types, filters, and sorts). Only exists for backwards compatibility, media providers other than the server libraries have it on always.
+         * Whether or not to include details for a section (types, filters, and sorts). Only exists for
+         * backwards compatibility, media providers other than the server libraries have it on always.
          */
         public Builder includeDetails(BoolInt includeDetails) {
             Utils.checkNotNull(includeDetails, "includeDetails");
@@ -812,7 +817,8 @@ public class GetLibraryDetailsRequest {
         }
 
         /**
-         * Whether or not to include details for a section (types, filters, and sorts). Only exists for backwards compatibility, media providers other than the server libraries have it on always.
+         * Whether or not to include details for a section (types, filters, and sorts). Only exists for
+         * backwards compatibility, media providers other than the server libraries have it on always.
          */
         public Builder includeDetails(Optional<? extends BoolInt> includeDetails) {
             Utils.checkNotNull(includeDetails, "includeDetails");

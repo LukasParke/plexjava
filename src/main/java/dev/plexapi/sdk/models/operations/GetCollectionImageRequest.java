@@ -85,6 +85,10 @@ public class GetCollectionImageRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
+
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=composite")
+    private Optional<? extends Composite> composite;
+
     /**
      * The collection id
      */
@@ -92,14 +96,10 @@ public class GetCollectionImageRequest {
     private long collectionId;
 
     /**
-     * The update time of the image.  Used for busting cache.
+     * The update time of the image. Used for busting cache.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=updatedAt")
     private long updatedAt;
-
-
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=composite")
-    private Optional<? extends Composite> composite;
 
     @JsonCreator
     public GetCollectionImageRequest(
@@ -114,9 +114,9 @@ public class GetCollectionImageRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<? extends Composite> composite,
             long collectionId,
-            long updatedAt,
-            Optional<? extends Composite> composite) {
+            long updatedAt) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -128,9 +128,9 @@ public class GetCollectionImageRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
+        Utils.checkNotNull(composite, "composite");
         Utils.checkNotNull(collectionId, "collectionId");
         Utils.checkNotNull(updatedAt, "updatedAt");
-        Utils.checkNotNull(composite, "composite");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -142,9 +142,9 @@ public class GetCollectionImageRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
+        this.composite = composite;
         this.collectionId = collectionId;
         this.updatedAt = updatedAt;
-        this.composite = composite;
     }
     
     public GetCollectionImageRequest(
@@ -153,8 +153,8 @@ public class GetCollectionImageRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), collectionId,
-            updatedAt, Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            collectionId, updatedAt);
     }
 
     /**
@@ -246,6 +246,12 @@ public class GetCollectionImageRequest {
         return marketplace;
     }
 
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<Composite> composite() {
+        return (Optional<Composite>) composite;
+    }
+
     /**
      * The collection id
      */
@@ -255,17 +261,11 @@ public class GetCollectionImageRequest {
     }
 
     /**
-     * The update time of the image.  Used for busting cache.
+     * The update time of the image. Used for busting cache.
      */
     @JsonIgnore
     public long updatedAt() {
         return updatedAt;
-    }
-
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<Composite> composite() {
-        return (Optional<Composite>) composite;
     }
 
     public static Builder builder() {
@@ -482,24 +482,6 @@ public class GetCollectionImageRequest {
         return this;
     }
 
-    /**
-     * The collection id
-     */
-    public GetCollectionImageRequest withCollectionId(long collectionId) {
-        Utils.checkNotNull(collectionId, "collectionId");
-        this.collectionId = collectionId;
-        return this;
-    }
-
-    /**
-     * The update time of the image.  Used for busting cache.
-     */
-    public GetCollectionImageRequest withUpdatedAt(long updatedAt) {
-        Utils.checkNotNull(updatedAt, "updatedAt");
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
     public GetCollectionImageRequest withComposite(Composite composite) {
         Utils.checkNotNull(composite, "composite");
         this.composite = Optional.ofNullable(composite);
@@ -510,6 +492,24 @@ public class GetCollectionImageRequest {
     public GetCollectionImageRequest withComposite(Optional<? extends Composite> composite) {
         Utils.checkNotNull(composite, "composite");
         this.composite = composite;
+        return this;
+    }
+
+    /**
+     * The collection id
+     */
+    public GetCollectionImageRequest withCollectionId(long collectionId) {
+        Utils.checkNotNull(collectionId, "collectionId");
+        this.collectionId = collectionId;
+        return this;
+    }
+
+    /**
+     * The update time of the image. Used for busting cache.
+     */
+    public GetCollectionImageRequest withUpdatedAt(long updatedAt) {
+        Utils.checkNotNull(updatedAt, "updatedAt");
+        this.updatedAt = updatedAt;
         return this;
     }
 
@@ -534,9 +534,9 @@ public class GetCollectionImageRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.composite, other.composite) &&
             Utils.enhancedDeepEquals(this.collectionId, other.collectionId) &&
-            Utils.enhancedDeepEquals(this.updatedAt, other.updatedAt) &&
-            Utils.enhancedDeepEquals(this.composite, other.composite);
+            Utils.enhancedDeepEquals(this.updatedAt, other.updatedAt);
     }
     
     @Override
@@ -545,8 +545,8 @@ public class GetCollectionImageRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, collectionId,
-            updatedAt, composite);
+            deviceName, marketplace, composite,
+            collectionId, updatedAt);
     }
     
     @Override
@@ -563,9 +563,9 @@ public class GetCollectionImageRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "composite", composite,
                 "collectionId", collectionId,
-                "updatedAt", updatedAt,
-                "composite", composite);
+                "updatedAt", updatedAt);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -593,11 +593,11 @@ public class GetCollectionImageRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
+        private Optional<? extends Composite> composite = Optional.empty();
+
         private Long collectionId;
 
         private Long updatedAt;
-
-        private Optional<? extends Composite> composite = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -813,26 +813,6 @@ public class GetCollectionImageRequest {
         }
 
 
-        /**
-         * The collection id
-         */
-        public Builder collectionId(long collectionId) {
-            Utils.checkNotNull(collectionId, "collectionId");
-            this.collectionId = collectionId;
-            return this;
-        }
-
-
-        /**
-         * The update time of the image.  Used for busting cache.
-         */
-        public Builder updatedAt(long updatedAt) {
-            Utils.checkNotNull(updatedAt, "updatedAt");
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-
         public Builder composite(Composite composite) {
             Utils.checkNotNull(composite, "composite");
             this.composite = Optional.ofNullable(composite);
@@ -845,6 +825,26 @@ public class GetCollectionImageRequest {
             return this;
         }
 
+
+        /**
+         * The collection id
+         */
+        public Builder collectionId(long collectionId) {
+            Utils.checkNotNull(collectionId, "collectionId");
+            this.collectionId = collectionId;
+            return this;
+        }
+
+
+        /**
+         * The update time of the image. Used for busting cache.
+         */
+        public Builder updatedAt(long updatedAt) {
+            Utils.checkNotNull(updatedAt, "updatedAt");
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
         public GetCollectionImageRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -854,8 +854,8 @@ public class GetCollectionImageRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, collectionId,
-                updatedAt, composite);
+                deviceName, marketplace, composite,
+                collectionId, updatedAt);
         }
 
 

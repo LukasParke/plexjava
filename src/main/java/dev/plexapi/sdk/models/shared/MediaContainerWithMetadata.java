@@ -14,7 +14,12 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.Optional;
 
-
+/**
+ * MediaContainerWithMetadata
+ * 
+ * <p>A MediaContainer that includes metadata items. When `includeCollections=1` is passed to endpoints
+ * such as `/library/sections/{sectionId}/all`, this container may also include `Collection` items.
+ */
 public class MediaContainerWithMetadata {
 
     @JsonInclude(Include.NON_ABSENT)

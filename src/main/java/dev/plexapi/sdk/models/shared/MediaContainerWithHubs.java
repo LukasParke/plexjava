@@ -14,11 +14,7 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.Optional;
 
-/**
- * MediaContainerWithHubs
- * 
- * <p>OK
- */
+
 public class MediaContainerWithHubs {
 
     @JsonInclude(Include.NON_ABSENT)

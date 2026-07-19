@@ -19,26 +19,26 @@ import java.lang.SuppressWarnings;
 /**
  * MediaContainerWithNestedMetadataSkipChildren
  * 
- * <p>When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
+ * <p>When found on a show item, indicates that the children (seasons) should be skipped in favor of the
+ * grandchildren (episodes). Useful for mini-series, etc.
  */
 @JsonDeserialize(using = MediaContainerWithNestedMetadataSkipChildren._Deserializer.class)
 public class MediaContainerWithNestedMetadataSkipChildren {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private MediaContainerWithNestedMetadataSkipChildren(TypedObject value) {
         this.value = value;
     }
 
     public static MediaContainerWithNestedMetadataSkipChildren of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new MediaContainerWithNestedMetadataSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new MediaContainerWithNestedMetadataSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static MediaContainerWithNestedMetadataSkipChildren of(MediaContainerWithNestedMetadataSkipChildren2 value) {
         Utils.checkNotNull(value, "value");
-        return new MediaContainerWithNestedMetadataSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaContainerWithNestedMetadataSkipChildren2>(){}));
+        return new MediaContainerWithNestedMetadataSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +61,7 @@ public class MediaContainerWithNestedMetadataSkipChildren {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +72,7 @@ public class MediaContainerWithNestedMetadataSkipChildren {
             return false;
         }
         MediaContainerWithNestedMetadataSkipChildren other = (MediaContainerWithNestedMetadataSkipChildren) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +85,8 @@ public class MediaContainerWithNestedMetadataSkipChildren {
 
         public _Deserializer() {
             super(MediaContainerWithNestedMetadataSkipChildren.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithNestedMetadataSkipChildren2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithNestedMetadataSkipChildren2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +95,6 @@ public class MediaContainerWithNestedMetadataSkipChildren {
         return Utils.toString(MediaContainerWithNestedMetadataSkipChildren.class,
                 "value", value);
     }
- 
+
 }
 

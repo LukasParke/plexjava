@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.plexapi.sdk.utils.Utils;
+import java.lang.Boolean;
 import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
@@ -18,10 +19,38 @@ import java.util.Optional;
 
 
 public class Device {
+    /**
+     * Display title for the device.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("title")
+    private Optional<String> title;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("ChannelMapping")
     private Optional<? extends List<ChannelMapping>> channelMapping;
+
+    /**
+     * Distinct hardware identifier for the device.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("deviceIdentifier")
+    private Optional<String> deviceIdentifier;
+
+    /**
+     * Whether the device is enabled.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("enabled")
+    private Optional<Boolean> enabled;
+
+    /**
+     * Unique device ID.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("id")
+    private Optional<Long> id;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -32,6 +61,20 @@ public class Device {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("lastSeenAt")
     private Optional<Long> lastSeenAt;
+
+    /**
+     * EPG lineup association.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("lineup")
+    private Optional<String> lineup;
+
+    /**
+     * Type of EPG lineup.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("lineupType")
+    private Optional<String> lineupType;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -47,6 +90,13 @@ public class Device {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("modelNumber")
     private Optional<String> modelNumber;
+
+    /**
+     * Human-readable device name.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("name")
+    private Optional<String> name;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -68,6 +118,20 @@ public class Device {
     @JsonProperty("status")
     private Optional<String> status;
 
+    /**
+     * URL to the device thumbnail image.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("thumb")
+    private Optional<String> thumb;
+
+    /**
+     * Version of the device thumbnail.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("thumbVersion")
+    private Optional<Long> thumbVersion;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("tuners")
@@ -85,42 +149,69 @@ public class Device {
 
     @JsonCreator
     public Device(
+            @JsonProperty("title") Optional<String> title,
             @JsonProperty("ChannelMapping") Optional<? extends List<ChannelMapping>> channelMapping,
+            @JsonProperty("deviceIdentifier") Optional<String> deviceIdentifier,
+            @JsonProperty("enabled") Optional<Boolean> enabled,
+            @JsonProperty("id") Optional<Long> id,
             @JsonProperty("key") Optional<String> key,
             @JsonProperty("lastSeenAt") Optional<Long> lastSeenAt,
+            @JsonProperty("lineup") Optional<String> lineup,
+            @JsonProperty("lineupType") Optional<String> lineupType,
             @JsonProperty("make") Optional<String> make,
             @JsonProperty("model") Optional<String> model,
             @JsonProperty("modelNumber") Optional<String> modelNumber,
+            @JsonProperty("name") Optional<String> name,
             @JsonProperty("protocol") Optional<String> protocol,
             @JsonProperty("sources") Optional<String> sources,
             @JsonProperty("state") Optional<String> state,
             @JsonProperty("status") Optional<String> status,
+            @JsonProperty("thumb") Optional<String> thumb,
+            @JsonProperty("thumbVersion") Optional<Long> thumbVersion,
             @JsonProperty("tuners") Optional<String> tuners,
             @JsonProperty("uri") Optional<String> uri,
             @JsonProperty("uuid") Optional<String> uuid) {
+        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(channelMapping, "channelMapping");
+        Utils.checkNotNull(deviceIdentifier, "deviceIdentifier");
+        Utils.checkNotNull(enabled, "enabled");
+        Utils.checkNotNull(id, "id");
         Utils.checkNotNull(key, "key");
         Utils.checkNotNull(lastSeenAt, "lastSeenAt");
+        Utils.checkNotNull(lineup, "lineup");
+        Utils.checkNotNull(lineupType, "lineupType");
         Utils.checkNotNull(make, "make");
         Utils.checkNotNull(model, "model");
         Utils.checkNotNull(modelNumber, "modelNumber");
+        Utils.checkNotNull(name, "name");
         Utils.checkNotNull(protocol, "protocol");
         Utils.checkNotNull(sources, "sources");
         Utils.checkNotNull(state, "state");
         Utils.checkNotNull(status, "status");
+        Utils.checkNotNull(thumb, "thumb");
+        Utils.checkNotNull(thumbVersion, "thumbVersion");
         Utils.checkNotNull(tuners, "tuners");
         Utils.checkNotNull(uri, "uri");
         Utils.checkNotNull(uuid, "uuid");
+        this.title = title;
         this.channelMapping = channelMapping;
+        this.deviceIdentifier = deviceIdentifier;
+        this.enabled = enabled;
+        this.id = id;
         this.key = key;
         this.lastSeenAt = lastSeenAt;
+        this.lineup = lineup;
+        this.lineupType = lineupType;
         this.make = make;
         this.model = model;
         this.modelNumber = modelNumber;
+        this.name = name;
         this.protocol = protocol;
         this.sources = sources;
         this.state = state;
         this.status = status;
+        this.thumb = thumb;
+        this.thumbVersion = thumbVersion;
         this.tuners = tuners;
         this.uri = uri;
         this.uuid = uuid;
@@ -131,13 +222,48 @@ public class Device {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty());
+    }
+
+    /**
+     * Display title for the device.
+     */
+    @JsonIgnore
+    public Optional<String> title() {
+        return title;
     }
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<List<ChannelMapping>> channelMapping() {
         return (Optional<List<ChannelMapping>>) channelMapping;
+    }
+
+    /**
+     * Distinct hardware identifier for the device.
+     */
+    @JsonIgnore
+    public Optional<String> deviceIdentifier() {
+        return deviceIdentifier;
+    }
+
+    /**
+     * Whether the device is enabled.
+     */
+    @JsonIgnore
+    public Optional<Boolean> enabled() {
+        return enabled;
+    }
+
+    /**
+     * Unique device ID.
+     */
+    @JsonIgnore
+    public Optional<Long> id() {
+        return id;
     }
 
     @JsonIgnore
@@ -148,6 +274,22 @@ public class Device {
     @JsonIgnore
     public Optional<Long> lastSeenAt() {
         return lastSeenAt;
+    }
+
+    /**
+     * EPG lineup association.
+     */
+    @JsonIgnore
+    public Optional<String> lineup() {
+        return lineup;
+    }
+
+    /**
+     * Type of EPG lineup.
+     */
+    @JsonIgnore
+    public Optional<String> lineupType() {
+        return lineupType;
     }
 
     @JsonIgnore
@@ -163,6 +305,14 @@ public class Device {
     @JsonIgnore
     public Optional<String> modelNumber() {
         return modelNumber;
+    }
+
+    /**
+     * Human-readable device name.
+     */
+    @JsonIgnore
+    public Optional<String> name() {
+        return name;
     }
 
     @JsonIgnore
@@ -185,6 +335,22 @@ public class Device {
         return status;
     }
 
+    /**
+     * URL to the device thumbnail image.
+     */
+    @JsonIgnore
+    public Optional<String> thumb() {
+        return thumb;
+    }
+
+    /**
+     * Version of the device thumbnail.
+     */
+    @JsonIgnore
+    public Optional<Long> thumbVersion() {
+        return thumbVersion;
+    }
+
     @JsonIgnore
     public Optional<String> tuners() {
         return tuners;
@@ -205,6 +371,25 @@ public class Device {
     }
 
 
+    /**
+     * Display title for the device.
+     */
+    public Device withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = Optional.ofNullable(title);
+        return this;
+    }
+
+
+    /**
+     * Display title for the device.
+     */
+    public Device withTitle(Optional<String> title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
+    }
+
     public Device withChannelMapping(List<ChannelMapping> channelMapping) {
         Utils.checkNotNull(channelMapping, "channelMapping");
         this.channelMapping = Optional.ofNullable(channelMapping);
@@ -215,6 +400,63 @@ public class Device {
     public Device withChannelMapping(Optional<? extends List<ChannelMapping>> channelMapping) {
         Utils.checkNotNull(channelMapping, "channelMapping");
         this.channelMapping = channelMapping;
+        return this;
+    }
+
+    /**
+     * Distinct hardware identifier for the device.
+     */
+    public Device withDeviceIdentifier(String deviceIdentifier) {
+        Utils.checkNotNull(deviceIdentifier, "deviceIdentifier");
+        this.deviceIdentifier = Optional.ofNullable(deviceIdentifier);
+        return this;
+    }
+
+
+    /**
+     * Distinct hardware identifier for the device.
+     */
+    public Device withDeviceIdentifier(Optional<String> deviceIdentifier) {
+        Utils.checkNotNull(deviceIdentifier, "deviceIdentifier");
+        this.deviceIdentifier = deviceIdentifier;
+        return this;
+    }
+
+    /**
+     * Whether the device is enabled.
+     */
+    public Device withEnabled(boolean enabled) {
+        Utils.checkNotNull(enabled, "enabled");
+        this.enabled = Optional.ofNullable(enabled);
+        return this;
+    }
+
+
+    /**
+     * Whether the device is enabled.
+     */
+    public Device withEnabled(Optional<Boolean> enabled) {
+        Utils.checkNotNull(enabled, "enabled");
+        this.enabled = enabled;
+        return this;
+    }
+
+    /**
+     * Unique device ID.
+     */
+    public Device withId(long id) {
+        Utils.checkNotNull(id, "id");
+        this.id = Optional.ofNullable(id);
+        return this;
+    }
+
+
+    /**
+     * Unique device ID.
+     */
+    public Device withId(Optional<Long> id) {
+        Utils.checkNotNull(id, "id");
+        this.id = id;
         return this;
     }
 
@@ -241,6 +483,44 @@ public class Device {
     public Device withLastSeenAt(Optional<Long> lastSeenAt) {
         Utils.checkNotNull(lastSeenAt, "lastSeenAt");
         this.lastSeenAt = lastSeenAt;
+        return this;
+    }
+
+    /**
+     * EPG lineup association.
+     */
+    public Device withLineup(String lineup) {
+        Utils.checkNotNull(lineup, "lineup");
+        this.lineup = Optional.ofNullable(lineup);
+        return this;
+    }
+
+
+    /**
+     * EPG lineup association.
+     */
+    public Device withLineup(Optional<String> lineup) {
+        Utils.checkNotNull(lineup, "lineup");
+        this.lineup = lineup;
+        return this;
+    }
+
+    /**
+     * Type of EPG lineup.
+     */
+    public Device withLineupType(String lineupType) {
+        Utils.checkNotNull(lineupType, "lineupType");
+        this.lineupType = Optional.ofNullable(lineupType);
+        return this;
+    }
+
+
+    /**
+     * Type of EPG lineup.
+     */
+    public Device withLineupType(Optional<String> lineupType) {
+        Utils.checkNotNull(lineupType, "lineupType");
+        this.lineupType = lineupType;
         return this;
     }
 
@@ -280,6 +560,25 @@ public class Device {
     public Device withModelNumber(Optional<String> modelNumber) {
         Utils.checkNotNull(modelNumber, "modelNumber");
         this.modelNumber = modelNumber;
+        return this;
+    }
+
+    /**
+     * Human-readable device name.
+     */
+    public Device withName(String name) {
+        Utils.checkNotNull(name, "name");
+        this.name = Optional.ofNullable(name);
+        return this;
+    }
+
+
+    /**
+     * Human-readable device name.
+     */
+    public Device withName(Optional<String> name) {
+        Utils.checkNotNull(name, "name");
+        this.name = name;
         return this;
     }
 
@@ -335,6 +634,44 @@ public class Device {
         return this;
     }
 
+    /**
+     * URL to the device thumbnail image.
+     */
+    public Device withThumb(String thumb) {
+        Utils.checkNotNull(thumb, "thumb");
+        this.thumb = Optional.ofNullable(thumb);
+        return this;
+    }
+
+
+    /**
+     * URL to the device thumbnail image.
+     */
+    public Device withThumb(Optional<String> thumb) {
+        Utils.checkNotNull(thumb, "thumb");
+        this.thumb = thumb;
+        return this;
+    }
+
+    /**
+     * Version of the device thumbnail.
+     */
+    public Device withThumbVersion(long thumbVersion) {
+        Utils.checkNotNull(thumbVersion, "thumbVersion");
+        this.thumbVersion = Optional.ofNullable(thumbVersion);
+        return this;
+    }
+
+
+    /**
+     * Version of the device thumbnail.
+     */
+    public Device withThumbVersion(Optional<Long> thumbVersion) {
+        Utils.checkNotNull(thumbVersion, "thumbVersion");
+        this.thumbVersion = thumbVersion;
+        return this;
+    }
+
     public Device withTuners(String tuners) {
         Utils.checkNotNull(tuners, "tuners");
         this.tuners = Optional.ofNullable(tuners);
@@ -384,16 +721,25 @@ public class Device {
         }
         Device other = (Device) o;
         return 
+            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.channelMapping, other.channelMapping) &&
+            Utils.enhancedDeepEquals(this.deviceIdentifier, other.deviceIdentifier) &&
+            Utils.enhancedDeepEquals(this.enabled, other.enabled) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.key, other.key) &&
             Utils.enhancedDeepEquals(this.lastSeenAt, other.lastSeenAt) &&
+            Utils.enhancedDeepEquals(this.lineup, other.lineup) &&
+            Utils.enhancedDeepEquals(this.lineupType, other.lineupType) &&
             Utils.enhancedDeepEquals(this.make, other.make) &&
             Utils.enhancedDeepEquals(this.model, other.model) &&
             Utils.enhancedDeepEquals(this.modelNumber, other.modelNumber) &&
+            Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.protocol, other.protocol) &&
             Utils.enhancedDeepEquals(this.sources, other.sources) &&
             Utils.enhancedDeepEquals(this.state, other.state) &&
             Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.thumb, other.thumb) &&
+            Utils.enhancedDeepEquals(this.thumbVersion, other.thumbVersion) &&
             Utils.enhancedDeepEquals(this.tuners, other.tuners) &&
             Utils.enhancedDeepEquals(this.uri, other.uri) &&
             Utils.enhancedDeepEquals(this.uuid, other.uuid);
@@ -402,26 +748,38 @@ public class Device {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            channelMapping, key, lastSeenAt,
+            title, channelMapping, deviceIdentifier,
+            enabled, id, key,
+            lastSeenAt, lineup, lineupType,
             make, model, modelNumber,
-            protocol, sources, state,
-            status, tuners, uri,
+            name, protocol, sources,
+            state, status, thumb,
+            thumbVersion, tuners, uri,
             uuid);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Device.class,
+                "title", title,
                 "channelMapping", channelMapping,
+                "deviceIdentifier", deviceIdentifier,
+                "enabled", enabled,
+                "id", id,
                 "key", key,
                 "lastSeenAt", lastSeenAt,
+                "lineup", lineup,
+                "lineupType", lineupType,
                 "make", make,
                 "model", model,
                 "modelNumber", modelNumber,
+                "name", name,
                 "protocol", protocol,
                 "sources", sources,
                 "state", state,
                 "status", status,
+                "thumb", thumb,
+                "thumbVersion", thumbVersion,
                 "tuners", tuners,
                 "uri", uri,
                 "uuid", uuid);
@@ -430,17 +788,31 @@ public class Device {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private Optional<String> title = Optional.empty();
+
         private Optional<? extends List<ChannelMapping>> channelMapping = Optional.empty();
+
+        private Optional<String> deviceIdentifier = Optional.empty();
+
+        private Optional<Boolean> enabled = Optional.empty();
+
+        private Optional<Long> id = Optional.empty();
 
         private Optional<String> key = Optional.empty();
 
         private Optional<Long> lastSeenAt = Optional.empty();
+
+        private Optional<String> lineup = Optional.empty();
+
+        private Optional<String> lineupType = Optional.empty();
 
         private Optional<String> make = Optional.empty();
 
         private Optional<String> model = Optional.empty();
 
         private Optional<String> modelNumber = Optional.empty();
+
+        private Optional<String> name = Optional.empty();
 
         private Optional<String> protocol = Optional.empty();
 
@@ -449,6 +821,10 @@ public class Device {
         private Optional<String> state = Optional.empty();
 
         private Optional<String> status = Optional.empty();
+
+        private Optional<String> thumb = Optional.empty();
+
+        private Optional<Long> thumbVersion = Optional.empty();
 
         private Optional<String> tuners = Optional.empty();
 
@@ -461,6 +837,25 @@ public class Device {
         }
 
 
+        /**
+         * Display title for the device.
+         */
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = Optional.ofNullable(title);
+            return this;
+        }
+
+        /**
+         * Display title for the device.
+         */
+        public Builder title(Optional<String> title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
+        }
+
+
         public Builder channelMapping(List<ChannelMapping> channelMapping) {
             Utils.checkNotNull(channelMapping, "channelMapping");
             this.channelMapping = Optional.ofNullable(channelMapping);
@@ -470,6 +865,63 @@ public class Device {
         public Builder channelMapping(Optional<? extends List<ChannelMapping>> channelMapping) {
             Utils.checkNotNull(channelMapping, "channelMapping");
             this.channelMapping = channelMapping;
+            return this;
+        }
+
+
+        /**
+         * Distinct hardware identifier for the device.
+         */
+        public Builder deviceIdentifier(String deviceIdentifier) {
+            Utils.checkNotNull(deviceIdentifier, "deviceIdentifier");
+            this.deviceIdentifier = Optional.ofNullable(deviceIdentifier);
+            return this;
+        }
+
+        /**
+         * Distinct hardware identifier for the device.
+         */
+        public Builder deviceIdentifier(Optional<String> deviceIdentifier) {
+            Utils.checkNotNull(deviceIdentifier, "deviceIdentifier");
+            this.deviceIdentifier = deviceIdentifier;
+            return this;
+        }
+
+
+        /**
+         * Whether the device is enabled.
+         */
+        public Builder enabled(boolean enabled) {
+            Utils.checkNotNull(enabled, "enabled");
+            this.enabled = Optional.ofNullable(enabled);
+            return this;
+        }
+
+        /**
+         * Whether the device is enabled.
+         */
+        public Builder enabled(Optional<Boolean> enabled) {
+            Utils.checkNotNull(enabled, "enabled");
+            this.enabled = enabled;
+            return this;
+        }
+
+
+        /**
+         * Unique device ID.
+         */
+        public Builder id(long id) {
+            Utils.checkNotNull(id, "id");
+            this.id = Optional.ofNullable(id);
+            return this;
+        }
+
+        /**
+         * Unique device ID.
+         */
+        public Builder id(Optional<Long> id) {
+            Utils.checkNotNull(id, "id");
+            this.id = id;
             return this;
         }
 
@@ -496,6 +948,44 @@ public class Device {
         public Builder lastSeenAt(Optional<Long> lastSeenAt) {
             Utils.checkNotNull(lastSeenAt, "lastSeenAt");
             this.lastSeenAt = lastSeenAt;
+            return this;
+        }
+
+
+        /**
+         * EPG lineup association.
+         */
+        public Builder lineup(String lineup) {
+            Utils.checkNotNull(lineup, "lineup");
+            this.lineup = Optional.ofNullable(lineup);
+            return this;
+        }
+
+        /**
+         * EPG lineup association.
+         */
+        public Builder lineup(Optional<String> lineup) {
+            Utils.checkNotNull(lineup, "lineup");
+            this.lineup = lineup;
+            return this;
+        }
+
+
+        /**
+         * Type of EPG lineup.
+         */
+        public Builder lineupType(String lineupType) {
+            Utils.checkNotNull(lineupType, "lineupType");
+            this.lineupType = Optional.ofNullable(lineupType);
+            return this;
+        }
+
+        /**
+         * Type of EPG lineup.
+         */
+        public Builder lineupType(Optional<String> lineupType) {
+            Utils.checkNotNull(lineupType, "lineupType");
+            this.lineupType = lineupType;
             return this;
         }
 
@@ -535,6 +1025,25 @@ public class Device {
         public Builder modelNumber(Optional<String> modelNumber) {
             Utils.checkNotNull(modelNumber, "modelNumber");
             this.modelNumber = modelNumber;
+            return this;
+        }
+
+
+        /**
+         * Human-readable device name.
+         */
+        public Builder name(String name) {
+            Utils.checkNotNull(name, "name");
+            this.name = Optional.ofNullable(name);
+            return this;
+        }
+
+        /**
+         * Human-readable device name.
+         */
+        public Builder name(Optional<String> name) {
+            Utils.checkNotNull(name, "name");
+            this.name = name;
             return this;
         }
 
@@ -591,6 +1100,44 @@ public class Device {
         }
 
 
+        /**
+         * URL to the device thumbnail image.
+         */
+        public Builder thumb(String thumb) {
+            Utils.checkNotNull(thumb, "thumb");
+            this.thumb = Optional.ofNullable(thumb);
+            return this;
+        }
+
+        /**
+         * URL to the device thumbnail image.
+         */
+        public Builder thumb(Optional<String> thumb) {
+            Utils.checkNotNull(thumb, "thumb");
+            this.thumb = thumb;
+            return this;
+        }
+
+
+        /**
+         * Version of the device thumbnail.
+         */
+        public Builder thumbVersion(long thumbVersion) {
+            Utils.checkNotNull(thumbVersion, "thumbVersion");
+            this.thumbVersion = Optional.ofNullable(thumbVersion);
+            return this;
+        }
+
+        /**
+         * Version of the device thumbnail.
+         */
+        public Builder thumbVersion(Optional<Long> thumbVersion) {
+            Utils.checkNotNull(thumbVersion, "thumbVersion");
+            this.thumbVersion = thumbVersion;
+            return this;
+        }
+
+
         public Builder tuners(String tuners) {
             Utils.checkNotNull(tuners, "tuners");
             this.tuners = Optional.ofNullable(tuners);
@@ -632,10 +1179,13 @@ public class Device {
         public Device build() {
 
             return new Device(
-                channelMapping, key, lastSeenAt,
+                title, channelMapping, deviceIdentifier,
+                enabled, id, key,
+                lastSeenAt, lineup, lineupType,
                 make, model, modelNumber,
-                protocol, sources, state,
-                status, tuners, uri,
+                name, protocol, sources,
+                state, status, thumb,
+                thumbVersion, tuners, uri,
                 uuid);
         }
 

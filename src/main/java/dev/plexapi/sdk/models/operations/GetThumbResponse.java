@@ -11,7 +11,9 @@ import java.io.InputStream;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 
 public class GetThumbResponse implements Response {
@@ -30,17 +32,41 @@ public class GetThumbResponse implements Response {
      */
     private HttpResponse<InputStream> rawResponse;
 
+    /**
+     * The thumbnail for the device
+     */
+    private Optional<? extends InputStream> binaryResponse;
+
+    /**
+     * The thumb URL on the device
+     */
+    private Optional<String> res;
+
     @JsonCreator
     public GetThumbResponse(
             String contentType,
             int statusCode,
-            HttpResponse<InputStream> rawResponse) {
+            HttpResponse<InputStream> rawResponse,
+            Optional<? extends InputStream> binaryResponse,
+            Optional<String> res) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        Utils.checkNotNull(res, "res");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.binaryResponse = binaryResponse;
+        this.res = res;
+    }
+    
+    public GetThumbResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -65,6 +91,23 @@ public class GetThumbResponse implements Response {
     @JsonIgnore
     public HttpResponse<InputStream> rawResponse() {
         return rawResponse;
+    }
+
+    /**
+     * The thumbnail for the device
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<InputStream> binaryResponse() {
+        return (Optional<InputStream>) binaryResponse;
+    }
+
+    /**
+     * The thumb URL on the device
+     */
+    @JsonIgnore
+    public Optional<String> res() {
+        return res;
     }
 
     public static Builder builder() {
@@ -99,6 +142,44 @@ public class GetThumbResponse implements Response {
         return this;
     }
 
+    /**
+     * The thumbnail for the device
+     */
+    public GetThumbResponse withBinaryResponse(InputStream binaryResponse) {
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        this.binaryResponse = Optional.ofNullable(binaryResponse);
+        return this;
+    }
+
+
+    /**
+     * The thumbnail for the device
+     */
+    public GetThumbResponse withBinaryResponse(Optional<? extends InputStream> binaryResponse) {
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        this.binaryResponse = binaryResponse;
+        return this;
+    }
+
+    /**
+     * The thumb URL on the device
+     */
+    public GetThumbResponse withRes(String res) {
+        Utils.checkNotNull(res, "res");
+        this.res = Optional.ofNullable(res);
+        return this;
+    }
+
+
+    /**
+     * The thumb URL on the device
+     */
+    public GetThumbResponse withRes(Optional<String> res) {
+        Utils.checkNotNull(res, "res");
+        this.res = res;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,13 +192,16 @@ public class GetThumbResponse implements Response {
         return 
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse);
+            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.binaryResponse, other.binaryResponse) &&
+            Utils.enhancedDeepEquals(this.res, other.res);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            contentType, statusCode, rawResponse);
+            contentType, statusCode, rawResponse,
+            binaryResponse, res);
     }
     
     @Override
@@ -125,7 +209,9 @@ public class GetThumbResponse implements Response {
         return Utils.toString(GetThumbResponse.class,
                 "contentType", contentType,
                 "statusCode", statusCode,
-                "rawResponse", rawResponse);
+                "rawResponse", rawResponse,
+                "binaryResponse", binaryResponse,
+                "res", res);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -136,6 +222,10 @@ public class GetThumbResponse implements Response {
         private Integer statusCode;
 
         private HttpResponse<InputStream> rawResponse;
+
+        private Optional<? extends InputStream> binaryResponse = Optional.empty();
+
+        private Optional<String> res = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -171,10 +261,49 @@ public class GetThumbResponse implements Response {
             return this;
         }
 
+
+        /**
+         * The thumbnail for the device
+         */
+        public Builder binaryResponse(InputStream binaryResponse) {
+            Utils.checkNotNull(binaryResponse, "binaryResponse");
+            this.binaryResponse = Optional.ofNullable(binaryResponse);
+            return this;
+        }
+
+        /**
+         * The thumbnail for the device
+         */
+        public Builder binaryResponse(Optional<? extends InputStream> binaryResponse) {
+            Utils.checkNotNull(binaryResponse, "binaryResponse");
+            this.binaryResponse = binaryResponse;
+            return this;
+        }
+
+
+        /**
+         * The thumb URL on the device
+         */
+        public Builder res(String res) {
+            Utils.checkNotNull(res, "res");
+            this.res = Optional.ofNullable(res);
+            return this;
+        }
+
+        /**
+         * The thumb URL on the device
+         */
+        public Builder res(Optional<String> res) {
+            Utils.checkNotNull(res, "res");
+            this.res = res;
+            return this;
+        }
+
         public GetThumbResponse build() {
 
             return new GetThumbResponse(
-                contentType, statusCode, rawResponse);
+                contentType, statusCode, rawResponse,
+                binaryResponse, res);
         }
 
     }

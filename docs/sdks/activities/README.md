@@ -1,5 +1,4 @@
 # Activities
-(*activities()*)
 
 ## Overview
 
@@ -8,7 +7,6 @@ Activities provide a way to monitor and control asynchronous operations on the s
 Activities are associated with HTTP replies via a special `X-Plex-Activity` header which contains the UUID of the activity.
 
 Activities are optional cancellable. If cancellable, they may be cancelled via the `DELETE` endpoint.
-
 
 ### Available Operations
 
@@ -26,12 +24,13 @@ List all activities on the server.  Admins can see all activities but other user
 package hello.world;
 
 import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.ListActivitiesResponse;
 import java.lang.Exception;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Error, Exception {
 
         PlexAPI sdk = PlexAPI.builder()
                 .token(System.getenv().getOrDefault("TOKEN", ""))
@@ -41,7 +40,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -55,6 +54,7 @@ public class Application {
 
 | Error Type             | Status Code            | Content Type           |
 | ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
 | models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
 
 ## cancelActivity

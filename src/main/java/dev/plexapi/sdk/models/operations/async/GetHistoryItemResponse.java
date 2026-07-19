@@ -36,7 +36,7 @@ public class GetHistoryItemResponse implements AsyncResponse {
     private HttpResponse<Blob> rawResponse;
 
     /**
-     * OK
+     * Successfully retrieved get single history item
      */
     private Optional<? extends HistoryAllGetResponses200> historyAllGetResponses200;
 
@@ -97,7 +97,7 @@ public class GetHistoryItemResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully retrieved get single history item
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -143,7 +143,7 @@ public class GetHistoryItemResponse implements AsyncResponse {
     }
 
     /**
-     * OK
+     * Successfully retrieved get single history item
      */
     public GetHistoryItemResponse withHistoryAllGetResponses200(HistoryAllGetResponses200 historyAllGetResponses200) {
         Utils.checkNotNull(historyAllGetResponses200, "historyAllGetResponses200");
@@ -153,7 +153,7 @@ public class GetHistoryItemResponse implements AsyncResponse {
 
 
     /**
-     * OK
+     * Successfully retrieved get single history item
      */
     public GetHistoryItemResponse withHistoryAllGetResponses200(Optional<? extends HistoryAllGetResponses200> historyAllGetResponses200) {
         Utils.checkNotNull(historyAllGetResponses200, "historyAllGetResponses200");
@@ -250,7 +250,7 @@ public class GetHistoryItemResponse implements AsyncResponse {
 
 
         /**
-         * OK
+         * Successfully retrieved get single history item
          */
         public Builder historyAllGetResponses200(HistoryAllGetResponses200 historyAllGetResponses200) {
             Utils.checkNotNull(historyAllGetResponses200, "historyAllGetResponses200");
@@ -259,7 +259,7 @@ public class GetHistoryItemResponse implements AsyncResponse {
         }
 
         /**
-         * OK
+         * Successfully retrieved get single history item
          */
         public Builder historyAllGetResponses200(Optional<? extends HistoryAllGetResponses200> historyAllGetResponses200) {
             Utils.checkNotNull(historyAllGetResponses200, "historyAllGetResponses200");

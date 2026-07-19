@@ -11,9 +11,11 @@ import dev.plexapi.sdk.utils.Utils;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class GetMediaPartResponse implements AsyncResponse {
@@ -32,6 +34,11 @@ public class GetMediaPartResponse implements AsyncResponse {
      */
     private HttpResponse<Blob> rawResponse;
 
+    /**
+     * OK
+     */
+    private Optional<? extends Blob> binaryResponse;
+
 
     private Map<String, List<String>> headers;
 
@@ -40,16 +47,28 @@ public class GetMediaPartResponse implements AsyncResponse {
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
+            Optional<? extends Blob> binaryResponse,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.binaryResponse = binaryResponse;
         this.headers = headers;
+    }
+    
+    public GetMediaPartResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<Blob> rawResponse,
+            Map<String, List<String>> headers) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty(), headers);
     }
 
     /**
@@ -74,6 +93,15 @@ public class GetMediaPartResponse implements AsyncResponse {
     @JsonIgnore
     public HttpResponse<Blob> rawResponse() {
         return rawResponse;
+    }
+
+    /**
+     * OK
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<Blob> binaryResponse() {
+        return (Optional<Blob>) binaryResponse;
     }
 
     @JsonIgnore
@@ -113,6 +141,25 @@ public class GetMediaPartResponse implements AsyncResponse {
         return this;
     }
 
+    /**
+     * OK
+     */
+    public GetMediaPartResponse withBinaryResponse(Blob binaryResponse) {
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        this.binaryResponse = Optional.ofNullable(binaryResponse);
+        return this;
+    }
+
+
+    /**
+     * OK
+     */
+    public GetMediaPartResponse withBinaryResponse(Optional<? extends Blob> binaryResponse) {
+        Utils.checkNotNull(binaryResponse, "binaryResponse");
+        this.binaryResponse = binaryResponse;
+        return this;
+    }
+
     public GetMediaPartResponse withHeaders(Map<String, List<String>> headers) {
         Utils.checkNotNull(headers, "headers");
         this.headers = headers;
@@ -132,6 +179,7 @@ public class GetMediaPartResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.binaryResponse, other.binaryResponse) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -139,7 +187,7 @@ public class GetMediaPartResponse implements AsyncResponse {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            headers);
+            binaryResponse, headers);
     }
     
     @Override
@@ -148,6 +196,7 @@ public class GetMediaPartResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
+                "binaryResponse", binaryResponse,
                 "headers", headers);
     }
 
@@ -159,6 +208,8 @@ public class GetMediaPartResponse implements AsyncResponse {
         private Integer statusCode;
 
         private HttpResponse<Blob> rawResponse;
+
+        private Optional<? extends Blob> binaryResponse = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -197,6 +248,25 @@ public class GetMediaPartResponse implements AsyncResponse {
         }
 
 
+        /**
+         * OK
+         */
+        public Builder binaryResponse(Blob binaryResponse) {
+            Utils.checkNotNull(binaryResponse, "binaryResponse");
+            this.binaryResponse = Optional.ofNullable(binaryResponse);
+            return this;
+        }
+
+        /**
+         * OK
+         */
+        public Builder binaryResponse(Optional<? extends Blob> binaryResponse) {
+            Utils.checkNotNull(binaryResponse, "binaryResponse");
+            this.binaryResponse = binaryResponse;
+            return this;
+        }
+
+
         public Builder headers(Map<String, List<String>> headers) {
             Utils.checkNotNull(headers, "headers");
             this.headers = headers;
@@ -207,7 +277,7 @@ public class GetMediaPartResponse implements AsyncResponse {
 
             return new GetMediaPartResponse(
                 contentType, statusCode, rawResponse,
-                headers);
+                binaryResponse, headers);
         }
 
     }

@@ -11,6 +11,7 @@ import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Boolean;
+import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -85,16 +86,22 @@ public class ListPlaylistsRequest {
     private Optional<String> marketplace;
 
     /**
+     * Whether this is a smart collection/playlist
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=smart")
+    private Optional<Boolean> smart;
+
+    /**
      * Limit to a type of playlist
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=playlistType")
     private Optional<? extends PlaylistType> playlistType;
 
     /**
-     * Whether this is a smart collection/playlist
+     * Filter by playlist type. Use 42 for optimized/conversion items.
      */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=smart")
-    private Optional<Boolean> smart;
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
+    private Optional<Long> mediaType;
 
     @JsonCreator
     public ListPlaylistsRequest(
@@ -109,8 +116,9 @@ public class ListPlaylistsRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<Boolean> smart,
             Optional<? extends PlaylistType> playlistType,
-            Optional<Boolean> smart) {
+            Optional<Long> mediaType) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -122,8 +130,9 @@ public class ListPlaylistsRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(playlistType, "playlistType");
         Utils.checkNotNull(smart, "smart");
+        Utils.checkNotNull(playlistType, "playlistType");
+        Utils.checkNotNull(mediaType, "mediaType");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -135,8 +144,9 @@ public class ListPlaylistsRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.playlistType = playlistType;
         this.smart = smart;
+        this.playlistType = playlistType;
+        this.mediaType = mediaType;
     }
     
     public ListPlaylistsRequest() {
@@ -144,7 +154,7 @@ public class ListPlaylistsRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -237,6 +247,14 @@ public class ListPlaylistsRequest {
     }
 
     /**
+     * Whether this is a smart collection/playlist
+     */
+    @JsonIgnore
+    public Optional<Boolean> smart() {
+        return smart;
+    }
+
+    /**
      * Limit to a type of playlist
      */
     @SuppressWarnings("unchecked")
@@ -246,11 +264,11 @@ public class ListPlaylistsRequest {
     }
 
     /**
-     * Whether this is a smart collection/playlist
+     * Filter by playlist type. Use 42 for optimized/conversion items.
      */
     @JsonIgnore
-    public Optional<Boolean> smart() {
-        return smart;
+    public Optional<Long> mediaType() {
+        return mediaType;
     }
 
     public static Builder builder() {
@@ -468,6 +486,25 @@ public class ListPlaylistsRequest {
     }
 
     /**
+     * Whether this is a smart collection/playlist
+     */
+    public ListPlaylistsRequest withSmart(boolean smart) {
+        Utils.checkNotNull(smart, "smart");
+        this.smart = Optional.ofNullable(smart);
+        return this;
+    }
+
+
+    /**
+     * Whether this is a smart collection/playlist
+     */
+    public ListPlaylistsRequest withSmart(Optional<Boolean> smart) {
+        Utils.checkNotNull(smart, "smart");
+        this.smart = smart;
+        return this;
+    }
+
+    /**
      * Limit to a type of playlist
      */
     public ListPlaylistsRequest withPlaylistType(PlaylistType playlistType) {
@@ -487,21 +524,21 @@ public class ListPlaylistsRequest {
     }
 
     /**
-     * Whether this is a smart collection/playlist
+     * Filter by playlist type. Use 42 for optimized/conversion items.
      */
-    public ListPlaylistsRequest withSmart(boolean smart) {
-        Utils.checkNotNull(smart, "smart");
-        this.smart = Optional.ofNullable(smart);
+    public ListPlaylistsRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = Optional.ofNullable(mediaType);
         return this;
     }
 
 
     /**
-     * Whether this is a smart collection/playlist
+     * Filter by playlist type. Use 42 for optimized/conversion items.
      */
-    public ListPlaylistsRequest withSmart(Optional<Boolean> smart) {
-        Utils.checkNotNull(smart, "smart");
-        this.smart = smart;
+    public ListPlaylistsRequest withMediaType(Optional<Long> mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -526,8 +563,9 @@ public class ListPlaylistsRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.smart, other.smart) &&
             Utils.enhancedDeepEquals(this.playlistType, other.playlistType) &&
-            Utils.enhancedDeepEquals(this.smart, other.smart);
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType);
     }
     
     @Override
@@ -536,8 +574,8 @@ public class ListPlaylistsRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, playlistType,
-            smart);
+            deviceName, marketplace, smart,
+            playlistType, mediaType);
     }
     
     @Override
@@ -554,8 +592,9 @@ public class ListPlaylistsRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "smart", smart,
                 "playlistType", playlistType,
-                "smart", smart);
+                "mediaType", mediaType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -583,9 +622,11 @@ public class ListPlaylistsRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
+        private Optional<Boolean> smart = Optional.empty();
+
         private Optional<? extends PlaylistType> playlistType = Optional.empty();
 
-        private Optional<Boolean> smart = Optional.empty();
+        private Optional<Long> mediaType = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -802,6 +843,25 @@ public class ListPlaylistsRequest {
 
 
         /**
+         * Whether this is a smart collection/playlist
+         */
+        public Builder smart(boolean smart) {
+            Utils.checkNotNull(smart, "smart");
+            this.smart = Optional.ofNullable(smart);
+            return this;
+        }
+
+        /**
+         * Whether this is a smart collection/playlist
+         */
+        public Builder smart(Optional<Boolean> smart) {
+            Utils.checkNotNull(smart, "smart");
+            this.smart = smart;
+            return this;
+        }
+
+
+        /**
          * Limit to a type of playlist
          */
         public Builder playlistType(PlaylistType playlistType) {
@@ -821,20 +881,20 @@ public class ListPlaylistsRequest {
 
 
         /**
-         * Whether this is a smart collection/playlist
+         * Filter by playlist type. Use 42 for optimized/conversion items.
          */
-        public Builder smart(boolean smart) {
-            Utils.checkNotNull(smart, "smart");
-            this.smart = Optional.ofNullable(smart);
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = Optional.ofNullable(mediaType);
             return this;
         }
 
         /**
-         * Whether this is a smart collection/playlist
+         * Filter by playlist type. Use 42 for optimized/conversion items.
          */
-        public Builder smart(Optional<Boolean> smart) {
-            Utils.checkNotNull(smart, "smart");
-            this.smart = smart;
+        public Builder mediaType(Optional<Long> mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -847,8 +907,8 @@ public class ListPlaylistsRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, playlistType,
-                smart);
+                deviceName, marketplace, smart,
+                playlistType, mediaType);
         }
 
 

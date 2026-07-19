@@ -3,29 +3,58 @@
  */
 package dev.plexapi.sdk;
 
-import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
+import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 
 import dev.plexapi.sdk.models.operations.AddProviderRequest;
+import dev.plexapi.sdk.models.operations.AddToWatchlistRequest;
 import dev.plexapi.sdk.models.operations.DeleteMediaProviderRequest;
+import dev.plexapi.sdk.models.operations.GetWatchlistRequest;
+import dev.plexapi.sdk.models.operations.RemoveFromWatchlistRequest;
+import dev.plexapi.sdk.models.operations.SearchDiscoverRequest;
 import dev.plexapi.sdk.models.operations.async.AddProviderRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.AddProviderResponse;
+import dev.plexapi.sdk.models.operations.async.AddToWatchlistRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.AddToWatchlistResponse;
 import dev.plexapi.sdk.models.operations.async.DeleteMediaProviderRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.DeleteMediaProviderResponse;
+import dev.plexapi.sdk.models.operations.async.GetWatchlistRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetWatchlistResponse;
 import dev.plexapi.sdk.models.operations.async.ListProvidersRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.ListProvidersResponse;
 import dev.plexapi.sdk.models.operations.async.RefreshProvidersRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.RefreshProvidersResponse;
+import dev.plexapi.sdk.models.operations.async.RemoveFromWatchlistRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.RemoveFromWatchlistResponse;
+import dev.plexapi.sdk.models.operations.async.SearchDiscoverRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.SearchDiscoverResponse;
 import dev.plexapi.sdk.operations.AddProvider;
+import dev.plexapi.sdk.operations.AddToWatchlist;
 import dev.plexapi.sdk.operations.DeleteMediaProvider;
+import dev.plexapi.sdk.operations.GetWatchlist;
 import dev.plexapi.sdk.operations.ListProviders;
 import dev.plexapi.sdk.operations.RefreshProviders;
+import dev.plexapi.sdk.operations.RemoveFromWatchlist;
+import dev.plexapi.sdk.operations.SearchDiscover;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.String;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Media providers are the starting points for the entire Plex Media Server media library API.  It defines the paths for the groups of endpoints.  The `/media/providers` should be the only hard-coded path in clients when accessing the media library.  Non-media library endpoints are outside the scope of the media provider.  See the description in See [the section in API Info](#section/API-Info/Media-Providers) for more information on how to use media providers.
+ * Media providers are the starting points for the entire Plex Media Server media library API. It
+ * defines the paths for the groups of endpoints. The `/media/providers` should be the only hard-coded
+ * path in clients when accessing the media library.
+ * 
+ * <p>Non-media library endpoints are outside the scope of the media provider. See the description in See
+ * [the section in API Info](#section/API-Info/Media-Providers) for more information on how to use
+ * media providers.
+ * Note: Dynamic proxy paths such as `/{provider}/search`, `/{provider}/metadata`, and other
+ * provider-relative routes are resolved through the media provider API.
  */
 public class AsyncProvider {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Provider syncSDK;
 
@@ -45,9 +74,190 @@ public class AsyncProvider {
 
 
     /**
+     * Add to Watchlist
+     * 
+     * <p>Add an item to the user's Plex Discover watchlist.
+     * 
+     * @return The async call builder
+     */
+    public AddToWatchlistRequestBuilder addToWatchlist() {
+        return new AddToWatchlistRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Add to Watchlist
+     * 
+     * <p>Add an item to the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<AddToWatchlistResponse>} - The async response
+     */
+    public CompletableFuture<AddToWatchlistResponse> addToWatchlist(AddToWatchlistRequest request) {
+        return addToWatchlist(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Add to Watchlist
+     * 
+     * <p>Add an item to the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddToWatchlistResponse>} - The async response
+     */
+    public CompletableFuture<AddToWatchlistResponse> addToWatchlist(
+            AddToWatchlistRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<AddToWatchlistRequest, AddToWatchlistResponse> operation
+              = new AddToWatchlist.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Remove from Watchlist
+     * 
+     * <p>Remove an item from the user's Plex Discover watchlist.
+     * 
+     * @return The async call builder
+     */
+    public RemoveFromWatchlistRequestBuilder removeFromWatchlist() {
+        return new RemoveFromWatchlistRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Remove from Watchlist
+     * 
+     * <p>Remove an item from the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<RemoveFromWatchlistResponse>} - The async response
+     */
+    public CompletableFuture<RemoveFromWatchlistResponse> removeFromWatchlist(RemoveFromWatchlistRequest request) {
+        return removeFromWatchlist(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Remove from Watchlist
+     * 
+     * <p>Remove an item from the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<RemoveFromWatchlistResponse>} - The async response
+     */
+    public CompletableFuture<RemoveFromWatchlistResponse> removeFromWatchlist(
+            RemoveFromWatchlistRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<RemoveFromWatchlistRequest, RemoveFromWatchlistResponse> operation
+              = new RemoveFromWatchlist.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Search Discover
+     * 
+     * <p>Search movies and shows in Plex Discover.
+     * 
+     * @return The async call builder
+     */
+    public SearchDiscoverRequestBuilder searchDiscover() {
+        return new SearchDiscoverRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Search Discover
+     * 
+     * <p>Search movies and shows in Plex Discover.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<SearchDiscoverResponse>} - The async response
+     */
+    public CompletableFuture<SearchDiscoverResponse> searchDiscover(SearchDiscoverRequest request) {
+        return searchDiscover(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Search Discover
+     * 
+     * <p>Search movies and shows in Plex Discover.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<SearchDiscoverResponse>} - The async response
+     */
+    public CompletableFuture<SearchDiscoverResponse> searchDiscover(
+            SearchDiscoverRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<SearchDiscoverRequest, SearchDiscoverResponse> operation
+              = new SearchDiscover.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Watchlist
+     * 
+     * <p>Get the user's Plex Discover watchlist.
+     * 
+     * @return The async call builder
+     */
+    public GetWatchlistRequestBuilder getWatchlist() {
+        return new GetWatchlistRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Watchlist
+     * 
+     * <p>Get the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetWatchlistResponse>} - The async response
+     */
+    public CompletableFuture<GetWatchlistResponse> getWatchlist(GetWatchlistRequest request) {
+        return getWatchlist(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Watchlist
+     * 
+     * <p>Get the user's Plex Discover watchlist.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetWatchlistResponse>} - The async response
+     */
+    public CompletableFuture<GetWatchlistResponse> getWatchlist(
+            GetWatchlistRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetWatchlistRequest, GetWatchlistResponse> operation
+              = new GetWatchlist.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
      * Get the list of available media providers
      * 
-     * <p>Get the list of all available media providers for this PMS.  This will generally include the library provider and possibly EPG if DVR is set up.
+     * <p>Get the list of all available media providers for this PMS. This will generally include the library
+     * provider and possibly EPG if DVR is set up.
      * 
      * @return The async call builder
      */
@@ -58,13 +268,29 @@ public class AsyncProvider {
     /**
      * Get the list of available media providers
      * 
-     * <p>Get the list of all available media providers for this PMS.  This will generally include the library provider and possibly EPG if DVR is set up.
+     * <p>Get the list of all available media providers for this PMS. This will generally include the library
+     * provider and possibly EPG if DVR is set up.
      * 
-     * @return CompletableFuture&lt;ListProvidersResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListProvidersResponse>} - The async response
      */
     public CompletableFuture<ListProvidersResponse> listProvidersDirect() {
+        return listProviders(Optional.empty());
+    }
+
+    /**
+     * Get the list of available media providers
+     * 
+     * <p>Get the list of all available media providers for this PMS. This will generally include the library
+     * provider and possibly EPG if DVR is set up.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<ListProvidersResponse>} - The async response
+     */
+    public CompletableFuture<ListProvidersResponse> listProviders(Optional<Options> options) {
         AsyncRequestlessOperation<ListProvidersResponse> operation
-            = new ListProviders.Async(sdkConfiguration);
+            = new ListProviders.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -73,7 +299,8 @@ public class AsyncProvider {
     /**
      * Add a media provider
      * 
-     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as a reverse proxy to the provider, allowing both local and remote providers to work.
+     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as
+     * a reverse proxy to the provider, allowing both local and remote providers to work.
      * 
      * @return The async call builder
      */
@@ -84,14 +311,31 @@ public class AsyncProvider {
     /**
      * Add a media provider
      * 
-     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as a reverse proxy to the provider, allowing both local and remote providers to work.
+     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as
+     * a reverse proxy to the provider, allowing both local and remote providers to work.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;AddProviderResponse&gt; - The async response
+     * @return {@code CompletableFuture<AddProviderResponse>} - The async response
      */
     public CompletableFuture<AddProviderResponse> addProvider(AddProviderRequest request) {
+        return addProvider(request, Optional.empty());
+    }
+
+    /**
+     * Add a media provider
+     * 
+     * <p>This endpoint registers a media provider with the server. Once registered, the media server acts as
+     * a reverse proxy to the provider, allowing both local and remote providers to work.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<AddProviderResponse>} - The async response
+     */
+    public CompletableFuture<AddProviderResponse> addProvider(AddProviderRequest request, Optional<Options> options) {
         AsyncRequestOperation<AddProviderRequest, AddProviderResponse> operation
-              = new AddProvider.Async(sdkConfiguration);
+              = new AddProvider.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -113,11 +357,25 @@ public class AsyncProvider {
      * 
      * <p>Refresh all known media providers. This is useful in case a provider has updated features.
      * 
-     * @return CompletableFuture&lt;RefreshProvidersResponse&gt; - The async response
+     * @return {@code CompletableFuture<RefreshProvidersResponse>} - The async response
      */
     public CompletableFuture<RefreshProvidersResponse> refreshProvidersDirect() {
+        return refreshProviders(Optional.empty());
+    }
+
+    /**
+     * Refresh media providers
+     * 
+     * <p>Refresh all known media providers. This is useful in case a provider has updated features.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<RefreshProvidersResponse>} - The async response
+     */
+    public CompletableFuture<RefreshProvidersResponse> refreshProviders(Optional<Options> options) {
         AsyncRequestlessOperation<RefreshProvidersResponse> operation
-            = new RefreshProviders.Async(sdkConfiguration);
+            = new RefreshProviders.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }
@@ -140,11 +398,26 @@ public class AsyncProvider {
      * <p>Deletes a media provider with the given id
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteMediaProviderResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteMediaProviderResponse>} - The async response
      */
     public CompletableFuture<DeleteMediaProviderResponse> deleteMediaProvider(DeleteMediaProviderRequest request) {
+        return deleteMediaProvider(request, Optional.empty());
+    }
+
+    /**
+     * Delete a media provider
+     * 
+     * <p>Deletes a media provider with the given id
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteMediaProviderResponse>} - The async response
+     */
+    public CompletableFuture<DeleteMediaProviderResponse> deleteMediaProvider(DeleteMediaProviderRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteMediaProviderRequest, DeleteMediaProviderResponse> operation
-              = new DeleteMediaProvider.Async(sdkConfiguration);
+              = new DeleteMediaProvider.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

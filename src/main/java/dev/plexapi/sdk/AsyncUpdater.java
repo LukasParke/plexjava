@@ -17,6 +17,9 @@ import dev.plexapi.sdk.models.operations.async.GetUpdatesStatusResponse;
 import dev.plexapi.sdk.operations.ApplyUpdates;
 import dev.plexapi.sdk.operations.CheckUpdates;
 import dev.plexapi.sdk.operations.GetUpdatesStatus;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -24,6 +27,7 @@ import java.util.concurrent.CompletableFuture;
  * Updates to the status can be observed via the Event API.
  */
 public class AsyncUpdater {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Updater syncSDK;
 
@@ -45,7 +49,11 @@ public class AsyncUpdater {
     /**
      * Applying updates
      * 
-     * <p>Apply any downloaded updates.  Note that the two parameters `tonight` and `skip` are effectively mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight` is also passed.
+     * <p>Apply any downloaded updates. Note that the two parameters `tonight` and `skip` are effectively
+     * mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight`
+     * is also passed.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -56,14 +64,37 @@ public class AsyncUpdater {
     /**
      * Applying updates
      * 
-     * <p>Apply any downloaded updates.  Note that the two parameters `tonight` and `skip` are effectively mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight` is also passed.
+     * <p>Apply any downloaded updates. Note that the two parameters `tonight` and `skip` are effectively
+     * mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight`
+     * is also passed.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ApplyUpdatesResponse&gt; - The async response
+     * @return {@code CompletableFuture<ApplyUpdatesResponse>} - The async response
      */
     public CompletableFuture<ApplyUpdatesResponse> applyUpdates(ApplyUpdatesRequest request) {
+        return applyUpdates(request, Optional.empty());
+    }
+
+    /**
+     * Applying updates
+     * 
+     * <p>Apply any downloaded updates. Note that the two parameters `tonight` and `skip` are effectively
+     * mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight`
+     * is also passed.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ApplyUpdatesResponse>} - The async response
+     */
+    public CompletableFuture<ApplyUpdatesResponse> applyUpdates(ApplyUpdatesRequest request, Optional<Options> options) {
         AsyncRequestOperation<ApplyUpdatesRequest, ApplyUpdatesResponse> operation
-              = new ApplyUpdates.Async(sdkConfiguration);
+              = new ApplyUpdates.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -73,6 +104,8 @@ public class AsyncUpdater {
      * Checking for updates
      * 
      * <p>Perform an update check and potentially download
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -85,12 +118,31 @@ public class AsyncUpdater {
      * 
      * <p>Perform an update check and potentially download
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CheckUpdatesResponse&gt; - The async response
+     * @return {@code CompletableFuture<CheckUpdatesResponse>} - The async response
      */
     public CompletableFuture<CheckUpdatesResponse> checkUpdates(CheckUpdatesRequest request) {
+        return checkUpdates(request, Optional.empty());
+    }
+
+    /**
+     * Checking for updates
+     * 
+     * <p>Perform an update check and potentially download
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CheckUpdatesResponse>} - The async response
+     */
+    public CompletableFuture<CheckUpdatesResponse> checkUpdates(CheckUpdatesRequest request, Optional<Options> options) {
         AsyncRequestOperation<CheckUpdatesRequest, CheckUpdatesResponse> operation
-              = new CheckUpdates.Async(sdkConfiguration);
+              = new CheckUpdates.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -100,6 +152,8 @@ public class AsyncUpdater {
      * Querying status of updates
      * 
      * <p>Get the status of updating the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -112,11 +166,29 @@ public class AsyncUpdater {
      * 
      * <p>Get the status of updating the server
      * 
-     * @return CompletableFuture&lt;GetUpdatesStatusResponse&gt; - The async response
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<GetUpdatesStatusResponse>} - The async response
      */
     public CompletableFuture<GetUpdatesStatusResponse> getUpdatesStatusDirect() {
+        return getUpdatesStatus(Optional.empty());
+    }
+
+    /**
+     * Querying status of updates
+     * 
+     * <p>Get the status of updating the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetUpdatesStatusResponse>} - The async response
+     */
+    public CompletableFuture<GetUpdatesStatusResponse> getUpdatesStatus(Optional<Options> options) {
         AsyncRequestlessOperation<GetUpdatesStatusResponse> operation
-            = new GetUpdatesStatus.Async(sdkConfiguration);
+            = new GetUpdatesStatus.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest()
             .thenCompose(operation::handleResponse);
     }

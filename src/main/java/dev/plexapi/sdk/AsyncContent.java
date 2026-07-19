@@ -57,12 +57,16 @@ import dev.plexapi.sdk.operations.GetSonicPath;
 import dev.plexapi.sdk.operations.GetSonicallySimilar;
 import dev.plexapi.sdk.operations.ListContent;
 import dev.plexapi.sdk.operations.ListMoments;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * The actual content of the media provider
  */
 public class AsyncContent {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Content syncSDK;
 
@@ -84,7 +88,8 @@ public class AsyncContent {
     /**
      * Get items in a collection
      * 
-     * <p>Get items in a collection.  Note if this collection contains more than 100 items, paging must be used.
+     * <p>Get items in a collection. Note if this collection contains more than 100 items, paging must be
+     * used.
      * 
      * @return The async call builder
      */
@@ -95,14 +100,31 @@ public class AsyncContent {
     /**
      * Get items in a collection
      * 
-     * <p>Get items in a collection.  Note if this collection contains more than 100 items, paging must be used.
+     * <p>Get items in a collection. Note if this collection contains more than 100 items, paging must be
+     * used.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetCollectionItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetCollectionItemsResponse>} - The async response
      */
     public CompletableFuture<GetCollectionItemsResponse> getCollectionItems(GetCollectionItemsRequest request) {
+        return getCollectionItems(request, Optional.empty());
+    }
+
+    /**
+     * Get items in a collection
+     * 
+     * <p>Get items in a collection. Note if this collection contains more than 100 items, paging must be
+     * used.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCollectionItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetCollectionItemsResponse> getCollectionItems(GetCollectionItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetCollectionItemsRequest, GetCollectionItemsResponse> operation
-              = new GetCollectionItems.Async(sdkConfiguration);
+              = new GetCollectionItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -125,11 +147,26 @@ public class AsyncContent {
      * <p>Get one or more metadata items.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetMetadataItemResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetMetadataItemResponse>} - The async response
      */
     public CompletableFuture<GetMetadataItemResponse> getMetadataItem(GetMetadataItemRequest request) {
+        return getMetadataItem(request, Optional.empty());
+    }
+
+    /**
+     * Get a metadata item
+     * 
+     * <p>Get one or more metadata items.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataItemResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataItemResponse> getMetadataItem(GetMetadataItemRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetMetadataItemRequest, GetMetadataItemResponse> operation
-              = new GetMetadataItem.Async(sdkConfiguration);
+              = new GetMetadataItem.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -152,11 +189,26 @@ public class AsyncContent {
      * <p>Get all albums in a music section
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetAlbumsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAlbumsResponse>} - The async response
      */
     public CompletableFuture<GetAlbumsResponse> getAlbums(GetAlbumsRequest request) {
+        return getAlbums(request, Optional.empty());
+    }
+
+    /**
+     * Set section albums
+     * 
+     * <p>Get all albums in a music section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAlbumsResponse>} - The async response
+     */
+    public CompletableFuture<GetAlbumsResponse> getAlbums(GetAlbumsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetAlbumsRequest, GetAlbumsResponse> operation
-              = new GetAlbums.Async(sdkConfiguration);
+              = new GetAlbums.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -165,7 +217,10 @@ public class AsyncContent {
     /**
      * Get items in the section
      * 
-     * <p>Get the items in a section, potentially filtering them
+     * <p>Get the items in a section, potentially filtering them.
+     * When `includeCollections=1` is passed, the response may also contain `Collection` items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -176,14 +231,35 @@ public class AsyncContent {
     /**
      * Get items in the section
      * 
-     * <p>Get the items in a section, potentially filtering them
+     * <p>Get the items in a section, potentially filtering them.
+     * When `includeCollections=1` is passed, the response may also contain `Collection` items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListContentResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListContentResponse>} - The async response
      */
     public CompletableFuture<ListContentResponse> listContent(ListContentRequest request) {
+        return listContent(request, Optional.empty());
+    }
+
+    /**
+     * Get items in the section
+     * 
+     * <p>Get the items in a section, potentially filtering them.
+     * When `includeCollections=1` is passed, the response may also contain `Collection` items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListContentResponse>} - The async response
+     */
+    public CompletableFuture<ListContentResponse> listContent(ListContentRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListContentRequest, ListContentResponse> operation
-              = new ListContent.Async(sdkConfiguration);
+              = new ListContent.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -206,11 +282,26 @@ public class AsyncContent {
      * <p>Get all leaves in a section (such as episodes in a show section)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetAllLeavesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAllLeavesResponse>} - The async response
      */
     public CompletableFuture<GetAllLeavesResponse> getAllLeaves(GetAllLeavesRequest request) {
+        return getAllLeaves(request, Optional.empty());
+    }
+
+    /**
+     * Set section leaves
+     * 
+     * <p>Get all leaves in a section (such as episodes in a show section)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAllLeavesResponse>} - The async response
+     */
+    public CompletableFuture<GetAllLeavesResponse> getAllLeaves(GetAllLeavesRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetAllLeavesRequest, GetAllLeavesResponse> operation
-              = new GetAllLeaves.Async(sdkConfiguration);
+              = new GetAllLeaves.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -233,11 +324,26 @@ public class AsyncContent {
      * <p>Get artwork for a library section
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetArtsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetArtsResponse>} - The async response
      */
     public CompletableFuture<GetArtsResponse> getArts(GetArtsRequest request) {
+        return getArts(request, Optional.empty());
+    }
+
+    /**
+     * Set section artwork
+     * 
+     * <p>Get artwork for a library section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetArtsResponse>} - The async response
+     */
+    public CompletableFuture<GetArtsResponse> getArts(GetArtsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetArtsRequest, GetArtsResponse> operation
-              = new GetArts.Async(sdkConfiguration);
+              = new GetArts.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -260,11 +366,26 @@ public class AsyncContent {
      * <p>Get categories in a library section
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetCategoriesResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetCategoriesResponse>} - The async response
      */
     public CompletableFuture<GetCategoriesResponse> getCategories(GetCategoriesRequest request) {
+        return getCategories(request, Optional.empty());
+    }
+
+    /**
+     * Set section categories
+     * 
+     * <p>Get categories in a library section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCategoriesResponse>} - The async response
+     */
+    public CompletableFuture<GetCategoriesResponse> getCategories(GetCategoriesRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetCategoriesRequest, GetCategoriesResponse> operation
-              = new GetCategories.Async(sdkConfiguration);
+              = new GetCategories.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -287,11 +408,26 @@ public class AsyncContent {
      * <p>Get clusters in a library section (typically for photos)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetClusterResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetClusterResponse>} - The async response
      */
     public CompletableFuture<GetClusterResponse> getCluster(GetClusterRequest request) {
+        return getCluster(request, Optional.empty());
+    }
+
+    /**
+     * Set section clusters
+     * 
+     * <p>Get clusters in a library section (typically for photos)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetClusterResponse>} - The async response
+     */
+    public CompletableFuture<GetClusterResponse> getCluster(GetClusterRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetClusterRequest, GetClusterResponse> operation
-              = new GetCluster.Async(sdkConfiguration);
+              = new GetCluster.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -314,11 +450,26 @@ public class AsyncContent {
      * <p>Get a list of audio tracks starting at one and ending at another which are similar across the path
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSonicPathResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSonicPathResponse>} - The async response
      */
     public CompletableFuture<GetSonicPathResponse> getSonicPath(GetSonicPathRequest request) {
+        return getSonicPath(request, Optional.empty());
+    }
+
+    /**
+     * Similar tracks to transition from one to another
+     * 
+     * <p>Get a list of audio tracks starting at one and ending at another which are similar across the path
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSonicPathResponse>} - The async response
+     */
+    public CompletableFuture<GetSonicPathResponse> getSonicPath(GetSonicPathRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSonicPathRequest, GetSonicPathResponse> operation
-              = new GetSonicPath.Async(sdkConfiguration);
+              = new GetSonicPath.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -341,11 +492,26 @@ public class AsyncContent {
      * <p>Get all folder locations of the media in a section
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetFoldersResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetFoldersResponse>} - The async response
      */
     public CompletableFuture<GetFoldersResponse> getFolders(GetFoldersRequest request) {
+        return getFolders(request, Optional.empty());
+    }
+
+    /**
+     * Get all folder locations
+     * 
+     * <p>Get all folder locations of the media in a section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetFoldersResponse>} - The async response
+     */
+    public CompletableFuture<GetFoldersResponse> getFolders(GetFoldersRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetFoldersRequest, GetFoldersResponse> operation
-              = new GetFolders.Async(sdkConfiguration);
+              = new GetFolders.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -368,11 +534,26 @@ public class AsyncContent {
      * <p>Get moments in a library section (typically for photos)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListMomentsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListMomentsResponse>} - The async response
      */
     public CompletableFuture<ListMomentsResponse> listMoments(ListMomentsRequest request) {
+        return listMoments(request, Optional.empty());
+    }
+
+    /**
+     * Set section moments
+     * 
+     * <p>Get moments in a library section (typically for photos)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListMomentsResponse>} - The async response
+     */
+    public CompletableFuture<ListMomentsResponse> listMoments(ListMomentsRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListMomentsRequest, ListMomentsResponse> operation
-              = new ListMoments.Async(sdkConfiguration);
+              = new ListMoments.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -395,11 +576,26 @@ public class AsyncContent {
      * <p>Get the nearest audio tracks to a particular analysis
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSonicallySimilarResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSonicallySimilarResponse>} - The async response
      */
     public CompletableFuture<GetSonicallySimilarResponse> getSonicallySimilar(GetSonicallySimilarRequest request) {
+        return getSonicallySimilar(request, Optional.empty());
+    }
+
+    /**
+     * The nearest audio tracks
+     * 
+     * <p>Get the nearest audio tracks to a particular analysis
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSonicallySimilarResponse>} - The async response
+     */
+    public CompletableFuture<GetSonicallySimilarResponse> getSonicallySimilar(GetSonicallySimilarRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSonicallySimilarRequest, GetSonicallySimilarResponse> operation
-              = new GetSonicallySimilar.Async(sdkConfiguration);
+              = new GetSonicallySimilar.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -422,11 +618,26 @@ public class AsyncContent {
      * <p>Get an image for the collection based on the items within
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetCollectionImageResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetCollectionImageResponse>} - The async response
      */
     public CompletableFuture<GetCollectionImageResponse> getCollectionImage(GetCollectionImageRequest request) {
+        return getCollectionImage(request, Optional.empty());
+    }
+
+    /**
+     * Get a collection's image
+     * 
+     * <p>Get an image for the collection based on the items within
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetCollectionImageResponse>} - The async response
+     */
+    public CompletableFuture<GetCollectionImageResponse> getCollectionImage(GetCollectionImageRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetCollectionImageRequest, GetCollectionImageResponse> operation
-              = new GetCollectionImage.Async(sdkConfiguration);
+              = new GetCollectionImage.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

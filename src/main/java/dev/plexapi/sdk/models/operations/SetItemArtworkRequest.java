@@ -83,16 +83,21 @@ public class SetItemArtworkRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=element")
     private Element element;
 
     /**
-     * The url of the new asset.  If not provided, the binary of the asset must be provided in the post body.
+     * The url of the new asset. If not provided, the binary of the asset must be provided in the post
+     * body.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=url")
     private Optional<String> url;
@@ -242,18 +247,25 @@ public class SetItemArtworkRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     @JsonIgnore
     public Element element() {
         return element;
     }
 
     /**
-     * The url of the new asset.  If not provided, the binary of the asset must be provided in the post body.
+     * The url of the new asset. If not provided, the binary of the asset must be provided in the post
+     * body.
      */
     @JsonIgnore
     public Optional<String> url() {
@@ -474,12 +486,18 @@ public class SetItemArtworkRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public SetItemArtworkRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The type of artwork element (e.g., art, poster, thumb)
+     */
     public SetItemArtworkRequest withElement(Element element) {
         Utils.checkNotNull(element, "element");
         this.element = element;
@@ -487,7 +505,8 @@ public class SetItemArtworkRequest {
     }
 
     /**
-     * The url of the new asset.  If not provided, the binary of the asset must be provided in the post body.
+     * The url of the new asset. If not provided, the binary of the asset must be provided in the post
+     * body.
      */
     public SetItemArtworkRequest withUrl(String url) {
         Utils.checkNotNull(url, "url");
@@ -497,7 +516,8 @@ public class SetItemArtworkRequest {
 
 
     /**
-     * The url of the new asset.  If not provided, the binary of the asset must be provided in the post body.
+     * The url of the new asset. If not provided, the binary of the asset must be provided in the post
+     * body.
      */
     public SetItemArtworkRequest withUrl(Optional<String> url) {
         Utils.checkNotNull(url, "url");
@@ -805,6 +825,9 @@ public class SetItemArtworkRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -812,6 +835,9 @@ public class SetItemArtworkRequest {
         }
 
 
+        /**
+         * The type of artwork element (e.g., art, poster, thumb)
+         */
         public Builder element(Element element) {
             Utils.checkNotNull(element, "element");
             this.element = element;
@@ -820,7 +846,8 @@ public class SetItemArtworkRequest {
 
 
         /**
-         * The url of the new asset.  If not provided, the binary of the asset must be provided in the post body.
+         * The url of the new asset. If not provided, the binary of the asset must be provided in the post
+         * body.
          */
         public Builder url(String url) {
             Utils.checkNotNull(url, "url");
@@ -829,7 +856,8 @@ public class SetItemArtworkRequest {
         }
 
         /**
-         * The url of the new asset.  If not provided, the binary of the asset must be provided in the post body.
+         * The url of the new asset. If not provided, the binary of the asset must be provided in the post
+         * body.
          */
         public Builder url(Optional<String> url) {
             Utils.checkNotNull(url, "url");

@@ -5,6 +5,7 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.plexapi.sdk.models.shared.MediaContainerWithDirectory;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -35,22 +36,22 @@ public class GetSectionFiltersResponse implements Response {
     /**
      * The filters on the section
      */
-    private Optional<? extends GetSectionFiltersResponseBody> object;
+    private Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory;
 
     @JsonCreator
     public GetSectionFiltersResponse(
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends GetSectionFiltersResponseBody> object) {
+            Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithDirectory = mediaContainerWithDirectory;
     }
     
     public GetSectionFiltersResponse(
@@ -90,8 +91,8 @@ public class GetSectionFiltersResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetSectionFiltersResponseBody> object() {
-        return (Optional<GetSectionFiltersResponseBody>) object;
+    public Optional<MediaContainerWithDirectory> mediaContainerWithDirectory() {
+        return (Optional<MediaContainerWithDirectory>) mediaContainerWithDirectory;
     }
 
     public static Builder builder() {
@@ -129,9 +130,9 @@ public class GetSectionFiltersResponse implements Response {
     /**
      * The filters on the section
      */
-    public GetSectionFiltersResponse withObject(GetSectionFiltersResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public GetSectionFiltersResponse withMediaContainerWithDirectory(MediaContainerWithDirectory mediaContainerWithDirectory) {
+        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
+        this.mediaContainerWithDirectory = Optional.ofNullable(mediaContainerWithDirectory);
         return this;
     }
 
@@ -139,9 +140,9 @@ public class GetSectionFiltersResponse implements Response {
     /**
      * The filters on the section
      */
-    public GetSectionFiltersResponse withObject(Optional<? extends GetSectionFiltersResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public GetSectionFiltersResponse withMediaContainerWithDirectory(Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
+        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
+        this.mediaContainerWithDirectory = mediaContainerWithDirectory;
         return this;
     }
 
@@ -158,14 +159,14 @@ public class GetSectionFiltersResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object);
+            Utils.enhancedDeepEquals(this.mediaContainerWithDirectory, other.mediaContainerWithDirectory);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object);
+            mediaContainerWithDirectory);
     }
     
     @Override
@@ -174,7 +175,7 @@ public class GetSectionFiltersResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object);
+                "mediaContainerWithDirectory", mediaContainerWithDirectory);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -186,7 +187,7 @@ public class GetSectionFiltersResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends GetSectionFiltersResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -226,18 +227,18 @@ public class GetSectionFiltersResponse implements Response {
         /**
          * The filters on the section
          */
-        public Builder object(GetSectionFiltersResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithDirectory(MediaContainerWithDirectory mediaContainerWithDirectory) {
+            Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
+            this.mediaContainerWithDirectory = Optional.ofNullable(mediaContainerWithDirectory);
             return this;
         }
 
         /**
          * The filters on the section
          */
-        public Builder object(Optional<? extends GetSectionFiltersResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithDirectory(Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
+            Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
+            this.mediaContainerWithDirectory = mediaContainerWithDirectory;
             return this;
         }
 
@@ -245,7 +246,7 @@ public class GetSectionFiltersResponse implements Response {
 
             return new GetSectionFiltersResponse(
                 contentType, statusCode, rawResponse,
-                object);
+                mediaContainerWithDirectory);
         }
 
     }

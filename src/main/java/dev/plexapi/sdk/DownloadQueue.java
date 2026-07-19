@@ -41,12 +41,17 @@ import dev.plexapi.sdk.operations.GetItemDecision;
 import dev.plexapi.sdk.operations.ListDownloadQueueItems;
 import dev.plexapi.sdk.operations.RemoveDownloadQueueItems;
 import dev.plexapi.sdk.operations.RestartProcessingDownloadQueueItems;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * API Operations against the Download Queue
+ * API Operations against the Download Queue.
+ * Note: The Download Queue is distinct from the Play Queue. The Download Queue manages
+ * offline/downloaded content, while the Play Queue manages active playback sessions.
  */
 public class DownloadQueue {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncDownloadQueue asyncSDK;
 
@@ -69,7 +74,8 @@ public class DownloadQueue {
      * 
      * <p>Available: 0.2.0
      * 
-     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for this client and user.
+     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for
+     * this client and user.
      * 
      * @return The call builder
      */
@@ -82,14 +88,31 @@ public class DownloadQueue {
      * 
      * <p>Available: 0.2.0
      * 
-     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for this client and user.
+     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for
+     * this client and user.
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreateDownloadQueueResponse createDownloadQueueDirect() throws Exception {
+    public CreateDownloadQueueResponse createDownloadQueueDirect() {
+        return createDownloadQueue(Optional.empty());
+    }
+
+    /**
+     * Create download queue
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Creates a download queue for this client if one doesn't exist, or returns the existing queue for
+     * this client and user.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateDownloadQueueResponse createDownloadQueue(Optional<Options> options) {
         RequestlessOperation<CreateDownloadQueueResponse> operation
-            = new CreateDownloadQueue.Sync(sdkConfiguration);
+            = new CreateDownloadQueue.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -115,11 +138,27 @@ public class DownloadQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetDownloadQueueResponse getDownloadQueue(GetDownloadQueueRequest request) throws Exception {
+    public GetDownloadQueueResponse getDownloadQueue(GetDownloadQueueRequest request) {
+        return getDownloadQueue(request, Optional.empty());
+    }
+
+    /**
+     * Get a download queue
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Get a download queue by its id
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDownloadQueueResponse getDownloadQueue(GetDownloadQueueRequest request, Optional<Options> options) {
         RequestOperation<GetDownloadQueueRequest, GetDownloadQueueResponse> operation
-              = new GetDownloadQueue.Sync(sdkConfiguration);
+              = new GetDownloadQueue.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -145,11 +184,27 @@ public class DownloadQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddDownloadQueueItemsResponse addDownloadQueueItems(AddDownloadQueueItemsRequest request) throws Exception {
+    public AddDownloadQueueItemsResponse addDownloadQueueItems(AddDownloadQueueItemsRequest request) {
+        return addDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Add to download queue
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Add items to the download queue
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddDownloadQueueItemsResponse addDownloadQueueItems(AddDownloadQueueItemsRequest request, Optional<Options> options) {
         RequestOperation<AddDownloadQueueItemsRequest, AddDownloadQueueItemsResponse> operation
-              = new AddDownloadQueueItems.Sync(sdkConfiguration);
+              = new AddDownloadQueueItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -175,11 +230,27 @@ public class DownloadQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListDownloadQueueItemsResponse listDownloadQueueItems(ListDownloadQueueItemsRequest request) throws Exception {
+    public ListDownloadQueueItemsResponse listDownloadQueueItems(ListDownloadQueueItemsRequest request) {
+        return listDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Get download queue items
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Get items from a download queue
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListDownloadQueueItemsResponse listDownloadQueueItems(ListDownloadQueueItemsRequest request, Optional<Options> options) {
         RequestOperation<ListDownloadQueueItemsRequest, ListDownloadQueueItemsResponse> operation
-              = new ListDownloadQueueItems.Sync(sdkConfiguration);
+              = new ListDownloadQueueItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -205,11 +276,27 @@ public class DownloadQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetItemDecisionResponse getItemDecision(GetItemDecisionRequest request) throws Exception {
+    public GetItemDecisionResponse getItemDecision(GetItemDecisionRequest request) {
+        return getItemDecision(request, Optional.empty());
+    }
+
+    /**
+     * Grab download queue item decision
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Grab the decision for a download queue item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetItemDecisionResponse getItemDecision(GetItemDecisionRequest request, Optional<Options> options) {
         RequestOperation<GetItemDecisionRequest, GetItemDecisionResponse> operation
-              = new GetItemDecision.Sync(sdkConfiguration);
+              = new GetItemDecision.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -235,11 +322,27 @@ public class DownloadQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetDownloadQueueMediaResponse getDownloadQueueMedia(GetDownloadQueueMediaRequest request) throws Exception {
+    public GetDownloadQueueMediaResponse getDownloadQueueMedia(GetDownloadQueueMediaRequest request) {
+        return getDownloadQueueMedia(request, Optional.empty());
+    }
+
+    /**
+     * Grab download queue media
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Grab the media for a download queue item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDownloadQueueMediaResponse getDownloadQueueMedia(GetDownloadQueueMediaRequest request, Optional<Options> options) {
         RequestOperation<GetDownloadQueueMediaRequest, GetDownloadQueueMediaResponse> operation
-              = new GetDownloadQueueMedia.Sync(sdkConfiguration);
+              = new GetDownloadQueueMedia.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -261,11 +364,25 @@ public class DownloadQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RemoveDownloadQueueItemsResponse removeDownloadQueueItems(RemoveDownloadQueueItemsRequest request) throws Exception {
+    public RemoveDownloadQueueItemsResponse removeDownloadQueueItems(RemoveDownloadQueueItemsRequest request) {
+        return removeDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Delete download queue items
+     * 
+     * <p>delete items from a download queue
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RemoveDownloadQueueItemsResponse removeDownloadQueueItems(RemoveDownloadQueueItemsRequest request, Optional<Options> options) {
         RequestOperation<RemoveDownloadQueueItemsRequest, RemoveDownloadQueueItemsResponse> operation
-              = new RemoveDownloadQueueItems.Sync(sdkConfiguration);
+              = new RemoveDownloadQueueItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -291,11 +408,27 @@ public class DownloadQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetDownloadQueueItemsResponse getDownloadQueueItems(GetDownloadQueueItemsRequest request) throws Exception {
+    public GetDownloadQueueItemsResponse getDownloadQueueItems(GetDownloadQueueItemsRequest request) {
+        return getDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Get download queue items
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Get items from a download queue
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDownloadQueueItemsResponse getDownloadQueueItems(GetDownloadQueueItemsRequest request, Optional<Options> options) {
         RequestOperation<GetDownloadQueueItemsRequest, GetDownloadQueueItemsResponse> operation
-              = new GetDownloadQueueItems.Sync(sdkConfiguration);
+              = new GetDownloadQueueItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -321,11 +454,27 @@ public class DownloadQueue {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RestartProcessingDownloadQueueItemsResponse restartProcessingDownloadQueueItems(RestartProcessingDownloadQueueItemsRequest request) throws Exception {
+    public RestartProcessingDownloadQueueItemsResponse restartProcessingDownloadQueueItems(RestartProcessingDownloadQueueItemsRequest request) {
+        return restartProcessingDownloadQueueItems(request, Optional.empty());
+    }
+
+    /**
+     * Restart processing of items from the decision
+     * 
+     * <p>Available: 0.2.0
+     * 
+     * <p>Reprocess download queue items with previous decision parameters
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RestartProcessingDownloadQueueItemsResponse restartProcessingDownloadQueueItems(RestartProcessingDownloadQueueItemsRequest request, Optional<Options> options) {
         RequestOperation<RestartProcessingDownloadQueueItemsRequest, RestartProcessingDownloadQueueItemsResponse> operation
-              = new RestartProcessingDownloadQueueItems.Sync(sdkConfiguration);
+              = new RestartProcessingDownloadQueueItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

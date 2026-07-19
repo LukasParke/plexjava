@@ -3,6 +3,8 @@
  */
 package dev.plexapi.sdk.models.shared;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -15,15 +17,24 @@ import java.lang.Boolean;
 import java.lang.Deprecated;
 import java.lang.Integer;
 import java.lang.Long;
+import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 
 public class UserPlexAccount {
+    /**
+     * The title of the account (username or friendly name)
+     */
+    @JsonProperty("title")
+    private String title;
+
     /**
      * Unknown
      */
@@ -47,6 +58,11 @@ public class UserPlexAccount {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("anonymous")
     private JsonNullable<Boolean> anonymous;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("attributionPartner")
+    private JsonNullable<String> attributionPartner;
 
     /**
      * The account token
@@ -89,6 +105,13 @@ public class UserPlexAccount {
     private Optional<Boolean> emailOnlyAuth;
 
     /**
+     * List of devices your allowed to use with this account
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("entitlements")
+    private Optional<? extends List<String>> entitlements;
+
+    /**
      * If experimental features are enabled
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -100,13 +123,6 @@ public class UserPlexAccount {
      */
     @JsonProperty("friendlyName")
     private String friendlyName;
-
-    /**
-     * List of devices your allowed to use with this account
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("entitlements")
-    private Optional<? extends List<String>> entitlements;
 
     /**
      * If the account is a Plex Home guest user
@@ -265,12 +281,6 @@ public class UserPlexAccount {
     private Optional<String> thumb;
 
     /**
-     * The title of the account (username or friendly name)
-     */
-    @JsonProperty("title")
-    private String title;
-
-    /**
      * If two-factor authentication is enabled
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -290,25 +300,26 @@ public class UserPlexAccount {
     private String uuid;
 
 
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("attributionPartner")
-    private JsonNullable<String> attributionPartner;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties;
 
     @JsonCreator
     public UserPlexAccount(
+            @JsonProperty("title") String title,
             @JsonProperty("adsConsent") JsonNullable<Boolean> adsConsent,
             @JsonProperty("adsConsentReminderAt") JsonNullable<Long> adsConsentReminderAt,
             @JsonProperty("adsConsentSetAt") JsonNullable<Long> adsConsentSetAt,
             @JsonProperty("anonymous") JsonNullable<Boolean> anonymous,
+            @JsonProperty("attributionPartner") JsonNullable<String> attributionPartner,
             @JsonProperty("authToken") String authToken,
             @JsonProperty("backupCodesCreated") Optional<Boolean> backupCodesCreated,
             @JsonProperty("confirmed") Optional<Boolean> confirmed,
             @JsonProperty("country") Optional<String> country,
             @JsonProperty("email") String email,
             @JsonProperty("emailOnlyAuth") Optional<Boolean> emailOnlyAuth,
+            @JsonProperty("entitlements") Optional<? extends List<String>> entitlements,
             @JsonProperty("experimentalFeatures") Optional<Boolean> experimentalFeatures,
             @JsonProperty("friendlyName") String friendlyName,
-            @JsonProperty("entitlements") Optional<? extends List<String>> entitlements,
             @JsonProperty("guest") Optional<Boolean> guest,
             @JsonProperty("hasPassword") Optional<Boolean> hasPassword,
             @JsonProperty("home") Optional<Boolean> home,
@@ -332,24 +343,24 @@ public class UserPlexAccount {
             @JsonProperty("subscriptionDescription") JsonNullable<String> subscriptionDescription,
             @JsonProperty("subscriptions") Optional<? extends List<UserPlexAccountSubscription>> subscriptions,
             @JsonProperty("thumb") Optional<String> thumb,
-            @JsonProperty("title") String title,
             @JsonProperty("twoFactorEnabled") Optional<Boolean> twoFactorEnabled,
             @JsonProperty("username") String username,
-            @JsonProperty("uuid") String uuid,
-            @JsonProperty("attributionPartner") JsonNullable<String> attributionPartner) {
+            @JsonProperty("uuid") String uuid) {
+        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(adsConsent, "adsConsent");
         Utils.checkNotNull(adsConsentReminderAt, "adsConsentReminderAt");
         Utils.checkNotNull(adsConsentSetAt, "adsConsentSetAt");
         Utils.checkNotNull(anonymous, "anonymous");
+        Utils.checkNotNull(attributionPartner, "attributionPartner");
         Utils.checkNotNull(authToken, "authToken");
         Utils.checkNotNull(backupCodesCreated, "backupCodesCreated");
         Utils.checkNotNull(confirmed, "confirmed");
         Utils.checkNotNull(country, "country");
         Utils.checkNotNull(email, "email");
         Utils.checkNotNull(emailOnlyAuth, "emailOnlyAuth");
+        Utils.checkNotNull(entitlements, "entitlements");
         Utils.checkNotNull(experimentalFeatures, "experimentalFeatures");
         Utils.checkNotNull(friendlyName, "friendlyName");
-        Utils.checkNotNull(entitlements, "entitlements");
         Utils.checkNotNull(guest, "guest");
         Utils.checkNotNull(hasPassword, "hasPassword");
         Utils.checkNotNull(home, "home");
@@ -373,24 +384,24 @@ public class UserPlexAccount {
         Utils.checkNotNull(subscriptionDescription, "subscriptionDescription");
         Utils.checkNotNull(subscriptions, "subscriptions");
         Utils.checkNotNull(thumb, "thumb");
-        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(twoFactorEnabled, "twoFactorEnabled");
         Utils.checkNotNull(username, "username");
         Utils.checkNotNull(uuid, "uuid");
-        Utils.checkNotNull(attributionPartner, "attributionPartner");
+        this.title = title;
         this.adsConsent = adsConsent;
         this.adsConsentReminderAt = adsConsentReminderAt;
         this.adsConsentSetAt = adsConsentSetAt;
         this.anonymous = anonymous;
+        this.attributionPartner = attributionPartner;
         this.authToken = authToken;
         this.backupCodesCreated = backupCodesCreated;
         this.confirmed = confirmed;
         this.country = country;
         this.email = email;
         this.emailOnlyAuth = emailOnlyAuth;
+        this.entitlements = entitlements;
         this.experimentalFeatures = experimentalFeatures;
         this.friendlyName = friendlyName;
-        this.entitlements = entitlements;
         this.guest = guest;
         this.hasPassword = hasPassword;
         this.home = home;
@@ -414,36 +425,43 @@ public class UserPlexAccount {
         this.subscriptionDescription = subscriptionDescription;
         this.subscriptions = subscriptions;
         this.thumb = thumb;
-        this.title = title;
         this.twoFactorEnabled = twoFactorEnabled;
         this.username = username;
         this.uuid = uuid;
-        this.attributionPartner = attributionPartner;
+        this.additionalProperties = new HashMap<>();
     }
     
     public UserPlexAccount(
+            String title,
             String authToken,
             String email,
             String friendlyName,
             int id,
             long joinedAt,
-            String title,
             String username,
             String uuid) {
-        this(JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined(),
-            JsonNullable.undefined(), authToken, Optional.empty(),
-            Optional.empty(), Optional.empty(), email,
+        this(title, JsonNullable.undefined(), JsonNullable.undefined(),
+            JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined(),
+            authToken, Optional.empty(), Optional.empty(),
+            Optional.empty(), email, Optional.empty(),
             Optional.empty(), Optional.empty(), friendlyName,
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty(),
-            id, joinedAt, JsonNullable.undefined(),
-            Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), id,
+            joinedAt, JsonNullable.undefined(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            JsonNullable.undefined(), Optional.empty(), Optional.empty(),
-            title, Optional.empty(), username,
-            uuid, JsonNullable.undefined());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), JsonNullable.undefined(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            username, uuid);
+    }
+
+    /**
+     * The title of the account (username or friendly name)
+     */
+    @JsonIgnore
+    public String title() {
+        return title;
     }
 
     /**
@@ -470,6 +488,11 @@ public class UserPlexAccount {
     @JsonIgnore
     public JsonNullable<Boolean> anonymous() {
         return anonymous;
+    }
+
+    @JsonIgnore
+    public JsonNullable<String> attributionPartner() {
+        return attributionPartner;
     }
 
     /**
@@ -521,6 +544,15 @@ public class UserPlexAccount {
     }
 
     /**
+     * List of devices your allowed to use with this account
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> entitlements() {
+        return (Optional<List<String>>) entitlements;
+    }
+
+    /**
      * If experimental features are enabled
      */
     @JsonIgnore
@@ -534,15 +566,6 @@ public class UserPlexAccount {
     @JsonIgnore
     public String friendlyName() {
         return friendlyName;
-    }
-
-    /**
-     * List of devices your allowed to use with this account
-     */
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<List<String>> entitlements() {
-        return (Optional<List<String>>) entitlements;
     }
 
     /**
@@ -730,14 +753,6 @@ public class UserPlexAccount {
     }
 
     /**
-     * The title of the account (username or friendly name)
-     */
-    @JsonIgnore
-    public String title() {
-        return title;
-    }
-
-    /**
      * If two-factor authentication is enabled
      */
     @JsonIgnore
@@ -761,15 +776,24 @@ public class UserPlexAccount {
         return uuid;
     }
 
-    @JsonIgnore
-    public JsonNullable<String> attributionPartner() {
-        return attributionPartner;
+    @JsonAnyGetter
+    public Map<String, Object> additionalProperties() {
+        return additionalProperties;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
+
+    /**
+     * The title of the account (username or friendly name)
+     */
+    public UserPlexAccount withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
+    }
 
     /**
      * Unknown
@@ -828,6 +852,18 @@ public class UserPlexAccount {
     public UserPlexAccount withAnonymous(JsonNullable<Boolean> anonymous) {
         Utils.checkNotNull(anonymous, "anonymous");
         this.anonymous = anonymous;
+        return this;
+    }
+
+    public UserPlexAccount withAttributionPartner(String attributionPartner) {
+        Utils.checkNotNull(attributionPartner, "attributionPartner");
+        this.attributionPartner = JsonNullable.of(attributionPartner);
+        return this;
+    }
+
+    public UserPlexAccount withAttributionPartner(JsonNullable<String> attributionPartner) {
+        Utils.checkNotNull(attributionPartner, "attributionPartner");
+        this.attributionPartner = attributionPartner;
         return this;
     }
 
@@ -926,6 +962,25 @@ public class UserPlexAccount {
     }
 
     /**
+     * List of devices your allowed to use with this account
+     */
+    public UserPlexAccount withEntitlements(List<String> entitlements) {
+        Utils.checkNotNull(entitlements, "entitlements");
+        this.entitlements = Optional.ofNullable(entitlements);
+        return this;
+    }
+
+
+    /**
+     * List of devices your allowed to use with this account
+     */
+    public UserPlexAccount withEntitlements(Optional<? extends List<String>> entitlements) {
+        Utils.checkNotNull(entitlements, "entitlements");
+        this.entitlements = entitlements;
+        return this;
+    }
+
+    /**
      * If experimental features are enabled
      */
     public UserPlexAccount withExperimentalFeatures(boolean experimentalFeatures) {
@@ -950,25 +1005,6 @@ public class UserPlexAccount {
     public UserPlexAccount withFriendlyName(String friendlyName) {
         Utils.checkNotNull(friendlyName, "friendlyName");
         this.friendlyName = friendlyName;
-        return this;
-    }
-
-    /**
-     * List of devices your allowed to use with this account
-     */
-    public UserPlexAccount withEntitlements(List<String> entitlements) {
-        Utils.checkNotNull(entitlements, "entitlements");
-        this.entitlements = Optional.ofNullable(entitlements);
-        return this;
-    }
-
-
-    /**
-     * List of devices your allowed to use with this account
-     */
-    public UserPlexAccount withEntitlements(Optional<? extends List<String>> entitlements) {
-        Utils.checkNotNull(entitlements, "entitlements");
-        this.entitlements = entitlements;
         return this;
     }
 
@@ -1376,15 +1412,6 @@ public class UserPlexAccount {
     }
 
     /**
-     * The title of the account (username or friendly name)
-     */
-    public UserPlexAccount withTitle(String title) {
-        Utils.checkNotNull(title, "title");
-        this.title = title;
-        return this;
-    }
-
-    /**
      * If two-factor authentication is enabled
      */
     public UserPlexAccount withTwoFactorEnabled(boolean twoFactorEnabled) {
@@ -1421,15 +1448,16 @@ public class UserPlexAccount {
         return this;
     }
 
-    public UserPlexAccount withAttributionPartner(String attributionPartner) {
-        Utils.checkNotNull(attributionPartner, "attributionPartner");
-        this.attributionPartner = JsonNullable.of(attributionPartner);
+    @JsonAnySetter
+    public UserPlexAccount withAdditionalProperty(String key, Object value) {
+        // note that value can be null because of the way JsonAnySetter works
+        Utils.checkNotNull(key, "key");
+        additionalProperties.put(key, value); 
         return this;
     }
-
-    public UserPlexAccount withAttributionPartner(JsonNullable<String> attributionPartner) {
-        Utils.checkNotNull(attributionPartner, "attributionPartner");
-        this.attributionPartner = attributionPartner;
+    public UserPlexAccount withAdditionalProperties(Map<String, Object> additionalProperties) {
+        Utils.checkNotNull(additionalProperties, "additionalProperties");
+        this.additionalProperties = additionalProperties;
         return this;
     }
 
@@ -1443,19 +1471,21 @@ public class UserPlexAccount {
         }
         UserPlexAccount other = (UserPlexAccount) o;
         return 
+            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.adsConsent, other.adsConsent) &&
             Utils.enhancedDeepEquals(this.adsConsentReminderAt, other.adsConsentReminderAt) &&
             Utils.enhancedDeepEquals(this.adsConsentSetAt, other.adsConsentSetAt) &&
             Utils.enhancedDeepEquals(this.anonymous, other.anonymous) &&
+            Utils.enhancedDeepEquals(this.attributionPartner, other.attributionPartner) &&
             Utils.enhancedDeepEquals(this.authToken, other.authToken) &&
             Utils.enhancedDeepEquals(this.backupCodesCreated, other.backupCodesCreated) &&
             Utils.enhancedDeepEquals(this.confirmed, other.confirmed) &&
             Utils.enhancedDeepEquals(this.country, other.country) &&
             Utils.enhancedDeepEquals(this.email, other.email) &&
             Utils.enhancedDeepEquals(this.emailOnlyAuth, other.emailOnlyAuth) &&
+            Utils.enhancedDeepEquals(this.entitlements, other.entitlements) &&
             Utils.enhancedDeepEquals(this.experimentalFeatures, other.experimentalFeatures) &&
             Utils.enhancedDeepEquals(this.friendlyName, other.friendlyName) &&
-            Utils.enhancedDeepEquals(this.entitlements, other.entitlements) &&
             Utils.enhancedDeepEquals(this.guest, other.guest) &&
             Utils.enhancedDeepEquals(this.hasPassword, other.hasPassword) &&
             Utils.enhancedDeepEquals(this.home, other.home) &&
@@ -1479,48 +1509,49 @@ public class UserPlexAccount {
             Utils.enhancedDeepEquals(this.subscriptionDescription, other.subscriptionDescription) &&
             Utils.enhancedDeepEquals(this.subscriptions, other.subscriptions) &&
             Utils.enhancedDeepEquals(this.thumb, other.thumb) &&
-            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.twoFactorEnabled, other.twoFactorEnabled) &&
             Utils.enhancedDeepEquals(this.username, other.username) &&
             Utils.enhancedDeepEquals(this.uuid, other.uuid) &&
-            Utils.enhancedDeepEquals(this.attributionPartner, other.attributionPartner);
+            Utils.enhancedDeepEquals(this.additionalProperties, other.additionalProperties);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            adsConsent, adsConsentReminderAt, adsConsentSetAt,
-            anonymous, authToken, backupCodesCreated,
-            confirmed, country, email,
-            emailOnlyAuth, experimentalFeatures, friendlyName,
-            entitlements, guest, hasPassword,
-            home, homeAdmin, homeSize,
-            id, joinedAt, locale,
-            mailingListActive, mailingListStatus, maxHomeSize,
-            pin, profile, protected_,
-            rememberExpiresAt, restricted, roles,
-            scrobbleTypes, services, subscription,
-            subscriptionDescription, subscriptions, thumb,
-            title, twoFactorEnabled, username,
-            uuid, attributionPartner);
+            title, adsConsent, adsConsentReminderAt,
+            adsConsentSetAt, anonymous, attributionPartner,
+            authToken, backupCodesCreated, confirmed,
+            country, email, emailOnlyAuth,
+            entitlements, experimentalFeatures, friendlyName,
+            guest, hasPassword, home,
+            homeAdmin, homeSize, id,
+            joinedAt, locale, mailingListActive,
+            mailingListStatus, maxHomeSize, pin,
+            profile, protected_, rememberExpiresAt,
+            restricted, roles, scrobbleTypes,
+            services, subscription, subscriptionDescription,
+            subscriptions, thumb, twoFactorEnabled,
+            username, uuid, additionalProperties);
     }
     
     @Override
     public String toString() {
         return Utils.toString(UserPlexAccount.class,
+                "title", title,
                 "adsConsent", adsConsent,
                 "adsConsentReminderAt", adsConsentReminderAt,
                 "adsConsentSetAt", adsConsentSetAt,
                 "anonymous", anonymous,
+                "attributionPartner", attributionPartner,
                 "authToken", authToken,
                 "backupCodesCreated", backupCodesCreated,
                 "confirmed", confirmed,
                 "country", country,
                 "email", email,
                 "emailOnlyAuth", emailOnlyAuth,
+                "entitlements", entitlements,
                 "experimentalFeatures", experimentalFeatures,
                 "friendlyName", friendlyName,
-                "entitlements", entitlements,
                 "guest", guest,
                 "hasPassword", hasPassword,
                 "home", home,
@@ -1544,15 +1575,16 @@ public class UserPlexAccount {
                 "subscriptionDescription", subscriptionDescription,
                 "subscriptions", subscriptions,
                 "thumb", thumb,
-                "title", title,
                 "twoFactorEnabled", twoFactorEnabled,
                 "username", username,
                 "uuid", uuid,
-                "attributionPartner", attributionPartner);
+                "additionalProperties", additionalProperties);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
+
+        private String title;
 
         private JsonNullable<Boolean> adsConsent = JsonNullable.undefined();
 
@@ -1561,6 +1593,8 @@ public class UserPlexAccount {
         private JsonNullable<Long> adsConsentSetAt = JsonNullable.undefined();
 
         private JsonNullable<Boolean> anonymous;
+
+        private JsonNullable<String> attributionPartner = JsonNullable.undefined();
 
         private String authToken;
 
@@ -1574,11 +1608,11 @@ public class UserPlexAccount {
 
         private Optional<Boolean> emailOnlyAuth;
 
+        private Optional<? extends List<String>> entitlements = Optional.empty();
+
         private Optional<Boolean> experimentalFeatures;
 
         private String friendlyName;
-
-        private Optional<? extends List<String>> entitlements = Optional.empty();
 
         private Optional<Boolean> guest;
 
@@ -1627,18 +1661,26 @@ public class UserPlexAccount {
 
         private Optional<String> thumb = Optional.empty();
 
-        private String title;
-
         private Optional<Boolean> twoFactorEnabled;
 
         private String username;
 
         private String uuid;
 
-        private JsonNullable<String> attributionPartner = JsonNullable.undefined();
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        /**
+         * The title of the account (username or friendly name)
+         */
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
         }
 
 
@@ -1702,6 +1744,19 @@ public class UserPlexAccount {
         public Builder anonymous(JsonNullable<Boolean> anonymous) {
             Utils.checkNotNull(anonymous, "anonymous");
             this.anonymous = anonymous;
+            return this;
+        }
+
+
+        public Builder attributionPartner(String attributionPartner) {
+            Utils.checkNotNull(attributionPartner, "attributionPartner");
+            this.attributionPartner = JsonNullable.of(attributionPartner);
+            return this;
+        }
+
+        public Builder attributionPartner(JsonNullable<String> attributionPartner) {
+            Utils.checkNotNull(attributionPartner, "attributionPartner");
+            this.attributionPartner = attributionPartner;
             return this;
         }
 
@@ -1803,6 +1858,25 @@ public class UserPlexAccount {
 
 
         /**
+         * List of devices your allowed to use with this account
+         */
+        public Builder entitlements(List<String> entitlements) {
+            Utils.checkNotNull(entitlements, "entitlements");
+            this.entitlements = Optional.ofNullable(entitlements);
+            return this;
+        }
+
+        /**
+         * List of devices your allowed to use with this account
+         */
+        public Builder entitlements(Optional<? extends List<String>> entitlements) {
+            Utils.checkNotNull(entitlements, "entitlements");
+            this.entitlements = entitlements;
+            return this;
+        }
+
+
+        /**
          * If experimental features are enabled
          */
         public Builder experimentalFeatures(boolean experimentalFeatures) {
@@ -1827,25 +1901,6 @@ public class UserPlexAccount {
         public Builder friendlyName(String friendlyName) {
             Utils.checkNotNull(friendlyName, "friendlyName");
             this.friendlyName = friendlyName;
-            return this;
-        }
-
-
-        /**
-         * List of devices your allowed to use with this account
-         */
-        public Builder entitlements(List<String> entitlements) {
-            Utils.checkNotNull(entitlements, "entitlements");
-            this.entitlements = Optional.ofNullable(entitlements);
-            return this;
-        }
-
-        /**
-         * List of devices your allowed to use with this account
-         */
-        public Builder entitlements(Optional<? extends List<String>> entitlements) {
-            Utils.checkNotNull(entitlements, "entitlements");
-            this.entitlements = entitlements;
             return this;
         }
 
@@ -2258,16 +2313,6 @@ public class UserPlexAccount {
 
 
         /**
-         * The title of the account (username or friendly name)
-         */
-        public Builder title(String title) {
-            Utils.checkNotNull(title, "title");
-            this.title = title;
-            return this;
-        }
-
-
-        /**
          * If two-factor authentication is enabled
          */
         public Builder twoFactorEnabled(boolean twoFactorEnabled) {
@@ -2305,16 +2350,19 @@ public class UserPlexAccount {
             return this;
         }
 
-
-        public Builder attributionPartner(String attributionPartner) {
-            Utils.checkNotNull(attributionPartner, "attributionPartner");
-            this.attributionPartner = JsonNullable.of(attributionPartner);
+        public Builder additionalProperty(String key, Object value) {
+            Utils.checkNotNull(key, "key");
+            // we could be strict about null values (force the user
+            // to pass `JsonNullable.of(null)`) but likely to be a bit 
+            // annoying for additional properties building so we'll 
+            // relax preconditions.
+            this.additionalProperties.put(key, value);
             return this;
         }
 
-        public Builder attributionPartner(JsonNullable<String> attributionPartner) {
-            Utils.checkNotNull(attributionPartner, "attributionPartner");
-            this.attributionPartner = attributionPartner;
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            Utils.checkNotNull(additionalProperties, "additionalProperties");
+            this.additionalProperties = additionalProperties;
             return this;
         }
 
@@ -2360,20 +2408,21 @@ public class UserPlexAccount {
             }
 
             return new UserPlexAccount(
-                adsConsent, adsConsentReminderAt, adsConsentSetAt,
-                anonymous, authToken, backupCodesCreated,
-                confirmed, country, email,
-                emailOnlyAuth, experimentalFeatures, friendlyName,
-                entitlements, guest, hasPassword,
-                home, homeAdmin, homeSize,
-                id, joinedAt, locale,
-                mailingListActive, mailingListStatus, maxHomeSize,
-                pin, profile, protected_,
-                rememberExpiresAt, restricted, roles,
-                scrobbleTypes, services, subscription,
-                subscriptionDescription, subscriptions, thumb,
-                title, twoFactorEnabled, username,
-                uuid, attributionPartner);
+                title, adsConsent, adsConsentReminderAt,
+                adsConsentSetAt, anonymous, attributionPartner,
+                authToken, backupCodesCreated, confirmed,
+                country, email, emailOnlyAuth,
+                entitlements, experimentalFeatures, friendlyName,
+                guest, hasPassword, home,
+                homeAdmin, homeSize, id,
+                joinedAt, locale, mailingListActive,
+                mailingListStatus, maxHomeSize, pin,
+                profile, protected_, rememberExpiresAt,
+                restricted, roles, scrobbleTypes,
+                services, subscription, subscriptionDescription,
+                subscriptions, thumb, twoFactorEnabled,
+                username, uuid)
+                .withAdditionalProperties(additionalProperties);
         }
 
 

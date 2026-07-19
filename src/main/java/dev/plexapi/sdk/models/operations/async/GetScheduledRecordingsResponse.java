@@ -5,7 +5,7 @@ package dev.plexapi.sdk.models.operations.async;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.plexapi.sdk.models.operations.GetScheduledRecordingsResponseBody;
+import dev.plexapi.sdk.models.shared.MediaContainerWithMediaGrabOperation;
 import dev.plexapi.sdk.utils.AsyncResponse;
 import dev.plexapi.sdk.utils.Blob;
 import dev.plexapi.sdk.utils.Utils;
@@ -38,7 +38,7 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
     /**
      * OK
      */
-    private Optional<? extends GetScheduledRecordingsResponseBody> object;
+    private Optional<? extends MediaContainerWithMediaGrabOperation> mediaContainerWithMediaGrabOperation;
 
 
     private Map<String, List<String>> headers;
@@ -48,18 +48,18 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
             String contentType,
             int statusCode,
             HttpResponse<Blob> rawResponse,
-            Optional<? extends GetScheduledRecordingsResponseBody> object,
+            Optional<? extends MediaContainerWithMediaGrabOperation> mediaContainerWithMediaGrabOperation,
             Map<String, List<String>> headers) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(object, "object");
+        Utils.checkNotNull(mediaContainerWithMediaGrabOperation, "mediaContainerWithMediaGrabOperation");
         headers = Utils.emptyMapIfNull(headers);
         Utils.checkNotNull(headers, "headers");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.object = object;
+        this.mediaContainerWithMediaGrabOperation = mediaContainerWithMediaGrabOperation;
         this.headers = headers;
     }
     
@@ -101,8 +101,8 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetScheduledRecordingsResponseBody> object() {
-        return (Optional<GetScheduledRecordingsResponseBody>) object;
+    public Optional<MediaContainerWithMediaGrabOperation> mediaContainerWithMediaGrabOperation() {
+        return (Optional<MediaContainerWithMediaGrabOperation>) mediaContainerWithMediaGrabOperation;
     }
 
     @JsonIgnore
@@ -145,9 +145,9 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
     /**
      * OK
      */
-    public GetScheduledRecordingsResponse withObject(GetScheduledRecordingsResponseBody object) {
-        Utils.checkNotNull(object, "object");
-        this.object = Optional.ofNullable(object);
+    public GetScheduledRecordingsResponse withMediaContainerWithMediaGrabOperation(MediaContainerWithMediaGrabOperation mediaContainerWithMediaGrabOperation) {
+        Utils.checkNotNull(mediaContainerWithMediaGrabOperation, "mediaContainerWithMediaGrabOperation");
+        this.mediaContainerWithMediaGrabOperation = Optional.ofNullable(mediaContainerWithMediaGrabOperation);
         return this;
     }
 
@@ -155,9 +155,9 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
     /**
      * OK
      */
-    public GetScheduledRecordingsResponse withObject(Optional<? extends GetScheduledRecordingsResponseBody> object) {
-        Utils.checkNotNull(object, "object");
-        this.object = object;
+    public GetScheduledRecordingsResponse withMediaContainerWithMediaGrabOperation(Optional<? extends MediaContainerWithMediaGrabOperation> mediaContainerWithMediaGrabOperation) {
+        Utils.checkNotNull(mediaContainerWithMediaGrabOperation, "mediaContainerWithMediaGrabOperation");
+        this.mediaContainerWithMediaGrabOperation = mediaContainerWithMediaGrabOperation;
         return this;
     }
 
@@ -180,7 +180,7 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
+            Utils.enhancedDeepEquals(this.mediaContainerWithMediaGrabOperation, other.mediaContainerWithMediaGrabOperation) &&
             Utils.enhancedDeepEquals(this.headers, other.headers);
     }
     
@@ -188,7 +188,7 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            object, headers);
+            mediaContainerWithMediaGrabOperation, headers);
     }
     
     @Override
@@ -197,7 +197,7 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "object", object,
+                "mediaContainerWithMediaGrabOperation", mediaContainerWithMediaGrabOperation,
                 "headers", headers);
     }
 
@@ -210,7 +210,7 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
 
         private HttpResponse<Blob> rawResponse;
 
-        private Optional<? extends GetScheduledRecordingsResponseBody> object = Optional.empty();
+        private Optional<? extends MediaContainerWithMediaGrabOperation> mediaContainerWithMediaGrabOperation = Optional.empty();
 
         private Map<String, List<String>> headers;
 
@@ -252,18 +252,18 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
         /**
          * OK
          */
-        public Builder object(GetScheduledRecordingsResponseBody object) {
-            Utils.checkNotNull(object, "object");
-            this.object = Optional.ofNullable(object);
+        public Builder mediaContainerWithMediaGrabOperation(MediaContainerWithMediaGrabOperation mediaContainerWithMediaGrabOperation) {
+            Utils.checkNotNull(mediaContainerWithMediaGrabOperation, "mediaContainerWithMediaGrabOperation");
+            this.mediaContainerWithMediaGrabOperation = Optional.ofNullable(mediaContainerWithMediaGrabOperation);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder object(Optional<? extends GetScheduledRecordingsResponseBody> object) {
-            Utils.checkNotNull(object, "object");
-            this.object = object;
+        public Builder mediaContainerWithMediaGrabOperation(Optional<? extends MediaContainerWithMediaGrabOperation> mediaContainerWithMediaGrabOperation) {
+            Utils.checkNotNull(mediaContainerWithMediaGrabOperation, "mediaContainerWithMediaGrabOperation");
+            this.mediaContainerWithMediaGrabOperation = mediaContainerWithMediaGrabOperation;
             return this;
         }
 
@@ -278,7 +278,7 @@ public class GetScheduledRecordingsResponse implements AsyncResponse {
 
             return new GetScheduledRecordingsResponse(
                 contentType, statusCode, rawResponse,
-                object, headers);
+                mediaContainerWithMediaGrabOperation, headers);
         }
 
     }

@@ -1,5 +1,13 @@
 # AdvancedSubtitles
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.AdvancedSubtitles;
+
+AdvancedSubtitles value = AdvancedSubtitles.AUTO;
+```
+
 
 ## Values
 

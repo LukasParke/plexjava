@@ -12,6 +12,7 @@ import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 
 public class ApplyUpdatesResponse implements AsyncResponse {
@@ -30,17 +31,31 @@ public class ApplyUpdatesResponse implements AsyncResponse {
      */
     private HttpResponse<Blob> rawResponse;
 
+
+    private Optional<byte[]> body;
+
     @JsonCreator
     public ApplyUpdatesResponse(
             String contentType,
             int statusCode,
-            HttpResponse<Blob> rawResponse) {
+            HttpResponse<Blob> rawResponse,
+            Optional<byte[]> body) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
+        Utils.checkNotNull(body, "body");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
+        this.body = body;
+    }
+    
+    public ApplyUpdatesResponse(
+            String contentType,
+            int statusCode,
+            HttpResponse<Blob> rawResponse) {
+        this(contentType, statusCode, rawResponse,
+            Optional.empty());
     }
 
     /**
@@ -65,6 +80,11 @@ public class ApplyUpdatesResponse implements AsyncResponse {
     @JsonIgnore
     public HttpResponse<Blob> rawResponse() {
         return rawResponse;
+    }
+
+    @JsonIgnore
+    public Blob body() {
+        return rawResponse.body();
     }
 
     public static Builder builder() {
@@ -99,6 +119,19 @@ public class ApplyUpdatesResponse implements AsyncResponse {
         return this;
     }
 
+    public ApplyUpdatesResponse withBody(byte[] body) {
+        Utils.checkNotNull(body, "body");
+        this.body = Optional.ofNullable(body);
+        return this;
+    }
+
+
+    public ApplyUpdatesResponse withBody(Optional<byte[]> body) {
+        Utils.checkNotNull(body, "body");
+        this.body = body;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,13 +144,15 @@ public class ApplyUpdatesResponse implements AsyncResponse {
         return 
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse);
+            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
+            Utils.enhancedDeepEquals(this.body, other.body);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            contentType, statusCode, rawResponse);
+            contentType, statusCode, rawResponse,
+            body);
     }
     
     @Override
@@ -125,7 +160,8 @@ public class ApplyUpdatesResponse implements AsyncResponse {
         return Utils.toString(ApplyUpdatesResponse.class,
                 "contentType", contentType,
                 "statusCode", statusCode,
-                "rawResponse", rawResponse);
+                "rawResponse", rawResponse,
+                "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -136,6 +172,8 @@ public class ApplyUpdatesResponse implements AsyncResponse {
         private Integer statusCode;
 
         private HttpResponse<Blob> rawResponse;
+
+        private Optional<byte[]> body = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -171,10 +209,24 @@ public class ApplyUpdatesResponse implements AsyncResponse {
             return this;
         }
 
+
+        public Builder body(byte[] body) {
+            Utils.checkNotNull(body, "body");
+            this.body = Optional.ofNullable(body);
+            return this;
+        }
+
+        public Builder body(Optional<byte[]> body) {
+            Utils.checkNotNull(body, "body");
+            this.body = body;
+            return this;
+        }
+
         public ApplyUpdatesResponse build() {
 
             return new ApplyUpdatesResponse(
-                contentType, statusCode, rawResponse);
+                contentType, statusCode, rawResponse,
+                body);
         }
 
     }

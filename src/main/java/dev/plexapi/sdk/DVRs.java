@@ -3,7 +3,6 @@
  */
 package dev.plexapi.sdk;
 
-import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.models.operations.AddDeviceToDVRRequest;
@@ -21,11 +20,21 @@ import dev.plexapi.sdk.models.operations.DeleteDVRResponse;
 import dev.plexapi.sdk.models.operations.DeleteLineupRequest;
 import dev.plexapi.sdk.models.operations.DeleteLineupRequestBuilder;
 import dev.plexapi.sdk.models.operations.DeleteLineupResponse;
+import dev.plexapi.sdk.models.operations.GetDVRChannelsRequest;
+import dev.plexapi.sdk.models.operations.GetDVRChannelsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetDVRChannelsResponse;
+import dev.plexapi.sdk.models.operations.GetDVRGuideRequest;
+import dev.plexapi.sdk.models.operations.GetDVRGuideRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetDVRGuideResponse;
 import dev.plexapi.sdk.models.operations.GetDVRRequest;
 import dev.plexapi.sdk.models.operations.GetDVRRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetDVRResponse;
+import dev.plexapi.sdk.models.operations.ListDVRsRequest;
 import dev.plexapi.sdk.models.operations.ListDVRsRequestBuilder;
 import dev.plexapi.sdk.models.operations.ListDVRsResponse;
+import dev.plexapi.sdk.models.operations.PatchDVRSettingsRequest;
+import dev.plexapi.sdk.models.operations.PatchDVRSettingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.PatchDVRSettingsResponse;
 import dev.plexapi.sdk.models.operations.ReloadGuideRequest;
 import dev.plexapi.sdk.models.operations.ReloadGuideRequestBuilder;
 import dev.plexapi.sdk.models.operations.ReloadGuideResponse;
@@ -41,24 +50,36 @@ import dev.plexapi.sdk.models.operations.StopDVRReloadResponse;
 import dev.plexapi.sdk.models.operations.TuneChannelRequest;
 import dev.plexapi.sdk.models.operations.TuneChannelRequestBuilder;
 import dev.plexapi.sdk.models.operations.TuneChannelResponse;
+import dev.plexapi.sdk.models.operations.UpdateDVRSettingsRequest;
+import dev.plexapi.sdk.models.operations.UpdateDVRSettingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.UpdateDVRSettingsResponse;
 import dev.plexapi.sdk.operations.AddDeviceToDVR;
 import dev.plexapi.sdk.operations.AddLineup;
 import dev.plexapi.sdk.operations.CreateDVR;
 import dev.plexapi.sdk.operations.DeleteDVR;
 import dev.plexapi.sdk.operations.DeleteLineup;
 import dev.plexapi.sdk.operations.GetDVR;
+import dev.plexapi.sdk.operations.GetDVRChannels;
+import dev.plexapi.sdk.operations.GetDVRGuide;
 import dev.plexapi.sdk.operations.ListDVRs;
+import dev.plexapi.sdk.operations.PatchDVRSettings;
 import dev.plexapi.sdk.operations.ReloadGuide;
 import dev.plexapi.sdk.operations.RemoveDeviceFromDVR;
 import dev.plexapi.sdk.operations.SetDVRPreferences;
 import dev.plexapi.sdk.operations.StopDVRReload;
 import dev.plexapi.sdk.operations.TuneChannel;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.UpdateDVRSettings;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.String;
+import java.util.Optional;
 
 /**
- * The DVR provides means to watch and record live TV.  This section of endpoints describes how to setup the DVR itself
+ * The DVR provides means to watch and record live TV. This section of endpoints describes how to setup
+ * the DVR itself
  */
 public class DVRs {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncDVRs asyncSDK;
 
@@ -93,18 +114,43 @@ public class DVRs {
      * <p>Get the list of all available DVRs
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListDVRsResponse listDVRsDirect() throws Exception {
-        RequestlessOperation<ListDVRsResponse> operation
-            = new ListDVRs.Sync(sdkConfiguration);
-        return operation.handleResponse(operation.doRequest());
+    public ListDVRsResponse listDVRsDirect() {
+        return listDVRs(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get DVRs
+     * 
+     * <p>Get the list of all available DVRs
+     * 
+     * @param uuid Filter by DVR UUID.
+     * @param lineup Filter by lineup.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListDVRsResponse listDVRs(
+            Optional<String> uuid, Optional<String> lineup,
+            Optional<Options> options) {
+        ListDVRsRequest request =
+            ListDVRsRequest
+                .builder()
+                .uuid(uuid)
+                .lineup(lineup)
+                .build();
+        RequestOperation<ListDVRsRequest, ListDVRsResponse> operation
+              = new ListDVRs.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Create a DVR
      * 
-     * <p>Creation of a DVR, after creation of a devcie and a lineup is selected
+     * <p>Creation of a DVR, after creation of a device and a lineup is selected
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -115,15 +161,33 @@ public class DVRs {
     /**
      * Create a DVR
      * 
-     * <p>Creation of a DVR, after creation of a devcie and a lineup is selected
+     * <p>Creation of a DVR, after creation of a device and a lineup is selected
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreateDVRResponse createDVR(CreateDVRRequest request) throws Exception {
+    public CreateDVRResponse createDVR(CreateDVRRequest request) {
+        return createDVR(request, Optional.empty());
+    }
+
+    /**
+     * Create a DVR
+     * 
+     * <p>Creation of a DVR, after creation of a device and a lineup is selected
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateDVRResponse createDVR(CreateDVRRequest request, Optional<Options> options) {
         RequestOperation<CreateDVRRequest, CreateDVRResponse> operation
-              = new CreateDVR.Sync(sdkConfiguration);
+              = new CreateDVR.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -131,6 +195,8 @@ public class DVRs {
      * Delete a single DVR
      * 
      * <p>Delete a single DVR by its id (key)
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -143,13 +209,31 @@ public class DVRs {
      * 
      * <p>Delete a single DVR by its id (key)
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteDVRResponse deleteDVR(DeleteDVRRequest request) throws Exception {
+    public DeleteDVRResponse deleteDVR(DeleteDVRRequest request) {
+        return deleteDVR(request, Optional.empty());
+    }
+
+    /**
+     * Delete a single DVR
+     * 
+     * <p>Delete a single DVR by its id (key)
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteDVRResponse deleteDVR(DeleteDVRRequest request, Optional<Options> options) {
         RequestOperation<DeleteDVRRequest, DeleteDVRResponse> operation
-              = new DeleteDVR.Sync(sdkConfiguration);
+              = new DeleteDVR.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -171,11 +255,209 @@ public class DVRs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetDVRResponse getDVR(GetDVRRequest request) throws Exception {
+    public GetDVRResponse getDVR(GetDVRRequest request) {
+        return getDVR(request, Optional.empty());
+    }
+
+    /**
+     * Get a single DVR
+     * 
+     * <p>Get a single DVR by its id (key)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRResponse getDVR(GetDVRRequest request, Optional<Options> options) {
         RequestOperation<GetDVRRequest, GetDVRResponse> operation
-              = new GetDVR.Sync(sdkConfiguration);
+              = new GetDVR.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public PatchDVRSettingsRequestBuilder patchDVRSettings() {
+        return new PatchDVRSettingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public PatchDVRSettingsResponse patchDVRSettings(PatchDVRSettingsRequest request) {
+        return patchDVRSettings(request, Optional.empty());
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public PatchDVRSettingsResponse patchDVRSettings(PatchDVRSettingsRequest request, Optional<Options> options) {
+        RequestOperation<PatchDVRSettingsRequest, PatchDVRSettingsResponse> operation
+              = new PatchDVRSettings.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public UpdateDVRSettingsRequestBuilder updateDVRSettings() {
+        return new UpdateDVRSettingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateDVRSettingsResponse updateDVRSettings(UpdateDVRSettingsRequest request) {
+        return updateDVRSettings(request, Optional.empty());
+    }
+
+    /**
+     * Update DVR Settings
+     * 
+     * <p>Update DVR settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateDVRSettingsResponse updateDVRSettings(UpdateDVRSettingsRequest request, Optional<Options> options) {
+        RequestOperation<UpdateDVRSettingsRequest, UpdateDVRSettingsResponse> operation
+              = new UpdateDVRSettings.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get DVR Channels
+     * 
+     * <p>List channels directly associated with a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetDVRChannelsRequestBuilder getDVRChannels() {
+        return new GetDVRChannelsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DVR Channels
+     * 
+     * <p>List channels directly associated with a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRChannelsResponse getDVRChannels(GetDVRChannelsRequest request) {
+        return getDVRChannels(request, Optional.empty());
+    }
+
+    /**
+     * Get DVR Channels
+     * 
+     * <p>List channels directly associated with a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRChannelsResponse getDVRChannels(GetDVRChannelsRequest request, Optional<Options> options) {
+        RequestOperation<GetDVRChannelsRequest, GetDVRChannelsResponse> operation
+              = new GetDVRChannels.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get DVR Guide
+     * 
+     * <p>Fetch program guide/schedule for a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetDVRGuideRequestBuilder getDVRGuide() {
+        return new GetDVRGuideRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get DVR Guide
+     * 
+     * <p>Fetch program guide/schedule for a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRGuideResponse getDVRGuide(GetDVRGuideRequest request) {
+        return getDVRGuide(request, Optional.empty());
+    }
+
+    /**
+     * Get DVR Guide
+     * 
+     * <p>Fetch program guide/schedule for a DVR.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDVRGuideResponse getDVRGuide(GetDVRGuideRequest request, Optional<Options> options) {
+        RequestOperation<GetDVRGuideRequest, GetDVRGuideResponse> operation
+              = new GetDVRGuide.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -183,6 +465,8 @@ public class DVRs {
      * Delete a DVR Lineup
      * 
      * <p>Deletes a DVR device's lineup.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -195,13 +479,31 @@ public class DVRs {
      * 
      * <p>Deletes a DVR device's lineup.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteLineupResponse deleteLineup(DeleteLineupRequest request) throws Exception {
+    public DeleteLineupResponse deleteLineup(DeleteLineupRequest request) {
+        return deleteLineup(request, Optional.empty());
+    }
+
+    /**
+     * Delete a DVR Lineup
+     * 
+     * <p>Deletes a DVR device's lineup.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteLineupResponse deleteLineup(DeleteLineupRequest request, Optional<Options> options) {
         RequestOperation<DeleteLineupRequest, DeleteLineupResponse> operation
-              = new DeleteLineup.Sync(sdkConfiguration);
+              = new DeleteLineup.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -209,6 +511,8 @@ public class DVRs {
      * Add a DVR Lineup
      * 
      * <p>Add a lineup to a DVR device's set of lineups.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -221,20 +525,40 @@ public class DVRs {
      * 
      * <p>Add a lineup to a DVR device's set of lineups.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddLineupResponse addLineup(AddLineupRequest request) throws Exception {
+    public AddLineupResponse addLineup(AddLineupRequest request) {
+        return addLineup(request, Optional.empty());
+    }
+
+    /**
+     * Add a DVR Lineup
+     * 
+     * <p>Add a lineup to a DVR device's set of lineups.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddLineupResponse addLineup(AddLineupRequest request, Optional<Options> options) {
         RequestOperation<AddLineupRequest, AddLineupResponse> operation
-              = new AddLineup.Sync(sdkConfiguration);
+              = new AddLineup.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Set DVR preferences
      * 
-     * <p>Set DVR preferences by name avd value
+     * <p>Set DVR preferences by name and value
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -245,15 +569,33 @@ public class DVRs {
     /**
      * Set DVR preferences
      * 
-     * <p>Set DVR preferences by name avd value
+     * <p>Set DVR preferences by name and value
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetDVRPreferencesResponse setDVRPreferences(SetDVRPreferencesRequest request) throws Exception {
+    public SetDVRPreferencesResponse setDVRPreferences(SetDVRPreferencesRequest request) {
+        return setDVRPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set DVR preferences
+     * 
+     * <p>Set DVR preferences by name and value
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetDVRPreferencesResponse setDVRPreferences(SetDVRPreferencesRequest request, Optional<Options> options) {
         RequestOperation<SetDVRPreferencesRequest, SetDVRPreferencesResponse> operation
-              = new SetDVRPreferences.Sync(sdkConfiguration);
+              = new SetDVRPreferences.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -261,6 +603,8 @@ public class DVRs {
      * Tell a DVR to stop reloading program guide
      * 
      * <p>Tell a DVR to stop reloading program guide
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -273,13 +617,31 @@ public class DVRs {
      * 
      * <p>Tell a DVR to stop reloading program guide
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StopDVRReloadResponse stopDVRReload(StopDVRReloadRequest request) throws Exception {
+    public StopDVRReloadResponse stopDVRReload(StopDVRReloadRequest request) {
+        return stopDVRReload(request, Optional.empty());
+    }
+
+    /**
+     * Tell a DVR to stop reloading program guide
+     * 
+     * <p>Tell a DVR to stop reloading program guide
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StopDVRReloadResponse stopDVRReload(StopDVRReloadRequest request, Optional<Options> options) {
         RequestOperation<StopDVRReloadRequest, StopDVRReloadResponse> operation
-              = new StopDVRReload.Sync(sdkConfiguration);
+              = new StopDVRReload.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -287,6 +649,8 @@ public class DVRs {
      * Tell a DVR to reload program guide
      * 
      * <p>Tell a DVR to reload program guide
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -299,13 +663,31 @@ public class DVRs {
      * 
      * <p>Tell a DVR to reload program guide
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ReloadGuideResponse reloadGuide(ReloadGuideRequest request) throws Exception {
+    public ReloadGuideResponse reloadGuide(ReloadGuideRequest request) {
+        return reloadGuide(request, Optional.empty());
+    }
+
+    /**
+     * Tell a DVR to reload program guide
+     * 
+     * <p>Tell a DVR to reload program guide
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ReloadGuideResponse reloadGuide(ReloadGuideRequest request, Optional<Options> options) {
         RequestOperation<ReloadGuideRequest, ReloadGuideResponse> operation
-              = new ReloadGuide.Sync(sdkConfiguration);
+              = new ReloadGuide.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -327,11 +709,25 @@ public class DVRs {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public TuneChannelResponse tuneChannel(TuneChannelRequest request) throws Exception {
+    public TuneChannelResponse tuneChannel(TuneChannelRequest request) {
+        return tuneChannel(request, Optional.empty());
+    }
+
+    /**
+     * Tune a channel on a DVR
+     * 
+     * <p>Tune a channel on a DVR to the provided channel
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public TuneChannelResponse tuneChannel(TuneChannelRequest request, Optional<Options> options) {
         RequestOperation<TuneChannelRequest, TuneChannelResponse> operation
-              = new TuneChannel.Sync(sdkConfiguration);
+              = new TuneChannel.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -339,6 +735,8 @@ public class DVRs {
      * Remove a device from an existing DVR
      * 
      * <p>Remove a device from an existing DVR
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -351,13 +749,31 @@ public class DVRs {
      * 
      * <p>Remove a device from an existing DVR
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RemoveDeviceFromDVRResponse removeDeviceFromDVR(RemoveDeviceFromDVRRequest request) throws Exception {
+    public RemoveDeviceFromDVRResponse removeDeviceFromDVR(RemoveDeviceFromDVRRequest request) {
+        return removeDeviceFromDVR(request, Optional.empty());
+    }
+
+    /**
+     * Remove a device from an existing DVR
+     * 
+     * <p>Remove a device from an existing DVR
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RemoveDeviceFromDVRResponse removeDeviceFromDVR(RemoveDeviceFromDVRRequest request, Optional<Options> options) {
         RequestOperation<RemoveDeviceFromDVRRequest, RemoveDeviceFromDVRResponse> operation
-              = new RemoveDeviceFromDVR.Sync(sdkConfiguration);
+              = new RemoveDeviceFromDVR.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -365,6 +781,8 @@ public class DVRs {
      * Add a device to an existing DVR
      * 
      * <p>Add a device to an existing DVR
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -377,13 +795,31 @@ public class DVRs {
      * 
      * <p>Add a device to an existing DVR
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddDeviceToDVRResponse addDeviceToDVR(AddDeviceToDVRRequest request) throws Exception {
+    public AddDeviceToDVRResponse addDeviceToDVR(AddDeviceToDVRRequest request) {
+        return addDeviceToDVR(request, Optional.empty());
+    }
+
+    /**
+     * Add a device to an existing DVR
+     * 
+     * <p>Add a device to an existing DVR
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddDeviceToDVRResponse addDeviceToDVR(AddDeviceToDVRRequest request, Optional<Options> options) {
         RequestOperation<AddDeviceToDVRRequest, AddDeviceToDVRResponse> operation
-              = new AddDeviceToDVR.Sync(sdkConfiguration);
+              = new AddDeviceToDVR.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

@@ -17,6 +17,18 @@ import java.util.Optional;
 
 
 public class Item {
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("title")
+    private Optional<String> title;
+
+    /**
+     * The type of this generator
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("type")
+    private Optional<? extends GetPlaylistGeneratorType> type;
+
     /**
      * The composite thumbnail image path
      */
@@ -27,7 +39,7 @@ public class Item {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Device")
-    private Optional<? extends GetPlaylistGeneratorDevice> device;
+    private Optional<? extends Device> device;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -66,31 +78,21 @@ public class Item {
     @JsonProperty("targetTagID")
     private Optional<Long> targetTagID;
 
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("title")
-    private Optional<String> title;
-
-    /**
-     * The type of this generator
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("type")
-    private Optional<? extends GetPlaylistGeneratorType> type;
-
     @JsonCreator
     public Item(
+            @JsonProperty("title") Optional<String> title,
+            @JsonProperty("type") Optional<? extends GetPlaylistGeneratorType> type,
             @JsonProperty("composite") Optional<String> composite,
-            @JsonProperty("Device") Optional<? extends GetPlaylistGeneratorDevice> device,
+            @JsonProperty("Device") Optional<? extends Device> device,
             @JsonProperty("id") Optional<Long> id,
             @JsonProperty("Location") Optional<? extends GetPlaylistGeneratorLocation> location,
             @JsonProperty("MediaSettings") Optional<? extends MediaSettings> mediaSettings,
             @JsonProperty("Policy") Optional<? extends Policy> policy,
             @JsonProperty("Status") Optional<? extends GetPlaylistGeneratorStatus> status,
             @JsonProperty("target") Optional<String> target,
-            @JsonProperty("targetTagID") Optional<Long> targetTagID,
-            @JsonProperty("title") Optional<String> title,
-            @JsonProperty("type") Optional<? extends GetPlaylistGeneratorType> type) {
+            @JsonProperty("targetTagID") Optional<Long> targetTagID) {
+        Utils.checkNotNull(title, "title");
+        Utils.checkNotNull(type, "type");
         Utils.checkNotNull(composite, "composite");
         Utils.checkNotNull(device, "device");
         Utils.checkNotNull(id, "id");
@@ -100,8 +102,8 @@ public class Item {
         Utils.checkNotNull(status, "status");
         Utils.checkNotNull(target, "target");
         Utils.checkNotNull(targetTagID, "targetTagID");
-        Utils.checkNotNull(title, "title");
-        Utils.checkNotNull(type, "type");
+        this.title = title;
+        this.type = type;
         this.composite = composite;
         this.device = device;
         this.id = id;
@@ -111,8 +113,6 @@ public class Item {
         this.status = status;
         this.target = target;
         this.targetTagID = targetTagID;
-        this.title = title;
-        this.type = type;
     }
     
     public Item() {
@@ -120,6 +120,20 @@ public class Item {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty());
+    }
+
+    @JsonIgnore
+    public Optional<String> title() {
+        return title;
+    }
+
+    /**
+     * The type of this generator
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<GetPlaylistGeneratorType> type() {
+        return (Optional<GetPlaylistGeneratorType>) type;
     }
 
     /**
@@ -132,8 +146,8 @@ public class Item {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<GetPlaylistGeneratorDevice> device() {
-        return (Optional<GetPlaylistGeneratorDevice>) device;
+    public Optional<Device> device() {
+        return (Optional<Device>) device;
     }
 
     @JsonIgnore
@@ -178,24 +192,42 @@ public class Item {
         return targetTagID;
     }
 
-    @JsonIgnore
-    public Optional<String> title() {
-        return title;
+    public static Builder builder() {
+        return new Builder();
+    }
+
+
+    public Item withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = Optional.ofNullable(title);
+        return this;
+    }
+
+
+    public Item withTitle(Optional<String> title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
     }
 
     /**
      * The type of this generator
      */
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<GetPlaylistGeneratorType> type() {
-        return (Optional<GetPlaylistGeneratorType>) type;
+    public Item withType(GetPlaylistGeneratorType type) {
+        Utils.checkNotNull(type, "type");
+        this.type = Optional.ofNullable(type);
+        return this;
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
 
+    /**
+     * The type of this generator
+     */
+    public Item withType(Optional<? extends GetPlaylistGeneratorType> type) {
+        Utils.checkNotNull(type, "type");
+        this.type = type;
+        return this;
+    }
 
     /**
      * The composite thumbnail image path
@@ -216,14 +248,14 @@ public class Item {
         return this;
     }
 
-    public Item withDevice(GetPlaylistGeneratorDevice device) {
+    public Item withDevice(Device device) {
         Utils.checkNotNull(device, "device");
         this.device = Optional.ofNullable(device);
         return this;
     }
 
 
-    public Item withDevice(Optional<? extends GetPlaylistGeneratorDevice> device) {
+    public Item withDevice(Optional<? extends Device> device) {
         Utils.checkNotNull(device, "device");
         this.device = device;
         return this;
@@ -326,38 +358,6 @@ public class Item {
         return this;
     }
 
-    public Item withTitle(String title) {
-        Utils.checkNotNull(title, "title");
-        this.title = Optional.ofNullable(title);
-        return this;
-    }
-
-
-    public Item withTitle(Optional<String> title) {
-        Utils.checkNotNull(title, "title");
-        this.title = title;
-        return this;
-    }
-
-    /**
-     * The type of this generator
-     */
-    public Item withType(GetPlaylistGeneratorType type) {
-        Utils.checkNotNull(type, "type");
-        this.type = Optional.ofNullable(type);
-        return this;
-    }
-
-
-    /**
-     * The type of this generator
-     */
-    public Item withType(Optional<? extends GetPlaylistGeneratorType> type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
-        return this;
-    }
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -368,6 +368,8 @@ public class Item {
         }
         Item other = (Item) o;
         return 
+            Utils.enhancedDeepEquals(this.title, other.title) &&
+            Utils.enhancedDeepEquals(this.type, other.type) &&
             Utils.enhancedDeepEquals(this.composite, other.composite) &&
             Utils.enhancedDeepEquals(this.device, other.device) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
@@ -376,23 +378,23 @@ public class Item {
             Utils.enhancedDeepEquals(this.policy, other.policy) &&
             Utils.enhancedDeepEquals(this.status, other.status) &&
             Utils.enhancedDeepEquals(this.target, other.target) &&
-            Utils.enhancedDeepEquals(this.targetTagID, other.targetTagID) &&
-            Utils.enhancedDeepEquals(this.title, other.title) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+            Utils.enhancedDeepEquals(this.targetTagID, other.targetTagID);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            composite, device, id,
-            location, mediaSettings, policy,
-            status, target, targetTagID,
-            title, type);
+            title, type, composite,
+            device, id, location,
+            mediaSettings, policy, status,
+            target, targetTagID);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Item.class,
+                "title", title,
+                "type", type,
                 "composite", composite,
                 "device", device,
                 "id", id,
@@ -401,17 +403,19 @@ public class Item {
                 "policy", policy,
                 "status", status,
                 "target", target,
-                "targetTagID", targetTagID,
-                "title", title,
-                "type", type);
+                "targetTagID", targetTagID);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private Optional<String> title = Optional.empty();
+
+        private Optional<? extends GetPlaylistGeneratorType> type = Optional.empty();
+
         private Optional<String> composite = Optional.empty();
 
-        private Optional<? extends GetPlaylistGeneratorDevice> device = Optional.empty();
+        private Optional<? extends Device> device = Optional.empty();
 
         private Optional<Long> id = Optional.empty();
 
@@ -427,12 +431,40 @@ public class Item {
 
         private Optional<Long> targetTagID = Optional.empty();
 
-        private Optional<String> title = Optional.empty();
-
-        private Optional<? extends GetPlaylistGeneratorType> type = Optional.empty();
-
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = Optional.ofNullable(title);
+            return this;
+        }
+
+        public Builder title(Optional<String> title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
+        }
+
+
+        /**
+         * The type of this generator
+         */
+        public Builder type(GetPlaylistGeneratorType type) {
+            Utils.checkNotNull(type, "type");
+            this.type = Optional.ofNullable(type);
+            return this;
+        }
+
+        /**
+         * The type of this generator
+         */
+        public Builder type(Optional<? extends GetPlaylistGeneratorType> type) {
+            Utils.checkNotNull(type, "type");
+            this.type = type;
+            return this;
         }
 
 
@@ -455,13 +487,13 @@ public class Item {
         }
 
 
-        public Builder device(GetPlaylistGeneratorDevice device) {
+        public Builder device(Device device) {
             Utils.checkNotNull(device, "device");
             this.device = Optional.ofNullable(device);
             return this;
         }
 
-        public Builder device(Optional<? extends GetPlaylistGeneratorDevice> device) {
+        public Builder device(Optional<? extends Device> device) {
             Utils.checkNotNull(device, "device");
             this.device = device;
             return this;
@@ -564,45 +596,13 @@ public class Item {
             return this;
         }
 
-
-        public Builder title(String title) {
-            Utils.checkNotNull(title, "title");
-            this.title = Optional.ofNullable(title);
-            return this;
-        }
-
-        public Builder title(Optional<String> title) {
-            Utils.checkNotNull(title, "title");
-            this.title = title;
-            return this;
-        }
-
-
-        /**
-         * The type of this generator
-         */
-        public Builder type(GetPlaylistGeneratorType type) {
-            Utils.checkNotNull(type, "type");
-            this.type = Optional.ofNullable(type);
-            return this;
-        }
-
-        /**
-         * The type of this generator
-         */
-        public Builder type(Optional<? extends GetPlaylistGeneratorType> type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
-            return this;
-        }
-
         public Item build() {
 
             return new Item(
-                composite, device, id,
-                location, mediaSettings, policy,
-                status, target, targetTagID,
-                title, type);
+                title, type, composite,
+                device, id, location,
+                mediaSettings, policy, status,
+                target, targetTagID);
         }
 
     }

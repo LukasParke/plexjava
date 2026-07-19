@@ -4,32 +4,91 @@
 package dev.plexapi.sdk.models.shared;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import dev.plexapi.sdk.utils.OneOfDeserializer;
+import dev.plexapi.sdk.utils.TypedObject;
+import dev.plexapi.sdk.utils.Utils.JsonShape;
+import dev.plexapi.sdk.utils.Utils.TypeReferenceWithShape;
+import dev.plexapi.sdk.utils.Utils;
+import java.lang.Boolean;
+import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
-import java.util.Optional;
+import java.lang.SuppressWarnings;
 
-public enum CanAutoSync2 {
-    ZERO("0"),
-    ONE("1");
+@JsonDeserialize(using = CanAutoSync2._Deserializer.class)
+public class CanAutoSync2 {
 
     @JsonValue
-    private final String value;
-
-    CanAutoSync2(String value) {
+    private final TypedObject value;
+    
+    private CanAutoSync2(TypedObject value) {
         this.value = value;
     }
-    
-    public String value() {
-        return value;
+
+    public static CanAutoSync2 of(One value) {
+        Utils.checkNotNull(value, "value");
+        return new CanAutoSync2(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
+    }
+
+    public static CanAutoSync2 of(boolean value) {
+        return new CanAutoSync2(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
-    public static Optional<CanAutoSync2> fromValue(String value) {
-        for (CanAutoSync2 o: CanAutoSync2.values()) {
-            if (Objects.deepEquals(o.value, value)) {
-                return Optional.of(o);
-            }
+    /**
+     * Returns an instance of one of these types:
+     * <ul>
+     * <li>{@code dev.plexapi.sdk.models.shared.One}</li>
+     * <li>{@code boolean}</li>
+     * </ul>
+     * 
+     * <p>Use {@code instanceof} to determine what type is returned. For example:
+     * 
+     * <pre>
+     * if (obj.value() instanceof String) {
+     *     String answer = (String) obj.value();
+     *     System.out.println("answer=" + answer);
+     * }
+     * </pre>
+     * 
+     * @return value of oneOf type
+     **/ 
+    public java.lang.Object value() {
+        return value.value();
+    }
+    
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
         }
-        return Optional.empty();
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CanAutoSync2 other = (CanAutoSync2) o;
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
+    
+    @Override
+    public int hashCode() {
+        return Utils.enhancedHash(value.value());
+    }
+    
+    @SuppressWarnings("serial")
+    public static final class _Deserializer extends OneOfDeserializer<CanAutoSync2> {
+
+        public _Deserializer() {
+            super(CanAutoSync2.class, false,
+                  TypeReferenceWithShape.of(new TypeReference<One>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return Utils.toString(CanAutoSync2.class,
+                "value", value);
+    }
+
 }
 

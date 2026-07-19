@@ -36,7 +36,7 @@ public class Directory {
     private Optional<String> tag;
 
     /**
-     * The key of this tag.  This is a universal key across all PMS instances and plex.tv services
+     * The key of this tag. This is a universal key across all PMS instances and plex.tv services
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("tagKey")
@@ -105,7 +105,7 @@ public class Directory {
     }
 
     /**
-     * The key of this tag.  This is a universal key across all PMS instances and plex.tv services
+     * The key of this tag. This is a universal key across all PMS instances and plex.tv services
      */
     @JsonIgnore
     public Optional<String> tagKey() {
@@ -185,7 +185,7 @@ public class Directory {
     }
 
     /**
-     * The key of this tag.  This is a universal key across all PMS instances and plex.tv services
+     * The key of this tag. This is a universal key across all PMS instances and plex.tv services
      */
     public Directory withTagKey(String tagKey) {
         Utils.checkNotNull(tagKey, "tagKey");
@@ -195,7 +195,7 @@ public class Directory {
 
 
     /**
-     * The key of this tag.  This is a universal key across all PMS instances and plex.tv services
+     * The key of this tag. This is a universal key across all PMS instances and plex.tv services
      */
     public Directory withTagKey(Optional<String> tagKey) {
         Utils.checkNotNull(tagKey, "tagKey");
@@ -349,7 +349,7 @@ public class Directory {
 
 
         /**
-         * The key of this tag.  This is a universal key across all PMS instances and plex.tv services
+         * The key of this tag. This is a universal key across all PMS instances and plex.tv services
          */
         public Builder tagKey(String tagKey) {
             Utils.checkNotNull(tagKey, "tagKey");
@@ -358,7 +358,7 @@ public class Directory {
         }
 
         /**
-         * The key of this tag.  This is a universal key across all PMS instances and plex.tv services
+         * The key of this tag. This is a universal key across all PMS instances and plex.tv services
          */
         public Builder tagKey(Optional<String> tagKey) {
             Utils.checkNotNull(tagKey, "tagKey");

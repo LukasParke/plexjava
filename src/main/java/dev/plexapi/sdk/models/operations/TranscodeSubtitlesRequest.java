@@ -101,13 +101,22 @@ public class TranscodeSubtitlesRequest {
     private Optional<String> transcodeSessionId;
 
     /**
-     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+     * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+     * advanced text subtitles to a compatible text format, even if some markup is lost
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=advancedSubtitles")
     private Optional<? extends AdvancedSubtitles> advancedSubtitles;
 
     /**
-     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+     * Client platform (some clients send this in addition to headers).
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=platform")
+    private Optional<String> platformQueryParameter;
+
+    /**
+     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+     * 50 is half, 200 is double, etc)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=audioBoost")
     private Optional<Long> audioBoost;
@@ -155,7 +164,8 @@ public class TranscodeSubtitlesRequest {
     private Optional<? extends BoolInt> disableResolutionRotation;
 
     /**
-     * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+     * Ignore client profiles when determining if direct play is possible. Only has an effect when
+     * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=hasMDE")
     private Optional<? extends BoolInt> hasMDE;
@@ -167,7 +177,9 @@ public class TranscodeSubtitlesRequest {
     private Optional<? extends QueryParamLocation> location;
 
     /**
-     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+     * This value could make the difference between transcoding and direct play on bandwidth constrained
+     * networks.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=mediaBufferSize")
     private Optional<Long> mediaBufferSize;
@@ -191,7 +203,8 @@ public class TranscodeSubtitlesRequest {
     private Optional<Double> offset;
 
     /**
-     * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+     * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+     * in a transcode
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=partIndex")
     private Optional<Long> partIndex;
@@ -215,10 +228,12 @@ public class TranscodeSubtitlesRequest {
     private Optional<String> photoResolution;
 
     /**
-     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+     * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+     * stream (ISO/IEC 23009-1:2022)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=protocol")
-    private Optional<? extends QueryParamProtocol> protocol;
+    private Optional<? extends TranscodeSubtitlesQueryParamProtocol> protocol;
 
     /**
      * Number of seconds to include in each transcoded segment
@@ -227,16 +242,39 @@ public class TranscodeSubtitlesRequest {
     private Optional<Long> secondsPerSegment;
 
     /**
-     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+     * size, 50 is half, ect)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=subtitleSize")
     private Optional<Long> subtitleSize;
 
     /**
-     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+     * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+     * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+     * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+     * selected subtitle should be provided as a segmented stream
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=subtitles")
     private Optional<? extends QueryParamSubtitles> subtitles;
+
+    /**
+     * Client-side maximum video bitrate cap in kbps
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=maxVideoBitrate")
+    private Optional<Long> maxVideoBitrate;
+
+    /**
+     * Cap resolution string (e.g. 1920x1080)
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=videoResolution")
+    private Optional<String> videoResolution;
+
+    /**
+     * Copy timestamps instead of re-encoding them
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=copyts")
+    private Optional<? extends BoolInt> copyts;
 
     /**
      * Target video bitrate (in kbps).
@@ -251,25 +289,21 @@ public class TranscodeSubtitlesRequest {
     private Optional<Long> videoQuality;
 
     /**
-     * Target maximum video resolution.
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=videoResolution")
-    private Optional<String> videoResolution;
-
-    /**
-     * See [Profile Augmentations](#section/API-Info/Profile-Augmentations) .
+     * See [Profile Augmentations](#section/API-Info/Profile-Augmentations).
      */
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Client-Profile-Extra")
     private Optional<String> xPlexClientProfileExtra;
 
     /**
-     * Which built in Client Profile to use in the decision. Generally should only be used to specify the Generic profile.
+     * Which built in Client Profile to use in the decision. Generally should only be used to specify the
+     * Generic profile.
      */
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Client-Profile-Name")
     private Optional<String> xPlexClientProfileName;
 
     /**
-     * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+     * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+     * a browser with multiple tabs)
      */
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Session-Identifier")
     private Optional<String> xPlexSessionIdentifier;
@@ -290,6 +324,7 @@ public class TranscodeSubtitlesRequest {
             TranscodeType transcodeType,
             Optional<String> transcodeSessionId,
             Optional<? extends AdvancedSubtitles> advancedSubtitles,
+            Optional<String> platformQueryParameter,
             Optional<Long> audioBoost,
             Optional<Long> audioChannelCount,
             Optional<? extends BoolInt> autoAdjustQuality,
@@ -308,13 +343,15 @@ public class TranscodeSubtitlesRequest {
             Optional<String> path,
             Optional<Long> peakBitrate,
             Optional<String> photoResolution,
-            Optional<? extends QueryParamProtocol> protocol,
+            Optional<? extends TranscodeSubtitlesQueryParamProtocol> protocol,
             Optional<Long> secondsPerSegment,
             Optional<Long> subtitleSize,
             Optional<? extends QueryParamSubtitles> subtitles,
+            Optional<Long> maxVideoBitrate,
+            Optional<String> videoResolution,
+            Optional<? extends BoolInt> copyts,
             Optional<Long> videoBitrate,
             Optional<Long> videoQuality,
-            Optional<String> videoResolution,
             Optional<String> xPlexClientProfileExtra,
             Optional<String> xPlexClientProfileName,
             Optional<String> xPlexSessionIdentifier) {
@@ -332,6 +369,7 @@ public class TranscodeSubtitlesRequest {
         Utils.checkNotNull(transcodeType, "transcodeType");
         Utils.checkNotNull(transcodeSessionId, "transcodeSessionId");
         Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
+        Utils.checkNotNull(platformQueryParameter, "platformQueryParameter");
         Utils.checkNotNull(audioBoost, "audioBoost");
         Utils.checkNotNull(audioChannelCount, "audioChannelCount");
         Utils.checkNotNull(autoAdjustQuality, "autoAdjustQuality");
@@ -354,9 +392,11 @@ public class TranscodeSubtitlesRequest {
         Utils.checkNotNull(secondsPerSegment, "secondsPerSegment");
         Utils.checkNotNull(subtitleSize, "subtitleSize");
         Utils.checkNotNull(subtitles, "subtitles");
+        Utils.checkNotNull(maxVideoBitrate, "maxVideoBitrate");
+        Utils.checkNotNull(videoResolution, "videoResolution");
+        Utils.checkNotNull(copyts, "copyts");
         Utils.checkNotNull(videoBitrate, "videoBitrate");
         Utils.checkNotNull(videoQuality, "videoQuality");
-        Utils.checkNotNull(videoResolution, "videoResolution");
         Utils.checkNotNull(xPlexClientProfileExtra, "xPlexClientProfileExtra");
         Utils.checkNotNull(xPlexClientProfileName, "xPlexClientProfileName");
         Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -374,6 +414,7 @@ public class TranscodeSubtitlesRequest {
         this.transcodeType = transcodeType;
         this.transcodeSessionId = transcodeSessionId;
         this.advancedSubtitles = advancedSubtitles;
+        this.platformQueryParameter = platformQueryParameter;
         this.audioBoost = audioBoost;
         this.audioChannelCount = audioChannelCount;
         this.autoAdjustQuality = autoAdjustQuality;
@@ -396,9 +437,11 @@ public class TranscodeSubtitlesRequest {
         this.secondsPerSegment = secondsPerSegment;
         this.subtitleSize = subtitleSize;
         this.subtitles = subtitles;
+        this.maxVideoBitrate = maxVideoBitrate;
+        this.videoResolution = videoResolution;
+        this.copyts = copyts;
         this.videoBitrate = videoBitrate;
         this.videoQuality = videoQuality;
-        this.videoResolution = videoResolution;
         this.xPlexClientProfileExtra = xPlexClientProfileExtra;
         this.xPlexClientProfileName = xPlexClientProfileName;
         this.xPlexSessionIdentifier = xPlexSessionIdentifier;
@@ -410,6 +453,7 @@ public class TranscodeSubtitlesRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), transcodeType,
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
@@ -528,7 +572,9 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+     * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+     * advanced text subtitles to a compatible text format, even if some markup is lost
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -537,7 +583,16 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+     * Client platform (some clients send this in addition to headers).
+     */
+    @JsonIgnore
+    public Optional<String> platformQueryParameter() {
+        return platformQueryParameter;
+    }
+
+    /**
+     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+     * 50 is half, 200 is double, etc)
      */
     @JsonIgnore
     public Optional<Long> audioBoost() {
@@ -607,7 +662,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+     * Ignore client profiles when determining if direct play is possible. Only has an effect when
+     * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -625,7 +681,9 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+     * This value could make the difference between transcoding and direct play on bandwidth constrained
+     * networks.
      */
     @JsonIgnore
     public Optional<Long> mediaBufferSize() {
@@ -657,7 +715,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+     * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+     * in a transcode
      */
     @JsonIgnore
     public Optional<Long> partIndex() {
@@ -689,12 +748,14 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+     * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+     * stream (ISO/IEC 23009-1:2022)
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<QueryParamProtocol> protocol() {
-        return (Optional<QueryParamProtocol>) protocol;
+    public Optional<TranscodeSubtitlesQueryParamProtocol> protocol() {
+        return (Optional<TranscodeSubtitlesQueryParamProtocol>) protocol;
     }
 
     /**
@@ -706,7 +767,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+     * size, 50 is half, ect)
      */
     @JsonIgnore
     public Optional<Long> subtitleSize() {
@@ -714,12 +776,41 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+     * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+     * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+     * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+     * selected subtitle should be provided as a segmented stream
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<QueryParamSubtitles> subtitles() {
         return (Optional<QueryParamSubtitles>) subtitles;
+    }
+
+    /**
+     * Client-side maximum video bitrate cap in kbps
+     */
+    @JsonIgnore
+    public Optional<Long> maxVideoBitrate() {
+        return maxVideoBitrate;
+    }
+
+    /**
+     * Cap resolution string (e.g. 1920x1080)
+     */
+    @JsonIgnore
+    public Optional<String> videoResolution() {
+        return videoResolution;
+    }
+
+    /**
+     * Copy timestamps instead of re-encoding them
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> copyts() {
+        return (Optional<BoolInt>) copyts;
     }
 
     /**
@@ -739,15 +830,7 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Target maximum video resolution.
-     */
-    @JsonIgnore
-    public Optional<String> videoResolution() {
-        return videoResolution;
-    }
-
-    /**
-     * See [Profile Augmentations](#section/API-Info/Profile-Augmentations) .
+     * See [Profile Augmentations](#section/API-Info/Profile-Augmentations).
      */
     @JsonIgnore
     public Optional<String> xPlexClientProfileExtra() {
@@ -755,7 +838,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Which built in Client Profile to use in the decision. Generally should only be used to specify the Generic profile.
+     * Which built in Client Profile to use in the decision. Generally should only be used to specify the
+     * Generic profile.
      */
     @JsonIgnore
     public Optional<String> xPlexClientProfileName() {
@@ -763,7 +847,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+     * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+     * a browser with multiple tabs)
      */
     @JsonIgnore
     public Optional<String> xPlexSessionIdentifier() {
@@ -1013,7 +1098,9 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+     * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+     * advanced text subtitles to a compatible text format, even if some markup is lost
      */
     public TranscodeSubtitlesRequest withAdvancedSubtitles(AdvancedSubtitles advancedSubtitles) {
         Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
@@ -1023,7 +1110,9 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+     * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+     * advanced text subtitles to a compatible text format, even if some markup is lost
      */
     public TranscodeSubtitlesRequest withAdvancedSubtitles(Optional<? extends AdvancedSubtitles> advancedSubtitles) {
         Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
@@ -1032,7 +1121,27 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+     * Client platform (some clients send this in addition to headers).
+     */
+    public TranscodeSubtitlesRequest withPlatformQueryParameter(String platformQueryParameter) {
+        Utils.checkNotNull(platformQueryParameter, "platformQueryParameter");
+        this.platformQueryParameter = Optional.ofNullable(platformQueryParameter);
+        return this;
+    }
+
+
+    /**
+     * Client platform (some clients send this in addition to headers).
+     */
+    public TranscodeSubtitlesRequest withPlatformQueryParameter(Optional<String> platformQueryParameter) {
+        Utils.checkNotNull(platformQueryParameter, "platformQueryParameter");
+        this.platformQueryParameter = platformQueryParameter;
+        return this;
+    }
+
+    /**
+     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+     * 50 is half, 200 is double, etc)
      */
     public TranscodeSubtitlesRequest withAudioBoost(long audioBoost) {
         Utils.checkNotNull(audioBoost, "audioBoost");
@@ -1042,7 +1151,8 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+     * 50 is half, 200 is double, etc)
      */
     public TranscodeSubtitlesRequest withAudioBoost(Optional<Long> audioBoost) {
         Utils.checkNotNull(audioBoost, "audioBoost");
@@ -1184,7 +1294,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+     * Ignore client profiles when determining if direct play is possible. Only has an effect when
+     * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
      */
     public TranscodeSubtitlesRequest withHasMDE(BoolInt hasMDE) {
         Utils.checkNotNull(hasMDE, "hasMDE");
@@ -1194,7 +1305,8 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+     * Ignore client profiles when determining if direct play is possible. Only has an effect when
+     * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
      */
     public TranscodeSubtitlesRequest withHasMDE(Optional<? extends BoolInt> hasMDE) {
         Utils.checkNotNull(hasMDE, "hasMDE");
@@ -1222,7 +1334,9 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+     * This value could make the difference between transcoding and direct play on bandwidth constrained
+     * networks.
      */
     public TranscodeSubtitlesRequest withMediaBufferSize(long mediaBufferSize) {
         Utils.checkNotNull(mediaBufferSize, "mediaBufferSize");
@@ -1232,7 +1346,9 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+     * This value could make the difference between transcoding and direct play on bandwidth constrained
+     * networks.
      */
     public TranscodeSubtitlesRequest withMediaBufferSize(Optional<Long> mediaBufferSize) {
         Utils.checkNotNull(mediaBufferSize, "mediaBufferSize");
@@ -1298,7 +1414,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+     * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+     * in a transcode
      */
     public TranscodeSubtitlesRequest withPartIndex(long partIndex) {
         Utils.checkNotNull(partIndex, "partIndex");
@@ -1308,7 +1425,8 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+     * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+     * in a transcode
      */
     public TranscodeSubtitlesRequest withPartIndex(Optional<Long> partIndex) {
         Utils.checkNotNull(partIndex, "partIndex");
@@ -1374,9 +1492,11 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+     * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+     * stream (ISO/IEC 23009-1:2022)
      */
-    public TranscodeSubtitlesRequest withProtocol(QueryParamProtocol protocol) {
+    public TranscodeSubtitlesRequest withProtocol(TranscodeSubtitlesQueryParamProtocol protocol) {
         Utils.checkNotNull(protocol, "protocol");
         this.protocol = Optional.ofNullable(protocol);
         return this;
@@ -1384,9 +1504,11 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+     * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+     * stream (ISO/IEC 23009-1:2022)
      */
-    public TranscodeSubtitlesRequest withProtocol(Optional<? extends QueryParamProtocol> protocol) {
+    public TranscodeSubtitlesRequest withProtocol(Optional<? extends TranscodeSubtitlesQueryParamProtocol> protocol) {
         Utils.checkNotNull(protocol, "protocol");
         this.protocol = protocol;
         return this;
@@ -1412,7 +1534,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+     * size, 50 is half, ect)
      */
     public TranscodeSubtitlesRequest withSubtitleSize(long subtitleSize) {
         Utils.checkNotNull(subtitleSize, "subtitleSize");
@@ -1422,7 +1545,8 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+     * size, 50 is half, ect)
      */
     public TranscodeSubtitlesRequest withSubtitleSize(Optional<Long> subtitleSize) {
         Utils.checkNotNull(subtitleSize, "subtitleSize");
@@ -1431,7 +1555,11 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+     * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+     * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+     * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+     * selected subtitle should be provided as a segmented stream
      */
     public TranscodeSubtitlesRequest withSubtitles(QueryParamSubtitles subtitles) {
         Utils.checkNotNull(subtitles, "subtitles");
@@ -1441,11 +1569,72 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+     * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+     * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+     * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+     * selected subtitle should be provided as a segmented stream
      */
     public TranscodeSubtitlesRequest withSubtitles(Optional<? extends QueryParamSubtitles> subtitles) {
         Utils.checkNotNull(subtitles, "subtitles");
         this.subtitles = subtitles;
+        return this;
+    }
+
+    /**
+     * Client-side maximum video bitrate cap in kbps
+     */
+    public TranscodeSubtitlesRequest withMaxVideoBitrate(long maxVideoBitrate) {
+        Utils.checkNotNull(maxVideoBitrate, "maxVideoBitrate");
+        this.maxVideoBitrate = Optional.ofNullable(maxVideoBitrate);
+        return this;
+    }
+
+
+    /**
+     * Client-side maximum video bitrate cap in kbps
+     */
+    public TranscodeSubtitlesRequest withMaxVideoBitrate(Optional<Long> maxVideoBitrate) {
+        Utils.checkNotNull(maxVideoBitrate, "maxVideoBitrate");
+        this.maxVideoBitrate = maxVideoBitrate;
+        return this;
+    }
+
+    /**
+     * Cap resolution string (e.g. 1920x1080)
+     */
+    public TranscodeSubtitlesRequest withVideoResolution(String videoResolution) {
+        Utils.checkNotNull(videoResolution, "videoResolution");
+        this.videoResolution = Optional.ofNullable(videoResolution);
+        return this;
+    }
+
+
+    /**
+     * Cap resolution string (e.g. 1920x1080)
+     */
+    public TranscodeSubtitlesRequest withVideoResolution(Optional<String> videoResolution) {
+        Utils.checkNotNull(videoResolution, "videoResolution");
+        this.videoResolution = videoResolution;
+        return this;
+    }
+
+    /**
+     * Copy timestamps instead of re-encoding them
+     */
+    public TranscodeSubtitlesRequest withCopyts(BoolInt copyts) {
+        Utils.checkNotNull(copyts, "copyts");
+        this.copyts = Optional.ofNullable(copyts);
+        return this;
+    }
+
+
+    /**
+     * Copy timestamps instead of re-encoding them
+     */
+    public TranscodeSubtitlesRequest withCopyts(Optional<? extends BoolInt> copyts) {
+        Utils.checkNotNull(copyts, "copyts");
+        this.copyts = copyts;
         return this;
     }
 
@@ -1488,26 +1677,7 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Target maximum video resolution.
-     */
-    public TranscodeSubtitlesRequest withVideoResolution(String videoResolution) {
-        Utils.checkNotNull(videoResolution, "videoResolution");
-        this.videoResolution = Optional.ofNullable(videoResolution);
-        return this;
-    }
-
-
-    /**
-     * Target maximum video resolution.
-     */
-    public TranscodeSubtitlesRequest withVideoResolution(Optional<String> videoResolution) {
-        Utils.checkNotNull(videoResolution, "videoResolution");
-        this.videoResolution = videoResolution;
-        return this;
-    }
-
-    /**
-     * See [Profile Augmentations](#section/API-Info/Profile-Augmentations) .
+     * See [Profile Augmentations](#section/API-Info/Profile-Augmentations).
      */
     public TranscodeSubtitlesRequest withXPlexClientProfileExtra(String xPlexClientProfileExtra) {
         Utils.checkNotNull(xPlexClientProfileExtra, "xPlexClientProfileExtra");
@@ -1517,7 +1687,7 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * See [Profile Augmentations](#section/API-Info/Profile-Augmentations) .
+     * See [Profile Augmentations](#section/API-Info/Profile-Augmentations).
      */
     public TranscodeSubtitlesRequest withXPlexClientProfileExtra(Optional<String> xPlexClientProfileExtra) {
         Utils.checkNotNull(xPlexClientProfileExtra, "xPlexClientProfileExtra");
@@ -1526,7 +1696,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Which built in Client Profile to use in the decision. Generally should only be used to specify the Generic profile.
+     * Which built in Client Profile to use in the decision. Generally should only be used to specify the
+     * Generic profile.
      */
     public TranscodeSubtitlesRequest withXPlexClientProfileName(String xPlexClientProfileName) {
         Utils.checkNotNull(xPlexClientProfileName, "xPlexClientProfileName");
@@ -1536,7 +1707,8 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Which built in Client Profile to use in the decision. Generally should only be used to specify the Generic profile.
+     * Which built in Client Profile to use in the decision. Generally should only be used to specify the
+     * Generic profile.
      */
     public TranscodeSubtitlesRequest withXPlexClientProfileName(Optional<String> xPlexClientProfileName) {
         Utils.checkNotNull(xPlexClientProfileName, "xPlexClientProfileName");
@@ -1545,7 +1717,8 @@ public class TranscodeSubtitlesRequest {
     }
 
     /**
-     * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+     * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+     * a browser with multiple tabs)
      */
     public TranscodeSubtitlesRequest withXPlexSessionIdentifier(String xPlexSessionIdentifier) {
         Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -1555,7 +1728,8 @@ public class TranscodeSubtitlesRequest {
 
 
     /**
-     * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+     * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+     * a browser with multiple tabs)
      */
     public TranscodeSubtitlesRequest withXPlexSessionIdentifier(Optional<String> xPlexSessionIdentifier) {
         Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -1587,6 +1761,7 @@ public class TranscodeSubtitlesRequest {
             Utils.enhancedDeepEquals(this.transcodeType, other.transcodeType) &&
             Utils.enhancedDeepEquals(this.transcodeSessionId, other.transcodeSessionId) &&
             Utils.enhancedDeepEquals(this.advancedSubtitles, other.advancedSubtitles) &&
+            Utils.enhancedDeepEquals(this.platformQueryParameter, other.platformQueryParameter) &&
             Utils.enhancedDeepEquals(this.audioBoost, other.audioBoost) &&
             Utils.enhancedDeepEquals(this.audioChannelCount, other.audioChannelCount) &&
             Utils.enhancedDeepEquals(this.autoAdjustQuality, other.autoAdjustQuality) &&
@@ -1609,9 +1784,11 @@ public class TranscodeSubtitlesRequest {
             Utils.enhancedDeepEquals(this.secondsPerSegment, other.secondsPerSegment) &&
             Utils.enhancedDeepEquals(this.subtitleSize, other.subtitleSize) &&
             Utils.enhancedDeepEquals(this.subtitles, other.subtitles) &&
+            Utils.enhancedDeepEquals(this.maxVideoBitrate, other.maxVideoBitrate) &&
+            Utils.enhancedDeepEquals(this.videoResolution, other.videoResolution) &&
+            Utils.enhancedDeepEquals(this.copyts, other.copyts) &&
             Utils.enhancedDeepEquals(this.videoBitrate, other.videoBitrate) &&
             Utils.enhancedDeepEquals(this.videoQuality, other.videoQuality) &&
-            Utils.enhancedDeepEquals(this.videoResolution, other.videoResolution) &&
             Utils.enhancedDeepEquals(this.xPlexClientProfileExtra, other.xPlexClientProfileExtra) &&
             Utils.enhancedDeepEquals(this.xPlexClientProfileName, other.xPlexClientProfileName) &&
             Utils.enhancedDeepEquals(this.xPlexSessionIdentifier, other.xPlexSessionIdentifier);
@@ -1624,15 +1801,16 @@ public class TranscodeSubtitlesRequest {
             version, platform, platformVersion,
             device, model, deviceVendor,
             deviceName, marketplace, transcodeType,
-            transcodeSessionId, advancedSubtitles, audioBoost,
-            audioChannelCount, autoAdjustQuality, autoAdjustSubtitle,
-            directPlay, directStream, directStreamAudio,
-            disableResolutionRotation, hasMDE, location,
-            mediaBufferSize, mediaIndex, musicBitrate,
-            offset, partIndex, path,
-            peakBitrate, photoResolution, protocol,
-            secondsPerSegment, subtitleSize, subtitles,
-            videoBitrate, videoQuality, videoResolution,
+            transcodeSessionId, advancedSubtitles, platformQueryParameter,
+            audioBoost, audioChannelCount, autoAdjustQuality,
+            autoAdjustSubtitle, directPlay, directStream,
+            directStreamAudio, disableResolutionRotation, hasMDE,
+            location, mediaBufferSize, mediaIndex,
+            musicBitrate, offset, partIndex,
+            path, peakBitrate, photoResolution,
+            protocol, secondsPerSegment, subtitleSize,
+            subtitles, maxVideoBitrate, videoResolution,
+            copyts, videoBitrate, videoQuality,
             xPlexClientProfileExtra, xPlexClientProfileName, xPlexSessionIdentifier);
     }
     
@@ -1653,6 +1831,7 @@ public class TranscodeSubtitlesRequest {
                 "transcodeType", transcodeType,
                 "transcodeSessionId", transcodeSessionId,
                 "advancedSubtitles", advancedSubtitles,
+                "platformQueryParameter", platformQueryParameter,
                 "audioBoost", audioBoost,
                 "audioChannelCount", audioChannelCount,
                 "autoAdjustQuality", autoAdjustQuality,
@@ -1675,9 +1854,11 @@ public class TranscodeSubtitlesRequest {
                 "secondsPerSegment", secondsPerSegment,
                 "subtitleSize", subtitleSize,
                 "subtitles", subtitles,
+                "maxVideoBitrate", maxVideoBitrate,
+                "videoResolution", videoResolution,
+                "copyts", copyts,
                 "videoBitrate", videoBitrate,
                 "videoQuality", videoQuality,
-                "videoResolution", videoResolution,
                 "xPlexClientProfileExtra", xPlexClientProfileExtra,
                 "xPlexClientProfileName", xPlexClientProfileName,
                 "xPlexSessionIdentifier", xPlexSessionIdentifier);
@@ -1713,6 +1894,8 @@ public class TranscodeSubtitlesRequest {
         private Optional<String> transcodeSessionId = Optional.empty();
 
         private Optional<? extends AdvancedSubtitles> advancedSubtitles = Optional.empty();
+
+        private Optional<String> platformQueryParameter = Optional.empty();
 
         private Optional<Long> audioBoost = Optional.empty();
 
@@ -1750,7 +1933,7 @@ public class TranscodeSubtitlesRequest {
 
         private Optional<String> photoResolution = Optional.empty();
 
-        private Optional<? extends QueryParamProtocol> protocol = Optional.empty();
+        private Optional<? extends TranscodeSubtitlesQueryParamProtocol> protocol = Optional.empty();
 
         private Optional<Long> secondsPerSegment = Optional.empty();
 
@@ -1758,11 +1941,15 @@ public class TranscodeSubtitlesRequest {
 
         private Optional<? extends QueryParamSubtitles> subtitles = Optional.empty();
 
+        private Optional<Long> maxVideoBitrate = Optional.empty();
+
+        private Optional<String> videoResolution = Optional.empty();
+
+        private Optional<? extends BoolInt> copyts;
+
         private Optional<Long> videoBitrate = Optional.empty();
 
         private Optional<Long> videoQuality = Optional.empty();
-
-        private Optional<String> videoResolution = Optional.empty();
 
         private Optional<String> xPlexClientProfileExtra = Optional.empty();
 
@@ -2014,7 +2201,9 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+         * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+         * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+         * advanced text subtitles to a compatible text format, even if some markup is lost
          */
         public Builder advancedSubtitles(AdvancedSubtitles advancedSubtitles) {
             Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
@@ -2023,7 +2212,9 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+         * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+         * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+         * advanced text subtitles to a compatible text format, even if some markup is lost
          */
         public Builder advancedSubtitles(Optional<? extends AdvancedSubtitles> advancedSubtitles) {
             Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
@@ -2033,7 +2224,27 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+         * Client platform (some clients send this in addition to headers).
+         */
+        public Builder platformQueryParameter(String platformQueryParameter) {
+            Utils.checkNotNull(platformQueryParameter, "platformQueryParameter");
+            this.platformQueryParameter = Optional.ofNullable(platformQueryParameter);
+            return this;
+        }
+
+        /**
+         * Client platform (some clients send this in addition to headers).
+         */
+        public Builder platformQueryParameter(Optional<String> platformQueryParameter) {
+            Utils.checkNotNull(platformQueryParameter, "platformQueryParameter");
+            this.platformQueryParameter = platformQueryParameter;
+            return this;
+        }
+
+
+        /**
+         * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+         * 50 is half, 200 is double, etc)
          */
         public Builder audioBoost(long audioBoost) {
             Utils.checkNotNull(audioBoost, "audioBoost");
@@ -2042,7 +2253,8 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+         * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+         * 50 is half, 200 is double, etc)
          */
         public Builder audioBoost(Optional<Long> audioBoost) {
             Utils.checkNotNull(audioBoost, "audioBoost");
@@ -2185,7 +2397,8 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+         * Ignore client profiles when determining if direct play is possible. Only has an effect when
+         * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
          */
         public Builder hasMDE(BoolInt hasMDE) {
             Utils.checkNotNull(hasMDE, "hasMDE");
@@ -2194,7 +2407,8 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+         * Ignore client profiles when determining if direct play is possible. Only has an effect when
+         * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
          */
         public Builder hasMDE(Optional<? extends BoolInt> hasMDE) {
             Utils.checkNotNull(hasMDE, "hasMDE");
@@ -2223,7 +2437,9 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+         * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+         * This value could make the difference between transcoding and direct play on bandwidth constrained
+         * networks.
          */
         public Builder mediaBufferSize(long mediaBufferSize) {
             Utils.checkNotNull(mediaBufferSize, "mediaBufferSize");
@@ -2232,7 +2448,9 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+         * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+         * This value could make the difference between transcoding and direct play on bandwidth constrained
+         * networks.
          */
         public Builder mediaBufferSize(Optional<Long> mediaBufferSize) {
             Utils.checkNotNull(mediaBufferSize, "mediaBufferSize");
@@ -2299,7 +2517,8 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+         * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+         * in a transcode
          */
         public Builder partIndex(long partIndex) {
             Utils.checkNotNull(partIndex, "partIndex");
@@ -2308,7 +2527,8 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+         * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+         * in a transcode
          */
         public Builder partIndex(Optional<Long> partIndex) {
             Utils.checkNotNull(partIndex, "partIndex");
@@ -2375,18 +2595,22 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+         * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+         * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+         * stream (ISO/IEC 23009-1:2022)
          */
-        public Builder protocol(QueryParamProtocol protocol) {
+        public Builder protocol(TranscodeSubtitlesQueryParamProtocol protocol) {
             Utils.checkNotNull(protocol, "protocol");
             this.protocol = Optional.ofNullable(protocol);
             return this;
         }
 
         /**
-         * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+         * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+         * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+         * stream (ISO/IEC 23009-1:2022)
          */
-        public Builder protocol(Optional<? extends QueryParamProtocol> protocol) {
+        public Builder protocol(Optional<? extends TranscodeSubtitlesQueryParamProtocol> protocol) {
             Utils.checkNotNull(protocol, "protocol");
             this.protocol = protocol;
             return this;
@@ -2413,7 +2637,8 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+         * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+         * size, 50 is half, ect)
          */
         public Builder subtitleSize(long subtitleSize) {
             Utils.checkNotNull(subtitleSize, "subtitleSize");
@@ -2422,7 +2647,8 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+         * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+         * size, 50 is half, ect)
          */
         public Builder subtitleSize(Optional<Long> subtitleSize) {
             Utils.checkNotNull(subtitleSize, "subtitleSize");
@@ -2432,7 +2658,11 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+         * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+         * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+         * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+         * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+         * selected subtitle should be provided as a segmented stream
          */
         public Builder subtitles(QueryParamSubtitles subtitles) {
             Utils.checkNotNull(subtitles, "subtitles");
@@ -2441,11 +2671,72 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+         * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+         * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+         * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+         * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+         * selected subtitle should be provided as a segmented stream
          */
         public Builder subtitles(Optional<? extends QueryParamSubtitles> subtitles) {
             Utils.checkNotNull(subtitles, "subtitles");
             this.subtitles = subtitles;
+            return this;
+        }
+
+
+        /**
+         * Client-side maximum video bitrate cap in kbps
+         */
+        public Builder maxVideoBitrate(long maxVideoBitrate) {
+            Utils.checkNotNull(maxVideoBitrate, "maxVideoBitrate");
+            this.maxVideoBitrate = Optional.ofNullable(maxVideoBitrate);
+            return this;
+        }
+
+        /**
+         * Client-side maximum video bitrate cap in kbps
+         */
+        public Builder maxVideoBitrate(Optional<Long> maxVideoBitrate) {
+            Utils.checkNotNull(maxVideoBitrate, "maxVideoBitrate");
+            this.maxVideoBitrate = maxVideoBitrate;
+            return this;
+        }
+
+
+        /**
+         * Cap resolution string (e.g. 1920x1080)
+         */
+        public Builder videoResolution(String videoResolution) {
+            Utils.checkNotNull(videoResolution, "videoResolution");
+            this.videoResolution = Optional.ofNullable(videoResolution);
+            return this;
+        }
+
+        /**
+         * Cap resolution string (e.g. 1920x1080)
+         */
+        public Builder videoResolution(Optional<String> videoResolution) {
+            Utils.checkNotNull(videoResolution, "videoResolution");
+            this.videoResolution = videoResolution;
+            return this;
+        }
+
+
+        /**
+         * Copy timestamps instead of re-encoding them
+         */
+        public Builder copyts(BoolInt copyts) {
+            Utils.checkNotNull(copyts, "copyts");
+            this.copyts = Optional.ofNullable(copyts);
+            return this;
+        }
+
+        /**
+         * Copy timestamps instead of re-encoding them
+         */
+        public Builder copyts(Optional<? extends BoolInt> copyts) {
+            Utils.checkNotNull(copyts, "copyts");
+            this.copyts = copyts;
             return this;
         }
 
@@ -2489,26 +2780,7 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Target maximum video resolution.
-         */
-        public Builder videoResolution(String videoResolution) {
-            Utils.checkNotNull(videoResolution, "videoResolution");
-            this.videoResolution = Optional.ofNullable(videoResolution);
-            return this;
-        }
-
-        /**
-         * Target maximum video resolution.
-         */
-        public Builder videoResolution(Optional<String> videoResolution) {
-            Utils.checkNotNull(videoResolution, "videoResolution");
-            this.videoResolution = videoResolution;
-            return this;
-        }
-
-
-        /**
-         * See [Profile Augmentations](#section/API-Info/Profile-Augmentations) .
+         * See [Profile Augmentations](#section/API-Info/Profile-Augmentations).
          */
         public Builder xPlexClientProfileExtra(String xPlexClientProfileExtra) {
             Utils.checkNotNull(xPlexClientProfileExtra, "xPlexClientProfileExtra");
@@ -2517,7 +2789,7 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * See [Profile Augmentations](#section/API-Info/Profile-Augmentations) .
+         * See [Profile Augmentations](#section/API-Info/Profile-Augmentations).
          */
         public Builder xPlexClientProfileExtra(Optional<String> xPlexClientProfileExtra) {
             Utils.checkNotNull(xPlexClientProfileExtra, "xPlexClientProfileExtra");
@@ -2527,7 +2799,8 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Which built in Client Profile to use in the decision. Generally should only be used to specify the Generic profile.
+         * Which built in Client Profile to use in the decision. Generally should only be used to specify the
+         * Generic profile.
          */
         public Builder xPlexClientProfileName(String xPlexClientProfileName) {
             Utils.checkNotNull(xPlexClientProfileName, "xPlexClientProfileName");
@@ -2536,7 +2809,8 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Which built in Client Profile to use in the decision. Generally should only be used to specify the Generic profile.
+         * Which built in Client Profile to use in the decision. Generally should only be used to specify the
+         * Generic profile.
          */
         public Builder xPlexClientProfileName(Optional<String> xPlexClientProfileName) {
             Utils.checkNotNull(xPlexClientProfileName, "xPlexClientProfileName");
@@ -2546,7 +2820,8 @@ public class TranscodeSubtitlesRequest {
 
 
         /**
-         * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+         * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+         * a browser with multiple tabs)
          */
         public Builder xPlexSessionIdentifier(String xPlexSessionIdentifier) {
             Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -2555,7 +2830,8 @@ public class TranscodeSubtitlesRequest {
         }
 
         /**
-         * Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+         * Unique per client playback session. Used if a client can playback multiple items at a time (such as
+         * a browser with multiple tabs)
          */
         public Builder xPlexSessionIdentifier(Optional<String> xPlexSessionIdentifier) {
             Utils.checkNotNull(xPlexSessionIdentifier, "xPlexSessionIdentifier");
@@ -2588,21 +2864,25 @@ public class TranscodeSubtitlesRequest {
             if (hasMDE == null) {
                 hasMDE = _SINGLETON_VALUE_HasMDE.value();
             }
+            if (copyts == null) {
+                copyts = _SINGLETON_VALUE_Copyts.value();
+            }
 
             return new TranscodeSubtitlesRequest(
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
                 deviceName, marketplace, transcodeType,
-                transcodeSessionId, advancedSubtitles, audioBoost,
-                audioChannelCount, autoAdjustQuality, autoAdjustSubtitle,
-                directPlay, directStream, directStreamAudio,
-                disableResolutionRotation, hasMDE, location,
-                mediaBufferSize, mediaIndex, musicBitrate,
-                offset, partIndex, path,
-                peakBitrate, photoResolution, protocol,
-                secondsPerSegment, subtitleSize, subtitles,
-                videoBitrate, videoQuality, videoResolution,
+                transcodeSessionId, advancedSubtitles, platformQueryParameter,
+                audioBoost, audioChannelCount, autoAdjustQuality,
+                autoAdjustSubtitle, directPlay, directStream,
+                directStreamAudio, disableResolutionRotation, hasMDE,
+                location, mediaBufferSize, mediaIndex,
+                musicBitrate, offset, partIndex,
+                path, peakBitrate, photoResolution,
+                protocol, secondsPerSegment, subtitleSize,
+                subtitles, maxVideoBitrate, videoResolution,
+                copyts, videoBitrate, videoQuality,
                 xPlexClientProfileExtra, xPlexClientProfileName, xPlexSessionIdentifier);
         }
 
@@ -2652,6 +2932,12 @@ public class TranscodeSubtitlesRequest {
         private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_HasMDE =
                 new LazySingletonValue<>(
                         "hasMDE",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_Copyts =
+                new LazySingletonValue<>(
+                        "copyts",
                         "0",
                         new TypeReference<Optional<? extends BoolInt>>() {});
     }

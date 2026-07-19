@@ -6,27 +6,157 @@ package dev.plexapi.sdk;
 import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
 
+import dev.plexapi.sdk.models.operations.AddUserWebhookRequest;
+import dev.plexapi.sdk.models.operations.AddUserWebhookRequestBuilder;
+import dev.plexapi.sdk.models.operations.AddUserWebhookResponse;
+import dev.plexapi.sdk.models.operations.AddWebhookRequest;
+import dev.plexapi.sdk.models.operations.AddWebhookRequestBuilder;
+import dev.plexapi.sdk.models.operations.AddWebhookResponse;
+import dev.plexapi.sdk.models.operations.BrowseFilesystemPathRequest;
+import dev.plexapi.sdk.models.operations.BrowseFilesystemPathRequestBuilder;
+import dev.plexapi.sdk.models.operations.BrowseFilesystemPathResponse;
+import dev.plexapi.sdk.models.operations.BrowseFilesystemRequest;
+import dev.plexapi.sdk.models.operations.BrowseFilesystemRequestBuilder;
+import dev.plexapi.sdk.models.operations.BrowseFilesystemResponse;
+import dev.plexapi.sdk.models.operations.CheckForSystemUpdatesRequest;
+import dev.plexapi.sdk.models.operations.CheckForSystemUpdatesRequestBuilder;
+import dev.plexapi.sdk.models.operations.CheckForSystemUpdatesResponse;
+import dev.plexapi.sdk.models.operations.ClaimServerRequest;
+import dev.plexapi.sdk.models.operations.ClaimServerRequestBuilder;
+import dev.plexapi.sdk.models.operations.ClaimServerResponse;
+import dev.plexapi.sdk.models.operations.CreateTransientTokenRequest;
+import dev.plexapi.sdk.models.operations.CreateTransientTokenRequestBuilder;
+import dev.plexapi.sdk.models.operations.CreateTransientTokenResponse;
+import dev.plexapi.sdk.models.operations.DownloadDatabaseDiagnosticsRequest;
+import dev.plexapi.sdk.models.operations.DownloadDatabaseDiagnosticsRequestBuilder;
+import dev.plexapi.sdk.models.operations.DownloadDatabaseDiagnosticsResponse;
+import dev.plexapi.sdk.models.operations.DownloadLogBundleRequest;
+import dev.plexapi.sdk.models.operations.DownloadLogBundleRequestBuilder;
+import dev.plexapi.sdk.models.operations.DownloadLogBundleResponse;
+import dev.plexapi.sdk.models.operations.GetBandwidthStatisticsRequest;
+import dev.plexapi.sdk.models.operations.GetBandwidthStatisticsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetBandwidthStatisticsResponse;
+import dev.plexapi.sdk.models.operations.GetClientsRequest;
+import dev.plexapi.sdk.models.operations.GetClientsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetClientsResponse;
+import dev.plexapi.sdk.models.operations.GetCloudServerRequest;
+import dev.plexapi.sdk.models.operations.GetCloudServerRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetCloudServerResponse;
+import dev.plexapi.sdk.models.operations.GetDiagnosticsRequest;
+import dev.plexapi.sdk.models.operations.GetDiagnosticsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetDiagnosticsResponse;
+import dev.plexapi.sdk.models.operations.GetGeoIPRequest;
+import dev.plexapi.sdk.models.operations.GetGeoIPRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetGeoIPResponse;
+import dev.plexapi.sdk.models.operations.GetIPRequest;
+import dev.plexapi.sdk.models.operations.GetIPRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetIPResponse;
 import dev.plexapi.sdk.models.operations.GetIdentityRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetIdentityResponse;
+import dev.plexapi.sdk.models.operations.GetLocalServersRequest;
+import dev.plexapi.sdk.models.operations.GetLocalServersRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetLocalServersResponse;
+import dev.plexapi.sdk.models.operations.GetMetadataAgentDetailsRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataAgentDetailsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMetadataAgentDetailsResponse;
+import dev.plexapi.sdk.models.operations.GetMetadataAgentsRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataAgentsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMetadataAgentsResponse;
+import dev.plexapi.sdk.models.operations.GetPlexDownloadsRequest;
+import dev.plexapi.sdk.models.operations.GetPlexDownloadsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetPlexDownloadsResponse;
+import dev.plexapi.sdk.models.operations.GetResourceStatisticsRequest;
+import dev.plexapi.sdk.models.operations.GetResourceStatisticsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetResourceStatisticsResponse;
 import dev.plexapi.sdk.models.operations.GetServerInfoRequest;
 import dev.plexapi.sdk.models.operations.GetServerInfoRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetServerInfoResponse;
 import dev.plexapi.sdk.models.operations.GetSourceConnectionInformationRequest;
 import dev.plexapi.sdk.models.operations.GetSourceConnectionInformationRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSourceConnectionInformationResponse;
-import dev.plexapi.sdk.models.operations.GetTransientTokenRequest;
-import dev.plexapi.sdk.models.operations.GetTransientTokenRequestBuilder;
-import dev.plexapi.sdk.models.operations.GetTransientTokenResponse;
+import dev.plexapi.sdk.models.operations.GetSyncItemRequest;
+import dev.plexapi.sdk.models.operations.GetSyncItemRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSyncItemResponse;
+import dev.plexapi.sdk.models.operations.GetSyncItemsRequest;
+import dev.plexapi.sdk.models.operations.GetSyncItemsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSyncItemsResponse;
+import dev.plexapi.sdk.models.operations.GetSyncQueueRequest;
+import dev.plexapi.sdk.models.operations.GetSyncQueueRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSyncQueueResponse;
+import dev.plexapi.sdk.models.operations.GetSyncStatusRequest;
+import dev.plexapi.sdk.models.operations.GetSyncStatusRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSyncStatusResponse;
+import dev.plexapi.sdk.models.operations.GetSyncTranscodeQueueRequest;
+import dev.plexapi.sdk.models.operations.GetSyncTranscodeQueueRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSyncTranscodeQueueResponse;
+import dev.plexapi.sdk.models.operations.GetSystemAccountsRequest;
+import dev.plexapi.sdk.models.operations.GetSystemAccountsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSystemAccountsResponse;
+import dev.plexapi.sdk.models.operations.GetSystemDevicesRequest;
+import dev.plexapi.sdk.models.operations.GetSystemDevicesRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSystemDevicesResponse;
+import dev.plexapi.sdk.models.operations.GetSystemSettingsRequest;
+import dev.plexapi.sdk.models.operations.GetSystemSettingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSystemSettingsResponse;
+import dev.plexapi.sdk.models.operations.GetUserWebhooksRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetUserWebhooksResponse;
+import dev.plexapi.sdk.models.operations.GetWebhooksRequest;
+import dev.plexapi.sdk.models.operations.GetWebhooksRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetWebhooksResponse;
+import dev.plexapi.sdk.models.operations.RefreshReachabilityRequestBuilder;
+import dev.plexapi.sdk.models.operations.RefreshReachabilityResponse;
+import dev.plexapi.sdk.models.operations.RefreshSyncContentRequest;
+import dev.plexapi.sdk.models.operations.RefreshSyncContentRequestBuilder;
+import dev.plexapi.sdk.models.operations.RefreshSyncContentResponse;
+import dev.plexapi.sdk.models.operations.RefreshSyncListsRequest;
+import dev.plexapi.sdk.models.operations.RefreshSyncListsRequestBuilder;
+import dev.plexapi.sdk.models.operations.RefreshSyncListsResponse;
+import dev.plexapi.sdk.operations.AddUserWebhook;
+import dev.plexapi.sdk.operations.AddWebhook;
+import dev.plexapi.sdk.operations.BrowseFilesystem;
+import dev.plexapi.sdk.operations.BrowseFilesystemPath;
+import dev.plexapi.sdk.operations.CheckForSystemUpdates;
+import dev.plexapi.sdk.operations.ClaimServer;
+import dev.plexapi.sdk.operations.CreateTransientToken;
+import dev.plexapi.sdk.operations.DownloadDatabaseDiagnostics;
+import dev.plexapi.sdk.operations.DownloadLogBundle;
+import dev.plexapi.sdk.operations.GetBandwidthStatistics;
+import dev.plexapi.sdk.operations.GetClients;
+import dev.plexapi.sdk.operations.GetCloudServer;
+import dev.plexapi.sdk.operations.GetDiagnostics;
+import dev.plexapi.sdk.operations.GetGeoIP;
+import dev.plexapi.sdk.operations.GetIP;
 import dev.plexapi.sdk.operations.GetIdentity;
+import dev.plexapi.sdk.operations.GetLocalServers;
+import dev.plexapi.sdk.operations.GetMetadataAgentDetails;
+import dev.plexapi.sdk.operations.GetMetadataAgents;
+import dev.plexapi.sdk.operations.GetPlexDownloads;
+import dev.plexapi.sdk.operations.GetResourceStatistics;
 import dev.plexapi.sdk.operations.GetServerInfo;
 import dev.plexapi.sdk.operations.GetSourceConnectionInformation;
-import dev.plexapi.sdk.operations.GetTransientToken;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.GetSyncItem;
+import dev.plexapi.sdk.operations.GetSyncItems;
+import dev.plexapi.sdk.operations.GetSyncQueue;
+import dev.plexapi.sdk.operations.GetSyncStatus;
+import dev.plexapi.sdk.operations.GetSyncTranscodeQueue;
+import dev.plexapi.sdk.operations.GetSystemAccounts;
+import dev.plexapi.sdk.operations.GetSystemDevices;
+import dev.plexapi.sdk.operations.GetSystemSettings;
+import dev.plexapi.sdk.operations.GetUserWebhooks;
+import dev.plexapi.sdk.operations.GetWebhooks;
+import dev.plexapi.sdk.operations.RefreshReachability;
+import dev.plexapi.sdk.operations.RefreshSyncContent;
+import dev.plexapi.sdk.operations.RefreshSyncLists;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.lang.String;
+import java.util.Optional;
 
 /**
  * General endpoints for basic PMS operation not specific to any media provider
  */
 public class General {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncGeneral asyncSDK;
 
@@ -62,11 +192,471 @@ public class General {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetServerInfoResponse getServerInfo(GetServerInfoRequest request) throws Exception {
+    public GetServerInfoResponse getServerInfo(GetServerInfoRequest request) {
+        return getServerInfo(request, Optional.empty());
+    }
+
+    /**
+     * Get PMS info
+     * 
+     * <p>Information about this PMS setup and configuration
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetServerInfoResponse getServerInfo(GetServerInfoRequest request, Optional<Options> options) {
         RequestOperation<GetServerInfoRequest, GetServerInfoResponse> operation
-              = new GetServerInfo.Sync(sdkConfiguration);
+              = new GetServerInfo.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get System Accounts
+     * 
+     * <p>Get a list of local system accounts.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSystemAccountsRequestBuilder getSystemAccounts() {
+        return new GetSystemAccountsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get System Accounts
+     * 
+     * <p>Get a list of local system accounts.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSystemAccountsResponse getSystemAccounts(GetSystemAccountsRequest request) {
+        return getSystemAccounts(request, Optional.empty());
+    }
+
+    /**
+     * Get System Accounts
+     * 
+     * <p>Get a list of local system accounts.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSystemAccountsResponse getSystemAccounts(GetSystemAccountsRequest request, Optional<Options> options) {
+        RequestOperation<GetSystemAccountsRequest, GetSystemAccountsResponse> operation
+              = new GetSystemAccounts.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * User Webhooks
+     * 
+     * <p>List webhook URLs for the logged-in user.
+     * 
+     * @return The call builder
+     */
+    public GetUserWebhooksRequestBuilder getUserWebhooks() {
+        return new GetUserWebhooksRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * User Webhooks
+     * 
+     * <p>List webhook URLs for the logged-in user.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUserWebhooksResponse getUserWebhooksDirect() {
+        return getUserWebhooks(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * User Webhooks
+     * 
+     * <p>List webhook URLs for the logged-in user.
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUserWebhooksResponse getUserWebhooks(Optional<String> serverURL, Optional<Options> options) {
+        RequestlessOperation<GetUserWebhooksResponse> operation
+            = new GetUserWebhooks.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Add User Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @return The call builder
+     */
+    public AddUserWebhookRequestBuilder addUserWebhook() {
+        return new AddUserWebhookRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Add User Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddUserWebhookResponse addUserWebhook(AddUserWebhookRequest request) {
+        return addUserWebhook(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Add User Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddUserWebhookResponse addUserWebhook(
+            AddUserWebhookRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<AddUserWebhookRequest, AddUserWebhookResponse> operation
+              = new AddUserWebhook.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Clients
+     * 
+     * <p>Get a list of connected Plex clients.
+     * 
+     * @return The call builder
+     */
+    public GetClientsRequestBuilder getClients() {
+        return new GetClientsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Clients
+     * 
+     * <p>Get a list of connected Plex clients.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetClientsResponse getClients(GetClientsRequest request) {
+        return getClients(request, Optional.empty());
+    }
+
+    /**
+     * Get Clients
+     * 
+     * <p>Get a list of connected Plex clients.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetClientsResponse getClients(GetClientsRequest request, Optional<Options> options) {
+        RequestOperation<GetClientsRequest, GetClientsResponse> operation
+              = new GetClients.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Cloud Server
+     * 
+     * <p>Get Plex Cloud server status for the logged-in user.
+     * 
+     * @return The call builder
+     */
+    public GetCloudServerRequestBuilder getCloudServer() {
+        return new GetCloudServerRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Cloud Server
+     * 
+     * <p>Get Plex Cloud server status for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCloudServerResponse getCloudServer(GetCloudServerRequest request) {
+        return getCloudServer(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Cloud Server
+     * 
+     * <p>Get Plex Cloud server status for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCloudServerResponse getCloudServer(
+            GetCloudServerRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetCloudServerRequest, GetCloudServerResponse> operation
+              = new GetCloudServer.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get System Devices
+     * 
+     * <p>Get a list of local system devices.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSystemDevicesRequestBuilder getSystemDevices() {
+        return new GetSystemDevicesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get System Devices
+     * 
+     * <p>Get a list of local system devices.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSystemDevicesResponse getSystemDevices(GetSystemDevicesRequest request) {
+        return getSystemDevices(request, Optional.empty());
+    }
+
+    /**
+     * Get System Devices
+     * 
+     * <p>Get a list of local system devices.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSystemDevicesResponse getSystemDevices(GetSystemDevicesRequest request, Optional<Options> options) {
+        RequestOperation<GetSystemDevicesRequest, GetSystemDevicesResponse> operation
+              = new GetSystemDevices.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Diagnostics
+     * 
+     * <p>Get server diagnostics overview.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetDiagnosticsRequestBuilder getDiagnostics() {
+        return new GetDiagnosticsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Diagnostics
+     * 
+     * <p>Get server diagnostics overview.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDiagnosticsResponse getDiagnostics(GetDiagnosticsRequest request) {
+        return getDiagnostics(request, Optional.empty());
+    }
+
+    /**
+     * Get Diagnostics
+     * 
+     * <p>Get server diagnostics overview.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetDiagnosticsResponse getDiagnostics(GetDiagnosticsRequest request, Optional<Options> options) {
+        RequestOperation<GetDiagnosticsRequest, GetDiagnosticsResponse> operation
+              = new GetDiagnostics.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Download Database Diagnostics
+     * 
+     * <p>Download server database diagnostics bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public DownloadDatabaseDiagnosticsRequestBuilder downloadDatabaseDiagnostics() {
+        return new DownloadDatabaseDiagnosticsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Download Database Diagnostics
+     * 
+     * <p>Download server database diagnostics bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DownloadDatabaseDiagnosticsResponse downloadDatabaseDiagnostics(DownloadDatabaseDiagnosticsRequest request) {
+        return downloadDatabaseDiagnostics(request, Optional.empty());
+    }
+
+    /**
+     * Download Database Diagnostics
+     * 
+     * <p>Download server database diagnostics bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DownloadDatabaseDiagnosticsResponse downloadDatabaseDiagnostics(DownloadDatabaseDiagnosticsRequest request, Optional<Options> options) {
+        RequestOperation<DownloadDatabaseDiagnosticsRequest, DownloadDatabaseDiagnosticsResponse> operation
+              = new DownloadDatabaseDiagnostics.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Download Log Bundle
+     * 
+     * <p>Download server logs bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public DownloadLogBundleRequestBuilder downloadLogBundle() {
+        return new DownloadLogBundleRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Download Log Bundle
+     * 
+     * <p>Download server logs bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DownloadLogBundleResponse downloadLogBundle(DownloadLogBundleRequest request) {
+        return downloadLogBundle(request, Optional.empty());
+    }
+
+    /**
+     * Download Log Bundle
+     * 
+     * <p>Download server logs bundle.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DownloadLogBundleResponse downloadLogBundle(DownloadLogBundleRequest request, Optional<Options> options) {
+        RequestOperation<DownloadLogBundleRequest, DownloadLogBundleResponse> operation
+              = new DownloadLogBundle.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get GeoIP
+     * 
+     * <p>Get GeoIP lookup information for the current request.
+     * 
+     * @return The call builder
+     */
+    public GetGeoIPRequestBuilder getGeoIP() {
+        return new GetGeoIPRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get GeoIP
+     * 
+     * <p>Get GeoIP lookup information for the current request.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetGeoIPResponse getGeoIP(GetGeoIPRequest request) {
+        return getGeoIP(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get GeoIP
+     * 
+     * <p>Get GeoIP lookup information for the current request.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetGeoIPResponse getGeoIP(
+            GetGeoIPRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetGeoIPRequest, GetGeoIPResponse> operation
+              = new GetGeoIP.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -87,18 +677,163 @@ public class General {
      * <p>Get details about this PMS's identity
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetIdentityResponse getIdentityDirect() throws Exception {
+    public GetIdentityResponse getIdentityDirect() {
+        return getIdentity(Optional.empty());
+    }
+
+    /**
+     * Get PMS identity
+     * 
+     * <p>Get details about this PMS's identity
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetIdentityResponse getIdentity(Optional<Options> options) {
         RequestlessOperation<GetIdentityResponse> operation
-            = new GetIdentity.Sync(sdkConfiguration);
+            = new GetIdentity.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Get IP
+     * 
+     * <p>Get the public IP address detected by Plex.
+     * 
+     * @return The call builder
+     */
+    public GetIPRequestBuilder getIP() {
+        return new GetIPRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get IP
+     * 
+     * <p>Get the public IP address detected by Plex.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetIPResponse getIP(GetIPRequest request) {
+        return getIP(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get IP
+     * 
+     * <p>Get the public IP address detected by Plex.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetIPResponse getIP(
+            GetIPRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetIPRequest, GetIPResponse> operation
+              = new GetIP.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Claim Server
+     * 
+     * <p>Claim the local PMS server using a claim token obtained from plex.tv.
+     * 
+     * @return The call builder
+     */
+    public ClaimServerRequestBuilder claimServer() {
+        return new ClaimServerRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Claim Server
+     * 
+     * <p>Claim the local PMS server using a claim token obtained from plex.tv.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ClaimServerResponse claimServer(ClaimServerRequest request) {
+        return claimServer(request, Optional.empty());
+    }
+
+    /**
+     * Claim Server
+     * 
+     * <p>Claim the local PMS server using a claim token obtained from plex.tv.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ClaimServerResponse claimServer(ClaimServerRequest request, Optional<Options> options) {
+        RequestOperation<ClaimServerRequest, ClaimServerResponse> operation
+              = new ClaimServer.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Refresh Reachability
+     * 
+     * <p>Refresh remote access port mapping.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public RefreshReachabilityRequestBuilder refreshReachability() {
+        return new RefreshReachabilityRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Refresh Reachability
+     * 
+     * <p>Refresh remote access port mapping.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshReachabilityResponse refreshReachabilityDirect() {
+        return refreshReachability(Optional.empty());
+    }
+
+    /**
+     * Refresh Reachability
+     * 
+     * <p>Refresh remote access port mapping.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshReachabilityResponse refreshReachability(Optional<Options> options) {
+        RequestlessOperation<RefreshReachabilityResponse> operation
+            = new RefreshReachability.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Get Source Connection Information
      * 
-     * <p>If a caller requires connection details and a transient token for a source that is known to the server, for example a cloud media provider or shared PMS, then this endpoint can be called. This endpoint is only accessible with either an admin token or a valid transient token generated from an admin token.
+     * <p>If a caller requires connection details and a transient token for a source that is known to the
+     * server, for example a cloud media provider or shared PMS, then this endpoint can be called. This
+     * endpoint is only accessible with either an admin token or a valid transient token generated from an
+     * admin token.
      * 
      * @return The call builder
      */
@@ -109,43 +844,907 @@ public class General {
     /**
      * Get Source Connection Information
      * 
-     * <p>If a caller requires connection details and a transient token for a source that is known to the server, for example a cloud media provider or shared PMS, then this endpoint can be called. This endpoint is only accessible with either an admin token or a valid transient token generated from an admin token.
+     * <p>If a caller requires connection details and a transient token for a source that is known to the
+     * server, for example a cloud media provider or shared PMS, then this endpoint can be called. This
+     * endpoint is only accessible with either an admin token or a valid transient token generated from an
+     * admin token.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSourceConnectionInformationResponse getSourceConnectionInformation(GetSourceConnectionInformationRequest request) throws Exception {
+    public GetSourceConnectionInformationResponse getSourceConnectionInformation(GetSourceConnectionInformationRequest request) {
+        return getSourceConnectionInformation(request, Optional.empty());
+    }
+
+    /**
+     * Get Source Connection Information
+     * 
+     * <p>If a caller requires connection details and a transient token for a source that is known to the
+     * server, for example a cloud media provider or shared PMS, then this endpoint can be called. This
+     * endpoint is only accessible with either an admin token or a valid transient token generated from an
+     * admin token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSourceConnectionInformationResponse getSourceConnectionInformation(GetSourceConnectionInformationRequest request, Optional<Options> options) {
         RequestOperation<GetSourceConnectionInformationRequest, GetSourceConnectionInformationResponse> operation
-              = new GetSourceConnectionInformation.Sync(sdkConfiguration);
+              = new GetSourceConnectionInformation.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get Transient Tokens
      * 
-     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's token. These tokens are valid for up to 48 hours and are destroyed if the server instance is restarted.
+     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's
+     * token. These tokens are valid for up to 48 hours and are destroyed if the server instance is
+     * restarted.
      * Note: This endpoint responds to all HTTP verbs but POST in preferred
      * 
      * @return The call builder
      */
-    public GetTransientTokenRequestBuilder getTransientToken() {
-        return new GetTransientTokenRequestBuilder(sdkConfiguration);
+    public CreateTransientTokenRequestBuilder createTransientToken() {
+        return new CreateTransientTokenRequestBuilder(sdkConfiguration);
     }
 
     /**
      * Get Transient Tokens
      * 
-     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's token. These tokens are valid for up to 48 hours and are destroyed if the server instance is restarted.
+     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's
+     * token. These tokens are valid for up to 48 hours and are destroyed if the server instance is
+     * restarted.
      * Note: This endpoint responds to all HTTP verbs but POST in preferred
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetTransientTokenResponse getTransientToken(GetTransientTokenRequest request) throws Exception {
-        RequestOperation<GetTransientTokenRequest, GetTransientTokenResponse> operation
-              = new GetTransientToken.Sync(sdkConfiguration);
+    public CreateTransientTokenResponse createTransientToken(CreateTransientTokenRequest request) {
+        return createTransientToken(request, Optional.empty());
+    }
+
+    /**
+     * Get Transient Tokens
+     * 
+     * <p>This endpoint provides the caller with a temporary token with the same access level as the caller's
+     * token. These tokens are valid for up to 48 hours and are destroyed if the server instance is
+     * restarted.
+     * Note: This endpoint responds to all HTTP verbs but POST in preferred
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateTransientTokenResponse createTransientToken(CreateTransientTokenRequest request, Optional<Options> options) {
+        RequestOperation<CreateTransientTokenRequest, CreateTransientTokenResponse> operation
+              = new CreateTransientToken.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Local Servers
+     * 
+     * <p>Get a list of local servers.
+     * 
+     * @return The call builder
+     */
+    public GetLocalServersRequestBuilder getLocalServers() {
+        return new GetLocalServersRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Local Servers
+     * 
+     * <p>Get a list of local servers.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLocalServersResponse getLocalServers(GetLocalServersRequest request) {
+        return getLocalServers(request, Optional.empty());
+    }
+
+    /**
+     * Get Local Servers
+     * 
+     * <p>Get a list of local servers.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLocalServersResponse getLocalServers(GetLocalServersRequest request, Optional<Options> options) {
+        RequestOperation<GetLocalServersRequest, GetLocalServersResponse> operation
+              = new GetLocalServers.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Browse Filesystem
+     * 
+     * <p>Browse filesystem paths accessible to the server.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public BrowseFilesystemRequestBuilder browseFilesystem() {
+        return new BrowseFilesystemRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Browse Filesystem
+     * 
+     * <p>Browse filesystem paths accessible to the server.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public BrowseFilesystemResponse browseFilesystem(BrowseFilesystemRequest request) {
+        return browseFilesystem(request, Optional.empty());
+    }
+
+    /**
+     * Browse Filesystem
+     * 
+     * <p>Browse filesystem paths accessible to the server.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public BrowseFilesystemResponse browseFilesystem(BrowseFilesystemRequest request, Optional<Options> options) {
+        RequestOperation<BrowseFilesystemRequest, BrowseFilesystemResponse> operation
+              = new BrowseFilesystem.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Bandwidth Statistics
+     * 
+     * <p>Get dashboard bandwidth data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetBandwidthStatisticsRequestBuilder getBandwidthStatistics() {
+        return new GetBandwidthStatisticsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Bandwidth Statistics
+     * 
+     * <p>Get dashboard bandwidth data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetBandwidthStatisticsResponse getBandwidthStatistics(GetBandwidthStatisticsRequest request) {
+        return getBandwidthStatistics(request, Optional.empty());
+    }
+
+    /**
+     * Get Bandwidth Statistics
+     * 
+     * <p>Get dashboard bandwidth data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetBandwidthStatisticsResponse getBandwidthStatistics(GetBandwidthStatisticsRequest request, Optional<Options> options) {
+        RequestOperation<GetBandwidthStatisticsRequest, GetBandwidthStatisticsResponse> operation
+              = new GetBandwidthStatistics.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Resource Statistics
+     * 
+     * <p>Get dashboard resource data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetResourceStatisticsRequestBuilder getResourceStatistics() {
+        return new GetResourceStatisticsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Resource Statistics
+     * 
+     * <p>Get dashboard resource data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetResourceStatisticsResponse getResourceStatistics(GetResourceStatisticsRequest request) {
+        return getResourceStatistics(request, Optional.empty());
+    }
+
+    /**
+     * Get Resource Statistics
+     * 
+     * <p>Get dashboard resource data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetResourceStatisticsResponse getResourceStatistics(GetResourceStatisticsRequest request, Optional<Options> options) {
+        RequestOperation<GetResourceStatisticsRequest, GetResourceStatisticsResponse> operation
+              = new GetResourceStatistics.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Sync Status
+     * 
+     * <p>Get sync status overview.
+     * 
+     * @return The call builder
+     */
+    public GetSyncStatusRequestBuilder getSyncStatus() {
+        return new GetSyncStatusRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Status
+     * 
+     * <p>Get sync status overview.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncStatusResponse getSyncStatus(GetSyncStatusRequest request) {
+        return getSyncStatus(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Status
+     * 
+     * <p>Get sync status overview.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncStatusResponse getSyncStatus(GetSyncStatusRequest request, Optional<Options> options) {
+        RequestOperation<GetSyncStatusRequest, GetSyncStatusResponse> operation
+              = new GetSyncStatus.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Sync Items
+     * 
+     * <p>Get sync items list.
+     * 
+     * @return The call builder
+     */
+    public GetSyncItemsRequestBuilder getSyncItems() {
+        return new GetSyncItemsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Items
+     * 
+     * <p>Get sync items list.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncItemsResponse getSyncItems(GetSyncItemsRequest request) {
+        return getSyncItems(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Items
+     * 
+     * <p>Get sync items list.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncItemsResponse getSyncItems(GetSyncItemsRequest request, Optional<Options> options) {
+        RequestOperation<GetSyncItemsRequest, GetSyncItemsResponse> operation
+              = new GetSyncItems.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Sync Queue
+     * 
+     * <p>Get sync queue.
+     * 
+     * @return The call builder
+     */
+    public GetSyncQueueRequestBuilder getSyncQueue() {
+        return new GetSyncQueueRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Queue
+     * 
+     * <p>Get sync queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncQueueResponse getSyncQueue(GetSyncQueueRequest request) {
+        return getSyncQueue(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Queue
+     * 
+     * <p>Get sync queue.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncQueueResponse getSyncQueue(GetSyncQueueRequest request, Optional<Options> options) {
+        RequestOperation<GetSyncQueueRequest, GetSyncQueueResponse> operation
+              = new GetSyncQueue.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Refresh Sync Content
+     * 
+     * <p>Force PMS to refresh content for known SyncLists.
+     * 
+     * @return The call builder
+     */
+    public RefreshSyncContentRequestBuilder refreshSyncContent() {
+        return new RefreshSyncContentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Refresh Sync Content
+     * 
+     * <p>Force PMS to refresh content for known SyncLists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshSyncContentResponse refreshSyncContent(RefreshSyncContentRequest request) {
+        return refreshSyncContent(request, Optional.empty());
+    }
+
+    /**
+     * Refresh Sync Content
+     * 
+     * <p>Force PMS to refresh content for known SyncLists.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshSyncContentResponse refreshSyncContent(RefreshSyncContentRequest request, Optional<Options> options) {
+        RequestOperation<RefreshSyncContentRequest, RefreshSyncContentResponse> operation
+              = new RefreshSyncContent.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Refresh Sync Lists
+     * 
+     * <p>Force PMS to download new SyncList from plex.tv.
+     * 
+     * @return The call builder
+     */
+    public RefreshSyncListsRequestBuilder refreshSyncLists() {
+        return new RefreshSyncListsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Refresh Sync Lists
+     * 
+     * <p>Force PMS to download new SyncList from plex.tv.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshSyncListsResponse refreshSyncLists(RefreshSyncListsRequest request) {
+        return refreshSyncLists(request, Optional.empty());
+    }
+
+    /**
+     * Refresh Sync Lists
+     * 
+     * <p>Force PMS to download new SyncList from plex.tv.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshSyncListsResponse refreshSyncLists(RefreshSyncListsRequest request, Optional<Options> options) {
+        RequestOperation<RefreshSyncListsRequest, RefreshSyncListsResponse> operation
+              = new RefreshSyncLists.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Sync Transcode Queue
+     * 
+     * <p>Get sync transcode queue status.
+     * 
+     * @return The call builder
+     */
+    public GetSyncTranscodeQueueRequestBuilder getSyncTranscodeQueue() {
+        return new GetSyncTranscodeQueueRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Transcode Queue
+     * 
+     * <p>Get sync transcode queue status.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncTranscodeQueueResponse getSyncTranscodeQueue(GetSyncTranscodeQueueRequest request) {
+        return getSyncTranscodeQueue(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Transcode Queue
+     * 
+     * <p>Get sync transcode queue status.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncTranscodeQueueResponse getSyncTranscodeQueue(GetSyncTranscodeQueueRequest request, Optional<Options> options) {
+        RequestOperation<GetSyncTranscodeQueueRequest, GetSyncTranscodeQueueResponse> operation
+              = new GetSyncTranscodeQueue.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Metadata Agents
+     * 
+     * <p>Get a list of available metadata agents.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMetadataAgentsRequestBuilder getMetadataAgents() {
+        return new GetMetadataAgentsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Agents
+     * 
+     * <p>Get a list of available metadata agents.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataAgentsResponse getMetadataAgents(GetMetadataAgentsRequest request) {
+        return getMetadataAgents(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Agents
+     * 
+     * <p>Get a list of available metadata agents.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataAgentsResponse getMetadataAgents(GetMetadataAgentsRequest request, Optional<Options> options) {
+        RequestOperation<GetMetadataAgentsRequest, GetMetadataAgentsResponse> operation
+              = new GetMetadataAgents.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get System Settings
+     * 
+     * <p>Get system-level settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSystemSettingsRequestBuilder getSystemSettings() {
+        return new GetSystemSettingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get System Settings
+     * 
+     * <p>Get system-level settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSystemSettingsResponse getSystemSettings(GetSystemSettingsRequest request) {
+        return getSystemSettings(request, Optional.empty());
+    }
+
+    /**
+     * Get System Settings
+     * 
+     * <p>Get system-level settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSystemSettingsResponse getSystemSettings(GetSystemSettingsRequest request, Optional<Options> options) {
+        RequestOperation<GetSystemSettingsRequest, GetSystemSettingsResponse> operation
+              = new GetSystemSettings.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Check for System Updates
+     * 
+     * <p>Check for available PMS updates.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public CheckForSystemUpdatesRequestBuilder checkForSystemUpdates() {
+        return new CheckForSystemUpdatesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Check for System Updates
+     * 
+     * <p>Check for available PMS updates.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CheckForSystemUpdatesResponse checkForSystemUpdates(CheckForSystemUpdatesRequest request) {
+        return checkForSystemUpdates(request, Optional.empty());
+    }
+
+    /**
+     * Check for System Updates
+     * 
+     * <p>Check for available PMS updates.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CheckForSystemUpdatesResponse checkForSystemUpdates(CheckForSystemUpdatesRequest request, Optional<Options> options) {
+        RequestOperation<CheckForSystemUpdatesRequest, CheckForSystemUpdatesResponse> operation
+              = new CheckForSystemUpdates.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Webhooks
+     * 
+     * <p>List configured webhook URLs for the logged-in user.
+     * 
+     * @return The call builder
+     */
+    public GetWebhooksRequestBuilder getWebhooks() {
+        return new GetWebhooksRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Webhooks
+     * 
+     * <p>List configured webhook URLs for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetWebhooksResponse getWebhooks(GetWebhooksRequest request) {
+        return getWebhooks(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Webhooks
+     * 
+     * <p>List configured webhook URLs for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetWebhooksResponse getWebhooks(
+            GetWebhooksRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetWebhooksRequest, GetWebhooksResponse> operation
+              = new GetWebhooks.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Add Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @return The call builder
+     */
+    public AddWebhookRequestBuilder addWebhook() {
+        return new AddWebhookRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Add Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddWebhookResponse addWebhook(AddWebhookRequest request) {
+        return addWebhook(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Add Webhook
+     * 
+     * <p>Add a webhook URL for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddWebhookResponse addWebhook(
+            AddWebhookRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<AddWebhookRequest, AddWebhookResponse> operation
+              = new AddWebhook.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Plex Downloads
+     * 
+     * <p>Get available Plex update downloads for a specific channel (e.g. `plexpass`, `public`).
+     * 
+     * @return The call builder
+     */
+    public GetPlexDownloadsRequestBuilder getPlexDownloads() {
+        return new GetPlexDownloadsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Plex Downloads
+     * 
+     * <p>Get available Plex update downloads for a specific channel (e.g. `plexpass`, `public`).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPlexDownloadsResponse getPlexDownloads(GetPlexDownloadsRequest request) {
+        return getPlexDownloads(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Plex Downloads
+     * 
+     * <p>Get available Plex update downloads for a specific channel (e.g. `plexpass`, `public`).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPlexDownloadsResponse getPlexDownloads(
+            GetPlexDownloadsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        RequestOperation<GetPlexDownloadsRequest, GetPlexDownloadsResponse> operation
+              = new GetPlexDownloads.Sync(
+                                    sdkConfiguration, serverURL, options,
+                                    _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Browse Filesystem Path
+     * 
+     * <p>Browse a specific filesystem path.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public BrowseFilesystemPathRequestBuilder browseFilesystemPath() {
+        return new BrowseFilesystemPathRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Browse Filesystem Path
+     * 
+     * <p>Browse a specific filesystem path.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public BrowseFilesystemPathResponse browseFilesystemPath(BrowseFilesystemPathRequest request) {
+        return browseFilesystemPath(request, Optional.empty());
+    }
+
+    /**
+     * Browse Filesystem Path
+     * 
+     * <p>Browse a specific filesystem path.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public BrowseFilesystemPathResponse browseFilesystemPath(BrowseFilesystemPathRequest request, Optional<Options> options) {
+        RequestOperation<BrowseFilesystemPathRequest, BrowseFilesystemPathResponse> operation
+              = new BrowseFilesystemPath.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Sync Item
+     * 
+     * <p>Get sync item details.
+     * 
+     * @return The call builder
+     */
+    public GetSyncItemRequestBuilder getSyncItem() {
+        return new GetSyncItemRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Sync Item
+     * 
+     * <p>Get sync item details.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncItemResponse getSyncItem(GetSyncItemRequest request) {
+        return getSyncItem(request, Optional.empty());
+    }
+
+    /**
+     * Get Sync Item
+     * 
+     * <p>Get sync item details.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSyncItemResponse getSyncItem(GetSyncItemRequest request, Optional<Options> options) {
+        RequestOperation<GetSyncItemRequest, GetSyncItemResponse> operation
+              = new GetSyncItem.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Metadata Agent Details
+     * 
+     * <p>Get details and settings for a specific metadata agent.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMetadataAgentDetailsRequestBuilder getMetadataAgentDetails() {
+        return new GetMetadataAgentDetailsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Agent Details
+     * 
+     * <p>Get details and settings for a specific metadata agent.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataAgentDetailsResponse getMetadataAgentDetails(GetMetadataAgentDetailsRequest request) {
+        return getMetadataAgentDetails(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Agent Details
+     * 
+     * <p>Get details and settings for a specific metadata agent.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataAgentDetailsResponse getMetadataAgentDetails(GetMetadataAgentDetailsRequest request, Optional<Options> options) {
+        RequestOperation<GetMetadataAgentDetailsRequest, GetMetadataAgentDetailsResponse> operation
+              = new GetMetadataAgentDetails.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

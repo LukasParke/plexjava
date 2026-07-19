@@ -88,7 +88,7 @@ public class GetSectionsPrefsRequest {
      * The metadata type
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=type")
-    private long type;
+    private long mediaType;
 
     /**
      * The metadata agent in use
@@ -109,7 +109,7 @@ public class GetSectionsPrefsRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            long type,
+            long mediaType,
             Optional<String> agent) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
@@ -122,7 +122,7 @@ public class GetSectionsPrefsRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(type, "type");
+        Utils.checkNotNull(mediaType, "mediaType");
         Utils.checkNotNull(agent, "agent");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
@@ -135,16 +135,16 @@ public class GetSectionsPrefsRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.type = type;
+        this.mediaType = mediaType;
         this.agent = agent;
     }
     
     public GetSectionsPrefsRequest(
-            long type) {
+            long mediaType) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), type,
+            Optional.empty(), Optional.empty(), mediaType,
             Optional.empty());
     }
 
@@ -241,8 +241,8 @@ public class GetSectionsPrefsRequest {
      * The metadata type
      */
     @JsonIgnore
-    public long type() {
-        return type;
+    public long mediaType() {
+        return mediaType;
     }
 
     /**
@@ -470,9 +470,9 @@ public class GetSectionsPrefsRequest {
     /**
      * The metadata type
      */
-    public GetSectionsPrefsRequest withType(long type) {
-        Utils.checkNotNull(type, "type");
-        this.type = type;
+    public GetSectionsPrefsRequest withMediaType(long mediaType) {
+        Utils.checkNotNull(mediaType, "mediaType");
+        this.mediaType = mediaType;
         return this;
     }
 
@@ -516,7 +516,7 @@ public class GetSectionsPrefsRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
+            Utils.enhancedDeepEquals(this.mediaType, other.mediaType) &&
             Utils.enhancedDeepEquals(this.agent, other.agent);
     }
     
@@ -526,7 +526,7 @@ public class GetSectionsPrefsRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, type,
+            deviceName, marketplace, mediaType,
             agent);
     }
     
@@ -544,7 +544,7 @@ public class GetSectionsPrefsRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "type", type,
+                "mediaType", mediaType,
                 "agent", agent);
     }
 
@@ -573,7 +573,7 @@ public class GetSectionsPrefsRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
-        private Long type;
+        private Long mediaType;
 
         private Optional<String> agent = Optional.empty();
 
@@ -794,9 +794,9 @@ public class GetSectionsPrefsRequest {
         /**
          * The metadata type
          */
-        public Builder type(long type) {
-            Utils.checkNotNull(type, "type");
-            this.type = type;
+        public Builder mediaType(long mediaType) {
+            Utils.checkNotNull(mediaType, "mediaType");
+            this.mediaType = mediaType;
             return this;
         }
 
@@ -828,7 +828,7 @@ public class GetSectionsPrefsRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, type,
+                deviceName, marketplace, mediaType,
                 agent);
         }
 

@@ -34,7 +34,7 @@ public class StopAllRefreshesResponse implements Response {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * OK
+     * Successfully deleted stop refresh
      */
     private Optional<? extends LibrarySections> librarySections;
 
@@ -87,7 +87,7 @@ public class StopAllRefreshesResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully deleted stop refresh
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -128,7 +128,7 @@ public class StopAllRefreshesResponse implements Response {
     }
 
     /**
-     * OK
+     * Successfully deleted stop refresh
      */
     public StopAllRefreshesResponse withLibrarySections(LibrarySections librarySections) {
         Utils.checkNotNull(librarySections, "librarySections");
@@ -138,7 +138,7 @@ public class StopAllRefreshesResponse implements Response {
 
 
     /**
-     * OK
+     * Successfully deleted stop refresh
      */
     public StopAllRefreshesResponse withLibrarySections(Optional<? extends LibrarySections> librarySections) {
         Utils.checkNotNull(librarySections, "librarySections");
@@ -225,7 +225,7 @@ public class StopAllRefreshesResponse implements Response {
 
 
         /**
-         * OK
+         * Successfully deleted stop refresh
          */
         public Builder librarySections(LibrarySections librarySections) {
             Utils.checkNotNull(librarySections, "librarySections");
@@ -234,7 +234,7 @@ public class StopAllRefreshesResponse implements Response {
         }
 
         /**
-         * OK
+         * Successfully deleted stop refresh
          */
         public Builder librarySections(Optional<? extends LibrarySections> librarySections) {
             Utils.checkNotNull(librarySections, "librarySections");

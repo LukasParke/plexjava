@@ -24,13 +24,6 @@ import org.openapitools.jackson.nullable.JsonNullable;
  */
 public class Subscription {
     /**
-     * List of features allowed on your Plex Pass subscription
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("features")
-    private Optional<? extends List<String>> features;
-
-    /**
      * If the account's Plex Pass subscription is active
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -38,18 +31,11 @@ public class Subscription {
     private Optional<Boolean> active;
 
     /**
-     * Date the account subscribed to Plex Pass
+     * List of features allowed on your Plex Pass subscription
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("subscribedAt")
-    private JsonNullable<String> subscribedAt;
-
-    /**
-     * String representation of subscriptionActive
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("status")
-    private Optional<? extends UserPlexAccountSubscriptionStatus> status;
+    @JsonProperty("features")
+    private Optional<? extends List<String>> features;
 
     /**
      * Payment service used for your Plex Pass subscription
@@ -65,40 +51,45 @@ public class Subscription {
     @JsonProperty("plan")
     private JsonNullable<String> plan;
 
+    /**
+     * String representation of subscriptionActive
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("status")
+    private Optional<? extends UserPlexAccountSubscriptionStatus> status;
+
+    /**
+     * Date the account subscribed to Plex Pass
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("subscribedAt")
+    private JsonNullable<String> subscribedAt;
+
     @JsonCreator
     public Subscription(
-            @JsonProperty("features") Optional<? extends List<String>> features,
             @JsonProperty("active") Optional<Boolean> active,
-            @JsonProperty("subscribedAt") JsonNullable<String> subscribedAt,
-            @JsonProperty("status") Optional<? extends UserPlexAccountSubscriptionStatus> status,
+            @JsonProperty("features") Optional<? extends List<String>> features,
             @JsonProperty("paymentService") JsonNullable<String> paymentService,
-            @JsonProperty("plan") JsonNullable<String> plan) {
-        Utils.checkNotNull(features, "features");
+            @JsonProperty("plan") JsonNullable<String> plan,
+            @JsonProperty("status") Optional<? extends UserPlexAccountSubscriptionStatus> status,
+            @JsonProperty("subscribedAt") JsonNullable<String> subscribedAt) {
         Utils.checkNotNull(active, "active");
-        Utils.checkNotNull(subscribedAt, "subscribedAt");
-        Utils.checkNotNull(status, "status");
+        Utils.checkNotNull(features, "features");
         Utils.checkNotNull(paymentService, "paymentService");
         Utils.checkNotNull(plan, "plan");
-        this.features = features;
+        Utils.checkNotNull(status, "status");
+        Utils.checkNotNull(subscribedAt, "subscribedAt");
         this.active = active;
-        this.subscribedAt = subscribedAt;
-        this.status = status;
+        this.features = features;
         this.paymentService = paymentService;
         this.plan = plan;
+        this.status = status;
+        this.subscribedAt = subscribedAt;
     }
     
     public Subscription() {
         this(Optional.empty(), Optional.empty(), JsonNullable.undefined(),
-            Optional.empty(), JsonNullable.undefined(), JsonNullable.undefined());
-    }
-
-    /**
-     * List of features allowed on your Plex Pass subscription
-     */
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
-    public Optional<List<String>> features() {
-        return (Optional<List<String>>) features;
+            JsonNullable.undefined(), Optional.empty(), JsonNullable.undefined());
     }
 
     /**
@@ -110,20 +101,12 @@ public class Subscription {
     }
 
     /**
-     * Date the account subscribed to Plex Pass
-     */
-    @JsonIgnore
-    public JsonNullable<String> subscribedAt() {
-        return subscribedAt;
-    }
-
-    /**
-     * String representation of subscriptionActive
+     * List of features allowed on your Plex Pass subscription
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<UserPlexAccountSubscriptionStatus> status() {
-        return (Optional<UserPlexAccountSubscriptionStatus>) status;
+    public Optional<List<String>> features() {
+        return (Optional<List<String>>) features;
     }
 
     /**
@@ -142,29 +125,27 @@ public class Subscription {
         return plan;
     }
 
+    /**
+     * String representation of subscriptionActive
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<UserPlexAccountSubscriptionStatus> status() {
+        return (Optional<UserPlexAccountSubscriptionStatus>) status;
+    }
+
+    /**
+     * Date the account subscribed to Plex Pass
+     */
+    @JsonIgnore
+    public JsonNullable<String> subscribedAt() {
+        return subscribedAt;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
-
-    /**
-     * List of features allowed on your Plex Pass subscription
-     */
-    public Subscription withFeatures(List<String> features) {
-        Utils.checkNotNull(features, "features");
-        this.features = Optional.ofNullable(features);
-        return this;
-    }
-
-
-    /**
-     * List of features allowed on your Plex Pass subscription
-     */
-    public Subscription withFeatures(Optional<? extends List<String>> features) {
-        Utils.checkNotNull(features, "features");
-        this.features = features;
-        return this;
-    }
 
     /**
      * If the account's Plex Pass subscription is active
@@ -186,39 +167,21 @@ public class Subscription {
     }
 
     /**
-     * Date the account subscribed to Plex Pass
+     * List of features allowed on your Plex Pass subscription
      */
-    public Subscription withSubscribedAt(String subscribedAt) {
-        Utils.checkNotNull(subscribedAt, "subscribedAt");
-        this.subscribedAt = JsonNullable.of(subscribedAt);
-        return this;
-    }
-
-    /**
-     * Date the account subscribed to Plex Pass
-     */
-    public Subscription withSubscribedAt(JsonNullable<String> subscribedAt) {
-        Utils.checkNotNull(subscribedAt, "subscribedAt");
-        this.subscribedAt = subscribedAt;
-        return this;
-    }
-
-    /**
-     * String representation of subscriptionActive
-     */
-    public Subscription withStatus(UserPlexAccountSubscriptionStatus status) {
-        Utils.checkNotNull(status, "status");
-        this.status = Optional.ofNullable(status);
+    public Subscription withFeatures(List<String> features) {
+        Utils.checkNotNull(features, "features");
+        this.features = Optional.ofNullable(features);
         return this;
     }
 
 
     /**
-     * String representation of subscriptionActive
+     * List of features allowed on your Plex Pass subscription
      */
-    public Subscription withStatus(Optional<? extends UserPlexAccountSubscriptionStatus> status) {
-        Utils.checkNotNull(status, "status");
-        this.status = status;
+    public Subscription withFeatures(Optional<? extends List<String>> features) {
+        Utils.checkNotNull(features, "features");
+        this.features = features;
         return this;
     }
 
@@ -258,6 +221,43 @@ public class Subscription {
         return this;
     }
 
+    /**
+     * String representation of subscriptionActive
+     */
+    public Subscription withStatus(UserPlexAccountSubscriptionStatus status) {
+        Utils.checkNotNull(status, "status");
+        this.status = Optional.ofNullable(status);
+        return this;
+    }
+
+
+    /**
+     * String representation of subscriptionActive
+     */
+    public Subscription withStatus(Optional<? extends UserPlexAccountSubscriptionStatus> status) {
+        Utils.checkNotNull(status, "status");
+        this.status = status;
+        return this;
+    }
+
+    /**
+     * Date the account subscribed to Plex Pass
+     */
+    public Subscription withSubscribedAt(String subscribedAt) {
+        Utils.checkNotNull(subscribedAt, "subscribedAt");
+        this.subscribedAt = JsonNullable.of(subscribedAt);
+        return this;
+    }
+
+    /**
+     * Date the account subscribed to Plex Pass
+     */
+    public Subscription withSubscribedAt(JsonNullable<String> subscribedAt) {
+        Utils.checkNotNull(subscribedAt, "subscribedAt");
+        this.subscribedAt = subscribedAt;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -268,68 +268,49 @@ public class Subscription {
         }
         Subscription other = (Subscription) o;
         return 
-            Utils.enhancedDeepEquals(this.features, other.features) &&
             Utils.enhancedDeepEquals(this.active, other.active) &&
-            Utils.enhancedDeepEquals(this.subscribedAt, other.subscribedAt) &&
-            Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.features, other.features) &&
             Utils.enhancedDeepEquals(this.paymentService, other.paymentService) &&
-            Utils.enhancedDeepEquals(this.plan, other.plan);
+            Utils.enhancedDeepEquals(this.plan, other.plan) &&
+            Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.subscribedAt, other.subscribedAt);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            features, active, subscribedAt,
-            status, paymentService, plan);
+            active, features, paymentService,
+            plan, status, subscribedAt);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Subscription.class,
-                "features", features,
                 "active", active,
-                "subscribedAt", subscribedAt,
-                "status", status,
+                "features", features,
                 "paymentService", paymentService,
-                "plan", plan);
+                "plan", plan,
+                "status", status,
+                "subscribedAt", subscribedAt);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Optional<? extends List<String>> features = Optional.empty();
-
         private Optional<Boolean> active = Optional.empty();
 
-        private JsonNullable<String> subscribedAt = JsonNullable.undefined();
-
-        private Optional<? extends UserPlexAccountSubscriptionStatus> status = Optional.empty();
+        private Optional<? extends List<String>> features = Optional.empty();
 
         private JsonNullable<String> paymentService = JsonNullable.undefined();
 
         private JsonNullable<String> plan = JsonNullable.undefined();
 
+        private Optional<? extends UserPlexAccountSubscriptionStatus> status = Optional.empty();
+
+        private JsonNullable<String> subscribedAt = JsonNullable.undefined();
+
         private Builder() {
           // force use of static builder() method
-        }
-
-
-        /**
-         * List of features allowed on your Plex Pass subscription
-         */
-        public Builder features(List<String> features) {
-            Utils.checkNotNull(features, "features");
-            this.features = Optional.ofNullable(features);
-            return this;
-        }
-
-        /**
-         * List of features allowed on your Plex Pass subscription
-         */
-        public Builder features(Optional<? extends List<String>> features) {
-            Utils.checkNotNull(features, "features");
-            this.features = features;
-            return this;
         }
 
 
@@ -353,39 +334,20 @@ public class Subscription {
 
 
         /**
-         * Date the account subscribed to Plex Pass
+         * List of features allowed on your Plex Pass subscription
          */
-        public Builder subscribedAt(String subscribedAt) {
-            Utils.checkNotNull(subscribedAt, "subscribedAt");
-            this.subscribedAt = JsonNullable.of(subscribedAt);
+        public Builder features(List<String> features) {
+            Utils.checkNotNull(features, "features");
+            this.features = Optional.ofNullable(features);
             return this;
         }
 
         /**
-         * Date the account subscribed to Plex Pass
+         * List of features allowed on your Plex Pass subscription
          */
-        public Builder subscribedAt(JsonNullable<String> subscribedAt) {
-            Utils.checkNotNull(subscribedAt, "subscribedAt");
-            this.subscribedAt = subscribedAt;
-            return this;
-        }
-
-
-        /**
-         * String representation of subscriptionActive
-         */
-        public Builder status(UserPlexAccountSubscriptionStatus status) {
-            Utils.checkNotNull(status, "status");
-            this.status = Optional.ofNullable(status);
-            return this;
-        }
-
-        /**
-         * String representation of subscriptionActive
-         */
-        public Builder status(Optional<? extends UserPlexAccountSubscriptionStatus> status) {
-            Utils.checkNotNull(status, "status");
-            this.status = status;
+        public Builder features(Optional<? extends List<String>> features) {
+            Utils.checkNotNull(features, "features");
+            this.features = features;
             return this;
         }
 
@@ -427,11 +389,49 @@ public class Subscription {
             return this;
         }
 
+
+        /**
+         * String representation of subscriptionActive
+         */
+        public Builder status(UserPlexAccountSubscriptionStatus status) {
+            Utils.checkNotNull(status, "status");
+            this.status = Optional.ofNullable(status);
+            return this;
+        }
+
+        /**
+         * String representation of subscriptionActive
+         */
+        public Builder status(Optional<? extends UserPlexAccountSubscriptionStatus> status) {
+            Utils.checkNotNull(status, "status");
+            this.status = status;
+            return this;
+        }
+
+
+        /**
+         * Date the account subscribed to Plex Pass
+         */
+        public Builder subscribedAt(String subscribedAt) {
+            Utils.checkNotNull(subscribedAt, "subscribedAt");
+            this.subscribedAt = JsonNullable.of(subscribedAt);
+            return this;
+        }
+
+        /**
+         * Date the account subscribed to Plex Pass
+         */
+        public Builder subscribedAt(JsonNullable<String> subscribedAt) {
+            Utils.checkNotNull(subscribedAt, "subscribedAt");
+            this.subscribedAt = subscribedAt;
+            return this;
+        }
+
         public Subscription build() {
 
             return new Subscription(
-                features, active, subscribedAt,
-                status, paymentService, plan);
+                active, features, paymentService,
+                plan, status, subscribedAt);
         }
 
     }

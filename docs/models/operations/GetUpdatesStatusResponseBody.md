@@ -1,6 +1,6 @@
 # GetUpdatesStatusResponseBody
 
-OK
+Status of the PMS updater.
 
 
 ## Fields
@@ -8,3 +8,7 @@ OK
 | Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
 | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | `mediaContainer`                                                                                       | [Optional\<GetUpdatesStatusMediaContainer>](../../models/operations/GetUpdatesStatusMediaContainer.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `checkedAt`                                                                                            | *Optional\<Long>*                                                                                      | :heavy_minus_sign:                                                                                     | Timestamp of the last update check.                                                                    |
+| `downloadURL`                                                                                          | *Optional\<String>*                                                                                    | :heavy_minus_sign:                                                                                     | The URL where the update is available.                                                                 |
+| `release`                                                                                              | List\<[Release](../../models/shared/Release.md)>                                                       | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `status`                                                                                               | *Optional\<Long>*                                                                                      | :heavy_minus_sign:                                                                                     | The current error code (0 means no error).                                                             |

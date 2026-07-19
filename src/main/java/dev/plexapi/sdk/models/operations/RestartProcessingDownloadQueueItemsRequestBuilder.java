@@ -7,13 +7,18 @@ import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.RestartProcessingDownloadQueueItems;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
 import dev.plexapi.sdk.utils.Utils;
-import java.lang.Exception;
+import java.util.Optional;
 
 public class RestartProcessingDownloadQueueItemsRequestBuilder {
 
     private RestartProcessingDownloadQueueItemsRequest request;
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public RestartProcessingDownloadQueueItemsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -24,11 +29,26 @@ public class RestartProcessingDownloadQueueItemsRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public RestartProcessingDownloadQueueItemsRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
 
-    public RestartProcessingDownloadQueueItemsResponse call() throws Exception {
-        
+    public RestartProcessingDownloadQueueItemsRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+    public RestartProcessingDownloadQueueItemsResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
         RequestOperation<RestartProcessingDownloadQueueItemsRequest, RestartProcessingDownloadQueueItemsResponse> operation
-              = new RestartProcessingDownloadQueueItems.Sync(sdkConfiguration);
+              = new RestartProcessingDownloadQueueItems.Sync(sdkConfiguration, options, _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

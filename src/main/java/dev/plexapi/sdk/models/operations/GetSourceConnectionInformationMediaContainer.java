@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.ConnectionInfo;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Long;
 import java.lang.Override;
@@ -18,9 +19,15 @@ import java.util.Optional;
 /**
  * GetSourceConnectionInformationMediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class GetSourceConnectionInformationMediaContainer {
 
@@ -29,7 +36,8 @@ public class GetSourceConnectionInformationMediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -50,7 +58,7 @@ public class GetSourceConnectionInformationMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Device")
-    private Optional<? extends Device> device;
+    private Optional<? extends ConnectionInfo> device;
 
     @JsonCreator
     public GetSourceConnectionInformationMediaContainer(
@@ -58,7 +66,7 @@ public class GetSourceConnectionInformationMediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("Device") Optional<? extends Device> device) {
+            @JsonProperty("Device") Optional<? extends ConnectionInfo> device) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
@@ -82,7 +90,8 @@ public class GetSourceConnectionInformationMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -104,8 +113,8 @@ public class GetSourceConnectionInformationMediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Device> device() {
-        return (Optional<Device>) device;
+    public Optional<ConnectionInfo> device() {
+        return (Optional<ConnectionInfo>) device;
     }
 
     public static Builder builder() {
@@ -127,7 +136,8 @@ public class GetSourceConnectionInformationMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetSourceConnectionInformationMediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -137,7 +147,8 @@ public class GetSourceConnectionInformationMediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetSourceConnectionInformationMediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -177,14 +188,14 @@ public class GetSourceConnectionInformationMediaContainer {
         return this;
     }
 
-    public GetSourceConnectionInformationMediaContainer withDevice(Device device) {
+    public GetSourceConnectionInformationMediaContainer withDevice(ConnectionInfo device) {
         Utils.checkNotNull(device, "device");
         this.device = Optional.ofNullable(device);
         return this;
     }
 
 
-    public GetSourceConnectionInformationMediaContainer withDevice(Optional<? extends Device> device) {
+    public GetSourceConnectionInformationMediaContainer withDevice(Optional<? extends ConnectionInfo> device) {
         Utils.checkNotNull(device, "device");
         this.device = device;
         return this;
@@ -235,7 +246,7 @@ public class GetSourceConnectionInformationMediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<? extends Device> device = Optional.empty();
+        private Optional<? extends ConnectionInfo> device = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -256,7 +267,8 @@ public class GetSourceConnectionInformationMediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -265,7 +277,8 @@ public class GetSourceConnectionInformationMediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -306,13 +319,13 @@ public class GetSourceConnectionInformationMediaContainer {
         }
 
 
-        public Builder device(Device device) {
+        public Builder device(ConnectionInfo device) {
             Utils.checkNotNull(device, "device");
             this.device = Optional.ofNullable(device);
             return this;
         }
 
-        public Builder device(Optional<? extends Device> device) {
+        public Builder device(Optional<? extends ConnectionInfo> device) {
             Utils.checkNotNull(device, "device");
             this.device = device;
             return this;

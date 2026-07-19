@@ -1,5 +1,4 @@
 # LibraryPlaylists
-(*libraryPlaylists()*)
 
 ## Overview
 
@@ -8,7 +7,7 @@ Endpoints for manipulating playlists.
 ### Available Operations
 
 * [createPlaylist](#createplaylist) - Create a Playlist
-* [uploadPlaylist](#uploadplaylist) - Upload
+* [uploadPlaylist](#uploadplaylist) - Upload media art
 * [deletePlaylist](#deleteplaylist) - Delete a Playlist
 * [updatePlaylist](#updateplaylist) - Editing a Playlist
 * [getPlaylistGenerators](#getplaylistgenerators) - Get a playlist's generators
@@ -64,7 +63,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -324,7 +323,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -390,7 +389,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -456,7 +455,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -523,7 +522,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }
@@ -590,7 +589,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -657,7 +656,7 @@ public class Application {
                 .call();
 
         if (res.object().isPresent()) {
-            // handle response
+            System.out.println(res.object().get());
         }
     }
 }
@@ -724,7 +723,7 @@ public class Application {
                 .call();
 
         if (res.mediaContainerWithPlaylistMetadata().isPresent()) {
-            // handle response
+            System.out.println(res.mediaContainerWithPlaylistMetadata().get());
         }
     }
 }

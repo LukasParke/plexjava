@@ -19,26 +19,26 @@ import java.lang.SuppressWarnings;
 /**
  * MediaContainerWithPlaylistMetadataSkipChildren
  * 
- * <p>When found on a show item, indicates that the children (seasons) should be skipped in favor of the grandchildren (episodes). Useful for mini-series, etc.
+ * <p>When found on a show item, indicates that the children (seasons) should be skipped in favor of the
+ * grandchildren (episodes). Useful for mini-series, etc.
  */
 @JsonDeserialize(using = MediaContainerWithPlaylistMetadataSkipChildren._Deserializer.class)
 public class MediaContainerWithPlaylistMetadataSkipChildren {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private MediaContainerWithPlaylistMetadataSkipChildren(TypedObject value) {
         this.value = value;
     }
 
     public static MediaContainerWithPlaylistMetadataSkipChildren of(boolean value) {
-        Utils.checkNotNull(value, "value");
-        return new MediaContainerWithPlaylistMetadataSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<java.lang.Boolean>(){}));
+        return new MediaContainerWithPlaylistMetadataSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static MediaContainerWithPlaylistMetadataSkipChildren of(MediaContainerWithPlaylistMetadataSkipChildren2 value) {
         Utils.checkNotNull(value, "value");
-        return new MediaContainerWithPlaylistMetadataSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaContainerWithPlaylistMetadataSkipChildren2>(){}));
+        return new MediaContainerWithPlaylistMetadataSkipChildren(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -61,7 +61,7 @@ public class MediaContainerWithPlaylistMetadataSkipChildren {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -72,7 +72,7 @@ public class MediaContainerWithPlaylistMetadataSkipChildren {
             return false;
         }
         MediaContainerWithPlaylistMetadataSkipChildren other = (MediaContainerWithPlaylistMetadataSkipChildren) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -85,8 +85,8 @@ public class MediaContainerWithPlaylistMetadataSkipChildren {
 
         public _Deserializer() {
             super(MediaContainerWithPlaylistMetadataSkipChildren.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithPlaylistMetadataSkipChildren2>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Boolean>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<MediaContainerWithPlaylistMetadataSkipChildren2>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -95,6 +95,6 @@ public class MediaContainerWithPlaylistMetadataSkipChildren {
         return Utils.toString(MediaContainerWithPlaylistMetadataSkipChildren.class,
                 "value", value);
     }
- 
+
 }
 

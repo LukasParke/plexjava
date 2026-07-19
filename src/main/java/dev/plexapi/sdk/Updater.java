@@ -17,13 +17,16 @@ import dev.plexapi.sdk.models.operations.GetUpdatesStatusResponse;
 import dev.plexapi.sdk.operations.ApplyUpdates;
 import dev.plexapi.sdk.operations.CheckUpdates;
 import dev.plexapi.sdk.operations.GetUpdatesStatus;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
  * This describes the API for searching and applying updates to the Plex Media Server.
  * Updates to the status can be observed via the Event API.
  */
 public class Updater {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncUpdater asyncSDK;
 
@@ -44,7 +47,11 @@ public class Updater {
     /**
      * Applying updates
      * 
-     * <p>Apply any downloaded updates.  Note that the two parameters `tonight` and `skip` are effectively mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight` is also passed.
+     * <p>Apply any downloaded updates. Note that the two parameters `tonight` and `skip` are effectively
+     * mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight`
+     * is also passed.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -55,15 +62,37 @@ public class Updater {
     /**
      * Applying updates
      * 
-     * <p>Apply any downloaded updates.  Note that the two parameters `tonight` and `skip` are effectively mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight` is also passed.
+     * <p>Apply any downloaded updates. Note that the two parameters `tonight` and `skip` are effectively
+     * mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight`
+     * is also passed.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ApplyUpdatesResponse applyUpdates(ApplyUpdatesRequest request) throws Exception {
+    public ApplyUpdatesResponse applyUpdates(ApplyUpdatesRequest request) {
+        return applyUpdates(request, Optional.empty());
+    }
+
+    /**
+     * Applying updates
+     * 
+     * <p>Apply any downloaded updates. Note that the two parameters `tonight` and `skip` are effectively
+     * mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight`
+     * is also passed.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ApplyUpdatesResponse applyUpdates(ApplyUpdatesRequest request, Optional<Options> options) {
         RequestOperation<ApplyUpdatesRequest, ApplyUpdatesResponse> operation
-              = new ApplyUpdates.Sync(sdkConfiguration);
+              = new ApplyUpdates.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -71,6 +100,8 @@ public class Updater {
      * Checking for updates
      * 
      * <p>Perform an update check and potentially download
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -83,13 +114,31 @@ public class Updater {
      * 
      * <p>Perform an update check and potentially download
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CheckUpdatesResponse checkUpdates(CheckUpdatesRequest request) throws Exception {
+    public CheckUpdatesResponse checkUpdates(CheckUpdatesRequest request) {
+        return checkUpdates(request, Optional.empty());
+    }
+
+    /**
+     * Checking for updates
+     * 
+     * <p>Perform an update check and potentially download
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CheckUpdatesResponse checkUpdates(CheckUpdatesRequest request, Optional<Options> options) {
         RequestOperation<CheckUpdatesRequest, CheckUpdatesResponse> operation
-              = new CheckUpdates.Sync(sdkConfiguration);
+              = new CheckUpdates.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -97,6 +146,8 @@ public class Updater {
      * Querying status of updates
      * 
      * <p>Get the status of updating the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -109,12 +160,29 @@ public class Updater {
      * 
      * <p>Get the status of updating the server
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetUpdatesStatusResponse getUpdatesStatusDirect() throws Exception {
+    public GetUpdatesStatusResponse getUpdatesStatusDirect() {
+        return getUpdatesStatus(Optional.empty());
+    }
+
+    /**
+     * Querying status of updates
+     * 
+     * <p>Get the status of updating the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUpdatesStatusResponse getUpdatesStatus(Optional<Options> options) {
         RequestlessOperation<GetUpdatesStatusResponse> operation
-            = new GetUpdatesStatus.Sync(sdkConfiguration);
+            = new GetUpdatesStatus.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 

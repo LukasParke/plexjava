@@ -86,6 +86,12 @@ public class GetSonicPathRequest {
     private Optional<String> marketplace;
 
     /**
+     * Limit results to count items
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=count")
+    private Optional<Long> count;
+
+    /**
      * Section identifier
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
@@ -102,12 +108,6 @@ public class GetSonicPathRequest {
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=endID")
     private long endID;
-
-    /**
-     * Limit results to count items
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=count")
-    private Optional<Long> count;
 
     /**
      * The maximum distance allowed along the path; defaults to 0.25
@@ -128,10 +128,10 @@ public class GetSonicPathRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<Long> count,
             long sectionId,
             long startID,
             long endID,
-            Optional<Long> count,
             Optional<Double> maxDistance) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
@@ -144,10 +144,10 @@ public class GetSonicPathRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
+        Utils.checkNotNull(count, "count");
         Utils.checkNotNull(sectionId, "sectionId");
         Utils.checkNotNull(startID, "startID");
         Utils.checkNotNull(endID, "endID");
-        Utils.checkNotNull(count, "count");
         Utils.checkNotNull(maxDistance, "maxDistance");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
@@ -160,10 +160,10 @@ public class GetSonicPathRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
+        this.count = count;
         this.sectionId = sectionId;
         this.startID = startID;
         this.endID = endID;
-        this.count = count;
         this.maxDistance = maxDistance;
     }
     
@@ -174,8 +174,8 @@ public class GetSonicPathRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
-            startID, endID, Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            sectionId, startID, endID,
             Optional.empty());
     }
 
@@ -269,6 +269,14 @@ public class GetSonicPathRequest {
     }
 
     /**
+     * Limit results to count items
+     */
+    @JsonIgnore
+    public Optional<Long> count() {
+        return count;
+    }
+
+    /**
      * Section identifier
      */
     @JsonIgnore
@@ -290,14 +298,6 @@ public class GetSonicPathRequest {
     @JsonIgnore
     public long endID() {
         return endID;
-    }
-
-    /**
-     * Limit results to count items
-     */
-    @JsonIgnore
-    public Optional<Long> count() {
-        return count;
     }
 
     /**
@@ -523,6 +523,25 @@ public class GetSonicPathRequest {
     }
 
     /**
+     * Limit results to count items
+     */
+    public GetSonicPathRequest withCount(long count) {
+        Utils.checkNotNull(count, "count");
+        this.count = Optional.ofNullable(count);
+        return this;
+    }
+
+
+    /**
+     * Limit results to count items
+     */
+    public GetSonicPathRequest withCount(Optional<Long> count) {
+        Utils.checkNotNull(count, "count");
+        this.count = count;
+        return this;
+    }
+
+    /**
      * Section identifier
      */
     public GetSonicPathRequest withSectionId(long sectionId) {
@@ -546,25 +565,6 @@ public class GetSonicPathRequest {
     public GetSonicPathRequest withEndID(long endID) {
         Utils.checkNotNull(endID, "endID");
         this.endID = endID;
-        return this;
-    }
-
-    /**
-     * Limit results to count items
-     */
-    public GetSonicPathRequest withCount(long count) {
-        Utils.checkNotNull(count, "count");
-        this.count = Optional.ofNullable(count);
-        return this;
-    }
-
-
-    /**
-     * Limit results to count items
-     */
-    public GetSonicPathRequest withCount(Optional<Long> count) {
-        Utils.checkNotNull(count, "count");
-        this.count = count;
         return this;
     }
 
@@ -608,10 +608,10 @@ public class GetSonicPathRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.count, other.count) &&
             Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
             Utils.enhancedDeepEquals(this.startID, other.startID) &&
             Utils.enhancedDeepEquals(this.endID, other.endID) &&
-            Utils.enhancedDeepEquals(this.count, other.count) &&
             Utils.enhancedDeepEquals(this.maxDistance, other.maxDistance);
     }
     
@@ -621,8 +621,8 @@ public class GetSonicPathRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, sectionId,
-            startID, endID, count,
+            deviceName, marketplace, count,
+            sectionId, startID, endID,
             maxDistance);
     }
     
@@ -640,10 +640,10 @@ public class GetSonicPathRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "count", count,
                 "sectionId", sectionId,
                 "startID", startID,
                 "endID", endID,
-                "count", count,
                 "maxDistance", maxDistance);
     }
 
@@ -672,13 +672,13 @@ public class GetSonicPathRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
+        private Optional<Long> count = Optional.empty();
+
         private Long sectionId;
 
         private Long startID;
 
         private Long endID;
-
-        private Optional<Long> count = Optional.empty();
 
         private Optional<Double> maxDistance = Optional.empty();
 
@@ -897,6 +897,25 @@ public class GetSonicPathRequest {
 
 
         /**
+         * Limit results to count items
+         */
+        public Builder count(long count) {
+            Utils.checkNotNull(count, "count");
+            this.count = Optional.ofNullable(count);
+            return this;
+        }
+
+        /**
+         * Limit results to count items
+         */
+        public Builder count(Optional<Long> count) {
+            Utils.checkNotNull(count, "count");
+            this.count = count;
+            return this;
+        }
+
+
+        /**
          * Section identifier
          */
         public Builder sectionId(long sectionId) {
@@ -922,25 +941,6 @@ public class GetSonicPathRequest {
         public Builder endID(long endID) {
             Utils.checkNotNull(endID, "endID");
             this.endID = endID;
-            return this;
-        }
-
-
-        /**
-         * Limit results to count items
-         */
-        public Builder count(long count) {
-            Utils.checkNotNull(count, "count");
-            this.count = Optional.ofNullable(count);
-            return this;
-        }
-
-        /**
-         * Limit results to count items
-         */
-        public Builder count(Optional<Long> count) {
-            Utils.checkNotNull(count, "count");
-            this.count = count;
             return this;
         }
 
@@ -972,8 +972,8 @@ public class GetSonicPathRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, sectionId,
-                startID, endID, count,
+                deviceName, marketplace, count,
+                sectionId, startID, endID,
                 maxDistance);
         }
 

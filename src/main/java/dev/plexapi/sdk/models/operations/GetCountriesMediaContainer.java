@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.plexapi.sdk.models.shared.EPGCountry;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Long;
 import java.lang.Override;
@@ -19,9 +20,15 @@ import java.util.Optional;
 /**
  * GetCountriesMediaContainer
  * 
- * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information (offset, size, totalSize) when applicable.
- * Common attributes: - identifier: Unique identifier for this container - size: Number of items in this response page - totalSize: Total number of items available (for pagination) - offset: Starting index of this page (for pagination)
- * The container often "hoists" common attributes from its children. For example, if all tracks in a container share the same album title, the `parentTitle` attribute may appear on the MediaContainer rather than being repeated on each track.
+ * <p>`MediaContainer` is the root element of most Plex API responses. It serves as a generic container
+ * for various types of content (Metadata, Hubs, Directories, etc.) and includes pagination information
+ * (offset, size, totalSize) when applicable.
+ * Common attributes: - identifier: Unique identifier for this container - size: Number of items in
+ * this response page - totalSize: Total number of items available (for pagination) - offset: Starting
+ * index of this page (for pagination)
+ * The container often "hoists" common attributes from its children. For example, if all tracks in a
+ * container share the same album title, the `parentTitle` attribute may appear on the MediaContainer
+ * rather than being repeated on each track.
  */
 public class GetCountriesMediaContainer {
 
@@ -30,7 +37,8 @@ public class GetCountriesMediaContainer {
     private Optional<String> identifier;
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("offset")
@@ -51,7 +59,7 @@ public class GetCountriesMediaContainer {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Country")
-    private Optional<? extends List<Country>> country;
+    private Optional<? extends List<EPGCountry>> country;
 
     @JsonCreator
     public GetCountriesMediaContainer(
@@ -59,7 +67,7 @@ public class GetCountriesMediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("Country") Optional<? extends List<Country>> country) {
+            @JsonProperty("Country") Optional<? extends List<EPGCountry>> country) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
@@ -83,7 +91,8 @@ public class GetCountriesMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     @JsonIgnore
     public Optional<Long> offset() {
@@ -105,8 +114,8 @@ public class GetCountriesMediaContainer {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<Country>> country() {
-        return (Optional<List<Country>>) country;
+    public Optional<List<EPGCountry>> country() {
+        return (Optional<List<EPGCountry>>) country;
     }
 
     public static Builder builder() {
@@ -128,7 +137,8 @@ public class GetCountriesMediaContainer {
     }
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetCountriesMediaContainer withOffset(long offset) {
         Utils.checkNotNull(offset, "offset");
@@ -138,7 +148,8 @@ public class GetCountriesMediaContainer {
 
 
     /**
-     * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+     * The offset of where this container page starts among the total objects available. Also provided in
+     * the `X-Plex-Container-Start` header.
      */
     public GetCountriesMediaContainer withOffset(Optional<Long> offset) {
         Utils.checkNotNull(offset, "offset");
@@ -178,14 +189,14 @@ public class GetCountriesMediaContainer {
         return this;
     }
 
-    public GetCountriesMediaContainer withCountry(List<Country> country) {
+    public GetCountriesMediaContainer withCountry(List<EPGCountry> country) {
         Utils.checkNotNull(country, "country");
         this.country = Optional.ofNullable(country);
         return this;
     }
 
 
-    public GetCountriesMediaContainer withCountry(Optional<? extends List<Country>> country) {
+    public GetCountriesMediaContainer withCountry(Optional<? extends List<EPGCountry>> country) {
         Utils.checkNotNull(country, "country");
         this.country = country;
         return this;
@@ -236,7 +247,7 @@ public class GetCountriesMediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
-        private Optional<? extends List<Country>> country = Optional.empty();
+        private Optional<? extends List<EPGCountry>> country = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -257,7 +268,8 @@ public class GetCountriesMediaContainer {
 
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(long offset) {
             Utils.checkNotNull(offset, "offset");
@@ -266,7 +278,8 @@ public class GetCountriesMediaContainer {
         }
 
         /**
-         * The offset of where this container page starts among the total objects available. Also provided in the `X-Plex-Container-Start` header.
+         * The offset of where this container page starts among the total objects available. Also provided in
+         * the `X-Plex-Container-Start` header.
          */
         public Builder offset(Optional<Long> offset) {
             Utils.checkNotNull(offset, "offset");
@@ -307,13 +320,13 @@ public class GetCountriesMediaContainer {
         }
 
 
-        public Builder country(List<Country> country) {
+        public Builder country(List<EPGCountry> country) {
             Utils.checkNotNull(country, "country");
             this.country = Optional.ofNullable(country);
             return this;
         }
 
-        public Builder country(Optional<? extends List<Country>> country) {
+        public Builder country(Optional<? extends List<EPGCountry>> country) {
             Utils.checkNotNull(country, "country");
             this.country = country;
             return this;

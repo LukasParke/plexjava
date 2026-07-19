@@ -91,7 +91,8 @@ public class DeleteLibrarySectionRequest {
     private String sectionId;
 
     /**
-     * If set, response will return an activity with the actual deletion process.  Otherwise request will return when deletion is complete
+     * If set, response will return an activity with the actual deletion process. Otherwise request will
+     * return when deletion is complete
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=async")
     private Optional<? extends BoolInt> async;
@@ -246,7 +247,8 @@ public class DeleteLibrarySectionRequest {
     }
 
     /**
-     * If set, response will return an activity with the actual deletion process.  Otherwise request will return when deletion is complete
+     * If set, response will return an activity with the actual deletion process. Otherwise request will
+     * return when deletion is complete
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -478,7 +480,8 @@ public class DeleteLibrarySectionRequest {
     }
 
     /**
-     * If set, response will return an activity with the actual deletion process.  Otherwise request will return when deletion is complete
+     * If set, response will return an activity with the actual deletion process. Otherwise request will
+     * return when deletion is complete
      */
     public DeleteLibrarySectionRequest withAsync(BoolInt async) {
         Utils.checkNotNull(async, "async");
@@ -488,7 +491,8 @@ public class DeleteLibrarySectionRequest {
 
 
     /**
-     * If set, response will return an activity with the actual deletion process.  Otherwise request will return when deletion is complete
+     * If set, response will return an activity with the actual deletion process. Otherwise request will
+     * return when deletion is complete
      */
     public DeleteLibrarySectionRequest withAsync(Optional<? extends BoolInt> async) {
         Utils.checkNotNull(async, "async");
@@ -803,7 +807,8 @@ public class DeleteLibrarySectionRequest {
 
 
         /**
-         * If set, response will return an activity with the actual deletion process.  Otherwise request will return when deletion is complete
+         * If set, response will return an activity with the actual deletion process. Otherwise request will
+         * return when deletion is complete
          */
         public Builder async(BoolInt async) {
             Utils.checkNotNull(async, "async");
@@ -812,7 +817,8 @@ public class DeleteLibrarySectionRequest {
         }
 
         /**
-         * If set, response will return an activity with the actual deletion process.  Otherwise request will return when deletion is complete
+         * If set, response will return an activity with the actual deletion process. Otherwise request will
+         * return when deletion is complete
          */
         public Builder async(Optional<? extends BoolInt> async) {
             Utils.checkNotNull(async, "async");

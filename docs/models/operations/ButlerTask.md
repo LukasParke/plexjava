@@ -2,6 +2,14 @@
 
 The task name
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.ButlerTask;
+
+ButlerTask value = ButlerTask.AUTOMATIC_UPDATES;
+```
+
 
 ## Values
 

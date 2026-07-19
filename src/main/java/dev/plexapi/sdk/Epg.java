@@ -22,6 +22,8 @@ import dev.plexapi.sdk.models.operations.GetCountriesResponse;
 import dev.plexapi.sdk.models.operations.GetCountryRegionsRequest;
 import dev.plexapi.sdk.models.operations.GetCountryRegionsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetCountryRegionsResponse;
+import dev.plexapi.sdk.models.operations.GetEPGGuideRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetEPGGuideResponse;
 import dev.plexapi.sdk.models.operations.GetLineupChannelsRequest;
 import dev.plexapi.sdk.models.operations.GetLineupChannelsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetLineupChannelsResponse;
@@ -31,21 +33,30 @@ import dev.plexapi.sdk.models.operations.GetLineupResponse;
 import dev.plexapi.sdk.models.operations.ListLineupsRequest;
 import dev.plexapi.sdk.models.operations.ListLineupsRequestBuilder;
 import dev.plexapi.sdk.models.operations.ListLineupsResponse;
+import dev.plexapi.sdk.models.operations.SearchEPGRequest;
+import dev.plexapi.sdk.models.operations.SearchEPGRequestBuilder;
+import dev.plexapi.sdk.models.operations.SearchEPGResponse;
 import dev.plexapi.sdk.operations.ComputeChannelMap;
 import dev.plexapi.sdk.operations.GetAllLanguages;
 import dev.plexapi.sdk.operations.GetChannels;
 import dev.plexapi.sdk.operations.GetCountries;
 import dev.plexapi.sdk.operations.GetCountriesLineups;
 import dev.plexapi.sdk.operations.GetCountryRegions;
+import dev.plexapi.sdk.operations.GetEPGGuide;
 import dev.plexapi.sdk.operations.GetLineup;
 import dev.plexapi.sdk.operations.GetLineupChannels;
 import dev.plexapi.sdk.operations.ListLineups;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.SearchEPG;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * The EPG (Electronic Program Guide) is responsible for obtaining metadata for what is airing on each channel and when
+ * The EPG (Electronic Program Guide) is responsible for obtaining metadata for what is airing on each
+ * channel and when
  */
 public class Epg {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncEpg asyncSDK;
 
@@ -81,11 +92,25 @@ public class Epg {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ComputeChannelMapResponse computeChannelMap(ComputeChannelMapRequest request) throws Exception {
+    public ComputeChannelMapResponse computeChannelMap(ComputeChannelMapRequest request) {
+        return computeChannelMap(request, Optional.empty());
+    }
+
+    /**
+     * Compute the best channel map
+     * 
+     * <p>Compute the best channel map, given device and lineup
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ComputeChannelMapResponse computeChannelMap(ComputeChannelMapRequest request, Optional<Options> options) {
         RequestOperation<ComputeChannelMapRequest, ComputeChannelMapResponse> operation
-              = new ComputeChannelMap.Sync(sdkConfiguration);
+              = new ComputeChannelMap.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -107,18 +132,33 @@ public class Epg {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetChannelsResponse getChannels(GetChannelsRequest request) throws Exception {
+    public GetChannelsResponse getChannels(GetChannelsRequest request) {
+        return getChannels(request, Optional.empty());
+    }
+
+    /**
+     * Get channels for a lineup
+     * 
+     * <p>Get channels for a lineup within an EPG provider
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetChannelsResponse getChannels(GetChannelsRequest request, Optional<Options> options) {
         RequestOperation<GetChannelsRequest, GetChannelsResponse> operation
-              = new GetChannels.Sync(sdkConfiguration);
+              = new GetChannels.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get all countries
      * 
-     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors, as specfied by the `flavor` attribute
+     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors,
+     * as specfied by the `flavor` attribute
      * 
      * @return The call builder
      */
@@ -129,14 +169,73 @@ public class Epg {
     /**
      * Get all countries
      * 
-     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors, as specfied by the `flavor` attribute
+     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors,
+     * as specfied by the `flavor` attribute
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetCountriesResponse getCountriesDirect() throws Exception {
+    public GetCountriesResponse getCountriesDirect() {
+        return getCountries(Optional.empty());
+    }
+
+    /**
+     * Get all countries
+     * 
+     * <p>This endpoint returns a list of countries which EPG data is available for. There are three flavors,
+     * as specfied by the `flavor` attribute
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCountriesResponse getCountries(Optional<Options> options) {
         RequestlessOperation<GetCountriesResponse> operation
-            = new GetCountries.Sync(sdkConfiguration);
+            = new GetCountries.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest());
+    }
+
+    /**
+     * Get EPG Guide
+     * 
+     * <p>Fetch the global electronic program guide.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetEPGGuideRequestBuilder getEPGGuide() {
+        return new GetEPGGuideRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get EPG Guide
+     * 
+     * <p>Fetch the global electronic program guide.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetEPGGuideResponse getEPGGuideDirect() {
+        return getEPGGuide(Optional.empty());
+    }
+
+    /**
+     * Get EPG Guide
+     * 
+     * <p>Fetch the global electronic program guide.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetEPGGuideResponse getEPGGuide(Optional<Options> options) {
+        RequestlessOperation<GetEPGGuideResponse> operation
+            = new GetEPGGuide.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -157,11 +256,24 @@ public class Epg {
      * <p>Returns a list of all possible languages for EPG data.
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAllLanguagesResponse getAllLanguagesDirect() throws Exception {
+    public GetAllLanguagesResponse getAllLanguagesDirect() {
+        return getAllLanguages(Optional.empty());
+    }
+
+    /**
+     * Get all languages
+     * 
+     * <p>Returns a list of all possible languages for EPG data.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAllLanguagesResponse getAllLanguages(Optional<Options> options) {
         RequestlessOperation<GetAllLanguagesResponse> operation
-            = new GetAllLanguages.Sync(sdkConfiguration);
+            = new GetAllLanguages.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -183,16 +295,30 @@ public class Epg {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetLineupResponse getLineup(GetLineupRequest request) throws Exception {
+    public GetLineupResponse getLineup(GetLineupRequest request) {
+        return getLineup(request, Optional.empty());
+    }
+
+    /**
+     * Compute the best lineup
+     * 
+     * <p>Compute the best lineup, given lineup group and device
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLineupResponse getLineup(GetLineupRequest request, Optional<Options> options) {
         RequestOperation<GetLineupRequest, GetLineupResponse> operation
-              = new GetLineup.Sync(sdkConfiguration);
+              = new GetLineup.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
-     * Get the channels for mulitple lineups
+     * Get the channels for multiple lineups
      * 
      * <p>Get the channels across multiple lineups
      * 
@@ -203,17 +329,77 @@ public class Epg {
     }
 
     /**
-     * Get the channels for mulitple lineups
+     * Get the channels for multiple lineups
      * 
      * <p>Get the channels across multiple lineups
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetLineupChannelsResponse getLineupChannels(GetLineupChannelsRequest request) throws Exception {
+    public GetLineupChannelsResponse getLineupChannels(GetLineupChannelsRequest request) {
+        return getLineupChannels(request, Optional.empty());
+    }
+
+    /**
+     * Get the channels for multiple lineups
+     * 
+     * <p>Get the channels across multiple lineups
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLineupChannelsResponse getLineupChannels(GetLineupChannelsRequest request, Optional<Options> options) {
         RequestOperation<GetLineupChannelsRequest, GetLineupChannelsResponse> operation
-              = new GetLineupChannels.Sync(sdkConfiguration);
+              = new GetLineupChannels.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Search EPG
+     * 
+     * <p>Search the electronic program guide for upcoming airings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public SearchEPGRequestBuilder searchEPG() {
+        return new SearchEPGRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Search EPG
+     * 
+     * <p>Search the electronic program guide for upcoming airings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SearchEPGResponse searchEPG(SearchEPGRequest request) {
+        return searchEPG(request, Optional.empty());
+    }
+
+    /**
+     * Search EPG
+     * 
+     * <p>Search the electronic program guide for upcoming airings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SearchEPGResponse searchEPG(SearchEPGRequest request, Optional<Options> options) {
+        RequestOperation<SearchEPGRequest, SearchEPGResponse> operation
+              = new SearchEPG.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -235,11 +421,25 @@ public class Epg {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetCountriesLineupsResponse getCountriesLineups(GetCountriesLineupsRequest request) throws Exception {
+    public GetCountriesLineupsResponse getCountriesLineups(GetCountriesLineupsRequest request) {
+        return getCountriesLineups(request, Optional.empty());
+    }
+
+    /**
+     * Get lineups for a country via postal code
+     * 
+     * <p>Returns a list of lineups for a given country, EPG provider and postal code
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCountriesLineupsResponse getCountriesLineups(GetCountriesLineupsRequest request, Optional<Options> options) {
         RequestOperation<GetCountriesLineupsRequest, GetCountriesLineupsResponse> operation
-              = new GetCountriesLineups.Sync(sdkConfiguration);
+              = new GetCountriesLineups.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -261,11 +461,25 @@ public class Epg {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetCountryRegionsResponse getCountryRegions(GetCountryRegionsRequest request) throws Exception {
+    public GetCountryRegionsResponse getCountryRegions(GetCountryRegionsRequest request) {
+        return getCountryRegions(request, Optional.empty());
+    }
+
+    /**
+     * Get regions for a country
+     * 
+     * <p>Get regions for a country within an EPG provider
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCountryRegionsResponse getCountryRegions(GetCountryRegionsRequest request, Optional<Options> options) {
         RequestOperation<GetCountryRegionsRequest, GetCountryRegionsResponse> operation
-              = new GetCountryRegions.Sync(sdkConfiguration);
+              = new GetCountryRegions.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -287,11 +501,25 @@ public class Epg {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListLineupsResponse listLineups(ListLineupsRequest request) throws Exception {
+    public ListLineupsResponse listLineups(ListLineupsRequest request) {
+        return listLineups(request, Optional.empty());
+    }
+
+    /**
+     * Get lineups for a region
+     * 
+     * <p>Get lineups for a region within an EPG provider
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListLineupsResponse listLineups(ListLineupsRequest request, Optional<Options> options) {
         RequestOperation<ListLineupsRequest, ListLineupsResponse> operation
-              = new ListLineups.Sync(sdkConfiguration);
+              = new ListLineups.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

@@ -8,7 +8,9 @@ import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 import dev.plexapi.sdk.models.operations.CreateCustomHubRequest;
 import dev.plexapi.sdk.models.operations.DeleteCustomHubRequest;
 import dev.plexapi.sdk.models.operations.GetAllHubsRequest;
+import dev.plexapi.sdk.models.operations.GetContinueWatchingItemsRequest;
 import dev.plexapi.sdk.models.operations.GetContinueWatchingRequest;
+import dev.plexapi.sdk.models.operations.GetHomeRecentlyAddedRequest;
 import dev.plexapi.sdk.models.operations.GetHubItemsRequest;
 import dev.plexapi.sdk.models.operations.GetMetadataHubsRequest;
 import dev.plexapi.sdk.models.operations.GetPostplayHubsRequest;
@@ -25,8 +27,12 @@ import dev.plexapi.sdk.models.operations.async.DeleteCustomHubRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.DeleteCustomHubResponse;
 import dev.plexapi.sdk.models.operations.async.GetAllHubsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetAllHubsResponse;
+import dev.plexapi.sdk.models.operations.async.GetContinueWatchingItemsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetContinueWatchingItemsResponse;
 import dev.plexapi.sdk.models.operations.async.GetContinueWatchingRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetContinueWatchingResponse;
+import dev.plexapi.sdk.models.operations.async.GetHomeRecentlyAddedRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetHomeRecentlyAddedResponse;
 import dev.plexapi.sdk.models.operations.async.GetHubItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetHubItemsResponse;
 import dev.plexapi.sdk.models.operations.async.GetMetadataHubsRequestBuilder;
@@ -51,6 +57,8 @@ import dev.plexapi.sdk.operations.CreateCustomHub;
 import dev.plexapi.sdk.operations.DeleteCustomHub;
 import dev.plexapi.sdk.operations.GetAllHubs;
 import dev.plexapi.sdk.operations.GetContinueWatching;
+import dev.plexapi.sdk.operations.GetContinueWatchingItems;
+import dev.plexapi.sdk.operations.GetHomeRecentlyAdded;
 import dev.plexapi.sdk.operations.GetHubItems;
 import dev.plexapi.sdk.operations.GetMetadataHubs;
 import dev.plexapi.sdk.operations.GetPostplayHubs;
@@ -61,12 +69,16 @@ import dev.plexapi.sdk.operations.ListHubs;
 import dev.plexapi.sdk.operations.MoveHub;
 import dev.plexapi.sdk.operations.ResetSectionDefaults;
 import dev.plexapi.sdk.operations.UpdateHubVisibility;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * The hubs within a media provider
  */
 public class AsyncHubs {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Hubs syncSDK;
 
@@ -102,11 +114,26 @@ public class AsyncHubs {
      * <p>Get the global hubs in this PMS
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetAllHubsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetAllHubsResponse>} - The async response
      */
     public CompletableFuture<GetAllHubsResponse> getAllHubs(GetAllHubsRequest request) {
+        return getAllHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get global hubs
+     * 
+     * <p>Get the global hubs in this PMS
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAllHubsResponse>} - The async response
+     */
+    public CompletableFuture<GetAllHubsResponse> getAllHubs(GetAllHubsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetAllHubsRequest, GetAllHubsResponse> operation
-              = new GetAllHubs.Async(sdkConfiguration);
+              = new GetAllHubs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -129,11 +156,122 @@ public class AsyncHubs {
      * <p>Get the global continue watching hub
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetContinueWatchingResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetContinueWatchingResponse>} - The async response
      */
     public CompletableFuture<GetContinueWatchingResponse> getContinueWatching(GetContinueWatchingRequest request) {
+        return getContinueWatching(request, Optional.empty());
+    }
+
+    /**
+     * Get the continue watching hub
+     * 
+     * <p>Get the global continue watching hub
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetContinueWatchingResponse>} - The async response
+     */
+    public CompletableFuture<GetContinueWatchingResponse> getContinueWatching(GetContinueWatchingRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetContinueWatchingRequest, GetContinueWatchingResponse> operation
-              = new GetContinueWatching.Async(sdkConfiguration);
+              = new GetContinueWatching.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Continue Watching Items
+     * 
+     * <p>Get direct access to Continue Watching items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetContinueWatchingItemsRequestBuilder getContinueWatchingItems() {
+        return new GetContinueWatchingItemsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Continue Watching Items
+     * 
+     * <p>Get direct access to Continue Watching items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetContinueWatchingItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetContinueWatchingItemsResponse> getContinueWatchingItems(GetContinueWatchingItemsRequest request) {
+        return getContinueWatchingItems(request, Optional.empty());
+    }
+
+    /**
+     * Get Continue Watching Items
+     * 
+     * <p>Get direct access to Continue Watching items.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetContinueWatchingItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetContinueWatchingItemsResponse> getContinueWatchingItems(GetContinueWatchingItemsRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetContinueWatchingItemsRequest, GetContinueWatchingItemsResponse> operation
+              = new GetContinueWatchingItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get home hubs Recently Added
+     * 
+     * <p>Get the recently added hub for the home screen.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetHomeRecentlyAddedRequestBuilder getHomeRecentlyAdded() {
+        return new GetHomeRecentlyAddedRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get home hubs Recently Added
+     * 
+     * <p>Get the recently added hub for the home screen.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetHomeRecentlyAddedResponse>} - The async response
+     */
+    public CompletableFuture<GetHomeRecentlyAddedResponse> getHomeRecentlyAdded(GetHomeRecentlyAddedRequest request) {
+        return getHomeRecentlyAdded(request, Optional.empty());
+    }
+
+    /**
+     * Get home hubs Recently Added
+     * 
+     * <p>Get the recently added hub for the home screen.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetHomeRecentlyAddedResponse>} - The async response
+     */
+    public CompletableFuture<GetHomeRecentlyAddedResponse> getHomeRecentlyAdded(GetHomeRecentlyAddedRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetHomeRecentlyAddedRequest, GetHomeRecentlyAddedResponse> operation
+              = new GetHomeRecentlyAdded.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -156,11 +294,26 @@ public class AsyncHubs {
      * <p>Get the items within a single hub specified by identifier
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetHubItemsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetHubItemsResponse>} - The async response
      */
     public CompletableFuture<GetHubItemsResponse> getHubItems(GetHubItemsRequest request) {
+        return getHubItems(request, Optional.empty());
+    }
+
+    /**
+     * Get a hub's items
+     * 
+     * <p>Get the items within a single hub specified by identifier
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetHubItemsResponse>} - The async response
+     */
+    public CompletableFuture<GetHubItemsResponse> getHubItems(GetHubItemsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetHubItemsRequest, GetHubItemsResponse> operation
-              = new GetHubItems.Async(sdkConfiguration);
+              = new GetHubItems.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -183,11 +336,26 @@ public class AsyncHubs {
      * <p>Get the global hubs which are promoted (should be displayed on the home screen)
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPromotedHubsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPromotedHubsResponse>} - The async response
      */
     public CompletableFuture<GetPromotedHubsResponse> getPromotedHubs(GetPromotedHubsRequest request) {
+        return getPromotedHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get the hubs which are promoted
+     * 
+     * <p>Get the global hubs which are promoted (should be displayed on the home screen)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPromotedHubsResponse>} - The async response
+     */
+    public CompletableFuture<GetPromotedHubsResponse> getPromotedHubs(GetPromotedHubsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPromotedHubsRequest, GetPromotedHubsResponse> operation
-              = new GetPromotedHubs.Async(sdkConfiguration);
+              = new GetPromotedHubs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -196,7 +364,7 @@ public class AsyncHubs {
     /**
      * Get hubs for section by metadata item
      * 
-     * <p>Get the hubs for a section by metadata item.  Currently only for music sections
+     * <p>Get the hubs for a section by metadata item. Currently only for music sections
      * 
      * @return The async call builder
      */
@@ -207,14 +375,29 @@ public class AsyncHubs {
     /**
      * Get hubs for section by metadata item
      * 
-     * <p>Get the hubs for a section by metadata item.  Currently only for music sections
+     * <p>Get the hubs for a section by metadata item. Currently only for music sections
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetMetadataHubsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetMetadataHubsResponse>} - The async response
      */
     public CompletableFuture<GetMetadataHubsResponse> getMetadataHubs(GetMetadataHubsRequest request) {
+        return getMetadataHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get hubs for section by metadata item
+     * 
+     * <p>Get the hubs for a section by metadata item. Currently only for music sections
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMetadataHubsResponse>} - The async response
+     */
+    public CompletableFuture<GetMetadataHubsResponse> getMetadataHubs(GetMetadataHubsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetMetadataHubsRequest, GetMetadataHubsResponse> operation
-              = new GetMetadataHubs.Async(sdkConfiguration);
+              = new GetMetadataHubs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -237,11 +420,26 @@ public class AsyncHubs {
      * <p>Get the hubs for a metadata to be displayed in post play
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetPostplayHubsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetPostplayHubsResponse>} - The async response
      */
     public CompletableFuture<GetPostplayHubsResponse> getPostplayHubs(GetPostplayHubsRequest request) {
+        return getPostplayHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get postplay hubs
+     * 
+     * <p>Get the hubs for a metadata to be displayed in post play
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetPostplayHubsResponse>} - The async response
+     */
+    public CompletableFuture<GetPostplayHubsResponse> getPostplayHubs(GetPostplayHubsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetPostplayHubsRequest, GetPostplayHubsResponse> operation
-              = new GetPostplayHubs.Async(sdkConfiguration);
+              = new GetPostplayHubs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -264,11 +462,26 @@ public class AsyncHubs {
      * <p>Get the hubs for a metadata related to the provided metadata item
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetRelatedHubsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetRelatedHubsResponse>} - The async response
      */
     public CompletableFuture<GetRelatedHubsResponse> getRelatedHubs(GetRelatedHubsRequest request) {
+        return getRelatedHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get related hubs
+     * 
+     * <p>Get the hubs for a metadata related to the provided metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetRelatedHubsResponse>} - The async response
+     */
+    public CompletableFuture<GetRelatedHubsResponse> getRelatedHubs(GetRelatedHubsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetRelatedHubsRequest, GetRelatedHubsResponse> operation
-              = new GetRelatedHubs.Async(sdkConfiguration);
+              = new GetRelatedHubs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -291,11 +504,26 @@ public class AsyncHubs {
      * <p>Get the hubs for a single section
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetSectionHubsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetSectionHubsResponse>} - The async response
      */
     public CompletableFuture<GetSectionHubsResponse> getSectionHubs(GetSectionHubsRequest request) {
+        return getSectionHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get section hubs
+     * 
+     * <p>Get the hubs for a single section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionHubsResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionHubsResponse> getSectionHubs(GetSectionHubsRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetSectionHubsRequest, GetSectionHubsResponse> operation
-              = new GetSectionHubs.Async(sdkConfiguration);
+              = new GetSectionHubs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -305,6 +533,8 @@ public class AsyncHubs {
      * Reset hubs to defaults
      * 
      * <p>Reset hubs for this section to defaults and delete custom hubs
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -317,12 +547,31 @@ public class AsyncHubs {
      * 
      * <p>Reset hubs for this section to defaults and delete custom hubs
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ResetSectionDefaultsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ResetSectionDefaultsResponse>} - The async response
      */
     public CompletableFuture<ResetSectionDefaultsResponse> resetSectionDefaults(ResetSectionDefaultsRequest request) {
+        return resetSectionDefaults(request, Optional.empty());
+    }
+
+    /**
+     * Reset hubs to defaults
+     * 
+     * <p>Reset hubs for this section to defaults and delete custom hubs
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ResetSectionDefaultsResponse>} - The async response
+     */
+    public CompletableFuture<ResetSectionDefaultsResponse> resetSectionDefaults(ResetSectionDefaultsRequest request, Optional<Options> options) {
         AsyncRequestOperation<ResetSectionDefaultsRequest, ResetSectionDefaultsResponse> operation
-              = new ResetSectionDefaults.Async(sdkConfiguration);
+              = new ResetSectionDefaults.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -332,6 +581,8 @@ public class AsyncHubs {
      * Get hubs
      * 
      * <p>Get the list of hubs including both built-in and custom
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -344,12 +595,31 @@ public class AsyncHubs {
      * 
      * <p>Get the list of hubs including both built-in and custom
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;ListHubsResponse&gt; - The async response
+     * @return {@code CompletableFuture<ListHubsResponse>} - The async response
      */
     public CompletableFuture<ListHubsResponse> listHubs(ListHubsRequest request) {
+        return listHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get hubs
+     * 
+     * <p>Get the list of hubs including both built-in and custom
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListHubsResponse>} - The async response
+     */
+    public CompletableFuture<ListHubsResponse> listHubs(ListHubsRequest request, Optional<Options> options) {
         AsyncRequestOperation<ListHubsRequest, ListHubsResponse> operation
-              = new ListHubs.Async(sdkConfiguration);
+              = new ListHubs.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -359,6 +629,8 @@ public class AsyncHubs {
      * Create a custom hub
      * 
      * <p>Create a custom hub based on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -371,12 +643,31 @@ public class AsyncHubs {
      * 
      * <p>Create a custom hub based on a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;CreateCustomHubResponse&gt; - The async response
+     * @return {@code CompletableFuture<CreateCustomHubResponse>} - The async response
      */
     public CompletableFuture<CreateCustomHubResponse> createCustomHub(CreateCustomHubRequest request) {
+        return createCustomHub(request, Optional.empty());
+    }
+
+    /**
+     * Create a custom hub
+     * 
+     * <p>Create a custom hub based on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateCustomHubResponse>} - The async response
+     */
+    public CompletableFuture<CreateCustomHubResponse> createCustomHub(CreateCustomHubRequest request, Optional<Options> options) {
         AsyncRequestOperation<CreateCustomHubRequest, CreateCustomHubResponse> operation
-              = new CreateCustomHub.Async(sdkConfiguration);
+              = new CreateCustomHub.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -386,6 +677,8 @@ public class AsyncHubs {
      * Move Hub
      * 
      * <p>Changed the ordering of a hub among others hubs
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -398,12 +691,31 @@ public class AsyncHubs {
      * 
      * <p>Changed the ordering of a hub among others hubs
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;MoveHubResponse&gt; - The async response
+     * @return {@code CompletableFuture<MoveHubResponse>} - The async response
      */
     public CompletableFuture<MoveHubResponse> moveHub(MoveHubRequest request) {
+        return moveHub(request, Optional.empty());
+    }
+
+    /**
+     * Move Hub
+     * 
+     * <p>Changed the ordering of a hub among others hubs
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<MoveHubResponse>} - The async response
+     */
+    public CompletableFuture<MoveHubResponse> moveHub(MoveHubRequest request, Optional<Options> options) {
         AsyncRequestOperation<MoveHubRequest, MoveHubResponse> operation
-              = new MoveHub.Async(sdkConfiguration);
+              = new MoveHub.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -413,6 +725,8 @@ public class AsyncHubs {
      * Delete a custom hub
      * 
      * <p>Delete a custom hub from the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -425,12 +739,31 @@ public class AsyncHubs {
      * 
      * <p>Delete a custom hub from the server
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;DeleteCustomHubResponse&gt; - The async response
+     * @return {@code CompletableFuture<DeleteCustomHubResponse>} - The async response
      */
     public CompletableFuture<DeleteCustomHubResponse> deleteCustomHub(DeleteCustomHubRequest request) {
+        return deleteCustomHub(request, Optional.empty());
+    }
+
+    /**
+     * Delete a custom hub
+     * 
+     * <p>Delete a custom hub from the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteCustomHubResponse>} - The async response
+     */
+    public CompletableFuture<DeleteCustomHubResponse> deleteCustomHub(DeleteCustomHubRequest request, Optional<Options> options) {
         AsyncRequestOperation<DeleteCustomHubRequest, DeleteCustomHubResponse> operation
-              = new DeleteCustomHub.Async(sdkConfiguration);
+              = new DeleteCustomHub.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -440,6 +773,8 @@ public class AsyncHubs {
      * Change hub visibility
      * 
      * <p>Changed the visibility of a hub for both the admin and shared users
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The async call builder
      */
@@ -452,12 +787,31 @@ public class AsyncHubs {
      * 
      * <p>Changed the visibility of a hub for both the admin and shared users
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;UpdateHubVisibilityResponse&gt; - The async response
+     * @return {@code CompletableFuture<UpdateHubVisibilityResponse>} - The async response
      */
     public CompletableFuture<UpdateHubVisibilityResponse> updateHubVisibility(UpdateHubVisibilityRequest request) {
+        return updateHubVisibility(request, Optional.empty());
+    }
+
+    /**
+     * Change hub visibility
+     * 
+     * <p>Changed the visibility of a hub for both the admin and shared users
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateHubVisibilityResponse>} - The async response
+     */
+    public CompletableFuture<UpdateHubVisibilityResponse> updateHubVisibility(UpdateHubVisibilityRequest request, Optional<Options> options) {
         AsyncRequestOperation<UpdateHubVisibilityRequest, UpdateHubVisibilityResponse> operation
-              = new UpdateHubVisibility.Async(sdkConfiguration);
+              = new UpdateHubVisibility.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

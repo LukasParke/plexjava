@@ -86,19 +86,20 @@ public class GetSectionHubsRequest {
     private Optional<String> marketplace;
 
     /**
-     * The section ID for the hubs to fetch
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
-    private long sectionId;
-
-    /**
      * Limit results to count items
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=count")
     private Optional<Long> count;
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * The section ID for the hubs to fetch
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
+    private long sectionId;
+
+    /**
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=onlyTransient")
     private Optional<? extends BoolInt> onlyTransient;
@@ -116,8 +117,8 @@ public class GetSectionHubsRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            long sectionId,
             Optional<Long> count,
+            long sectionId,
             Optional<? extends BoolInt> onlyTransient) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
@@ -130,8 +131,8 @@ public class GetSectionHubsRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(sectionId, "sectionId");
         Utils.checkNotNull(count, "count");
+        Utils.checkNotNull(sectionId, "sectionId");
         Utils.checkNotNull(onlyTransient, "onlyTransient");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
@@ -144,8 +145,8 @@ public class GetSectionHubsRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.sectionId = sectionId;
         this.count = count;
+        this.sectionId = sectionId;
         this.onlyTransient = onlyTransient;
     }
     
@@ -154,8 +155,8 @@ public class GetSectionHubsRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            sectionId, Optional.empty());
     }
 
     /**
@@ -248,14 +249,6 @@ public class GetSectionHubsRequest {
     }
 
     /**
-     * The section ID for the hubs to fetch
-     */
-    @JsonIgnore
-    public long sectionId() {
-        return sectionId;
-    }
-
-    /**
      * Limit results to count items
      */
     @JsonIgnore
@@ -264,7 +257,16 @@ public class GetSectionHubsRequest {
     }
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * The section ID for the hubs to fetch
+     */
+    @JsonIgnore
+    public long sectionId() {
+        return sectionId;
+    }
+
+    /**
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -487,15 +489,6 @@ public class GetSectionHubsRequest {
     }
 
     /**
-     * The section ID for the hubs to fetch
-     */
-    public GetSectionHubsRequest withSectionId(long sectionId) {
-        Utils.checkNotNull(sectionId, "sectionId");
-        this.sectionId = sectionId;
-        return this;
-    }
-
-    /**
      * Limit results to count items
      */
     public GetSectionHubsRequest withCount(long count) {
@@ -515,7 +508,17 @@ public class GetSectionHubsRequest {
     }
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * The section ID for the hubs to fetch
+     */
+    public GetSectionHubsRequest withSectionId(long sectionId) {
+        Utils.checkNotNull(sectionId, "sectionId");
+        this.sectionId = sectionId;
+        return this;
+    }
+
+    /**
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     public GetSectionHubsRequest withOnlyTransient(BoolInt onlyTransient) {
         Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -525,7 +528,8 @@ public class GetSectionHubsRequest {
 
 
     /**
-     * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+     * Only return hubs which are "transient", meaning those which are prone to changing after media
+     * playback or addition (e.g. On Deck, or Recently Added)
      */
     public GetSectionHubsRequest withOnlyTransient(Optional<? extends BoolInt> onlyTransient) {
         Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -554,8 +558,8 @@ public class GetSectionHubsRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
             Utils.enhancedDeepEquals(this.count, other.count) &&
+            Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
             Utils.enhancedDeepEquals(this.onlyTransient, other.onlyTransient);
     }
     
@@ -565,8 +569,8 @@ public class GetSectionHubsRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, sectionId,
-            count, onlyTransient);
+            deviceName, marketplace, count,
+            sectionId, onlyTransient);
     }
     
     @Override
@@ -583,8 +587,8 @@ public class GetSectionHubsRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "sectionId", sectionId,
                 "count", count,
+                "sectionId", sectionId,
                 "onlyTransient", onlyTransient);
     }
 
@@ -613,9 +617,9 @@ public class GetSectionHubsRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
-        private Long sectionId;
-
         private Optional<Long> count = Optional.empty();
+
+        private Long sectionId;
 
         private Optional<? extends BoolInt> onlyTransient;
 
@@ -834,16 +838,6 @@ public class GetSectionHubsRequest {
 
 
         /**
-         * The section ID for the hubs to fetch
-         */
-        public Builder sectionId(long sectionId) {
-            Utils.checkNotNull(sectionId, "sectionId");
-            this.sectionId = sectionId;
-            return this;
-        }
-
-
-        /**
          * Limit results to count items
          */
         public Builder count(long count) {
@@ -863,7 +857,18 @@ public class GetSectionHubsRequest {
 
 
         /**
-         * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+         * The section ID for the hubs to fetch
+         */
+        public Builder sectionId(long sectionId) {
+            Utils.checkNotNull(sectionId, "sectionId");
+            this.sectionId = sectionId;
+            return this;
+        }
+
+
+        /**
+         * Only return hubs which are "transient", meaning those which are prone to changing after media
+         * playback or addition (e.g. On Deck, or Recently Added)
          */
         public Builder onlyTransient(BoolInt onlyTransient) {
             Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -872,7 +877,8 @@ public class GetSectionHubsRequest {
         }
 
         /**
-         * Only return hubs which are "transient", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)
+         * Only return hubs which are "transient", meaning those which are prone to changing after media
+         * playback or addition (e.g. On Deck, or Recently Added)
          */
         public Builder onlyTransient(Optional<? extends BoolInt> onlyTransient) {
             Utils.checkNotNull(onlyTransient, "onlyTransient");
@@ -892,8 +898,8 @@ public class GetSectionHubsRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, sectionId,
-                count, onlyTransient);
+                deviceName, marketplace, count,
+                sectionId, onlyTransient);
         }
 
 

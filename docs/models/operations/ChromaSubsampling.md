@@ -7,6 +7,14 @@ Use the specified chroma subsambling.
   - 3: 444
 Defaults to 3 (444)
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.ChromaSubsampling;
+
+ChromaSubsampling value = ChromaSubsampling.ZERO;
+```
+
 
 ## Values
 

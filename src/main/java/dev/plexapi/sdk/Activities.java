@@ -13,16 +13,23 @@ import dev.plexapi.sdk.models.operations.ListActivitiesRequestBuilder;
 import dev.plexapi.sdk.models.operations.ListActivitiesResponse;
 import dev.plexapi.sdk.operations.CancelActivity;
 import dev.plexapi.sdk.operations.ListActivities;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * Activities provide a way to monitor and control asynchronous operations on the server. In order to receive real-time updates for activities, a client would normally subscribe via either EventSource or Websocket endpoints.
+ * Activities provide a way to monitor and control asynchronous operations on the server. In order to
+ * receive real-time updates for activities, a client would normally subscribe via either EventSource
+ * or Websocket endpoints.
  * 
- * <p>Activities are associated with HTTP replies via a special `X-Plex-Activity` header which contains the UUID of the activity.
+ * <p>Activities are associated with HTTP replies via a special `X-Plex-Activity` header which contains
+ * the UUID of the activity.
  * 
- * <p>Activities are optional cancellable. If cancellable, they may be cancelled via the `DELETE` endpoint.
+ * <p>Activities are optional cancellable. If cancellable, they may be cancelled via the `DELETE`
+ * endpoint.
  */
 public class Activities {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncActivities asyncSDK;
 
@@ -43,7 +50,8 @@ public class Activities {
     /**
      * Get all activities
      * 
-     * <p>List all activities on the server.  Admins can see all activities but other users can only see their own
+     * <p>List all activities on the server. Admins can see all activities but other users can only see their
+     * own
      * 
      * @return The call builder
      */
@@ -54,21 +62,39 @@ public class Activities {
     /**
      * Get all activities
      * 
-     * <p>List all activities on the server.  Admins can see all activities but other users can only see their own
+     * <p>List all activities on the server. Admins can see all activities but other users can only see their
+     * own
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListActivitiesResponse listActivitiesDirect() throws Exception {
+    public ListActivitiesResponse listActivitiesDirect() {
+        return listActivities(Optional.empty());
+    }
+
+    /**
+     * Get all activities
+     * 
+     * <p>List all activities on the server. Admins can see all activities but other users can only see their
+     * own
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListActivitiesResponse listActivities(Optional<Options> options) {
         RequestlessOperation<ListActivitiesResponse> operation
-            = new ListActivities.Sync(sdkConfiguration);
+            = new ListActivities.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Cancel a running activity
      * 
-     * <p>Cancel a running activity.  Admins can cancel all activities but other users can only cancel their own
+     * <p>Cancel a running activity. Admins can cancel all activities but other users can only cancel their
+     * own
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -79,15 +105,35 @@ public class Activities {
     /**
      * Cancel a running activity
      * 
-     * <p>Cancel a running activity.  Admins can cancel all activities but other users can only cancel their own
+     * <p>Cancel a running activity. Admins can cancel all activities but other users can only cancel their
+     * own
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CancelActivityResponse cancelActivity(CancelActivityRequest request) throws Exception {
+    public CancelActivityResponse cancelActivity(CancelActivityRequest request) {
+        return cancelActivity(request, Optional.empty());
+    }
+
+    /**
+     * Cancel a running activity
+     * 
+     * <p>Cancel a running activity. Admins can cancel all activities but other users can only cancel their
+     * own
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CancelActivityResponse cancelActivity(CancelActivityRequest request, Optional<Options> options) {
         RequestOperation<CancelActivityRequest, CancelActivityResponse> operation
-              = new CancelActivity.Sync(sdkConfiguration);
+              = new CancelActivity.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

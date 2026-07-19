@@ -3,6 +3,8 @@
  */
 package dev.plexapi.sdk.models.shared;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -10,9 +12,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Long;
+import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -21,6 +26,13 @@ import java.util.Optional;
  * <p>Information about the playback session
  */
 public class Session {
+    /**
+     * Title of the media being played.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("title")
+    private Optional<String> title;
+
     /**
      * The bandwidth used by this client's playback in kbps
      */
@@ -42,21 +54,69 @@ public class Session {
     @JsonProperty("location")
     private Optional<? extends SessionLocation> location;
 
+    /**
+     * Unique session key for this playback session.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("sessionKey")
+    private Optional<String> sessionKey;
+
+    /**
+     * ID of the user owning this session.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("userID")
+    private Optional<Long> userID;
+
+    /**
+     * UUID of the playback session.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("uuid")
+    private Optional<String> uuid;
+
+
+    @JsonIgnore
+    private Map<String, Object> additionalProperties;
+
     @JsonCreator
     public Session(
+            @JsonProperty("title") Optional<String> title,
             @JsonProperty("bandwidth") Optional<Long> bandwidth,
             @JsonProperty("id") Optional<String> id,
-            @JsonProperty("location") Optional<? extends SessionLocation> location) {
+            @JsonProperty("location") Optional<? extends SessionLocation> location,
+            @JsonProperty("sessionKey") Optional<String> sessionKey,
+            @JsonProperty("userID") Optional<Long> userID,
+            @JsonProperty("uuid") Optional<String> uuid) {
+        Utils.checkNotNull(title, "title");
         Utils.checkNotNull(bandwidth, "bandwidth");
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(location, "location");
+        Utils.checkNotNull(sessionKey, "sessionKey");
+        Utils.checkNotNull(userID, "userID");
+        Utils.checkNotNull(uuid, "uuid");
+        this.title = title;
         this.bandwidth = bandwidth;
         this.id = id;
         this.location = location;
+        this.sessionKey = sessionKey;
+        this.userID = userID;
+        this.uuid = uuid;
+        this.additionalProperties = new HashMap<>();
     }
     
     public Session() {
-        this(Optional.empty(), Optional.empty(), Optional.empty());
+        this(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
+    }
+
+    /**
+     * Title of the media being played.
+     */
+    @JsonIgnore
+    public Optional<String> title() {
+        return title;
     }
 
     /**
@@ -84,10 +144,58 @@ public class Session {
         return (Optional<SessionLocation>) location;
     }
 
+    /**
+     * Unique session key for this playback session.
+     */
+    @JsonIgnore
+    public Optional<String> sessionKey() {
+        return sessionKey;
+    }
+
+    /**
+     * ID of the user owning this session.
+     */
+    @JsonIgnore
+    public Optional<Long> userID() {
+        return userID;
+    }
+
+    /**
+     * UUID of the playback session.
+     */
+    @JsonIgnore
+    public Optional<String> uuid() {
+        return uuid;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> additionalProperties() {
+        return additionalProperties;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
+
+    /**
+     * Title of the media being played.
+     */
+    public Session withTitle(String title) {
+        Utils.checkNotNull(title, "title");
+        this.title = Optional.ofNullable(title);
+        return this;
+    }
+
+
+    /**
+     * Title of the media being played.
+     */
+    public Session withTitle(Optional<String> title) {
+        Utils.checkNotNull(title, "title");
+        this.title = title;
+        return this;
+    }
 
     /**
      * The bandwidth used by this client's playback in kbps
@@ -146,6 +254,76 @@ public class Session {
         return this;
     }
 
+    /**
+     * Unique session key for this playback session.
+     */
+    public Session withSessionKey(String sessionKey) {
+        Utils.checkNotNull(sessionKey, "sessionKey");
+        this.sessionKey = Optional.ofNullable(sessionKey);
+        return this;
+    }
+
+
+    /**
+     * Unique session key for this playback session.
+     */
+    public Session withSessionKey(Optional<String> sessionKey) {
+        Utils.checkNotNull(sessionKey, "sessionKey");
+        this.sessionKey = sessionKey;
+        return this;
+    }
+
+    /**
+     * ID of the user owning this session.
+     */
+    public Session withUserID(long userID) {
+        Utils.checkNotNull(userID, "userID");
+        this.userID = Optional.ofNullable(userID);
+        return this;
+    }
+
+
+    /**
+     * ID of the user owning this session.
+     */
+    public Session withUserID(Optional<Long> userID) {
+        Utils.checkNotNull(userID, "userID");
+        this.userID = userID;
+        return this;
+    }
+
+    /**
+     * UUID of the playback session.
+     */
+    public Session withUuid(String uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = Optional.ofNullable(uuid);
+        return this;
+    }
+
+
+    /**
+     * UUID of the playback session.
+     */
+    public Session withUuid(Optional<String> uuid) {
+        Utils.checkNotNull(uuid, "uuid");
+        this.uuid = uuid;
+        return this;
+    }
+
+    @JsonAnySetter
+    public Session withAdditionalProperty(String key, Object value) {
+        // note that value can be null because of the way JsonAnySetter works
+        Utils.checkNotNull(key, "key");
+        additionalProperties.put(key, value); 
+        return this;
+    }
+    public Session withAdditionalProperties(Map<String, Object> additionalProperties) {
+        Utils.checkNotNull(additionalProperties, "additionalProperties");
+        this.additionalProperties = additionalProperties;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -156,27 +334,41 @@ public class Session {
         }
         Session other = (Session) o;
         return 
+            Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.bandwidth, other.bandwidth) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.location, other.location);
+            Utils.enhancedDeepEquals(this.location, other.location) &&
+            Utils.enhancedDeepEquals(this.sessionKey, other.sessionKey) &&
+            Utils.enhancedDeepEquals(this.userID, other.userID) &&
+            Utils.enhancedDeepEquals(this.uuid, other.uuid) &&
+            Utils.enhancedDeepEquals(this.additionalProperties, other.additionalProperties);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            bandwidth, id, location);
+            title, bandwidth, id,
+            location, sessionKey, userID,
+            uuid, additionalProperties);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Session.class,
+                "title", title,
                 "bandwidth", bandwidth,
                 "id", id,
-                "location", location);
+                "location", location,
+                "sessionKey", sessionKey,
+                "userID", userID,
+                "uuid", uuid,
+                "additionalProperties", additionalProperties);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
+
+        private Optional<String> title = Optional.empty();
 
         private Optional<Long> bandwidth = Optional.empty();
 
@@ -184,8 +376,35 @@ public class Session {
 
         private Optional<? extends SessionLocation> location = Optional.empty();
 
+        private Optional<String> sessionKey = Optional.empty();
+
+        private Optional<Long> userID = Optional.empty();
+
+        private Optional<String> uuid = Optional.empty();
+
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        /**
+         * Title of the media being played.
+         */
+        public Builder title(String title) {
+            Utils.checkNotNull(title, "title");
+            this.title = Optional.ofNullable(title);
+            return this;
+        }
+
+        /**
+         * Title of the media being played.
+         */
+        public Builder title(Optional<String> title) {
+            Utils.checkNotNull(title, "title");
+            this.title = title;
+            return this;
         }
 
 
@@ -245,10 +464,86 @@ public class Session {
             return this;
         }
 
+
+        /**
+         * Unique session key for this playback session.
+         */
+        public Builder sessionKey(String sessionKey) {
+            Utils.checkNotNull(sessionKey, "sessionKey");
+            this.sessionKey = Optional.ofNullable(sessionKey);
+            return this;
+        }
+
+        /**
+         * Unique session key for this playback session.
+         */
+        public Builder sessionKey(Optional<String> sessionKey) {
+            Utils.checkNotNull(sessionKey, "sessionKey");
+            this.sessionKey = sessionKey;
+            return this;
+        }
+
+
+        /**
+         * ID of the user owning this session.
+         */
+        public Builder userID(long userID) {
+            Utils.checkNotNull(userID, "userID");
+            this.userID = Optional.ofNullable(userID);
+            return this;
+        }
+
+        /**
+         * ID of the user owning this session.
+         */
+        public Builder userID(Optional<Long> userID) {
+            Utils.checkNotNull(userID, "userID");
+            this.userID = userID;
+            return this;
+        }
+
+
+        /**
+         * UUID of the playback session.
+         */
+        public Builder uuid(String uuid) {
+            Utils.checkNotNull(uuid, "uuid");
+            this.uuid = Optional.ofNullable(uuid);
+            return this;
+        }
+
+        /**
+         * UUID of the playback session.
+         */
+        public Builder uuid(Optional<String> uuid) {
+            Utils.checkNotNull(uuid, "uuid");
+            this.uuid = uuid;
+            return this;
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            Utils.checkNotNull(key, "key");
+            // we could be strict about null values (force the user
+            // to pass `JsonNullable.of(null)`) but likely to be a bit 
+            // annoying for additional properties building so we'll 
+            // relax preconditions.
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            Utils.checkNotNull(additionalProperties, "additionalProperties");
+            this.additionalProperties = additionalProperties;
+            return this;
+        }
+
         public Session build() {
 
             return new Session(
-                bandwidth, id, location);
+                title, bandwidth, id,
+                location, sessionKey, userID,
+                uuid)
+                .withAdditionalProperties(additionalProperties);
         }
 
     }

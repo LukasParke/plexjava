@@ -85,31 +85,45 @@ public class ListMatchesRequest {
     @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Marketplace")
     private Optional<String> marketplace;
 
-
+    /**
+     * Comma-separated list of IDs
+     */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=ids")
     private String ids;
 
-
+    /**
+     * The title to filter by
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=title")
     private Optional<String> title;
 
-
+    /**
+     * The parentTitle
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=parentTitle")
     private Optional<String> parentTitle;
 
-
+    /**
+     * The identifier of the metadata agent to use
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=agent")
     private Optional<String> agent;
 
-
+    /**
+     * The language code to use
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=language")
     private Optional<String> language;
 
-
+    /**
+     * The year to filter by
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=year")
     private Optional<Long> year;
 
-
+    /**
+     * Whether to perform the operation manually
+     */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=manual")
     private Optional<? extends BoolInt> manual;
 
@@ -270,36 +284,57 @@ public class ListMatchesRequest {
         return marketplace;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     @JsonIgnore
     public String ids() {
         return ids;
     }
 
+    /**
+     * The title to filter by
+     */
     @JsonIgnore
     public Optional<String> title() {
         return title;
     }
 
+    /**
+     * The parentTitle
+     */
     @JsonIgnore
     public Optional<String> parentTitle() {
         return parentTitle;
     }
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     @JsonIgnore
     public Optional<String> agent() {
         return agent;
     }
 
+    /**
+     * The language code to use
+     */
     @JsonIgnore
     public Optional<String> language() {
         return language;
     }
 
+    /**
+     * The year to filter by
+     */
     @JsonIgnore
     public Optional<Long> year() {
         return year;
     }
 
+    /**
+     * Whether to perform the operation manually
+     */
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<BoolInt> manual() {
@@ -520,12 +555,18 @@ public class ListMatchesRequest {
         return this;
     }
 
+    /**
+     * Comma-separated list of IDs
+     */
     public ListMatchesRequest withIds(String ids) {
         Utils.checkNotNull(ids, "ids");
         this.ids = ids;
         return this;
     }
 
+    /**
+     * The title to filter by
+     */
     public ListMatchesRequest withTitle(String title) {
         Utils.checkNotNull(title, "title");
         this.title = Optional.ofNullable(title);
@@ -533,12 +574,18 @@ public class ListMatchesRequest {
     }
 
 
+    /**
+     * The title to filter by
+     */
     public ListMatchesRequest withTitle(Optional<String> title) {
         Utils.checkNotNull(title, "title");
         this.title = title;
         return this;
     }
 
+    /**
+     * The parentTitle
+     */
     public ListMatchesRequest withParentTitle(String parentTitle) {
         Utils.checkNotNull(parentTitle, "parentTitle");
         this.parentTitle = Optional.ofNullable(parentTitle);
@@ -546,12 +593,18 @@ public class ListMatchesRequest {
     }
 
 
+    /**
+     * The parentTitle
+     */
     public ListMatchesRequest withParentTitle(Optional<String> parentTitle) {
         Utils.checkNotNull(parentTitle, "parentTitle");
         this.parentTitle = parentTitle;
         return this;
     }
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     public ListMatchesRequest withAgent(String agent) {
         Utils.checkNotNull(agent, "agent");
         this.agent = Optional.ofNullable(agent);
@@ -559,12 +612,18 @@ public class ListMatchesRequest {
     }
 
 
+    /**
+     * The identifier of the metadata agent to use
+     */
     public ListMatchesRequest withAgent(Optional<String> agent) {
         Utils.checkNotNull(agent, "agent");
         this.agent = agent;
         return this;
     }
 
+    /**
+     * The language code to use
+     */
     public ListMatchesRequest withLanguage(String language) {
         Utils.checkNotNull(language, "language");
         this.language = Optional.ofNullable(language);
@@ -572,12 +631,18 @@ public class ListMatchesRequest {
     }
 
 
+    /**
+     * The language code to use
+     */
     public ListMatchesRequest withLanguage(Optional<String> language) {
         Utils.checkNotNull(language, "language");
         this.language = language;
         return this;
     }
 
+    /**
+     * The year to filter by
+     */
     public ListMatchesRequest withYear(long year) {
         Utils.checkNotNull(year, "year");
         this.year = Optional.ofNullable(year);
@@ -585,12 +650,18 @@ public class ListMatchesRequest {
     }
 
 
+    /**
+     * The year to filter by
+     */
     public ListMatchesRequest withYear(Optional<Long> year) {
         Utils.checkNotNull(year, "year");
         this.year = year;
         return this;
     }
 
+    /**
+     * Whether to perform the operation manually
+     */
     public ListMatchesRequest withManual(BoolInt manual) {
         Utils.checkNotNull(manual, "manual");
         this.manual = Optional.ofNullable(manual);
@@ -598,6 +669,9 @@ public class ListMatchesRequest {
     }
 
 
+    /**
+     * Whether to perform the operation manually
+     */
     public ListMatchesRequest withManual(Optional<? extends BoolInt> manual) {
         Utils.checkNotNull(manual, "manual");
         this.manual = manual;
@@ -921,6 +995,9 @@ public class ListMatchesRequest {
         }
 
 
+        /**
+         * Comma-separated list of IDs
+         */
         public Builder ids(String ids) {
             Utils.checkNotNull(ids, "ids");
             this.ids = ids;
@@ -928,12 +1005,18 @@ public class ListMatchesRequest {
         }
 
 
+        /**
+         * The title to filter by
+         */
         public Builder title(String title) {
             Utils.checkNotNull(title, "title");
             this.title = Optional.ofNullable(title);
             return this;
         }
 
+        /**
+         * The title to filter by
+         */
         public Builder title(Optional<String> title) {
             Utils.checkNotNull(title, "title");
             this.title = title;
@@ -941,12 +1024,18 @@ public class ListMatchesRequest {
         }
 
 
+        /**
+         * The parentTitle
+         */
         public Builder parentTitle(String parentTitle) {
             Utils.checkNotNull(parentTitle, "parentTitle");
             this.parentTitle = Optional.ofNullable(parentTitle);
             return this;
         }
 
+        /**
+         * The parentTitle
+         */
         public Builder parentTitle(Optional<String> parentTitle) {
             Utils.checkNotNull(parentTitle, "parentTitle");
             this.parentTitle = parentTitle;
@@ -954,12 +1043,18 @@ public class ListMatchesRequest {
         }
 
 
+        /**
+         * The identifier of the metadata agent to use
+         */
         public Builder agent(String agent) {
             Utils.checkNotNull(agent, "agent");
             this.agent = Optional.ofNullable(agent);
             return this;
         }
 
+        /**
+         * The identifier of the metadata agent to use
+         */
         public Builder agent(Optional<String> agent) {
             Utils.checkNotNull(agent, "agent");
             this.agent = agent;
@@ -967,12 +1062,18 @@ public class ListMatchesRequest {
         }
 
 
+        /**
+         * The language code to use
+         */
         public Builder language(String language) {
             Utils.checkNotNull(language, "language");
             this.language = Optional.ofNullable(language);
             return this;
         }
 
+        /**
+         * The language code to use
+         */
         public Builder language(Optional<String> language) {
             Utils.checkNotNull(language, "language");
             this.language = language;
@@ -980,12 +1081,18 @@ public class ListMatchesRequest {
         }
 
 
+        /**
+         * The year to filter by
+         */
         public Builder year(long year) {
             Utils.checkNotNull(year, "year");
             this.year = Optional.ofNullable(year);
             return this;
         }
 
+        /**
+         * The year to filter by
+         */
         public Builder year(Optional<Long> year) {
             Utils.checkNotNull(year, "year");
             this.year = year;
@@ -993,12 +1100,18 @@ public class ListMatchesRequest {
         }
 
 
+        /**
+         * Whether to perform the operation manually
+         */
         public Builder manual(BoolInt manual) {
             Utils.checkNotNull(manual, "manual");
             this.manual = Optional.ofNullable(manual);
             return this;
         }
 
+        /**
+         * Whether to perform the operation manually
+         */
         public Builder manual(Optional<? extends BoolInt> manual) {
             Utils.checkNotNull(manual, "manual");
             this.manual = manual;

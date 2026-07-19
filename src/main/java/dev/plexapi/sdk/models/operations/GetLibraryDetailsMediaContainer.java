@@ -20,16 +20,6 @@ import java.util.Optional;
 
 
 public class GetLibraryDetailsMediaContainer {
-    /**
-     * The flavors of directory found here:
-     *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-     *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-     *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("content")
-    private Optional<String> content;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("allowSync")
@@ -39,6 +29,21 @@ public class GetLibraryDetailsMediaContainer {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("art")
     private Optional<String> art;
+
+    /**
+     * The flavors of directory found here:
+     * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+     * subsets of media. However, with the exception of On Deck, all of them can be created by media
+     * queries, and the desire is to allow these to be customized by users.
+     * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+     * nested menus allowing for primative (but structured) navigation.
+     * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+     * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+     * allow clients to build search dialogs on the fly.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("content")
+    private Optional<String> content;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -97,9 +102,9 @@ public class GetLibraryDetailsMediaContainer {
 
     @JsonCreator
     public GetLibraryDetailsMediaContainer(
-            @JsonProperty("content") Optional<String> content,
             @JsonProperty("allowSync") Optional<? extends AllowSync> allowSync,
             @JsonProperty("art") Optional<String> art,
+            @JsonProperty("content") Optional<String> content,
             @JsonProperty("Directory") Optional<? extends List<Metadata>> directory,
             @JsonProperty("identifier") Optional<String> identifier,
             @JsonProperty("librarySectionID") Optional<Long> librarySectionID,
@@ -111,9 +116,9 @@ public class GetLibraryDetailsMediaContainer {
             @JsonProperty("title1") Optional<String> title1,
             @JsonProperty("viewGroup") Optional<String> viewGroup,
             @JsonProperty("viewMode") Optional<Long> viewMode) {
-        Utils.checkNotNull(content, "content");
         Utils.checkNotNull(allowSync, "allowSync");
         Utils.checkNotNull(art, "art");
+        Utils.checkNotNull(content, "content");
         Utils.checkNotNull(directory, "directory");
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(librarySectionID, "librarySectionID");
@@ -125,9 +130,9 @@ public class GetLibraryDetailsMediaContainer {
         Utils.checkNotNull(title1, "title1");
         Utils.checkNotNull(viewGroup, "viewGroup");
         Utils.checkNotNull(viewMode, "viewMode");
-        this.content = content;
         this.allowSync = allowSync;
         this.art = art;
+        this.content = content;
         this.directory = directory;
         this.identifier = identifier;
         this.librarySectionID = librarySectionID;
@@ -149,17 +154,6 @@ public class GetLibraryDetailsMediaContainer {
             Optional.empty(), Optional.empty());
     }
 
-    /**
-     * The flavors of directory found here:
-     *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-     *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-     *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
-     */
-    @JsonIgnore
-    public Optional<String> content() {
-        return content;
-    }
-
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<AllowSync> allowSync() {
@@ -169,6 +163,22 @@ public class GetLibraryDetailsMediaContainer {
     @JsonIgnore
     public Optional<String> art() {
         return art;
+    }
+
+    /**
+     * The flavors of directory found here:
+     * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+     * subsets of media. However, with the exception of On Deck, all of them can be created by media
+     * queries, and the desire is to allow these to be customized by users.
+     * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+     * nested menus allowing for primative (but structured) navigation.
+     * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+     * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+     * allow clients to build search dialogs on the fly.
+     */
+    @JsonIgnore
+    public Optional<String> content() {
+        return content;
     }
 
     @SuppressWarnings("unchecked")
@@ -232,31 +242,6 @@ public class GetLibraryDetailsMediaContainer {
     }
 
 
-    /**
-     * The flavors of directory found here:
-     *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-     *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-     *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
-     */
-    public GetLibraryDetailsMediaContainer withContent(String content) {
-        Utils.checkNotNull(content, "content");
-        this.content = Optional.ofNullable(content);
-        return this;
-    }
-
-
-    /**
-     * The flavors of directory found here:
-     *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-     *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-     *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
-     */
-    public GetLibraryDetailsMediaContainer withContent(Optional<String> content) {
-        Utils.checkNotNull(content, "content");
-        this.content = content;
-        return this;
-    }
-
     public GetLibraryDetailsMediaContainer withAllowSync(AllowSync allowSync) {
         Utils.checkNotNull(allowSync, "allowSync");
         this.allowSync = Optional.ofNullable(allowSync);
@@ -280,6 +265,41 @@ public class GetLibraryDetailsMediaContainer {
     public GetLibraryDetailsMediaContainer withArt(Optional<String> art) {
         Utils.checkNotNull(art, "art");
         this.art = art;
+        return this;
+    }
+
+    /**
+     * The flavors of directory found here:
+     * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+     * subsets of media. However, with the exception of On Deck, all of them can be created by media
+     * queries, and the desire is to allow these to be customized by users.
+     * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+     * nested menus allowing for primative (but structured) navigation.
+     * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+     * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+     * allow clients to build search dialogs on the fly.
+     */
+    public GetLibraryDetailsMediaContainer withContent(String content) {
+        Utils.checkNotNull(content, "content");
+        this.content = Optional.ofNullable(content);
+        return this;
+    }
+
+
+    /**
+     * The flavors of directory found here:
+     * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+     * subsets of media. However, with the exception of On Deck, all of them can be created by media
+     * queries, and the desire is to allow these to be customized by users.
+     * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+     * nested menus allowing for primative (but structured) navigation.
+     * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+     * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+     * allow clients to build search dialogs on the fly.
+     */
+    public GetLibraryDetailsMediaContainer withContent(Optional<String> content) {
+        Utils.checkNotNull(content, "content");
+        this.content = content;
         return this;
     }
 
@@ -436,9 +456,9 @@ public class GetLibraryDetailsMediaContainer {
         }
         GetLibraryDetailsMediaContainer other = (GetLibraryDetailsMediaContainer) o;
         return 
-            Utils.enhancedDeepEquals(this.content, other.content) &&
             Utils.enhancedDeepEquals(this.allowSync, other.allowSync) &&
             Utils.enhancedDeepEquals(this.art, other.art) &&
+            Utils.enhancedDeepEquals(this.content, other.content) &&
             Utils.enhancedDeepEquals(this.directory, other.directory) &&
             Utils.enhancedDeepEquals(this.identifier, other.identifier) &&
             Utils.enhancedDeepEquals(this.librarySectionID, other.librarySectionID) &&
@@ -455,7 +475,7 @@ public class GetLibraryDetailsMediaContainer {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            content, allowSync, art,
+            allowSync, art, content,
             directory, identifier, librarySectionID,
             mediaTagPrefix, mediaTagVersion, size,
             sortAsc, thumb, title1,
@@ -465,9 +485,9 @@ public class GetLibraryDetailsMediaContainer {
     @Override
     public String toString() {
         return Utils.toString(GetLibraryDetailsMediaContainer.class,
-                "content", content,
                 "allowSync", allowSync,
                 "art", art,
+                "content", content,
                 "directory", directory,
                 "identifier", identifier,
                 "librarySectionID", librarySectionID,
@@ -484,11 +504,11 @@ public class GetLibraryDetailsMediaContainer {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Optional<String> content = Optional.empty();
-
         private Optional<? extends AllowSync> allowSync = Optional.empty();
 
         private Optional<String> art = Optional.empty();
+
+        private Optional<String> content = Optional.empty();
 
         private Optional<? extends List<Metadata>> directory = Optional.empty();
 
@@ -517,31 +537,6 @@ public class GetLibraryDetailsMediaContainer {
         }
 
 
-        /**
-         * The flavors of directory found here:
-         *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-         *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-         *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
-         */
-        public Builder content(String content) {
-            Utils.checkNotNull(content, "content");
-            this.content = Optional.ofNullable(content);
-            return this;
-        }
-
-        /**
-         * The flavors of directory found here:
-         *   - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to subsets of media. However, with the exception of On Deck, all of them can be created by media queries, and the desire is to allow these to be customized by users.
-         *   - Secondary: These are marked with `"secondary": true` and were used by old clients to provide nested menus allowing for primative (but structured) navigation.
-         *   - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem structure, and there's a completely obsolete entry marked `"search": true` which used to be used to allow clients to build search dialogs on the fly.
-         */
-        public Builder content(Optional<String> content) {
-            Utils.checkNotNull(content, "content");
-            this.content = content;
-            return this;
-        }
-
-
         public Builder allowSync(AllowSync allowSync) {
             Utils.checkNotNull(allowSync, "allowSync");
             this.allowSync = Optional.ofNullable(allowSync);
@@ -564,6 +559,41 @@ public class GetLibraryDetailsMediaContainer {
         public Builder art(Optional<String> art) {
             Utils.checkNotNull(art, "art");
             this.art = art;
+            return this;
+        }
+
+
+        /**
+         * The flavors of directory found here:
+         * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+         * subsets of media. However, with the exception of On Deck, all of them can be created by media
+         * queries, and the desire is to allow these to be customized by users.
+         * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+         * nested menus allowing for primative (but structured) navigation.
+         * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+         * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+         * allow clients to build search dialogs on the fly.
+         */
+        public Builder content(String content) {
+            Utils.checkNotNull(content, "content");
+            this.content = Optional.ofNullable(content);
+            return this;
+        }
+
+        /**
+         * The flavors of directory found here:
+         * - Primary: (e.g. all, On Deck) These are still used in some clients to provide "shortcuts" to
+         * subsets of media. However, with the exception of On Deck, all of them can be created by media
+         * queries, and the desire is to allow these to be customized by users.
+         * - Secondary: These are marked with `"secondary": true` and were used by old clients to provide
+         * nested menus allowing for primative (but structured) navigation.
+         * - Special: There is a By Folder entry which allows browsing the media by the underlying filesystem
+         * structure, and there's a completely obsolete entry marked `"search": true` which used to be used to
+         * allow clients to build search dialogs on the fly.
+         */
+        public Builder content(Optional<String> content) {
+            Utils.checkNotNull(content, "content");
+            this.content = content;
             return this;
         }
 
@@ -713,7 +743,7 @@ public class GetLibraryDetailsMediaContainer {
         public GetLibraryDetailsMediaContainer build() {
 
             return new GetLibraryDetailsMediaContainer(
-                content, allowSync, art,
+                allowSync, art, content,
                 directory, identifier, librarySectionID,
                 mediaTagPrefix, mediaTagVersion, size,
                 sortAsc, thumb, title1,

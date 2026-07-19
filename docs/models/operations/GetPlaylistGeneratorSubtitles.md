@@ -1,5 +1,13 @@
 # GetPlaylistGeneratorSubtitles
 
+## Example Usage
+
+```java
+import dev.plexapi.sdk.models.operations.GetPlaylistGeneratorSubtitles;
+
+GetPlaylistGeneratorSubtitles value = GetPlaylistGeneratorSubtitles.AUTO;
+```
+
 
 ## Values
 

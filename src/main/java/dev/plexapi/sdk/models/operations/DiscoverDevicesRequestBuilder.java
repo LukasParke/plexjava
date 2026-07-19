@@ -3,25 +3,83 @@
  */
 package dev.plexapi.sdk.models.operations;
 
-import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
+import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.SDKConfiguration;
 import dev.plexapi.sdk.operations.DiscoverDevices;
-import java.lang.Exception;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import dev.plexapi.sdk.utils.RetryConfig;
+import dev.plexapi.sdk.utils.Utils;
+import java.lang.String;
+import java.util.Optional;
 
 public class DiscoverDevicesRequestBuilder {
 
+    private Optional<? extends Protocol> protocol = Optional.empty();
+    private Optional<String> grabberIdentifier = Optional.empty();
+    private Optional<RetryConfig> retryConfig = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public DiscoverDevicesRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
     }
+                
+    public DiscoverDevicesRequestBuilder protocol(Protocol protocol) {
+        Utils.checkNotNull(protocol, "protocol");
+        this.protocol = Optional.of(protocol);
+        return this;
+    }
 
-    public DiscoverDevicesResponse call() throws Exception {
-        
-        RequestlessOperation<DiscoverDevicesResponse> operation
-            = new DiscoverDevices.Sync(sdkConfiguration);
+    public DiscoverDevicesRequestBuilder protocol(Optional<? extends Protocol> protocol) {
+        Utils.checkNotNull(protocol, "protocol");
+        this.protocol = protocol;
+        return this;
+    }
+                
+    public DiscoverDevicesRequestBuilder grabberIdentifier(String grabberIdentifier) {
+        Utils.checkNotNull(grabberIdentifier, "grabberIdentifier");
+        this.grabberIdentifier = Optional.of(grabberIdentifier);
+        return this;
+    }
 
-        return operation.handleResponse(operation.doRequest());
+    public DiscoverDevicesRequestBuilder grabberIdentifier(Optional<String> grabberIdentifier) {
+        Utils.checkNotNull(grabberIdentifier, "grabberIdentifier");
+        this.grabberIdentifier = grabberIdentifier;
+        return this;
+    }
+                
+    public DiscoverDevicesRequestBuilder retryConfig(RetryConfig retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = Optional.of(retryConfig);
+        return this;
+    }
+
+    public DiscoverDevicesRequestBuilder retryConfig(Optional<RetryConfig> retryConfig) {
+        Utils.checkNotNull(retryConfig, "retryConfig");
+        this.retryConfig = retryConfig;
+        return this;
+    }
+
+
+    private DiscoverDevicesRequest buildRequest() {
+
+        DiscoverDevicesRequest request = new DiscoverDevicesRequest(protocol,
+            grabberIdentifier);
+
+        return request;
+    }
+
+    public DiscoverDevicesResponse call() {
+        Optional<Options> options = Optional.of(Options.builder()
+            .retryConfig(retryConfig)
+            .build());
+
+        RequestOperation<DiscoverDevicesRequest, DiscoverDevicesResponse> operation
+              = new DiscoverDevices.Sync(sdkConfiguration, options, _headers);
+        DiscoverDevicesRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 }

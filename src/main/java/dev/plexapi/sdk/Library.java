@@ -3,8 +3,8 @@
  */
 package dev.plexapi.sdk;
 
-import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 import static dev.plexapi.sdk.operations.Operations.RequestlessOperation;
+import static dev.plexapi.sdk.operations.Operations.RequestOperation;
 
 import dev.plexapi.sdk.models.operations.AddExtrasRequest;
 import dev.plexapi.sdk.models.operations.AddExtrasRequestBuilder;
@@ -12,9 +12,6 @@ import dev.plexapi.sdk.models.operations.AddExtrasResponse;
 import dev.plexapi.sdk.models.operations.AddSectionRequest;
 import dev.plexapi.sdk.models.operations.AddSectionRequestBuilder;
 import dev.plexapi.sdk.models.operations.AddSectionResponse;
-import dev.plexapi.sdk.models.operations.AddSubtitlesRequest;
-import dev.plexapi.sdk.models.operations.AddSubtitlesRequestBuilder;
-import dev.plexapi.sdk.models.operations.AddSubtitlesResponse;
 import dev.plexapi.sdk.models.operations.AnalyzeMetadataRequest;
 import dev.plexapi.sdk.models.operations.AnalyzeMetadataRequestBuilder;
 import dev.plexapi.sdk.models.operations.AnalyzeMetadataResponse;
@@ -26,6 +23,9 @@ import dev.plexapi.sdk.models.operations.CancelRefreshRequestBuilder;
 import dev.plexapi.sdk.models.operations.CancelRefreshResponse;
 import dev.plexapi.sdk.models.operations.CleanBundlesRequestBuilder;
 import dev.plexapi.sdk.models.operations.CleanBundlesResponse;
+import dev.plexapi.sdk.models.operations.ComputeSonicPathRequest;
+import dev.plexapi.sdk.models.operations.ComputeSonicPathRequestBuilder;
+import dev.plexapi.sdk.models.operations.ComputeSonicPathResponse;
 import dev.plexapi.sdk.models.operations.CreateMarkerRequest;
 import dev.plexapi.sdk.models.operations.CreateMarkerRequestBuilder;
 import dev.plexapi.sdk.models.operations.CreateMarkerResponse;
@@ -67,6 +67,9 @@ import dev.plexapi.sdk.models.operations.DetectIntrosResponse;
 import dev.plexapi.sdk.models.operations.DetectVoiceActivityRequest;
 import dev.plexapi.sdk.models.operations.DetectVoiceActivityRequestBuilder;
 import dev.plexapi.sdk.models.operations.DetectVoiceActivityResponse;
+import dev.plexapi.sdk.models.operations.EditLibrarySectionRequest;
+import dev.plexapi.sdk.models.operations.EditLibrarySectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.EditLibrarySectionResponse;
 import dev.plexapi.sdk.models.operations.EditMarkerRequest;
 import dev.plexapi.sdk.models.operations.EditMarkerRequestBuilder;
 import dev.plexapi.sdk.models.operations.EditMarkerResponse;
@@ -76,6 +79,12 @@ import dev.plexapi.sdk.models.operations.EditMetadataItemResponse;
 import dev.plexapi.sdk.models.operations.EditSectionRequest;
 import dev.plexapi.sdk.models.operations.EditSectionRequestBuilder;
 import dev.plexapi.sdk.models.operations.EditSectionResponse;
+import dev.plexapi.sdk.models.operations.EmptyTrashPostRequest;
+import dev.plexapi.sdk.models.operations.EmptyTrashPostRequestBuilder;
+import dev.plexapi.sdk.models.operations.EmptyTrashPostResponse;
+import dev.plexapi.sdk.models.operations.EmptyTrashPutRequest;
+import dev.plexapi.sdk.models.operations.EmptyTrashPutRequestBuilder;
+import dev.plexapi.sdk.models.operations.EmptyTrashPutResponse;
 import dev.plexapi.sdk.models.operations.EmptyTrashRequest;
 import dev.plexapi.sdk.models.operations.EmptyTrashRequestBuilder;
 import dev.plexapi.sdk.models.operations.EmptyTrashResponse;
@@ -91,6 +100,21 @@ import dev.plexapi.sdk.models.operations.GetAugmentationStatusResponse;
 import dev.plexapi.sdk.models.operations.GetAvailableSortsRequest;
 import dev.plexapi.sdk.models.operations.GetAvailableSortsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetAvailableSortsResponse;
+import dev.plexapi.sdk.models.operations.GetByContentRatingRequest;
+import dev.plexapi.sdk.models.operations.GetByContentRatingRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetByContentRatingResponse;
+import dev.plexapi.sdk.models.operations.GetByDecadeRequest;
+import dev.plexapi.sdk.models.operations.GetByDecadeRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetByDecadeResponse;
+import dev.plexapi.sdk.models.operations.GetByFolderRequest;
+import dev.plexapi.sdk.models.operations.GetByFolderRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetByFolderResponse;
+import dev.plexapi.sdk.models.operations.GetByResolutionRequest;
+import dev.plexapi.sdk.models.operations.GetByResolutionRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetByResolutionResponse;
+import dev.plexapi.sdk.models.operations.GetByYearRequest;
+import dev.plexapi.sdk.models.operations.GetByYearRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetByYearResponse;
 import dev.plexapi.sdk.models.operations.GetChapterImageRequest;
 import dev.plexapi.sdk.models.operations.GetChapterImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetChapterImageResponse;
@@ -127,9 +151,41 @@ import dev.plexapi.sdk.models.operations.GetLibraryItemsResponse;
 import dev.plexapi.sdk.models.operations.GetLibraryMatchesRequest;
 import dev.plexapi.sdk.models.operations.GetLibraryMatchesRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetLibraryMatchesResponse;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionHubsRequest;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionHubsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionHubsResponse;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionsFallbackRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionsFallbackResponse;
 import dev.plexapi.sdk.models.operations.GetMediaPartRequest;
 import dev.plexapi.sdk.models.operations.GetMediaPartRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetMediaPartResponse;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMetadataChildrenResponse;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandchildrenRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandchildrenRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandchildrenResponse;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandparentRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandparentRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMetadataGrandparentResponse;
+import dev.plexapi.sdk.models.operations.GetMetadataOnDeckRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataOnDeckRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMetadataOnDeckResponse;
+import dev.plexapi.sdk.models.operations.GetMetadataParentRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataParentRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMetadataParentResponse;
+import dev.plexapi.sdk.models.operations.GetMetadataReviewsRequest;
+import dev.plexapi.sdk.models.operations.GetMetadataReviewsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetMetadataReviewsResponse;
+import dev.plexapi.sdk.models.operations.GetNearestMetadataRequest;
+import dev.plexapi.sdk.models.operations.GetNearestMetadataRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetNearestMetadataResponse;
+import dev.plexapi.sdk.models.operations.GetNewestForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetNewestForSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetNewestForSectionResponse;
+import dev.plexapi.sdk.models.operations.GetOnDeckForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetOnDeckForSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetOnDeckForSectionResponse;
 import dev.plexapi.sdk.models.operations.GetPartIndexRequest;
 import dev.plexapi.sdk.models.operations.GetPartIndexRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetPartIndexResponse;
@@ -139,18 +195,65 @@ import dev.plexapi.sdk.models.operations.GetPersonResponse;
 import dev.plexapi.sdk.models.operations.GetRandomArtworkRequest;
 import dev.plexapi.sdk.models.operations.GetRandomArtworkRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetRandomArtworkResponse;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedForSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedForSectionResponse;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedGlobalRequest;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedGlobalRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetRecentlyAddedGlobalResponse;
 import dev.plexapi.sdk.models.operations.GetRelatedItemsRequest;
 import dev.plexapi.sdk.models.operations.GetRelatedItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetRelatedItemsResponse;
+import dev.plexapi.sdk.models.operations.GetRootLibraryRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetRootLibraryResponse;
+import dev.plexapi.sdk.models.operations.GetSectionAgentsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionAgentsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionAgentsResponse;
+import dev.plexapi.sdk.models.operations.GetSectionArtistsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionArtistsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionArtistsResponse;
+import dev.plexapi.sdk.models.operations.GetSectionClipsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionClipsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionClipsResponse;
+import dev.plexapi.sdk.models.operations.GetSectionEditRequest;
+import dev.plexapi.sdk.models.operations.GetSectionEditRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionEditResponse;
+import dev.plexapi.sdk.models.operations.GetSectionEpisodesRequest;
+import dev.plexapi.sdk.models.operations.GetSectionEpisodesRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionEpisodesResponse;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersRequest;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersResponse;
 import dev.plexapi.sdk.models.operations.GetSectionImageRequest;
 import dev.plexapi.sdk.models.operations.GetSectionImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSectionImageResponse;
+import dev.plexapi.sdk.models.operations.GetSectionLabelsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionLabelsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionLabelsResponse;
+import dev.plexapi.sdk.models.operations.GetSectionMoviesRequest;
+import dev.plexapi.sdk.models.operations.GetSectionMoviesRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionMoviesResponse;
+import dev.plexapi.sdk.models.operations.GetSectionPhotosRequest;
+import dev.plexapi.sdk.models.operations.GetSectionPhotosRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionPhotosResponse;
+import dev.plexapi.sdk.models.operations.GetSectionPlaylistsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionPlaylistsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionPlaylistsResponse;
 import dev.plexapi.sdk.models.operations.GetSectionPreferencesRequest;
 import dev.plexapi.sdk.models.operations.GetSectionPreferencesRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSectionPreferencesResponse;
+import dev.plexapi.sdk.models.operations.GetSectionSettingsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionSettingsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionSettingsResponse;
+import dev.plexapi.sdk.models.operations.GetSectionShowsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionShowsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionShowsResponse;
+import dev.plexapi.sdk.models.operations.GetSectionTagsRequest;
+import dev.plexapi.sdk.models.operations.GetSectionTagsRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionTagsResponse;
+import dev.plexapi.sdk.models.operations.GetSectionTimelineRequest;
+import dev.plexapi.sdk.models.operations.GetSectionTimelineRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionTimelineResponse;
 import dev.plexapi.sdk.models.operations.GetSectionsPrefsRequest;
 import dev.plexapi.sdk.models.operations.GetSectionsPrefsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSectionsPrefsResponse;
@@ -165,9 +268,15 @@ import dev.plexapi.sdk.models.operations.GetStreamLoudnessResponse;
 import dev.plexapi.sdk.models.operations.GetStreamRequest;
 import dev.plexapi.sdk.models.operations.GetStreamRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetStreamResponse;
+import dev.plexapi.sdk.models.operations.GetSubtitlesRequest;
+import dev.plexapi.sdk.models.operations.GetSubtitlesRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSubtitlesResponse;
 import dev.plexapi.sdk.models.operations.GetTagsRequest;
 import dev.plexapi.sdk.models.operations.GetTagsRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetTagsResponse;
+import dev.plexapi.sdk.models.operations.GetUnwatchedForSectionRequest;
+import dev.plexapi.sdk.models.operations.GetUnwatchedForSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetUnwatchedForSectionResponse;
 import dev.plexapi.sdk.models.operations.IngestTransientItemRequest;
 import dev.plexapi.sdk.models.operations.IngestTransientItemRequestBuilder;
 import dev.plexapi.sdk.models.operations.IngestTransientItemResponse;
@@ -180,30 +289,51 @@ import dev.plexapi.sdk.models.operations.ListPersonMediaResponse;
 import dev.plexapi.sdk.models.operations.ListSimilarRequest;
 import dev.plexapi.sdk.models.operations.ListSimilarRequestBuilder;
 import dev.plexapi.sdk.models.operations.ListSimilarResponse;
-import dev.plexapi.sdk.models.operations.ListSonicallySimilarRequest;
-import dev.plexapi.sdk.models.operations.ListSonicallySimilarRequestBuilder;
-import dev.plexapi.sdk.models.operations.ListSonicallySimilarResponse;
 import dev.plexapi.sdk.models.operations.ListTopUsersRequest;
 import dev.plexapi.sdk.models.operations.ListTopUsersRequestBuilder;
 import dev.plexapi.sdk.models.operations.ListTopUsersResponse;
 import dev.plexapi.sdk.models.operations.MatchItemRequest;
 import dev.plexapi.sdk.models.operations.MatchItemRequestBuilder;
 import dev.plexapi.sdk.models.operations.MatchItemResponse;
+import dev.plexapi.sdk.models.operations.MatchSectionItemsRequest;
+import dev.plexapi.sdk.models.operations.MatchSectionItemsRequestBuilder;
+import dev.plexapi.sdk.models.operations.MatchSectionItemsResponse;
 import dev.plexapi.sdk.models.operations.MergeItemsRequest;
 import dev.plexapi.sdk.models.operations.MergeItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.MergeItemsResponse;
+import dev.plexapi.sdk.models.operations.MoveSectionRequest;
+import dev.plexapi.sdk.models.operations.MoveSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.MoveSectionResponse;
 import dev.plexapi.sdk.models.operations.OptimizeDatabaseRequest;
 import dev.plexapi.sdk.models.operations.OptimizeDatabaseRequestBuilder;
 import dev.plexapi.sdk.models.operations.OptimizeDatabaseResponse;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryPostRequest;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryPostRequestBuilder;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryPostResponse;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryRequest;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryRequestBuilder;
+import dev.plexapi.sdk.models.operations.OptimizeLibraryResponse;
+import dev.plexapi.sdk.models.operations.OptimizeSectionPostRequest;
+import dev.plexapi.sdk.models.operations.OptimizeSectionPostRequestBuilder;
+import dev.plexapi.sdk.models.operations.OptimizeSectionPostResponse;
+import dev.plexapi.sdk.models.operations.OptimizeSectionRequest;
+import dev.plexapi.sdk.models.operations.OptimizeSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.OptimizeSectionResponse;
 import dev.plexapi.sdk.models.operations.RefreshItemsMetadataRequest;
 import dev.plexapi.sdk.models.operations.RefreshItemsMetadataRequestBuilder;
 import dev.plexapi.sdk.models.operations.RefreshItemsMetadataResponse;
+import dev.plexapi.sdk.models.operations.RefreshSectionPostRequest;
+import dev.plexapi.sdk.models.operations.RefreshSectionPostRequestBuilder;
+import dev.plexapi.sdk.models.operations.RefreshSectionPostResponse;
 import dev.plexapi.sdk.models.operations.RefreshSectionRequest;
 import dev.plexapi.sdk.models.operations.RefreshSectionRequestBuilder;
 import dev.plexapi.sdk.models.operations.RefreshSectionResponse;
 import dev.plexapi.sdk.models.operations.RefreshSectionsMetadataRequest;
 import dev.plexapi.sdk.models.operations.RefreshSectionsMetadataRequestBuilder;
 import dev.plexapi.sdk.models.operations.RefreshSectionsMetadataResponse;
+import dev.plexapi.sdk.models.operations.SearchSectionRequest;
+import dev.plexapi.sdk.models.operations.SearchSectionRequestBuilder;
+import dev.plexapi.sdk.models.operations.SearchSectionResponse;
 import dev.plexapi.sdk.models.operations.SetItemArtworkRequest;
 import dev.plexapi.sdk.models.operations.SetItemArtworkRequestBuilder;
 import dev.plexapi.sdk.models.operations.SetItemArtworkResponse;
@@ -233,19 +363,28 @@ import dev.plexapi.sdk.models.operations.StopAllRefreshesResponse;
 import dev.plexapi.sdk.models.operations.UnmatchRequest;
 import dev.plexapi.sdk.models.operations.UnmatchRequestBuilder;
 import dev.plexapi.sdk.models.operations.UnmatchResponse;
+import dev.plexapi.sdk.models.operations.UnmatchSectionItemsRequest;
+import dev.plexapi.sdk.models.operations.UnmatchSectionItemsRequestBuilder;
+import dev.plexapi.sdk.models.operations.UnmatchSectionItemsResponse;
 import dev.plexapi.sdk.models.operations.UpdateItemArtworkRequest;
 import dev.plexapi.sdk.models.operations.UpdateItemArtworkRequestBuilder;
 import dev.plexapi.sdk.models.operations.UpdateItemArtworkResponse;
 import dev.plexapi.sdk.models.operations.UpdateItemsRequest;
 import dev.plexapi.sdk.models.operations.UpdateItemsRequestBuilder;
 import dev.plexapi.sdk.models.operations.UpdateItemsResponse;
+import dev.plexapi.sdk.models.operations.UploadArtRequest;
+import dev.plexapi.sdk.models.operations.UploadArtRequestBuilder;
+import dev.plexapi.sdk.models.operations.UploadArtResponse;
+import dev.plexapi.sdk.models.operations.UploadPosterRequest;
+import dev.plexapi.sdk.models.operations.UploadPosterRequestBuilder;
+import dev.plexapi.sdk.models.operations.UploadPosterResponse;
 import dev.plexapi.sdk.operations.AddExtras;
 import dev.plexapi.sdk.operations.AddSection;
-import dev.plexapi.sdk.operations.AddSubtitles;
 import dev.plexapi.sdk.operations.AnalyzeMetadata;
 import dev.plexapi.sdk.operations.Autocomplete;
 import dev.plexapi.sdk.operations.CancelRefresh;
 import dev.plexapi.sdk.operations.CleanBundles;
+import dev.plexapi.sdk.operations.ComputeSonicPath;
 import dev.plexapi.sdk.operations.CreateMarker;
 import dev.plexapi.sdk.operations.DeleteCaches;
 import dev.plexapi.sdk.operations.DeleteCollection;
@@ -260,14 +399,22 @@ import dev.plexapi.sdk.operations.DetectAds;
 import dev.plexapi.sdk.operations.DetectCredits;
 import dev.plexapi.sdk.operations.DetectIntros;
 import dev.plexapi.sdk.operations.DetectVoiceActivity;
+import dev.plexapi.sdk.operations.EditLibrarySection;
 import dev.plexapi.sdk.operations.EditMarker;
 import dev.plexapi.sdk.operations.EditMetadataItem;
 import dev.plexapi.sdk.operations.EditSection;
 import dev.plexapi.sdk.operations.EmptyTrash;
+import dev.plexapi.sdk.operations.EmptyTrashPost;
+import dev.plexapi.sdk.operations.EmptyTrashPut;
 import dev.plexapi.sdk.operations.GenerateThumbs;
 import dev.plexapi.sdk.operations.GetAllItemLeaves;
 import dev.plexapi.sdk.operations.GetAugmentationStatus;
 import dev.plexapi.sdk.operations.GetAvailableSorts;
+import dev.plexapi.sdk.operations.GetByContentRating;
+import dev.plexapi.sdk.operations.GetByDecade;
+import dev.plexapi.sdk.operations.GetByFolder;
+import dev.plexapi.sdk.operations.GetByResolution;
+import dev.plexapi.sdk.operations.GetByYear;
 import dev.plexapi.sdk.operations.GetChapterImage;
 import dev.plexapi.sdk.operations.GetCollections;
 import dev.plexapi.sdk.operations.GetCommon;
@@ -280,32 +427,68 @@ import dev.plexapi.sdk.operations.GetItemTree;
 import dev.plexapi.sdk.operations.GetLibraryDetails;
 import dev.plexapi.sdk.operations.GetLibraryItems;
 import dev.plexapi.sdk.operations.GetLibraryMatches;
+import dev.plexapi.sdk.operations.GetLibrarySectionHubs;
+import dev.plexapi.sdk.operations.GetLibrarySectionsFallback;
 import dev.plexapi.sdk.operations.GetMediaPart;
+import dev.plexapi.sdk.operations.GetMetadataChildren;
+import dev.plexapi.sdk.operations.GetMetadataGrandchildren;
+import dev.plexapi.sdk.operations.GetMetadataGrandparent;
+import dev.plexapi.sdk.operations.GetMetadataOnDeck;
+import dev.plexapi.sdk.operations.GetMetadataParent;
+import dev.plexapi.sdk.operations.GetMetadataReviews;
+import dev.plexapi.sdk.operations.GetNearestMetadata;
+import dev.plexapi.sdk.operations.GetNewestForSection;
+import dev.plexapi.sdk.operations.GetOnDeckForSection;
 import dev.plexapi.sdk.operations.GetPartIndex;
 import dev.plexapi.sdk.operations.GetPerson;
 import dev.plexapi.sdk.operations.GetRandomArtwork;
+import dev.plexapi.sdk.operations.GetRecentlyAddedForSection;
+import dev.plexapi.sdk.operations.GetRecentlyAddedGlobal;
 import dev.plexapi.sdk.operations.GetRelatedItems;
+import dev.plexapi.sdk.operations.GetRootLibrary;
+import dev.plexapi.sdk.operations.GetSectionAgents;
+import dev.plexapi.sdk.operations.GetSectionArtists;
+import dev.plexapi.sdk.operations.GetSectionClips;
+import dev.plexapi.sdk.operations.GetSectionEdit;
+import dev.plexapi.sdk.operations.GetSectionEpisodes;
 import dev.plexapi.sdk.operations.GetSectionFilters;
 import dev.plexapi.sdk.operations.GetSectionImage;
+import dev.plexapi.sdk.operations.GetSectionLabels;
+import dev.plexapi.sdk.operations.GetSectionMovies;
+import dev.plexapi.sdk.operations.GetSectionPhotos;
+import dev.plexapi.sdk.operations.GetSectionPlaylists;
 import dev.plexapi.sdk.operations.GetSectionPreferences;
+import dev.plexapi.sdk.operations.GetSectionSettings;
+import dev.plexapi.sdk.operations.GetSectionShows;
+import dev.plexapi.sdk.operations.GetSectionTags;
+import dev.plexapi.sdk.operations.GetSectionTimeline;
 import dev.plexapi.sdk.operations.GetSections;
 import dev.plexapi.sdk.operations.GetSectionsPrefs;
 import dev.plexapi.sdk.operations.GetStream;
 import dev.plexapi.sdk.operations.GetStreamLevels;
 import dev.plexapi.sdk.operations.GetStreamLoudness;
+import dev.plexapi.sdk.operations.GetSubtitles;
 import dev.plexapi.sdk.operations.GetTags;
+import dev.plexapi.sdk.operations.GetUnwatchedForSection;
 import dev.plexapi.sdk.operations.IngestTransientItem;
 import dev.plexapi.sdk.operations.ListMatches;
 import dev.plexapi.sdk.operations.ListPersonMedia;
 import dev.plexapi.sdk.operations.ListSimilar;
-import dev.plexapi.sdk.operations.ListSonicallySimilar;
 import dev.plexapi.sdk.operations.ListTopUsers;
 import dev.plexapi.sdk.operations.MatchItem;
+import dev.plexapi.sdk.operations.MatchSectionItems;
 import dev.plexapi.sdk.operations.MergeItems;
+import dev.plexapi.sdk.operations.MoveSection;
 import dev.plexapi.sdk.operations.OptimizeDatabase;
+import dev.plexapi.sdk.operations.OptimizeLibrary;
+import dev.plexapi.sdk.operations.OptimizeLibraryPost;
+import dev.plexapi.sdk.operations.OptimizeSection;
+import dev.plexapi.sdk.operations.OptimizeSectionPost;
 import dev.plexapi.sdk.operations.RefreshItemsMetadata;
 import dev.plexapi.sdk.operations.RefreshSection;
+import dev.plexapi.sdk.operations.RefreshSectionPost;
 import dev.plexapi.sdk.operations.RefreshSectionsMetadata;
+import dev.plexapi.sdk.operations.SearchSection;
 import dev.plexapi.sdk.operations.SetItemArtwork;
 import dev.plexapi.sdk.operations.SetItemPreferences;
 import dev.plexapi.sdk.operations.SetSectionPreferences;
@@ -316,14 +499,21 @@ import dev.plexapi.sdk.operations.StartAnalysis;
 import dev.plexapi.sdk.operations.StartBifGeneration;
 import dev.plexapi.sdk.operations.StopAllRefreshes;
 import dev.plexapi.sdk.operations.Unmatch;
+import dev.plexapi.sdk.operations.UnmatchSectionItems;
 import dev.plexapi.sdk.operations.UpdateItemArtwork;
 import dev.plexapi.sdk.operations.UpdateItems;
-import java.lang.Exception;
+import dev.plexapi.sdk.operations.UploadArt;
+import dev.plexapi.sdk.operations.UploadPoster;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
+import java.util.Optional;
 
 /**
- * Library endpoints which are outside of the Media Provider API.  Typically this is manipulation of the library (adding/removing sections, modifying preferences, etc).
+ * Library endpoints which are outside of the Media Provider API. Typically this is manipulation of the
+ * library (adding/removing sections, modifying preferences, etc).
  */
 public class Library {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncLibrary asyncSDK;
 
@@ -339,6 +529,50 @@ public class Library {
      */
     public AsyncLibrary async() {
         return asyncSDK;
+    }
+
+    /**
+     * Get Root Library
+     * 
+     * <p>Get the root library object.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetRootLibraryRequestBuilder getRootLibrary() {
+        return new GetRootLibraryRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Root Library
+     * 
+     * <p>Get the root library object.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRootLibraryResponse getRootLibraryDirect() {
+        return getRootLibrary(Optional.empty());
+    }
+
+    /**
+     * Get Root Library
+     * 
+     * <p>Get the root library object.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRootLibraryResponse getRootLibrary(Optional<Options> options) {
+        RequestlessOperation<GetRootLibraryResponse> operation
+            = new GetRootLibrary.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest());
     }
 
     /**
@@ -359,11 +593,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetLibraryItemsResponse getLibraryItems(GetLibraryItemsRequest request) throws Exception {
+    public GetLibraryItemsResponse getLibraryItems(GetLibraryItemsRequest request) {
+        return getLibraryItems(request, Optional.empty());
+    }
+
+    /**
+     * Get all items in library
+     * 
+     * <p>Request all metadata items according to a query.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLibraryItemsResponse getLibraryItems(GetLibraryItemsRequest request, Optional<Options> options) {
         RequestOperation<GetLibraryItemsRequest, GetLibraryItemsResponse> operation
-              = new GetLibraryItems.Sync(sdkConfiguration);
+              = new GetLibraryItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -371,6 +619,8 @@ public class Library {
      * Delete library caches
      * 
      * <p>Delete the hub caches so they are recomputed on next request
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -383,12 +633,29 @@ public class Library {
      * 
      * <p>Delete the hub caches so they are recomputed on next request
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteCachesResponse deleteCachesDirect() throws Exception {
+    public DeleteCachesResponse deleteCachesDirect() {
+        return deleteCaches(Optional.empty());
+    }
+
+    /**
+     * Delete library caches
+     * 
+     * <p>Delete the hub caches so they are recomputed on next request
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteCachesResponse deleteCaches(Optional<Options> options) {
         RequestlessOperation<DeleteCachesResponse> operation
-            = new DeleteCaches.Sync(sdkConfiguration);
+            = new DeleteCaches.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -396,6 +663,8 @@ public class Library {
      * Clean bundles
      * 
      * <p>Clean out any now unused bundles. Bundles can become unused when media is deleted
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -408,20 +677,42 @@ public class Library {
      * 
      * <p>Clean out any now unused bundles. Bundles can become unused when media is deleted
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CleanBundlesResponse cleanBundlesDirect() throws Exception {
+    public CleanBundlesResponse cleanBundlesDirect() {
+        return cleanBundles(Optional.empty());
+    }
+
+    /**
+     * Clean bundles
+     * 
+     * <p>Clean out any now unused bundles. Bundles can become unused when media is deleted
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CleanBundlesResponse cleanBundles(Optional<Options> options) {
         RequestlessOperation<CleanBundlesResponse> operation
-            = new CleanBundles.Sync(sdkConfiguration);
+            = new CleanBundles.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Ingest a transient item
      * 
-     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a library section). In the case where the file represents an episode, the entire tree (show, season, and episode) is added as transient items. At this time, movies and episodes are the only supported types, which are gleaned automatically from the file path.
-     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`) work here.
+     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's
+     * match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a
+     * library section). In the case where the file represents an episode, the entire tree (show, season,
+     * and episode) is added as transient items. At this time, movies and episodes are the only supported
+     * types, which are gleaned automatically from the file path.
+     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`)
+     * work here.
      * 
      * @return The call builder
      */
@@ -432,27 +723,63 @@ public class Library {
     /**
      * Ingest a transient item
      * 
-     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a library section). In the case where the file represents an episode, the entire tree (show, season, and episode) is added as transient items. At this time, movies and episodes are the only supported types, which are gleaned automatically from the file path.
-     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`) work here.
+     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's
+     * match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a
+     * library section). In the case where the file represents an episode, the entire tree (show, season,
+     * and episode) is added as transient items. At this time, movies and episodes are the only supported
+     * types, which are gleaned automatically from the file path.
+     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`)
+     * work here.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public IngestTransientItemResponse ingestTransientItem(IngestTransientItemRequest request) throws Exception {
+    public IngestTransientItemResponse ingestTransientItem(IngestTransientItemRequest request) {
+        return ingestTransientItem(request, Optional.empty());
+    }
+
+    /**
+     * Ingest a transient item
+     * 
+     * <p>This endpoint takes a file path specified in the `url` parameter, matches it using the scanner's
+     * match mechanism, downloads rich metadata, and then ingests the item as a transient item (without a
+     * library section). In the case where the file represents an episode, the entire tree (show, season,
+     * and episode) is added as transient items. At this time, movies and episodes are the only supported
+     * types, which are gleaned automatically from the file path.
+     * Note that any of the parameters passed to the metadata details endpoint (e.g. `includeExtras=1`)
+     * work here.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public IngestTransientItemResponse ingestTransientItem(IngestTransientItemRequest request, Optional<Options> options) {
         RequestOperation<IngestTransientItemRequest, IngestTransientItemResponse> operation
-              = new IngestTransientItem.Sync(sdkConfiguration);
+              = new IngestTransientItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get library matches
      * 
-     * <p>The matches endpoint is used to match content external to the library with content inside the library. This is done by passing a series of semantic "hints" about the content (its type, name, or release year). Each type (e.g. movie) has a canonical set of minimal required hints.
-     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses the endpoint to match up a piece of media with rich metadata.
-     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive match (we prefer false negatives over false positives in general for matching).
-     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
-     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be sent, or the show title
+     * <p>The matches endpoint is used to match content external to the library with content inside the
+     * library. This is done by passing a series of semantic "hints" about the content (its type, name, or
+     * release year). Each type (e.g.
+     * 
+     * <p>movie) has a canonical set of minimal required hints.
+     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG
+     * uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses
+     * the endpoint to match up a piece of media with rich metadata.
+     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a
+     * `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive
+     * match (we prefer false negatives over false positives in general for matching).
+     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece
+     * of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more
+     * ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
+     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be
+     * sent, or the show title
      * 
      * @return The call builder
      */
@@ -463,19 +790,151 @@ public class Library {
     /**
      * Get library matches
      * 
-     * <p>The matches endpoint is used to match content external to the library with content inside the library. This is done by passing a series of semantic "hints" about the content (its type, name, or release year). Each type (e.g. movie) has a canonical set of minimal required hints.
-     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses the endpoint to match up a piece of media with rich metadata.
-     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive match (we prefer false negatives over false positives in general for matching).
-     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
-     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be sent, or the show title
+     * <p>The matches endpoint is used to match content external to the library with content inside the
+     * library. This is done by passing a series of semantic "hints" about the content (its type, name, or
+     * release year). Each type (e.g.
+     * 
+     * <p>movie) has a canonical set of minimal required hints.
+     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG
+     * uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses
+     * the endpoint to match up a piece of media with rich metadata.
+     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a
+     * `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive
+     * match (we prefer false negatives over false positives in general for matching).
+     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece
+     * of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more
+     * ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
+     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be
+     * sent, or the show title
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetLibraryMatchesResponse getLibraryMatches(GetLibraryMatchesRequest request) throws Exception {
+    public GetLibraryMatchesResponse getLibraryMatches(GetLibraryMatchesRequest request) {
+        return getLibraryMatches(request, Optional.empty());
+    }
+
+    /**
+     * Get library matches
+     * 
+     * <p>The matches endpoint is used to match content external to the library with content inside the
+     * library. This is done by passing a series of semantic "hints" about the content (its type, name, or
+     * release year). Each type (e.g.
+     * 
+     * <p>movie) has a canonical set of minimal required hints.
+     * This ability to match content is useful in a variety of scenarios. For example, in the DVR, the EPG
+     * uses the endpoint to match recording rules against airing content. And in the cloud, the UMP uses
+     * the endpoint to match up a piece of media with rich metadata.
+     * The endpoint response can including multiple matches, if there is ambiguity, each one containing a
+     * `score` from 0 to 100. For somewhat historical reasons, anything over 85 is considered a positive
+     * match (we prefer false negatives over false positives in general for matching).
+     * The `guid` hint is somewhat special, in that it generally represents a unique identity for a piece
+     * of media (e.g. the IMDB `ttXXX`) identifier, in contrast with other hints which can be much more
+     * ambiguous (e.g. a title of `Jane Eyre`, which could refer to the 1943 or the 2011 version).
+     * Episodes require either a season/episode pair, or an air date (or both). Either the path must be
+     * sent, or the show title
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLibraryMatchesResponse getLibraryMatches(GetLibraryMatchesRequest request, Optional<Options> options) {
         RequestOperation<GetLibraryMatchesRequest, GetLibraryMatchesResponse> operation
-              = new GetLibraryMatches.Sync(sdkConfiguration);
+              = new GetLibraryMatches.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public OptimizeLibraryRequestBuilder optimizeLibrary() {
+        return new OptimizeLibraryRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeLibraryResponse optimizeLibrary(OptimizeLibraryRequest request) {
+        return optimizeLibrary(request, Optional.empty());
+    }
+
+    /**
+     * Get Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeLibraryResponse optimizeLibrary(OptimizeLibraryRequest request, Optional<Options> options) {
+        RequestOperation<OptimizeLibraryRequest, OptimizeLibraryResponse> operation
+              = new OptimizeLibrary.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public OptimizeLibraryPostRequestBuilder optimizeLibraryPost() {
+        return new OptimizeLibraryPostRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeLibraryPostResponse optimizeLibraryPost(OptimizeLibraryPostRequest request) {
+        return optimizeLibraryPost(request, Optional.empty());
+    }
+
+    /**
+     * Optimize Library
+     * 
+     * <p>Optimize the database globally across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeLibraryPostResponse optimizeLibraryPost(OptimizeLibraryPostRequest request, Optional<Options> options) {
+        RequestOperation<OptimizeLibraryPostRequest, OptimizeLibraryPostResponse> operation
+              = new OptimizeLibraryPost.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -483,6 +942,8 @@ public class Library {
      * Optimize the Database
      * 
      * <p>Initiate optimize on the database.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -495,22 +956,42 @@ public class Library {
      * 
      * <p>Initiate optimize on the database.
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public OptimizeDatabaseResponse optimizeDatabase(OptimizeDatabaseRequest request) throws Exception {
+    public OptimizeDatabaseResponse optimizeDatabase(OptimizeDatabaseRequest request) {
+        return optimizeDatabase(request, Optional.empty());
+    }
+
+    /**
+     * Optimize the Database
+     * 
+     * <p>Initiate optimize on the database.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeDatabaseResponse optimizeDatabase(OptimizeDatabaseRequest request, Optional<Options> options) {
         RequestOperation<OptimizeDatabaseRequest, OptimizeDatabaseResponse> operation
-              = new OptimizeDatabase.Sync(sdkConfiguration);
+              = new OptimizeDatabase.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get random artwork
      * 
-     * <p>Get random artwork across sections.  This is commonly used for a screensaver.
+     * <p>Get random artwork across sections. This is commonly used for a screensaver.
      * 
-     * <p>This retrieves 100 random artwork paths in the specified sections and returns them.  Restrictions are put in place to not return artwork for items the user is not allowed to access.  Artwork will be for Movies, Shows, and Artists only.
+     * <p>This retrieves 100 random artwork paths in the specified sections and returns them. Restrictions are
+     * put in place to not return artwork for items the user is not allowed to access. Artwork will be for
+     * Movies, Shows, and Artists only.
      * 
      * @return The call builder
      */
@@ -521,25 +1002,140 @@ public class Library {
     /**
      * Get random artwork
      * 
-     * <p>Get random artwork across sections.  This is commonly used for a screensaver.
+     * <p>Get random artwork across sections. This is commonly used for a screensaver.
      * 
-     * <p>This retrieves 100 random artwork paths in the specified sections and returns them.  Restrictions are put in place to not return artwork for items the user is not allowed to access.  Artwork will be for Movies, Shows, and Artists only.
+     * <p>This retrieves 100 random artwork paths in the specified sections and returns them. Restrictions are
+     * put in place to not return artwork for items the user is not allowed to access. Artwork will be for
+     * Movies, Shows, and Artists only.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetRandomArtworkResponse getRandomArtwork(GetRandomArtworkRequest request) throws Exception {
+    public GetRandomArtworkResponse getRandomArtwork(GetRandomArtworkRequest request) {
+        return getRandomArtwork(request, Optional.empty());
+    }
+
+    /**
+     * Get random artwork
+     * 
+     * <p>Get random artwork across sections. This is commonly used for a screensaver.
+     * 
+     * <p>This retrieves 100 random artwork paths in the specified sections and returns them. Restrictions are
+     * put in place to not return artwork for items the user is not allowed to access. Artwork will be for
+     * Movies, Shows, and Artists only.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRandomArtworkResponse getRandomArtwork(GetRandomArtworkRequest request, Optional<Options> options) {
         RequestOperation<GetRandomArtworkRequest, GetRandomArtworkResponse> operation
-              = new GetRandomArtwork.Sync(sdkConfiguration);
+              = new GetRandomArtwork.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Global Recently Added
+     * 
+     * <p>Get recently added items across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetRecentlyAddedGlobalRequestBuilder getRecentlyAddedGlobal() {
+        return new GetRecentlyAddedGlobalRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Global Recently Added
+     * 
+     * <p>Get recently added items across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRecentlyAddedGlobalResponse getRecentlyAddedGlobal(GetRecentlyAddedGlobalRequest request) {
+        return getRecentlyAddedGlobal(request, Optional.empty());
+    }
+
+    /**
+     * Get Global Recently Added
+     * 
+     * <p>Get recently added items across all library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRecentlyAddedGlobalResponse getRecentlyAddedGlobal(GetRecentlyAddedGlobalRequest request, Optional<Options> options) {
+        RequestOperation<GetRecentlyAddedGlobalRequest, GetRecentlyAddedGlobalResponse> operation
+              = new GetRecentlyAddedGlobal.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Library Sections (Fallback)
+     * 
+     * <p>Fallback for non-owners to list library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetLibrarySectionsFallbackRequestBuilder getLibrarySectionsFallback() {
+        return new GetLibrarySectionsFallbackRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Library Sections (Fallback)
+     * 
+     * <p>Fallback for non-owners to list library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLibrarySectionsFallbackResponse getLibrarySectionsFallbackDirect() {
+        return getLibrarySectionsFallback(Optional.empty());
+    }
+
+    /**
+     * Get Library Sections (Fallback)
+     * 
+     * <p>Fallback for non-owners to list library sections.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLibrarySectionsFallbackResponse getLibrarySectionsFallback(Optional<Options> options) {
+        RequestlessOperation<GetLibrarySectionsFallbackResponse> operation
+            = new GetLibrarySectionsFallback.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest());
     }
 
     /**
      * Get library sections (main Media Provider Only)
      * 
-     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are typed, and depending on their type provide either a flat or a hierarchical view of the media. For example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is flat.
-     * Libraries have features beyond just being a collection of media; for starters, they include information about supported types, filters and sorts. This allows a client to provide a rich interface around the media (e.g. allow sorting movies by release year).
+     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are
+     * typed, and depending on their type provide either a flat or a hierarchical view of the media. For
+     * example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is
+     * flat.
+     * Libraries have features beyond just being a collection of media; for starters, they include
+     * information about supported types, filters and sorts. This allows a client to provide a rich
+     * interface around the media (e.g. allow sorting movies by release year).
      * 
      * @return The call builder
      */
@@ -550,15 +1146,39 @@ public class Library {
     /**
      * Get library sections (main Media Provider Only)
      * 
-     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are typed, and depending on their type provide either a flat or a hierarchical view of the media. For example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is flat.
-     * Libraries have features beyond just being a collection of media; for starters, they include information about supported types, filters and sorts. This allows a client to provide a rich interface around the media (e.g. allow sorting movies by release year).
+     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are
+     * typed, and depending on their type provide either a flat or a hierarchical view of the media. For
+     * example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is
+     * flat.
+     * Libraries have features beyond just being a collection of media; for starters, they include
+     * information about supported types, filters and sorts. This allows a client to provide a rich
+     * interface around the media (e.g. allow sorting movies by release year).
      * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSectionsResponse getSectionsDirect() throws Exception {
+    public GetSectionsResponse getSectionsDirect() {
+        return getSections(Optional.empty());
+    }
+
+    /**
+     * Get library sections (main Media Provider Only)
+     * 
+     * <p>A library section (commonly referred to as just a library) is a collection of media. Libraries are
+     * typed, and depending on their type provide either a flat or a hierarchical view of the media. For
+     * example, a music library has an artist &gt; albums &gt; tracks structure, whereas a movie library is
+     * flat.
+     * Libraries have features beyond just being a collection of media; for starters, they include
+     * information about supported types, filters and sorts. This allows a client to provide a rich
+     * interface around the media (e.g. allow sorting movies by release year).
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionsResponse getSections(Optional<Options> options) {
         RequestlessOperation<GetSectionsResponse> operation
-            = new GetSections.Sync(sdkConfiguration);
+            = new GetSections.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -566,6 +1186,8 @@ public class Library {
      * Add a library section
      * 
      * <p>Add a new library section to the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -578,13 +1200,31 @@ public class Library {
      * 
      * <p>Add a new library section to the server
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddSectionResponse addSection(AddSectionRequest request) throws Exception {
+    public AddSectionResponse addSection(AddSectionRequest request) {
+        return addSection(request, Optional.empty());
+    }
+
+    /**
+     * Add a library section
+     * 
+     * <p>Add a new library section to the server
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddSectionResponse addSection(AddSectionRequest request, Optional<Options> options) {
         RequestOperation<AddSectionRequest, AddSectionResponse> operation
-              = new AddSection.Sync(sdkConfiguration);
+              = new AddSection.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -592,6 +1232,8 @@ public class Library {
      * Stop refresh
      * 
      * <p>Stop all refreshes across all sections
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -604,12 +1246,29 @@ public class Library {
      * 
      * <p>Stop all refreshes across all sections
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StopAllRefreshesResponse stopAllRefreshesDirect() throws Exception {
+    public StopAllRefreshesResponse stopAllRefreshesDirect() {
+        return stopAllRefreshes(Optional.empty());
+    }
+
+    /**
+     * Stop refresh
+     * 
+     * <p>Stop all refreshes across all sections
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StopAllRefreshesResponse stopAllRefreshes(Optional<Options> options) {
         RequestlessOperation<StopAllRefreshesResponse> operation
-            = new StopAllRefreshes.Sync(sdkConfiguration);
+            = new StopAllRefreshes.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest());
     }
 
@@ -617,6 +1276,8 @@ public class Library {
      * Get section prefs
      * 
      * <p>Get a section's preferences for a metadata type
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -629,13 +1290,31 @@ public class Library {
      * 
      * <p>Get a section's preferences for a metadata type
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSectionsPrefsResponse getSectionsPrefs(GetSectionsPrefsRequest request) throws Exception {
+    public GetSectionsPrefsResponse getSectionsPrefs(GetSectionsPrefsRequest request) {
+        return getSectionsPrefs(request, Optional.empty());
+    }
+
+    /**
+     * Get section prefs
+     * 
+     * <p>Get a section's preferences for a metadata type
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionsPrefsResponse getSectionsPrefs(GetSectionsPrefsRequest request, Optional<Options> options) {
         RequestOperation<GetSectionsPrefsRequest, GetSectionsPrefsResponse> operation
-              = new GetSectionsPrefs.Sync(sdkConfiguration);
+              = new GetSectionsPrefs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -643,6 +1322,8 @@ public class Library {
      * Refresh all sections
      * 
      * <p>Tell PMS to refresh all section metadata
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -655,13 +1336,31 @@ public class Library {
      * 
      * <p>Tell PMS to refresh all section metadata
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RefreshSectionsMetadataResponse refreshSectionsMetadata(RefreshSectionsMetadataRequest request) throws Exception {
+    public RefreshSectionsMetadataResponse refreshSectionsMetadata(RefreshSectionsMetadataRequest request) {
+        return refreshSectionsMetadata(request, Optional.empty());
+    }
+
+    /**
+     * Refresh all sections
+     * 
+     * <p>Tell PMS to refresh all section metadata
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshSectionsMetadataResponse refreshSectionsMetadata(RefreshSectionsMetadataRequest request, Optional<Options> options) {
         RequestOperation<RefreshSectionsMetadataRequest, RefreshSectionsMetadataResponse> operation
-              = new RefreshSectionsMetadata.Sync(sdkConfiguration);
+              = new RefreshSectionsMetadata.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -683,11 +1382,485 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetTagsResponse getTags(GetTagsRequest request) throws Exception {
+    public GetTagsResponse getTags(GetTagsRequest request) {
+        return getTags(request, Optional.empty());
+    }
+
+    /**
+     * Get all library tags of a type
+     * 
+     * <p>Get all library tags of a type
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetTagsResponse getTags(GetTagsRequest request, Optional<Options> options) {
         RequestOperation<GetTagsRequest, GetTagsResponse> operation
-              = new GetTags.Sync(sdkConfiguration);
+              = new GetTags.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Upload media art Art
+     * 
+     * <p>Upload custom background art for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public UploadArtRequestBuilder uploadArt() {
+        return new UploadArtRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Upload media art Art
+     * 
+     * <p>Upload custom background art for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UploadArtResponse uploadArt(UploadArtRequest request) {
+        return uploadArt(request, Optional.empty());
+    }
+
+    /**
+     * Upload media art Art
+     * 
+     * <p>Upload custom background art for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UploadArtResponse uploadArt(UploadArtRequest request, Optional<Options> options) {
+        RequestOperation<UploadArtRequest, UploadArtResponse> operation
+              = new UploadArt.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Metadata Children
+     * 
+     * <p>Get children of a show, season, artist, or album.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMetadataChildrenRequestBuilder getMetadataChildren() {
+        return new GetMetadataChildrenRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Children
+     * 
+     * <p>Get children of a show, season, artist, or album.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataChildrenResponse getMetadataChildren(GetMetadataChildrenRequest request) {
+        return getMetadataChildren(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Children
+     * 
+     * <p>Get children of a show, season, artist, or album.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataChildrenResponse getMetadataChildren(GetMetadataChildrenRequest request, Optional<Options> options) {
+        RequestOperation<GetMetadataChildrenRequest, GetMetadataChildrenResponse> operation
+              = new GetMetadataChildren.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Compute Sonic Path
+     * 
+     * <p>Compute a sonic adventure path from a starting track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public ComputeSonicPathRequestBuilder computeSonicPath() {
+        return new ComputeSonicPathRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Compute Sonic Path
+     * 
+     * <p>Compute a sonic adventure path from a starting track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ComputeSonicPathResponse computeSonicPath(ComputeSonicPathRequest request) {
+        return computeSonicPath(request, Optional.empty());
+    }
+
+    /**
+     * Compute Sonic Path
+     * 
+     * <p>Compute a sonic adventure path from a starting track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ComputeSonicPathResponse computeSonicPath(ComputeSonicPathRequest request, Optional<Options> options) {
+        RequestOperation<ComputeSonicPathRequest, ComputeSonicPathResponse> operation
+              = new ComputeSonicPath.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Metadata Grandchildren
+     * 
+     * <p>Get grandchildren (e.g. episodes under a show).
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMetadataGrandchildrenRequestBuilder getMetadataGrandchildren() {
+        return new GetMetadataGrandchildrenRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Grandchildren
+     * 
+     * <p>Get grandchildren (e.g. episodes under a show).
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataGrandchildrenResponse getMetadataGrandchildren(GetMetadataGrandchildrenRequest request) {
+        return getMetadataGrandchildren(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Grandchildren
+     * 
+     * <p>Get grandchildren (e.g. episodes under a show).
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataGrandchildrenResponse getMetadataGrandchildren(GetMetadataGrandchildrenRequest request, Optional<Options> options) {
+        RequestOperation<GetMetadataGrandchildrenRequest, GetMetadataGrandchildrenResponse> operation
+              = new GetMetadataGrandchildren.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Metadata Grandparent
+     * 
+     * <p>Get grandparent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMetadataGrandparentRequestBuilder getMetadataGrandparent() {
+        return new GetMetadataGrandparentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Grandparent
+     * 
+     * <p>Get grandparent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataGrandparentResponse getMetadataGrandparent(GetMetadataGrandparentRequest request) {
+        return getMetadataGrandparent(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Grandparent
+     * 
+     * <p>Get grandparent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataGrandparentResponse getMetadataGrandparent(GetMetadataGrandparentRequest request, Optional<Options> options) {
+        RequestOperation<GetMetadataGrandparentRequest, GetMetadataGrandparentResponse> operation
+              = new GetMetadataGrandparent.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Nearest Metadata
+     * 
+     * <p>Get sonically similar items for a music track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetNearestMetadataRequestBuilder getNearestMetadata() {
+        return new GetNearestMetadataRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Nearest Metadata
+     * 
+     * <p>Get sonically similar items for a music track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetNearestMetadataResponse getNearestMetadata(GetNearestMetadataRequest request) {
+        return getNearestMetadata(request, Optional.empty());
+    }
+
+    /**
+     * Get Nearest Metadata
+     * 
+     * <p>Get sonically similar items for a music track.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetNearestMetadataResponse getNearestMetadata(GetNearestMetadataRequest request, Optional<Options> options) {
+        RequestOperation<GetNearestMetadataRequest, GetNearestMetadataResponse> operation
+              = new GetNearestMetadata.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Metadata On Deck
+     * 
+     * <p>Get On Deck status for a show or season.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMetadataOnDeckRequestBuilder getMetadataOnDeck() {
+        return new GetMetadataOnDeckRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata On Deck
+     * 
+     * <p>Get On Deck status for a show or season.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataOnDeckResponse getMetadataOnDeck(GetMetadataOnDeckRequest request) {
+        return getMetadataOnDeck(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata On Deck
+     * 
+     * <p>Get On Deck status for a show or season.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataOnDeckResponse getMetadataOnDeck(GetMetadataOnDeckRequest request, Optional<Options> options) {
+        RequestOperation<GetMetadataOnDeckRequest, GetMetadataOnDeckResponse> operation
+              = new GetMetadataOnDeck.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Metadata Parent
+     * 
+     * <p>Get parent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMetadataParentRequestBuilder getMetadataParent() {
+        return new GetMetadataParentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Parent
+     * 
+     * <p>Get parent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataParentResponse getMetadataParent(GetMetadataParentRequest request) {
+        return getMetadataParent(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Parent
+     * 
+     * <p>Get parent metadata shortcut.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataParentResponse getMetadataParent(GetMetadataParentRequest request, Optional<Options> options) {
+        RequestOperation<GetMetadataParentRequest, GetMetadataParentResponse> operation
+              = new GetMetadataParent.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Upload media art Poster
+     * 
+     * <p>Upload a custom poster image for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public UploadPosterRequestBuilder uploadPoster() {
+        return new UploadPosterRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Upload media art Poster
+     * 
+     * <p>Upload a custom poster image for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UploadPosterResponse uploadPoster(UploadPosterRequest request) {
+        return uploadPoster(request, Optional.empty());
+    }
+
+    /**
+     * Upload media art Poster
+     * 
+     * <p>Upload a custom poster image for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UploadPosterResponse uploadPoster(UploadPosterRequest request, Optional<Options> options) {
+        RequestOperation<UploadPosterRequest, UploadPosterResponse> operation
+              = new UploadPoster.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Metadata Reviews
+     * 
+     * <p>Get user reviews for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetMetadataReviewsRequestBuilder getMetadataReviews() {
+        return new GetMetadataReviewsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Metadata Reviews
+     * 
+     * <p>Get user reviews for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataReviewsResponse getMetadataReviews(GetMetadataReviewsRequest request) {
+        return getMetadataReviews(request, Optional.empty());
+    }
+
+    /**
+     * Get Metadata Reviews
+     * 
+     * <p>Get user reviews for a metadata item.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMetadataReviewsResponse getMetadataReviews(GetMetadataReviewsRequest request, Optional<Options> options) {
+        RequestOperation<GetMetadataReviewsRequest, GetMetadataReviewsResponse> operation
+              = new GetMetadataReviews.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -695,6 +1868,8 @@ public class Library {
      * Delete a metadata item
      * 
      * <p>Delete a single metadata item from the library, deleting media as well
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -707,13 +1882,31 @@ public class Library {
      * 
      * <p>Delete a single metadata item from the library, deleting media as well
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteMetadataItemResponse deleteMetadataItem(DeleteMetadataItemRequest request) throws Exception {
+    public DeleteMetadataItemResponse deleteMetadataItem(DeleteMetadataItemRequest request) {
+        return deleteMetadataItem(request, Optional.empty());
+    }
+
+    /**
+     * Delete a metadata item
+     * 
+     * <p>Delete a single metadata item from the library, deleting media as well
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteMetadataItemResponse deleteMetadataItem(DeleteMetadataItemRequest request, Optional<Options> options) {
         RequestOperation<DeleteMetadataItemRequest, DeleteMetadataItemResponse> operation
-              = new DeleteMetadataItem.Sync(sdkConfiguration);
+              = new DeleteMetadataItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -721,6 +1914,8 @@ public class Library {
      * Edit a metadata item
      * 
      * <p>Edit metadata items setting fields
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -733,13 +1928,31 @@ public class Library {
      * 
      * <p>Edit metadata items setting fields
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public EditMetadataItemResponse editMetadataItem(EditMetadataItemRequest request) throws Exception {
+    public EditMetadataItemResponse editMetadataItem(EditMetadataItemRequest request) {
+        return editMetadataItem(request, Optional.empty());
+    }
+
+    /**
+     * Edit a metadata item
+     * 
+     * <p>Edit metadata items setting fields
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EditMetadataItemResponse editMetadataItem(EditMetadataItemRequest request, Optional<Options> options) {
         RequestOperation<EditMetadataItemRequest, EditMetadataItemResponse> operation
-              = new EditMetadataItem.Sync(sdkConfiguration);
+              = new EditMetadataItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -747,6 +1960,8 @@ public class Library {
      * Ad-detect an item
      * 
      * <p>Start the detection of ads in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -759,13 +1974,31 @@ public class Library {
      * 
      * <p>Start the detection of ads in a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DetectAdsResponse detectAds(DetectAdsRequest request) throws Exception {
+    public DetectAdsResponse detectAds(DetectAdsRequest request) {
+        return detectAds(request, Optional.empty());
+    }
+
+    /**
+     * Ad-detect an item
+     * 
+     * <p>Start the detection of ads in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DetectAdsResponse detectAds(DetectAdsRequest request, Optional<Options> options) {
         RequestOperation<DetectAdsRequest, DetectAdsResponse> operation
-              = new DetectAds.Sync(sdkConfiguration);
+              = new DetectAds.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -787,11 +2020,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAllItemLeavesResponse getAllItemLeaves(GetAllItemLeavesRequest request) throws Exception {
+    public GetAllItemLeavesResponse getAllItemLeaves(GetAllItemLeavesRequest request) {
+        return getAllItemLeaves(request, Optional.empty());
+    }
+
+    /**
+     * Get the leaves of an item
+     * 
+     * <p>Get the leaves for a metadata item such as the episodes in a show
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAllItemLeavesResponse getAllItemLeaves(GetAllItemLeavesRequest request, Optional<Options> options) {
         RequestOperation<GetAllItemLeavesRequest, GetAllItemLeavesResponse> operation
-              = new GetAllItemLeaves.Sync(sdkConfiguration);
+              = new GetAllItemLeaves.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -799,6 +2046,8 @@ public class Library {
      * Analyze an item
      * 
      * <p>Start the analysis of a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -811,13 +2060,31 @@ public class Library {
      * 
      * <p>Start the analysis of a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AnalyzeMetadataResponse analyzeMetadata(AnalyzeMetadataRequest request) throws Exception {
+    public AnalyzeMetadataResponse analyzeMetadata(AnalyzeMetadataRequest request) {
+        return analyzeMetadata(request, Optional.empty());
+    }
+
+    /**
+     * Analyze an item
+     * 
+     * <p>Start the analysis of a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AnalyzeMetadataResponse analyzeMetadata(AnalyzeMetadataRequest request, Optional<Options> options) {
         RequestOperation<AnalyzeMetadataRequest, AnalyzeMetadataResponse> operation
-              = new AnalyzeMetadata.Sync(sdkConfiguration);
+              = new AnalyzeMetadata.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -825,6 +2092,8 @@ public class Library {
      * Generate thumbs of chapters for an item
      * 
      * <p>Start the chapter thumb generation for an item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -837,13 +2106,31 @@ public class Library {
      * 
      * <p>Start the chapter thumb generation for an item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GenerateThumbsResponse generateThumbs(GenerateThumbsRequest request) throws Exception {
+    public GenerateThumbsResponse generateThumbs(GenerateThumbsRequest request) {
+        return generateThumbs(request, Optional.empty());
+    }
+
+    /**
+     * Generate thumbs of chapters for an item
+     * 
+     * <p>Start the chapter thumb generation for an item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GenerateThumbsResponse generateThumbs(GenerateThumbsRequest request, Optional<Options> options) {
         RequestOperation<GenerateThumbsRequest, GenerateThumbsResponse> operation
-              = new GenerateThumbs.Sync(sdkConfiguration);
+              = new GenerateThumbs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -851,6 +2138,8 @@ public class Library {
      * Credit detect a metadata item
      * 
      * <p>Start credit detection on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -863,13 +2152,31 @@ public class Library {
      * 
      * <p>Start credit detection on a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DetectCreditsResponse detectCredits(DetectCreditsRequest request) throws Exception {
+    public DetectCreditsResponse detectCredits(DetectCreditsRequest request) {
+        return detectCredits(request, Optional.empty());
+    }
+
+    /**
+     * Credit detect a metadata item
+     * 
+     * <p>Start credit detection on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DetectCreditsResponse detectCredits(DetectCreditsRequest request, Optional<Options> options) {
         RequestOperation<DetectCreditsRequest, DetectCreditsResponse> operation
-              = new DetectCredits.Sync(sdkConfiguration);
+              = new DetectCredits.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -891,11 +2198,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetExtrasResponse getExtras(GetExtrasRequest request) throws Exception {
+    public GetExtrasResponse getExtras(GetExtrasRequest request) {
+        return getExtras(request, Optional.empty());
+    }
+
+    /**
+     * Get an item's extras
+     * 
+     * <p>Get the extras for a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetExtrasResponse getExtras(GetExtrasRequest request, Optional<Options> options) {
         RequestOperation<GetExtrasRequest, GetExtrasResponse> operation
-              = new GetExtras.Sync(sdkConfiguration);
+              = new GetExtras.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -917,18 +2238,33 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddExtrasResponse addExtras(AddExtrasRequest request) throws Exception {
+    public AddExtrasResponse addExtras(AddExtrasRequest request) {
+        return addExtras(request, Optional.empty());
+    }
+
+    /**
+     * Add to an item's extras
+     * 
+     * <p>Add an extra to a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AddExtrasResponse addExtras(AddExtrasRequest request, Optional<Options> options) {
         RequestOperation<AddExtrasRequest, AddExtrasResponse> operation
-              = new AddExtras.Sync(sdkConfiguration);
+              = new AddExtras.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get a file from a metadata or media bundle
      * 
-     * <p>Get a bundle file for a metadata or media item.  This is either an image or a mp3 (for a show's theme)
+     * <p>Get a bundle file for a metadata or media item. This is either an image or a mp3 (for a show's
+     * theme)
      * 
      * @return The call builder
      */
@@ -939,15 +2275,31 @@ public class Library {
     /**
      * Get a file from a metadata or media bundle
      * 
-     * <p>Get a bundle file for a metadata or media item.  This is either an image or a mp3 (for a show's theme)
+     * <p>Get a bundle file for a metadata or media item. This is either an image or a mp3 (for a show's
+     * theme)
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetFileResponse getFile(GetFileRequest request) throws Exception {
+    public GetFileResponse getFile(GetFileRequest request) {
+        return getFile(request, Optional.empty());
+    }
+
+    /**
+     * Get a file from a metadata or media bundle
+     * 
+     * <p>Get a bundle file for a metadata or media item. This is either an image or a mp3 (for a show's
+     * theme)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetFileResponse getFile(GetFileRequest request, Optional<Options> options) {
         RequestOperation<GetFileRequest, GetFileResponse> operation
-              = new GetFile.Sync(sdkConfiguration);
+              = new GetFile.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -955,6 +2307,8 @@ public class Library {
      * Start BIF generation of an item
      * 
      * <p>Start the indexing (BIF generation) of an item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -967,13 +2321,31 @@ public class Library {
      * 
      * <p>Start the indexing (BIF generation) of an item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StartBifGenerationResponse startBifGeneration(StartBifGenerationRequest request) throws Exception {
+    public StartBifGenerationResponse startBifGeneration(StartBifGenerationRequest request) {
+        return startBifGeneration(request, Optional.empty());
+    }
+
+    /**
+     * Start BIF generation of an item
+     * 
+     * <p>Start the indexing (BIF generation) of an item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StartBifGenerationResponse startBifGeneration(StartBifGenerationRequest request, Optional<Options> options) {
         RequestOperation<StartBifGenerationRequest, StartBifGenerationResponse> operation
-              = new StartBifGeneration.Sync(sdkConfiguration);
+              = new StartBifGeneration.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -981,6 +2353,8 @@ public class Library {
      * Intro detect an item
      * 
      * <p>Start the detection of intros in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -993,13 +2367,31 @@ public class Library {
      * 
      * <p>Start the detection of intros in a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DetectIntrosResponse detectIntros(DetectIntrosRequest request) throws Exception {
+    public DetectIntrosResponse detectIntros(DetectIntrosRequest request) {
+        return detectIntros(request, Optional.empty());
+    }
+
+    /**
+     * Intro detect an item
+     * 
+     * <p>Start the detection of intros in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DetectIntrosResponse detectIntros(DetectIntrosRequest request, Optional<Options> options) {
         RequestOperation<DetectIntrosRequest, DetectIntrosResponse> operation
-              = new DetectIntros.Sync(sdkConfiguration);
+              = new DetectIntros.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1021,11 +2413,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreateMarkerResponse createMarker(CreateMarkerRequest request) throws Exception {
+    public CreateMarkerResponse createMarker(CreateMarkerRequest request) {
+        return createMarker(request, Optional.empty());
+    }
+
+    /**
+     * Create a marker
+     * 
+     * <p>Create a marker for this user on the metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateMarkerResponse createMarker(CreateMarkerRequest request, Optional<Options> options) {
         RequestOperation<CreateMarkerRequest, CreateMarkerResponse> operation
-              = new CreateMarker.Sync(sdkConfiguration);
+              = new CreateMarker.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1033,6 +2439,8 @@ public class Library {
      * Match a metadata item
      * 
      * <p>Match a metadata item to a guid
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1045,13 +2453,31 @@ public class Library {
      * 
      * <p>Match a metadata item to a guid
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public MatchItemResponse matchItem(MatchItemRequest request) throws Exception {
+    public MatchItemResponse matchItem(MatchItemRequest request) {
+        return matchItem(request, Optional.empty());
+    }
+
+    /**
+     * Match a metadata item
+     * 
+     * <p>Match a metadata item to a guid
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MatchItemResponse matchItem(MatchItemRequest request, Optional<Options> options) {
         RequestOperation<MatchItemRequest, MatchItemResponse> operation
-              = new MatchItem.Sync(sdkConfiguration);
+              = new MatchItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1059,6 +2485,8 @@ public class Library {
      * Get metadata matches for an item
      * 
      * <p>Get the list of metadata matches for a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1071,13 +2499,31 @@ public class Library {
      * 
      * <p>Get the list of metadata matches for a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListMatchesResponse listMatches(ListMatchesRequest request) throws Exception {
+    public ListMatchesResponse listMatches(ListMatchesRequest request) {
+        return listMatches(request, Optional.empty());
+    }
+
+    /**
+     * Get metadata matches for an item
+     * 
+     * <p>Get the list of metadata matches for a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListMatchesResponse listMatches(ListMatchesRequest request, Optional<Options> options) {
         RequestOperation<ListMatchesRequest, ListMatchesResponse> operation
-              = new ListMatches.Sync(sdkConfiguration);
+              = new ListMatches.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1085,6 +2531,8 @@ public class Library {
      * Merge a metadata item
      * 
      * <p>Merge a metadata item with other items
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1097,39 +2545,31 @@ public class Library {
      * 
      * <p>Merge a metadata item with other items
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public MergeItemsResponse mergeItems(MergeItemsRequest request) throws Exception {
+    public MergeItemsResponse mergeItems(MergeItemsRequest request) {
+        return mergeItems(request, Optional.empty());
+    }
+
+    /**
+     * Merge a metadata item
+     * 
+     * <p>Merge a metadata item with other items
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MergeItemsResponse mergeItems(MergeItemsRequest request, Optional<Options> options) {
         RequestOperation<MergeItemsRequest, MergeItemsResponse> operation
-              = new MergeItems.Sync(sdkConfiguration);
-        return operation.handleResponse(operation.doRequest(request));
-    }
-
-    /**
-     * Get nearest tracks to metadata item
-     * 
-     * <p>Get the nearest tracks, sonically, to the provided track
-     * 
-     * @return The call builder
-     */
-    public ListSonicallySimilarRequestBuilder listSonicallySimilar() {
-        return new ListSonicallySimilarRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Get nearest tracks to metadata item
-     * 
-     * <p>Get the nearest tracks, sonically, to the provided track
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return The response from the API call
-     * @throws Exception if the API call fails
-     */
-    public ListSonicallySimilarResponse listSonicallySimilar(ListSonicallySimilarRequest request) throws Exception {
-        RequestOperation<ListSonicallySimilarRequest, ListSonicallySimilarResponse> operation
-              = new ListSonicallySimilar.Sync(sdkConfiguration);
+              = new MergeItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1137,6 +2577,8 @@ public class Library {
      * Set metadata preferences
      * 
      * <p>Set the preferences on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1149,13 +2591,31 @@ public class Library {
      * 
      * <p>Set the preferences on a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetItemPreferencesResponse setItemPreferences(SetItemPreferencesRequest request) throws Exception {
+    public SetItemPreferencesResponse setItemPreferences(SetItemPreferencesRequest request) {
+        return setItemPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set metadata preferences
+     * 
+     * <p>Set the preferences on a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetItemPreferencesResponse setItemPreferences(SetItemPreferencesRequest request, Optional<Options> options) {
         RequestOperation<SetItemPreferencesRequest, SetItemPreferencesResponse> operation
-              = new SetItemPreferences.Sync(sdkConfiguration);
+              = new SetItemPreferences.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1163,6 +2623,8 @@ public class Library {
      * Refresh a metadata item
      * 
      * <p>Refresh a metadata item from the agent
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1175,13 +2637,31 @@ public class Library {
      * 
      * <p>Refresh a metadata item from the agent
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RefreshItemsMetadataResponse refreshItemsMetadata(RefreshItemsMetadataRequest request) throws Exception {
+    public RefreshItemsMetadataResponse refreshItemsMetadata(RefreshItemsMetadataRequest request) {
+        return refreshItemsMetadata(request, Optional.empty());
+    }
+
+    /**
+     * Refresh a metadata item
+     * 
+     * <p>Refresh a metadata item from the agent
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshItemsMetadataResponse refreshItemsMetadata(RefreshItemsMetadataRequest request, Optional<Options> options) {
         RequestOperation<RefreshItemsMetadataRequest, RefreshItemsMetadataResponse> operation
-              = new RefreshItemsMetadata.Sync(sdkConfiguration);
+              = new RefreshItemsMetadata.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1203,11 +2683,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetRelatedItemsResponse getRelatedItems(GetRelatedItemsRequest request) throws Exception {
+    public GetRelatedItemsResponse getRelatedItems(GetRelatedItemsRequest request) {
+        return getRelatedItems(request, Optional.empty());
+    }
+
+    /**
+     * Get related items
+     * 
+     * <p>Get a hub of related items to a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRelatedItemsResponse getRelatedItems(GetRelatedItemsRequest request, Optional<Options> options) {
         RequestOperation<GetRelatedItemsRequest, GetRelatedItemsResponse> operation
-              = new GetRelatedItems.Sync(sdkConfiguration);
+              = new GetRelatedItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1229,11 +2723,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListSimilarResponse listSimilar(ListSimilarRequest request) throws Exception {
+    public ListSimilarResponse listSimilar(ListSimilarRequest request) {
+        return listSimilar(request, Optional.empty());
+    }
+
+    /**
+     * Get similar items
+     * 
+     * <p>Get a list of similar items to a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListSimilarResponse listSimilar(ListSimilarRequest request, Optional<Options> options) {
         RequestOperation<ListSimilarRequest, ListSimilarResponse> operation
-              = new ListSimilar.Sync(sdkConfiguration);
+              = new ListSimilar.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1241,6 +2749,8 @@ public class Library {
      * Split a metadata item
      * 
      * <p>Split a metadata item into multiple items
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1253,39 +2763,77 @@ public class Library {
      * 
      * <p>Split a metadata item into multiple items
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SplitItemResponse splitItem(SplitItemRequest request) throws Exception {
+    public SplitItemResponse splitItem(SplitItemRequest request) {
+        return splitItem(request, Optional.empty());
+    }
+
+    /**
+     * Split a metadata item
+     * 
+     * <p>Split a metadata item into multiple items
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SplitItemResponse splitItem(SplitItemRequest request, Optional<Options> options) {
         RequestOperation<SplitItemRequest, SplitItemResponse> operation
-              = new SplitItem.Sync(sdkConfiguration);
+              = new SplitItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
-     * Add subtitles
+     * Get subtitles
      * 
      * <p>Add a subtitle to a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
-    public AddSubtitlesRequestBuilder addSubtitles() {
-        return new AddSubtitlesRequestBuilder(sdkConfiguration);
+    public GetSubtitlesRequestBuilder getSubtitles() {
+        return new GetSubtitlesRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Add subtitles
+     * Get subtitles
      * 
      * <p>Add a subtitle to a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AddSubtitlesResponse addSubtitles(AddSubtitlesRequest request) throws Exception {
-        RequestOperation<AddSubtitlesRequest, AddSubtitlesResponse> operation
-              = new AddSubtitles.Sync(sdkConfiguration);
+    public GetSubtitlesResponse getSubtitles(GetSubtitlesRequest request) {
+        return getSubtitles(request, Optional.empty());
+    }
+
+    /**
+     * Get subtitles
+     * 
+     * <p>Add a subtitle to a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSubtitlesResponse getSubtitles(GetSubtitlesRequest request, Optional<Options> options) {
+        RequestOperation<GetSubtitlesRequest, GetSubtitlesResponse> operation
+              = new GetSubtitles.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1307,11 +2855,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetItemTreeResponse getItemTree(GetItemTreeRequest request) throws Exception {
+    public GetItemTreeResponse getItemTree(GetItemTreeRequest request) {
+        return getItemTree(request, Optional.empty());
+    }
+
+    /**
+     * Get metadata items as a tree
+     * 
+     * <p>Get a tree of metadata items, such as the seasons/episodes of a show
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetItemTreeResponse getItemTree(GetItemTreeRequest request, Optional<Options> options) {
         RequestOperation<GetItemTreeRequest, GetItemTreeResponse> operation
-              = new GetItemTree.Sync(sdkConfiguration);
+              = new GetItemTree.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1319,6 +2881,8 @@ public class Library {
      * Unmatch a metadata item
      * 
      * <p>Unmatch a metadata item to info fetched from the agent
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1331,13 +2895,31 @@ public class Library {
      * 
      * <p>Unmatch a metadata item to info fetched from the agent
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public UnmatchResponse unmatch(UnmatchRequest request) throws Exception {
+    public UnmatchResponse unmatch(UnmatchRequest request) {
+        return unmatch(request, Optional.empty());
+    }
+
+    /**
+     * Unmatch a metadata item
+     * 
+     * <p>Unmatch a metadata item to info fetched from the agent
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UnmatchResponse unmatch(UnmatchRequest request, Optional<Options> options) {
         RequestOperation<UnmatchRequest, UnmatchResponse> operation
-              = new Unmatch.Sync(sdkConfiguration);
+              = new Unmatch.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1345,6 +2927,8 @@ public class Library {
      * Get metadata top users
      * 
      * <p>Get the list of users which have played this item starting with the most
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1357,13 +2941,31 @@ public class Library {
      * 
      * <p>Get the list of users which have played this item starting with the most
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListTopUsersResponse listTopUsers(ListTopUsersRequest request) throws Exception {
+    public ListTopUsersResponse listTopUsers(ListTopUsersRequest request) {
+        return listTopUsers(request, Optional.empty());
+    }
+
+    /**
+     * Get metadata top users
+     * 
+     * <p>Get the list of users which have played this item starting with the most
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListTopUsersResponse listTopUsers(ListTopUsersRequest request, Optional<Options> options) {
         RequestOperation<ListTopUsersRequest, ListTopUsersResponse> operation
-              = new ListTopUsers.Sync(sdkConfiguration);
+              = new ListTopUsers.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1371,6 +2973,8 @@ public class Library {
      * Detect voice activity
      * 
      * <p>Start the detection of voice in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1383,13 +2987,31 @@ public class Library {
      * 
      * <p>Start the detection of voice in a metadata item
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DetectVoiceActivityResponse detectVoiceActivity(DetectVoiceActivityRequest request) throws Exception {
+    public DetectVoiceActivityResponse detectVoiceActivity(DetectVoiceActivityRequest request) {
+        return detectVoiceActivity(request, Optional.empty());
+    }
+
+    /**
+     * Detect voice activity
+     * 
+     * <p>Start the detection of voice in a metadata item
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DetectVoiceActivityResponse detectVoiceActivity(DetectVoiceActivityRequest request, Optional<Options> options) {
         RequestOperation<DetectVoiceActivityRequest, DetectVoiceActivityResponse> operation
-              = new DetectVoiceActivity.Sync(sdkConfiguration);
+              = new DetectVoiceActivity.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1411,11 +3033,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAugmentationStatusResponse getAugmentationStatus(GetAugmentationStatusRequest request) throws Exception {
+    public GetAugmentationStatusResponse getAugmentationStatus(GetAugmentationStatusRequest request) {
+        return getAugmentationStatus(request, Optional.empty());
+    }
+
+    /**
+     * Get augmentation status
+     * 
+     * <p>Get augmentation status and potentially wait for completion
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAugmentationStatusResponse getAugmentationStatus(GetAugmentationStatusRequest request, Optional<Options> options) {
         RequestOperation<GetAugmentationStatusRequest, GetAugmentationStatusResponse> operation
-              = new GetAugmentationStatus.Sync(sdkConfiguration);
+              = new GetAugmentationStatus.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1437,11 +3073,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetStreamSelectionResponse setStreamSelection(SetStreamSelectionRequest request) throws Exception {
+    public SetStreamSelectionResponse setStreamSelection(SetStreamSelectionRequest request) {
+        return setStreamSelection(request, Optional.empty());
+    }
+
+    /**
+     * Set stream selection
+     * 
+     * <p>Set which streams (audio/subtitle) are selected by this user
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetStreamSelectionResponse setStreamSelection(SetStreamSelectionRequest request, Optional<Options> options) {
         RequestOperation<SetStreamSelectionRequest, SetStreamSelectionResponse> operation
-              = new SetStreamSelection.Sync(sdkConfiguration);
+              = new SetStreamSelection.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1463,11 +3113,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPersonResponse getPerson(GetPersonRequest request) throws Exception {
+    public GetPersonResponse getPerson(GetPersonRequest request) {
+        return getPerson(request, Optional.empty());
+    }
+
+    /**
+     * Get person details
+     * 
+     * <p>Get details for a single actor.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPersonResponse getPerson(GetPersonRequest request, Optional<Options> options) {
         RequestOperation<GetPersonRequest, GetPersonResponse> operation
-              = new GetPerson.Sync(sdkConfiguration);
+              = new GetPerson.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1489,11 +3153,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public ListPersonMediaResponse listPersonMedia(ListPersonMediaRequest request) throws Exception {
+    public ListPersonMediaResponse listPersonMedia(ListPersonMediaRequest request) {
+        return listPersonMedia(request, Optional.empty());
+    }
+
+    /**
+     * Get media for a person
+     * 
+     * <p>Get all the media for a single actor.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListPersonMediaResponse listPersonMedia(ListPersonMediaRequest request, Optional<Options> options) {
         RequestOperation<ListPersonMediaRequest, ListPersonMediaResponse> operation
-              = new ListPersonMedia.Sync(sdkConfiguration);
+              = new ListPersonMedia.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1501,6 +3179,8 @@ public class Library {
      * Delete a library section
      * 
      * <p>Delete a library section by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1513,20 +3193,40 @@ public class Library {
      * 
      * <p>Delete a library section by id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteLibrarySectionResponse deleteLibrarySection(DeleteLibrarySectionRequest request) throws Exception {
+    public DeleteLibrarySectionResponse deleteLibrarySection(DeleteLibrarySectionRequest request) {
+        return deleteLibrarySection(request, Optional.empty());
+    }
+
+    /**
+     * Delete a library section
+     * 
+     * <p>Delete a library section by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteLibrarySectionResponse deleteLibrarySection(DeleteLibrarySectionRequest request, Optional<Options> options) {
         RequestOperation<DeleteLibrarySectionRequest, DeleteLibrarySectionResponse> operation
-              = new DeleteLibrarySection.Sync(sdkConfiguration);
+              = new DeleteLibrarySection.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get a library section by id
      * 
-     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it contains information about the library, rather than content itself. It often contains a list of `Directory` metadata objects: These used to be used by clients to build a menuing system.
+     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it
+     * contains information about the library, rather than content itself. It often contains a list of
+     * `Directory` metadata objects: These used to be used by clients to build a menuing system.
      * 
      * @return The call builder
      */
@@ -1537,15 +3237,33 @@ public class Library {
     /**
      * Get a library section by id
      * 
-     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it contains information about the library, rather than content itself. It often contains a list of `Directory` metadata objects: These used to be used by clients to build a menuing system.
+     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it
+     * contains information about the library, rather than content itself. It often contains a list of
+     * `Directory` metadata objects: These used to be used by clients to build a menuing system.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetLibraryDetailsResponse getLibraryDetails(GetLibraryDetailsRequest request) throws Exception {
+    public GetLibraryDetailsResponse getLibraryDetails(GetLibraryDetailsRequest request) {
+        return getLibraryDetails(request, Optional.empty());
+    }
+
+    /**
+     * Get a library section by id
+     * 
+     * <p>Returns details for the library. This can be thought of as an interstitial endpoint because it
+     * contains information about the library, rather than content itself. It often contains a list of
+     * `Directory` metadata objects: These used to be used by clients to build a menuing system.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLibraryDetailsResponse getLibraryDetails(GetLibraryDetailsRequest request, Optional<Options> options) {
         RequestOperation<GetLibraryDetailsRequest, GetLibraryDetailsResponse> operation
-              = new GetLibraryDetails.Sync(sdkConfiguration);
+              = new GetLibraryDetails.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1553,6 +3271,8 @@ public class Library {
      * Edit a library section
      * 
      * <p>Edit a library section by id setting parameters
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1565,64 +3285,130 @@ public class Library {
      * 
      * <p>Edit a library section by id setting parameters
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public EditSectionResponse editSection(EditSectionRequest request) throws Exception {
+    public EditSectionResponse editSection(EditSectionRequest request) {
+        return editSection(request, Optional.empty());
+    }
+
+    /**
+     * Edit a library section
+     * 
+     * <p>Edit a library section by id setting parameters
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EditSectionResponse editSection(EditSectionRequest request, Optional<Options> options) {
         RequestOperation<EditSectionRequest, EditSectionResponse> operation
-              = new EditSection.Sync(sdkConfiguration);
+              = new EditSection.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Agents
+     * 
+     * <p>Get available metadata agents for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionAgentsRequestBuilder getSectionAgents() {
+        return new GetSectionAgentsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Agents
+     * 
+     * <p>Get available metadata agents for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionAgentsResponse getSectionAgents(GetSectionAgentsRequest request) {
+        return getSectionAgents(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Agents
+     * 
+     * <p>Get available metadata agents for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionAgentsResponse getSectionAgents(GetSectionAgentsRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionAgentsRequest, GetSectionAgentsResponse> operation
+              = new GetSectionAgents.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Set the fields of the filtered items
      * 
-     * <p>This endpoint takes an large possible set of values.  Here are some examples.
+     * <p>This endpoint takes an large possible set of values. Here are some examples.
      * - **Parameters, extra documentation**
-     *   - artist.title.value
-     *       - When used with track, both artist.title.value and album.title.value need to be specified
-     *   - title.value usage
-     *       - Summary
-     *           - Tracks always rename and never merge
-     *           - Albums and Artists
-     *               - if single item and item without title does not exist, it is renamed.
-     *               - if single item and item with title does exist they are merged.
-     *               - if multiple they are always merged.
-     *       - Tracks
-     *           - Works as expected will update the track's title
-     *           - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
-     *           - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
-     *           - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
-     *       - Albums
-     *           - Functionality changes depending on the existence of an album with the same title
-     *           - Album exists
-     *               - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
-     *                   - Album with id 42 is merged into album titled "Album 2"
-     *               - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
-     *                   - All albums are merged into the existing album titled "Moo Album"
-     *           - Album does not exist
-     *               - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
-     *                   - Album with id 42 has title modified to "NewAlbumTitle"
-     *               - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
-     *                   - All albums are merged into a new album with title="NewAlbumTitle"
-     *       - Artists
-     *           - Functionaly changes depending on the existence of an artist with the same title.
-     *           - Artist exists
-     *               - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
-     *                   - Artist with id 42 is merged into existing artist titled "Artist 2"
-     *               - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
-     *                   - All artists are merged into the existing artist titled "Artist 3"
-     *           - Artist does not exist
-     *               - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
-     *                   - Artist with id 42 has title modified to "NewArtistTitle"
-     *               - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
-     *                   - All artists are merged into a new artist with title="NewArtistTitle"
+     * - artist.title.value
+     * - When used with track, both artist.title.value and album.title.value need to be specified
+     * - title.value usage
+     * - Summary
+     * - Tracks always rename and never merge
+     * - Albums and Artists
+     * - if single item and item without title does not exist, it is renamed.
+     * - if single item and item with title does exist they are merged.
+     * - if multiple they are always merged.
+     * - Tracks
+     * - Works as expected will update the track's title
+     * - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
+     * - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
+     * - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
+     * - Albums
+     * - Functionality changes depending on the existence of an album with the same title
+     * - Album exists
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
+     * - Album with id 42 is merged into album titled "Album 2"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
+     * - All albums are merged into the existing album titled "Moo Album"
+     * - Album does not exist
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
+     * - Album with id 42 has title modified to "NewAlbumTitle"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
+     * - All albums are merged into a new album with title="NewAlbumTitle"
+     * - Artists
+     * - Functionaly changes depending on the existence of an artist with the same title.
+     * - Artist exists
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
+     * - Artist with id 42 is merged into existing artist titled "Artist 2"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
+     * - All artists are merged into the existing artist titled "Artist 3"
+     * - Artist does not exist
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
+     * - Artist with id 42 has title modified to "NewArtistTitle"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
+     * - All artists are merged into a new artist with title="NewArtistTitle"
      * 
      * <p>- **Notes**
-     *     - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
-     *     - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later, is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only place where square bracket characters are allowed in the URI syntax.
-     *     - Escaped square brackets are allowed, but don't render well
+     * - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
+     * - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later,
+     * is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only
+     * place where square bracket characters are allowed in the URI syntax.
+     * - Escaped square brackets are allowed, but don't render well
      * 
      * @return The call builder
      */
@@ -1633,66 +3419,131 @@ public class Library {
     /**
      * Set the fields of the filtered items
      * 
-     * <p>This endpoint takes an large possible set of values.  Here are some examples.
+     * <p>This endpoint takes an large possible set of values. Here are some examples.
      * - **Parameters, extra documentation**
-     *   - artist.title.value
-     *       - When used with track, both artist.title.value and album.title.value need to be specified
-     *   - title.value usage
-     *       - Summary
-     *           - Tracks always rename and never merge
-     *           - Albums and Artists
-     *               - if single item and item without title does not exist, it is renamed.
-     *               - if single item and item with title does exist they are merged.
-     *               - if multiple they are always merged.
-     *       - Tracks
-     *           - Works as expected will update the track's title
-     *           - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
-     *           - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
-     *           - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
-     *       - Albums
-     *           - Functionality changes depending on the existence of an album with the same title
-     *           - Album exists
-     *               - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
-     *                   - Album with id 42 is merged into album titled "Album 2"
-     *               - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
-     *                   - All albums are merged into the existing album titled "Moo Album"
-     *           - Album does not exist
-     *               - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
-     *                   - Album with id 42 has title modified to "NewAlbumTitle"
-     *               - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
-     *                   - All albums are merged into a new album with title="NewAlbumTitle"
-     *       - Artists
-     *           - Functionaly changes depending on the existence of an artist with the same title.
-     *           - Artist exists
-     *               - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
-     *                   - Artist with id 42 is merged into existing artist titled "Artist 2"
-     *               - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
-     *                   - All artists are merged into the existing artist titled "Artist 3"
-     *           - Artist does not exist
-     *               - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
-     *                   - Artist with id 42 has title modified to "NewArtistTitle"
-     *               - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
-     *                   - All artists are merged into a new artist with title="NewArtistTitle"
+     * - artist.title.value
+     * - When used with track, both artist.title.value and album.title.value need to be specified
+     * - title.value usage
+     * - Summary
+     * - Tracks always rename and never merge
+     * - Albums and Artists
+     * - if single item and item without title does not exist, it is renamed.
+     * - if single item and item with title does exist they are merged.
+     * - if multiple they are always merged.
+     * - Tracks
+     * - Works as expected will update the track's title
+     * - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
+     * - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
+     * - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
+     * - Albums
+     * - Functionality changes depending on the existence of an album with the same title
+     * - Album exists
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
+     * - Album with id 42 is merged into album titled "Album 2"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
+     * - All albums are merged into the existing album titled "Moo Album"
+     * - Album does not exist
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
+     * - Album with id 42 has title modified to "NewAlbumTitle"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
+     * - All albums are merged into a new album with title="NewAlbumTitle"
+     * - Artists
+     * - Functionaly changes depending on the existence of an artist with the same title.
+     * - Artist exists
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
+     * - Artist with id 42 is merged into existing artist titled "Artist 2"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
+     * - All artists are merged into the existing artist titled "Artist 3"
+     * - Artist does not exist
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
+     * - Artist with id 42 has title modified to "NewArtistTitle"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
+     * - All artists are merged into a new artist with title="NewArtistTitle"
      * 
      * <p>- **Notes**
-     *     - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
-     *     - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later, is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only place where square bracket characters are allowed in the URI syntax.
-     *     - Escaped square brackets are allowed, but don't render well
+     * - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
+     * - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later,
+     * is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only
+     * place where square bracket characters are allowed in the URI syntax.
+     * - Escaped square brackets are allowed, but don't render well
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public UpdateItemsResponse updateItems(UpdateItemsRequest request) throws Exception {
+    public UpdateItemsResponse updateItems(UpdateItemsRequest request) {
+        return updateItems(request, Optional.empty());
+    }
+
+    /**
+     * Set the fields of the filtered items
+     * 
+     * <p>This endpoint takes an large possible set of values. Here are some examples.
+     * - **Parameters, extra documentation**
+     * - artist.title.value
+     * - When used with track, both artist.title.value and album.title.value need to be specified
+     * - title.value usage
+     * - Summary
+     * - Tracks always rename and never merge
+     * - Albums and Artists
+     * - if single item and item without title does not exist, it is renamed.
+     * - if single item and item with title does exist they are merged.
+     * - if multiple they are always merged.
+     * - Tracks
+     * - Works as expected will update the track's title
+     * - Single track:    `/library/sections/{id}/all?type=10&amp;id=42&amp;title.value=NewName`
+     * - Multiple tracks: `/library/sections/{id}/all?type=10&amp;id=42,43,44&amp;title.value=NewName`
+     * - All tracks:      `/library/sections/{id}/all?type=10&amp;title.value=NewName`
+     * - Albums
+     * - Functionality changes depending on the existence of an album with the same title
+     * - Album exists
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=Album 2`
+     * - Album with id 42 is merged into album titled "Album 2"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=Moo Album`
+     * - All albums are merged into the existing album titled "Moo Album"
+     * - Album does not exist
+     * - Single album: `/library/sections/{id}/all?type=9&amp;id=42&amp;title.value=NewAlbumTitle`
+     * - Album with id 42 has title modified to "NewAlbumTitle"
+     * - Multiple/All albums: `/library/sections/{id}/all?type=9&amp;title.value=NewAlbumTitle`
+     * - All albums are merged into a new album with title="NewAlbumTitle"
+     * - Artists
+     * - Functionaly changes depending on the existence of an artist with the same title.
+     * - Artist exists
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=Artist 2`
+     * - Artist with id 42 is merged into existing artist titled "Artist 2"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=Artist 3`
+     * - All artists are merged into the existing artist titled "Artist 3"
+     * - Artist does not exist
+     * - Single artist: `/library/sections/{id}/all?type=8&amp;id=42&amp;title.value=NewArtistTitle`
+     * - Artist with id 42 has title modified to "NewArtistTitle"
+     * - Multiple/All artists: `/library/sections/{id}/all?type=8&amp;title.value=NewArtistTitle`
+     * - All artists are merged into a new artist with title="NewArtistTitle"
+     * 
+     * <p>- **Notes**
+     * - Technically square brackets are not allowed in an URI except the Internet Protocol Literal Address
+     * - RFC3513: A host identified by an Internet Protocol literal address, version 6 [RFC3513] or later,
+     * is distinguished by enclosing the IP literal within square brackets ("[" and "]"). This is the only
+     * place where square bracket characters are allowed in the URI syntax.
+     * - Escaped square brackets are allowed, but don't render well
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateItemsResponse updateItems(UpdateItemsRequest request, Optional<Options> options) {
         RequestOperation<UpdateItemsRequest, UpdateItemsResponse> operation
-              = new UpdateItems.Sync(sdkConfiguration);
+              = new UpdateItems.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Analyze a section
      * 
-     * <p>Start analysis of all items in a section.  If BIF generation is enabled, this will also be started on this section
+     * <p>Start analysis of all items in a section. If BIF generation is enabled, this will also be started on
+     * this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1703,23 +3554,91 @@ public class Library {
     /**
      * Analyze a section
      * 
-     * <p>Start analysis of all items in a section.  If BIF generation is enabled, this will also be started on this section
+     * <p>Start analysis of all items in a section. If BIF generation is enabled, this will also be started on
+     * this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public StartAnalysisResponse startAnalysis(StartAnalysisRequest request) throws Exception {
+    public StartAnalysisResponse startAnalysis(StartAnalysisRequest request) {
+        return startAnalysis(request, Optional.empty());
+    }
+
+    /**
+     * Analyze a section
+     * 
+     * <p>Start analysis of all items in a section. If BIF generation is enabled, this will also be started on
+     * this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public StartAnalysisResponse startAnalysis(StartAnalysisRequest request, Optional<Options> options) {
         RequestOperation<StartAnalysisRequest, StartAnalysisResponse> operation
-              = new StartAnalysis.Sync(sdkConfiguration);
+              = new StartAnalysis.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Artists
+     * 
+     * <p>Get artists for a music library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionArtistsRequestBuilder getSectionArtists() {
+        return new GetSectionArtistsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Artists
+     * 
+     * <p>Get artists for a music library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionArtistsResponse getSectionArtists(GetSectionArtistsRequest request) {
+        return getSectionArtists(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Artists
+     * 
+     * <p>Get artists for a music library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionArtistsResponse getSectionArtists(GetSectionArtistsRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionArtistsRequest, GetSectionArtistsResponse> operation
+              = new GetSectionArtists.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get autocompletions for search
      * 
-     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example `genre.query` or `title.query`.
-     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`.  In the results, a `{field}.queryRange` will be present to express the range of the match
+     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example
+     * `genre.query` or `title.query`.
+     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`. In the
+     * results, a `{field}.queryRange` will be present to express the range of the match
      * 
      * @return The call builder
      */
@@ -1730,16 +3649,311 @@ public class Library {
     /**
      * Get autocompletions for search
      * 
-     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example `genre.query` or `title.query`.
-     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`.  In the results, a `{field}.queryRange` will be present to express the range of the match
+     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example
+     * `genre.query` or `title.query`.
+     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`. In the
+     * results, a `{field}.queryRange` will be present to express the range of the match
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public AutocompleteResponse autocomplete(AutocompleteRequest request) throws Exception {
+    public AutocompleteResponse autocomplete(AutocompleteRequest request) {
+        return autocomplete(request, Optional.empty());
+    }
+
+    /**
+     * Get autocompletions for search
+     * 
+     * <p>The field to autocomplete on is specified by the `{field}.query` parameter. For example
+     * `genre.query` or `title.query`.
+     * Returns a set of items from the filtered items whose `{field}` starts with `{field}.query`. In the
+     * results, a `{field}.queryRange` will be present to express the range of the match
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AutocompleteResponse autocomplete(AutocompleteRequest request, Optional<Options> options) {
         RequestOperation<AutocompleteRequest, AutocompleteResponse> operation
-              = new Autocomplete.Sync(sdkConfiguration);
+              = new Autocomplete.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get By Content Rating
+     * 
+     * <p>Browse items in a library section grouped by content rating.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetByContentRatingRequestBuilder getByContentRating() {
+        return new GetByContentRatingRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Content Rating
+     * 
+     * <p>Browse items in a library section grouped by content rating.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByContentRatingResponse getByContentRating(GetByContentRatingRequest request) {
+        return getByContentRating(request, Optional.empty());
+    }
+
+    /**
+     * Get By Content Rating
+     * 
+     * <p>Browse items in a library section grouped by content rating.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByContentRatingResponse getByContentRating(GetByContentRatingRequest request, Optional<Options> options) {
+        RequestOperation<GetByContentRatingRequest, GetByContentRatingResponse> operation
+              = new GetByContentRating.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get By Decade
+     * 
+     * <p>Browse items in a library section grouped by decade.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetByDecadeRequestBuilder getByDecade() {
+        return new GetByDecadeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Decade
+     * 
+     * <p>Browse items in a library section grouped by decade.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByDecadeResponse getByDecade(GetByDecadeRequest request) {
+        return getByDecade(request, Optional.empty());
+    }
+
+    /**
+     * Get By Decade
+     * 
+     * <p>Browse items in a library section grouped by decade.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByDecadeResponse getByDecade(GetByDecadeRequest request, Optional<Options> options) {
+        RequestOperation<GetByDecadeRequest, GetByDecadeResponse> operation
+              = new GetByDecade.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get By Folder
+     * 
+     * <p>Browse items in a library section by underlying filesystem folder.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetByFolderRequestBuilder getByFolder() {
+        return new GetByFolderRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Folder
+     * 
+     * <p>Browse items in a library section by underlying filesystem folder.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByFolderResponse getByFolder(GetByFolderRequest request) {
+        return getByFolder(request, Optional.empty());
+    }
+
+    /**
+     * Get By Folder
+     * 
+     * <p>Browse items in a library section by underlying filesystem folder.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByFolderResponse getByFolder(GetByFolderRequest request, Optional<Options> options) {
+        RequestOperation<GetByFolderRequest, GetByFolderResponse> operation
+              = new GetByFolder.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get By Resolution
+     * 
+     * <p>Browse items in a library section grouped by resolution.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetByResolutionRequestBuilder getByResolution() {
+        return new GetByResolutionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Resolution
+     * 
+     * <p>Browse items in a library section grouped by resolution.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByResolutionResponse getByResolution(GetByResolutionRequest request) {
+        return getByResolution(request, Optional.empty());
+    }
+
+    /**
+     * Get By Resolution
+     * 
+     * <p>Browse items in a library section grouped by resolution.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByResolutionResponse getByResolution(GetByResolutionRequest request, Optional<Options> options) {
+        RequestOperation<GetByResolutionRequest, GetByResolutionResponse> operation
+              = new GetByResolution.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get By Year
+     * 
+     * <p>Browse items in a library section grouped by year.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetByYearRequestBuilder getByYear() {
+        return new GetByYearRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get By Year
+     * 
+     * <p>Browse items in a library section grouped by year.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByYearResponse getByYear(GetByYearRequest request) {
+        return getByYear(request, Optional.empty());
+    }
+
+    /**
+     * Get By Year
+     * 
+     * <p>Browse items in a library section grouped by year.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetByYearResponse getByYear(GetByYearRequest request, Optional<Options> options) {
+        RequestOperation<GetByYearRequest, GetByYearResponse> operation
+              = new GetByYear.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Clips
+     * 
+     * <p>Get clips for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionClipsRequestBuilder getSectionClips() {
+        return new GetSectionClipsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Clips
+     * 
+     * <p>Get clips for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionClipsResponse getSectionClips(GetSectionClipsRequest request) {
+        return getSectionClips(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Clips
+     * 
+     * <p>Get clips for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionClipsResponse getSectionClips(GetSectionClipsRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionClipsRequest, GetSectionClipsResponse> operation
+              = new GetSectionClips.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1761,18 +3975,33 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetCollectionsResponse getCollections(GetCollectionsRequest request) throws Exception {
+    public GetCollectionsResponse getCollections(GetCollectionsRequest request) {
+        return getCollections(request, Optional.empty());
+    }
+
+    /**
+     * Get collections in a section
+     * 
+     * <p>Get all collections in a section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCollectionsResponse getCollections(GetCollectionsRequest request, Optional<Options> options) {
         RequestOperation<GetCollectionsRequest, GetCollectionsResponse> operation
-              = new GetCollections.Sync(sdkConfiguration);
+              = new GetCollections.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Get common fields for items
      * 
-     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the provided filter
+     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the
+     * provided filter
      * Fields which are not common will be expressed in the `mixedFields` field
      * 
      * @return The call builder
@@ -1784,23 +4013,134 @@ public class Library {
     /**
      * Get common fields for items
      * 
-     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the provided filter
+     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the
+     * provided filter
      * Fields which are not common will be expressed in the `mixedFields` field
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetCommonResponse getCommon(GetCommonRequest request) throws Exception {
+    public GetCommonResponse getCommon(GetCommonRequest request) {
+        return getCommon(request, Optional.empty());
+    }
+
+    /**
+     * Get common fields for items
+     * 
+     * <p>Represents a "Common" item. It contains only the common attributes of the items selected by the
+     * provided filter
+     * Fields which are not common will be expressed in the `mixedFields` field
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCommonResponse getCommon(GetCommonRequest request, Optional<Options> options) {
         RequestOperation<GetCommonRequest, GetCommonResponse> operation
-              = new GetCommon.Sync(sdkConfiguration);
+              = new GetCommon.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
-     * Empty section trash
+     * Edit Section
      * 
-     * <p>Empty trash in the section, permanently deleting media/metadata for missing media
+     * <p>Get library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionEditRequestBuilder getSectionEdit() {
+        return new GetSectionEditRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Get library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionEditResponse getSectionEdit(GetSectionEditRequest request) {
+        return getSectionEdit(request, Optional.empty());
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Get library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionEditResponse getSectionEdit(GetSectionEditRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionEditRequest, GetSectionEditResponse> operation
+              = new GetSectionEdit.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Update library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public EditLibrarySectionRequestBuilder editLibrarySection() {
+        return new EditLibrarySectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Update library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EditLibrarySectionResponse editLibrarySection(EditLibrarySectionRequest request) {
+        return editLibrarySection(request, Optional.empty());
+    }
+
+    /**
+     * Edit Section
+     * 
+     * <p>Update library section metadata.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EditLibrarySectionResponse editLibrarySection(EditLibrarySectionRequest request, Optional<Options> options) {
+        RequestOperation<EditLibrarySectionRequest, EditLibrarySectionResponse> operation
+              = new EditLibrarySection.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1809,17 +4149,173 @@ public class Library {
     }
 
     /**
+     * Get Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EmptyTrashResponse emptyTrash(EmptyTrashRequest request) {
+        return emptyTrash(request, Optional.empty());
+    }
+
+    /**
+     * Get Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EmptyTrashResponse emptyTrash(EmptyTrashRequest request, Optional<Options> options) {
+        RequestOperation<EmptyTrashRequest, EmptyTrashResponse> operation
+              = new EmptyTrash.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public EmptyTrashPostRequestBuilder emptyTrashPost() {
+        return new EmptyTrashPostRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EmptyTrashPostResponse emptyTrashPost(EmptyTrashPostRequest request) {
+        return emptyTrashPost(request, Optional.empty());
+    }
+
+    /**
+     * Empty Trash
+     * 
+     * <p>Permanently remove items from the trash for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EmptyTrashPostResponse emptyTrashPost(EmptyTrashPostRequest request, Optional<Options> options) {
+        RequestOperation<EmptyTrashPostRequest, EmptyTrashPostResponse> operation
+              = new EmptyTrashPost.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
      * Empty section trash
      * 
      * <p>Empty trash in the section, permanently deleting media/metadata for missing media
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public EmptyTrashPutRequestBuilder emptyTrashPut() {
+        return new EmptyTrashPutRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Empty section trash
+     * 
+     * <p>Empty trash in the section, permanently deleting media/metadata for missing media
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public EmptyTrashResponse emptyTrash(EmptyTrashRequest request) throws Exception {
-        RequestOperation<EmptyTrashRequest, EmptyTrashResponse> operation
-              = new EmptyTrash.Sync(sdkConfiguration);
+    public EmptyTrashPutResponse emptyTrashPut(EmptyTrashPutRequest request) {
+        return emptyTrashPut(request, Optional.empty());
+    }
+
+    /**
+     * Empty section trash
+     * 
+     * <p>Empty trash in the section, permanently deleting media/metadata for missing media
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EmptyTrashPutResponse emptyTrashPut(EmptyTrashPutRequest request, Optional<Options> options) {
+        RequestOperation<EmptyTrashPutRequest, EmptyTrashPutResponse> operation
+              = new EmptyTrashPut.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Episodes
+     * 
+     * <p>Get episodes for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionEpisodesRequestBuilder getSectionEpisodes() {
+        return new GetSectionEpisodesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Episodes
+     * 
+     * <p>Get episodes for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionEpisodesResponse getSectionEpisodes(GetSectionEpisodesRequest request) {
+        return getSectionEpisodes(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Episodes
+     * 
+     * <p>Get episodes for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionEpisodesResponse getSectionEpisodes(GetSectionEpisodesRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionEpisodesRequest, GetSectionEpisodesResponse> operation
+              = new GetSectionEpisodes.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1827,6 +4323,8 @@ public class Library {
      * Get section filters
      * 
      * <p>Get common filters on a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1839,13 +4337,31 @@ public class Library {
      * 
      * <p>Get common filters on a section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSectionFiltersResponse getSectionFilters(GetSectionFiltersRequest request) throws Exception {
+    public GetSectionFiltersResponse getSectionFilters(GetSectionFiltersRequest request) {
+        return getSectionFilters(request, Optional.empty());
+    }
+
+    /**
+     * Get section filters
+     * 
+     * <p>Get common filters on a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionFiltersResponse getSectionFilters(GetSectionFiltersRequest request, Optional<Options> options) {
         RequestOperation<GetSectionFiltersRequest, GetSectionFiltersResponse> operation
-              = new GetSectionFilters.Sync(sdkConfiguration);
+              = new GetSectionFilters.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1867,11 +4383,71 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetFirstCharactersResponse getFirstCharacters(GetFirstCharactersRequest request) throws Exception {
+    public GetFirstCharactersResponse getFirstCharacters(GetFirstCharactersRequest request) {
+        return getFirstCharacters(request, Optional.empty());
+    }
+
+    /**
+     * Get list of first characters
+     * 
+     * <p>Get list of first characters in this section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetFirstCharactersResponse getFirstCharacters(GetFirstCharactersRequest request, Optional<Options> options) {
         RequestOperation<GetFirstCharactersRequest, GetFirstCharactersResponse> operation
-              = new GetFirstCharacters.Sync(sdkConfiguration);
+              = new GetFirstCharacters.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Hubs
+     * 
+     * <p>Get hubs for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetLibrarySectionHubsRequestBuilder getLibrarySectionHubs() {
+        return new GetLibrarySectionHubsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Hubs
+     * 
+     * <p>Get hubs for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLibrarySectionHubsResponse getLibrarySectionHubs(GetLibrarySectionHubsRequest request) {
+        return getLibrarySectionHubs(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Hubs
+     * 
+     * <p>Get hubs for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetLibrarySectionHubsResponse getLibrarySectionHubs(GetLibrarySectionHubsRequest request, Optional<Options> options) {
+        RequestOperation<GetLibrarySectionHubsRequest, GetLibrarySectionHubsResponse> operation
+              = new GetLibrarySectionHubs.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1879,6 +4455,8 @@ public class Library {
      * Delete section indexes
      * 
      * <p>Delete all the indexes in a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1891,13 +4469,31 @@ public class Library {
      * 
      * <p>Delete all the indexes in a section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteIndexesResponse deleteIndexes(DeleteIndexesRequest request) throws Exception {
+    public DeleteIndexesResponse deleteIndexes(DeleteIndexesRequest request) {
+        return deleteIndexes(request, Optional.empty());
+    }
+
+    /**
+     * Delete section indexes
+     * 
+     * <p>Delete all the indexes in a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteIndexesResponse deleteIndexes(DeleteIndexesRequest request, Optional<Options> options) {
         RequestOperation<DeleteIndexesRequest, DeleteIndexesResponse> operation
-              = new DeleteIndexes.Sync(sdkConfiguration);
+              = new DeleteIndexes.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1905,6 +4501,8 @@ public class Library {
      * Delete section intro markers
      * 
      * <p>Delete all the intro markers in a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1917,13 +4515,485 @@ public class Library {
      * 
      * <p>Delete all the intro markers in a section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteIntrosResponse deleteIntros(DeleteIntrosRequest request) throws Exception {
+    public DeleteIntrosResponse deleteIntros(DeleteIntrosRequest request) {
+        return deleteIntros(request, Optional.empty());
+    }
+
+    /**
+     * Delete section intro markers
+     * 
+     * <p>Delete all the intro markers in a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteIntrosResponse deleteIntros(DeleteIntrosRequest request, Optional<Options> options) {
         RequestOperation<DeleteIntrosRequest, DeleteIntrosResponse> operation
-              = new DeleteIntros.Sync(sdkConfiguration);
+              = new DeleteIntros.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Labels
+     * 
+     * <p>Get labels for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionLabelsRequestBuilder getSectionLabels() {
+        return new GetSectionLabelsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Labels
+     * 
+     * <p>Get labels for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionLabelsResponse getSectionLabels(GetSectionLabelsRequest request) {
+        return getSectionLabels(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Labels
+     * 
+     * <p>Get labels for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionLabelsResponse getSectionLabels(GetSectionLabelsRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionLabelsRequest, GetSectionLabelsResponse> operation
+              = new GetSectionLabels.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Match Section Items
+     * 
+     * <p>Match items in a library section against metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public MatchSectionItemsRequestBuilder matchSectionItems() {
+        return new MatchSectionItemsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Match Section Items
+     * 
+     * <p>Match items in a library section against metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MatchSectionItemsResponse matchSectionItems(MatchSectionItemsRequest request) {
+        return matchSectionItems(request, Optional.empty());
+    }
+
+    /**
+     * Match Section Items
+     * 
+     * <p>Match items in a library section against metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MatchSectionItemsResponse matchSectionItems(MatchSectionItemsRequest request, Optional<Options> options) {
+        RequestOperation<MatchSectionItemsRequest, MatchSectionItemsResponse> operation
+              = new MatchSectionItems.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Move Section
+     * 
+     * <p>Move library section paths.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public MoveSectionRequestBuilder moveSection() {
+        return new MoveSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Move Section
+     * 
+     * <p>Move library section paths.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MoveSectionResponse moveSection(MoveSectionRequest request) {
+        return moveSection(request, Optional.empty());
+    }
+
+    /**
+     * Move Section
+     * 
+     * <p>Move library section paths.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public MoveSectionResponse moveSection(MoveSectionRequest request, Optional<Options> options) {
+        RequestOperation<MoveSectionRequest, MoveSectionResponse> operation
+              = new MoveSection.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Movies
+     * 
+     * <p>Get movies for a movie library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionMoviesRequestBuilder getSectionMovies() {
+        return new GetSectionMoviesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Movies
+     * 
+     * <p>Get movies for a movie library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionMoviesResponse getSectionMovies(GetSectionMoviesRequest request) {
+        return getSectionMovies(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Movies
+     * 
+     * <p>Get movies for a movie library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionMoviesResponse getSectionMovies(GetSectionMoviesRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionMoviesRequest, GetSectionMoviesResponse> operation
+              = new GetSectionMovies.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Newest for Section
+     * 
+     * <p>Get the newest additions for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetNewestForSectionRequestBuilder getNewestForSection() {
+        return new GetNewestForSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Newest for Section
+     * 
+     * <p>Get the newest additions for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetNewestForSectionResponse getNewestForSection(GetNewestForSectionRequest request) {
+        return getNewestForSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Newest for Section
+     * 
+     * <p>Get the newest additions for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetNewestForSectionResponse getNewestForSection(GetNewestForSectionRequest request, Optional<Options> options) {
+        RequestOperation<GetNewestForSectionRequest, GetNewestForSectionResponse> operation
+              = new GetNewestForSection.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get On Deck for Section
+     * 
+     * <p>Get the On Deck items for a specific library section.
+     * 
+     * @return The call builder
+     */
+    public GetOnDeckForSectionRequestBuilder getOnDeckForSection() {
+        return new GetOnDeckForSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get On Deck for Section
+     * 
+     * <p>Get the On Deck items for a specific library section.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetOnDeckForSectionResponse getOnDeckForSection(GetOnDeckForSectionRequest request) {
+        return getOnDeckForSection(request, Optional.empty());
+    }
+
+    /**
+     * Get On Deck for Section
+     * 
+     * <p>Get the On Deck items for a specific library section.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetOnDeckForSectionResponse getOnDeckForSection(GetOnDeckForSectionRequest request, Optional<Options> options) {
+        RequestOperation<GetOnDeckForSectionRequest, GetOnDeckForSectionResponse> operation
+              = new GetOnDeckForSection.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public OptimizeSectionRequestBuilder optimizeSection() {
+        return new OptimizeSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeSectionResponse optimizeSection(OptimizeSectionRequest request) {
+        return optimizeSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeSectionResponse optimizeSection(OptimizeSectionRequest request, Optional<Options> options) {
+        RequestOperation<OptimizeSectionRequest, OptimizeSectionResponse> operation
+              = new OptimizeSection.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public OptimizeSectionPostRequestBuilder optimizeSectionPost() {
+        return new OptimizeSectionPostRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeSectionPostResponse optimizeSectionPost(OptimizeSectionPostRequest request) {
+        return optimizeSectionPost(request, Optional.empty());
+    }
+
+    /**
+     * Optimize Section
+     * 
+     * <p>Optimize the database for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public OptimizeSectionPostResponse optimizeSectionPost(OptimizeSectionPostRequest request, Optional<Options> options) {
+        RequestOperation<OptimizeSectionPostRequest, OptimizeSectionPostResponse> operation
+              = new OptimizeSectionPost.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Photos
+     * 
+     * <p>Get photos for a photo library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionPhotosRequestBuilder getSectionPhotos() {
+        return new GetSectionPhotosRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Photos
+     * 
+     * <p>Get photos for a photo library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionPhotosResponse getSectionPhotos(GetSectionPhotosRequest request) {
+        return getSectionPhotos(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Photos
+     * 
+     * <p>Get photos for a photo library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionPhotosResponse getSectionPhotos(GetSectionPhotosRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionPhotosRequest, GetSectionPhotosResponse> operation
+              = new GetSectionPhotos.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Playlists
+     * 
+     * <p>Get playlists belonging to a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionPlaylistsRequestBuilder getSectionPlaylists() {
+        return new GetSectionPlaylistsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Playlists
+     * 
+     * <p>Get playlists belonging to a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionPlaylistsResponse getSectionPlaylists(GetSectionPlaylistsRequest request) {
+        return getSectionPlaylists(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Playlists
+     * 
+     * <p>Get playlists belonging to a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionPlaylistsResponse getSectionPlaylists(GetSectionPlaylistsRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionPlaylistsRequest, GetSectionPlaylistsResponse> operation
+              = new GetSectionPlaylists.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1945,11 +5015,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSectionPreferencesResponse getSectionPreferences(GetSectionPreferencesRequest request) throws Exception {
+    public GetSectionPreferencesResponse getSectionPreferences(GetSectionPreferencesRequest request) {
+        return getSectionPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Get section prefs
+     * 
+     * <p>Get the prefs for a section by id and potentially overriding the agent
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionPreferencesResponse getSectionPreferences(GetSectionPreferencesRequest request, Optional<Options> options) {
         RequestOperation<GetSectionPreferencesRequest, GetSectionPreferencesResponse> operation
-              = new GetSectionPreferences.Sync(sdkConfiguration);
+              = new GetSectionPreferences.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1957,6 +5041,8 @@ public class Library {
      * Set section prefs
      * 
      * <p>Set the prefs for a section by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1969,13 +5055,71 @@ public class Library {
      * 
      * <p>Set the prefs for a section by id
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetSectionPreferencesResponse setSectionPreferences(SetSectionPreferencesRequest request) throws Exception {
+    public SetSectionPreferencesResponse setSectionPreferences(SetSectionPreferencesRequest request) {
+        return setSectionPreferences(request, Optional.empty());
+    }
+
+    /**
+     * Set section prefs
+     * 
+     * <p>Set the prefs for a section by id
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetSectionPreferencesResponse setSectionPreferences(SetSectionPreferencesRequest request, Optional<Options> options) {
         RequestOperation<SetSectionPreferencesRequest, SetSectionPreferencesResponse> operation
-              = new SetSectionPreferences.Sync(sdkConfiguration);
+              = new SetSectionPreferences.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Recently Added for Section
+     * 
+     * <p>Get recently added items for a specific library section.
+     * 
+     * @return The call builder
+     */
+    public GetRecentlyAddedForSectionRequestBuilder getRecentlyAddedForSection() {
+        return new GetRecentlyAddedForSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Recently Added for Section
+     * 
+     * <p>Get recently added items for a specific library section.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRecentlyAddedForSectionResponse getRecentlyAddedForSection(GetRecentlyAddedForSectionRequest request) {
+        return getRecentlyAddedForSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Recently Added for Section
+     * 
+     * <p>Get recently added items for a specific library section.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetRecentlyAddedForSectionResponse getRecentlyAddedForSection(GetRecentlyAddedForSectionRequest request, Optional<Options> options) {
+        RequestOperation<GetRecentlyAddedForSectionRequest, GetRecentlyAddedForSectionResponse> operation
+              = new GetRecentlyAddedForSection.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1983,6 +5127,8 @@ public class Library {
      * Cancel section refresh
      * 
      * <p>Cancel the refresh of a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -1995,20 +5141,40 @@ public class Library {
      * 
      * <p>Cancel the refresh of a section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CancelRefreshResponse cancelRefresh(CancelRefreshRequest request) throws Exception {
+    public CancelRefreshResponse cancelRefresh(CancelRefreshRequest request) {
+        return cancelRefresh(request, Optional.empty());
+    }
+
+    /**
+     * Cancel section refresh
+     * 
+     * <p>Cancel the refresh of a section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CancelRefreshResponse cancelRefresh(CancelRefreshRequest request, Optional<Options> options) {
         RequestOperation<CancelRefreshRequest, CancelRefreshResponse> operation
-              = new CancelRefresh.Sync(sdkConfiguration);
+              = new CancelRefresh.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
-     * Refresh section
+     * Get Refresh Section
      * 
-     * <p>Start a refresh of this section
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -2017,17 +5183,219 @@ public class Library {
     }
 
     /**
-     * Refresh section
+     * Get Refresh Section
      * 
-     * <p>Start a refresh of this section
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public RefreshSectionResponse refreshSection(RefreshSectionRequest request) throws Exception {
+    public RefreshSectionResponse refreshSection(RefreshSectionRequest request) {
+        return refreshSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Refresh Section
+     * 
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshSectionResponse refreshSection(RefreshSectionRequest request, Optional<Options> options) {
         RequestOperation<RefreshSectionRequest, RefreshSectionResponse> operation
-              = new RefreshSection.Sync(sdkConfiguration);
+              = new RefreshSection.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Refresh Section
+     * 
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public RefreshSectionPostRequestBuilder refreshSectionPost() {
+        return new RefreshSectionPostRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Refresh Section
+     * 
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshSectionPostResponse refreshSectionPost(RefreshSectionPostRequest request) {
+        return refreshSectionPost(request, Optional.empty());
+    }
+
+    /**
+     * Refresh Section
+     * 
+     * <p>Trigger a metadata refresh for a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public RefreshSectionPostResponse refreshSectionPost(RefreshSectionPostRequest request, Optional<Options> options) {
+        RequestOperation<RefreshSectionPostRequest, RefreshSectionPostResponse> operation
+              = new RefreshSectionPost.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Search Section
+     * 
+     * <p>Search within a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public SearchSectionRequestBuilder searchSection() {
+        return new SearchSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Search Section
+     * 
+     * <p>Search within a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SearchSectionResponse searchSection(SearchSectionRequest request) {
+        return searchSection(request, Optional.empty());
+    }
+
+    /**
+     * Search Section
+     * 
+     * <p>Search within a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SearchSectionResponse searchSection(SearchSectionRequest request, Optional<Options> options) {
+        RequestOperation<SearchSectionRequest, SearchSectionResponse> operation
+              = new SearchSection.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Settings
+     * 
+     * <p>Get section-specific settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionSettingsRequestBuilder getSectionSettings() {
+        return new GetSectionSettingsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Settings
+     * 
+     * <p>Get section-specific settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionSettingsResponse getSectionSettings(GetSectionSettingsRequest request) {
+        return getSectionSettings(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Settings
+     * 
+     * <p>Get section-specific settings.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionSettingsResponse getSectionSettings(GetSectionSettingsRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionSettingsRequest, GetSectionSettingsResponse> operation
+              = new GetSectionSettings.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Shows
+     * 
+     * <p>Get shows for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionShowsRequestBuilder getSectionShows() {
+        return new GetSectionShowsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Shows
+     * 
+     * <p>Get shows for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionShowsResponse getSectionShows(GetSectionShowsRequest request) {
+        return getSectionShows(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Shows
+     * 
+     * <p>Get shows for a TV library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionShowsResponse getSectionShows(GetSectionShowsRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionShowsRequest, GetSectionShowsResponse> operation
+              = new GetSectionShows.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2049,11 +5417,209 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetAvailableSortsResponse getAvailableSorts(GetAvailableSortsRequest request) throws Exception {
+    public GetAvailableSortsResponse getAvailableSorts(GetAvailableSortsRequest request) {
+        return getAvailableSorts(request, Optional.empty());
+    }
+
+    /**
+     * Get a section sorts
+     * 
+     * <p>Get the sort mechanisms available in a section
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAvailableSortsResponse getAvailableSorts(GetAvailableSortsRequest request, Optional<Options> options) {
         RequestOperation<GetAvailableSortsRequest, GetAvailableSortsResponse> operation
-              = new GetAvailableSorts.Sync(sdkConfiguration);
+              = new GetAvailableSorts.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Tags
+     * 
+     * <p>Get tags in a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionTagsRequestBuilder getSectionTags() {
+        return new GetSectionTagsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Tags
+     * 
+     * <p>Get tags in a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionTagsResponse getSectionTags(GetSectionTagsRequest request) {
+        return getSectionTags(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Tags
+     * 
+     * <p>Get tags in a library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionTagsResponse getSectionTags(GetSectionTagsRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionTagsRequest, GetSectionTagsResponse> operation
+              = new GetSectionTags.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Section Timeline
+     * 
+     * <p>Get section timeline data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionTimelineRequestBuilder getSectionTimeline() {
+        return new GetSectionTimelineRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Section Timeline
+     * 
+     * <p>Get section timeline data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionTimelineResponse getSectionTimeline(GetSectionTimelineRequest request) {
+        return getSectionTimeline(request, Optional.empty());
+    }
+
+    /**
+     * Get Section Timeline
+     * 
+     * <p>Get section timeline data.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionTimelineResponse getSectionTimeline(GetSectionTimelineRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionTimelineRequest, GetSectionTimelineResponse> operation
+              = new GetSectionTimeline.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Unmatch Section Items
+     * 
+     * <p>Unmatch items in a library section from metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public UnmatchSectionItemsRequestBuilder unmatchSectionItems() {
+        return new UnmatchSectionItemsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Unmatch Section Items
+     * 
+     * <p>Unmatch items in a library section from metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UnmatchSectionItemsResponse unmatchSectionItems(UnmatchSectionItemsRequest request) {
+        return unmatchSectionItems(request, Optional.empty());
+    }
+
+    /**
+     * Unmatch Section Items
+     * 
+     * <p>Unmatch items in a library section from metadata providers.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UnmatchSectionItemsResponse unmatchSectionItems(UnmatchSectionItemsRequest request, Optional<Options> options) {
+        RequestOperation<UnmatchSectionItemsRequest, UnmatchSectionItemsResponse> operation
+              = new UnmatchSectionItems.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get Unwatched for Section
+     * 
+     * <p>Get unwatched items for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetUnwatchedForSectionRequestBuilder getUnwatchedForSection() {
+        return new GetUnwatchedForSectionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Unwatched for Section
+     * 
+     * <p>Get unwatched items for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUnwatchedForSectionResponse getUnwatchedForSection(GetUnwatchedForSectionRequest request) {
+        return getUnwatchedForSection(request, Optional.empty());
+    }
+
+    /**
+     * Get Unwatched for Section
+     * 
+     * <p>Get unwatched items for a specific library section.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetUnwatchedForSectionResponse getUnwatchedForSection(GetUnwatchedForSectionRequest request, Optional<Options> options) {
+        RequestOperation<GetUnwatchedForSectionRequest, GetUnwatchedForSectionResponse> operation
+              = new GetUnwatchedForSection.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2075,11 +5641,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetStreamLevelsResponse getStreamLevels(GetStreamLevelsRequest request) throws Exception {
+    public GetStreamLevelsResponse getStreamLevels(GetStreamLevelsRequest request) {
+        return getStreamLevels(request, Optional.empty());
+    }
+
+    /**
+     * Get loudness about a stream in json
+     * 
+     * <p>The the loudness of a stream in db, one entry per 100ms
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetStreamLevelsResponse getStreamLevels(GetStreamLevelsRequest request, Optional<Options> options) {
         RequestOperation<GetStreamLevelsRequest, GetStreamLevelsResponse> operation
-              = new GetStreamLevels.Sync(sdkConfiguration);
+              = new GetStreamLevels.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2101,11 +5681,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetStreamLoudnessResponse getStreamLoudness(GetStreamLoudnessRequest request) throws Exception {
+    public GetStreamLoudnessResponse getStreamLoudness(GetStreamLoudnessRequest request) {
+        return getStreamLoudness(request, Optional.empty());
+    }
+
+    /**
+     * Get loudness about a stream
+     * 
+     * <p>The the loudness of a stream in db, one number per line, one entry per 100ms
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetStreamLoudnessResponse getStreamLoudness(GetStreamLoudnessRequest request, Optional<Options> options) {
         RequestOperation<GetStreamLoudnessRequest, GetStreamLoudnessResponse> operation
-              = new GetStreamLoudness.Sync(sdkConfiguration);
+              = new GetStreamLoudness.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2127,11 +5721,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetChapterImageResponse getChapterImage(GetChapterImageRequest request) throws Exception {
+    public GetChapterImageResponse getChapterImage(GetChapterImageRequest request) {
+        return getChapterImage(request, Optional.empty());
+    }
+
+    /**
+     * Get a chapter image
+     * 
+     * <p>Get a single chapter image for a piece of media
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetChapterImageResponse getChapterImage(GetChapterImageRequest request, Optional<Options> options) {
         RequestOperation<GetChapterImageRequest, GetChapterImageResponse> operation
-              = new GetChapterImage.Sync(sdkConfiguration);
+              = new GetChapterImage.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2139,7 +5747,8 @@ public class Library {
      * Set an item's artwork, theme, etc
      * 
      * <p>Set the artwork, thumb, element for a metadata item
-     * Generally only the admin can perform this action.  The exception is if the metadata is a playlist created by the user
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
      * 
      * @return The call builder
      */
@@ -2151,15 +5760,32 @@ public class Library {
      * Set an item's artwork, theme, etc
      * 
      * <p>Set the artwork, thumb, element for a metadata item
-     * Generally only the admin can perform this action.  The exception is if the metadata is a playlist created by the user
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetItemArtworkResponse setItemArtwork(SetItemArtworkRequest request) throws Exception {
+    public SetItemArtworkResponse setItemArtwork(SetItemArtworkRequest request) {
+        return setItemArtwork(request, Optional.empty());
+    }
+
+    /**
+     * Set an item's artwork, theme, etc
+     * 
+     * <p>Set the artwork, thumb, element for a metadata item
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetItemArtworkResponse setItemArtwork(SetItemArtworkRequest request, Optional<Options> options) {
         RequestOperation<SetItemArtworkRequest, SetItemArtworkResponse> operation
-              = new SetItemArtwork.Sync(sdkConfiguration);
+              = new SetItemArtwork.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2167,7 +5793,8 @@ public class Library {
      * Set an item's artwork, theme, etc
      * 
      * <p>Set the artwork, thumb, element for a metadata item
-     * Generally only the admin can perform this action.  The exception is if the metadata is a playlist created by the user
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
      * 
      * @return The call builder
      */
@@ -2179,15 +5806,32 @@ public class Library {
      * Set an item's artwork, theme, etc
      * 
      * <p>Set the artwork, thumb, element for a metadata item
-     * Generally only the admin can perform this action.  The exception is if the metadata is a playlist created by the user
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public UpdateItemArtworkResponse updateItemArtwork(UpdateItemArtworkRequest request) throws Exception {
+    public UpdateItemArtworkResponse updateItemArtwork(UpdateItemArtworkRequest request) {
+        return updateItemArtwork(request, Optional.empty());
+    }
+
+    /**
+     * Set an item's artwork, theme, etc
+     * 
+     * <p>Set the artwork, thumb, element for a metadata item
+     * Generally only the admin can perform this action. The exception is if the metadata is a playlist
+     * created by the user
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateItemArtworkResponse updateItemArtwork(UpdateItemArtworkRequest request, Optional<Options> options) {
         RequestOperation<UpdateItemArtworkRequest, UpdateItemArtworkResponse> operation
-              = new UpdateItemArtwork.Sync(sdkConfiguration);
+              = new UpdateItemArtwork.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2209,11 +5853,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteMarkerResponse deleteMarker(DeleteMarkerRequest request) throws Exception {
+    public DeleteMarkerResponse deleteMarker(DeleteMarkerRequest request) {
+        return deleteMarker(request, Optional.empty());
+    }
+
+    /**
+     * Delete a marker
+     * 
+     * <p>Delete a marker for this user on the metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteMarkerResponse deleteMarker(DeleteMarkerRequest request, Optional<Options> options) {
         RequestOperation<DeleteMarkerRequest, DeleteMarkerResponse> operation
-              = new DeleteMarker.Sync(sdkConfiguration);
+              = new DeleteMarker.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2235,11 +5893,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public EditMarkerResponse editMarker(EditMarkerRequest request) throws Exception {
+    public EditMarkerResponse editMarker(EditMarkerRequest request) {
+        return editMarker(request, Optional.empty());
+    }
+
+    /**
+     * Edit a marker
+     * 
+     * <p>Edit a marker for this user on the metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public EditMarkerResponse editMarker(EditMarkerRequest request, Optional<Options> options) {
         RequestOperation<EditMarkerRequest, EditMarkerResponse> operation
-              = new EditMarker.Sync(sdkConfiguration);
+              = new EditMarker.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2247,6 +5919,8 @@ public class Library {
      * Delete a media item
      * 
      * <p>Delete a single media from a metadata item in the library
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -2259,13 +5933,31 @@ public class Library {
      * 
      * <p>Delete a single media from a metadata item in the library
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteMediaItemResponse deleteMediaItem(DeleteMediaItemRequest request) throws Exception {
+    public DeleteMediaItemResponse deleteMediaItem(DeleteMediaItemRequest request) {
+        return deleteMediaItem(request, Optional.empty());
+    }
+
+    /**
+     * Delete a media item
+     * 
+     * <p>Delete a single media from a metadata item in the library
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteMediaItemResponse deleteMediaItem(DeleteMediaItemRequest request, Optional<Options> options) {
         RequestOperation<DeleteMediaItemRequest, DeleteMediaItemResponse> operation
-              = new DeleteMediaItem.Sync(sdkConfiguration);
+              = new DeleteMediaItem.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2287,11 +5979,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetPartIndexResponse getPartIndex(GetPartIndexRequest request) throws Exception {
+    public GetPartIndexResponse getPartIndex(GetPartIndexRequest request) {
+        return getPartIndex(request, Optional.empty());
+    }
+
+    /**
+     * Get BIF index for a part
+     * 
+     * <p>Get BIF index for a part by index type
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetPartIndexResponse getPartIndex(GetPartIndexRequest request, Optional<Options> options) {
         RequestOperation<GetPartIndexRequest, GetPartIndexResponse> operation
-              = new GetPartIndex.Sync(sdkConfiguration);
+              = new GetPartIndex.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2299,6 +6005,8 @@ public class Library {
      * Delete a collection
      * 
      * <p>Delete a library collection from the PMS
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -2311,13 +6019,31 @@ public class Library {
      * 
      * <p>Delete a library collection from the PMS
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteCollectionResponse deleteCollection(DeleteCollectionRequest request) throws Exception {
+    public DeleteCollectionResponse deleteCollection(DeleteCollectionRequest request) {
+        return deleteCollection(request, Optional.empty());
+    }
+
+    /**
+     * Delete a collection
+     * 
+     * <p>Delete a library collection from the PMS
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteCollectionResponse deleteCollection(DeleteCollectionRequest request, Optional<Options> options) {
         RequestOperation<DeleteCollectionRequest, DeleteCollectionResponse> operation
-              = new DeleteCollection.Sync(sdkConfiguration);
+              = new DeleteCollection.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2325,6 +6051,8 @@ public class Library {
      * Get a section composite image
      * 
      * <p>Get a composite image of images in this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
      * 
      * @return The call builder
      */
@@ -2337,20 +6065,39 @@ public class Library {
      * 
      * <p>Get a composite image of images in this section
      * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetSectionImageResponse getSectionImage(GetSectionImageRequest request) throws Exception {
+    public GetSectionImageResponse getSectionImage(GetSectionImageRequest request) {
+        return getSectionImage(request, Optional.empty());
+    }
+
+    /**
+     * Get a section composite image
+     * 
+     * <p>Get a composite image of images in this section
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionImageResponse getSectionImage(GetSectionImageRequest request, Optional<Options> options) {
         RequestOperation<GetSectionImageRequest, GetSectionImageResponse> operation
-              = new GetSectionImage.Sync(sdkConfiguration);
+              = new GetSectionImage.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Delete a stream
      * 
-     * <p>Delete a stream.  Only applies to downloaded subtitle streams or a sidecar subtitle when media deletion is enabled.
+     * <p>Delete a stream. Only applies to downloaded subtitle streams or a sidecar subtitle when media
+     * deletion is enabled.
      * 
      * @return The call builder
      */
@@ -2361,15 +6108,31 @@ public class Library {
     /**
      * Delete a stream
      * 
-     * <p>Delete a stream.  Only applies to downloaded subtitle streams or a sidecar subtitle when media deletion is enabled.
+     * <p>Delete a stream. Only applies to downloaded subtitle streams or a sidecar subtitle when media
+     * deletion is enabled.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteStreamResponse deleteStream(DeleteStreamRequest request) throws Exception {
+    public DeleteStreamResponse deleteStream(DeleteStreamRequest request) {
+        return deleteStream(request, Optional.empty());
+    }
+
+    /**
+     * Delete a stream
+     * 
+     * <p>Delete a stream. Only applies to downloaded subtitle streams or a sidecar subtitle when media
+     * deletion is enabled.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteStreamResponse deleteStream(DeleteStreamRequest request, Optional<Options> options) {
         RequestOperation<DeleteStreamRequest, DeleteStreamResponse> operation
-              = new DeleteStream.Sync(sdkConfiguration);
+              = new DeleteStream.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2391,18 +6154,32 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetStreamResponse getStream(GetStreamRequest request) throws Exception {
+    public GetStreamResponse getStream(GetStreamRequest request) {
+        return getStream(request, Optional.empty());
+    }
+
+    /**
+     * Get a stream
+     * 
+     * <p>Get a stream (such as a sidecar subtitle stream)
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetStreamResponse getStream(GetStreamRequest request, Optional<Options> options) {
         RequestOperation<GetStreamRequest, GetStreamResponse> operation
-              = new GetStream.Sync(sdkConfiguration);
+              = new GetStream.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Set a stream offset
      * 
-     * <p>Set a stream offset in ms.  This may not be respected by all clients
+     * <p>Set a stream offset in ms. This may not be respected by all clients
      * 
      * @return The call builder
      */
@@ -2413,15 +6190,29 @@ public class Library {
     /**
      * Set a stream offset
      * 
-     * <p>Set a stream offset in ms.  This may not be respected by all clients
+     * <p>Set a stream offset in ms. This may not be respected by all clients
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public SetStreamOffsetResponse setStreamOffset(SetStreamOffsetRequest request) throws Exception {
+    public SetStreamOffsetResponse setStreamOffset(SetStreamOffsetRequest request) {
+        return setStreamOffset(request, Optional.empty());
+    }
+
+    /**
+     * Set a stream offset
+     * 
+     * <p>Set a stream offset in ms. This may not be respected by all clients
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public SetStreamOffsetResponse setStreamOffset(SetStreamOffsetRequest request, Optional<Options> options) {
         RequestOperation<SetStreamOffsetRequest, SetStreamOffsetResponse> operation
-              = new SetStreamOffset.Sync(sdkConfiguration);
+              = new SetStreamOffset.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2443,11 +6234,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetItemArtworkResponse getItemArtwork(GetItemArtworkRequest request) throws Exception {
+    public GetItemArtworkResponse getItemArtwork(GetItemArtworkRequest request) {
+        return getItemArtwork(request, Optional.empty());
+    }
+
+    /**
+     * Get an item's artwork, theme, etc
+     * 
+     * <p>Get the artwork, thumb, element for a metadata item
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetItemArtworkResponse getItemArtwork(GetItemArtworkRequest request, Optional<Options> options) {
         RequestOperation<GetItemArtworkRequest, GetItemArtworkResponse> operation
-              = new GetItemArtwork.Sync(sdkConfiguration);
+              = new GetItemArtwork.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2455,8 +6260,13 @@ public class Library {
      * Get a media part
      * 
      * <p>Get a media part for streaming or download.
-     *   - streaming: This is the default scenario.  Bandwidth usage on this endpoint will be guaranteed (on the server's end) to be at least the bandwidth reservation given in the decision.  If no decision exists, an ad-hoc decision will be created if sufficient bandwidth exists.  Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
-     *   - download: Indicated if the query parameter indicates this is a download.  Bandwidth will be prioritized behind playbacks and will get a fair share of what remains.
+     * - streaming: This is the default scenario. Bandwidth usage on this endpoint will be guaranteed (on
+     * the server's end) to be at least the bandwidth reservation given in the decision. If no decision
+     * exists, an ad-hoc decision will be created if sufficient bandwidth exists.
+     * 
+     * <p>Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
+     * - download: Indicated if the query parameter indicates this is a download. Bandwidth will be
+     * prioritized behind playbacks and will get a fair share of what remains.
      * 
      * @return The call builder
      */
@@ -2468,16 +6278,42 @@ public class Library {
      * Get a media part
      * 
      * <p>Get a media part for streaming or download.
-     *   - streaming: This is the default scenario.  Bandwidth usage on this endpoint will be guaranteed (on the server's end) to be at least the bandwidth reservation given in the decision.  If no decision exists, an ad-hoc decision will be created if sufficient bandwidth exists.  Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
-     *   - download: Indicated if the query parameter indicates this is a download.  Bandwidth will be prioritized behind playbacks and will get a fair share of what remains.
+     * - streaming: This is the default scenario. Bandwidth usage on this endpoint will be guaranteed (on
+     * the server's end) to be at least the bandwidth reservation given in the decision. If no decision
+     * exists, an ad-hoc decision will be created if sufficient bandwidth exists.
+     * 
+     * <p>Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
+     * - download: Indicated if the query parameter indicates this is a download. Bandwidth will be
+     * prioritized behind playbacks and will get a fair share of what remains.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetMediaPartResponse getMediaPart(GetMediaPartRequest request) throws Exception {
+    public GetMediaPartResponse getMediaPart(GetMediaPartRequest request) {
+        return getMediaPart(request, Optional.empty());
+    }
+
+    /**
+     * Get a media part
+     * 
+     * <p>Get a media part for streaming or download.
+     * - streaming: This is the default scenario. Bandwidth usage on this endpoint will be guaranteed (on
+     * the server's end) to be at least the bandwidth reservation given in the decision. If no decision
+     * exists, an ad-hoc decision will be created if sufficient bandwidth exists.
+     * 
+     * <p>Clients should not rely on ad-hoc decisions being made as this may be removed in the future.
+     * - download: Indicated if the query parameter indicates this is a download. Bandwidth will be
+     * prioritized behind playbacks and will get a fair share of what remains.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetMediaPartResponse getMediaPart(GetMediaPartRequest request, Optional<Options> options) {
         RequestOperation<GetMediaPartRequest, GetMediaPartResponse> operation
-              = new GetMediaPart.Sync(sdkConfiguration);
+              = new GetMediaPart.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2499,11 +6335,25 @@ public class Library {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public GetImageFromBifResponse getImageFromBif(GetImageFromBifRequest request) throws Exception {
+    public GetImageFromBifResponse getImageFromBif(GetImageFromBifRequest request) {
+        return getImageFromBif(request, Optional.empty());
+    }
+
+    /**
+     * Get an image from part BIF
+     * 
+     * <p>Extract an image from the BIF for a part at a particular offset
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetImageFromBifResponse getImageFromBif(GetImageFromBifRequest request, Optional<Options> options) {
         RequestOperation<GetImageFromBifRequest, GetImageFromBifResponse> operation
-              = new GetImageFromBif.Sync(sdkConfiguration);
+              = new GetImageFromBif.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

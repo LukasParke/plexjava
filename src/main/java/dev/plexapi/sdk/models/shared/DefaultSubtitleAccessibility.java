@@ -10,7 +10,8 @@ import java.util.Optional;
 /**
  * DefaultSubtitleAccessibility
  * 
- * <p>The subtitles for the deaf or hard-of-hearing (SDH) searches mode (0 = Prefer non-SDH subtitles, 1 = Prefer SDH subtitles, 2 = Only show SDH subtitles, 3 = Only show non-SDH subtitles)
+ * <p>The subtitles for the deaf or hard-of-hearing (SDH) searches mode (0 = Prefer non-SDH subtitles, 1 =
+ * Prefer SDH subtitles, 2 = Only show SDH subtitles, 3 = Only show non-SDH subtitles)
  */
 public enum DefaultSubtitleAccessibility {
     PreferNonSdh(0),

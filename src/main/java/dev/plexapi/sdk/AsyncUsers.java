@@ -3,18 +3,104 @@
  */
 package dev.plexapi.sdk;
 
+import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
 
+import dev.plexapi.sdk.models.operations.CreateHomeUserRequest;
+import dev.plexapi.sdk.models.operations.DeleteHomeUserRequest;
+import dev.plexapi.sdk.models.operations.GetAccountJSONRequest;
+import dev.plexapi.sdk.models.operations.GetAccountXMLRequest;
+import dev.plexapi.sdk.models.operations.GetFriendsRequest;
+import dev.plexapi.sdk.models.operations.GetHomeUsersRequest;
+import dev.plexapi.sdk.models.operations.GetServerDetailsRequest;
+import dev.plexapi.sdk.models.operations.GetServerUserFeaturesRequest;
+import dev.plexapi.sdk.models.operations.GetUserOptOutsRequest;
+import dev.plexapi.sdk.models.operations.GetUserServerRequest;
 import dev.plexapi.sdk.models.operations.GetUsersRequest;
+import dev.plexapi.sdk.models.operations.RemoveShareRequest;
+import dev.plexapi.sdk.models.operations.ShareServerLegacyRequest;
+import dev.plexapi.sdk.models.operations.ShareServerRequest;
+import dev.plexapi.sdk.models.operations.UpdateHomeUserRequest;
+import dev.plexapi.sdk.models.operations.UpdateRestrictedUserRequest;
+import dev.plexapi.sdk.models.operations.UpdateShareRequest;
+import dev.plexapi.sdk.models.operations.UpdateViewStateSyncRequest;
+import dev.plexapi.sdk.models.operations.async.CreateHomeUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.CreateHomeUserResponse;
+import dev.plexapi.sdk.models.operations.async.DeleteHomeUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.DeleteHomeUserResponse;
+import dev.plexapi.sdk.models.operations.async.GetAccountJSONRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetAccountJSONResponse;
+import dev.plexapi.sdk.models.operations.async.GetAccountXMLRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetAccountXMLResponse;
+import dev.plexapi.sdk.models.operations.async.GetFriendsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetFriendsResponse;
+import dev.plexapi.sdk.models.operations.async.GetHomeRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetHomeResponse;
+import dev.plexapi.sdk.models.operations.async.GetHomeUsersRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetHomeUsersResponse;
+import dev.plexapi.sdk.models.operations.async.GetLegacyResourcesRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetLegacyResourcesResponse;
+import dev.plexapi.sdk.models.operations.async.GetLegacyUsersRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetLegacyUsersResponse;
+import dev.plexapi.sdk.models.operations.async.GetMyPlexAccountRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetMyPlexAccountResponse;
+import dev.plexapi.sdk.models.operations.async.GetServerDetailsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetServerDetailsResponse;
+import dev.plexapi.sdk.models.operations.async.GetServerUserFeaturesRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetServerUserFeaturesResponse;
+import dev.plexapi.sdk.models.operations.async.GetUserOptOutsRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetUserOptOutsResponse;
+import dev.plexapi.sdk.models.operations.async.GetUserServerRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetUserServerResponse;
 import dev.plexapi.sdk.models.operations.async.GetUsersRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetUsersResponse;
+import dev.plexapi.sdk.models.operations.async.RemoveShareRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.RemoveShareResponse;
+import dev.plexapi.sdk.models.operations.async.ShareServerLegacyRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.ShareServerLegacyResponse;
+import dev.plexapi.sdk.models.operations.async.ShareServerRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.ShareServerResponse;
+import dev.plexapi.sdk.models.operations.async.UpdateHomeUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UpdateHomeUserResponse;
+import dev.plexapi.sdk.models.operations.async.UpdateRestrictedUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UpdateRestrictedUserResponse;
+import dev.plexapi.sdk.models.operations.async.UpdateShareRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UpdateShareResponse;
+import dev.plexapi.sdk.models.operations.async.UpdateViewStateSyncRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.UpdateViewStateSyncResponse;
+import dev.plexapi.sdk.operations.CreateHomeUser;
+import dev.plexapi.sdk.operations.DeleteHomeUser;
+import dev.plexapi.sdk.operations.GetAccountJSON;
+import dev.plexapi.sdk.operations.GetAccountXML;
+import dev.plexapi.sdk.operations.GetFriends;
+import dev.plexapi.sdk.operations.GetHome;
+import dev.plexapi.sdk.operations.GetHomeUsers;
+import dev.plexapi.sdk.operations.GetLegacyResources;
+import dev.plexapi.sdk.operations.GetLegacyUsers;
+import dev.plexapi.sdk.operations.GetMyPlexAccount;
+import dev.plexapi.sdk.operations.GetServerDetails;
+import dev.plexapi.sdk.operations.GetServerUserFeatures;
+import dev.plexapi.sdk.operations.GetUserOptOuts;
+import dev.plexapi.sdk.operations.GetUserServer;
 import dev.plexapi.sdk.operations.GetUsers;
+import dev.plexapi.sdk.operations.RemoveShare;
+import dev.plexapi.sdk.operations.ShareServer;
+import dev.plexapi.sdk.operations.ShareServerLegacy;
+import dev.plexapi.sdk.operations.UpdateHomeUser;
+import dev.plexapi.sdk.operations.UpdateRestrictedUser;
+import dev.plexapi.sdk.operations.UpdateShare;
+import dev.plexapi.sdk.operations.UpdateViewStateSync;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
 import java.lang.String;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-
+/**
+ * Plex Users operations
+ */
 public class AsyncUsers {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Users syncSDK;
 
@@ -34,9 +120,494 @@ public class AsyncUsers {
 
 
     /**
+     * Get Legacy Resources
+     * 
+     * <p>Get legacy published server connections (XML).
+     * 
+     * @return The async call builder
+     */
+    public GetLegacyResourcesRequestBuilder getLegacyResources() {
+        return new GetLegacyResourcesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Legacy Resources
+     * 
+     * <p>Get legacy published server connections (XML).
+     * 
+     * @return {@code CompletableFuture<GetLegacyResourcesResponse>} - The async response
+     */
+    public CompletableFuture<GetLegacyResourcesResponse> getLegacyResourcesDirect() {
+        return getLegacyResources(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Legacy Resources
+     * 
+     * <p>Get legacy published server connections (XML).
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLegacyResourcesResponse>} - The async response
+     */
+    public CompletableFuture<GetLegacyResourcesResponse> getLegacyResources(Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestlessOperation<GetLegacyResourcesResponse> operation
+            = new GetLegacyResources.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Legacy Users
+     * 
+     * <p>Get legacy friends list (XML).
+     * 
+     * @return The async call builder
+     */
+    public GetLegacyUsersRequestBuilder getLegacyUsers() {
+        return new GetLegacyUsersRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Legacy Users
+     * 
+     * <p>Get legacy friends list (XML).
+     * 
+     * @return {@code CompletableFuture<GetLegacyUsersResponse>} - The async response
+     */
+    public CompletableFuture<GetLegacyUsersResponse> getLegacyUsersDirect() {
+        return getLegacyUsers(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Legacy Users
+     * 
+     * <p>Get legacy friends list (XML).
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetLegacyUsersResponse>} - The async response
+     */
+    public CompletableFuture<GetLegacyUsersResponse> getLegacyUsers(Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestlessOperation<GetLegacyUsersResponse> operation
+            = new GetLegacyUsers.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Friends
+     * 
+     * <p>Get the list of friends and shared users.
+     * 
+     * @return The async call builder
+     */
+    public GetFriendsRequestBuilder getFriends() {
+        return new GetFriendsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Friends
+     * 
+     * <p>Get the list of friends and shared users.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetFriendsResponse>} - The async response
+     */
+    public CompletableFuture<GetFriendsResponse> getFriends(GetFriendsRequest request) {
+        return getFriends(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Friends
+     * 
+     * <p>Get the list of friends and shared users.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetFriendsResponse>} - The async response
+     */
+    public CompletableFuture<GetFriendsResponse> getFriends(
+            GetFriendsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetFriendsRequest, GetFriendsResponse> operation
+              = new GetFriends.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get home hubs
+     * 
+     * <p>Get Plex Home user list.
+     * 
+     * @return The async call builder
+     */
+    public GetHomeRequestBuilder getHome() {
+        return new GetHomeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get home hubs
+     * 
+     * <p>Get Plex Home user list.
+     * 
+     * @return {@code CompletableFuture<GetHomeResponse>} - The async response
+     */
+    public CompletableFuture<GetHomeResponse> getHomeDirect() {
+        return getHome(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get home hubs
+     * 
+     * <p>Get Plex Home user list.
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetHomeResponse>} - The async response
+     */
+    public CompletableFuture<GetHomeResponse> getHome(Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestlessOperation<GetHomeResponse> operation
+            = new GetHome.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get home hubs Users
+     * 
+     * <p>Get the list of Plex Home users.
+     * 
+     * @return The async call builder
+     */
+    public GetHomeUsersRequestBuilder getHomeUsers() {
+        return new GetHomeUsersRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get home hubs Users
+     * 
+     * <p>Get the list of Plex Home users.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetHomeUsersResponse>} - The async response
+     */
+    public CompletableFuture<GetHomeUsersResponse> getHomeUsers(GetHomeUsersRequest request) {
+        return getHomeUsers(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get home hubs Users
+     * 
+     * <p>Get the list of Plex Home users.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetHomeUsersResponse>} - The async response
+     */
+    public CompletableFuture<GetHomeUsersResponse> getHomeUsers(
+            GetHomeUsersRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetHomeUsersRequest, GetHomeUsersResponse> operation
+              = new GetHomeUsers.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Create Home User
+     * 
+     * <p>Create a new Plex Home user.
+     * 
+     * @return The async call builder
+     */
+    public CreateHomeUserRequestBuilder createHomeUser() {
+        return new CreateHomeUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create Home User
+     * 
+     * <p>Create a new Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<CreateHomeUserResponse>} - The async response
+     */
+    public CompletableFuture<CreateHomeUserResponse> createHomeUser(CreateHomeUserRequest request) {
+        return createHomeUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Create Home User
+     * 
+     * <p>Create a new Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateHomeUserResponse>} - The async response
+     */
+    public CompletableFuture<CreateHomeUserResponse> createHomeUser(
+            CreateHomeUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<CreateHomeUserRequest, CreateHomeUserResponse> operation
+              = new CreateHomeUser.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get MyPlex Account
+     * 
+     * <p>Get linked MyPlex account info on PMS.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetMyPlexAccountRequestBuilder getMyPlexAccount() {
+        return new GetMyPlexAccountRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get MyPlex Account
+     * 
+     * <p>Get linked MyPlex account info on PMS.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return {@code CompletableFuture<GetMyPlexAccountResponse>} - The async response
+     */
+    public CompletableFuture<GetMyPlexAccountResponse> getMyPlexAccountDirect() {
+        return getMyPlexAccount(Optional.empty());
+    }
+
+    /**
+     * Get MyPlex Account
+     * 
+     * <p>Get linked MyPlex account info on PMS.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param options additional options
+     * @return {@code CompletableFuture<GetMyPlexAccountResponse>} - The async response
+     */
+    public CompletableFuture<GetMyPlexAccountResponse> getMyPlexAccount(Optional<Options> options) {
+        AsyncRequestlessOperation<GetMyPlexAccountResponse> operation
+            = new GetMyPlexAccount.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get User Server Association
+     * 
+     * <p>Get server association information for the logged-in user.
+     * 
+     * @return The async call builder
+     */
+    public GetUserServerRequestBuilder getUserServer() {
+        return new GetUserServerRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get User Server Association
+     * 
+     * <p>Get server association information for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetUserServerResponse>} - The async response
+     */
+    public CompletableFuture<GetUserServerResponse> getUserServer(GetUserServerRequest request) {
+        return getUserServer(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get User Server Association
+     * 
+     * <p>Get server association information for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetUserServerResponse>} - The async response
+     */
+    public CompletableFuture<GetUserServerResponse> getUserServer(
+            GetUserServerRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetUserServerRequest, GetUserServerResponse> operation
+              = new GetUserServer.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Server User Features
+     * 
+     * <p>Get features enabled per shared user for the server.
+     * 
+     * @return The async call builder
+     */
+    public GetServerUserFeaturesRequestBuilder getServerUserFeatures() {
+        return new GetServerUserFeaturesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Server User Features
+     * 
+     * <p>Get features enabled per shared user for the server.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetServerUserFeaturesResponse>} - The async response
+     */
+    public CompletableFuture<GetServerUserFeaturesResponse> getServerUserFeatures(GetServerUserFeaturesRequest request) {
+        return getServerUserFeatures(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Server User Features
+     * 
+     * <p>Get features enabled per shared user for the server.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetServerUserFeaturesResponse>} - The async response
+     */
+    public CompletableFuture<GetServerUserFeaturesResponse> getServerUserFeatures(
+            GetServerUserFeaturesRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetServerUserFeaturesRequest, GetServerUserFeaturesResponse> operation
+              = new GetServerUserFeatures.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Share Server
+     * 
+     * <p>Share a server with a friend or managed user.
+     * 
+     * @return The async call builder
+     */
+    public ShareServerRequestBuilder shareServer() {
+        return new ShareServerRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Share Server
+     * 
+     * <p>Share a server with a friend or managed user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ShareServerResponse>} - The async response
+     */
+    public CompletableFuture<ShareServerResponse> shareServer(ShareServerRequest request) {
+        return shareServer(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Share Server
+     * 
+     * <p>Share a server with a friend or managed user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<ShareServerResponse>} - The async response
+     */
+    public CompletableFuture<ShareServerResponse> shareServer(
+            ShareServerRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<ShareServerRequest, ShareServerResponse> operation
+              = new ShareServer.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Update View State Sync
+     * 
+     * <p>Enable or disable watch-state sync consent for the logged-in user.
+     * 
+     * @return The async call builder
+     */
+    public UpdateViewStateSyncRequestBuilder updateViewStateSync() {
+        return new UpdateViewStateSyncRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update View State Sync
+     * 
+     * <p>Enable or disable watch-state sync consent for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<UpdateViewStateSyncResponse>} - The async response
+     */
+    public CompletableFuture<UpdateViewStateSyncResponse> updateViewStateSync(UpdateViewStateSyncRequest request) {
+        return updateViewStateSync(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Update View State Sync
+     * 
+     * <p>Enable or disable watch-state sync consent for the logged-in user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateViewStateSyncResponse>} - The async response
+     */
+    public CompletableFuture<UpdateViewStateSyncResponse> updateViewStateSync(
+            UpdateViewStateSyncRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<UpdateViewStateSyncRequest, UpdateViewStateSyncResponse> operation
+              = new UpdateViewStateSync.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
      * Get list of all connected users
      * 
-     * <p>Get list of all users that are friends and have library access with the provided Plex authentication token
+     * <p>Get list of all users that are friends and have library access with the provided Plex authentication
+     * token
      * 
      * @return The async call builder
      */
@@ -47,27 +618,484 @@ public class AsyncUsers {
     /**
      * Get list of all connected users
      * 
-     * <p>Get list of all users that are friends and have library access with the provided Plex authentication token
+     * <p>Get list of all users that are friends and have library access with the provided Plex authentication
+     * token
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetUsersResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetUsersResponse>} - The async response
      */
     public CompletableFuture<GetUsersResponse> getUsers(GetUsersRequest request) {
-        return getUsers(request, Optional.empty());
+        return getUsers(request, Optional.empty(), Optional.empty());
     }
 
     /**
      * Get list of all connected users
      * 
-     * <p>Get list of all users that are friends and have library access with the provided Plex authentication token
+     * <p>Get list of all users that are friends and have library access with the provided Plex authentication
+     * token
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param serverURL Overrides the server URL.
-     * @return CompletableFuture&lt;GetUsersResponse&gt; - The async response
+     * @param options additional options
+     * @return {@code CompletableFuture<GetUsersResponse>} - The async response
      */
-    public CompletableFuture<GetUsersResponse> getUsers(GetUsersRequest request, Optional<String> serverURL) {
+    public CompletableFuture<GetUsersResponse> getUsers(
+            GetUsersRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
         AsyncRequestOperation<GetUsersRequest, GetUsersResponse> operation
-              = new GetUsers.Async(sdkConfiguration, serverURL);
+              = new GetUsers.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Account (XML)
+     * 
+     * <p>Get the logged-in user's account details in XML format (legacy v1 endpoint).
+     * 
+     * @return The async call builder
+     */
+    public GetAccountXMLRequestBuilder getAccountXML() {
+        return new GetAccountXMLRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Account (XML)
+     * 
+     * <p>Get the logged-in user's account details in XML format (legacy v1 endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetAccountXMLResponse>} - The async response
+     */
+    public CompletableFuture<GetAccountXMLResponse> getAccountXML(GetAccountXMLRequest request) {
+        return getAccountXML(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Account (XML)
+     * 
+     * <p>Get the logged-in user's account details in XML format (legacy v1 endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAccountXMLResponse>} - The async response
+     */
+    public CompletableFuture<GetAccountXMLResponse> getAccountXML(
+            GetAccountXMLRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetAccountXMLRequest, GetAccountXMLResponse> operation
+              = new GetAccountXML.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Account (JSON)
+     * 
+     * <p>Get the logged-in user's account details in JSON format (legacy v1 endpoint).
+     * 
+     * @return The async call builder
+     */
+    public GetAccountJSONRequestBuilder getAccountJSON() {
+        return new GetAccountJSONRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Account (JSON)
+     * 
+     * <p>Get the logged-in user's account details in JSON format (legacy v1 endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetAccountJSONResponse>} - The async response
+     */
+    public CompletableFuture<GetAccountJSONResponse> getAccountJSON(GetAccountJSONRequest request) {
+        return getAccountJSON(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Account (JSON)
+     * 
+     * <p>Get the logged-in user's account details in JSON format (legacy v1 endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAccountJSONResponse>} - The async response
+     */
+    public CompletableFuture<GetAccountJSONResponse> getAccountJSON(
+            GetAccountJSONRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetAccountJSONRequest, GetAccountJSONResponse> operation
+              = new GetAccountJSON.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Delete Home User
+     * 
+     * <p>Remove a Plex Home user.
+     * 
+     * @return The async call builder
+     */
+    public DeleteHomeUserRequestBuilder deleteHomeUser() {
+        return new DeleteHomeUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Delete Home User
+     * 
+     * <p>Remove a Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<DeleteHomeUserResponse>} - The async response
+     */
+    public CompletableFuture<DeleteHomeUserResponse> deleteHomeUser(DeleteHomeUserRequest request) {
+        return deleteHomeUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Delete Home User
+     * 
+     * <p>Remove a Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteHomeUserResponse>} - The async response
+     */
+    public CompletableFuture<DeleteHomeUserResponse> deleteHomeUser(
+            DeleteHomeUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<DeleteHomeUserRequest, DeleteHomeUserResponse> operation
+              = new DeleteHomeUser.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Update Home User
+     * 
+     * <p>Update a Plex Home user.
+     * 
+     * @return The async call builder
+     */
+    public UpdateHomeUserRequestBuilder updateHomeUser() {
+        return new UpdateHomeUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update Home User
+     * 
+     * <p>Update a Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<UpdateHomeUserResponse>} - The async response
+     */
+    public CompletableFuture<UpdateHomeUserResponse> updateHomeUser(UpdateHomeUserRequest request) {
+        return updateHomeUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Update Home User
+     * 
+     * <p>Update a Plex Home user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateHomeUserResponse>} - The async response
+     */
+    public CompletableFuture<UpdateHomeUserResponse> updateHomeUser(
+            UpdateHomeUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<UpdateHomeUserRequest, UpdateHomeUserResponse> operation
+              = new UpdateHomeUser.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Update Restricted User
+     * 
+     * <p>Update restricted (managed) home user settings.
+     * 
+     * @return The async call builder
+     */
+    public UpdateRestrictedUserRequestBuilder updateRestrictedUser() {
+        return new UpdateRestrictedUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update Restricted User
+     * 
+     * <p>Update restricted (managed) home user settings.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<UpdateRestrictedUserResponse>} - The async response
+     */
+    public CompletableFuture<UpdateRestrictedUserResponse> updateRestrictedUser(UpdateRestrictedUserRequest request) {
+        return updateRestrictedUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Update Restricted User
+     * 
+     * <p>Update restricted (managed) home user settings.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateRestrictedUserResponse>} - The async response
+     */
+    public CompletableFuture<UpdateRestrictedUserResponse> updateRestrictedUser(
+            UpdateRestrictedUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<UpdateRestrictedUserRequest, UpdateRestrictedUserResponse> operation
+              = new UpdateRestrictedUser.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Server Details
+     * 
+     * <p>Get server details for sharing.
+     * 
+     * @return The async call builder
+     */
+    public GetServerDetailsRequestBuilder getServerDetails() {
+        return new GetServerDetailsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Server Details
+     * 
+     * <p>Get server details for sharing.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetServerDetailsResponse>} - The async response
+     */
+    public CompletableFuture<GetServerDetailsResponse> getServerDetails(GetServerDetailsRequest request) {
+        return getServerDetails(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Server Details
+     * 
+     * <p>Get server details for sharing.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetServerDetailsResponse>} - The async response
+     */
+    public CompletableFuture<GetServerDetailsResponse> getServerDetails(
+            GetServerDetailsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetServerDetailsRequest, GetServerDetailsResponse> operation
+              = new GetServerDetails.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Share Server (Legacy v1)
+     * 
+     * <p>Share a library with a friend (legacy v1 XML endpoint).
+     * 
+     * @return The async call builder
+     */
+    public ShareServerLegacyRequestBuilder shareServerLegacy() {
+        return new ShareServerLegacyRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Share Server (Legacy v1)
+     * 
+     * <p>Share a library with a friend (legacy v1 XML endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ShareServerLegacyResponse>} - The async response
+     */
+    public CompletableFuture<ShareServerLegacyResponse> shareServerLegacy(ShareServerLegacyRequest request) {
+        return shareServerLegacy(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Share Server (Legacy v1)
+     * 
+     * <p>Share a library with a friend (legacy v1 XML endpoint).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<ShareServerLegacyResponse>} - The async response
+     */
+    public CompletableFuture<ShareServerLegacyResponse> shareServerLegacy(
+            ShareServerLegacyRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<ShareServerLegacyRequest, ShareServerLegacyResponse> operation
+              = new ShareServerLegacy.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Remove Share
+     * 
+     * <p>Remove a share / friend.
+     * 
+     * @return The async call builder
+     */
+    public RemoveShareRequestBuilder removeShare() {
+        return new RemoveShareRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Remove Share
+     * 
+     * <p>Remove a share / friend.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<RemoveShareResponse>} - The async response
+     */
+    public CompletableFuture<RemoveShareResponse> removeShare(RemoveShareRequest request) {
+        return removeShare(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Remove Share
+     * 
+     * <p>Remove a share / friend.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<RemoveShareResponse>} - The async response
+     */
+    public CompletableFuture<RemoveShareResponse> removeShare(
+            RemoveShareRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<RemoveShareRequest, RemoveShareResponse> operation
+              = new RemoveShare.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Update Share
+     * 
+     * <p>Update friend filters (allowSync, filterMovies, etc.).
+     * 
+     * @return The async call builder
+     */
+    public UpdateShareRequestBuilder updateShare() {
+        return new UpdateShareRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update Share
+     * 
+     * <p>Update friend filters (allowSync, filterMovies, etc.).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<UpdateShareResponse>} - The async response
+     */
+    public CompletableFuture<UpdateShareResponse> updateShare(UpdateShareRequest request) {
+        return updateShare(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Update Share
+     * 
+     * <p>Update friend filters (allowSync, filterMovies, etc.).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<UpdateShareResponse>} - The async response
+     */
+    public CompletableFuture<UpdateShareResponse> updateShare(
+            UpdateShareRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<UpdateShareRequest, UpdateShareResponse> operation
+              = new UpdateShare.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get User Opt-Outs
+     * 
+     * <p>Get online media source opt-out settings for a user.
+     * 
+     * @return The async call builder
+     */
+    public GetUserOptOutsRequestBuilder getUserOptOuts() {
+        return new GetUserOptOutsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get User Opt-Outs
+     * 
+     * <p>Get online media source opt-out settings for a user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetUserOptOutsResponse>} - The async response
+     */
+    public CompletableFuture<GetUserOptOutsResponse> getUserOptOuts(GetUserOptOutsRequest request) {
+        return getUserOptOuts(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get User Opt-Outs
+     * 
+     * <p>Get online media source opt-out settings for a user.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetUserOptOutsResponse>} - The async response
+     */
+    public CompletableFuture<GetUserOptOutsResponse> getUserOptOuts(
+            GetUserOptOutsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetUserOptOutsRequest, GetUserOptOutsResponse> operation
+              = new GetUserOptOuts.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

@@ -13,23 +13,23 @@ generation:
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
     sharedErrorComponentsApr2025: false
-    nameOverrideFeb2026: false
     sharedNestedComponentsJan2026: false
+    nameOverrideFeb2026: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
     hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
+  versioningStrategy: automatic
+  persistentEdits: {}
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
-  persistentEdits: {}
-  requestBodyFieldName: ""
-  schemas:
-    allOfMergeStrategy: shallowMerge
-  versioningStrategy: automatic
 java:
-  version: 0.22.7
+  version: 0.23.0
   additionalDependencies: []
   additionalPlugins: []
   artifactID: plexapi
@@ -47,7 +47,7 @@ java:
   explicitDocImports: false
   flattenGlobalSecurity: true
   forwardCompatibleEnumsByDefault: false
-  forwardCompatibleUnionsByDefault: false
+  forwardCompatibleUnionsByDefault: "false"
   generateOptionalUnionAccessors: false
   generateSpringBootStarter: true
   generateUnionDocs: false

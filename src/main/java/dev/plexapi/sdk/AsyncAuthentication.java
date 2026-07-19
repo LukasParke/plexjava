@@ -4,21 +4,86 @@
 package dev.plexapi.sdk;
 
 import static dev.plexapi.sdk.operations.Operations.AsyncRequestOperation;
+import static dev.plexapi.sdk.operations.Operations.AsyncRequestlessOperation;
 
+import dev.plexapi.sdk.models.operations.ChangePasswordRequest;
+import dev.plexapi.sdk.models.operations.CreateOAuthPinRequest;
+import dev.plexapi.sdk.models.operations.CreateOAuthPinSecurity;
+import dev.plexapi.sdk.models.operations.ExchangeJWTTokenRequest;
+import dev.plexapi.sdk.models.operations.GetAuthKeysRequest;
+import dev.plexapi.sdk.models.operations.GetAuthNonceRequest;
+import dev.plexapi.sdk.models.operations.GetClaimTokenRequest;
+import dev.plexapi.sdk.models.operations.GetOAuthPinRequest;
+import dev.plexapi.sdk.models.operations.GetOAuthPinSecurity;
+import dev.plexapi.sdk.models.operations.GetServerAccessTokensRequest;
 import dev.plexapi.sdk.models.operations.GetTokenDetailsRequest;
+import dev.plexapi.sdk.models.operations.LinkOAuthPinAuthenticationRequestBody;
 import dev.plexapi.sdk.models.operations.PostUsersSignInDataRequest;
+import dev.plexapi.sdk.models.operations.RegisterDeviceJWKRequest;
+import dev.plexapi.sdk.models.operations.SignOutRequest;
+import dev.plexapi.sdk.models.operations.SwitchHomeUserRequest;
+import dev.plexapi.sdk.models.operations.async.ChangePasswordRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.ChangePasswordResponse;
+import dev.plexapi.sdk.models.operations.async.CreateLegacyPinRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.CreateLegacyPinResponse;
+import dev.plexapi.sdk.models.operations.async.CreateOAuthPinRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.CreateOAuthPinResponse;
+import dev.plexapi.sdk.models.operations.async.ExchangeJWTTokenRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.ExchangeJWTTokenResponse;
+import dev.plexapi.sdk.models.operations.async.GetAuthKeysRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetAuthKeysResponse;
+import dev.plexapi.sdk.models.operations.async.GetAuthNonceRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetAuthNonceResponse;
+import dev.plexapi.sdk.models.operations.async.GetClaimTokenRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetClaimTokenResponse;
+import dev.plexapi.sdk.models.operations.async.GetFeaturesRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetFeaturesResponse;
+import dev.plexapi.sdk.models.operations.async.GetOAuthPinRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetOAuthPinResponse;
+import dev.plexapi.sdk.models.operations.async.GetServerAccessTokensRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetServerAccessTokensResponse;
 import dev.plexapi.sdk.models.operations.async.GetTokenDetailsRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetTokenDetailsResponse;
+import dev.plexapi.sdk.models.operations.async.LinkOAuthPinRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.LinkOAuthPinResponse;
+import dev.plexapi.sdk.models.operations.async.PingRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.PingResponse;
 import dev.plexapi.sdk.models.operations.async.PostUsersSignInDataRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.PostUsersSignInDataResponse;
+import dev.plexapi.sdk.models.operations.async.RegisterDeviceJWKRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.RegisterDeviceJWKResponse;
+import dev.plexapi.sdk.models.operations.async.SignOutRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.SignOutResponse;
+import dev.plexapi.sdk.models.operations.async.SwitchHomeUserRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.SwitchHomeUserResponse;
+import dev.plexapi.sdk.operations.ChangePassword;
+import dev.plexapi.sdk.operations.CreateLegacyPin;
+import dev.plexapi.sdk.operations.CreateOAuthPin;
+import dev.plexapi.sdk.operations.ExchangeJWTToken;
+import dev.plexapi.sdk.operations.GetAuthKeys;
+import dev.plexapi.sdk.operations.GetAuthNonce;
+import dev.plexapi.sdk.operations.GetClaimToken;
+import dev.plexapi.sdk.operations.GetFeatures;
+import dev.plexapi.sdk.operations.GetOAuthPin;
+import dev.plexapi.sdk.operations.GetServerAccessTokens;
 import dev.plexapi.sdk.operations.GetTokenDetails;
+import dev.plexapi.sdk.operations.LinkOAuthPin;
+import dev.plexapi.sdk.operations.Ping;
 import dev.plexapi.sdk.operations.PostUsersSignInData;
+import dev.plexapi.sdk.operations.RegisterDeviceJWK;
+import dev.plexapi.sdk.operations.SignOut;
+import dev.plexapi.sdk.operations.SwitchHomeUser;
+import dev.plexapi.sdk.utils.Headers;
+import dev.plexapi.sdk.utils.Options;
 import java.lang.String;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-
+/**
+ * Plex Authentication operations
+ */
 public class AsyncAuthentication {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final Authentication syncSDK;
 
@@ -34,6 +99,495 @@ public class AsyncAuthentication {
      */
     public Authentication sync() {
         return syncSDK;
+    }
+
+
+    /**
+     * Register Device JWK
+     * 
+     * <p>Register a device public key (JWK) for JWT-based authentication.
+     * 
+     * @return The async call builder
+     */
+    public RegisterDeviceJWKRequestBuilder registerDeviceJWK() {
+        return new RegisterDeviceJWKRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Register Device JWK
+     * 
+     * <p>Register a device public key (JWK) for JWT-based authentication.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<RegisterDeviceJWKResponse>} - The async response
+     */
+    public CompletableFuture<RegisterDeviceJWKResponse> registerDeviceJWK(RegisterDeviceJWKRequest request) {
+        return registerDeviceJWK(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Register Device JWK
+     * 
+     * <p>Register a device public key (JWK) for JWT-based authentication.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<RegisterDeviceJWKResponse>} - The async response
+     */
+    public CompletableFuture<RegisterDeviceJWKResponse> registerDeviceJWK(
+            RegisterDeviceJWKRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<RegisterDeviceJWKRequest, RegisterDeviceJWKResponse> operation
+              = new RegisterDeviceJWK.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Auth Keys
+     * 
+     * <p>Get Plex public JWKs for signature verification.
+     * 
+     * @return The async call builder
+     */
+    public GetAuthKeysRequestBuilder getAuthKeys() {
+        return new GetAuthKeysRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Auth Keys
+     * 
+     * <p>Get Plex public JWKs for signature verification.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetAuthKeysResponse>} - The async response
+     */
+    public CompletableFuture<GetAuthKeysResponse> getAuthKeys(GetAuthKeysRequest request) {
+        return getAuthKeys(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Auth Keys
+     * 
+     * <p>Get Plex public JWKs for signature verification.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAuthKeysResponse>} - The async response
+     */
+    public CompletableFuture<GetAuthKeysResponse> getAuthKeys(
+            GetAuthKeysRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetAuthKeysRequest, GetAuthKeysResponse> operation
+              = new GetAuthKeys.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Auth Nonce
+     * 
+     * <p>Get a nonce to sign in client JWT authentication flow.
+     * 
+     * @return The async call builder
+     */
+    public GetAuthNonceRequestBuilder getAuthNonce() {
+        return new GetAuthNonceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Auth Nonce
+     * 
+     * <p>Get a nonce to sign in client JWT authentication flow.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetAuthNonceResponse>} - The async response
+     */
+    public CompletableFuture<GetAuthNonceResponse> getAuthNonce(GetAuthNonceRequest request) {
+        return getAuthNonce(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Auth Nonce
+     * 
+     * <p>Get a nonce to sign in client JWT authentication flow.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetAuthNonceResponse>} - The async response
+     */
+    public CompletableFuture<GetAuthNonceResponse> getAuthNonce(
+            GetAuthNonceRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetAuthNonceRequest, GetAuthNonceResponse> operation
+              = new GetAuthNonce.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Exchange JWT Token
+     * 
+     * <p>Exchange a signed client JWT for a Plex JWT token.
+     * 
+     * @return The async call builder
+     */
+    public ExchangeJWTTokenRequestBuilder exchangeJWTToken() {
+        return new ExchangeJWTTokenRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Exchange JWT Token
+     * 
+     * <p>Exchange a signed client JWT for a Plex JWT token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ExchangeJWTTokenResponse>} - The async response
+     */
+    public CompletableFuture<ExchangeJWTTokenResponse> exchangeJWTToken(ExchangeJWTTokenRequest request) {
+        return exchangeJWTToken(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Exchange JWT Token
+     * 
+     * <p>Exchange a signed client JWT for a Plex JWT token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<ExchangeJWTTokenResponse>} - The async response
+     */
+    public CompletableFuture<ExchangeJWTTokenResponse> exchangeJWTToken(
+            ExchangeJWTTokenRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<ExchangeJWTTokenRequest, ExchangeJWTTokenResponse> operation
+              = new ExchangeJWTToken.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Claim Token
+     * 
+     * <p>Get a claim token for new server setup.
+     * 
+     * @return The async call builder
+     */
+    public GetClaimTokenRequestBuilder getClaimToken() {
+        return new GetClaimTokenRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Claim Token
+     * 
+     * <p>Get a claim token for new server setup.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetClaimTokenResponse>} - The async response
+     */
+    public CompletableFuture<GetClaimTokenResponse> getClaimToken(GetClaimTokenRequest request) {
+        return getClaimToken(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Claim Token
+     * 
+     * <p>Get a claim token for new server setup.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetClaimTokenResponse>} - The async response
+     */
+    public CompletableFuture<GetClaimTokenResponse> getClaimToken(
+            GetClaimTokenRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetClaimTokenRequest, GetClaimTokenResponse> operation
+              = new GetClaimToken.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Features
+     * 
+     * <p>Get Plex Pass feature flags for the logged-in user.
+     * 
+     * @return The async call builder
+     */
+    public GetFeaturesRequestBuilder getFeatures() {
+        return new GetFeaturesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Features
+     * 
+     * <p>Get Plex Pass feature flags for the logged-in user.
+     * 
+     * @return {@code CompletableFuture<GetFeaturesResponse>} - The async response
+     */
+    public CompletableFuture<GetFeaturesResponse> getFeaturesDirect() {
+        return getFeatures(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Features
+     * 
+     * <p>Get Plex Pass feature flags for the logged-in user.
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetFeaturesResponse>} - The async response
+     */
+    public CompletableFuture<GetFeaturesResponse> getFeatures(Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestlessOperation<GetFeaturesResponse> operation
+            = new GetFeatures.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Ping the server
+     * 
+     * <p>Health / latency check. No authentication required.
+     * 
+     * @return The async call builder
+     */
+    public PingRequestBuilder ping() {
+        return new PingRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Ping the server
+     * 
+     * <p>Health / latency check. No authentication required.
+     * 
+     * @return {@code CompletableFuture<PingResponse>} - The async response
+     */
+    public CompletableFuture<PingResponse> pingDirect() {
+        return ping(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Ping the server
+     * 
+     * <p>Health / latency check. No authentication required.
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<PingResponse>} - The async response
+     */
+    public CompletableFuture<PingResponse> ping(Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestlessOperation<PingResponse> operation
+            = new Ping.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Create OAuth PIN
+     * 
+     * <p>Create a 4-character PIN for device linking via OAuth. The user must visit https://plex.tv/link and
+     * enter the PIN to authorize the device.
+     * 
+     * @return The async call builder
+     */
+    public CreateOAuthPinRequestBuilder createOAuthPin() {
+        return new CreateOAuthPinRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create OAuth PIN
+     * 
+     * <p>Create a 4-character PIN for device linking via OAuth. The user must visit https://plex.tv/link and
+     * enter the PIN to authorize the device.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param security The security details to use for authentication.
+     * @return {@code CompletableFuture<CreateOAuthPinResponse>} - The async response
+     */
+    public CompletableFuture<CreateOAuthPinResponse> createOAuthPin(CreateOAuthPinRequest request, CreateOAuthPinSecurity security) {
+        return createOAuthPin(
+                request, security, Optional.empty(),
+                Optional.empty());
+    }
+
+    /**
+     * Create OAuth PIN
+     * 
+     * <p>Create a 4-character PIN for device linking via OAuth. The user must visit https://plex.tv/link and
+     * enter the PIN to authorize the device.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param security The security details to use for authentication.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateOAuthPinResponse>} - The async response
+     */
+    public CompletableFuture<CreateOAuthPinResponse> createOAuthPin(
+            CreateOAuthPinRequest request, CreateOAuthPinSecurity security,
+            Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestOperation<CreateOAuthPinRequest, CreateOAuthPinResponse> operation
+              = new CreateOAuthPin.Async(
+                                    sdkConfiguration, security, serverURL,
+                                    options, sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Create Legacy PIN
+     * 
+     * <p>Legacy PIN creation (XML).
+     * 
+     * @return The async call builder
+     */
+    public CreateLegacyPinRequestBuilder createLegacyPin() {
+        return new CreateLegacyPinRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create Legacy PIN
+     * 
+     * <p>Legacy PIN creation (XML).
+     * 
+     * @return {@code CompletableFuture<CreateLegacyPinResponse>} - The async response
+     */
+    public CompletableFuture<CreateLegacyPinResponse> createLegacyPinDirect() {
+        return createLegacyPin(Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Create Legacy PIN
+     * 
+     * <p>Legacy PIN creation (XML).
+     * 
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateLegacyPinResponse>} - The async response
+     */
+    public CompletableFuture<CreateLegacyPinResponse> createLegacyPin(Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestlessOperation<CreateLegacyPinResponse> operation
+            = new CreateLegacyPin.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest()
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Link OAuth PIN
+     * 
+     * <p>Link a PIN to an account (OAuth completion).
+     * 
+     * @return The async call builder
+     */
+    public LinkOAuthPinRequestBuilder linkOAuthPin() {
+        return new LinkOAuthPinRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Link OAuth PIN
+     * 
+     * <p>Link a PIN to an account (OAuth completion).
+     * 
+     * @return {@code CompletableFuture<LinkOAuthPinResponse>} - The async response
+     */
+    public CompletableFuture<LinkOAuthPinResponse> linkOAuthPinDirect() {
+        return linkOAuthPin(Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Link OAuth PIN
+     * 
+     * <p>Link a PIN to an account (OAuth completion).
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<LinkOAuthPinResponse>} - The async response
+     */
+    public CompletableFuture<LinkOAuthPinResponse> linkOAuthPin(
+            Optional<? extends LinkOAuthPinAuthenticationRequestBody> request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<Optional<? extends LinkOAuthPinAuthenticationRequestBody>, LinkOAuthPinResponse> operation
+              = new LinkOAuthPin.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get Server Access Tokens
+     * 
+     * <p>List access tokens for the server.
+     * 
+     * @return The async call builder
+     */
+    public GetServerAccessTokensRequestBuilder getServerAccessTokens() {
+        return new GetServerAccessTokensRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get Server Access Tokens
+     * 
+     * <p>List access tokens for the server.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetServerAccessTokensResponse>} - The async response
+     */
+    public CompletableFuture<GetServerAccessTokensResponse> getServerAccessTokens(GetServerAccessTokensRequest request) {
+        return getServerAccessTokens(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Get Server Access Tokens
+     * 
+     * <p>List access tokens for the server.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetServerAccessTokensResponse>} - The async response
+     */
+    public CompletableFuture<GetServerAccessTokensResponse> getServerAccessTokens(
+            GetServerAccessTokensRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<GetServerAccessTokensRequest, GetServerAccessTokensResponse> operation
+              = new GetServerAccessTokens.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
     }
 
 
@@ -54,10 +608,10 @@ public class AsyncAuthentication {
      * <p>Get the User data from the provided X-Plex-Token
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;GetTokenDetailsResponse&gt; - The async response
+     * @return {@code CompletableFuture<GetTokenDetailsResponse>} - The async response
      */
     public CompletableFuture<GetTokenDetailsResponse> getTokenDetails(GetTokenDetailsRequest request) {
-        return getTokenDetails(request, Optional.empty());
+        return getTokenDetails(request, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -67,11 +621,61 @@ public class AsyncAuthentication {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param serverURL Overrides the server URL.
-     * @return CompletableFuture&lt;GetTokenDetailsResponse&gt; - The async response
+     * @param options additional options
+     * @return {@code CompletableFuture<GetTokenDetailsResponse>} - The async response
      */
-    public CompletableFuture<GetTokenDetailsResponse> getTokenDetails(GetTokenDetailsRequest request, Optional<String> serverURL) {
+    public CompletableFuture<GetTokenDetailsResponse> getTokenDetails(
+            GetTokenDetailsRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
         AsyncRequestOperation<GetTokenDetailsRequest, GetTokenDetailsResponse> operation
-              = new GetTokenDetails.Async(sdkConfiguration, serverURL);
+              = new GetTokenDetails.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Change Password
+     * 
+     * <p>Change or reset the logged-in user's password.
+     * 
+     * @return The async call builder
+     */
+    public ChangePasswordRequestBuilder changePassword() {
+        return new ChangePasswordRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Change Password
+     * 
+     * <p>Change or reset the logged-in user's password.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ChangePasswordResponse>} - The async response
+     */
+    public CompletableFuture<ChangePasswordResponse> changePassword(ChangePasswordRequest request) {
+        return changePassword(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Change Password
+     * 
+     * <p>Change or reset the logged-in user's password.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<ChangePasswordResponse>} - The async response
+     */
+    public CompletableFuture<ChangePasswordResponse> changePassword(
+            ChangePasswordRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<ChangePasswordRequest, ChangePasswordResponse> operation
+              = new ChangePassword.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -94,10 +698,10 @@ public class AsyncAuthentication {
      * <p>Sign in user with username and password and return user data with Plex authentication token
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return CompletableFuture&lt;PostUsersSignInDataResponse&gt; - The async response
+     * @return {@code CompletableFuture<PostUsersSignInDataResponse>} - The async response
      */
     public CompletableFuture<PostUsersSignInDataResponse> postUsersSignInData(PostUsersSignInDataRequest request) {
-        return postUsersSignInData(request, Optional.empty());
+        return postUsersSignInData(request, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -107,11 +711,155 @@ public class AsyncAuthentication {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param serverURL Overrides the server URL.
-     * @return CompletableFuture&lt;PostUsersSignInDataResponse&gt; - The async response
+     * @param options additional options
+     * @return {@code CompletableFuture<PostUsersSignInDataResponse>} - The async response
      */
-    public CompletableFuture<PostUsersSignInDataResponse> postUsersSignInData(PostUsersSignInDataRequest request, Optional<String> serverURL) {
+    public CompletableFuture<PostUsersSignInDataResponse> postUsersSignInData(
+            PostUsersSignInDataRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
         AsyncRequestOperation<PostUsersSignInDataRequest, PostUsersSignInDataResponse> operation
-              = new PostUsersSignInData.Async(sdkConfiguration, serverURL);
+              = new PostUsersSignInData.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Sign Out
+     * 
+     * <p>Invalidate the current authentication token.
+     * 
+     * @return The async call builder
+     */
+    public SignOutRequestBuilder signOut() {
+        return new SignOutRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Sign Out
+     * 
+     * <p>Invalidate the current authentication token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<SignOutResponse>} - The async response
+     */
+    public CompletableFuture<SignOutResponse> signOut(SignOutRequest request) {
+        return signOut(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Sign Out
+     * 
+     * <p>Invalidate the current authentication token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<SignOutResponse>} - The async response
+     */
+    public CompletableFuture<SignOutResponse> signOut(
+            SignOutRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<SignOutRequest, SignOutResponse> operation
+              = new SignOut.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Switch Home User
+     * 
+     * <p>Switch to a Plex Home user and return a new auth token.
+     * 
+     * @return The async call builder
+     */
+    public SwitchHomeUserRequestBuilder switchHomeUser() {
+        return new SwitchHomeUserRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Switch Home User
+     * 
+     * <p>Switch to a Plex Home user and return a new auth token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<SwitchHomeUserResponse>} - The async response
+     */
+    public CompletableFuture<SwitchHomeUserResponse> switchHomeUser(SwitchHomeUserRequest request) {
+        return switchHomeUser(request, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * Switch Home User
+     * 
+     * <p>Switch to a Plex Home user and return a new auth token.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<SwitchHomeUserResponse>} - The async response
+     */
+    public CompletableFuture<SwitchHomeUserResponse> switchHomeUser(
+            SwitchHomeUserRequest request, Optional<String> serverURL,
+            Optional<Options> options) {
+        AsyncRequestOperation<SwitchHomeUserRequest, SwitchHomeUserResponse> operation
+              = new SwitchHomeUser.Async(
+                                    sdkConfiguration, serverURL, options,
+                                    sdkConfiguration.retryScheduler(), _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get OAuth PIN Status
+     * 
+     * <p>Poll the PIN status. Returns authToken when the user has linked the device.
+     * 
+     * @return The async call builder
+     */
+    public GetOAuthPinRequestBuilder getOAuthPin() {
+        return new GetOAuthPinRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get OAuth PIN Status
+     * 
+     * <p>Poll the PIN status. Returns authToken when the user has linked the device.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param security The security details to use for authentication.
+     * @return {@code CompletableFuture<GetOAuthPinResponse>} - The async response
+     */
+    public CompletableFuture<GetOAuthPinResponse> getOAuthPin(GetOAuthPinRequest request, GetOAuthPinSecurity security) {
+        return getOAuthPin(
+                request, security, Optional.empty(),
+                Optional.empty());
+    }
+
+    /**
+     * Get OAuth PIN Status
+     * 
+     * <p>Poll the PIN status. Returns authToken when the user has linked the device.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param security The security details to use for authentication.
+     * @param serverURL Overrides the server URL.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetOAuthPinResponse>} - The async response
+     */
+    public CompletableFuture<GetOAuthPinResponse> getOAuthPin(
+            GetOAuthPinRequest request, GetOAuthPinSecurity security,
+            Optional<String> serverURL, Optional<Options> options) {
+        AsyncRequestOperation<GetOAuthPinRequest, GetOAuthPinResponse> operation
+              = new GetOAuthPin.Async(
+                                    sdkConfiguration, security, serverURL,
+                                    options, sdkConfiguration.retryScheduler(), _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

@@ -92,25 +92,16 @@ public class AddDownloadQueueItemsRequest {
     private Optional<String> marketplace;
 
     /**
-     * The queue id
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=queueId")
-    private long queueId;
-
-    /**
-     * Keys to add
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=false,name=keys")
-    private List<String> keys;
-
-    /**
-     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+     * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+     * advanced text subtitles to a compatible text format, even if some markup is lost
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=advancedSubtitles")
     private Optional<? extends AdvancedSubtitles> advancedSubtitles;
 
     /**
-     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+     * 50 is half, 200 is double, etc)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=audioBoost")
     private Optional<Long> audioBoost;
@@ -158,7 +149,8 @@ public class AddDownloadQueueItemsRequest {
     private Optional<? extends BoolInt> disableResolutionRotation;
 
     /**
-     * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+     * Ignore client profiles when determining if direct play is possible. Only has an effect when
+     * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=hasMDE")
     private Optional<? extends BoolInt> hasMDE;
@@ -170,7 +162,9 @@ public class AddDownloadQueueItemsRequest {
     private Optional<? extends Location> location;
 
     /**
-     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+     * This value could make the difference between transcoding and direct play on bandwidth constrained
+     * networks.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=mediaBufferSize")
     private Optional<Long> mediaBufferSize;
@@ -194,7 +188,8 @@ public class AddDownloadQueueItemsRequest {
     private Optional<Double> offset;
 
     /**
-     * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+     * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+     * in a transcode
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=partIndex")
     private Optional<Long> partIndex;
@@ -218,7 +213,9 @@ public class AddDownloadQueueItemsRequest {
     private Optional<String> photoResolution;
 
     /**
-     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+     * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+     * stream (ISO/IEC 23009-1:2022)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=protocol")
     private Optional<? extends Protocol> protocol;
@@ -230,13 +227,18 @@ public class AddDownloadQueueItemsRequest {
     private Optional<Long> secondsPerSegment;
 
     /**
-     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+     * size, 50 is half, ect)
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=subtitleSize")
     private Optional<Long> subtitleSize;
 
     /**
-     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+     * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+     * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+     * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+     * selected subtitle should be provided as a segmented stream
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=subtitles")
     private Optional<? extends Subtitles> subtitles;
@@ -259,6 +261,18 @@ public class AddDownloadQueueItemsRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=videoResolution")
     private Optional<String> videoResolution;
 
+    /**
+     * The queue id
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=queueId")
+    private long queueId;
+
+    /**
+     * Keys to add
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=false,name=keys")
+    private List<String> keys;
+
     @JsonCreator
     public AddDownloadQueueItemsRequest(
             Optional<? extends Accepts> accepts,
@@ -272,8 +286,6 @@ public class AddDownloadQueueItemsRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
-            long queueId,
-            List<String> keys,
             Optional<? extends AdvancedSubtitles> advancedSubtitles,
             Optional<Long> audioBoost,
             Optional<Long> audioChannelCount,
@@ -299,7 +311,9 @@ public class AddDownloadQueueItemsRequest {
             Optional<? extends Subtitles> subtitles,
             Optional<Long> videoBitrate,
             Optional<Long> videoQuality,
-            Optional<String> videoResolution) {
+            Optional<String> videoResolution,
+            long queueId,
+            List<String> keys) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
         Utils.checkNotNull(product, "product");
@@ -311,8 +325,6 @@ public class AddDownloadQueueItemsRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
-        Utils.checkNotNull(queueId, "queueId");
-        Utils.checkNotNull(keys, "keys");
         Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
         Utils.checkNotNull(audioBoost, "audioBoost");
         Utils.checkNotNull(audioChannelCount, "audioChannelCount");
@@ -339,6 +351,8 @@ public class AddDownloadQueueItemsRequest {
         Utils.checkNotNull(videoBitrate, "videoBitrate");
         Utils.checkNotNull(videoQuality, "videoQuality");
         Utils.checkNotNull(videoResolution, "videoResolution");
+        Utils.checkNotNull(queueId, "queueId");
+        Utils.checkNotNull(keys, "keys");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
         this.product = product;
@@ -350,8 +364,6 @@ public class AddDownloadQueueItemsRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
-        this.queueId = queueId;
-        this.keys = keys;
         this.advancedSubtitles = advancedSubtitles;
         this.audioBoost = audioBoost;
         this.audioChannelCount = audioChannelCount;
@@ -378,6 +390,8 @@ public class AddDownloadQueueItemsRequest {
         this.videoBitrate = videoBitrate;
         this.videoQuality = videoQuality;
         this.videoResolution = videoResolution;
+        this.queueId = queueId;
+        this.keys = keys;
     }
     
     public AddDownloadQueueItemsRequest(
@@ -386,8 +400,6 @@ public class AddDownloadQueueItemsRequest {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), queueId,
-            keys, Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
@@ -395,7 +407,9 @@ public class AddDownloadQueueItemsRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), queueId, keys);
     }
 
     /**
@@ -488,23 +502,9 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * The queue id
-     */
-    @JsonIgnore
-    public long queueId() {
-        return queueId;
-    }
-
-    /**
-     * Keys to add
-     */
-    @JsonIgnore
-    public List<String> keys() {
-        return keys;
-    }
-
-    /**
-     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+     * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+     * advanced text subtitles to a compatible text format, even if some markup is lost
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -513,7 +513,8 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+     * 50 is half, 200 is double, etc)
      */
     @JsonIgnore
     public Optional<Long> audioBoost() {
@@ -583,7 +584,8 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+     * Ignore client profiles when determining if direct play is possible. Only has an effect when
+     * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -601,7 +603,9 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+     * This value could make the difference between transcoding and direct play on bandwidth constrained
+     * networks.
      */
     @JsonIgnore
     public Optional<Long> mediaBufferSize() {
@@ -633,7 +637,8 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+     * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+     * in a transcode
      */
     @JsonIgnore
     public Optional<Long> partIndex() {
@@ -665,7 +670,9 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+     * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+     * stream (ISO/IEC 23009-1:2022)
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -682,7 +689,8 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+     * size, 50 is half, ect)
      */
     @JsonIgnore
     public Optional<Long> subtitleSize() {
@@ -690,7 +698,11 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+     * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+     * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+     * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+     * selected subtitle should be provided as a segmented stream
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -720,6 +732,22 @@ public class AddDownloadQueueItemsRequest {
     @JsonIgnore
     public Optional<String> videoResolution() {
         return videoResolution;
+    }
+
+    /**
+     * The queue id
+     */
+    @JsonIgnore
+    public long queueId() {
+        return queueId;
+    }
+
+    /**
+     * Keys to add
+     */
+    @JsonIgnore
+    public List<String> keys() {
+        return keys;
     }
 
     public static Builder builder() {
@@ -937,25 +965,9 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * The queue id
-     */
-    public AddDownloadQueueItemsRequest withQueueId(long queueId) {
-        Utils.checkNotNull(queueId, "queueId");
-        this.queueId = queueId;
-        return this;
-    }
-
-    /**
-     * Keys to add
-     */
-    public AddDownloadQueueItemsRequest withKeys(List<String> keys) {
-        Utils.checkNotNull(keys, "keys");
-        this.keys = keys;
-        return this;
-    }
-
-    /**
-     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+     * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+     * advanced text subtitles to a compatible text format, even if some markup is lost
      */
     public AddDownloadQueueItemsRequest withAdvancedSubtitles(AdvancedSubtitles advancedSubtitles) {
         Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
@@ -965,7 +977,9 @@ public class AddDownloadQueueItemsRequest {
 
 
     /**
-     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+     * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+     * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+     * advanced text subtitles to a compatible text format, even if some markup is lost
      */
     public AddDownloadQueueItemsRequest withAdvancedSubtitles(Optional<? extends AdvancedSubtitles> advancedSubtitles) {
         Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
@@ -974,7 +988,8 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+     * 50 is half, 200 is double, etc)
      */
     public AddDownloadQueueItemsRequest withAudioBoost(long audioBoost) {
         Utils.checkNotNull(audioBoost, "audioBoost");
@@ -984,7 +999,8 @@ public class AddDownloadQueueItemsRequest {
 
 
     /**
-     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+     * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+     * 50 is half, 200 is double, etc)
      */
     public AddDownloadQueueItemsRequest withAudioBoost(Optional<Long> audioBoost) {
         Utils.checkNotNull(audioBoost, "audioBoost");
@@ -1126,7 +1142,8 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+     * Ignore client profiles when determining if direct play is possible. Only has an effect when
+     * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
      */
     public AddDownloadQueueItemsRequest withHasMDE(BoolInt hasMDE) {
         Utils.checkNotNull(hasMDE, "hasMDE");
@@ -1136,7 +1153,8 @@ public class AddDownloadQueueItemsRequest {
 
 
     /**
-     * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+     * Ignore client profiles when determining if direct play is possible. Only has an effect when
+     * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
      */
     public AddDownloadQueueItemsRequest withHasMDE(Optional<? extends BoolInt> hasMDE) {
         Utils.checkNotNull(hasMDE, "hasMDE");
@@ -1164,7 +1182,9 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+     * This value could make the difference between transcoding and direct play on bandwidth constrained
+     * networks.
      */
     public AddDownloadQueueItemsRequest withMediaBufferSize(long mediaBufferSize) {
         Utils.checkNotNull(mediaBufferSize, "mediaBufferSize");
@@ -1174,7 +1194,9 @@ public class AddDownloadQueueItemsRequest {
 
 
     /**
-     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+     * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+     * This value could make the difference between transcoding and direct play on bandwidth constrained
+     * networks.
      */
     public AddDownloadQueueItemsRequest withMediaBufferSize(Optional<Long> mediaBufferSize) {
         Utils.checkNotNull(mediaBufferSize, "mediaBufferSize");
@@ -1240,7 +1262,8 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+     * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+     * in a transcode
      */
     public AddDownloadQueueItemsRequest withPartIndex(long partIndex) {
         Utils.checkNotNull(partIndex, "partIndex");
@@ -1250,7 +1273,8 @@ public class AddDownloadQueueItemsRequest {
 
 
     /**
-     * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+     * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+     * in a transcode
      */
     public AddDownloadQueueItemsRequest withPartIndex(Optional<Long> partIndex) {
         Utils.checkNotNull(partIndex, "partIndex");
@@ -1316,7 +1340,9 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+     * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+     * stream (ISO/IEC 23009-1:2022)
      */
     public AddDownloadQueueItemsRequest withProtocol(Protocol protocol) {
         Utils.checkNotNull(protocol, "protocol");
@@ -1326,7 +1352,9 @@ public class AddDownloadQueueItemsRequest {
 
 
     /**
-     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+     * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+     * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+     * stream (ISO/IEC 23009-1:2022)
      */
     public AddDownloadQueueItemsRequest withProtocol(Optional<? extends Protocol> protocol) {
         Utils.checkNotNull(protocol, "protocol");
@@ -1354,7 +1382,8 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+     * size, 50 is half, ect)
      */
     public AddDownloadQueueItemsRequest withSubtitleSize(long subtitleSize) {
         Utils.checkNotNull(subtitleSize, "subtitleSize");
@@ -1364,7 +1393,8 @@ public class AddDownloadQueueItemsRequest {
 
 
     /**
-     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+     * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+     * size, 50 is half, ect)
      */
     public AddDownloadQueueItemsRequest withSubtitleSize(Optional<Long> subtitleSize) {
         Utils.checkNotNull(subtitleSize, "subtitleSize");
@@ -1373,7 +1403,11 @@ public class AddDownloadQueueItemsRequest {
     }
 
     /**
-     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+     * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+     * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+     * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+     * selected subtitle should be provided as a segmented stream
      */
     public AddDownloadQueueItemsRequest withSubtitles(Subtitles subtitles) {
         Utils.checkNotNull(subtitles, "subtitles");
@@ -1383,7 +1417,11 @@ public class AddDownloadQueueItemsRequest {
 
 
     /**
-     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+     * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+     * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+     * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+     * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+     * selected subtitle should be provided as a segmented stream
      */
     public AddDownloadQueueItemsRequest withSubtitles(Optional<? extends Subtitles> subtitles) {
         Utils.checkNotNull(subtitles, "subtitles");
@@ -1448,6 +1486,24 @@ public class AddDownloadQueueItemsRequest {
         return this;
     }
 
+    /**
+     * The queue id
+     */
+    public AddDownloadQueueItemsRequest withQueueId(long queueId) {
+        Utils.checkNotNull(queueId, "queueId");
+        this.queueId = queueId;
+        return this;
+    }
+
+    /**
+     * Keys to add
+     */
+    public AddDownloadQueueItemsRequest withKeys(List<String> keys) {
+        Utils.checkNotNull(keys, "keys");
+        this.keys = keys;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -1469,8 +1525,6 @@ public class AddDownloadQueueItemsRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
-            Utils.enhancedDeepEquals(this.queueId, other.queueId) &&
-            Utils.enhancedDeepEquals(this.keys, other.keys) &&
             Utils.enhancedDeepEquals(this.advancedSubtitles, other.advancedSubtitles) &&
             Utils.enhancedDeepEquals(this.audioBoost, other.audioBoost) &&
             Utils.enhancedDeepEquals(this.audioChannelCount, other.audioChannelCount) &&
@@ -1496,7 +1550,9 @@ public class AddDownloadQueueItemsRequest {
             Utils.enhancedDeepEquals(this.subtitles, other.subtitles) &&
             Utils.enhancedDeepEquals(this.videoBitrate, other.videoBitrate) &&
             Utils.enhancedDeepEquals(this.videoQuality, other.videoQuality) &&
-            Utils.enhancedDeepEquals(this.videoResolution, other.videoResolution);
+            Utils.enhancedDeepEquals(this.videoResolution, other.videoResolution) &&
+            Utils.enhancedDeepEquals(this.queueId, other.queueId) &&
+            Utils.enhancedDeepEquals(this.keys, other.keys);
     }
     
     @Override
@@ -1505,16 +1561,16 @@ public class AddDownloadQueueItemsRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, queueId,
-            keys, advancedSubtitles, audioBoost,
-            audioChannelCount, autoAdjustQuality, autoAdjustSubtitle,
-            directPlay, directStream, directStreamAudio,
-            disableResolutionRotation, hasMDE, location,
-            mediaBufferSize, mediaIndex, musicBitrate,
-            offset, partIndex, path,
-            peakBitrate, photoResolution, protocol,
-            secondsPerSegment, subtitleSize, subtitles,
-            videoBitrate, videoQuality, videoResolution);
+            deviceName, marketplace, advancedSubtitles,
+            audioBoost, audioChannelCount, autoAdjustQuality,
+            autoAdjustSubtitle, directPlay, directStream,
+            directStreamAudio, disableResolutionRotation, hasMDE,
+            location, mediaBufferSize, mediaIndex,
+            musicBitrate, offset, partIndex,
+            path, peakBitrate, photoResolution,
+            protocol, secondsPerSegment, subtitleSize,
+            subtitles, videoBitrate, videoQuality,
+            videoResolution, queueId, keys);
     }
     
     @Override
@@ -1531,8 +1587,6 @@ public class AddDownloadQueueItemsRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
-                "queueId", queueId,
-                "keys", keys,
                 "advancedSubtitles", advancedSubtitles,
                 "audioBoost", audioBoost,
                 "audioChannelCount", audioChannelCount,
@@ -1558,7 +1612,9 @@ public class AddDownloadQueueItemsRequest {
                 "subtitles", subtitles,
                 "videoBitrate", videoBitrate,
                 "videoQuality", videoQuality,
-                "videoResolution", videoResolution);
+                "videoResolution", videoResolution,
+                "queueId", queueId,
+                "keys", keys);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -1585,10 +1641,6 @@ public class AddDownloadQueueItemsRequest {
         private Optional<String> deviceName = Optional.empty();
 
         private Optional<String> marketplace = Optional.empty();
-
-        private Long queueId;
-
-        private List<String> keys;
 
         private Optional<? extends AdvancedSubtitles> advancedSubtitles = Optional.empty();
 
@@ -1641,6 +1693,10 @@ public class AddDownloadQueueItemsRequest {
         private Optional<Long> videoQuality = Optional.empty();
 
         private Optional<String> videoResolution = Optional.empty();
+
+        private Long queueId;
+
+        private List<String> keys;
 
         private Builder() {
           // force use of static builder() method
@@ -1857,27 +1913,9 @@ public class AddDownloadQueueItemsRequest {
 
 
         /**
-         * The queue id
-         */
-        public Builder queueId(long queueId) {
-            Utils.checkNotNull(queueId, "queueId");
-            this.queueId = queueId;
-            return this;
-        }
-
-
-        /**
-         * Keys to add
-         */
-        public Builder keys(List<String> keys) {
-            Utils.checkNotNull(keys, "keys");
-            this.keys = keys;
-            return this;
-        }
-
-
-        /**
-         * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+         * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+         * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+         * advanced text subtitles to a compatible text format, even if some markup is lost
          */
         public Builder advancedSubtitles(AdvancedSubtitles advancedSubtitles) {
             Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
@@ -1886,7 +1924,9 @@ public class AddDownloadQueueItemsRequest {
         }
 
         /**
-         * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+         * Indicates how incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn
+         * incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible
+         * advanced text subtitles to a compatible text format, even if some markup is lost
          */
         public Builder advancedSubtitles(Optional<? extends AdvancedSubtitles> advancedSubtitles) {
             Utils.checkNotNull(advancedSubtitles, "advancedSubtitles");
@@ -1896,7 +1936,8 @@ public class AddDownloadQueueItemsRequest {
 
 
         /**
-         * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+         * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+         * 50 is half, 200 is double, etc)
          */
         public Builder audioBoost(long audioBoost) {
             Utils.checkNotNull(audioBoost, "audioBoost");
@@ -1905,7 +1946,8 @@ public class AddDownloadQueueItemsRequest {
         }
 
         /**
-         * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+         * Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume,
+         * 50 is half, 200 is double, etc)
          */
         public Builder audioBoost(Optional<Long> audioBoost) {
             Utils.checkNotNull(audioBoost, "audioBoost");
@@ -2048,7 +2090,8 @@ public class AddDownloadQueueItemsRequest {
 
 
         /**
-         * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+         * Ignore client profiles when determining if direct play is possible. Only has an effect when
+         * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
          */
         public Builder hasMDE(BoolInt hasMDE) {
             Utils.checkNotNull(hasMDE, "hasMDE");
@@ -2057,7 +2100,8 @@ public class AddDownloadQueueItemsRequest {
         }
 
         /**
-         * Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+         * Ignore client profiles when determining if direct play is possible. Only has an effect when
+         * directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
          */
         public Builder hasMDE(Optional<? extends BoolInt> hasMDE) {
             Utils.checkNotNull(hasMDE, "hasMDE");
@@ -2086,7 +2130,9 @@ public class AddDownloadQueueItemsRequest {
 
 
         /**
-         * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+         * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+         * This value could make the difference between transcoding and direct play on bandwidth constrained
+         * networks.
          */
         public Builder mediaBufferSize(long mediaBufferSize) {
             Utils.checkNotNull(mediaBufferSize, "mediaBufferSize");
@@ -2095,7 +2141,9 @@ public class AddDownloadQueueItemsRequest {
         }
 
         /**
-         * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+         * Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly.
+         * This value could make the difference between transcoding and direct play on bandwidth constrained
+         * networks.
          */
         public Builder mediaBufferSize(Optional<Long> mediaBufferSize) {
             Utils.checkNotNull(mediaBufferSize, "mediaBufferSize");
@@ -2162,7 +2210,8 @@ public class AddDownloadQueueItemsRequest {
 
 
         /**
-         * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+         * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+         * in a transcode
          */
         public Builder partIndex(long partIndex) {
             Utils.checkNotNull(partIndex, "partIndex");
@@ -2171,7 +2220,8 @@ public class AddDownloadQueueItemsRequest {
         }
 
         /**
-         * Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+         * Index of the part to transcode. -1 or not specified indicates the server should join parts together
+         * in a transcode
          */
         public Builder partIndex(Optional<Long> partIndex) {
             Utils.checkNotNull(partIndex, "partIndex");
@@ -2238,7 +2288,9 @@ public class AddDownloadQueueItemsRequest {
 
 
         /**
-         * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+         * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+         * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+         * stream (ISO/IEC 23009-1:2022)
          */
         public Builder protocol(Protocol protocol) {
             Utils.checkNotNull(protocol, "protocol");
@@ -2247,7 +2299,9 @@ public class AddDownloadQueueItemsRequest {
         }
 
         /**
-         * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)
+         * Indicates the network streaming protocol to be used for the transcode session: * 'http' - include
+         * the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash
+         * stream (ISO/IEC 23009-1:2022)
          */
         public Builder protocol(Optional<? extends Protocol> protocol) {
             Utils.checkNotNull(protocol, "protocol");
@@ -2276,7 +2330,8 @@ public class AddDownloadQueueItemsRequest {
 
 
         /**
-         * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+         * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+         * size, 50 is half, ect)
          */
         public Builder subtitleSize(long subtitleSize) {
             Utils.checkNotNull(subtitleSize, "subtitleSize");
@@ -2285,7 +2340,8 @@ public class AddDownloadQueueItemsRequest {
         }
 
         /**
-         * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+         * Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original
+         * size, 50 is half, ect)
          */
         public Builder subtitleSize(Optional<Long> subtitleSize) {
             Utils.checkNotNull(subtitleSize, "subtitleSize");
@@ -2295,7 +2351,11 @@ public class AddDownloadQueueItemsRequest {
 
 
         /**
-         * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+         * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+         * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+         * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+         * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+         * selected subtitle should be provided as a segmented stream
          */
         public Builder subtitles(Subtitles subtitles) {
             Utils.checkNotNull(subtitles, "subtitles");
@@ -2304,7 +2364,11 @@ public class AddDownloadQueueItemsRequest {
         }
 
         /**
-         * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream
+         * Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting
+         * automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore
+         * all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar *
+         * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The
+         * selected subtitle should be provided as a segmented stream
          */
         public Builder subtitles(Optional<? extends Subtitles> subtitles) {
             Utils.checkNotNull(subtitles, "subtitles");
@@ -2369,6 +2433,26 @@ public class AddDownloadQueueItemsRequest {
             return this;
         }
 
+
+        /**
+         * The queue id
+         */
+        public Builder queueId(long queueId) {
+            Utils.checkNotNull(queueId, "queueId");
+            this.queueId = queueId;
+            return this;
+        }
+
+
+        /**
+         * Keys to add
+         */
+        public Builder keys(List<String> keys) {
+            Utils.checkNotNull(keys, "keys");
+            this.keys = keys;
+            return this;
+        }
+
         public AddDownloadQueueItemsRequest build() {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
@@ -2399,16 +2483,16 @@ public class AddDownloadQueueItemsRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, queueId,
-                keys, advancedSubtitles, audioBoost,
-                audioChannelCount, autoAdjustQuality, autoAdjustSubtitle,
-                directPlay, directStream, directStreamAudio,
-                disableResolutionRotation, hasMDE, location,
-                mediaBufferSize, mediaIndex, musicBitrate,
-                offset, partIndex, path,
-                peakBitrate, photoResolution, protocol,
-                secondsPerSegment, subtitleSize, subtitles,
-                videoBitrate, videoQuality, videoResolution);
+                deviceName, marketplace, advancedSubtitles,
+                audioBoost, audioChannelCount, autoAdjustQuality,
+                autoAdjustSubtitle, directPlay, directStream,
+                directStreamAudio, disableResolutionRotation, hasMDE,
+                location, mediaBufferSize, mediaIndex,
+                musicBitrate, offset, partIndex,
+                path, peakBitrate, photoResolution,
+                protocol, secondsPerSegment, subtitleSize,
+                subtitles, videoBitrate, videoQuality,
+                videoResolution, queueId, keys);
         }
 
 

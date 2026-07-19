@@ -98,7 +98,7 @@ public class SetStreamSelectionRequest {
     private Optional<Long> audioStreamID;
 
     /**
-     * The id of the subtitle stream to select in this part.  Specify 0 to select no subtitle
+     * The id of the subtitle stream to select in this part. Specify 0 to select no subtitle
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=subtitleStreamID")
     private Optional<Long> subtitleStreamID;
@@ -273,7 +273,7 @@ public class SetStreamSelectionRequest {
     }
 
     /**
-     * The id of the subtitle stream to select in this part.  Specify 0 to select no subtitle
+     * The id of the subtitle stream to select in this part. Specify 0 to select no subtitle
      */
     @JsonIgnore
     public Optional<Long> subtitleStreamID() {
@@ -532,7 +532,7 @@ public class SetStreamSelectionRequest {
     }
 
     /**
-     * The id of the subtitle stream to select in this part.  Specify 0 to select no subtitle
+     * The id of the subtitle stream to select in this part. Specify 0 to select no subtitle
      */
     public SetStreamSelectionRequest withSubtitleStreamID(long subtitleStreamID) {
         Utils.checkNotNull(subtitleStreamID, "subtitleStreamID");
@@ -542,7 +542,7 @@ public class SetStreamSelectionRequest {
 
 
     /**
-     * The id of the subtitle stream to select in this part.  Specify 0 to select no subtitle
+     * The id of the subtitle stream to select in this part. Specify 0 to select no subtitle
      */
     public SetStreamSelectionRequest withSubtitleStreamID(Optional<Long> subtitleStreamID) {
         Utils.checkNotNull(subtitleStreamID, "subtitleStreamID");
@@ -903,7 +903,7 @@ public class SetStreamSelectionRequest {
 
 
         /**
-         * The id of the subtitle stream to select in this part.  Specify 0 to select no subtitle
+         * The id of the subtitle stream to select in this part. Specify 0 to select no subtitle
          */
         public Builder subtitleStreamID(long subtitleStreamID) {
             Utils.checkNotNull(subtitleStreamID, "subtitleStreamID");
@@ -912,7 +912,7 @@ public class SetStreamSelectionRequest {
         }
 
         /**
-         * The id of the subtitle stream to select in this part.  Specify 0 to select no subtitle
+         * The id of the subtitle stream to select in this part. Specify 0 to select no subtitle
          */
         public Builder subtitleStreamID(Optional<Long> subtitleStreamID) {
             Utils.checkNotNull(subtitleStreamID, "subtitleStreamID");

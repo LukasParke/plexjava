@@ -88,6 +88,13 @@ public class ListContentRequest {
     private Optional<String> marketplace;
 
     /**
+     * The PMS API version requested by the client. If omitted, the server assumes `0.0`.
+     * Use `1.0` for the published PMS API response customization behavior.
+     */
+    @SpeakeasyMetadata("header:style=simple,explode=false,name=X-Plex-Pms-Api-Version")
+    private Optional<String> pmsApiVersion;
+
+    /**
      * The index of the first item to return. If not specified, the first item will be returned.
      * If the number of items exceeds the limit, the response will be paginated.
      * By default this is 0
@@ -134,6 +141,60 @@ public class ListContentRequest {
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=sectionId")
     private long sectionId;
+
+    /**
+     * Return current items whose updatedAt is strictly greater than this Unix timestamp in seconds.
+     * The query key is updatedAt&gt;&gt; (URL-encoded as updatedAt%3E%3E), for example
+     * updatedAt%3E%3E=1792000000.
+     * Items updated exactly at the supplied timestamp are excluded; overlap polling windows and
+     * deduplicate ratingKey values to avoid missing same-second updates.
+     * Verified for movies, episodes, and tracks on PMS 1.43.4.10903. Support on other server versions and
+     * library types may vary.
+     * This filters current items, not a durable change log: deleted items are not returned, and it does
+     * not guarantee that every file, part, or stream change updates the parent timestamp.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=updatedAt>>")
+    private Optional<Long> updatedAtAfter;
+
+    /**
+     * Return current items whose updatedAt is strictly less than this Unix timestamp in seconds.
+     * The query key is updatedAt&lt;&lt; (URL-encoded as updatedAt%3C%3C), for example
+     * updatedAt%3C%3C=1792054845.
+     * Items updated exactly at the supplied timestamp are excluded. Combine with updatedAt&gt;&gt; to
+     * request a bounded interval; both conditions must match.
+     * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+     * vary.
+     * This filters current items and does not provide an atomic snapshot, a replay cursor, or deleted
+     * items.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=updatedAt<<")
+    private Optional<Long> updatedAtBefore;
+
+    /**
+     * Return current items whose addedAt is strictly greater than this Unix timestamp in seconds.
+     * The query key is addedAt&gt;&gt; (URL-encoded as addedAt%3E%3E), for example
+     * addedAt%3E%3E=1791200000.
+     * Items added exactly at the supplied timestamp are excluded; overlap polling windows and deduplicate
+     * ratingKey values to avoid missing same-second additions.
+     * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+     * vary.
+     * This filters surviving additions only; it does not identify later metadata updates or deleted items.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=addedAt>>")
+    private Optional<Long> addedAtAfter;
+
+    /**
+     * Return current items whose addedAt is strictly less than this Unix timestamp in seconds.
+     * The query key is addedAt&lt;&lt; (URL-encoded as addedAt%3C%3C), for example
+     * addedAt%3C%3C=1791252847.
+     * Items added exactly at the supplied timestamp are excluded. Combine with addedAt&gt;&gt; to request
+     * a bounded interval; both conditions must match.
+     * Support on server versions and library types may vary.
+     * This filters surviving additions only; it does not identify later metadata updates or deleted items,
+     * or provide an atomic snapshot.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=addedAt<<")
+    private Optional<Long> addedAtBefore;
 
     /**
      * Adds the Meta object to the response
@@ -274,7 +335,13 @@ public class ListContentRequest {
     private Optional<? extends BoolInt> includeTheme;
 
     /**
-     * Whitelist of fields to return
+     * Comma-separated whitelist of fields to return.
+     * With PMS API version 1.0.0 or later, this projection also applies to container attributes.
+     * Include size,totalSize,offset alongside item fields when paging, for example
+     * ratingKey,updatedAt,size,totalSize,offset.
+     * Otherwise the response may omit the pagination attributes needed to determine whether the complete
+     * result has been retrieved.
+     * This does not necessarily remove nested elements; use excludeElements to request their exclusion.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeFields")
     private Optional<String> includeFields;
@@ -308,6 +375,15 @@ public class ListContentRequest {
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=skipRefresh")
     private Optional<? extends BoolInt> skipRefresh;
+
+    /**
+     * Comma-separated list of optional elements to add to the response.
+     * Use `Stream` to request stream metadata within returned media parts.
+     * Unlike `includeElements`, this adds optional elements without excluding the normal response
+     * elements.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeOptionalElements")
+    private Optional<String> includeOptionalElements;
 
     /**
      * Comma-separated list of elements to exclude from the response
@@ -376,10 +452,15 @@ public class ListContentRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<String> pmsApiVersion,
             Optional<Integer> xPlexContainerStart,
             Optional<Integer> xPlexContainerSize,
             Optional<? extends MediaQuery> mediaQuery,
             long sectionId,
+            Optional<Long> updatedAtAfter,
+            Optional<Long> updatedAtBefore,
+            Optional<Long> addedAtAfter,
+            Optional<Long> addedAtBefore,
             Optional<? extends BoolInt> includeMeta,
             Optional<? extends BoolInt> includeGuids,
             Optional<? extends BoolInt> includeCollections,
@@ -409,6 +490,7 @@ public class ListContentRequest {
             Optional<? extends BoolInt> asyncRefreshLocalMediaAgent,
             Optional<? extends BoolInt> nocache,
             Optional<? extends BoolInt> skipRefresh,
+            Optional<String> includeOptionalElements,
             Optional<String> excludeElements,
             Optional<String> filters,
             Optional<? extends BoolInt> unwatched,
@@ -429,10 +511,15 @@ public class ListContentRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
+        Utils.checkNotNull(pmsApiVersion, "pmsApiVersion");
         Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
         Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
         Utils.checkNotNull(mediaQuery, "mediaQuery");
         Utils.checkNotNull(sectionId, "sectionId");
+        Utils.checkNotNull(updatedAtAfter, "updatedAtAfter");
+        Utils.checkNotNull(updatedAtBefore, "updatedAtBefore");
+        Utils.checkNotNull(addedAtAfter, "addedAtAfter");
+        Utils.checkNotNull(addedAtBefore, "addedAtBefore");
         Utils.checkNotNull(includeMeta, "includeMeta");
         Utils.checkNotNull(includeGuids, "includeGuids");
         Utils.checkNotNull(includeCollections, "includeCollections");
@@ -462,6 +549,7 @@ public class ListContentRequest {
         Utils.checkNotNull(asyncRefreshLocalMediaAgent, "asyncRefreshLocalMediaAgent");
         Utils.checkNotNull(nocache, "nocache");
         Utils.checkNotNull(skipRefresh, "skipRefresh");
+        Utils.checkNotNull(includeOptionalElements, "includeOptionalElements");
         Utils.checkNotNull(excludeElements, "excludeElements");
         Utils.checkNotNull(filters, "filters");
         Utils.checkNotNull(unwatched, "unwatched");
@@ -482,10 +570,15 @@ public class ListContentRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
+        this.pmsApiVersion = pmsApiVersion;
         this.xPlexContainerStart = xPlexContainerStart;
         this.xPlexContainerSize = xPlexContainerSize;
         this.mediaQuery = mediaQuery;
         this.sectionId = sectionId;
+        this.updatedAtAfter = updatedAtAfter;
+        this.updatedAtBefore = updatedAtBefore;
+        this.addedAtAfter = addedAtAfter;
+        this.addedAtBefore = addedAtBefore;
         this.includeMeta = includeMeta;
         this.includeGuids = includeGuids;
         this.includeCollections = includeCollections;
@@ -515,6 +608,7 @@ public class ListContentRequest {
         this.asyncRefreshLocalMediaAgent = asyncRefreshLocalMediaAgent;
         this.nocache = nocache;
         this.skipRefresh = skipRefresh;
+        this.includeOptionalElements = includeOptionalElements;
         this.excludeElements = excludeElements;
         this.filters = filters;
         this.unwatched = unwatched;
@@ -532,7 +626,9 @@ public class ListContentRequest {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), sectionId,
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            sectionId, Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
@@ -638,6 +734,15 @@ public class ListContentRequest {
     }
 
     /**
+     * The PMS API version requested by the client. If omitted, the server assumes `0.0`.
+     * Use `1.0` for the published PMS API response customization behavior.
+     */
+    @JsonIgnore
+    public Optional<String> pmsApiVersion() {
+        return pmsApiVersion;
+    }
+
+    /**
      * The index of the first item to return. If not specified, the first item will be returned.
      * If the number of items exceeds the limit, the response will be paginated.
      * By default this is 0
@@ -692,6 +797,68 @@ public class ListContentRequest {
     @JsonIgnore
     public long sectionId() {
         return sectionId;
+    }
+
+    /**
+     * Return current items whose updatedAt is strictly greater than this Unix timestamp in seconds.
+     * The query key is updatedAt&gt;&gt; (URL-encoded as updatedAt%3E%3E), for example
+     * updatedAt%3E%3E=1792000000.
+     * Items updated exactly at the supplied timestamp are excluded; overlap polling windows and
+     * deduplicate ratingKey values to avoid missing same-second updates.
+     * Verified for movies, episodes, and tracks on PMS 1.43.4.10903. Support on other server versions and
+     * library types may vary.
+     * This filters current items, not a durable change log: deleted items are not returned, and it does
+     * not guarantee that every file, part, or stream change updates the parent timestamp.
+     */
+    @JsonIgnore
+    public Optional<Long> updatedAtAfter() {
+        return updatedAtAfter;
+    }
+
+    /**
+     * Return current items whose updatedAt is strictly less than this Unix timestamp in seconds.
+     * The query key is updatedAt&lt;&lt; (URL-encoded as updatedAt%3C%3C), for example
+     * updatedAt%3C%3C=1792054845.
+     * Items updated exactly at the supplied timestamp are excluded. Combine with updatedAt&gt;&gt; to
+     * request a bounded interval; both conditions must match.
+     * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+     * vary.
+     * This filters current items and does not provide an atomic snapshot, a replay cursor, or deleted
+     * items.
+     */
+    @JsonIgnore
+    public Optional<Long> updatedAtBefore() {
+        return updatedAtBefore;
+    }
+
+    /**
+     * Return current items whose addedAt is strictly greater than this Unix timestamp in seconds.
+     * The query key is addedAt&gt;&gt; (URL-encoded as addedAt%3E%3E), for example
+     * addedAt%3E%3E=1791200000.
+     * Items added exactly at the supplied timestamp are excluded; overlap polling windows and deduplicate
+     * ratingKey values to avoid missing same-second additions.
+     * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+     * vary.
+     * This filters surviving additions only; it does not identify later metadata updates or deleted items.
+     */
+    @JsonIgnore
+    public Optional<Long> addedAtAfter() {
+        return addedAtAfter;
+    }
+
+    /**
+     * Return current items whose addedAt is strictly less than this Unix timestamp in seconds.
+     * The query key is addedAt&lt;&lt; (URL-encoded as addedAt%3C%3C), for example
+     * addedAt%3C%3C=1791252847.
+     * Items added exactly at the supplied timestamp are excluded. Combine with addedAt&gt;&gt; to request
+     * a bounded interval; both conditions must match.
+     * Support on server versions and library types may vary.
+     * This filters surviving additions only; it does not identify later metadata updates or deleted items,
+     * or provide an atomic snapshot.
+     */
+    @JsonIgnore
+    public Optional<Long> addedAtBefore() {
+        return addedAtBefore;
     }
 
     /**
@@ -902,7 +1069,13 @@ public class ListContentRequest {
     }
 
     /**
-     * Whitelist of fields to return
+     * Comma-separated whitelist of fields to return.
+     * With PMS API version 1.0.0 or later, this projection also applies to container attributes.
+     * Include size,totalSize,offset alongside item fields when paging, for example
+     * ratingKey,updatedAt,size,totalSize,offset.
+     * Otherwise the response may omit the pagination attributes needed to determine whether the complete
+     * result has been retrieved.
+     * This does not necessarily remove nested elements; use excludeElements to request their exclusion.
      */
     @JsonIgnore
     public Optional<String> includeFields() {
@@ -951,6 +1124,17 @@ public class ListContentRequest {
     @JsonIgnore
     public Optional<BoolInt> skipRefresh() {
         return (Optional<BoolInt>) skipRefresh;
+    }
+
+    /**
+     * Comma-separated list of optional elements to add to the response.
+     * Use `Stream` to request stream metadata within returned media parts.
+     * Unlike `includeElements`, this adds optional elements without excluding the normal response
+     * elements.
+     */
+    @JsonIgnore
+    public Optional<String> includeOptionalElements() {
+        return includeOptionalElements;
     }
 
     /**
@@ -1241,6 +1425,27 @@ public class ListContentRequest {
     }
 
     /**
+     * The PMS API version requested by the client. If omitted, the server assumes `0.0`.
+     * Use `1.0` for the published PMS API response customization behavior.
+     */
+    public ListContentRequest withPmsApiVersion(String pmsApiVersion) {
+        Utils.checkNotNull(pmsApiVersion, "pmsApiVersion");
+        this.pmsApiVersion = Optional.ofNullable(pmsApiVersion);
+        return this;
+    }
+
+
+    /**
+     * The PMS API version requested by the client. If omitted, the server assumes `0.0`.
+     * Use `1.0` for the published PMS API response customization behavior.
+     */
+    public ListContentRequest withPmsApiVersion(Optional<String> pmsApiVersion) {
+        Utils.checkNotNull(pmsApiVersion, "pmsApiVersion");
+        this.pmsApiVersion = pmsApiVersion;
+        return this;
+    }
+
+    /**
      * The index of the first item to return. If not specified, the first item will be returned.
      * If the number of items exceeds the limit, the response will be paginated.
      * By default this is 0
@@ -1351,6 +1556,142 @@ public class ListContentRequest {
     public ListContentRequest withSectionId(long sectionId) {
         Utils.checkNotNull(sectionId, "sectionId");
         this.sectionId = sectionId;
+        return this;
+    }
+
+    /**
+     * Return current items whose updatedAt is strictly greater than this Unix timestamp in seconds.
+     * The query key is updatedAt&gt;&gt; (URL-encoded as updatedAt%3E%3E), for example
+     * updatedAt%3E%3E=1792000000.
+     * Items updated exactly at the supplied timestamp are excluded; overlap polling windows and
+     * deduplicate ratingKey values to avoid missing same-second updates.
+     * Verified for movies, episodes, and tracks on PMS 1.43.4.10903. Support on other server versions and
+     * library types may vary.
+     * This filters current items, not a durable change log: deleted items are not returned, and it does
+     * not guarantee that every file, part, or stream change updates the parent timestamp.
+     */
+    public ListContentRequest withUpdatedAtAfter(long updatedAtAfter) {
+        Utils.checkNotNull(updatedAtAfter, "updatedAtAfter");
+        this.updatedAtAfter = Optional.ofNullable(updatedAtAfter);
+        return this;
+    }
+
+
+    /**
+     * Return current items whose updatedAt is strictly greater than this Unix timestamp in seconds.
+     * The query key is updatedAt&gt;&gt; (URL-encoded as updatedAt%3E%3E), for example
+     * updatedAt%3E%3E=1792000000.
+     * Items updated exactly at the supplied timestamp are excluded; overlap polling windows and
+     * deduplicate ratingKey values to avoid missing same-second updates.
+     * Verified for movies, episodes, and tracks on PMS 1.43.4.10903. Support on other server versions and
+     * library types may vary.
+     * This filters current items, not a durable change log: deleted items are not returned, and it does
+     * not guarantee that every file, part, or stream change updates the parent timestamp.
+     */
+    public ListContentRequest withUpdatedAtAfter(Optional<Long> updatedAtAfter) {
+        Utils.checkNotNull(updatedAtAfter, "updatedAtAfter");
+        this.updatedAtAfter = updatedAtAfter;
+        return this;
+    }
+
+    /**
+     * Return current items whose updatedAt is strictly less than this Unix timestamp in seconds.
+     * The query key is updatedAt&lt;&lt; (URL-encoded as updatedAt%3C%3C), for example
+     * updatedAt%3C%3C=1792054845.
+     * Items updated exactly at the supplied timestamp are excluded. Combine with updatedAt&gt;&gt; to
+     * request a bounded interval; both conditions must match.
+     * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+     * vary.
+     * This filters current items and does not provide an atomic snapshot, a replay cursor, or deleted
+     * items.
+     */
+    public ListContentRequest withUpdatedAtBefore(long updatedAtBefore) {
+        Utils.checkNotNull(updatedAtBefore, "updatedAtBefore");
+        this.updatedAtBefore = Optional.ofNullable(updatedAtBefore);
+        return this;
+    }
+
+
+    /**
+     * Return current items whose updatedAt is strictly less than this Unix timestamp in seconds.
+     * The query key is updatedAt&lt;&lt; (URL-encoded as updatedAt%3C%3C), for example
+     * updatedAt%3C%3C=1792054845.
+     * Items updated exactly at the supplied timestamp are excluded. Combine with updatedAt&gt;&gt; to
+     * request a bounded interval; both conditions must match.
+     * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+     * vary.
+     * This filters current items and does not provide an atomic snapshot, a replay cursor, or deleted
+     * items.
+     */
+    public ListContentRequest withUpdatedAtBefore(Optional<Long> updatedAtBefore) {
+        Utils.checkNotNull(updatedAtBefore, "updatedAtBefore");
+        this.updatedAtBefore = updatedAtBefore;
+        return this;
+    }
+
+    /**
+     * Return current items whose addedAt is strictly greater than this Unix timestamp in seconds.
+     * The query key is addedAt&gt;&gt; (URL-encoded as addedAt%3E%3E), for example
+     * addedAt%3E%3E=1791200000.
+     * Items added exactly at the supplied timestamp are excluded; overlap polling windows and deduplicate
+     * ratingKey values to avoid missing same-second additions.
+     * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+     * vary.
+     * This filters surviving additions only; it does not identify later metadata updates or deleted items.
+     */
+    public ListContentRequest withAddedAtAfter(long addedAtAfter) {
+        Utils.checkNotNull(addedAtAfter, "addedAtAfter");
+        this.addedAtAfter = Optional.ofNullable(addedAtAfter);
+        return this;
+    }
+
+
+    /**
+     * Return current items whose addedAt is strictly greater than this Unix timestamp in seconds.
+     * The query key is addedAt&gt;&gt; (URL-encoded as addedAt%3E%3E), for example
+     * addedAt%3E%3E=1791200000.
+     * Items added exactly at the supplied timestamp are excluded; overlap polling windows and deduplicate
+     * ratingKey values to avoid missing same-second additions.
+     * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+     * vary.
+     * This filters surviving additions only; it does not identify later metadata updates or deleted items.
+     */
+    public ListContentRequest withAddedAtAfter(Optional<Long> addedAtAfter) {
+        Utils.checkNotNull(addedAtAfter, "addedAtAfter");
+        this.addedAtAfter = addedAtAfter;
+        return this;
+    }
+
+    /**
+     * Return current items whose addedAt is strictly less than this Unix timestamp in seconds.
+     * The query key is addedAt&lt;&lt; (URL-encoded as addedAt%3C%3C), for example
+     * addedAt%3C%3C=1791252847.
+     * Items added exactly at the supplied timestamp are excluded. Combine with addedAt&gt;&gt; to request
+     * a bounded interval; both conditions must match.
+     * Support on server versions and library types may vary.
+     * This filters surviving additions only; it does not identify later metadata updates or deleted items,
+     * or provide an atomic snapshot.
+     */
+    public ListContentRequest withAddedAtBefore(long addedAtBefore) {
+        Utils.checkNotNull(addedAtBefore, "addedAtBefore");
+        this.addedAtBefore = Optional.ofNullable(addedAtBefore);
+        return this;
+    }
+
+
+    /**
+     * Return current items whose addedAt is strictly less than this Unix timestamp in seconds.
+     * The query key is addedAt&lt;&lt; (URL-encoded as addedAt%3C%3C), for example
+     * addedAt%3C%3C=1791252847.
+     * Items added exactly at the supplied timestamp are excluded. Combine with addedAt&gt;&gt; to request
+     * a bounded interval; both conditions must match.
+     * Support on server versions and library types may vary.
+     * This filters surviving additions only; it does not identify later metadata updates or deleted items,
+     * or provide an atomic snapshot.
+     */
+    public ListContentRequest withAddedAtBefore(Optional<Long> addedAtBefore) {
+        Utils.checkNotNull(addedAtBefore, "addedAtBefore");
+        this.addedAtBefore = addedAtBefore;
         return this;
     }
 
@@ -1792,7 +2133,13 @@ public class ListContentRequest {
     }
 
     /**
-     * Whitelist of fields to return
+     * Comma-separated whitelist of fields to return.
+     * With PMS API version 1.0.0 or later, this projection also applies to container attributes.
+     * Include size,totalSize,offset alongside item fields when paging, for example
+     * ratingKey,updatedAt,size,totalSize,offset.
+     * Otherwise the response may omit the pagination attributes needed to determine whether the complete
+     * result has been retrieved.
+     * This does not necessarily remove nested elements; use excludeElements to request their exclusion.
      */
     public ListContentRequest withIncludeFields(String includeFields) {
         Utils.checkNotNull(includeFields, "includeFields");
@@ -1802,7 +2149,13 @@ public class ListContentRequest {
 
 
     /**
-     * Whitelist of fields to return
+     * Comma-separated whitelist of fields to return.
+     * With PMS API version 1.0.0 or later, this projection also applies to container attributes.
+     * Include size,totalSize,offset alongside item fields when paging, for example
+     * ratingKey,updatedAt,size,totalSize,offset.
+     * Otherwise the response may omit the pagination attributes needed to determine whether the complete
+     * result has been retrieved.
+     * This does not necessarily remove nested elements; use excludeElements to request their exclusion.
      */
     public ListContentRequest withIncludeFields(Optional<String> includeFields) {
         Utils.checkNotNull(includeFields, "includeFields");
@@ -1902,6 +2255,31 @@ public class ListContentRequest {
     public ListContentRequest withSkipRefresh(Optional<? extends BoolInt> skipRefresh) {
         Utils.checkNotNull(skipRefresh, "skipRefresh");
         this.skipRefresh = skipRefresh;
+        return this;
+    }
+
+    /**
+     * Comma-separated list of optional elements to add to the response.
+     * Use `Stream` to request stream metadata within returned media parts.
+     * Unlike `includeElements`, this adds optional elements without excluding the normal response
+     * elements.
+     */
+    public ListContentRequest withIncludeOptionalElements(String includeOptionalElements) {
+        Utils.checkNotNull(includeOptionalElements, "includeOptionalElements");
+        this.includeOptionalElements = Optional.ofNullable(includeOptionalElements);
+        return this;
+    }
+
+
+    /**
+     * Comma-separated list of optional elements to add to the response.
+     * Use `Stream` to request stream metadata within returned media parts.
+     * Unlike `includeElements`, this adds optional elements without excluding the normal response
+     * elements.
+     */
+    public ListContentRequest withIncludeOptionalElements(Optional<String> includeOptionalElements) {
+        Utils.checkNotNull(includeOptionalElements, "includeOptionalElements");
+        this.includeOptionalElements = includeOptionalElements;
         return this;
     }
 
@@ -2097,10 +2475,15 @@ public class ListContentRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.pmsApiVersion, other.pmsApiVersion) &&
             Utils.enhancedDeepEquals(this.xPlexContainerStart, other.xPlexContainerStart) &&
             Utils.enhancedDeepEquals(this.xPlexContainerSize, other.xPlexContainerSize) &&
             Utils.enhancedDeepEquals(this.mediaQuery, other.mediaQuery) &&
             Utils.enhancedDeepEquals(this.sectionId, other.sectionId) &&
+            Utils.enhancedDeepEquals(this.updatedAtAfter, other.updatedAtAfter) &&
+            Utils.enhancedDeepEquals(this.updatedAtBefore, other.updatedAtBefore) &&
+            Utils.enhancedDeepEquals(this.addedAtAfter, other.addedAtAfter) &&
+            Utils.enhancedDeepEquals(this.addedAtBefore, other.addedAtBefore) &&
             Utils.enhancedDeepEquals(this.includeMeta, other.includeMeta) &&
             Utils.enhancedDeepEquals(this.includeGuids, other.includeGuids) &&
             Utils.enhancedDeepEquals(this.includeCollections, other.includeCollections) &&
@@ -2130,6 +2513,7 @@ public class ListContentRequest {
             Utils.enhancedDeepEquals(this.asyncRefreshLocalMediaAgent, other.asyncRefreshLocalMediaAgent) &&
             Utils.enhancedDeepEquals(this.nocache, other.nocache) &&
             Utils.enhancedDeepEquals(this.skipRefresh, other.skipRefresh) &&
+            Utils.enhancedDeepEquals(this.includeOptionalElements, other.includeOptionalElements) &&
             Utils.enhancedDeepEquals(this.excludeElements, other.excludeElements) &&
             Utils.enhancedDeepEquals(this.filters, other.filters) &&
             Utils.enhancedDeepEquals(this.unwatched, other.unwatched) &&
@@ -2147,18 +2531,20 @@ public class ListContentRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, xPlexContainerStart,
-            xPlexContainerSize, mediaQuery, sectionId,
-            includeMeta, includeGuids, includeCollections,
-            includeExternalMedia, includeAdvanced, checkFiles,
-            includeRelated, includeExtras, includePopularLeaves,
-            includeConcerts, includeOnDeck, includeChapters,
-            includePreferences, includeBandwidths, includeLoudnessRamps,
-            includeStations, includeExternalIds, includeReviews,
-            includeCredits, includeArt, includeThumb,
-            includeBanner, includeTheme, includeFields,
-            excludeFields, asyncAugmentMetadata, asyncRefreshLocalMediaAgent,
-            nocache, skipRefresh, excludeElements,
+            deviceName, marketplace, pmsApiVersion,
+            xPlexContainerStart, xPlexContainerSize, mediaQuery,
+            sectionId, updatedAtAfter, updatedAtBefore,
+            addedAtAfter, addedAtBefore, includeMeta,
+            includeGuids, includeCollections, includeExternalMedia,
+            includeAdvanced, checkFiles, includeRelated,
+            includeExtras, includePopularLeaves, includeConcerts,
+            includeOnDeck, includeChapters, includePreferences,
+            includeBandwidths, includeLoudnessRamps, includeStations,
+            includeExternalIds, includeReviews, includeCredits,
+            includeArt, includeThumb, includeBanner,
+            includeTheme, includeFields, excludeFields,
+            asyncAugmentMetadata, asyncRefreshLocalMediaAgent, nocache,
+            skipRefresh, includeOptionalElements, excludeElements,
             filters, unwatched, genre,
             studio, contentRating, resolution,
             year, firstCharacter);
@@ -2178,10 +2564,15 @@ public class ListContentRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "pmsApiVersion", pmsApiVersion,
                 "xPlexContainerStart", xPlexContainerStart,
                 "xPlexContainerSize", xPlexContainerSize,
                 "mediaQuery", mediaQuery,
                 "sectionId", sectionId,
+                "updatedAtAfter", updatedAtAfter,
+                "updatedAtBefore", updatedAtBefore,
+                "addedAtAfter", addedAtAfter,
+                "addedAtBefore", addedAtBefore,
                 "includeMeta", includeMeta,
                 "includeGuids", includeGuids,
                 "includeCollections", includeCollections,
@@ -2211,6 +2602,7 @@ public class ListContentRequest {
                 "asyncRefreshLocalMediaAgent", asyncRefreshLocalMediaAgent,
                 "nocache", nocache,
                 "skipRefresh", skipRefresh,
+                "includeOptionalElements", includeOptionalElements,
                 "excludeElements", excludeElements,
                 "filters", filters,
                 "unwatched", unwatched,
@@ -2247,6 +2639,8 @@ public class ListContentRequest {
 
         private Optional<String> marketplace = Optional.empty();
 
+        private Optional<String> pmsApiVersion = Optional.empty();
+
         private Optional<Integer> xPlexContainerStart;
 
         private Optional<Integer> xPlexContainerSize;
@@ -2254,6 +2648,14 @@ public class ListContentRequest {
         private Optional<? extends MediaQuery> mediaQuery = Optional.empty();
 
         private Long sectionId;
+
+        private Optional<Long> updatedAtAfter = Optional.empty();
+
+        private Optional<Long> updatedAtBefore = Optional.empty();
+
+        private Optional<Long> addedAtAfter = Optional.empty();
+
+        private Optional<Long> addedAtBefore = Optional.empty();
 
         private Optional<? extends BoolInt> includeMeta;
 
@@ -2312,6 +2714,8 @@ public class ListContentRequest {
         private Optional<? extends BoolInt> nocache;
 
         private Optional<? extends BoolInt> skipRefresh;
+
+        private Optional<String> includeOptionalElements = Optional.empty();
 
         private Optional<String> excludeElements = Optional.empty();
 
@@ -2546,6 +2950,27 @@ public class ListContentRequest {
 
 
         /**
+         * The PMS API version requested by the client. If omitted, the server assumes `0.0`.
+         * Use `1.0` for the published PMS API response customization behavior.
+         */
+        public Builder pmsApiVersion(String pmsApiVersion) {
+            Utils.checkNotNull(pmsApiVersion, "pmsApiVersion");
+            this.pmsApiVersion = Optional.ofNullable(pmsApiVersion);
+            return this;
+        }
+
+        /**
+         * The PMS API version requested by the client. If omitted, the server assumes `0.0`.
+         * Use `1.0` for the published PMS API response customization behavior.
+         */
+        public Builder pmsApiVersion(Optional<String> pmsApiVersion) {
+            Utils.checkNotNull(pmsApiVersion, "pmsApiVersion");
+            this.pmsApiVersion = pmsApiVersion;
+            return this;
+        }
+
+
+        /**
          * The index of the first item to return. If not specified, the first item will be returned.
          * If the number of items exceeds the limit, the response will be paginated.
          * By default this is 0
@@ -2656,6 +3081,142 @@ public class ListContentRequest {
         public Builder sectionId(long sectionId) {
             Utils.checkNotNull(sectionId, "sectionId");
             this.sectionId = sectionId;
+            return this;
+        }
+
+
+        /**
+         * Return current items whose updatedAt is strictly greater than this Unix timestamp in seconds.
+         * The query key is updatedAt&gt;&gt; (URL-encoded as updatedAt%3E%3E), for example
+         * updatedAt%3E%3E=1792000000.
+         * Items updated exactly at the supplied timestamp are excluded; overlap polling windows and
+         * deduplicate ratingKey values to avoid missing same-second updates.
+         * Verified for movies, episodes, and tracks on PMS 1.43.4.10903. Support on other server versions and
+         * library types may vary.
+         * This filters current items, not a durable change log: deleted items are not returned, and it does
+         * not guarantee that every file, part, or stream change updates the parent timestamp.
+         */
+        public Builder updatedAtAfter(long updatedAtAfter) {
+            Utils.checkNotNull(updatedAtAfter, "updatedAtAfter");
+            this.updatedAtAfter = Optional.ofNullable(updatedAtAfter);
+            return this;
+        }
+
+        /**
+         * Return current items whose updatedAt is strictly greater than this Unix timestamp in seconds.
+         * The query key is updatedAt&gt;&gt; (URL-encoded as updatedAt%3E%3E), for example
+         * updatedAt%3E%3E=1792000000.
+         * Items updated exactly at the supplied timestamp are excluded; overlap polling windows and
+         * deduplicate ratingKey values to avoid missing same-second updates.
+         * Verified for movies, episodes, and tracks on PMS 1.43.4.10903. Support on other server versions and
+         * library types may vary.
+         * This filters current items, not a durable change log: deleted items are not returned, and it does
+         * not guarantee that every file, part, or stream change updates the parent timestamp.
+         */
+        public Builder updatedAtAfter(Optional<Long> updatedAtAfter) {
+            Utils.checkNotNull(updatedAtAfter, "updatedAtAfter");
+            this.updatedAtAfter = updatedAtAfter;
+            return this;
+        }
+
+
+        /**
+         * Return current items whose updatedAt is strictly less than this Unix timestamp in seconds.
+         * The query key is updatedAt&lt;&lt; (URL-encoded as updatedAt%3C%3C), for example
+         * updatedAt%3C%3C=1792054845.
+         * Items updated exactly at the supplied timestamp are excluded. Combine with updatedAt&gt;&gt; to
+         * request a bounded interval; both conditions must match.
+         * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+         * vary.
+         * This filters current items and does not provide an atomic snapshot, a replay cursor, or deleted
+         * items.
+         */
+        public Builder updatedAtBefore(long updatedAtBefore) {
+            Utils.checkNotNull(updatedAtBefore, "updatedAtBefore");
+            this.updatedAtBefore = Optional.ofNullable(updatedAtBefore);
+            return this;
+        }
+
+        /**
+         * Return current items whose updatedAt is strictly less than this Unix timestamp in seconds.
+         * The query key is updatedAt&lt;&lt; (URL-encoded as updatedAt%3C%3C), for example
+         * updatedAt%3C%3C=1792054845.
+         * Items updated exactly at the supplied timestamp are excluded. Combine with updatedAt&gt;&gt; to
+         * request a bounded interval; both conditions must match.
+         * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+         * vary.
+         * This filters current items and does not provide an atomic snapshot, a replay cursor, or deleted
+         * items.
+         */
+        public Builder updatedAtBefore(Optional<Long> updatedAtBefore) {
+            Utils.checkNotNull(updatedAtBefore, "updatedAtBefore");
+            this.updatedAtBefore = updatedAtBefore;
+            return this;
+        }
+
+
+        /**
+         * Return current items whose addedAt is strictly greater than this Unix timestamp in seconds.
+         * The query key is addedAt&gt;&gt; (URL-encoded as addedAt%3E%3E), for example
+         * addedAt%3E%3E=1791200000.
+         * Items added exactly at the supplied timestamp are excluded; overlap polling windows and deduplicate
+         * ratingKey values to avoid missing same-second additions.
+         * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+         * vary.
+         * This filters surviving additions only; it does not identify later metadata updates or deleted items.
+         */
+        public Builder addedAtAfter(long addedAtAfter) {
+            Utils.checkNotNull(addedAtAfter, "addedAtAfter");
+            this.addedAtAfter = Optional.ofNullable(addedAtAfter);
+            return this;
+        }
+
+        /**
+         * Return current items whose addedAt is strictly greater than this Unix timestamp in seconds.
+         * The query key is addedAt&gt;&gt; (URL-encoded as addedAt%3E%3E), for example
+         * addedAt%3E%3E=1791200000.
+         * Items added exactly at the supplied timestamp are excluded; overlap polling windows and deduplicate
+         * ratingKey values to avoid missing same-second additions.
+         * Verified for movies on PMS 1.43.4.10903. Support on other server versions and library types may
+         * vary.
+         * This filters surviving additions only; it does not identify later metadata updates or deleted items.
+         */
+        public Builder addedAtAfter(Optional<Long> addedAtAfter) {
+            Utils.checkNotNull(addedAtAfter, "addedAtAfter");
+            this.addedAtAfter = addedAtAfter;
+            return this;
+        }
+
+
+        /**
+         * Return current items whose addedAt is strictly less than this Unix timestamp in seconds.
+         * The query key is addedAt&lt;&lt; (URL-encoded as addedAt%3C%3C), for example
+         * addedAt%3C%3C=1791252847.
+         * Items added exactly at the supplied timestamp are excluded. Combine with addedAt&gt;&gt; to request
+         * a bounded interval; both conditions must match.
+         * Support on server versions and library types may vary.
+         * This filters surviving additions only; it does not identify later metadata updates or deleted items,
+         * or provide an atomic snapshot.
+         */
+        public Builder addedAtBefore(long addedAtBefore) {
+            Utils.checkNotNull(addedAtBefore, "addedAtBefore");
+            this.addedAtBefore = Optional.ofNullable(addedAtBefore);
+            return this;
+        }
+
+        /**
+         * Return current items whose addedAt is strictly less than this Unix timestamp in seconds.
+         * The query key is addedAt&lt;&lt; (URL-encoded as addedAt%3C%3C), for example
+         * addedAt%3C%3C=1791252847.
+         * Items added exactly at the supplied timestamp are excluded. Combine with addedAt&gt;&gt; to request
+         * a bounded interval; both conditions must match.
+         * Support on server versions and library types may vary.
+         * This filters surviving additions only; it does not identify later metadata updates or deleted items,
+         * or provide an atomic snapshot.
+         */
+        public Builder addedAtBefore(Optional<Long> addedAtBefore) {
+            Utils.checkNotNull(addedAtBefore, "addedAtBefore");
+            this.addedAtBefore = addedAtBefore;
             return this;
         }
 
@@ -3098,7 +3659,13 @@ public class ListContentRequest {
 
 
         /**
-         * Whitelist of fields to return
+         * Comma-separated whitelist of fields to return.
+         * With PMS API version 1.0.0 or later, this projection also applies to container attributes.
+         * Include size,totalSize,offset alongside item fields when paging, for example
+         * ratingKey,updatedAt,size,totalSize,offset.
+         * Otherwise the response may omit the pagination attributes needed to determine whether the complete
+         * result has been retrieved.
+         * This does not necessarily remove nested elements; use excludeElements to request their exclusion.
          */
         public Builder includeFields(String includeFields) {
             Utils.checkNotNull(includeFields, "includeFields");
@@ -3107,7 +3674,13 @@ public class ListContentRequest {
         }
 
         /**
-         * Whitelist of fields to return
+         * Comma-separated whitelist of fields to return.
+         * With PMS API version 1.0.0 or later, this projection also applies to container attributes.
+         * Include size,totalSize,offset alongside item fields when paging, for example
+         * ratingKey,updatedAt,size,totalSize,offset.
+         * Otherwise the response may omit the pagination attributes needed to determine whether the complete
+         * result has been retrieved.
+         * This does not necessarily remove nested elements; use excludeElements to request their exclusion.
          */
         public Builder includeFields(Optional<String> includeFields) {
             Utils.checkNotNull(includeFields, "includeFields");
@@ -3207,6 +3780,31 @@ public class ListContentRequest {
         public Builder skipRefresh(Optional<? extends BoolInt> skipRefresh) {
             Utils.checkNotNull(skipRefresh, "skipRefresh");
             this.skipRefresh = skipRefresh;
+            return this;
+        }
+
+
+        /**
+         * Comma-separated list of optional elements to add to the response.
+         * Use `Stream` to request stream metadata within returned media parts.
+         * Unlike `includeElements`, this adds optional elements without excluding the normal response
+         * elements.
+         */
+        public Builder includeOptionalElements(String includeOptionalElements) {
+            Utils.checkNotNull(includeOptionalElements, "includeOptionalElements");
+            this.includeOptionalElements = Optional.ofNullable(includeOptionalElements);
+            return this;
+        }
+
+        /**
+         * Comma-separated list of optional elements to add to the response.
+         * Use `Stream` to request stream metadata within returned media parts.
+         * Unlike `includeElements`, this adds optional elements without excluding the normal response
+         * elements.
+         */
+        public Builder includeOptionalElements(Optional<String> includeOptionalElements) {
+            Utils.checkNotNull(includeOptionalElements, "includeOptionalElements");
+            this.includeOptionalElements = includeOptionalElements;
             return this;
         }
 
@@ -3480,18 +4078,20 @@ public class ListContentRequest {
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, xPlexContainerStart,
-                xPlexContainerSize, mediaQuery, sectionId,
-                includeMeta, includeGuids, includeCollections,
-                includeExternalMedia, includeAdvanced, checkFiles,
-                includeRelated, includeExtras, includePopularLeaves,
-                includeConcerts, includeOnDeck, includeChapters,
-                includePreferences, includeBandwidths, includeLoudnessRamps,
-                includeStations, includeExternalIds, includeReviews,
-                includeCredits, includeArt, includeThumb,
-                includeBanner, includeTheme, includeFields,
-                excludeFields, asyncAugmentMetadata, asyncRefreshLocalMediaAgent,
-                nocache, skipRefresh, excludeElements,
+                deviceName, marketplace, pmsApiVersion,
+                xPlexContainerStart, xPlexContainerSize, mediaQuery,
+                sectionId, updatedAtAfter, updatedAtBefore,
+                addedAtAfter, addedAtBefore, includeMeta,
+                includeGuids, includeCollections, includeExternalMedia,
+                includeAdvanced, checkFiles, includeRelated,
+                includeExtras, includePopularLeaves, includeConcerts,
+                includeOnDeck, includeChapters, includePreferences,
+                includeBandwidths, includeLoudnessRamps, includeStations,
+                includeExternalIds, includeReviews, includeCredits,
+                includeArt, includeThumb, includeBanner,
+                includeTheme, includeFields, excludeFields,
+                asyncAugmentMetadata, asyncRefreshLocalMediaAgent, nocache,
+                skipRefresh, includeOptionalElements, excludeElements,
                 filters, unwatched, genre,
                 studio, contentRating, resolution,
                 year, firstCharacter);

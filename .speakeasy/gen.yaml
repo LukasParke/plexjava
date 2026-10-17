@@ -29,7 +29,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 java:
-  version: 0.25.0
+  version: 0.25.1
   additionalDependencies: []
   additionalPlugins: []
   artifactID: plexapi

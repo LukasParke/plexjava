@@ -369,11 +369,12 @@ public class Stream {
     private Optional<Integer> level;
 
     /**
-     * Integrated loudness in LUFS.
+     * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+     * sentinel string "-inf".
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("loudness")
-    private Optional<Double> loudness;
+    private Optional<? extends Loudness> loudness;
 
     /**
      * Loudness range in LU.
@@ -397,18 +398,19 @@ public class Stream {
     private Optional<Boolean> original;
 
     /**
-     * Track peak amplitude.
+     * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+     * string "-inf".
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("peak")
-    private Optional<Double> peak;
+    private Optional<? extends Peak> peak;
 
     /**
      * Whether the subtitle is an exact match.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("perfectMatch")
-    private Optional<Boolean> perfectMatch;
+    private Optional<? extends PerfectMatch> perfectMatch;
 
     /**
      * Video profile.
@@ -492,14 +494,14 @@ public class Stream {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("timed")
-    private Optional<Boolean> timed;
+    private Optional<? extends Timed> timed;
 
     /**
      * Whether the subtitle is temporary or downloaded.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("transient")
-    private Optional<Boolean> transient_;
+    private Optional<? extends Transient> transient_;
 
     /**
      * ID of the user who added the subtitle.
@@ -577,12 +579,12 @@ public class Stream {
             @JsonProperty("languageCode") Optional<String> languageCode,
             @JsonProperty("languageTag") Optional<String> languageTag,
             @JsonProperty("level") Optional<Integer> level,
-            @JsonProperty("loudness") Optional<Double> loudness,
+            @JsonProperty("loudness") Optional<? extends Loudness> loudness,
             @JsonProperty("lra") Optional<Double> lra,
             @JsonProperty("minLines") Optional<Long> minLines,
             @JsonProperty("original") Optional<Boolean> original,
-            @JsonProperty("peak") Optional<Double> peak,
-            @JsonProperty("perfectMatch") Optional<Boolean> perfectMatch,
+            @JsonProperty("peak") Optional<? extends Peak> peak,
+            @JsonProperty("perfectMatch") Optional<? extends PerfectMatch> perfectMatch,
             @JsonProperty("profile") Optional<String> profile,
             @JsonProperty("provider") Optional<String> provider,
             @JsonProperty("providerTitle") Optional<String> providerTitle,
@@ -595,8 +597,8 @@ public class Stream {
             @JsonProperty("startRamp") Optional<String> startRamp,
             @JsonProperty("streamIdentifier") Optional<Integer> streamIdentifier,
             @JsonProperty("streamType") StreamType streamType,
-            @JsonProperty("timed") Optional<Boolean> timed,
-            @JsonProperty("transient") Optional<Boolean> transient_,
+            @JsonProperty("timed") Optional<? extends Timed> timed,
+            @JsonProperty("transient") Optional<? extends Transient> transient_,
             @JsonProperty("userID") Optional<Long> userID,
             @JsonProperty("visualImpaired") Optional<Boolean> visualImpaired,
             @JsonProperty("width") Optional<Integer> width) {
@@ -1162,11 +1164,13 @@ public class Stream {
     }
 
     /**
-     * Integrated loudness in LUFS.
+     * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+     * sentinel string "-inf".
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Double> loudness() {
-        return loudness;
+    public Optional<Loudness> loudness() {
+        return (Optional<Loudness>) loudness;
     }
 
     /**
@@ -1194,19 +1198,22 @@ public class Stream {
     }
 
     /**
-     * Track peak amplitude.
+     * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+     * string "-inf".
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Double> peak() {
-        return peak;
+    public Optional<Peak> peak() {
+        return (Optional<Peak>) peak;
     }
 
     /**
      * Whether the subtitle is an exact match.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> perfectMatch() {
-        return perfectMatch;
+    public Optional<PerfectMatch> perfectMatch() {
+        return (Optional<PerfectMatch>) perfectMatch;
     }
 
     /**
@@ -1299,17 +1306,19 @@ public class Stream {
     /**
      * Whether lyrics are timestamped.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> timed() {
-        return timed;
+    public Optional<Timed> timed() {
+        return (Optional<Timed>) timed;
     }
 
     /**
      * Whether the subtitle is temporary or downloaded.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> transient_() {
-        return transient_;
+    public Optional<Transient> transient_() {
+        return (Optional<Transient>) transient_;
     }
 
     /**
@@ -2214,9 +2223,10 @@ public class Stream {
     }
 
     /**
-     * Integrated loudness in LUFS.
+     * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+     * sentinel string "-inf".
      */
-    public Stream withLoudness(double loudness) {
+    public Stream withLoudness(Loudness loudness) {
         Utils.checkNotNull(loudness, "loudness");
         this.loudness = Optional.ofNullable(loudness);
         return this;
@@ -2224,9 +2234,10 @@ public class Stream {
 
 
     /**
-     * Integrated loudness in LUFS.
+     * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+     * sentinel string "-inf".
      */
-    public Stream withLoudness(Optional<Double> loudness) {
+    public Stream withLoudness(Optional<? extends Loudness> loudness) {
         Utils.checkNotNull(loudness, "loudness");
         this.loudness = loudness;
         return this;
@@ -2290,9 +2301,10 @@ public class Stream {
     }
 
     /**
-     * Track peak amplitude.
+     * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+     * string "-inf".
      */
-    public Stream withPeak(double peak) {
+    public Stream withPeak(Peak peak) {
         Utils.checkNotNull(peak, "peak");
         this.peak = Optional.ofNullable(peak);
         return this;
@@ -2300,9 +2312,10 @@ public class Stream {
 
 
     /**
-     * Track peak amplitude.
+     * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+     * string "-inf".
      */
-    public Stream withPeak(Optional<Double> peak) {
+    public Stream withPeak(Optional<? extends Peak> peak) {
         Utils.checkNotNull(peak, "peak");
         this.peak = peak;
         return this;
@@ -2311,7 +2324,7 @@ public class Stream {
     /**
      * Whether the subtitle is an exact match.
      */
-    public Stream withPerfectMatch(boolean perfectMatch) {
+    public Stream withPerfectMatch(PerfectMatch perfectMatch) {
         Utils.checkNotNull(perfectMatch, "perfectMatch");
         this.perfectMatch = Optional.ofNullable(perfectMatch);
         return this;
@@ -2321,7 +2334,7 @@ public class Stream {
     /**
      * Whether the subtitle is an exact match.
      */
-    public Stream withPerfectMatch(Optional<Boolean> perfectMatch) {
+    public Stream withPerfectMatch(Optional<? extends PerfectMatch> perfectMatch) {
         Utils.checkNotNull(perfectMatch, "perfectMatch");
         this.perfectMatch = perfectMatch;
         return this;
@@ -2533,7 +2546,7 @@ public class Stream {
     /**
      * Whether lyrics are timestamped.
      */
-    public Stream withTimed(boolean timed) {
+    public Stream withTimed(Timed timed) {
         Utils.checkNotNull(timed, "timed");
         this.timed = Optional.ofNullable(timed);
         return this;
@@ -2543,7 +2556,7 @@ public class Stream {
     /**
      * Whether lyrics are timestamped.
      */
-    public Stream withTimed(Optional<Boolean> timed) {
+    public Stream withTimed(Optional<? extends Timed> timed) {
         Utils.checkNotNull(timed, "timed");
         this.timed = timed;
         return this;
@@ -2552,7 +2565,7 @@ public class Stream {
     /**
      * Whether the subtitle is temporary or downloaded.
      */
-    public Stream withTransient(boolean transient_) {
+    public Stream withTransient(Transient transient_) {
         Utils.checkNotNull(transient_, "transient_");
         this.transient_ = Optional.ofNullable(transient_);
         return this;
@@ -2562,7 +2575,7 @@ public class Stream {
     /**
      * Whether the subtitle is temporary or downloaded.
      */
-    public Stream withTransient(Optional<Boolean> transient_) {
+    public Stream withTransient(Optional<? extends Transient> transient_) {
         Utils.checkNotNull(transient_, "transient_");
         this.transient_ = transient_;
         return this;
@@ -2932,7 +2945,7 @@ public class Stream {
 
         private Optional<Integer> level = Optional.empty();
 
-        private Optional<Double> loudness = Optional.empty();
+        private Optional<? extends Loudness> loudness = Optional.empty();
 
         private Optional<Double> lra = Optional.empty();
 
@@ -2940,9 +2953,9 @@ public class Stream {
 
         private Optional<Boolean> original = Optional.empty();
 
-        private Optional<Double> peak = Optional.empty();
+        private Optional<? extends Peak> peak = Optional.empty();
 
-        private Optional<Boolean> perfectMatch = Optional.empty();
+        private Optional<? extends PerfectMatch> perfectMatch = Optional.empty();
 
         private Optional<String> profile = Optional.empty();
 
@@ -2968,9 +2981,9 @@ public class Stream {
 
         private StreamType streamType;
 
-        private Optional<Boolean> timed = Optional.empty();
+        private Optional<? extends Timed> timed = Optional.empty();
 
-        private Optional<Boolean> transient_ = Optional.empty();
+        private Optional<? extends Transient> transient_ = Optional.empty();
 
         private Optional<Long> userID = Optional.empty();
 
@@ -3857,18 +3870,20 @@ public class Stream {
 
 
         /**
-         * Integrated loudness in LUFS.
+         * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+         * sentinel string "-inf".
          */
-        public Builder loudness(double loudness) {
+        public Builder loudness(Loudness loudness) {
             Utils.checkNotNull(loudness, "loudness");
             this.loudness = Optional.ofNullable(loudness);
             return this;
         }
 
         /**
-         * Integrated loudness in LUFS.
+         * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+         * sentinel string "-inf".
          */
-        public Builder loudness(Optional<Double> loudness) {
+        public Builder loudness(Optional<? extends Loudness> loudness) {
             Utils.checkNotNull(loudness, "loudness");
             this.loudness = loudness;
             return this;
@@ -3933,18 +3948,20 @@ public class Stream {
 
 
         /**
-         * Track peak amplitude.
+         * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+         * string "-inf".
          */
-        public Builder peak(double peak) {
+        public Builder peak(Peak peak) {
             Utils.checkNotNull(peak, "peak");
             this.peak = Optional.ofNullable(peak);
             return this;
         }
 
         /**
-         * Track peak amplitude.
+         * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+         * string "-inf".
          */
-        public Builder peak(Optional<Double> peak) {
+        public Builder peak(Optional<? extends Peak> peak) {
             Utils.checkNotNull(peak, "peak");
             this.peak = peak;
             return this;
@@ -3954,7 +3971,7 @@ public class Stream {
         /**
          * Whether the subtitle is an exact match.
          */
-        public Builder perfectMatch(boolean perfectMatch) {
+        public Builder perfectMatch(PerfectMatch perfectMatch) {
             Utils.checkNotNull(perfectMatch, "perfectMatch");
             this.perfectMatch = Optional.ofNullable(perfectMatch);
             return this;
@@ -3963,7 +3980,7 @@ public class Stream {
         /**
          * Whether the subtitle is an exact match.
          */
-        public Builder perfectMatch(Optional<Boolean> perfectMatch) {
+        public Builder perfectMatch(Optional<? extends PerfectMatch> perfectMatch) {
             Utils.checkNotNull(perfectMatch, "perfectMatch");
             this.perfectMatch = perfectMatch;
             return this;
@@ -4177,7 +4194,7 @@ public class Stream {
         /**
          * Whether lyrics are timestamped.
          */
-        public Builder timed(boolean timed) {
+        public Builder timed(Timed timed) {
             Utils.checkNotNull(timed, "timed");
             this.timed = Optional.ofNullable(timed);
             return this;
@@ -4186,7 +4203,7 @@ public class Stream {
         /**
          * Whether lyrics are timestamped.
          */
-        public Builder timed(Optional<Boolean> timed) {
+        public Builder timed(Optional<? extends Timed> timed) {
             Utils.checkNotNull(timed, "timed");
             this.timed = timed;
             return this;
@@ -4196,7 +4213,7 @@ public class Stream {
         /**
          * Whether the subtitle is temporary or downloaded.
          */
-        public Builder transient_(boolean transient_) {
+        public Builder transient_(Transient transient_) {
             Utils.checkNotNull(transient_, "transient_");
             this.transient_ = Optional.ofNullable(transient_);
             return this;
@@ -4205,7 +4222,7 @@ public class Stream {
         /**
          * Whether the subtitle is temporary or downloaded.
          */
-        public Builder transient_(Optional<Boolean> transient_) {
+        public Builder transient_(Optional<? extends Transient> transient_) {
             Utils.checkNotNull(transient_, "transient_");
             this.transient_ = transient_;
             return this;

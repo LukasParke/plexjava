@@ -1,11 +1,11 @@
-# Two1
+# Transient2
 
 ## Example Usage
 
 ```java
-import dev.plexapi.sdk.models.shared.Two1;
+import dev.plexapi.sdk.models.shared.Transient2;
 
-Two1 value = Two1.ZERO;
+Transient2 value = Transient2.ZERO;
 ```
 
 

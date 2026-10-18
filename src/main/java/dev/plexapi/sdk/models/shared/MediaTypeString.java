@@ -11,18 +11,23 @@ import java.util.Optional;
 /**
  * MediaTypeString
  * 
- * <p>The type of media content in the Plex library. This can represent videos, music, or photos.
+ * <p>The Plex media type name, corresponding to the numeric MediaType schema.
  */
 public enum MediaTypeString {
     Movie("movie"),
     TvShow("show"),
     Season("season"),
     Episode("episode"),
+    Trailer("trailer"),
+    Person("person"),
     Artist("artist"),
     Album("album"),
     Track("track"),
-    PhotoAlbum("photoalbum"),
+    Clip("clip"),
     Photo("photo"),
+    PhotoAlbum("photoalbum"),
+    Playlist("playlist"),
+    PlaylistFolder("playlistfolder"),
     Collection("collection");
 
     @JsonValue

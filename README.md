@@ -75,7 +75,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'dev.plexapi:plexapi:0.25.1'
+implementation 'dev.plexapi:plexapi:0.25.2'
 ```
 
 Maven:
@@ -83,7 +83,7 @@ Maven:
 <dependency>
     <groupId>dev.plexapi</groupId>
     <artifactId>plexapi</artifactId>
-    <version>0.25.1</version>
+    <version>0.25.2</version>
 </dependency>
 ```
 
@@ -1010,7 +1010,7 @@ If the selected server has variables, you may override its default values using 
 | ----------------- | ------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `identifier`      | `identifier(String identifier)`       | `"0123456789abcdef0123456789abcdef"` | The unique identifier of this particular PMS                                                                                                                                                                                                                                                                                                                                   |
 | `IP-description`  | `ipDescription(String ipDescription)` | `"1-2-3-4"`                          | A `-` separated string of the IPv4 or IPv6 address components                                                                                                                                                                                                                                                                                                                  |
-| `port`            | `port(String port)`                   | `"32400"`                            | The Port number configured on the PMS. Typically (`32400`). <br/>If using a reverse proxy, this would be the port number configured on the proxy.                                                                                                                                                                                                                              |
+| `port`            | `port(String port)`                   | `"32400"`                            | The Port number configured on the PMS. Typically (`32400`).<br/>If using a reverse proxy, this would be the port number configured on the proxy.                                                                                                                                                                                                                               |
 | `host`            | `host(String host)`                   | `"localhost"`                        | The Host of the PMS.<br/>If using on a local network, this is the internal IP address of the server hosting the PMS.<br/>If using on an external network, this is the external IP address for your network, and requires port forwarding.<br/>If using a reverse proxy, this would be the external DNS domain for your network, and requires the proxy handle port forwarding. |
 | `protocol`        | `protocol(String protocol)`           | `"http"`                             | The network protocol to use. Typically (`http` or `https`)                                                                                                                                                                                                                                                                                                                     |
 | `full_server_url` | `fullServerUrl(String fullServerUrl)` | `"http://localhost:32400"`           | The full manual URL to access the PMS                                                                                                                                                                                                                                                                                                                                          |

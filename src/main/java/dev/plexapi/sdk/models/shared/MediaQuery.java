@@ -30,11 +30,17 @@ public class MediaQuery {
      * 2 = show
      * 3 = season
      * 4 = episode
-     * 5 = artist
-     * 6 = album
-     * 7 = track
-     * 8 = photo_album
-     * 9 = photo
+     * 5 = trailer
+     * 7 = person
+     * 8 = artist
+     * 9 = album
+     * 10 = track
+     * 12 = clip
+     * 13 = photo
+     * 14 = photoalbum
+     * 15 = playlist
+     * 16 = playlistfolder
+     * 18 = collection
      * 
      * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
      * libraries
@@ -98,11 +104,17 @@ public class MediaQuery {
      * 2 = show
      * 3 = season
      * 4 = episode
-     * 5 = artist
-     * 6 = album
-     * 7 = track
-     * 8 = photo_album
-     * 9 = photo
+     * 5 = trailer
+     * 7 = person
+     * 8 = artist
+     * 9 = album
+     * 10 = track
+     * 12 = clip
+     * 13 = photo
+     * 14 = photoalbum
+     * 15 = playlist
+     * 16 = playlistfolder
+     * 18 = collection
      * 
      * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
      * libraries
@@ -158,11 +170,17 @@ public class MediaQuery {
      * 2 = show
      * 3 = season
      * 4 = episode
-     * 5 = artist
-     * 6 = album
-     * 7 = track
-     * 8 = photo_album
-     * 9 = photo
+     * 5 = trailer
+     * 7 = person
+     * 8 = artist
+     * 9 = album
+     * 10 = track
+     * 12 = clip
+     * 13 = photo
+     * 14 = photoalbum
+     * 15 = playlist
+     * 16 = playlistfolder
+     * 18 = collection
      * 
      * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
      * libraries
@@ -181,11 +199,17 @@ public class MediaQuery {
      * 2 = show
      * 3 = season
      * 4 = episode
-     * 5 = artist
-     * 6 = album
-     * 7 = track
-     * 8 = photo_album
-     * 9 = photo
+     * 5 = trailer
+     * 7 = person
+     * 8 = artist
+     * 9 = album
+     * 10 = track
+     * 12 = clip
+     * 13 = photo
+     * 14 = photoalbum
+     * 15 = playlist
+     * 16 = playlistfolder
+     * 18 = collection
      * 
      * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
      * libraries
@@ -333,11 +357,17 @@ public class MediaQuery {
          * 2 = show
          * 3 = season
          * 4 = episode
-         * 5 = artist
-         * 6 = album
-         * 7 = track
-         * 8 = photo_album
-         * 9 = photo
+         * 5 = trailer
+         * 7 = person
+         * 8 = artist
+         * 9 = album
+         * 10 = track
+         * 12 = clip
+         * 13 = photo
+         * 14 = photoalbum
+         * 15 = playlist
+         * 16 = playlistfolder
+         * 18 = collection
          * 
          * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
          * libraries
@@ -355,11 +385,17 @@ public class MediaQuery {
          * 2 = show
          * 3 = season
          * 4 = episode
-         * 5 = artist
-         * 6 = album
-         * 7 = track
-         * 8 = photo_album
-         * 9 = photo
+         * 5 = trailer
+         * 7 = person
+         * 8 = artist
+         * 9 = album
+         * 10 = track
+         * 12 = clip
+         * 13 = photo
+         * 14 = photoalbum
+         * 15 = playlist
+         * 16 = playlistfolder
+         * 18 = collection
          * 
          * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
          * libraries

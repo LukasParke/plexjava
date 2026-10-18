@@ -369,11 +369,12 @@ public class MediaContainerWithDecisionStream {
     private Optional<Integer> level;
 
     /**
-     * Integrated loudness in LUFS.
+     * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+     * sentinel string "-inf".
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("loudness")
-    private Optional<Double> loudness;
+    private Optional<? extends MediaContainerWithDecisionLoudness> loudness;
 
     /**
      * Loudness range in LU.
@@ -397,18 +398,19 @@ public class MediaContainerWithDecisionStream {
     private Optional<Boolean> original;
 
     /**
-     * Track peak amplitude.
+     * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+     * string "-inf".
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("peak")
-    private Optional<Double> peak;
+    private Optional<? extends MediaContainerWithDecisionPeak> peak;
 
     /**
      * Whether the subtitle is an exact match.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("perfectMatch")
-    private Optional<Boolean> perfectMatch;
+    private Optional<? extends MediaContainerWithDecisionPerfectMatch> perfectMatch;
 
     /**
      * Video profile.
@@ -492,14 +494,14 @@ public class MediaContainerWithDecisionStream {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("timed")
-    private Optional<Boolean> timed;
+    private Optional<? extends MediaContainerWithDecisionTimed> timed;
 
     /**
      * Whether the subtitle is temporary or downloaded.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("transient")
-    private Optional<Boolean> transient_;
+    private Optional<? extends MediaContainerWithDecisionTransient> transient_;
 
     /**
      * ID of the user who added the subtitle.
@@ -587,12 +589,12 @@ public class MediaContainerWithDecisionStream {
             @JsonProperty("languageCode") Optional<String> languageCode,
             @JsonProperty("languageTag") Optional<String> languageTag,
             @JsonProperty("level") Optional<Integer> level,
-            @JsonProperty("loudness") Optional<Double> loudness,
+            @JsonProperty("loudness") Optional<? extends MediaContainerWithDecisionLoudness> loudness,
             @JsonProperty("lra") Optional<Double> lra,
             @JsonProperty("minLines") Optional<Long> minLines,
             @JsonProperty("original") Optional<Boolean> original,
-            @JsonProperty("peak") Optional<Double> peak,
-            @JsonProperty("perfectMatch") Optional<Boolean> perfectMatch,
+            @JsonProperty("peak") Optional<? extends MediaContainerWithDecisionPeak> peak,
+            @JsonProperty("perfectMatch") Optional<? extends MediaContainerWithDecisionPerfectMatch> perfectMatch,
             @JsonProperty("profile") Optional<String> profile,
             @JsonProperty("provider") Optional<String> provider,
             @JsonProperty("providerTitle") Optional<String> providerTitle,
@@ -605,8 +607,8 @@ public class MediaContainerWithDecisionStream {
             @JsonProperty("startRamp") Optional<String> startRamp,
             @JsonProperty("streamIdentifier") Optional<Integer> streamIdentifier,
             @JsonProperty("streamType") MediaContainerWithDecisionStreamType streamType,
-            @JsonProperty("timed") Optional<Boolean> timed,
-            @JsonProperty("transient") Optional<Boolean> transient_,
+            @JsonProperty("timed") Optional<? extends MediaContainerWithDecisionTimed> timed,
+            @JsonProperty("transient") Optional<? extends MediaContainerWithDecisionTransient> transient_,
             @JsonProperty("userID") Optional<Long> userID,
             @JsonProperty("visualImpaired") Optional<Boolean> visualImpaired,
             @JsonProperty("width") Optional<Integer> width,
@@ -1179,11 +1181,13 @@ public class MediaContainerWithDecisionStream {
     }
 
     /**
-     * Integrated loudness in LUFS.
+     * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+     * sentinel string "-inf".
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Double> loudness() {
-        return loudness;
+    public Optional<MediaContainerWithDecisionLoudness> loudness() {
+        return (Optional<MediaContainerWithDecisionLoudness>) loudness;
     }
 
     /**
@@ -1211,19 +1215,22 @@ public class MediaContainerWithDecisionStream {
     }
 
     /**
-     * Track peak amplitude.
+     * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+     * string "-inf".
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Double> peak() {
-        return peak;
+    public Optional<MediaContainerWithDecisionPeak> peak() {
+        return (Optional<MediaContainerWithDecisionPeak>) peak;
     }
 
     /**
      * Whether the subtitle is an exact match.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> perfectMatch() {
-        return perfectMatch;
+    public Optional<MediaContainerWithDecisionPerfectMatch> perfectMatch() {
+        return (Optional<MediaContainerWithDecisionPerfectMatch>) perfectMatch;
     }
 
     /**
@@ -1316,17 +1323,19 @@ public class MediaContainerWithDecisionStream {
     /**
      * Whether lyrics are timestamped.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> timed() {
-        return timed;
+    public Optional<MediaContainerWithDecisionTimed> timed() {
+        return (Optional<MediaContainerWithDecisionTimed>) timed;
     }
 
     /**
      * Whether the subtitle is temporary or downloaded.
      */
+    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Boolean> transient_() {
-        return transient_;
+    public Optional<MediaContainerWithDecisionTransient> transient_() {
+        return (Optional<MediaContainerWithDecisionTransient>) transient_;
     }
 
     /**
@@ -2243,9 +2252,10 @@ public class MediaContainerWithDecisionStream {
     }
 
     /**
-     * Integrated loudness in LUFS.
+     * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+     * sentinel string "-inf".
      */
-    public MediaContainerWithDecisionStream withLoudness(double loudness) {
+    public MediaContainerWithDecisionStream withLoudness(MediaContainerWithDecisionLoudness loudness) {
         Utils.checkNotNull(loudness, "loudness");
         this.loudness = Optional.ofNullable(loudness);
         return this;
@@ -2253,9 +2263,10 @@ public class MediaContainerWithDecisionStream {
 
 
     /**
-     * Integrated loudness in LUFS.
+     * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+     * sentinel string "-inf".
      */
-    public MediaContainerWithDecisionStream withLoudness(Optional<Double> loudness) {
+    public MediaContainerWithDecisionStream withLoudness(Optional<? extends MediaContainerWithDecisionLoudness> loudness) {
         Utils.checkNotNull(loudness, "loudness");
         this.loudness = loudness;
         return this;
@@ -2319,9 +2330,10 @@ public class MediaContainerWithDecisionStream {
     }
 
     /**
-     * Track peak amplitude.
+     * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+     * string "-inf".
      */
-    public MediaContainerWithDecisionStream withPeak(double peak) {
+    public MediaContainerWithDecisionStream withPeak(MediaContainerWithDecisionPeak peak) {
         Utils.checkNotNull(peak, "peak");
         this.peak = Optional.ofNullable(peak);
         return this;
@@ -2329,9 +2341,10 @@ public class MediaContainerWithDecisionStream {
 
 
     /**
-     * Track peak amplitude.
+     * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+     * string "-inf".
      */
-    public MediaContainerWithDecisionStream withPeak(Optional<Double> peak) {
+    public MediaContainerWithDecisionStream withPeak(Optional<? extends MediaContainerWithDecisionPeak> peak) {
         Utils.checkNotNull(peak, "peak");
         this.peak = peak;
         return this;
@@ -2340,7 +2353,7 @@ public class MediaContainerWithDecisionStream {
     /**
      * Whether the subtitle is an exact match.
      */
-    public MediaContainerWithDecisionStream withPerfectMatch(boolean perfectMatch) {
+    public MediaContainerWithDecisionStream withPerfectMatch(MediaContainerWithDecisionPerfectMatch perfectMatch) {
         Utils.checkNotNull(perfectMatch, "perfectMatch");
         this.perfectMatch = Optional.ofNullable(perfectMatch);
         return this;
@@ -2350,7 +2363,7 @@ public class MediaContainerWithDecisionStream {
     /**
      * Whether the subtitle is an exact match.
      */
-    public MediaContainerWithDecisionStream withPerfectMatch(Optional<Boolean> perfectMatch) {
+    public MediaContainerWithDecisionStream withPerfectMatch(Optional<? extends MediaContainerWithDecisionPerfectMatch> perfectMatch) {
         Utils.checkNotNull(perfectMatch, "perfectMatch");
         this.perfectMatch = perfectMatch;
         return this;
@@ -2562,7 +2575,7 @@ public class MediaContainerWithDecisionStream {
     /**
      * Whether lyrics are timestamped.
      */
-    public MediaContainerWithDecisionStream withTimed(boolean timed) {
+    public MediaContainerWithDecisionStream withTimed(MediaContainerWithDecisionTimed timed) {
         Utils.checkNotNull(timed, "timed");
         this.timed = Optional.ofNullable(timed);
         return this;
@@ -2572,7 +2585,7 @@ public class MediaContainerWithDecisionStream {
     /**
      * Whether lyrics are timestamped.
      */
-    public MediaContainerWithDecisionStream withTimed(Optional<Boolean> timed) {
+    public MediaContainerWithDecisionStream withTimed(Optional<? extends MediaContainerWithDecisionTimed> timed) {
         Utils.checkNotNull(timed, "timed");
         this.timed = timed;
         return this;
@@ -2581,7 +2594,7 @@ public class MediaContainerWithDecisionStream {
     /**
      * Whether the subtitle is temporary or downloaded.
      */
-    public MediaContainerWithDecisionStream withTransient(boolean transient_) {
+    public MediaContainerWithDecisionStream withTransient(MediaContainerWithDecisionTransient transient_) {
         Utils.checkNotNull(transient_, "transient_");
         this.transient_ = Optional.ofNullable(transient_);
         return this;
@@ -2591,7 +2604,7 @@ public class MediaContainerWithDecisionStream {
     /**
      * Whether the subtitle is temporary or downloaded.
      */
-    public MediaContainerWithDecisionStream withTransient(Optional<Boolean> transient_) {
+    public MediaContainerWithDecisionStream withTransient(Optional<? extends MediaContainerWithDecisionTransient> transient_) {
         Utils.checkNotNull(transient_, "transient_");
         this.transient_ = transient_;
         return this;
@@ -2991,7 +3004,7 @@ public class MediaContainerWithDecisionStream {
 
         private Optional<Integer> level = Optional.empty();
 
-        private Optional<Double> loudness = Optional.empty();
+        private Optional<? extends MediaContainerWithDecisionLoudness> loudness = Optional.empty();
 
         private Optional<Double> lra = Optional.empty();
 
@@ -2999,9 +3012,9 @@ public class MediaContainerWithDecisionStream {
 
         private Optional<Boolean> original = Optional.empty();
 
-        private Optional<Double> peak = Optional.empty();
+        private Optional<? extends MediaContainerWithDecisionPeak> peak = Optional.empty();
 
-        private Optional<Boolean> perfectMatch = Optional.empty();
+        private Optional<? extends MediaContainerWithDecisionPerfectMatch> perfectMatch = Optional.empty();
 
         private Optional<String> profile = Optional.empty();
 
@@ -3027,9 +3040,9 @@ public class MediaContainerWithDecisionStream {
 
         private MediaContainerWithDecisionStreamType streamType;
 
-        private Optional<Boolean> timed = Optional.empty();
+        private Optional<? extends MediaContainerWithDecisionTimed> timed = Optional.empty();
 
-        private Optional<Boolean> transient_ = Optional.empty();
+        private Optional<? extends MediaContainerWithDecisionTransient> transient_ = Optional.empty();
 
         private Optional<Long> userID = Optional.empty();
 
@@ -3920,18 +3933,20 @@ public class MediaContainerWithDecisionStream {
 
 
         /**
-         * Integrated loudness in LUFS.
+         * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+         * sentinel string "-inf".
          */
-        public Builder loudness(double loudness) {
+        public Builder loudness(MediaContainerWithDecisionLoudness loudness) {
             Utils.checkNotNull(loudness, "loudness");
             this.loudness = Optional.ofNullable(loudness);
             return this;
         }
 
         /**
-         * Integrated loudness in LUFS.
+         * Integrated loudness in LUFS. Plex may return a numeric value as a number or numeric string, or the
+         * sentinel string "-inf".
          */
-        public Builder loudness(Optional<Double> loudness) {
+        public Builder loudness(Optional<? extends MediaContainerWithDecisionLoudness> loudness) {
             Utils.checkNotNull(loudness, "loudness");
             this.loudness = loudness;
             return this;
@@ -3996,18 +4011,20 @@ public class MediaContainerWithDecisionStream {
 
 
         /**
-         * Track peak amplitude.
+         * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+         * string "-inf".
          */
-        public Builder peak(double peak) {
+        public Builder peak(MediaContainerWithDecisionPeak peak) {
             Utils.checkNotNull(peak, "peak");
             this.peak = Optional.ofNullable(peak);
             return this;
         }
 
         /**
-         * Track peak amplitude.
+         * Track peak amplitude. Plex may return a numeric value as a number or numeric string, or the sentinel
+         * string "-inf".
          */
-        public Builder peak(Optional<Double> peak) {
+        public Builder peak(Optional<? extends MediaContainerWithDecisionPeak> peak) {
             Utils.checkNotNull(peak, "peak");
             this.peak = peak;
             return this;
@@ -4017,7 +4034,7 @@ public class MediaContainerWithDecisionStream {
         /**
          * Whether the subtitle is an exact match.
          */
-        public Builder perfectMatch(boolean perfectMatch) {
+        public Builder perfectMatch(MediaContainerWithDecisionPerfectMatch perfectMatch) {
             Utils.checkNotNull(perfectMatch, "perfectMatch");
             this.perfectMatch = Optional.ofNullable(perfectMatch);
             return this;
@@ -4026,7 +4043,7 @@ public class MediaContainerWithDecisionStream {
         /**
          * Whether the subtitle is an exact match.
          */
-        public Builder perfectMatch(Optional<Boolean> perfectMatch) {
+        public Builder perfectMatch(Optional<? extends MediaContainerWithDecisionPerfectMatch> perfectMatch) {
             Utils.checkNotNull(perfectMatch, "perfectMatch");
             this.perfectMatch = perfectMatch;
             return this;
@@ -4240,7 +4257,7 @@ public class MediaContainerWithDecisionStream {
         /**
          * Whether lyrics are timestamped.
          */
-        public Builder timed(boolean timed) {
+        public Builder timed(MediaContainerWithDecisionTimed timed) {
             Utils.checkNotNull(timed, "timed");
             this.timed = Optional.ofNullable(timed);
             return this;
@@ -4249,7 +4266,7 @@ public class MediaContainerWithDecisionStream {
         /**
          * Whether lyrics are timestamped.
          */
-        public Builder timed(Optional<Boolean> timed) {
+        public Builder timed(Optional<? extends MediaContainerWithDecisionTimed> timed) {
             Utils.checkNotNull(timed, "timed");
             this.timed = timed;
             return this;
@@ -4259,7 +4276,7 @@ public class MediaContainerWithDecisionStream {
         /**
          * Whether the subtitle is temporary or downloaded.
          */
-        public Builder transient_(boolean transient_) {
+        public Builder transient_(MediaContainerWithDecisionTransient transient_) {
             Utils.checkNotNull(transient_, "transient_");
             this.transient_ = Optional.ofNullable(transient_);
             return this;
@@ -4268,7 +4285,7 @@ public class MediaContainerWithDecisionStream {
         /**
          * Whether the subtitle is temporary or downloaded.
          */
-        public Builder transient_(Optional<Boolean> transient_) {
+        public Builder transient_(Optional<? extends MediaContainerWithDecisionTransient> transient_) {
             Utils.checkNotNull(transient_, "transient_");
             this.transient_ = transient_;
             return this;

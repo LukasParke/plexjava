@@ -1,11 +1,11 @@
-# One
+# PerfectMatch2
 
 ## Example Usage
 
 ```java
-import dev.plexapi.sdk.models.shared.One;
+import dev.plexapi.sdk.models.shared.PerfectMatch2;
 
-One value = One.ZERO;
+PerfectMatch2 value = PerfectMatch2.ZERO;
 ```
 
 

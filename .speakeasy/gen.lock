@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 1732900d-e173-47c1-a90d-d45182eb35d9
 management:
-  docChecksum: 8af03503b21cc52f69a337438a295c73
+  docChecksum: ebfbd9cbbebaec0d97992b0bf4e40078
   docVersion: 1.1.1
   speakeasyVersion: 1.802.0
   generationVersion: 2.948.4
-  releaseVersion: 0.25.1
-  configChecksum: 10f46b25b36efc92f1f175681d13c68e
+  releaseVersion: 0.25.2
+  configChecksum: 610d42401e4ae3c44f896c8502a4ac93
   repoURL: https://github.com/LukasParke/plexjava.git
   installationURL: https://github.com/LukasParke/plexjava
   published: true
 persistentEdits:
-  generation_id: 2aa51f12-c0ca-43d3-91ea-84f449d522bb
-  pristine_commit_hash: 78a00529487a0e24d7ab2afd5170f8f941451964
-  pristine_tree_hash: 52c4953625e2d653df7187a618f93e8dc675ee20
+  generation_id: 012996c3-e9fe-48ca-b762-943a88186ae4
+  pristine_commit_hash: d6929042b279a9280f5c8fede48eec4cfe40f299
+  pristine_tree_hash: 017a8d05233520f169fcade1591795a86677d7bf
 features:
   java:
     acceptHeaders: 2.81.2
@@ -432,8 +432,8 @@ trackedFiles:
     pristine_git_object: 45c8a362bdee20a592a79ddde1bd46c020d2c917
   docs/models/operations/CreateCollectionRequest.md:
     id: 63904f96adf4
-    last_write_checksum: sha1:2eee499f1b072079c82205da20c17fc5c08be0bc
-    pristine_git_object: bea6ef46ed8c4fd83980d7979cd221b85ae67541
+    last_write_checksum: sha1:6cc26483f6f89ba6704b411af371275fd0a6aaa7
+    pristine_git_object: 4006975e589397f4150dd6ebcb08d08b1ced7344
   docs/models/operations/CreateCollectionResponse.md:
     id: efccfe3ca7ca
     last_write_checksum: sha1:6bd5f6fb556fec445ec8aeb061c191346dd02c48
@@ -1624,8 +1624,8 @@ trackedFiles:
     pristine_git_object: dbbcfd0bcd252a2fe719b4a6b9183d6815bf0cd7
   docs/models/operations/GetLibraryMatchesRequest.md:
     id: ba4e5f99a964
-    last_write_checksum: sha1:42e36263436aa952919ca19c300433decd066c38
-    pristine_git_object: a3e01adfcc33fe7c9f6b579679a21662ab612948
+    last_write_checksum: sha1:944567ee792d18e3180c97b44d01255d0ad78e17
+    pristine_git_object: 15a4c89f79db7d0db95b56c81cbad16aa292b562
   docs/models/operations/GetLibraryMatchesResponse.md:
     id: dcd0088e8f9c
     last_write_checksum: sha1:ca06564d0fba925db36644dd65e7729a7bb0fcad
@@ -2244,8 +2244,8 @@ trackedFiles:
     pristine_git_object: ef5fa33bc0367100f91f7f3278a08ab376ea59be
   docs/models/operations/GetServerResourcesRequest.md:
     id: 5fcc593901aa
-    last_write_checksum: sha1:93f8ffcf874e31a1773dd87df913e4b03202a506
-    pristine_git_object: 8a713a7c536c63023e932b4fa0309e56f867595c
+    last_write_checksum: sha1:4e1df7cdbf079f6e88b8eb5aaead54cae86eca88
+    pristine_git_object: e1417b43a20fdf8577ad54b88ff1f3d4613e8e35
   docs/models/operations/GetServerResourcesResponse.md:
     id: c8a55311215d
     last_write_checksum: sha1:61ad49b08a98dbf71c58ab26881e6db22bfaac1b
@@ -2432,8 +2432,8 @@ trackedFiles:
     pristine_git_object: 589379ff76b069273027e03616abf3eb4a7381fc
   docs/models/operations/GetTagsRequest.md:
     id: 6db38251a57c
-    last_write_checksum: sha1:8ce539a9cd60a2f0598e7c9abc15991b1d123e2c
-    pristine_git_object: 2c8bc313f4d26d461ff228b58545ee9fbb1f4074
+    last_write_checksum: sha1:3aabf5d2fc8e8e21d7a6a8067b6d40e13c7f9719
+    pristine_git_object: 145cbf849838f40e221e0c661f602b37d88de5f5
   docs/models/operations/GetTagsResponse.md:
     id: 024a6a3e0c30
     last_write_checksum: sha1:3528a3d2cfdc9e07e8bdc6deb57c5ac7d32a8107
@@ -2592,8 +2592,8 @@ trackedFiles:
     pristine_git_object: c70ffb9824a098e7e0eb92153fd8b716aa3cb311
   docs/models/operations/IncludeRelay.md:
     id: 802af2480849
-    last_write_checksum: sha1:98e983f682b48a85b708cfc6bbf35e9c395d56d8
-    pristine_git_object: 2c42041f3efa3dcc8df633c7637f5baf0d33d545
+    last_write_checksum: sha1:2fd518d51704c081d92048d69e8aa22dd3791b14
+    pristine_git_object: 718a22c215e124dc42caac576155aa39c6ba3875
   docs/models/operations/Index.md:
     id: 2c5d20bfd7ff
     last_write_checksum: sha1:dc842e60d2c3fad63719171050266fa7b34a13cb
@@ -4016,8 +4016,8 @@ trackedFiles:
     pristine_git_object: 118a12a7cb9c10ace74b90e72143be3e793082e7
   docs/models/operations/VoiceSearchHubsRequest.md:
     id: 5d17fdb0f324
-    last_write_checksum: sha1:96760715cd027e4d2400a553b72a7fd8ffbde523
-    pristine_git_object: b8aa75b98b07b6ff16536e2cba76b95cc8d3acb3
+    last_write_checksum: sha1:b0f0cfa29ac339b6f08d75ec4b20a1b07d21016c
+    pristine_git_object: cc747e7bb8d19f644afb4d91bdb6bf1faa71133d
   docs/models/operations/VoiceSearchHubsResponse.md:
     id: f18193dd5d9d
     last_write_checksum: sha1:2b4f935e0f6c761dc8879bdf19844867a07dcc7a
@@ -4112,8 +4112,8 @@ trackedFiles:
     pristine_git_object: 7dcf299b84d6081d2bcfbbd79101170d56d11bfa
   docs/models/shared/CanAutoSync2.md:
     id: b14898830265
-    last_write_checksum: sha1:baf064520f6b93b9cdc6bd5a26ed335a5fde9849
-    pristine_git_object: 071c855edca02172227d20703ac6ce1c332cf373
+    last_write_checksum: sha1:402d394eb914eaed751f1b59ddd9ae24b9388073
+    pristine_git_object: f3e63bbef7a2d4d4698b311a36fffd79a561fcba
   docs/models/shared/Channel.md:
     id: 9283085e5b1c
     last_write_checksum: sha1:18ca6c5a92c8334927ef660b5d9e51d0672b1d25
@@ -4384,8 +4384,8 @@ trackedFiles:
     pristine_git_object: 9580f26f414c9f92da82dcdd5e05062f9c84d21b
   docs/models/shared/LibrarySection.md:
     id: 9d160635e971
-    last_write_checksum: sha1:a8fbc3ba2d517294e98f7f21003e043966f73d4a
-    pristine_git_object: 5fbd3a59cec6fdf56404764b13610e78c7b4f0b2
+    last_write_checksum: sha1:6d8f35d6432c0c3021915518aa4498cc123920a5
+    pristine_git_object: b052bf47c8bad8ef7a37c21cb8e5da0efccebd9f
   docs/models/shared/LibrarySectionAllowSync.md:
     id: 3f88ace74cba
     last_write_checksum: sha1:e1b27b0c57089edb3a2f492348479d53e2ca8e6f
@@ -4418,6 +4418,10 @@ trackedFiles:
     id: bc21c548e84a
     last_write_checksum: sha1:857076d1418090799fa0526fb0a10d6ef0c3505a
     pristine_git_object: 19c40ebfee8dfbf3cebdf334226f8e704994f4e8
+  docs/models/shared/Loudness.md:
+    id: 12ab77cf5680
+    last_write_checksum: sha1:53b7afc4abb30b3330bd552e2e594859df2a400f
+    pristine_git_object: 11ad0033f275103c23b9018b99f730a779b48770
   docs/models/shared/MailingListStatus.md:
     id: 0bb54887e7b6
     last_write_checksum: sha1:ab33daf6238c96ebe09354e7a90dfaebe3af9f7f
@@ -4464,8 +4468,8 @@ trackedFiles:
     pristine_git_object: 9b0cba3f1c3bfaccd1e77b3d343357dd25a2c804
   docs/models/shared/MediaContainerWithDecisionCanAutoSync2.md:
     id: 8abfcc6c7093
-    last_write_checksum: sha1:257c122c173ac5ddf8407a293aaef41bd2dcfb75
-    pristine_git_object: e1f420048783ce04ddd2fe17f5c8b17558c5ed5f
+    last_write_checksum: sha1:5e8f4ceaa50bfa21c45b7f7cf81ca6fefc4823ed
+    pristine_git_object: 4222a0560e48606d4ec59ba4965912727a4900fe
   docs/models/shared/MediaContainerWithDecisionDecision.md:
     id: "514313482294"
     last_write_checksum: sha1:65279163fb9fbb84a5966bdf077bf8083c9ede38
@@ -4482,6 +4486,10 @@ trackedFiles:
     id: 5e69594a5cac
     last_write_checksum: sha1:500f1f82e8618fa628620b5f55f891d7d82a31b2
     pristine_git_object: 5a583a6738be6ae116358534bc165cfd9d66f6f3
+  docs/models/shared/MediaContainerWithDecisionLoudness.md:
+    id: fef6f5cd2507
+    last_write_checksum: sha1:eb4f7984b884ae3a5779c75386793766fc0f9524
+    pristine_git_object: 2b8ef58846e4e23e6652731da0c4abf8a440de34
   docs/models/shared/MediaContainerWithDecisionMedia.md:
     id: d6d0a01fcdef
     last_write_checksum: sha1:f3a35e39005bf12589199f0afd545f21a3abf1a7
@@ -4502,6 +4510,18 @@ trackedFiles:
     id: f8d7abdf1747
     last_write_checksum: sha1:395a6cc6432c9c22b7a26d29c93ab85a05e89a45
     pristine_git_object: af73a19857478039a181957c4d230b47ed6dcabc
+  docs/models/shared/MediaContainerWithDecisionPeak.md:
+    id: df4d1b04bd2d
+    last_write_checksum: sha1:701fba3c7051129b9ce73eb0bf14d56822592077
+    pristine_git_object: 4d218386798b659e0a5fe173e80e7e0a169f07eb
+  docs/models/shared/MediaContainerWithDecisionPerfectMatch.md:
+    id: 657b8ddf63d2
+    last_write_checksum: sha1:423796785b7de0cb75bc2685c4a52d5af32eccaa
+    pristine_git_object: 7f9510fd383f3b83cd8dd3de4a23a64e44fab106
+  docs/models/shared/MediaContainerWithDecisionPerfectMatch2.md:
+    id: 8928c95113c6
+    last_write_checksum: sha1:ba8c4fae9a095b99a257c8f3e31a02d9a5651d0c
+    pristine_git_object: 271a689862a0b699d215b5a232d91f405273858a
   docs/models/shared/MediaContainerWithDecisionSkipChildren.md:
     id: 6c9ffe6fd37e
     last_write_checksum: sha1:cd7e6368ae934881cc8a321ef2512bd679f1432c
@@ -4520,12 +4540,28 @@ trackedFiles:
     pristine_git_object: 110815fc1aa433f199ce901f3215c35136ca2250
   docs/models/shared/MediaContainerWithDecisionStream.md:
     id: ed6288f5f15d
-    last_write_checksum: sha1:cf6c87322d65cb5845d024fbb2c9e837b1bff432
-    pristine_git_object: 1f3af503d9695b9e9f21ac9d446eafdbac48150a
+    last_write_checksum: sha1:eb30d305a5e4ebc990dded5f3cbef8b501830264
+    pristine_git_object: 3d4fefe413e114abd291554ae169051f5d707ddd
   docs/models/shared/MediaContainerWithDecisionStreamType.md:
     id: 0962f5287897
     last_write_checksum: sha1:cc1014d30cb15f1a4b0722e123a61cced4dcce78
     pristine_git_object: 43ff753087894ec96dce2c40c5ae9ed8bd536bed
+  docs/models/shared/MediaContainerWithDecisionTimed.md:
+    id: 5f9a6827d845
+    last_write_checksum: sha1:067dfa53fdba3c8ce26f10aacc241e8aab034cdd
+    pristine_git_object: 0ced061ca622f5aa87688044fb2aff12097f4e2b
+  docs/models/shared/MediaContainerWithDecisionTimed2.md:
+    id: d2fed0a6fbee
+    last_write_checksum: sha1:dc9b35177d9119644e175b49ca0765bbaa4ad96d
+    pristine_git_object: 5cad1df1f8415fd31ba13b496d7e935ac44c8001
+  docs/models/shared/MediaContainerWithDecisionTransient.md:
+    id: f01333236707
+    last_write_checksum: sha1:44839f1c8aa3a2d1b26e52fc12b13cd7ff099992
+    pristine_git_object: f34a7ad6fd8884867e4bfc5df4ae3808b6d4fe97
+  docs/models/shared/MediaContainerWithDecisionTransient2.md:
+    id: 3736deb9b062
+    last_write_checksum: sha1:e1e943dd1fa88584f54a01c5cae5055111b78738
+    pristine_git_object: 9d2f6d4694c05b6112edefb0dded79488ab0883e
   docs/models/shared/MediaContainerWithDevice.md:
     id: c787b5b0104f
     last_write_checksum: sha1:a3304270777add828582e21ca28ff3b1a76a5919
@@ -4700,8 +4736,8 @@ trackedFiles:
     pristine_git_object: aa354cb1b2970fe36d6a7146713dffc95c6fa15a
   docs/models/shared/MediaQuery.md:
     id: ca42a22ddfe3
-    last_write_checksum: sha1:9f4041d7ac5eb08f9c38151c698ffd3b6dfcf7fc
-    pristine_git_object: 23416d11c205a6c25f3f21ae424c0fdae0a9db94
+    last_write_checksum: sha1:1a0d49373b507d7b3c9b1d47256c4c30d016cc61
+    pristine_git_object: f316c500805d16a416902605ff04e6a84422e5d0
   docs/models/shared/MediaReviewsVisibility.md:
     id: 86d4a7afa97f
     last_write_checksum: sha1:cff0eeb1d9603d04482718c9146dc656ea62cfb8
@@ -4712,12 +4748,12 @@ trackedFiles:
     pristine_git_object: 5c154761b2bbd1c8f225f2de5816c317a7dcc89f
   docs/models/shared/MediaType.md:
     id: 67970e59c6c1
-    last_write_checksum: sha1:708cea3c8acf2b88bb9d762124255ca88064db0f
-    pristine_git_object: 0170880d3d2f198eb299d6b1c68de6544431fa6f
+    last_write_checksum: sha1:d42e3c58068ab99c34884fd764a7011af449f6b3
+    pristine_git_object: 0a300e7c46c528ec10bea319282a5b507cee7586
   docs/models/shared/MediaTypeString.md:
     id: c750e468cd16
-    last_write_checksum: sha1:830cb88acda12304c36a460ed1782383db979423
-    pristine_git_object: c9e110abfdaf319b59dc9050b410753b3ec34bb6
+    last_write_checksum: sha1:4bfe8e9ac0905085218b2d46a6119486d96ecd1e
+    pristine_git_object: 8a2a95c1547d8e3a2fcfeb9afac5af7c7f72e80b
   docs/models/shared/Metadata.md:
     id: d43313aa2e54
     last_write_checksum: sha1:84754e2309902b06ad75909e88454917c150bd12
@@ -4730,10 +4766,6 @@ trackedFiles:
     id: e1adcbf18981
     last_write_checksum: sha1:4ae1b71581d834036c02abe05e4606d23fd5761a
     pristine_git_object: b6ebabd1cadde29ef4e8f8e13ae70766c4f88834
-  docs/models/shared/One.md:
-    id: f77064f6609b
-    last_write_checksum: sha1:60739af264aa8b05ab9b6694cf60908fe509f1bb
-    pristine_git_object: 1638f469dc9cdffa03a0be025fc47f70796de688
   docs/models/shared/OptOuts.md:
     id: fbe2b13194ca
     last_write_checksum: sha1:ae04877e8548956574bc6aa49d9796bffcbe9635
@@ -4746,6 +4778,18 @@ trackedFiles:
     id: 2ea14212acc9
     last_write_checksum: sha1:314318e587cab2d25fb8f76d1e1d8976c3cdcb88
     pristine_git_object: 959c0f01104391dcb6b6f937daf35f68dc415ec0
+  docs/models/shared/Peak.md:
+    id: d12bb924541f
+    last_write_checksum: sha1:f73c95e727254982d66fed3edc5ed0196fbde285
+    pristine_git_object: c25c79de5515d1c96fde6aac908e57a9bd9f5254
+  docs/models/shared/PerfectMatch.md:
+    id: 94932c88bfdf
+    last_write_checksum: sha1:a4a04af4b988aa781511941d349849cdceb862af
+    pristine_git_object: b9a838b6e4104200b4ea8c3e0e41c23c8d92ea26
+  docs/models/shared/PerfectMatch2.md:
+    id: 67d6c4f09efe
+    last_write_checksum: sha1:1a9e944a951975efafd2ae0cfa8820c066345d25
+    pristine_git_object: 1e15957a288ab70750b63cda0cbc2febd6ce66c7
   docs/models/shared/Pivot.md:
     id: bf908fadb85d
     last_write_checksum: sha1:b5f7764d0015873cd4a00895956674e064e376a8
@@ -4924,8 +4968,8 @@ trackedFiles:
     pristine_git_object: 31d4f1fa4a617391073729ec174702cc00fb1c8f
   docs/models/shared/Stream.md:
     id: 6195be618589
-    last_write_checksum: sha1:7f8afe22c0e33cc9a4b3b7f7d2941351ed93748f
-    pristine_git_object: 563825e942fccf69d7b8446b5bc20dea4d701144
+    last_write_checksum: sha1:b7281e30282b517c238bce63d5d62b5f5b196178
+    pristine_git_object: fad1c895c3c4a9974bf9bb755676802f259bd0b1
   docs/models/shared/StreamType.md:
     id: 8a38e886d24e
     last_write_checksum: sha1:ad9559a7ccd04e47064440c053a1998d5375bd38
@@ -4946,6 +4990,14 @@ trackedFiles:
     id: 05ca43f7de5c
     last_write_checksum: sha1:363af0d6f66c23b8c7e169acd2bbf2ee09558a9d
     pristine_git_object: 270c4e58851a34fdeceff26b42fc0c0647274d73
+  docs/models/shared/Timed.md:
+    id: eb1bf2525eb7
+    last_write_checksum: sha1:3b6efa17e75ae2c601cc469323161a8f878e5fbf
+    pristine_git_object: 6c3da6fe78e6d4e20c329076d82d0158442daca6
+  docs/models/shared/Timed2.md:
+    id: 502dd2efbdf2
+    last_write_checksum: sha1:3e07c70a954cd0049cac64f07bf19e518f4c1ed0
+    pristine_git_object: ef05dd016a15649e69abfaa6d35ab7de44cf2b75
   docs/models/shared/TimelineEntry.md:
     id: a854021519af
     last_write_checksum: sha1:cea6053c6f9e9ec67587cb7dfa4892957f100c9d
@@ -4978,14 +5030,18 @@ trackedFiles:
     id: 96417f041265
     last_write_checksum: sha1:1060967a35384274b37d9b207a144caa11cd2680
     pristine_git_object: ba7341fc8f3b99fffe80f9d0ac975d18ef7f3719
+  docs/models/shared/Transient.md:
+    id: 0b859537d76c
+    last_write_checksum: sha1:92ec8ae2fd576a551d3ef90aaab427a7d14075b9
+    pristine_git_object: d3f595454efef4b2ab27d146bfa9931afa7345f4
+  docs/models/shared/Transient2.md:
+    id: 2404c3a8c89c
+    last_write_checksum: sha1:af84b1a8b36f8e0c11e1c3ac57b85986a453ffe3
+    pristine_git_object: 42d7f8faf87a8c43739eb5bba937526636e8263b
   docs/models/shared/Two.md:
     id: 89c310833f4b
     last_write_checksum: sha1:a59781d7dc7e8b7817c52029a1c0ac37548d7730
     pristine_git_object: a65e2f9bd00972fdd70bdee81947f4280708f602
-  docs/models/shared/Two1.md:
-    id: 91281d02525d
-    last_write_checksum: sha1:8bb3b7fa9041705bdb78805fd6debac92c04488c
-    pristine_git_object: e25bcbfc5d852578fb40ba04b9c3f1fd15e3e417
   docs/models/shared/Type.md:
     id: 2508f35504ed
     last_write_checksum: sha1:125ae3b36edc08f60dcbe458a6e201e7bebac000
@@ -5128,8 +5184,8 @@ trackedFiles:
     pristine_git_object: 00a501a1f359412f19e06915bb59758c24dc120f
   docs/sdks/playqueue/README.md:
     id: 1488a418f0ed
-    last_write_checksum: sha1:b966734e3a3e88a15748f56b98f43101364abcb9
-    pristine_git_object: a438e03f3e4d1330bd26214a28aaf9a81683a913
+    last_write_checksum: sha1:5e5b8fb7f59c951f4a8ad7461fd8b7526a2271d4
+    pristine_git_object: b0fe550390dab2a600f2a97478a452ce7f06416a
   docs/sdks/plex/README.md:
     id: e38f26a59e3a
     last_write_checksum: sha1:b65bcb884738b18eab01dcf1e9fb78fa0305d80f
@@ -5184,8 +5240,8 @@ trackedFiles:
     pristine_git_object: aa620e86016abcfaa026334c072457e4f3d114a3
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:54ff1b8096758a6d876945219e38b97c2e69161a
-    pristine_git_object: aafd712bb0dc7e8c1da401e2cf5905c3ce393c5d
+    last_write_checksum: sha1:d84f0b11114926ca081249604b2f1651472f6465
+    pristine_git_object: d4b206606c4b0acad24d8f3491f1b823be863120
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -5452,8 +5508,8 @@ trackedFiles:
     pristine_git_object: 13b408b9a3de044e68141a0ba977c48b4fb00bf0
   src/main/java/dev/plexapi/sdk/SDKConfiguration.java:
     id: fc2b069e396f
-    last_write_checksum: sha1:d6c24f77c94d2ecc067e663a87959533bfc041a8
-    pristine_git_object: db330a84e8b0c7c1397572cd48176b07590bfcba
+    last_write_checksum: sha1:b4e0c8b417188d3e3ce4e731e25d66cbc5f25512
+    pristine_git_object: a228881ca5ededa51997a7e74e1f1fb86a566681
   src/main/java/dev/plexapi/sdk/Search.java:
     id: 5a61f99a5b07
     last_write_checksum: sha1:8eda1e681781db17ea7227cc6de8275db70d7608
@@ -6012,8 +6068,8 @@ trackedFiles:
     pristine_git_object: 5f7c5c6bf1b8a418a1dbe0106ccd15754b7cd31f
   src/main/java/dev/plexapi/sdk/models/operations/CreateCollectionRequest.java:
     id: 77f7ae8d2bbf
-    last_write_checksum: sha1:87415afcfa260f123935a37da0aaa6573db403a5
-    pristine_git_object: 37e27cb81666676a01b343b2929813135b9cbddd
+    last_write_checksum: sha1:0ddbe3d387dc75fcc9ea73ea1420be953bf6e983
+    pristine_git_object: 8bd6e7411e534ba9b77e50d0a06d621f576874bf
   src/main/java/dev/plexapi/sdk/models/operations/CreateCollectionRequestBuilder.java:
     id: 355f353707ca
     last_write_checksum: sha1:3844687717b2319fec529937f344f84f3e0d398f
@@ -7720,8 +7776,8 @@ trackedFiles:
     pristine_git_object: efb4ce9f65ba9c98f5a629709623f2adc7dd1a75
   src/main/java/dev/plexapi/sdk/models/operations/GetLibraryMatchesRequest.java:
     id: 53086a70cc58
-    last_write_checksum: sha1:8e6be8048eee03fa76c2d4564cd6056d1a186381
-    pristine_git_object: 985afdff979d108a595ba91633a4398caa081a81
+    last_write_checksum: sha1:b699c095f21437540c15b4339d7884f59f097884
+    pristine_git_object: 7aeeb760145ba58f84122f711dc723e0e2496665
   src/main/java/dev/plexapi/sdk/models/operations/GetLibraryMatchesRequestBuilder.java:
     id: 1f791a9cd3d0
     last_write_checksum: sha1:16057fcb726daf6de04934fb518ebb33a71167a9
@@ -8880,8 +8936,8 @@ trackedFiles:
     pristine_git_object: e0cca5163c736c23336b772f6d82614eaaaad4c6
   src/main/java/dev/plexapi/sdk/models/operations/GetTagsRequest.java:
     id: 14480f09431b
-    last_write_checksum: sha1:9c5913e4cd4c2c16bd12e1e57467f1c5308fbf89
-    pristine_git_object: c937862b9670a06cbed3f67a607f9c746d8984c1
+    last_write_checksum: sha1:922850c8f1cf4dbe8a0aec1aa258478849ade3d8
+    pristine_git_object: aace4873ec90271e2a9f2618a8c1f6e37ff1dac0
   src/main/java/dev/plexapi/sdk/models/operations/GetTagsRequestBuilder.java:
     id: 7f841c24aea6
     last_write_checksum: sha1:245a9245bf4c6a6cf791e2f1c963ead37e175a16
@@ -11072,8 +11128,8 @@ trackedFiles:
     pristine_git_object: c025744cb03b90c865f70fe11b0bd656e7296a21
   src/main/java/dev/plexapi/sdk/models/operations/VoiceSearchHubsRequest.java:
     id: beda5cf93c72
-    last_write_checksum: sha1:3c27ad457960a99574e844b20a31b41faa93ffed
-    pristine_git_object: 91ade9d038bab749f107544868406a062bb6ff31
+    last_write_checksum: sha1:34a12ecafb2f2cdd27e8173d5dc8e7c39d6d5225
+    pristine_git_object: a1e51ce9482e6932bf9a7f3d1daceb2f0c1092ce
   src/main/java/dev/plexapi/sdk/models/operations/VoiceSearchHubsRequestBuilder.java:
     id: 8e58a149bf68
     last_write_checksum: sha1:62dce36a44c3a4cac26915337956b3c2e832611a
@@ -14412,8 +14468,8 @@ trackedFiles:
     pristine_git_object: 627740b34b6fd1da04acca633a4b92c4fffdbfff
   src/main/java/dev/plexapi/sdk/models/shared/CanAutoSync2.java:
     id: d0d3367b8c15
-    last_write_checksum: sha1:299614276613e6189a02b8ec7f0b0d13ff72ff96
-    pristine_git_object: 449e651dc70e078f80747dce64dc67044601c12f
+    last_write_checksum: sha1:81e72b8873956e4aac80df8bad84f9a6c4c82532
+    pristine_git_object: f3ba6aa5aeb66a6dfd64eef178aaa07e3b756eb3
   src/main/java/dev/plexapi/sdk/models/shared/Channel.java:
     id: 6b9e1499e5de
     last_write_checksum: sha1:72a7891aa401b6a77ee4a9ecf5b2b0d8401ec65b
@@ -14684,8 +14740,8 @@ trackedFiles:
     pristine_git_object: 8b7603934156bd11270290cbb43554950e189cc5
   src/main/java/dev/plexapi/sdk/models/shared/LibrarySection.java:
     id: aeae4e2f2efc
-    last_write_checksum: sha1:1a08b0de4bf4d9b579e9c536cb09da912d453476
-    pristine_git_object: 76f0b8fbe33cd33e99f3d5873cc29a1be377d73b
+    last_write_checksum: sha1:4f18092c32ffbbe296ae2f6e7db9481a71c2dded
+    pristine_git_object: bff6aceeb1d3a56d60581cd70ec9f9efeb40771b
   src/main/java/dev/plexapi/sdk/models/shared/LibrarySectionAllowSync.java:
     id: 93780d1ee68e
     last_write_checksum: sha1:f17137c93c2518ca4682a376bddbe117ba2437a9
@@ -14718,6 +14774,10 @@ trackedFiles:
     id: 1b5be9d77316
     last_write_checksum: sha1:f3666cb6707877c9907b2e673cc61eb002a3312c
     pristine_git_object: 782834d88e1f072d15508adebf62e1ed3f2b2333
+  src/main/java/dev/plexapi/sdk/models/shared/Loudness.java:
+    id: 9401879e1154
+    last_write_checksum: sha1:21acd86ff03ac0f1a95756e63584147006e2260c
+    pristine_git_object: b895b0fc458905f14938ae3cb4b0335221335ef3
   src/main/java/dev/plexapi/sdk/models/shared/MailingListStatus.java:
     id: b120386ff0c6
     last_write_checksum: sha1:5f623ff427fd186a90cf5bbb17c7ba5a820bd5b6
@@ -14764,8 +14824,8 @@ trackedFiles:
     pristine_git_object: e1b91ceb4a7e95bb69089b55653238b0f24b2332
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionCanAutoSync2.java:
     id: a082ee5b3234
-    last_write_checksum: sha1:98f917d113dadf775c0b7d428cadf892dcc175ec
-    pristine_git_object: b4637afdd52455c3fad30ebc6d8c19a79bc8d045
+    last_write_checksum: sha1:701430db6cf9883a9d45d426afefa01dbbc06109
+    pristine_git_object: b80b2cb5b61aadfc2d7ef4eeb588f8f199d32e81
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionDecision.java:
     id: 5252f7a2efee
     last_write_checksum: sha1:07b419fc5948cbebcc839800461fe992a6cff934
@@ -14782,6 +14842,10 @@ trackedFiles:
     id: d83b0b6f7ca5
     last_write_checksum: sha1:f1b9d15c0f4f3d0a330fad24582f506efaf9996f
     pristine_git_object: 4663922b3dbf0cd85bb2a7729aa2a383b1fde67a
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionLoudness.java:
+    id: 4c94d992a0c6
+    last_write_checksum: sha1:58172ed24acd68a418c091368f7db7fcd8eb0ba7
+    pristine_git_object: 31093dee3e740e66b3e7e37c85ba5d2a495cf2ca
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionMedia.java:
     id: 74f8231b4d40
     last_write_checksum: sha1:e841a989fc5eb358de130cf6ab83ca987a82e8dd
@@ -14802,6 +14866,18 @@ trackedFiles:
     id: 4dcf68a1c148
     last_write_checksum: sha1:f1e9a3ea8eba71649db78ee90429edfdb95ca92d
     pristine_git_object: 39c108466babbec0c511a3c9bd87f09abfb0958f
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionPeak.java:
+    id: 977ab9b2cff2
+    last_write_checksum: sha1:80bcb2d68831c0af0e2605c12275f301f8ff2cfa
+    pristine_git_object: fd86911eea1eecc3b43e5b06639cc2ec00020fd0
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionPerfectMatch.java:
+    id: 648c6d764589
+    last_write_checksum: sha1:028647dc8b59cfdd5efb7edbd670ccc615d67aba
+    pristine_git_object: 3727c304e54dbb9838fe28136aaeb63722c1b415
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionPerfectMatch2.java:
+    id: 440229e80be4
+    last_write_checksum: sha1:24c271b1ce02a90c5150de34462f1be3b2fdd5c1
+    pristine_git_object: d25a11e041a0e4b6006e94ef3abfc0c157c8dd56
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionSkipChildren.java:
     id: da4039b602d0
     last_write_checksum: sha1:fc61ec07f92a85c82d850836a0e5125521c2dc21
@@ -14820,12 +14896,28 @@ trackedFiles:
     pristine_git_object: 6cdc561a8437c4c3ec1b018b07a3c386b30ead7f
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionStream.java:
     id: fc30c607fff0
-    last_write_checksum: sha1:88bf80030a2712a67e8cd54cbf4bd72b27ec9e6a
-    pristine_git_object: 6df8fc9d7b6aaa57e14ad277692dea55a9fb7cd0
+    last_write_checksum: sha1:e01d710d3345379f336fb76a6588e427292da67c
+    pristine_git_object: 89b4a61f8a8facf6211d911b83ae96ff05e2ea8f
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionStreamType.java:
     id: 983a6206e3c8
     last_write_checksum: sha1:eba24bd912e2a8b5df412ac2b9282423a8df3275
     pristine_git_object: 488e480b1d4af7c32de086553f5d2220d8e35225
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionTimed.java:
+    id: bfbb22742d3a
+    last_write_checksum: sha1:b2ef4a0cfba261690440f790e0d05674325b32fa
+    pristine_git_object: 137c438904cbac20755fe7e876671045b015313e
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionTimed2.java:
+    id: 2cdab1eeb5b2
+    last_write_checksum: sha1:2256a76971b7b154b96c0b29a3ccb43d52f25f51
+    pristine_git_object: 768cb38ce97016419c545cb3ec5d188e33fd156d
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionTransient.java:
+    id: d478e820d7d0
+    last_write_checksum: sha1:076948b6d1bf5797313ca997f01fc1fe9b2202b2
+    pristine_git_object: 4379e606a017299f5665a6e9e4302b396594f483
+  src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionTransient2.java:
+    id: e65a1d0d2c72
+    last_write_checksum: sha1:e1ca9aa8d3dc3f5187953fb978afcdcce6979257
+    pristine_git_object: f35154a20b893634944e737f415e6eb4ea11551d
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDevice.java:
     id: 45f46d481571
     last_write_checksum: sha1:bf83b21c6e6b332b32cc7bec13126c3790ab0ad0
@@ -15000,8 +15092,8 @@ trackedFiles:
     pristine_git_object: 780a1a7e1f536d71e2bd9ac431a3709a20241e44
   src/main/java/dev/plexapi/sdk/models/shared/MediaQuery.java:
     id: 2963cc40fbdb
-    last_write_checksum: sha1:23614bb01c29d3072d8c1d84d69d69215aed6c1a
-    pristine_git_object: a7f953390203500ce3db069fec14cfb29da6b92f
+    last_write_checksum: sha1:932275a77bfa6a2a3892cb008750c0d462d43924
+    pristine_git_object: 1a51c04eaee68bc3c14b9c4bd1f951702cda886f
   src/main/java/dev/plexapi/sdk/models/shared/MediaReviewsVisibility.java:
     id: 52110e1fd3bc
     last_write_checksum: sha1:3d92283195609d82fe75ddf43494a207f9fcfd6c
@@ -15012,12 +15104,12 @@ trackedFiles:
     pristine_git_object: 1ad6396d9a14bf8f7ceb9445239640b887292847
   src/main/java/dev/plexapi/sdk/models/shared/MediaType.java:
     id: 2778af0fab38
-    last_write_checksum: sha1:feb7e22fefc5dc7190eb8c4c80c8043edb28b3cd
-    pristine_git_object: 02527ecb9e44cf463383903747acf89fda2dafd9
+    last_write_checksum: sha1:4e5ed440161fb9651d50ccddcfca0bf96598a5a0
+    pristine_git_object: 144a7505e331d802c5c782e6ae8af98268774005
   src/main/java/dev/plexapi/sdk/models/shared/MediaTypeString.java:
     id: 238b1ceb4e4b
-    last_write_checksum: sha1:020c7573a6f200236d41e98a233f31fcd8c93790
-    pristine_git_object: 5a74954147de59ffbfb115fce2e76d016feed359
+    last_write_checksum: sha1:c332986430de972804aa4f92b0ea60d646d24210
+    pristine_git_object: ca8b7644c28a792b9f9a314ea9b8e2d491358697
   src/main/java/dev/plexapi/sdk/models/shared/Metadata.java:
     id: 72b65aacba65
     last_write_checksum: sha1:1561b87ef16e0d6a76d87ef4e54891a0e657b4c9
@@ -15030,10 +15122,6 @@ trackedFiles:
     id: b607dd8146d7
     last_write_checksum: sha1:4d1f85d521e470e174724617cb66aa5adbcd6c25
     pristine_git_object: 0b1deda1863170211f7144f055a2f1197457c6b4
-  src/main/java/dev/plexapi/sdk/models/shared/One.java:
-    id: 6e600b2018b7
-    last_write_checksum: sha1:cf354ffe9d1952e5f8a6ceb717a855f6a5e94b3c
-    pristine_git_object: f51ed3cb5e26402155dd589892c2448b608ef347
   src/main/java/dev/plexapi/sdk/models/shared/OptOuts.java:
     id: 940a2c1f346b
     last_write_checksum: sha1:f85dd0f55570c2076a4fdeb148a33df1cf4d6bab
@@ -15046,6 +15134,18 @@ trackedFiles:
     id: ef533148c667
     last_write_checksum: sha1:ef8f27f7806e4f910a164ebd29752570b65bc3f0
     pristine_git_object: 88a1433a62d8a5d60e14c4b3be91e0d19b185225
+  src/main/java/dev/plexapi/sdk/models/shared/Peak.java:
+    id: 18ad7033808d
+    last_write_checksum: sha1:5b9ff3782897701ba712e2f3482640f893f8eb97
+    pristine_git_object: d179a98c65a1d88c63c5405b49e54656b3ea62b1
+  src/main/java/dev/plexapi/sdk/models/shared/PerfectMatch.java:
+    id: 8d85bba30000
+    last_write_checksum: sha1:48b887251564a3599ce61d98951c8414a5f4d7de
+    pristine_git_object: 059f4ce9133276f7627161f888899e0f6def78c4
+  src/main/java/dev/plexapi/sdk/models/shared/PerfectMatch2.java:
+    id: 3925b06fa954
+    last_write_checksum: sha1:6b96cd3a2796f0670bb50bb06d69cb1b19a69583
+    pristine_git_object: a8319ae5cfab6584f02c1025f0b2bd55b155019f
   src/main/java/dev/plexapi/sdk/models/shared/Pivot.java:
     id: 8197ed0ec7dd
     last_write_checksum: sha1:399079018a5c0a39de9593d87de31ab1937a5518
@@ -15224,8 +15324,8 @@ trackedFiles:
     pristine_git_object: 2e2c97b299c97544c002eb86eda1f42b3bae1359
   src/main/java/dev/plexapi/sdk/models/shared/Stream.java:
     id: c78af63fceb8
-    last_write_checksum: sha1:fc4473a1b20fbc8fc47c1d34142e79e3e3ba4f4f
-    pristine_git_object: afc471365bac2433f1047a215b5c0475df27d607
+    last_write_checksum: sha1:e2e8da7c7a3d941ab18f4c7e7ffa8e76a95aec74
+    pristine_git_object: 76352768a069ab98373287a46093abe87481c26b
   src/main/java/dev/plexapi/sdk/models/shared/StreamType.java:
     id: 2b4caff479f7
     last_write_checksum: sha1:dd30c71fb3cb3c08f64b9db15e91865f48913580
@@ -15246,6 +15346,14 @@ trackedFiles:
     id: 0409b0da85f5
     last_write_checksum: sha1:652db6653ba28405d58298a15efe3f76ca129717
     pristine_git_object: 8724e6c8ce316ffef99243ec7c7d473202666fa6
+  src/main/java/dev/plexapi/sdk/models/shared/Timed.java:
+    id: 0add4958060f
+    last_write_checksum: sha1:3569767d9d19e0b68aded43cb4505007e3d19384
+    pristine_git_object: 2f16816dbf5c505d2f941ebce52a36db797aee3d
+  src/main/java/dev/plexapi/sdk/models/shared/Timed2.java:
+    id: 6c1d34a5f740
+    last_write_checksum: sha1:9279539a33568cc66c75252011b6675da77a6697
+    pristine_git_object: eef7369c7940aa7464b91411c2326c2e1f1a7ddd
   src/main/java/dev/plexapi/sdk/models/shared/TimelineEntry.java:
     id: 140d389af107
     last_write_checksum: sha1:79bbc31ddcb7df9bc79dc16506201b1270d54ae7
@@ -15278,14 +15386,18 @@ trackedFiles:
     id: 1c5f50bbd4d5
     last_write_checksum: sha1:51b006577019dba250226fdc67ef251d8e675486
     pristine_git_object: 641d6ac403383be6e5da84a5986cba7e2d97c299
+  src/main/java/dev/plexapi/sdk/models/shared/Transient.java:
+    id: 1d3d5cfe2449
+    last_write_checksum: sha1:a788ade22db8835d4509b904a0c1bfac61de6bcd
+    pristine_git_object: 2a0a10c366f2b1bd0fdf1cc7a803f8c1d253b605
+  src/main/java/dev/plexapi/sdk/models/shared/Transient2.java:
+    id: 30e607c28c96
+    last_write_checksum: sha1:45e0a52e2695c5a21133a7ed8a9aa010891453fd
+    pristine_git_object: 8684d8aaa36ef8c307d3495a786546340f7cc79c
   src/main/java/dev/plexapi/sdk/models/shared/Two.java:
     id: 88fe8aa27711
     last_write_checksum: sha1:e0a0817cdb29f29c6f345df9203a86d733587ace
     pristine_git_object: a7c27a9fb789efc0fedd763e61677374221efbff
-  src/main/java/dev/plexapi/sdk/models/shared/Two1.java:
-    id: c35b049daf5c
-    last_write_checksum: sha1:1969ef4cb5244d3e55bfd0d0b1f4a14145749128
-    pristine_git_object: 5f99c0c57f26761f552ee1c17510d2e8a1c0cbf7
   src/main/java/dev/plexapi/sdk/models/shared/Type.java:
     id: 9dde641dd482
     last_write_checksum: sha1:def08ae469d0c820a20b1d4a0f6337b1ed02b67b
@@ -26695,9 +26807,7 @@ examples:
           application/json: {"errors": [{"code": 1, "message": "string value", "status": 1}]}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Java SDK Changes:
-  * `plex-api.content.listContent()`:  `request` **Changed**
+releaseNotes: "## Java SDK Changes:\n* `plex-api.playback.getProgress()`:  `response.mediaContainer.video[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.provider.searchDiscover()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.provider.getWatchlist()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.users.getHome()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.downloadQueue.getItemDecision()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getAllHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getContinueWatching()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getContinueWatchingItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getHomeRecentlyAdded()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getPromotedHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getMetadataHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getPostplayHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getRelatedHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getSectionHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.search.searchHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.search.voiceSearchHubs()`: \n  *  `request.type` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryItems()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.ingestTransientItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryMatches()`: \n  *  `request.type` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRecentlyAddedGlobal()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSections()`:  `response.mediaContainer.directory[].type` **Changed** (Breaking ⚠️)\n* `plex-api.library.addSection()`:  `response.mediaContainer.directory[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getTags()`: \n  *  `request.type` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataChildren()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.computeSonicPath()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataGrandchildren()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataGrandparent()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getNearestMetadata()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataOnDeck()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataParent()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataReviews()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getAllItemLeaves()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getExtras()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.listMatches()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRelatedItems()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.listSimilar()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getItemTree()`:  `response.mediaContainer.metadataItem[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.listPersonMedia()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryDetails()`:  `response.mediaContainer.directory[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionArtists()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.autocomplete()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByContentRating()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByDecade()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByFolder()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByResolution()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByYear()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionClips()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getCollections()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getCommon()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionEpisodes()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getFirstCharacters()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibrarySectionHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionMovies()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getNewestForSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getOnDeckForSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionPhotos()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionPlaylists()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRecentlyAddedForSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.searchSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionShows()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getUnwatchedForSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionImage()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n* `plex-api.collections.createCollection()`: \n  *  `request.type` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.getDvrChannels()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.getDvrGuide()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.tuneChannel()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.epg.getEpgGuide()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.epg.searchEpg()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getDvrRecordings()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getSessions()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getDvrRecordingsByDvr()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getLiveTvSession()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getAllSubscriptions()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.createSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getScheduledRecordings()`:  `response.mediaContainer.mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getTemplate()`:  `response.mediaContainer.subscriptionTemplate[].mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.editSubscriptionPreferences()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.reorderSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.transcoder.getTranscodeSessions()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.transcoder.makeDecision()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.listPlaylists()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.getPlaylist()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.getPlaylistItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.createPlaylist()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.clearPlaylistItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.addPlaylistItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.deletePlaylistItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.getPlaylistGeneratorItems()`:  `response.mediaContainer.metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.movePlaylistItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.addToPlayQueue()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.clearPlayQueue()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.resetPlayQueue()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.shuffle()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.unshuffle()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.deletePlayQueueItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.movePlayQueueItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.status.listSessions()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getCollectionItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getMetadataItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getAlbums()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.listContent()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getAllLeaves()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getSonicPath()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getSonicallySimilar()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.addCollectionItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.updateCollectionItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.moveCollectionItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n"
 generatedFiles:
   - .gitattributes
   - USAGE.md

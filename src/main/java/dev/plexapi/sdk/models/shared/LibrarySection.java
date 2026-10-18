@@ -27,7 +27,7 @@ public class LibrarySection {
     private Optional<String> title;
 
     /**
-     * The type of media content in the Plex library. This can represent videos, music, or photos.
+     * The Plex media type name, corresponding to the numeric MediaType schema.
      */
     @JsonProperty("type")
     private MediaTypeString type;
@@ -228,7 +228,7 @@ public class LibrarySection {
     }
 
     /**
-     * The type of media content in the Plex library. This can represent videos, music, or photos.
+     * The Plex media type name, corresponding to the numeric MediaType schema.
      */
     @JsonIgnore
     public MediaTypeString type() {
@@ -378,7 +378,7 @@ public class LibrarySection {
     }
 
     /**
-     * The type of media content in the Plex library. This can represent videos, music, or photos.
+     * The Plex media type name, corresponding to the numeric MediaType schema.
      */
     public LibrarySection withType(MediaTypeString type) {
         Utils.checkNotNull(type, "type");
@@ -799,7 +799,7 @@ public class LibrarySection {
 
 
         /**
-         * The type of media content in the Plex library. This can represent videos, music, or photos.
+         * The Plex media type name, corresponding to the numeric MediaType schema.
          */
         public Builder type(MediaTypeString type) {
             Utils.checkNotNull(type, "type");

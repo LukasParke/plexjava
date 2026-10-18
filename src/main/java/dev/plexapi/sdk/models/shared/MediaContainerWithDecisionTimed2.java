@@ -8,14 +8,14 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-public enum Two1 {
+public enum MediaContainerWithDecisionTimed2 {
     ZERO("0"),
     ONE("1");
 
     @JsonValue
     private final String value;
 
-    Two1(String value) {
+    MediaContainerWithDecisionTimed2(String value) {
         this.value = value;
     }
     
@@ -23,8 +23,8 @@ public enum Two1 {
         return value;
     }
     
-    public static Optional<Two1> fromValue(String value) {
-        for (Two1 o: Two1.values()) {
+    public static Optional<MediaContainerWithDecisionTimed2> fromValue(String value) {
+        for (MediaContainerWithDecisionTimed2 o: MediaContainerWithDecisionTimed2.values()) {
             if (Objects.deepEquals(o.value, value)) {
                 return Optional.of(o);
             }

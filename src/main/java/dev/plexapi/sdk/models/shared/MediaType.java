@@ -16,11 +16,17 @@ import java.util.Optional;
  * 2 = show
  * 3 = season
  * 4 = episode
- * 5 = artist
- * 6 = album
- * 7 = track
- * 8 = photo_album
- * 9 = photo
+ * 5 = trailer
+ * 7 = person
+ * 8 = artist
+ * 9 = album
+ * 10 = track
+ * 12 = clip
+ * 13 = photo
+ * 14 = photoalbum
+ * 15 = playlist
+ * 16 = playlistfolder
+ * 18 = collection
  * 
  * <p>E.g. A movie library will not return anything with type 3 as there are no seasons for movie
  * libraries
@@ -30,11 +36,17 @@ public enum MediaType {
     TvShow(2L),
     Season(3L),
     Episode(4L),
-    Artist(5L),
-    Album(6L),
-    Track(7L),
-    PhotoAlbum(8L),
-    Photo(9L);
+    Trailer(5L),
+    Person(7L),
+    Artist(8L),
+    Album(9L),
+    Track(10L),
+    Clip(12L),
+    Photo(13L),
+    PhotoAlbum(14L),
+    Playlist(15L),
+    PlaylistFolder(16L),
+    Collection(18L);
 
     @JsonValue
     private final long value;

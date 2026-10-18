@@ -8,14 +8,14 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-public enum One {
+public enum Transient2 {
     ZERO("0"),
     ONE("1");
 
     @JsonValue
     private final String value;
 
-    One(String value) {
+    Transient2(String value) {
         this.value = value;
     }
     
@@ -23,8 +23,8 @@ public enum One {
         return value;
     }
     
-    public static Optional<One> fromValue(String value) {
-        for (One o: One.values()) {
+    public static Optional<Transient2> fromValue(String value) {
+        for (Transient2 o: Transient2.values()) {
             if (Objects.deepEquals(o.value, value)) {
                 return Optional.of(o);
             }

@@ -5763,6 +5763,7 @@ actions:
             import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
             import dev.plexapi.sdk.models.operations.GetMetadataChildrenResponse;
             import dev.plexapi.sdk.models.shared.Accepts;
+            import dev.plexapi.sdk.models.shared.BoolInt;
             import java.lang.Exception;
 
             public class Application {
@@ -5786,6 +5787,7 @@ actions:
 
                     GetMetadataChildrenRequest req = GetMetadataChildrenRequest.builder()
                             .id(240367L)
+                            .includeMeta(BoolInt.True)
                             .build();
 
                     GetMetadataChildrenResponse res = sdk.library().getMetadataChildren()
@@ -6764,8 +6766,8 @@ actions:
                     GetLibrarySectionsFallbackResponse res = sdk.library().getLibrarySectionsFallback()
                             .call();
 
-                    if (res.mediaContainerWithDirectory().isPresent()) {
-                        System.out.println(res.mediaContainerWithDirectory().get());
+                    if (res.object().isPresent()) {
+                        System.out.println(res.object().get());
                     }
                 }
             }
@@ -8629,6 +8631,46 @@ actions:
 
                     if (res.object().isPresent()) {
                         System.out.println(res.object().get());
+                    }
+                }
+            }
+  - target: $["paths"]["/library/sections/{sectionId}/folder"]["get"]
+    update:
+      x-codeSamples:
+        - lang: java
+          label: PlexJava
+          source: |-
+            package hello.world;
+
+            import dev.plexapi.sdk.PlexAPI;
+            import dev.plexapi.sdk.models.errors.Error;
+            import dev.plexapi.sdk.models.operations.GetSectionFolderRequest;
+            import dev.plexapi.sdk.models.operations.GetSectionFolderResponse;
+            import dev.plexapi.sdk.models.shared.Accepts;
+            import dev.plexapi.sdk.models.shared.BoolInt;
+            import java.lang.Exception;
+
+            public class Application {
+
+                public static void main(String[] args) throws Error, Exception {
+
+                    PlexAPI sdk = PlexAPI.builder()
+                            .accepts(Accepts.APPLICATION_XML)
+                            .token(System.getenv().getOrDefault("TOKEN", ""))
+                        .build();
+
+                    GetSectionFolderRequest req = GetSectionFolderRequest.builder()
+                            .sectionId(924129L)
+                            .parent("3706")
+                            .includeMeta(BoolInt.True)
+                            .build();
+
+                    GetSectionFolderResponse res = sdk.library().getSectionFolder()
+                            .request(req)
+                            .call();
+
+                    if (res.mediaContainerWithMetadata().isPresent()) {
+                        System.out.println(res.mediaContainerWithMetadata().get());
                     }
                 }
             }

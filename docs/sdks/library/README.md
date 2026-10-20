@@ -88,6 +88,7 @@ Library endpoints which are outside of the Media Provider API.  Typically this i
 * [getSectionEpisodes](#getsectionepisodes) - Get Section Episodes
 * [getSectionFilters](#getsectionfilters) - Get section filters
 * [getFirstCharacters](#getfirstcharacters) - Get list of first characters
+* [getSectionFolder](#getsectionfolder) - Get library folder contents
 * [getLibrarySectionHubs](#getlibrarysectionhubs) - Get Section Hubs
 * [deleteIndexes](#deleteindexes) - Delete section indexes
 * [deleteIntros](#deleteintros) - Delete section intro markers
@@ -848,8 +849,8 @@ public class Application {
         GetLibrarySectionsFallbackResponse res = sdk.library().getLibrarySectionsFallback()
                 .call();
 
-        if (res.mediaContainerWithDirectory().isPresent()) {
-            System.out.println(res.mediaContainerWithDirectory().get());
+        if (res.object().isPresent()) {
+            System.out.println(res.object().get());
         }
     }
 }
@@ -1304,7 +1305,8 @@ public class Application {
 
 ## getMetadataChildren
 
-Get children of a show, season, artist, or album.
+Get children of a show, season, artist, or album, including a photo album.
+Photo album children can include both photos and video clips; omit media-type filters to retrieve all members.
 
 ### Example Usage: include-stream
 
@@ -1317,6 +1319,7 @@ import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
 import dev.plexapi.sdk.models.operations.GetMetadataChildrenResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
+import dev.plexapi.sdk.models.shared.BoolInt;
 import java.lang.Exception;
 
 public class Application {
@@ -1340,6 +1343,7 @@ public class Application {
 
         GetMetadataChildrenRequest req = GetMetadataChildrenRequest.builder()
                 .id(240367L)
+                .includeMeta(BoolInt.True)
                 .build();
 
         GetMetadataChildrenResponse res = sdk.library().getMetadataChildren()
@@ -1363,6 +1367,7 @@ import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
 import dev.plexapi.sdk.models.operations.GetMetadataChildrenResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
+import dev.plexapi.sdk.models.shared.BoolInt;
 import java.lang.Exception;
 
 public class Application {
@@ -1386,6 +1391,7 @@ public class Application {
 
         GetMetadataChildrenRequest req = GetMetadataChildrenRequest.builder()
                 .id(240367L)
+                .includeMeta(BoolInt.True)
                 .build();
 
         GetMetadataChildrenResponse res = sdk.library().getMetadataChildren()
@@ -1409,6 +1415,7 @@ import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.operations.GetMetadataChildrenRequest;
 import dev.plexapi.sdk.models.operations.GetMetadataChildrenResponse;
 import dev.plexapi.sdk.models.shared.Accepts;
+import dev.plexapi.sdk.models.shared.BoolInt;
 import java.lang.Exception;
 
 public class Application {
@@ -1432,6 +1439,7 @@ public class Application {
 
         GetMetadataChildrenRequest req = GetMetadataChildrenRequest.builder()
                 .id(240367L)
+                .includeMeta(BoolInt.True)
                 .build();
 
         GetMetadataChildrenResponse res = sdk.library().getMetadataChildren()
@@ -5722,6 +5730,70 @@ public class Application {
 ### Response
 
 **[GetFirstCharactersResponse](../../models/operations/GetFirstCharactersResponse.md)**
+
+### Errors
+
+| Error Type             | Status Code            | Content Type           |
+| ---------------------- | ---------------------- | ---------------------- |
+| models/errors/Error    | 401                    | application/json       |
+| models/errors/SDKError | 4XX, 5XX               | \*/\*                  |
+
+## getSectionFolder
+
+Browse the physical folders and direct media items in a library section.
+Omit parent to retrieve the root page. For a child folder, use the parent query value from the folder key returned by Plex.
+A folder token is distinct from a metadata rating key; do not substitute an album rating key.
+Photo libraries can return navigation directories, photos, and video clips in the same response.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="getSectionFolder" method="get" path="/library/sections/{sectionId}/folder" -->
+```java
+package hello.world;
+
+import dev.plexapi.sdk.PlexAPI;
+import dev.plexapi.sdk.models.errors.Error;
+import dev.plexapi.sdk.models.operations.GetSectionFolderRequest;
+import dev.plexapi.sdk.models.operations.GetSectionFolderResponse;
+import dev.plexapi.sdk.models.shared.Accepts;
+import dev.plexapi.sdk.models.shared.BoolInt;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Error, Exception {
+
+        PlexAPI sdk = PlexAPI.builder()
+                .accepts(Accepts.APPLICATION_XML)
+                .token(System.getenv().getOrDefault("TOKEN", ""))
+            .build();
+
+        GetSectionFolderRequest req = GetSectionFolderRequest.builder()
+                .sectionId(924129L)
+                .parent("3706")
+                .includeMeta(BoolInt.True)
+                .build();
+
+        GetSectionFolderResponse res = sdk.library().getSectionFolder()
+                .request(req)
+                .call();
+
+        if (res.mediaContainerWithMetadata().isPresent()) {
+            System.out.println(res.mediaContainerWithMetadata().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [GetSectionFolderRequest](../../models/operations/GetSectionFolderRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[GetSectionFolderResponse](../../models/operations/GetSectionFolderResponse.md)**
 
 ### Errors
 

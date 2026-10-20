@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import dev.plexapi.sdk.models.shared.Accepts;
+import dev.plexapi.sdk.models.shared.BoolInt;
 import dev.plexapi.sdk.utils.LazySingletonValue;
 import dev.plexapi.sdk.utils.SpeakeasyMetadata;
 import dev.plexapi.sdk.utils.Utils;
+import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Override;
 import java.lang.String;
@@ -85,6 +87,28 @@ public class GetMetadataChildrenRequest {
     private Optional<String> marketplace;
 
     /**
+     * The index of the first item to return. If not specified, the first item will be returned.
+     * If the number of items exceeds the limit, the response will be paginated.
+     * By default this is 0
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=X-Plex-Container-Start")
+    private Optional<Integer> xPlexContainerStart;
+
+    /**
+     * The number of items to return. If not specified, all items will be returned.
+     * If the number of items exceeds the limit, the response will be paginated.
+     * By default this is 50
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=X-Plex-Container-Size")
+    private Optional<Integer> xPlexContainerSize;
+
+    /**
+     * Include the Meta object in the response.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=includeMeta")
+    private Optional<? extends BoolInt> includeMeta;
+
+    /**
      * The unique identifier of the item
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
@@ -103,6 +127,9 @@ public class GetMetadataChildrenRequest {
             Optional<String> deviceVendor,
             Optional<String> deviceName,
             Optional<String> marketplace,
+            Optional<Integer> xPlexContainerStart,
+            Optional<Integer> xPlexContainerSize,
+            Optional<? extends BoolInt> includeMeta,
             long id) {
         Utils.checkNotNull(accepts, "accepts");
         Utils.checkNotNull(clientIdentifier, "clientIdentifier");
@@ -115,6 +142,9 @@ public class GetMetadataChildrenRequest {
         Utils.checkNotNull(deviceVendor, "deviceVendor");
         Utils.checkNotNull(deviceName, "deviceName");
         Utils.checkNotNull(marketplace, "marketplace");
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+        Utils.checkNotNull(includeMeta, "includeMeta");
         Utils.checkNotNull(id, "id");
         this.accepts = accepts;
         this.clientIdentifier = clientIdentifier;
@@ -127,12 +157,16 @@ public class GetMetadataChildrenRequest {
         this.deviceVendor = deviceVendor;
         this.deviceName = deviceName;
         this.marketplace = marketplace;
+        this.xPlexContainerStart = xPlexContainerStart;
+        this.xPlexContainerSize = xPlexContainerSize;
+        this.includeMeta = includeMeta;
         this.id = id;
     }
     
     public GetMetadataChildrenRequest(
             long id) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), id);
@@ -225,6 +259,35 @@ public class GetMetadataChildrenRequest {
     @JsonIgnore
     public Optional<String> marketplace() {
         return marketplace;
+    }
+
+    /**
+     * The index of the first item to return. If not specified, the first item will be returned.
+     * If the number of items exceeds the limit, the response will be paginated.
+     * By default this is 0
+     */
+    @JsonIgnore
+    public Optional<Integer> xPlexContainerStart() {
+        return xPlexContainerStart;
+    }
+
+    /**
+     * The number of items to return. If not specified, all items will be returned.
+     * If the number of items exceeds the limit, the response will be paginated.
+     * By default this is 50
+     */
+    @JsonIgnore
+    public Optional<Integer> xPlexContainerSize() {
+        return xPlexContainerSize;
+    }
+
+    /**
+     * Include the Meta object in the response.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<BoolInt> includeMeta() {
+        return (Optional<BoolInt>) includeMeta;
     }
 
     /**
@@ -450,6 +513,71 @@ public class GetMetadataChildrenRequest {
     }
 
     /**
+     * The index of the first item to return. If not specified, the first item will be returned.
+     * If the number of items exceeds the limit, the response will be paginated.
+     * By default this is 0
+     */
+    public GetMetadataChildrenRequest withXPlexContainerStart(int xPlexContainerStart) {
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        this.xPlexContainerStart = Optional.ofNullable(xPlexContainerStart);
+        return this;
+    }
+
+
+    /**
+     * The index of the first item to return. If not specified, the first item will be returned.
+     * If the number of items exceeds the limit, the response will be paginated.
+     * By default this is 0
+     */
+    public GetMetadataChildrenRequest withXPlexContainerStart(Optional<Integer> xPlexContainerStart) {
+        Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+        this.xPlexContainerStart = xPlexContainerStart;
+        return this;
+    }
+
+    /**
+     * The number of items to return. If not specified, all items will be returned.
+     * If the number of items exceeds the limit, the response will be paginated.
+     * By default this is 50
+     */
+    public GetMetadataChildrenRequest withXPlexContainerSize(int xPlexContainerSize) {
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+        this.xPlexContainerSize = Optional.ofNullable(xPlexContainerSize);
+        return this;
+    }
+
+
+    /**
+     * The number of items to return. If not specified, all items will be returned.
+     * If the number of items exceeds the limit, the response will be paginated.
+     * By default this is 50
+     */
+    public GetMetadataChildrenRequest withXPlexContainerSize(Optional<Integer> xPlexContainerSize) {
+        Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+        this.xPlexContainerSize = xPlexContainerSize;
+        return this;
+    }
+
+    /**
+     * Include the Meta object in the response.
+     */
+    public GetMetadataChildrenRequest withIncludeMeta(BoolInt includeMeta) {
+        Utils.checkNotNull(includeMeta, "includeMeta");
+        this.includeMeta = Optional.ofNullable(includeMeta);
+        return this;
+    }
+
+
+    /**
+     * Include the Meta object in the response.
+     */
+    public GetMetadataChildrenRequest withIncludeMeta(Optional<? extends BoolInt> includeMeta) {
+        Utils.checkNotNull(includeMeta, "includeMeta");
+        this.includeMeta = includeMeta;
+        return this;
+    }
+
+    /**
      * The unique identifier of the item
      */
     public GetMetadataChildrenRequest withId(long id) {
@@ -479,6 +607,9 @@ public class GetMetadataChildrenRequest {
             Utils.enhancedDeepEquals(this.deviceVendor, other.deviceVendor) &&
             Utils.enhancedDeepEquals(this.deviceName, other.deviceName) &&
             Utils.enhancedDeepEquals(this.marketplace, other.marketplace) &&
+            Utils.enhancedDeepEquals(this.xPlexContainerStart, other.xPlexContainerStart) &&
+            Utils.enhancedDeepEquals(this.xPlexContainerSize, other.xPlexContainerSize) &&
+            Utils.enhancedDeepEquals(this.includeMeta, other.includeMeta) &&
             Utils.enhancedDeepEquals(this.id, other.id);
     }
     
@@ -488,7 +619,8 @@ public class GetMetadataChildrenRequest {
             accepts, clientIdentifier, product,
             version, platform, platformVersion,
             device, model, deviceVendor,
-            deviceName, marketplace, id);
+            deviceName, marketplace, xPlexContainerStart,
+            xPlexContainerSize, includeMeta, id);
     }
     
     @Override
@@ -505,6 +637,9 @@ public class GetMetadataChildrenRequest {
                 "deviceVendor", deviceVendor,
                 "deviceName", deviceName,
                 "marketplace", marketplace,
+                "xPlexContainerStart", xPlexContainerStart,
+                "xPlexContainerSize", xPlexContainerSize,
+                "includeMeta", includeMeta,
                 "id", id);
     }
 
@@ -532,6 +667,12 @@ public class GetMetadataChildrenRequest {
         private Optional<String> deviceName = Optional.empty();
 
         private Optional<String> marketplace = Optional.empty();
+
+        private Optional<Integer> xPlexContainerStart;
+
+        private Optional<Integer> xPlexContainerSize;
+
+        private Optional<? extends BoolInt> includeMeta;
 
         private Long id;
 
@@ -750,6 +891,71 @@ public class GetMetadataChildrenRequest {
 
 
         /**
+         * The index of the first item to return. If not specified, the first item will be returned.
+         * If the number of items exceeds the limit, the response will be paginated.
+         * By default this is 0
+         */
+        public Builder xPlexContainerStart(int xPlexContainerStart) {
+            Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+            this.xPlexContainerStart = Optional.ofNullable(xPlexContainerStart);
+            return this;
+        }
+
+        /**
+         * The index of the first item to return. If not specified, the first item will be returned.
+         * If the number of items exceeds the limit, the response will be paginated.
+         * By default this is 0
+         */
+        public Builder xPlexContainerStart(Optional<Integer> xPlexContainerStart) {
+            Utils.checkNotNull(xPlexContainerStart, "xPlexContainerStart");
+            this.xPlexContainerStart = xPlexContainerStart;
+            return this;
+        }
+
+
+        /**
+         * The number of items to return. If not specified, all items will be returned.
+         * If the number of items exceeds the limit, the response will be paginated.
+         * By default this is 50
+         */
+        public Builder xPlexContainerSize(int xPlexContainerSize) {
+            Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+            this.xPlexContainerSize = Optional.ofNullable(xPlexContainerSize);
+            return this;
+        }
+
+        /**
+         * The number of items to return. If not specified, all items will be returned.
+         * If the number of items exceeds the limit, the response will be paginated.
+         * By default this is 50
+         */
+        public Builder xPlexContainerSize(Optional<Integer> xPlexContainerSize) {
+            Utils.checkNotNull(xPlexContainerSize, "xPlexContainerSize");
+            this.xPlexContainerSize = xPlexContainerSize;
+            return this;
+        }
+
+
+        /**
+         * Include the Meta object in the response.
+         */
+        public Builder includeMeta(BoolInt includeMeta) {
+            Utils.checkNotNull(includeMeta, "includeMeta");
+            this.includeMeta = Optional.ofNullable(includeMeta);
+            return this;
+        }
+
+        /**
+         * Include the Meta object in the response.
+         */
+        public Builder includeMeta(Optional<? extends BoolInt> includeMeta) {
+            Utils.checkNotNull(includeMeta, "includeMeta");
+            this.includeMeta = includeMeta;
+            return this;
+        }
+
+
+        /**
          * The unique identifier of the item
          */
         public Builder id(long id) {
@@ -762,12 +968,22 @@ public class GetMetadataChildrenRequest {
             if (accepts == null) {
                 accepts = _SINGLETON_VALUE_Accepts.value();
             }
+            if (xPlexContainerStart == null) {
+                xPlexContainerStart = _SINGLETON_VALUE_XPlexContainerStart.value();
+            }
+            if (xPlexContainerSize == null) {
+                xPlexContainerSize = _SINGLETON_VALUE_XPlexContainerSize.value();
+            }
+            if (includeMeta == null) {
+                includeMeta = _SINGLETON_VALUE_IncludeMeta.value();
+            }
 
             return new GetMetadataChildrenRequest(
                 accepts, clientIdentifier, product,
                 version, platform, platformVersion,
                 device, model, deviceVendor,
-                deviceName, marketplace, id);
+                deviceName, marketplace, xPlexContainerStart,
+                xPlexContainerSize, includeMeta, id);
         }
 
 
@@ -776,5 +992,23 @@ public class GetMetadataChildrenRequest {
                         "accepts",
                         "\"application/xml\"",
                         new TypeReference<Optional<? extends Accepts>>() {});
+
+        private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_XPlexContainerStart =
+                new LazySingletonValue<>(
+                        "X-Plex-Container-Start",
+                        "0",
+                        new TypeReference<Optional<Integer>>() {});
+
+        private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_XPlexContainerSize =
+                new LazySingletonValue<>(
+                        "X-Plex-Container-Size",
+                        "50",
+                        new TypeReference<Optional<Integer>>() {});
+
+        private static final LazySingletonValue<Optional<? extends BoolInt>> _SINGLETON_VALUE_IncludeMeta =
+                new LazySingletonValue<>(
+                        "includeMeta",
+                        "0",
+                        new TypeReference<Optional<? extends BoolInt>>() {});
     }
 }

@@ -224,6 +224,9 @@ import dev.plexapi.sdk.models.operations.GetSectionEpisodesResponse;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersRequest;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersResponse;
+import dev.plexapi.sdk.models.operations.GetSectionFolderRequest;
+import dev.plexapi.sdk.models.operations.GetSectionFolderRequestBuilder;
+import dev.plexapi.sdk.models.operations.GetSectionFolderResponse;
 import dev.plexapi.sdk.models.operations.GetSectionImageRequest;
 import dev.plexapi.sdk.models.operations.GetSectionImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.GetSectionImageResponse;
@@ -452,6 +455,7 @@ import dev.plexapi.sdk.operations.GetSectionClips;
 import dev.plexapi.sdk.operations.GetSectionEdit;
 import dev.plexapi.sdk.operations.GetSectionEpisodes;
 import dev.plexapi.sdk.operations.GetSectionFilters;
+import dev.plexapi.sdk.operations.GetSectionFolder;
 import dev.plexapi.sdk.operations.GetSectionImage;
 import dev.plexapi.sdk.operations.GetSectionLabels;
 import dev.plexapi.sdk.operations.GetSectionMovies;
@@ -1453,7 +1457,9 @@ public class Library {
     /**
      * Get Metadata Children
      * 
-     * <p>Get children of a show, season, artist, or album.
+     * <p>Get children of a show, season, artist, or album, including a photo album.
+     * Photo album children can include both photos and video clips; omit media-type filters to retrieve
+     * all members.
      * 
      * <p>If set, this operation will use Security#token from the global security.
      * 
@@ -1466,7 +1472,9 @@ public class Library {
     /**
      * Get Metadata Children
      * 
-     * <p>Get children of a show, season, artist, or album.
+     * <p>Get children of a show, season, artist, or album, including a photo album.
+     * Photo album children can include both photos and video clips; omit media-type filters to retrieve
+     * all members.
      * 
      * <p>If set, this operation will use Security#token from the global security.
      * 
@@ -1481,7 +1489,9 @@ public class Library {
     /**
      * Get Metadata Children
      * 
-     * <p>Get children of a show, season, artist, or album.
+     * <p>Get children of a show, season, artist, or album, including a photo album.
+     * Photo album children can include both photos and video clips; omit media-type filters to retrieve
+     * all members.
      * 
      * <p>If set, this operation will use Security#token from the global security.
      * 
@@ -4402,6 +4412,64 @@ public class Library {
     public GetFirstCharactersResponse getFirstCharacters(GetFirstCharactersRequest request, Optional<Options> options) {
         RequestOperation<GetFirstCharactersRequest, GetFirstCharactersResponse> operation
               = new GetFirstCharacters.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get library folder contents
+     * 
+     * <p>Browse the physical folders and direct media items in a library section.
+     * Omit parent to retrieve the root page. For a child folder, use the parent query value from the
+     * folder key returned by Plex.
+     * A folder token is distinct from a metadata rating key; do not substitute an album rating key.
+     * Photo libraries can return navigation directories, photos, and video clips in the same response.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The call builder
+     */
+    public GetSectionFolderRequestBuilder getSectionFolder() {
+        return new GetSectionFolderRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get library folder contents
+     * 
+     * <p>Browse the physical folders and direct media items in a library section.
+     * Omit parent to retrieve the root page. For a child folder, use the parent query value from the
+     * folder key returned by Plex.
+     * A folder token is distinct from a metadata rating key; do not substitute an album rating key.
+     * Photo libraries can return navigation directories, photos, and video clips in the same response.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionFolderResponse getSectionFolder(GetSectionFolderRequest request) {
+        return getSectionFolder(request, Optional.empty());
+    }
+
+    /**
+     * Get library folder contents
+     * 
+     * <p>Browse the physical folders and direct media items in a library section.
+     * Omit parent to retrieve the root page. For a child folder, use the parent query value from the
+     * folder key returned by Plex.
+     * A folder token is distinct from a metadata rating key; do not substitute an album rating key.
+     * Photo libraries can return navigation directories, photos, and video clips in the same response.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetSectionFolderResponse getSectionFolder(GetSectionFolderRequest request, Optional<Options> options) {
+        RequestOperation<GetSectionFolderRequest, GetSectionFolderResponse> operation
+              = new GetSectionFolder.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

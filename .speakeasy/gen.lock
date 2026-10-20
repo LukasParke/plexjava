@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 1732900d-e173-47c1-a90d-d45182eb35d9
 management:
-  docChecksum: ebfbd9cbbebaec0d97992b0bf4e40078
+  docChecksum: 4b535643b6ff4e822193d73d0ffc5003
   docVersion: 1.1.1
   speakeasyVersion: 1.802.0
   generationVersion: 2.948.4
-  releaseVersion: 0.25.2
-  configChecksum: 610d42401e4ae3c44f896c8502a4ac93
+  releaseVersion: 0.25.3
+  configChecksum: ccbd7226d010effc292f5de0d2e733f3
   repoURL: https://github.com/LukasParke/plexjava.git
   installationURL: https://github.com/LukasParke/plexjava
   published: true
 persistentEdits:
-  generation_id: 012996c3-e9fe-48ca-b762-943a88186ae4
-  pristine_commit_hash: d6929042b279a9280f5c8fede48eec4cfe40f299
-  pristine_tree_hash: 017a8d05233520f169fcade1591795a86677d7bf
+  generation_id: 1567c1ec-3cab-47a7-a6bc-2d164c68c80c
+  pristine_commit_hash: 94079eeca75720f17e7425dd3695188400c28062
+  pristine_tree_hash: d00e1b1797addca35511444152975604d1aa01b5
 features:
   java:
     acceptHeaders: 2.81.2
@@ -1638,10 +1638,18 @@ trackedFiles:
     id: 8084370ff19d
     last_write_checksum: sha1:ddaa49385678ee0c823b45113966ab3442d4a993
     pristine_git_object: 00c3fe82d6f9dcfa02b5aa5e40cb1e37949c2644
+  docs/models/operations/GetLibrarySectionsFallbackMediaContainer.md:
+    id: ae2f6081d545
+    last_write_checksum: sha1:25ef9bb09db8723cd23a8bcd11d3e8766f2b310a
+    pristine_git_object: 0446c68f2c16ab97e44ac308b453d09b19d26dd1
   docs/models/operations/GetLibrarySectionsFallbackResponse.md:
     id: 3d4763106045
-    last_write_checksum: sha1:a7f110c7475b6524ae80cdd54c2e5c4973f17863
-    pristine_git_object: 13e31fb621e68b7ecf7c8c59cb7a1f854fd62275
+    last_write_checksum: sha1:ea9575310b13fe6cec50994dcf4a7229929c5e42
+    pristine_git_object: 669886a396ea4d6ab91386a2b60b31540d7aac18
+  docs/models/operations/GetLibrarySectionsFallbackResponseBody.md:
+    id: 33745f4c708a
+    last_write_checksum: sha1:6cc4ad1fedb0054ba9410c8da22808db797dc187
+    pristine_git_object: d11e7d01d6cb833b9c78b66b5948f7c9a338a7e2
   docs/models/operations/GetLineupChannelsMediaContainer.md:
     id: c03a52cd4ccd
     last_write_checksum: sha1:9f35bc33d8f56980a84555addf1af15605de6144
@@ -1708,8 +1716,8 @@ trackedFiles:
     pristine_git_object: 6c7c9d54bbef9f25a426dc737c6ac746df98e798
   docs/models/operations/GetMetadataChildrenRequest.md:
     id: aee27f3658c8
-    last_write_checksum: sha1:ffec4bcf38bd54cba430802d6dca2654bdf74217
-    pristine_git_object: b14296e50873c2353f08b6eebaa99c504b094b4c
+    last_write_checksum: sha1:b533112f9da68f19254bf47a9acf99d384544893
+    pristine_git_object: 2b5a75a7c1aff3cf003c466502c258daaf5acef8
   docs/models/operations/GetMetadataChildrenResponse.md:
     id: e4dccc9d9803
     last_write_checksum: sha1:129fc857658f8610c4881d0a3864f95896ffea98
@@ -1856,8 +1864,8 @@ trackedFiles:
     pristine_git_object: c3931d428fad970751cc874b49d48e6c6413b52d
   docs/models/operations/GetPlaylistGeneratorItemsMetadata.md:
     id: a4b548b31fdd
-    last_write_checksum: sha1:183705b99a44e962fa35374c4b57f3c697a470f7
-    pristine_git_object: 8052efc6912e4d90941c3854cfc39305bdb39ff0
+    last_write_checksum: sha1:80817a339af27f613ade7b14bfa42e557a702863
+    pristine_git_object: e4c15f4beb30155a5307394a5b50e4fe6c3f86cc
   docs/models/operations/GetPlaylistGeneratorItemsRequest.md:
     id: 5d93922ba571
     last_write_checksum: sha1:7a859a92dd7da81351786dae279e560dbd829672
@@ -2106,6 +2114,14 @@ trackedFiles:
     id: 68e7b13d8a9e
     last_write_checksum: sha1:941fbd1250a39a886c0153355404fea966cd0dc3
     pristine_git_object: b49fa9959568e392256ebab377cf08e8f123933c
+  docs/models/operations/GetSectionFolderRequest.md:
+    id: c4b36b5902a9
+    last_write_checksum: sha1:768a34a29f3d14c6c94835afca65e2ddd863244a
+    pristine_git_object: 67665d810f021287c09b476fe29f59654b3f18aa
+  docs/models/operations/GetSectionFolderResponse.md:
+    id: 368d1a315532
+    last_write_checksum: sha1:61fb051be41126ec2fdbcfce638562a8b49102ab
+    pristine_git_object: 1295e2e6ce220648d7af0c4c44fdb1e5a3190cea
   docs/models/operations/GetSectionHubsRequest.md:
     id: 4142a3043a65
     last_write_checksum: sha1:ef9833d446ab38a452a042d8f30ad791b739e6d9
@@ -2868,8 +2884,8 @@ trackedFiles:
     pristine_git_object: aa0d878847eff7876ca9310042676b5cdbbd3344
   docs/models/operations/Metadata.md:
     id: f15bc0be9b59
-    last_write_checksum: sha1:603ac1562ed391cba72d42f3042cc409d9f334ce
-    pristine_git_object: fae753fb357c67cf35b712425277cd5956fb5819
+    last_write_checksum: sha1:4ef70a6170604ec2b674fcc506b543cb61bf0028
+    pristine_git_object: e0060b54b279041daa6dceed6ca727340af2e369
   docs/models/operations/ModifyDeviceMediaContainer.md:
     id: 86700f0662fb
     last_write_checksum: sha1:cb5ce507e8960a5176c7b691b3bbb24e032370c6
@@ -4340,8 +4356,8 @@ trackedFiles:
     pristine_git_object: 769cf40160d3d57ae951ae183ef393f14fc5765b
   docs/models/shared/Items.md:
     id: 44387721aa66
-    last_write_checksum: sha1:e3184d689c148abadff16701a7aa08389d9f2ed1
-    pristine_git_object: e58aeae6bb5b91a021f0e91dce0e83ffca70dfdd
+    last_write_checksum: sha1:d19317b608f649283d8419b1003981016f153bc1
+    pristine_git_object: 7c7707fd553cc74b871232881c6191e4706565e8
   docs/models/shared/ItemsGuids.md:
     id: 9d0b79b46ad2
     last_write_checksum: sha1:9ac4ea98b67f66c970a52debf2fba17c332f384b
@@ -4392,8 +4408,8 @@ trackedFiles:
     pristine_git_object: 9cdfb2a082fdd7b9acdea02df234f2590e8d344a
   docs/models/shared/LibrarySectionLocation.md:
     id: ed20ed30f1c2
-    last_write_checksum: sha1:d719786fef958fb1ff798f0701742068b58d08b6
-    pristine_git_object: a83bb4325e02c7cf4d729d97695f205e148f0ea6
+    last_write_checksum: sha1:c2aab3e536ab0a948a3447d2572002fffde8d3ee
+    pristine_git_object: 4b257d9eb95a9e0acbb59e365feff8a21931c017
   docs/models/shared/LibrarySections.md:
     id: 5ac3a2e5e8e5
     last_write_checksum: sha1:130bcc6b245d337a418149515c7e467b092b9858
@@ -4500,8 +4516,8 @@ trackedFiles:
     pristine_git_object: 4bc8790096a0496653724b048d4724628bdddb42
   docs/models/shared/MediaContainerWithDecisionMetadata.md:
     id: 96a886972ecf
-    last_write_checksum: sha1:6ef8faa2c29678d447f3b89e6b68ae3515f1add9
-    pristine_git_object: 27f13680b6f398dab3bce58b75efe7de047c1ac2
+    last_write_checksum: sha1:39a5f194339d8e6d44d819f7d81404271aad0cb6
+    pristine_git_object: 27309b18705e8ea797e7cda68ae0fdfc494d6e44
   docs/models/shared/MediaContainerWithDecisionOptimizedForStreaming.md:
     id: 2314b00775a5
     last_write_checksum: sha1:65ee2059443af79f10b5aa08966d2e7180f0f726
@@ -4612,12 +4628,12 @@ trackedFiles:
     pristine_git_object: 1cc124ad9dc8f2c35fde2ff4eea3942a2b6eea5a
   docs/models/shared/MediaContainerWithMetadata.md:
     id: 6c1ac0526796
-    last_write_checksum: sha1:02583921e8b4e1478b478e658e09cd5795e6931b
-    pristine_git_object: af3a9deb5afc3d0909537eefe90c3ea92cb8ff4f
+    last_write_checksum: sha1:5a97e2ce5708b6023f37b46d0a66731e031e7d1e
+    pristine_git_object: b8b386eb03ab137bf4b7b2df57fea1f379c0ed7f
   docs/models/shared/MediaContainerWithMetadataMediaContainer.md:
     id: c33cf8e1b29c
-    last_write_checksum: sha1:404dfd320efa6afc3cbbb4d38ecb27936e90513f
-    pristine_git_object: 4095411793e61c3b2bc47933685ff73fc0115a43
+    last_write_checksum: sha1:b48910d540ae24f1535f346ae45a23dd80b1baff
+    pristine_git_object: 16a3d1146097e7caa294fa75e29726066019ff7d
   docs/models/shared/MediaContainerWithNestedMetadata.md:
     id: 4a326e0030d6
     last_write_checksum: sha1:2e7c747f8e1a2c7f8b41a9fab23dcc3a2053dd38
@@ -4664,8 +4680,8 @@ trackedFiles:
     pristine_git_object: 4cd713143d3dff80e38ab4eaf6569b1c9743df4e
   docs/models/shared/MediaContainerWithPlaylistMetadataMetadata.md:
     id: cff1096bf623
-    last_write_checksum: sha1:0fdf5f0e1c00e6c7fa26c912a9e6843e09c6e6f2
-    pristine_git_object: 28426b12349aab0a7e6ec93bc2a0a145ec7c3975
+    last_write_checksum: sha1:170d7052e8bee6e76234109cd532a99508358e42
+    pristine_git_object: f5145f4a7b5d5ee53bd1e799ddf4e9bb90b5234a
   docs/models/shared/MediaContainerWithPlaylistMetadataSkipChildren.md:
     id: d5c727a6769c
     last_write_checksum: sha1:b34433165f4a3872f348e26f122942dfa5187e2e
@@ -4756,12 +4772,12 @@ trackedFiles:
     pristine_git_object: 8a2a95c1547d8e3a2fcfeb9afac5af7c7f72e80b
   docs/models/shared/Metadata.md:
     id: d43313aa2e54
-    last_write_checksum: sha1:84754e2309902b06ad75909e88454917c150bd12
-    pristine_git_object: fd124e962cd97d8f653f9e91ab4f7b23fb7c8a5d
+    last_write_checksum: sha1:2233a7ae330cd8e5516b27737e18f50a2197605d
+    pristine_git_object: 23e7b435a445252334bc6f71c3898b79f4daa191
   docs/models/shared/MetadataItem.md:
     id: 47cdcb25e8d3
-    last_write_checksum: sha1:b661cde04538b3aba0e41e0b942373a01e889dcc
-    pristine_git_object: 27bc881c379233335ace71d392a55b4060cae689
+    last_write_checksum: sha1:e219974a2276cf0d93db9d98f7e99626b2f29e27
+    pristine_git_object: a8b47141da3345c86c8210ecfdc3ed37c0bd165e
   docs/models/shared/NotificationContainer.md:
     id: e1adcbf18981
     last_write_checksum: sha1:4ae1b71581d834036c02abe05e4606d23fd5761a
@@ -5152,8 +5168,8 @@ trackedFiles:
     pristine_git_object: b09532621da7ac4197d5d37f655ec298ec831f4e
   docs/sdks/library/README.md:
     id: a0b6032768bb
-    last_write_checksum: sha1:3b548acd723ec173bb686a229e6edc6bde2c4306
-    pristine_git_object: f9f40595e5e20ddc56cfa449a4314a8240432cac
+    last_write_checksum: sha1:967eee4654e4c88256f5a0648dc47fd89ebada96
+    pristine_git_object: 1416d349b659d838f53e3e5e358dcc39c7ff4251
   docs/sdks/librarycollections/README.md:
     id: 3b31de82c185
     last_write_checksum: sha1:c0acbeb47f7b13414a6fc05d76e3cf27f405cce4
@@ -5240,8 +5256,8 @@ trackedFiles:
     pristine_git_object: aa620e86016abcfaa026334c072457e4f3d114a3
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:d84f0b11114926ca081249604b2f1651472f6465
-    pristine_git_object: d4b206606c4b0acad24d8f3491f1b823be863120
+    last_write_checksum: sha1:6fe60dc519f15bfb6351e011bd1ffbe81cff6332
+    pristine_git_object: 506e3d4be4fee8fafbe62dd8f5f912bca7055b9d
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -5320,8 +5336,8 @@ trackedFiles:
     pristine_git_object: e8d35fedf1d486a8a5dea0bbac5952f787bfcbc0
   src/main/java/dev/plexapi/sdk/AsyncLibrary.java:
     id: eba05403f7a6
-    last_write_checksum: sha1:6bb177de09cdfce2ce8564b72464a70a5f516461
-    pristine_git_object: b920ce714cc228dfcdeb611db8cf2f34285db9b9
+    last_write_checksum: sha1:b4a50b90b69b60576b6b0bc25bf3b2982b270426
+    pristine_git_object: 8ee5f59c5324e0df32de42862182f1096ef0b7e8
   src/main/java/dev/plexapi/sdk/AsyncLibraryCollections.java:
     id: 9cbecee60c0d
     last_write_checksum: sha1:92c31b68d2da61c66cd3128ac71c507209ff811a
@@ -5452,8 +5468,8 @@ trackedFiles:
     pristine_git_object: 257b643fc499a346b7465448a9063d31f60fa8d4
   src/main/java/dev/plexapi/sdk/Library.java:
     id: 0101da22753a
-    last_write_checksum: sha1:45e34a127ee739eb2c73970cd6fc3c45a4f9eeb0
-    pristine_git_object: c3529d36b9f283766bfea7874eb1763da9045edd
+    last_write_checksum: sha1:77e3a684ebe27f13bd9bf9a2a15812bc38404ec7
+    pristine_git_object: 8b9fe229e7a27541baf5a515b02e19c336865f5d
   src/main/java/dev/plexapi/sdk/LibraryCollections.java:
     id: 2d86e2dd5895
     last_write_checksum: sha1:b1a09e1652d464eb9792d7f84783ae717992b237
@@ -5508,8 +5524,8 @@ trackedFiles:
     pristine_git_object: 13b408b9a3de044e68141a0ba977c48b4fb00bf0
   src/main/java/dev/plexapi/sdk/SDKConfiguration.java:
     id: fc2b069e396f
-    last_write_checksum: sha1:b4e0c8b417188d3e3ce4e731e25d66cbc5f25512
-    pristine_git_object: a228881ca5ededa51997a7e74e1f1fb86a566681
+    last_write_checksum: sha1:ba9cc1e038b6b92359ddfb2b3be7b1dee87831a2
+    pristine_git_object: 2716a5841db5737cd6cee9084a3a14d13e1a9875
   src/main/java/dev/plexapi/sdk/Search.java:
     id: 5a61f99a5b07
     last_write_checksum: sha1:8eda1e681781db17ea7227cc6de8275db70d7608
@@ -7798,14 +7814,22 @@ trackedFiles:
     id: e75d4f5e167d
     last_write_checksum: sha1:3501ef39d6398f340f0592e11738d8a11870a710
     pristine_git_object: 7c2da6bbe21796c8cad9d1080597d291e4d7e355
+  src/main/java/dev/plexapi/sdk/models/operations/GetLibrarySectionsFallbackMediaContainer.java:
+    id: 5d796607754f
+    last_write_checksum: sha1:98e5d2638af0c42d75d56beb7f0e36b959683bbf
+    pristine_git_object: 1c44292a0f7c2f071aa999982683dcc3704b6ee8
   src/main/java/dev/plexapi/sdk/models/operations/GetLibrarySectionsFallbackRequestBuilder.java:
     id: c3a5e99e467e
     last_write_checksum: sha1:44b64d9c93978ef85a8a8becc3eaba1cc0aec0f7
     pristine_git_object: 5be22d08412dc31089fbdf8cb87972cc386ea67f
   src/main/java/dev/plexapi/sdk/models/operations/GetLibrarySectionsFallbackResponse.java:
     id: 3ce763be2a5a
-    last_write_checksum: sha1:43a164c6c6891743da4ffa634178318033a18c7a
-    pristine_git_object: 042258784e5629120643e631f3a08c7d6eff9900
+    last_write_checksum: sha1:76821f7270a2a563c2388d87b36c1b7270dd8aa3
+    pristine_git_object: ef27223ea7e169f5f182696b3707823e9b09989a
+  src/main/java/dev/plexapi/sdk/models/operations/GetLibrarySectionsFallbackResponseBody.java:
+    id: eda6dd210d03
+    last_write_checksum: sha1:8486ffb73581b3785267e518c8a68f2a20c9544e
+    pristine_git_object: 905eb3def7c35015d248bdb22798df6a13940b60
   src/main/java/dev/plexapi/sdk/models/operations/GetLineupChannelsMediaContainer.java:
     id: fe469afc5ab5
     last_write_checksum: sha1:ce441d97d72548e9691e69ede33f8cffd5c4fafd
@@ -7900,8 +7924,8 @@ trackedFiles:
     pristine_git_object: 8babeb69a0521b4298c0eac9fc68e43e018dc55a
   src/main/java/dev/plexapi/sdk/models/operations/GetMetadataChildrenRequest.java:
     id: 689d98f1e2a8
-    last_write_checksum: sha1:571bf5ca9036c7e202c6c76362f348d69e384e66
-    pristine_git_object: 04df4ce6ffbc66047aa2dd9ccc0a6c86af8d0d3c
+    last_write_checksum: sha1:61e69b0f82454ae25931a5c0fcd776c2681f2a3a
+    pristine_git_object: 1ca2896f83863bd40f6a81c7ee6ecf6a1857c04b
   src/main/java/dev/plexapi/sdk/models/operations/GetMetadataChildrenRequestBuilder.java:
     id: 93270e5fdb5a
     last_write_checksum: sha1:a3ca6c23b8e396f260abdd64a0723321bad2c281
@@ -8116,8 +8140,8 @@ trackedFiles:
     pristine_git_object: 1ec6941fe7d55ef34f36bc792da5a723a1e4ba27
   src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsMetadata.java:
     id: defb33182d76
-    last_write_checksum: sha1:2c0bb0b669344b4288c21b9aa8f625c1745348ba
-    pristine_git_object: 972bf480d962b6e4739d510e3ffeeb35748d519c
+    last_write_checksum: sha1:b5072df40e0dfd24804b9be45f4fb219a7a4ef50
+    pristine_git_object: e93855fa9e1e7773bca59bc795010bfce7b90a01
   src/main/java/dev/plexapi/sdk/models/operations/GetPlaylistGeneratorItemsRequest.java:
     id: 479b744e2ff8
     last_write_checksum: sha1:c79b45d3fa9ddaa6868683200715383583ec97b6
@@ -8462,6 +8486,18 @@ trackedFiles:
     id: 719a2d6faf8e
     last_write_checksum: sha1:ee44a18ba8d879a0360460de2cc3c39edfd923e7
     pristine_git_object: 901369ce4c81e0a6b6e6bf96303af809f46835a7
+  src/main/java/dev/plexapi/sdk/models/operations/GetSectionFolderRequest.java:
+    id: fa1758a1818b
+    last_write_checksum: sha1:ec189a8f3ed6a836da28e83cb8ac05076dc93613
+    pristine_git_object: f7d325edc8677345a8539eef64c5b36b95ccb247
+  src/main/java/dev/plexapi/sdk/models/operations/GetSectionFolderRequestBuilder.java:
+    id: e1c3b7067707
+    last_write_checksum: sha1:9a1c76fdc2bca5978c6ca27020942b6efa1d0214
+    pristine_git_object: 4f05297454cfd7aa2f7f6dbd281075e8bbc866b2
+  src/main/java/dev/plexapi/sdk/models/operations/GetSectionFolderResponse.java:
+    id: 8582af93bae2
+    last_write_checksum: sha1:1c9efd831356036c553d172a92b7ebeece390958
+    pristine_git_object: abd19e01adb78183a24e454ac4a5e92069a33ebd
   src/main/java/dev/plexapi/sdk/models/operations/GetSectionHubsRequest.java:
     id: aa6cd3a5d0f7
     last_write_checksum: sha1:3a05d1b076ce355bae736296fb3a983cff710abb
@@ -9524,8 +9560,8 @@ trackedFiles:
     pristine_git_object: 400b7f0c87ce990648a9961c1376f280e5f4f0d8
   src/main/java/dev/plexapi/sdk/models/operations/Metadata.java:
     id: 130a14f93f75
-    last_write_checksum: sha1:9cdc8e335839b380c6e6c1f5c30c9fb2507f0e17
-    pristine_git_object: 3bffafe6ee57589e0e4d6d6e80b86c274dc7ec95
+    last_write_checksum: sha1:c1edc69e271c5111f68771fd05f9b15223808aba
+    pristine_git_object: 1eb6f611ee6c53bb823aa271b6b1b84e5f3afaec
   src/main/java/dev/plexapi/sdk/models/operations/ModifyDeviceMediaContainer.java:
     id: 7051a103f68f
     last_write_checksum: sha1:82937e78fc2fcc9bead10cc2d6016873699a9897
@@ -12468,8 +12504,8 @@ trackedFiles:
     pristine_git_object: 9dfc8b8ccba87dbc6887f8c8a68b85b3f8a923e3
   src/main/java/dev/plexapi/sdk/models/operations/async/GetLibrarySectionsFallbackResponse.java:
     id: 497b9f554e49
-    last_write_checksum: sha1:b96716d66a05e9e3e1a273c421f024e6bb28a7ca
-    pristine_git_object: a4810a328b678eb5a64633fa68f00935a3da5208
+    last_write_checksum: sha1:b4223b7f224092f46f8ca1dcc54c473d8d73aa7c
+    pristine_git_object: 0b76eacc4dff4dfa2985f3b5c6fe144a66305069
   src/main/java/dev/plexapi/sdk/models/operations/async/GetLineupChannelsRequestBuilder.java:
     id: a9afcd4f5569
     last_write_checksum: sha1:c3c975b0a7b654f3210176c8181c8eaf8a00f514
@@ -12854,6 +12890,14 @@ trackedFiles:
     id: d68560521ede
     last_write_checksum: sha1:ada3798a7b241a674e1e0a890ff1f607b9beb5cf
     pristine_git_object: f866b70bc22739517171110a83cd33bf25ec64ec
+  src/main/java/dev/plexapi/sdk/models/operations/async/GetSectionFolderRequestBuilder.java:
+    id: e3e902b211e0
+    last_write_checksum: sha1:c3a7d6caee4ac39866625a8a4ccc90958a5aa9ae
+    pristine_git_object: 3014927003490e2bc7cf8cf4e0e74132188d3b20
+  src/main/java/dev/plexapi/sdk/models/operations/async/GetSectionFolderResponse.java:
+    id: 9f95e9511e40
+    last_write_checksum: sha1:d056c93dbd8a7ee78e9d5f39eedef31fbb9d21f7
+    pristine_git_object: 1c50f615f561b68696d52673717df42a4a048688
   src/main/java/dev/plexapi/sdk/models/operations/async/GetSectionHubsRequestBuilder.java:
     id: b803013c2e0b
     last_write_checksum: sha1:7ba611130ecfdc6fa89f211d4c346ac5ec3ed501
@@ -14696,8 +14740,8 @@ trackedFiles:
     pristine_git_object: 7f16446bf0436027793d8101e8e00c70622e09ef
   src/main/java/dev/plexapi/sdk/models/shared/Items.java:
     id: e57844e282f3
-    last_write_checksum: sha1:109455e58be26b08317d80e6238f0a30f313865e
-    pristine_git_object: 2a432de202f9cba52df411cfb8ceb82a70b39d56
+    last_write_checksum: sha1:89f1ef98917f96b0ba398e215bdd7f01623e2619
+    pristine_git_object: d4965f6977ebbd7e83ee7e72064b4f09b2c2fc1e
   src/main/java/dev/plexapi/sdk/models/shared/ItemsGuids.java:
     id: 94849ad14503
     last_write_checksum: sha1:c4fab7504e0bd6e64212895b6cee0dc2057d8f70
@@ -14748,8 +14792,8 @@ trackedFiles:
     pristine_git_object: 3b483a995385d45fdaa9461e3a1f0a3c9ea43771
   src/main/java/dev/plexapi/sdk/models/shared/LibrarySectionLocation.java:
     id: 9cf6116e4bae
-    last_write_checksum: sha1:287e86f164a2ac5a8b6403260dcaab6f8f1ee275
-    pristine_git_object: f813f65fc3c48d3bec8cf1ad53c0945b6e0ebacf
+    last_write_checksum: sha1:1fe74c0479eb31e14078cbfcf29ad68d65f9ffcd
+    pristine_git_object: 0cc1709a922d6236415fc029d47300f26cb83be2
   src/main/java/dev/plexapi/sdk/models/shared/LibrarySections.java:
     id: 4ad5e9d3ac56
     last_write_checksum: sha1:fcfda907819073b62a45474b37107425f9d0b912
@@ -14856,8 +14900,8 @@ trackedFiles:
     pristine_git_object: c49839df89e122ee09a691c4847dcac16da14534
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionMetadata.java:
     id: 99d4ab3759c6
-    last_write_checksum: sha1:eb6c957dd050c19677a41d41f3ab24880162a183
-    pristine_git_object: a91e377901e1e8f345081baa09f5320c77401b85
+    last_write_checksum: sha1:271ff7274f2e1364f0a44ef12d5405400a287441
+    pristine_git_object: 0844086b406d8bb93ea6cd322f08c83124bcb963
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithDecisionOptimizedForStreaming.java:
     id: a94ac9cfbd38
     last_write_checksum: sha1:9f225bdf8536516622e703c81fdb460fbc9dfe34
@@ -14968,12 +15012,12 @@ trackedFiles:
     pristine_git_object: cbcb3eb5aba6c11d5d41cfb8415ca2773e14e6bd
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithMetadata.java:
     id: ff908733b199
-    last_write_checksum: sha1:428dd571e552a705d10629dbfaabe96fd95ef22a
-    pristine_git_object: 219f79d49714938b29b62eebfa084d75aa8c19d9
+    last_write_checksum: sha1:7d1b65776601300bcf3adb32304b0873551d8f63
+    pristine_git_object: 98d90aac2598b2fda3ebc4e1cbb31f5d38d9e883
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithMetadataMediaContainer.java:
     id: 445b018bb4a9
-    last_write_checksum: sha1:5060b744b47dda5c588f63a4e43eb2fbc760e642
-    pristine_git_object: c50db11059a36f7a38ba50744e562e46ea6bbe4b
+    last_write_checksum: sha1:042dd0070dac94d23f42484b21a1fdc9c06e70cd
+    pristine_git_object: 001eb1cfd8c6e6f29fc2177e370057642d613930
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithNestedMetadata.java:
     id: d16528a790de
     last_write_checksum: sha1:1228cf823b67e0d89b1b82a264a3241692b0913c
@@ -15020,8 +15064,8 @@ trackedFiles:
     pristine_git_object: 123815d8e9658c027f6eef71a0370579e84ce9a9
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithPlaylistMetadataMetadata.java:
     id: 8e26137d1d8d
-    last_write_checksum: sha1:2b078c20c4659e01fa265b8428108f2575a002aa
-    pristine_git_object: 8eff5b04c5a0d955f6587329fc3835320dc587b7
+    last_write_checksum: sha1:9dcb1be9dab40d0ce96824e82fc0760cf545a374
+    pristine_git_object: 4ea5177a2067de4a285a4b1fa8cc2942517d6a43
   src/main/java/dev/plexapi/sdk/models/shared/MediaContainerWithPlaylistMetadataSkipChildren.java:
     id: 7ad9406e6d3a
     last_write_checksum: sha1:11ae4d8da8393eeb15baa240e25407a2409ca14a
@@ -15112,12 +15156,12 @@ trackedFiles:
     pristine_git_object: ca8b7644c28a792b9f9a314ea9b8e2d491358697
   src/main/java/dev/plexapi/sdk/models/shared/Metadata.java:
     id: 72b65aacba65
-    last_write_checksum: sha1:1561b87ef16e0d6a76d87ef4e54891a0e657b4c9
-    pristine_git_object: c989df5c5ebb4dbe1a3e3da2503f787bd2a0ef9e
+    last_write_checksum: sha1:082930e5c4eaedea0d1b297349e3e633b4270738
+    pristine_git_object: 7ebfb5ca31a0ee16324d3bb69b291a3394174d1c
   src/main/java/dev/plexapi/sdk/models/shared/MetadataItem.java:
     id: ff3e37a08ab0
-    last_write_checksum: sha1:eab90c96089cd428e918a1778dda5f146f362b98
-    pristine_git_object: dcfbc14f0bca255f8c47e9759d83ec7cc58c1e73
+    last_write_checksum: sha1:b4fa99d82e3293c838c52fb076f9aff8eb28a0da
+    pristine_git_object: c9d12aeb1c99b5f5a2909a42d7e434ad927de2f8
   src/main/java/dev/plexapi/sdk/models/shared/NotificationContainer.java:
     id: b607dd8146d7
     last_write_checksum: sha1:4d1f85d521e470e174724617cb66aa5adbcd6c25
@@ -16112,8 +16156,8 @@ trackedFiles:
     pristine_git_object: 8d460489ed2e628d84ed578e98566442d871f5c1
   src/main/java/dev/plexapi/sdk/operations/GetLibrarySectionsFallback.java:
     id: 66758e5f8e89
-    last_write_checksum: sha1:1365ad5829e336c1c9529a8d60a2ba7f8e4d5413
-    pristine_git_object: d38e0bebf236aa89087cb483f3881563b1bf835f
+    last_write_checksum: sha1:00f8fdb4ef398100234668a924ae58e48e7e7c51
+    pristine_git_object: 6dba36953e7f98ba6be2d743ca7f56cebdbcce6f
   src/main/java/dev/plexapi/sdk/operations/GetLineup.java:
     id: c4ac28a0207a
     last_write_checksum: sha1:fe0c4b1a626207d73d1127a6e0d8f8052fe1b9c1
@@ -16144,8 +16188,8 @@ trackedFiles:
     pristine_git_object: cd6f89c38c446b885b4266b1b7f5f0f66c62bfef
   src/main/java/dev/plexapi/sdk/operations/GetMetadataChildren.java:
     id: 3728016757ae
-    last_write_checksum: sha1:4973fffe889504581d67c3a45aa9ba6e8bad8cf1
-    pristine_git_object: 719fa807ef8c67b20c586f26eead60d21398e534
+    last_write_checksum: sha1:ba70ac76d097bd838d128c556118183eee58f28f
+    pristine_git_object: 83dadd49ed3d7887b819a82082d1ffb235f84af3
   src/main/java/dev/plexapi/sdk/operations/GetMetadataGrandchildren.java:
     id: e1ff0a366c7d
     last_write_checksum: sha1:5885653f2d2962fae856ed3cd30db4d895dba795
@@ -16306,6 +16350,10 @@ trackedFiles:
     id: 6d6cc34b17f7
     last_write_checksum: sha1:a1fd0c42666b80647097c8ba825e742ee7e911c7
     pristine_git_object: 10e11adb728118e78df9776549b70b3199b60327
+  src/main/java/dev/plexapi/sdk/operations/GetSectionFolder.java:
+    id: ff8bb1b4c144
+    last_write_checksum: sha1:508987368686302abe46f6cb0d77775df3303fb7
+    pristine_git_object: 9f9709a83c3cad8b019cf2e5bf4e8677610e2cb0
   src/main/java/dev/plexapi/sdk/operations/GetSectionHubs.java:
     id: 18b2df29fc2c
     last_write_checksum: sha1:110d5e441ba3cb54c7a7ec8bd574308efe1c4314
@@ -18220,6 +18268,10 @@ examples:
       parameters:
         path:
           id: 240367
+        query:
+          X-Plex-Container-Start: 0
+          X-Plex-Container-Size: 50
+          includeMeta: 1
         header:
           accepts: "application/xml"
           X-Plex-Client-Identifier: "abc123"
@@ -25526,7 +25578,7 @@ examples:
     speakeasy-default-get-library-sections-fallback:
       responses:
         "200":
-          application/json: {"MediaContainer": {"identifier": "com.plexapp.plugins.library", "size": 1, "Directory": []}}
+          application/json: {"MediaContainer": {"identifier": "com.plexapp.plugins.library", "offset": 0, "size": 1, "totalSize": 100}}
         "401":
           application/json: {"errors": [{"code": 1, "message": "string value", "status": 1}]}
   uploadArt:
@@ -26805,9 +26857,26 @@ examples:
           application/xml: "0xA9fA681439"
         "401":
           application/json: {"errors": [{"code": 1, "message": "string value", "status": 1}]}
+  getSectionFolder:
+    speakeasy-default-get-section-folder:
+      parameters:
+        path:
+          sectionId: 924129
+        query:
+          X-Plex-Container-Start: 0
+          X-Plex-Container-Size: 50
+          parent: "3706"
+          includeMeta: 1
+        header:
+          accepts: "application/xml"
+      responses:
+        "200":
+          application/json: {"MediaContainer": {"identifier": "com.plexapp.plugins.library", "size": 1, "Metadata": []}}
+        "401":
+          application/json: {"errors": [{"code": 1, "message": "string value", "status": 1}]}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Java SDK Changes:\n* `plex-api.playback.getProgress()`:  `response.mediaContainer.video[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.provider.searchDiscover()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.provider.getWatchlist()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.users.getHome()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.downloadQueue.getItemDecision()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getAllHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getContinueWatching()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getContinueWatchingItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getHomeRecentlyAdded()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getPromotedHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getMetadataHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getPostplayHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getRelatedHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getSectionHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.search.searchHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.search.voiceSearchHubs()`: \n  *  `request.type` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryItems()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.ingestTransientItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryMatches()`: \n  *  `request.type` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRecentlyAddedGlobal()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSections()`:  `response.mediaContainer.directory[].type` **Changed** (Breaking ⚠️)\n* `plex-api.library.addSection()`:  `response.mediaContainer.directory[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getTags()`: \n  *  `request.type` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataChildren()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.computeSonicPath()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataGrandchildren()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataGrandparent()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getNearestMetadata()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataOnDeck()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataParent()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataReviews()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getAllItemLeaves()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getExtras()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.listMatches()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRelatedItems()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.listSimilar()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getItemTree()`:  `response.mediaContainer.metadataItem[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.listPersonMedia()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryDetails()`:  `response.mediaContainer.directory[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionArtists()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.autocomplete()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByContentRating()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByDecade()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByFolder()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByResolution()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByYear()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionClips()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getCollections()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getCommon()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionEpisodes()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getFirstCharacters()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibrarySectionHubs()`:  `response.mediaContainer.hub[].metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionMovies()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getNewestForSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getOnDeckForSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionPhotos()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionPlaylists()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRecentlyAddedForSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.searchSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionShows()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getUnwatchedForSection()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionImage()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n* `plex-api.collections.createCollection()`: \n  *  `request.type` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.getDvrChannels()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.getDvrGuide()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.tuneChannel()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.epg.getEpgGuide()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.epg.searchEpg()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getDvrRecordings()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getSessions()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getDvrRecordingsByDvr()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getLiveTvSession()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getAllSubscriptions()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.createSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getScheduledRecordings()`:  `response.mediaContainer.mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getTemplate()`:  `response.mediaContainer.subscriptionTemplate[].mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.editSubscriptionPreferences()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.reorderSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.transcoder.getTranscodeSessions()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.transcoder.makeDecision()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.listPlaylists()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.getPlaylist()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.getPlaylistItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.createPlaylist()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.clearPlaylistItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.addPlaylistItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.deletePlaylistItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.getPlaylistGeneratorItems()`:  `response.mediaContainer.metadata.media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.movePlaylistItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.addToPlayQueue()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.clearPlayQueue()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.resetPlayQueue()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.shuffle()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.unshuffle()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.deletePlayQueueItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.movePlayQueueItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.status.listSessions()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getCollectionItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getMetadataItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getAlbums()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.listContent()`: \n  *  `request.mediaQuery` **Changed** (Breaking ⚠️)\n  *  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getAllLeaves()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getSonicPath()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getSonicallySimilar()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.addCollectionItems()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.updateCollectionItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.moveCollectionItem()`:  `response.mediaContainer.metadata[].media[].part[].stream[]` **Changed** (Breaking ⚠️)\n"
+releaseNotes: "## Java SDK Changes:\n* `plex-api.playback.getProgress()`:  `response.mediaContainer.video[]` **Changed** (Breaking ⚠️)\n* `plex-api.provider.searchDiscover()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.provider.getWatchlist()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.users.getHome()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.downloadQueue.getItemDecision()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getAllHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getContinueWatching()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getContinueWatchingItems()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getHomeRecentlyAdded()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getPromotedHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getMetadataHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getPostplayHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getRelatedHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.hubs.getSectionHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.search.searchHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.search.voiceSearchHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryItems()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.ingestTransientItem()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryMatches()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRecentlyAddedGlobal()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibrarySectionsFallback()`:  `response.mediaContainer.directory[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSections()`:  `response.mediaContainer.directory[].location[].path` **Changed** (Breaking ⚠️)\n* `plex-api.library.addSection()`:  `response.mediaContainer.directory[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataChildren()`: \n  *  `request` **Changed**\n  *  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.computeSonicPath()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataGrandchildren()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataGrandparent()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getNearestMetadata()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataOnDeck()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataParent()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getMetadataReviews()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getAllItemLeaves()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getExtras()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.listMatches()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRelatedItems()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.listSimilar()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getItemTree()`:  `response.mediaContainer.metadataItem[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.listPersonMedia()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibraryDetails()`:  `response.mediaContainer.directory[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionArtists()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.autocomplete()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByContentRating()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByDecade()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByFolder()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByResolution()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getByYear()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionClips()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getCollections()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getCommon()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionEpisodes()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getLibrarySectionHubs()`:  `response.mediaContainer.hub[].metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionMovies()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getNewestForSection()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getOnDeckForSection()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionPhotos()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionPlaylists()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.library.getRecentlyAddedForSection()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.searchSection()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionShows()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getUnwatchedForSection()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.getDvrChannels()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.getDvrGuide()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.dvRs.tuneChannel()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.epg.getEpgGuide()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.epg.searchEpg()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getDvrRecordings()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getSessions()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getDvrRecordingsByDvr()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.liveTv.getLiveTvSession()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getAllSubscriptions()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.createSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getScheduledRecordings()`:  `response.mediaContainer.mediaGrabOperation[].metadata` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getTemplate()`:  `response.mediaContainer.subscriptionTemplate[].mediaSubscription[].mediaGrabOperation[].metadata` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.getSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.editSubscriptionPreferences()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata` **Changed** (Breaking ⚠️)\n* `plex-api.subscriptions.reorderSubscription()`:  `response.mediaContainer.mediaSubscription[].mediaGrabOperation[].metadata` **Changed** (Breaking ⚠️)\n* `plex-api.transcoder.getTranscodeSessions()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.transcoder.makeDecision()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.listPlaylists()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.getPlaylist()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playlist.getPlaylistItems()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.createPlaylist()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.clearPlaylistItems()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.addPlaylistItems()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.deletePlaylistItem()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.getPlaylistGeneratorItems()`:  `response.mediaContainer.metadata` **Changed** (Breaking ⚠️)\n* `plex-api.libraryPlaylists.movePlaylistItem()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.addToPlayQueue()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.clearPlayQueue()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.resetPlayQueue()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.shuffle()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.unshuffle()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.deletePlayQueueItem()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.playQueue.movePlayQueueItem()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.status.listSessions()`:  `response.mediaContainer.metadata[]` **Changed** (Breaking ⚠️)\n* `plex-api.content.getCollectionItems()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.content.getMetadataItem()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.content.getAlbums()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.content.listContent()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.content.getAllLeaves()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.content.getSonicPath()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.content.getSonicallySimilar()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.addCollectionItems()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.updateCollectionItem()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.libraryCollections.moveCollectionItem()`:  `response.mediaContainer` **Changed** (Breaking ⚠️)\n* `plex-api.library.getSectionFolder()`: **Added**\n"
 generatedFiles:
   - .gitattributes
   - USAGE.md

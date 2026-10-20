@@ -13,7 +13,7 @@ import dev.plexapi.sdk.SecuritySource;
 import dev.plexapi.sdk.models.errors.Error;
 import dev.plexapi.sdk.models.errors.SDKError;
 import dev.plexapi.sdk.models.operations.GetLibrarySectionsFallbackResponse;
-import dev.plexapi.sdk.models.shared.MediaContainerWithDirectory;
+import dev.plexapi.sdk.models.operations.GetLibrarySectionsFallbackResponseBody;
 import dev.plexapi.sdk.utils.AsyncRetries;
 import dev.plexapi.sdk.utils.BackoffStrategy;
 import dev.plexapi.sdk.utils.Blob;
@@ -192,7 +192,7 @@ public class GetLibrarySectionsFallback {
             
             if (Utils.statusCodeMatches(response.statusCode(), "200")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withMediaContainerWithDirectory(Utils.unmarshal(response, new TypeReference<MediaContainerWithDirectory>() {}));
+                    return res.withObject(Utils.unmarshal(response, new TypeReference<GetLibrarySectionsFallbackResponseBody>() {}));
                 } else {
                     throw SDKError.from("Unexpected content-type received: " + contentType, response);
                 }
@@ -280,8 +280,8 @@ public class GetLibrarySectionsFallback {
             
             if (Utils.statusCodeMatches(response.statusCode(), "200")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return Utils.unmarshalAsync(response, new TypeReference<MediaContainerWithDirectory>() {})
-                            .thenApply(res::withMediaContainerWithDirectory);
+                    return Utils.unmarshalAsync(response, new TypeReference<GetLibrarySectionsFallbackResponseBody>() {})
+                            .thenApply(res::withObject);
                 } else {
                     return Utils.createAsyncApiError(response, "Unexpected content-type received: " + contentType);
                 }

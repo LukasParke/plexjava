@@ -19,7 +19,6 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,8 +142,9 @@ public class MediaContainerWithPlaylistMetadataMetadata {
     /**
      * The type of the video item, such as `movie`, `episode`, or `clip`.
      */
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("type")
-    private String type;
+    private Optional<String> type;
 
     /**
      * When present, contains the disc number for a track on multi-disc albums.
@@ -156,8 +156,9 @@ public class MediaContainerWithPlaylistMetadataMetadata {
     /**
      * In units of seconds since the epoch, returns the time at which the item was added to the library.
      */
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("addedAt")
-    private long addedAt;
+    private Optional<Long> addedAt;
 
     /**
      * When present, the URL for the background artwork for the item.
@@ -373,6 +374,13 @@ public class MediaContainerWithPlaylistMetadataMetadata {
     @JsonProperty("lastViewedAt")
     private Optional<Long> lastViewedAt;
 
+    /**
+     * The library section containing this metadata item, when reported by the server.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("librarySectionID")
+    private Optional<Long> librarySectionID;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Media")
@@ -386,17 +394,15 @@ public class MediaContainerWithPlaylistMetadataMetadata {
     private Optional<Long> musicAnalysisVersion;
 
     /**
-     * When present, in the format YYYY-MM-DD [HH:MM:SS] (the hours/minutes/seconds part is not always
-     * present). The air date, or a higher resolution release date for an item, depending on type. For
-     * example, episodes usually have air date like 1979-08-10 (we don't use epoch seconds because media
-     * existed prior to 1970).
-     * 
-     * <p>In some cases, recorded over-the-air content has higher resolution air date which includes a time
-     * component. Albums and movies may have day-resolution release dates as well.
+     * The original release or capture date as reported by the server.
+     * Values can be a date (YYYY-MM-DD), a date with a time (YYYY-MM-DD HH:MM:SS), or an ISO 8601
+     * timestamp.
+     * Preserve the string representation so higher-resolution timestamps are not reduced to a date-only
+     * value.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("originallyAvailableAt")
-    private Optional<LocalDate> originallyAvailableAt;
+    private Optional<String> originallyAvailableAt;
 
     /**
      * When present, used to indicate an item's original title, e.g. a movie's foreign title.
@@ -709,9 +715,9 @@ public class MediaContainerWithPlaylistMetadataMetadata {
             @JsonProperty("smart") Optional<Boolean> smart,
             @JsonProperty("specialPlaylistType") Optional<String> specialPlaylistType,
             @JsonProperty("title") String title,
-            @JsonProperty("type") String type,
+            @JsonProperty("type") Optional<String> type,
             @JsonProperty("absoluteIndex") Optional<Integer> absoluteIndex,
-            @JsonProperty("addedAt") long addedAt,
+            @JsonProperty("addedAt") Optional<Long> addedAt,
             @JsonProperty("art") Optional<String> art,
             @JsonProperty("artBlurHash") Optional<String> artBlurHash,
             @JsonProperty("audienceRating") Optional<Float> audienceRating,
@@ -744,9 +750,10 @@ public class MediaContainerWithPlaylistMetadataMetadata {
             @JsonProperty("languageOverride") Optional<String> languageOverride,
             @JsonProperty("lastRatedAt") Optional<Long> lastRatedAt,
             @JsonProperty("lastViewedAt") Optional<Long> lastViewedAt,
+            @JsonProperty("librarySectionID") Optional<Long> librarySectionID,
             @JsonProperty("Media") Optional<? extends List<Media>> media,
             @JsonProperty("musicAnalysisVersion") Optional<Long> musicAnalysisVersion,
-            @JsonProperty("originallyAvailableAt") Optional<LocalDate> originallyAvailableAt,
+            @JsonProperty("originallyAvailableAt") Optional<String> originallyAvailableAt,
             @JsonProperty("originalTitle") Optional<String> originalTitle,
             @JsonProperty("parentGuid") Optional<String> parentGuid,
             @JsonProperty("parentHero") Optional<String> parentHero,
@@ -834,6 +841,7 @@ public class MediaContainerWithPlaylistMetadataMetadata {
         Utils.checkNotNull(languageOverride, "languageOverride");
         Utils.checkNotNull(lastRatedAt, "lastRatedAt");
         Utils.checkNotNull(lastViewedAt, "lastViewedAt");
+        Utils.checkNotNull(librarySectionID, "librarySectionID");
         Utils.checkNotNull(media, "media");
         Utils.checkNotNull(musicAnalysisVersion, "musicAnalysisVersion");
         Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
@@ -924,6 +932,7 @@ public class MediaContainerWithPlaylistMetadataMetadata {
         this.languageOverride = languageOverride;
         this.lastRatedAt = lastRatedAt;
         this.lastViewedAt = lastViewedAt;
+        this.librarySectionID = librarySectionID;
         this.media = media;
         this.musicAnalysisVersion = musicAnalysisVersion;
         this.originallyAvailableAt = originallyAvailableAt;
@@ -973,14 +982,11 @@ public class MediaContainerWithPlaylistMetadataMetadata {
     
     public MediaContainerWithPlaylistMetadataMetadata(
             String key,
-            String title,
-            String type,
-            long addedAt) {
+            String title) {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), key, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), title, type,
-            Optional.empty(), addedAt, Optional.empty(),
+            Optional.empty(), title, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
@@ -1005,7 +1011,9 @@ public class MediaContainerWithPlaylistMetadataMetadata {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -1103,7 +1111,7 @@ public class MediaContainerWithPlaylistMetadataMetadata {
      * The type of the video item, such as `movie`, `episode`, or `clip`.
      */
     @JsonIgnore
-    public String type() {
+    public Optional<String> type() {
         return type;
     }
 
@@ -1119,7 +1127,7 @@ public class MediaContainerWithPlaylistMetadataMetadata {
      * In units of seconds since the epoch, returns the time at which the item was added to the library.
      */
     @JsonIgnore
-    public long addedAt() {
+    public Optional<Long> addedAt() {
         return addedAt;
     }
 
@@ -1369,6 +1377,14 @@ public class MediaContainerWithPlaylistMetadataMetadata {
         return lastViewedAt;
     }
 
+    /**
+     * The library section containing this metadata item, when reported by the server.
+     */
+    @JsonIgnore
+    public Optional<Long> librarySectionID() {
+        return librarySectionID;
+    }
+
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<List<Media>> media() {
@@ -1384,16 +1400,14 @@ public class MediaContainerWithPlaylistMetadataMetadata {
     }
 
     /**
-     * When present, in the format YYYY-MM-DD [HH:MM:SS] (the hours/minutes/seconds part is not always
-     * present). The air date, or a higher resolution release date for an item, depending on type. For
-     * example, episodes usually have air date like 1979-08-10 (we don't use epoch seconds because media
-     * existed prior to 1970).
-     * 
-     * <p>In some cases, recorded over-the-air content has higher resolution air date which includes a time
-     * component. Albums and movies may have day-resolution release dates as well.
+     * The original release or capture date as reported by the server.
+     * Values can be a date (YYYY-MM-DD), a date with a time (YYYY-MM-DD HH:MM:SS), or an ISO 8601
+     * timestamp.
+     * Preserve the string representation so higher-resolution timestamps are not reduced to a date-only
+     * value.
      */
     @JsonIgnore
-    public Optional<LocalDate> originallyAvailableAt() {
+    public Optional<String> originallyAvailableAt() {
         return originallyAvailableAt;
     }
 
@@ -1941,6 +1955,16 @@ public class MediaContainerWithPlaylistMetadataMetadata {
      */
     public MediaContainerWithPlaylistMetadataMetadata withType(String type) {
         Utils.checkNotNull(type, "type");
+        this.type = Optional.ofNullable(type);
+        return this;
+    }
+
+
+    /**
+     * The type of the video item, such as `movie`, `episode`, or `clip`.
+     */
+    public MediaContainerWithPlaylistMetadataMetadata withType(Optional<String> type) {
+        Utils.checkNotNull(type, "type");
         this.type = type;
         return this;
     }
@@ -1968,6 +1992,16 @@ public class MediaContainerWithPlaylistMetadataMetadata {
      * In units of seconds since the epoch, returns the time at which the item was added to the library.
      */
     public MediaContainerWithPlaylistMetadataMetadata withAddedAt(long addedAt) {
+        Utils.checkNotNull(addedAt, "addedAt");
+        this.addedAt = Optional.ofNullable(addedAt);
+        return this;
+    }
+
+
+    /**
+     * In units of seconds since the epoch, returns the time at which the item was added to the library.
+     */
+    public MediaContainerWithPlaylistMetadataMetadata withAddedAt(Optional<Long> addedAt) {
         Utils.checkNotNull(addedAt, "addedAt");
         this.addedAt = addedAt;
         return this;
@@ -2547,6 +2581,25 @@ public class MediaContainerWithPlaylistMetadataMetadata {
         return this;
     }
 
+    /**
+     * The library section containing this metadata item, when reported by the server.
+     */
+    public MediaContainerWithPlaylistMetadataMetadata withLibrarySectionID(long librarySectionID) {
+        Utils.checkNotNull(librarySectionID, "librarySectionID");
+        this.librarySectionID = Optional.ofNullable(librarySectionID);
+        return this;
+    }
+
+
+    /**
+     * The library section containing this metadata item, when reported by the server.
+     */
+    public MediaContainerWithPlaylistMetadataMetadata withLibrarySectionID(Optional<Long> librarySectionID) {
+        Utils.checkNotNull(librarySectionID, "librarySectionID");
+        this.librarySectionID = librarySectionID;
+        return this;
+    }
+
     public MediaContainerWithPlaylistMetadataMetadata withMedia(List<Media> media) {
         Utils.checkNotNull(media, "media");
         this.media = Optional.ofNullable(media);
@@ -2580,15 +2633,13 @@ public class MediaContainerWithPlaylistMetadataMetadata {
     }
 
     /**
-     * When present, in the format YYYY-MM-DD [HH:MM:SS] (the hours/minutes/seconds part is not always
-     * present). The air date, or a higher resolution release date for an item, depending on type. For
-     * example, episodes usually have air date like 1979-08-10 (we don't use epoch seconds because media
-     * existed prior to 1970).
-     * 
-     * <p>In some cases, recorded over-the-air content has higher resolution air date which includes a time
-     * component. Albums and movies may have day-resolution release dates as well.
+     * The original release or capture date as reported by the server.
+     * Values can be a date (YYYY-MM-DD), a date with a time (YYYY-MM-DD HH:MM:SS), or an ISO 8601
+     * timestamp.
+     * Preserve the string representation so higher-resolution timestamps are not reduced to a date-only
+     * value.
      */
-    public MediaContainerWithPlaylistMetadataMetadata withOriginallyAvailableAt(LocalDate originallyAvailableAt) {
+    public MediaContainerWithPlaylistMetadataMetadata withOriginallyAvailableAt(String originallyAvailableAt) {
         Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
         this.originallyAvailableAt = Optional.ofNullable(originallyAvailableAt);
         return this;
@@ -2596,15 +2647,13 @@ public class MediaContainerWithPlaylistMetadataMetadata {
 
 
     /**
-     * When present, in the format YYYY-MM-DD [HH:MM:SS] (the hours/minutes/seconds part is not always
-     * present). The air date, or a higher resolution release date for an item, depending on type. For
-     * example, episodes usually have air date like 1979-08-10 (we don't use epoch seconds because media
-     * existed prior to 1970).
-     * 
-     * <p>In some cases, recorded over-the-air content has higher resolution air date which includes a time
-     * component. Albums and movies may have day-resolution release dates as well.
+     * The original release or capture date as reported by the server.
+     * Values can be a date (YYYY-MM-DD), a date with a time (YYYY-MM-DD HH:MM:SS), or an ISO 8601
+     * timestamp.
+     * Preserve the string representation so higher-resolution timestamps are not reduced to a date-only
+     * value.
      */
-    public MediaContainerWithPlaylistMetadataMetadata withOriginallyAvailableAt(Optional<LocalDate> originallyAvailableAt) {
+    public MediaContainerWithPlaylistMetadataMetadata withOriginallyAvailableAt(Optional<String> originallyAvailableAt) {
         Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
         this.originallyAvailableAt = originallyAvailableAt;
         return this;
@@ -3466,6 +3515,7 @@ public class MediaContainerWithPlaylistMetadataMetadata {
             Utils.enhancedDeepEquals(this.languageOverride, other.languageOverride) &&
             Utils.enhancedDeepEquals(this.lastRatedAt, other.lastRatedAt) &&
             Utils.enhancedDeepEquals(this.lastViewedAt, other.lastViewedAt) &&
+            Utils.enhancedDeepEquals(this.librarySectionID, other.librarySectionID) &&
             Utils.enhancedDeepEquals(this.media, other.media) &&
             Utils.enhancedDeepEquals(this.musicAnalysisVersion, other.musicAnalysisVersion) &&
             Utils.enhancedDeepEquals(this.originallyAvailableAt, other.originallyAvailableAt) &&
@@ -3531,22 +3581,22 @@ public class MediaContainerWithPlaylistMetadataMetadata {
             grandparentThumb, grandparentTitle, guid,
             guids, hero, image,
             index, languageOverride, lastRatedAt,
-            lastViewedAt, media, musicAnalysisVersion,
-            originallyAvailableAt, originalTitle, parentGuid,
-            parentHero, parentIndex, parentKey,
-            parentRatingKey, parentThumb, parentTitle,
-            playlistItemID, primaryExtraKey, prompt,
-            rating, ratingArray, ratingCount,
-            ratingImage, ratingKey, role,
-            search, secondary, skipChildren,
-            skipCount, skipParent, slug,
-            sort, sourceURI, studio,
-            subtype, summary, tagline,
-            theme, thumb, thumbBlurHash,
-            titleSort, updatedAt, useOriginalTitle,
-            userRating, viewCount, viewedLeafCount,
-            viewOffset, writer, year,
-            additionalProperties);
+            lastViewedAt, librarySectionID, media,
+            musicAnalysisVersion, originallyAvailableAt, originalTitle,
+            parentGuid, parentHero, parentIndex,
+            parentKey, parentRatingKey, parentThumb,
+            parentTitle, playlistItemID, primaryExtraKey,
+            prompt, rating, ratingArray,
+            ratingCount, ratingImage, ratingKey,
+            role, search, secondary,
+            skipChildren, skipCount, skipParent,
+            slug, sort, sourceURI,
+            studio, subtype, summary,
+            tagline, theme, thumb,
+            thumbBlurHash, titleSort, updatedAt,
+            useOriginalTitle, userRating, viewCount,
+            viewedLeafCount, viewOffset, writer,
+            year, additionalProperties);
     }
     
     @Override
@@ -3598,6 +3648,7 @@ public class MediaContainerWithPlaylistMetadataMetadata {
                 "languageOverride", languageOverride,
                 "lastRatedAt", lastRatedAt,
                 "lastViewedAt", lastViewedAt,
+                "librarySectionID", librarySectionID,
                 "media", media,
                 "musicAnalysisVersion", musicAnalysisVersion,
                 "originallyAvailableAt", originallyAvailableAt,
@@ -3670,11 +3721,11 @@ public class MediaContainerWithPlaylistMetadataMetadata {
 
         private String title;
 
-        private String type;
+        private Optional<String> type = Optional.empty();
 
         private Optional<Integer> absoluteIndex = Optional.empty();
 
-        private Long addedAt;
+        private Optional<Long> addedAt = Optional.empty();
 
         private Optional<String> art = Optional.empty();
 
@@ -3740,11 +3791,13 @@ public class MediaContainerWithPlaylistMetadataMetadata {
 
         private Optional<Long> lastViewedAt = Optional.empty();
 
+        private Optional<Long> librarySectionID = Optional.empty();
+
         private Optional<? extends List<Media>> media = Optional.empty();
 
         private Optional<Long> musicAnalysisVersion = Optional.empty();
 
-        private Optional<LocalDate> originallyAvailableAt = Optional.empty();
+        private Optional<String> originallyAvailableAt = Optional.empty();
 
         private Optional<String> originalTitle = Optional.empty();
 
@@ -4033,6 +4086,15 @@ public class MediaContainerWithPlaylistMetadataMetadata {
          */
         public Builder type(String type) {
             Utils.checkNotNull(type, "type");
+            this.type = Optional.ofNullable(type);
+            return this;
+        }
+
+        /**
+         * The type of the video item, such as `movie`, `episode`, or `clip`.
+         */
+        public Builder type(Optional<String> type) {
+            Utils.checkNotNull(type, "type");
             this.type = type;
             return this;
         }
@@ -4061,6 +4123,15 @@ public class MediaContainerWithPlaylistMetadataMetadata {
          * In units of seconds since the epoch, returns the time at which the item was added to the library.
          */
         public Builder addedAt(long addedAt) {
+            Utils.checkNotNull(addedAt, "addedAt");
+            this.addedAt = Optional.ofNullable(addedAt);
+            return this;
+        }
+
+        /**
+         * In units of seconds since the epoch, returns the time at which the item was added to the library.
+         */
+        public Builder addedAt(Optional<Long> addedAt) {
             Utils.checkNotNull(addedAt, "addedAt");
             this.addedAt = addedAt;
             return this;
@@ -4641,6 +4712,25 @@ public class MediaContainerWithPlaylistMetadataMetadata {
         }
 
 
+        /**
+         * The library section containing this metadata item, when reported by the server.
+         */
+        public Builder librarySectionID(long librarySectionID) {
+            Utils.checkNotNull(librarySectionID, "librarySectionID");
+            this.librarySectionID = Optional.ofNullable(librarySectionID);
+            return this;
+        }
+
+        /**
+         * The library section containing this metadata item, when reported by the server.
+         */
+        public Builder librarySectionID(Optional<Long> librarySectionID) {
+            Utils.checkNotNull(librarySectionID, "librarySectionID");
+            this.librarySectionID = librarySectionID;
+            return this;
+        }
+
+
         public Builder media(List<Media> media) {
             Utils.checkNotNull(media, "media");
             this.media = Optional.ofNullable(media);
@@ -4674,30 +4764,26 @@ public class MediaContainerWithPlaylistMetadataMetadata {
 
 
         /**
-         * When present, in the format YYYY-MM-DD [HH:MM:SS] (the hours/minutes/seconds part is not always
-         * present). The air date, or a higher resolution release date for an item, depending on type. For
-         * example, episodes usually have air date like 1979-08-10 (we don't use epoch seconds because media
-         * existed prior to 1970).
-         * 
-         * <p>In some cases, recorded over-the-air content has higher resolution air date which includes a time
-         * component. Albums and movies may have day-resolution release dates as well.
+         * The original release or capture date as reported by the server.
+         * Values can be a date (YYYY-MM-DD), a date with a time (YYYY-MM-DD HH:MM:SS), or an ISO 8601
+         * timestamp.
+         * Preserve the string representation so higher-resolution timestamps are not reduced to a date-only
+         * value.
          */
-        public Builder originallyAvailableAt(LocalDate originallyAvailableAt) {
+        public Builder originallyAvailableAt(String originallyAvailableAt) {
             Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
             this.originallyAvailableAt = Optional.ofNullable(originallyAvailableAt);
             return this;
         }
 
         /**
-         * When present, in the format YYYY-MM-DD [HH:MM:SS] (the hours/minutes/seconds part is not always
-         * present). The air date, or a higher resolution release date for an item, depending on type. For
-         * example, episodes usually have air date like 1979-08-10 (we don't use epoch seconds because media
-         * existed prior to 1970).
-         * 
-         * <p>In some cases, recorded over-the-air content has higher resolution air date which includes a time
-         * component. Albums and movies may have day-resolution release dates as well.
+         * The original release or capture date as reported by the server.
+         * Values can be a date (YYYY-MM-DD), a date with a time (YYYY-MM-DD HH:MM:SS), or an ISO 8601
+         * timestamp.
+         * Preserve the string representation so higher-resolution timestamps are not reduced to a date-only
+         * value.
          */
-        public Builder originallyAvailableAt(Optional<LocalDate> originallyAvailableAt) {
+        public Builder originallyAvailableAt(Optional<String> originallyAvailableAt) {
             Utils.checkNotNull(originallyAvailableAt, "originallyAvailableAt");
             this.originallyAvailableAt = originallyAvailableAt;
             return this;
@@ -5524,21 +5610,22 @@ public class MediaContainerWithPlaylistMetadataMetadata {
                 grandparentThumb, grandparentTitle, guid,
                 guids, hero, image,
                 index, languageOverride, lastRatedAt,
-                lastViewedAt, media, musicAnalysisVersion,
-                originallyAvailableAt, originalTitle, parentGuid,
-                parentHero, parentIndex, parentKey,
-                parentRatingKey, parentThumb, parentTitle,
-                playlistItemID, primaryExtraKey, prompt,
-                rating, ratingArray, ratingCount,
-                ratingImage, ratingKey, role,
-                search, secondary, skipChildren,
-                skipCount, skipParent, slug,
-                sort, sourceURI, studio,
-                subtype, summary, tagline,
-                theme, thumb, thumbBlurHash,
-                titleSort, updatedAt, useOriginalTitle,
-                userRating, viewCount, viewedLeafCount,
-                viewOffset, writer, year)
+                lastViewedAt, librarySectionID, media,
+                musicAnalysisVersion, originallyAvailableAt, originalTitle,
+                parentGuid, parentHero, parentIndex,
+                parentKey, parentRatingKey, parentThumb,
+                parentTitle, playlistItemID, primaryExtraKey,
+                prompt, rating, ratingArray,
+                ratingCount, ratingImage, ratingKey,
+                role, search, secondary,
+                skipChildren, skipCount, skipParent,
+                slug, sort, sourceURI,
+                studio, subtype, summary,
+                tagline, theme, thumb,
+                thumbBlurHash, titleSort, updatedAt,
+                useOriginalTitle, userRating, viewCount,
+                viewedLeafCount, viewOffset, writer,
+                year)
                 .withAdditionalProperties(additionalProperties);
         }
 

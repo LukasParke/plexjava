@@ -76,6 +76,7 @@ import dev.plexapi.sdk.models.operations.GetSectionClipsRequest;
 import dev.plexapi.sdk.models.operations.GetSectionEditRequest;
 import dev.plexapi.sdk.models.operations.GetSectionEpisodesRequest;
 import dev.plexapi.sdk.models.operations.GetSectionFiltersRequest;
+import dev.plexapi.sdk.models.operations.GetSectionFolderRequest;
 import dev.plexapi.sdk.models.operations.GetSectionImageRequest;
 import dev.plexapi.sdk.models.operations.GetSectionLabelsRequest;
 import dev.plexapi.sdk.models.operations.GetSectionMoviesRequest;
@@ -274,6 +275,8 @@ import dev.plexapi.sdk.models.operations.async.GetSectionEpisodesRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSectionEpisodesResponse;
 import dev.plexapi.sdk.models.operations.async.GetSectionFiltersRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSectionFiltersResponse;
+import dev.plexapi.sdk.models.operations.async.GetSectionFolderRequestBuilder;
+import dev.plexapi.sdk.models.operations.async.GetSectionFolderResponse;
 import dev.plexapi.sdk.models.operations.async.GetSectionImageRequestBuilder;
 import dev.plexapi.sdk.models.operations.async.GetSectionImageResponse;
 import dev.plexapi.sdk.models.operations.async.GetSectionLabelsRequestBuilder;
@@ -452,6 +455,7 @@ import dev.plexapi.sdk.operations.GetSectionClips;
 import dev.plexapi.sdk.operations.GetSectionEdit;
 import dev.plexapi.sdk.operations.GetSectionEpisodes;
 import dev.plexapi.sdk.operations.GetSectionFilters;
+import dev.plexapi.sdk.operations.GetSectionFolder;
 import dev.plexapi.sdk.operations.GetSectionImage;
 import dev.plexapi.sdk.operations.GetSectionLabels;
 import dev.plexapi.sdk.operations.GetSectionMovies;
@@ -1493,7 +1497,9 @@ public class AsyncLibrary {
     /**
      * Get Metadata Children
      * 
-     * <p>Get children of a show, season, artist, or album.
+     * <p>Get children of a show, season, artist, or album, including a photo album.
+     * Photo album children can include both photos and video clips; omit media-type filters to retrieve
+     * all members.
      * 
      * <p>If set, this operation will use Security#token from the global security.
      * 
@@ -1506,7 +1512,9 @@ public class AsyncLibrary {
     /**
      * Get Metadata Children
      * 
-     * <p>Get children of a show, season, artist, or album.
+     * <p>Get children of a show, season, artist, or album, including a photo album.
+     * Photo album children can include both photos and video clips; omit media-type filters to retrieve
+     * all members.
      * 
      * <p>If set, this operation will use Security#token from the global security.
      * 
@@ -1520,7 +1528,9 @@ public class AsyncLibrary {
     /**
      * Get Metadata Children
      * 
-     * <p>Get children of a show, season, artist, or album.
+     * <p>Get children of a show, season, artist, or album, including a photo album.
+     * Photo album children can include both photos and video clips; omit media-type filters to retrieve
+     * all members.
      * 
      * <p>If set, this operation will use Security#token from the global security.
      * 
@@ -4564,6 +4574,66 @@ public class AsyncLibrary {
     public CompletableFuture<GetFirstCharactersResponse> getFirstCharacters(GetFirstCharactersRequest request, Optional<Options> options) {
         AsyncRequestOperation<GetFirstCharactersRequest, GetFirstCharactersResponse> operation
               = new GetFirstCharacters.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get library folder contents
+     * 
+     * <p>Browse the physical folders and direct media items in a library section.
+     * Omit parent to retrieve the root page. For a child folder, use the parent query value from the
+     * folder key returned by Plex.
+     * A folder token is distinct from a metadata rating key; do not substitute an album rating key.
+     * Photo libraries can return navigation directories, photos, and video clips in the same response.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @return The async call builder
+     */
+    public GetSectionFolderRequestBuilder getSectionFolder() {
+        return new GetSectionFolderRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get library folder contents
+     * 
+     * <p>Browse the physical folders and direct media items in a library section.
+     * Omit parent to retrieve the root page. For a child folder, use the parent query value from the
+     * folder key returned by Plex.
+     * A folder token is distinct from a metadata rating key; do not substitute an album rating key.
+     * Photo libraries can return navigation directories, photos, and video clips in the same response.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetSectionFolderResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionFolderResponse> getSectionFolder(GetSectionFolderRequest request) {
+        return getSectionFolder(request, Optional.empty());
+    }
+
+    /**
+     * Get library folder contents
+     * 
+     * <p>Browse the physical folders and direct media items in a library section.
+     * Omit parent to retrieve the root page. For a child folder, use the parent query value from the
+     * folder key returned by Plex.
+     * A folder token is distinct from a metadata rating key; do not substitute an album rating key.
+     * Photo libraries can return navigation directories, photos, and video clips in the same response.
+     * 
+     * <p>If set, this operation will use Security#token from the global security.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetSectionFolderResponse>} - The async response
+     */
+    public CompletableFuture<GetSectionFolderResponse> getSectionFolder(GetSectionFolderRequest request, Optional<Options> options) {
+        AsyncRequestOperation<GetSectionFolderRequest, GetSectionFolderResponse> operation
+              = new GetSectionFolder.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return operation.doRequest(request)

@@ -10,10 +10,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.plexapi.sdk.utils.Utils;
 import java.lang.Long;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.lang.SuppressWarnings;
 import java.util.Optional;
 
 /**
@@ -32,12 +30,12 @@ public class LibrarySectionLocation {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("path")
-    private Optional<? extends Object> path;
+    private Optional<String> path;
 
     @JsonCreator
     public LibrarySectionLocation(
             @JsonProperty("id") Optional<Long> id,
-            @JsonProperty("path") Optional<? extends Object> path) {
+            @JsonProperty("path") Optional<String> path) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(path, "path");
         this.id = id;
@@ -56,10 +54,9 @@ public class LibrarySectionLocation {
     /**
      * The path of where this directory exists on disk
      */
-    @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Object> path() {
-        return (Optional<Object>) path;
+    public Optional<String> path() {
+        return path;
     }
 
     public static Builder builder() {
@@ -83,7 +80,7 @@ public class LibrarySectionLocation {
     /**
      * The path of where this directory exists on disk
      */
-    public LibrarySectionLocation withPath(Object path) {
+    public LibrarySectionLocation withPath(String path) {
         Utils.checkNotNull(path, "path");
         this.path = Optional.ofNullable(path);
         return this;
@@ -93,7 +90,7 @@ public class LibrarySectionLocation {
     /**
      * The path of where this directory exists on disk
      */
-    public LibrarySectionLocation withPath(Optional<? extends Object> path) {
+    public LibrarySectionLocation withPath(Optional<String> path) {
         Utils.checkNotNull(path, "path");
         this.path = path;
         return this;
@@ -131,7 +128,7 @@ public class LibrarySectionLocation {
 
         private Optional<Long> id = Optional.empty();
 
-        private Optional<? extends Object> path = Optional.empty();
+        private Optional<String> path = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -154,7 +151,7 @@ public class LibrarySectionLocation {
         /**
          * The path of where this directory exists on disk
          */
-        public Builder path(Object path) {
+        public Builder path(String path) {
             Utils.checkNotNull(path, "path");
             this.path = Optional.ofNullable(path);
             return this;
@@ -163,7 +160,7 @@ public class LibrarySectionLocation {
         /**
          * The path of where this directory exists on disk
          */
-        public Builder path(Optional<? extends Object> path) {
+        public Builder path(Optional<String> path) {
             Utils.checkNotNull(path, "path");
             this.path = path;
             return this;

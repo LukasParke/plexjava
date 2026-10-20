@@ -55,10 +55,31 @@ public class MediaContainerWithMetadataMediaContainer {
     @JsonProperty("totalSize")
     private Optional<Long> totalSize;
 
+    /**
+     * Navigation folders or metadata items returned under the Directory element.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("Directory")
+    private Optional<? extends List<Metadata>> directory;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("Metadata")
     private Optional<? extends List<Metadata>> metadata;
+
+    /**
+     * Photo items returned under the Photo element.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("Photo")
+    private Optional<? extends List<Metadata>> photo;
+
+    /**
+     * Video items, including photo-library clips, returned under the Video element.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("Video")
+    private Optional<? extends List<Metadata>> video;
 
     @JsonCreator
     public MediaContainerWithMetadataMediaContainer(
@@ -66,21 +87,31 @@ public class MediaContainerWithMetadataMediaContainer {
             @JsonProperty("offset") Optional<Long> offset,
             @JsonProperty("size") Optional<Long> size,
             @JsonProperty("totalSize") Optional<Long> totalSize,
-            @JsonProperty("Metadata") Optional<? extends List<Metadata>> metadata) {
+            @JsonProperty("Directory") Optional<? extends List<Metadata>> directory,
+            @JsonProperty("Metadata") Optional<? extends List<Metadata>> metadata,
+            @JsonProperty("Photo") Optional<? extends List<Metadata>> photo,
+            @JsonProperty("Video") Optional<? extends List<Metadata>> video) {
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(offset, "offset");
         Utils.checkNotNull(size, "size");
         Utils.checkNotNull(totalSize, "totalSize");
+        Utils.checkNotNull(directory, "directory");
         Utils.checkNotNull(metadata, "metadata");
+        Utils.checkNotNull(photo, "photo");
+        Utils.checkNotNull(video, "video");
         this.identifier = identifier;
         this.offset = offset;
         this.size = size;
         this.totalSize = totalSize;
+        this.directory = directory;
         this.metadata = metadata;
+        this.photo = photo;
+        this.video = video;
     }
     
     public MediaContainerWithMetadataMediaContainer() {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty());
     }
 
@@ -111,10 +142,37 @@ public class MediaContainerWithMetadataMediaContainer {
         return totalSize;
     }
 
+    /**
+     * Navigation folders or metadata items returned under the Directory element.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<Metadata>> directory() {
+        return (Optional<List<Metadata>>) directory;
+    }
+
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<List<Metadata>> metadata() {
         return (Optional<List<Metadata>>) metadata;
+    }
+
+    /**
+     * Photo items returned under the Photo element.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<Metadata>> photo() {
+        return (Optional<List<Metadata>>) photo;
+    }
+
+    /**
+     * Video items, including photo-library clips, returned under the Video element.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<Metadata>> video() {
+        return (Optional<List<Metadata>>) video;
     }
 
     public static Builder builder() {
@@ -188,6 +246,25 @@ public class MediaContainerWithMetadataMediaContainer {
         return this;
     }
 
+    /**
+     * Navigation folders or metadata items returned under the Directory element.
+     */
+    public MediaContainerWithMetadataMediaContainer withDirectory(List<Metadata> directory) {
+        Utils.checkNotNull(directory, "directory");
+        this.directory = Optional.ofNullable(directory);
+        return this;
+    }
+
+
+    /**
+     * Navigation folders or metadata items returned under the Directory element.
+     */
+    public MediaContainerWithMetadataMediaContainer withDirectory(Optional<? extends List<Metadata>> directory) {
+        Utils.checkNotNull(directory, "directory");
+        this.directory = directory;
+        return this;
+    }
+
     public MediaContainerWithMetadataMediaContainer withMetadata(List<Metadata> metadata) {
         Utils.checkNotNull(metadata, "metadata");
         this.metadata = Optional.ofNullable(metadata);
@@ -198,6 +275,44 @@ public class MediaContainerWithMetadataMediaContainer {
     public MediaContainerWithMetadataMediaContainer withMetadata(Optional<? extends List<Metadata>> metadata) {
         Utils.checkNotNull(metadata, "metadata");
         this.metadata = metadata;
+        return this;
+    }
+
+    /**
+     * Photo items returned under the Photo element.
+     */
+    public MediaContainerWithMetadataMediaContainer withPhoto(List<Metadata> photo) {
+        Utils.checkNotNull(photo, "photo");
+        this.photo = Optional.ofNullable(photo);
+        return this;
+    }
+
+
+    /**
+     * Photo items returned under the Photo element.
+     */
+    public MediaContainerWithMetadataMediaContainer withPhoto(Optional<? extends List<Metadata>> photo) {
+        Utils.checkNotNull(photo, "photo");
+        this.photo = photo;
+        return this;
+    }
+
+    /**
+     * Video items, including photo-library clips, returned under the Video element.
+     */
+    public MediaContainerWithMetadataMediaContainer withVideo(List<Metadata> video) {
+        Utils.checkNotNull(video, "video");
+        this.video = Optional.ofNullable(video);
+        return this;
+    }
+
+
+    /**
+     * Video items, including photo-library clips, returned under the Video element.
+     */
+    public MediaContainerWithMetadataMediaContainer withVideo(Optional<? extends List<Metadata>> video) {
+        Utils.checkNotNull(video, "video");
+        this.video = video;
         return this;
     }
 
@@ -215,14 +330,18 @@ public class MediaContainerWithMetadataMediaContainer {
             Utils.enhancedDeepEquals(this.offset, other.offset) &&
             Utils.enhancedDeepEquals(this.size, other.size) &&
             Utils.enhancedDeepEquals(this.totalSize, other.totalSize) &&
-            Utils.enhancedDeepEquals(this.metadata, other.metadata);
+            Utils.enhancedDeepEquals(this.directory, other.directory) &&
+            Utils.enhancedDeepEquals(this.metadata, other.metadata) &&
+            Utils.enhancedDeepEquals(this.photo, other.photo) &&
+            Utils.enhancedDeepEquals(this.video, other.video);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             identifier, offset, size,
-            totalSize, metadata);
+            totalSize, directory, metadata,
+            photo, video);
     }
     
     @Override
@@ -232,7 +351,10 @@ public class MediaContainerWithMetadataMediaContainer {
                 "offset", offset,
                 "size", size,
                 "totalSize", totalSize,
-                "metadata", metadata);
+                "directory", directory,
+                "metadata", metadata,
+                "photo", photo,
+                "video", video);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -246,7 +368,13 @@ public class MediaContainerWithMetadataMediaContainer {
 
         private Optional<Long> totalSize = Optional.empty();
 
+        private Optional<? extends List<Metadata>> directory = Optional.empty();
+
         private Optional<? extends List<Metadata>> metadata = Optional.empty();
+
+        private Optional<? extends List<Metadata>> photo = Optional.empty();
+
+        private Optional<? extends List<Metadata>> video = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -319,6 +447,25 @@ public class MediaContainerWithMetadataMediaContainer {
         }
 
 
+        /**
+         * Navigation folders or metadata items returned under the Directory element.
+         */
+        public Builder directory(List<Metadata> directory) {
+            Utils.checkNotNull(directory, "directory");
+            this.directory = Optional.ofNullable(directory);
+            return this;
+        }
+
+        /**
+         * Navigation folders or metadata items returned under the Directory element.
+         */
+        public Builder directory(Optional<? extends List<Metadata>> directory) {
+            Utils.checkNotNull(directory, "directory");
+            this.directory = directory;
+            return this;
+        }
+
+
         public Builder metadata(List<Metadata> metadata) {
             Utils.checkNotNull(metadata, "metadata");
             this.metadata = Optional.ofNullable(metadata);
@@ -331,11 +478,50 @@ public class MediaContainerWithMetadataMediaContainer {
             return this;
         }
 
+
+        /**
+         * Photo items returned under the Photo element.
+         */
+        public Builder photo(List<Metadata> photo) {
+            Utils.checkNotNull(photo, "photo");
+            this.photo = Optional.ofNullable(photo);
+            return this;
+        }
+
+        /**
+         * Photo items returned under the Photo element.
+         */
+        public Builder photo(Optional<? extends List<Metadata>> photo) {
+            Utils.checkNotNull(photo, "photo");
+            this.photo = photo;
+            return this;
+        }
+
+
+        /**
+         * Video items, including photo-library clips, returned under the Video element.
+         */
+        public Builder video(List<Metadata> video) {
+            Utils.checkNotNull(video, "video");
+            this.video = Optional.ofNullable(video);
+            return this;
+        }
+
+        /**
+         * Video items, including photo-library clips, returned under the Video element.
+         */
+        public Builder video(Optional<? extends List<Metadata>> video) {
+            Utils.checkNotNull(video, "video");
+            this.video = video;
+            return this;
+        }
+
         public MediaContainerWithMetadataMediaContainer build() {
 
             return new MediaContainerWithMetadataMediaContainer(
                 identifier, offset, size,
-                totalSize, metadata);
+                totalSize, directory, metadata,
+                photo, video);
         }
 
     }

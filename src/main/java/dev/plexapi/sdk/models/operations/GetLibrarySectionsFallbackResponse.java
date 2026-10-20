@@ -5,7 +5,6 @@ package dev.plexapi.sdk.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.plexapi.sdk.models.shared.MediaContainerWithDirectory;
 import dev.plexapi.sdk.utils.Response;
 import dev.plexapi.sdk.utils.Utils;
 import java.io.InputStream;
@@ -36,22 +35,22 @@ public class GetLibrarySectionsFallbackResponse implements Response {
     /**
      * OK
      */
-    private Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory;
+    private Optional<? extends GetLibrarySectionsFallbackResponseBody> object;
 
     @JsonCreator
     public GetLibrarySectionsFallbackResponse(
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
+            Optional<? extends GetLibrarySectionsFallbackResponseBody> object) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
+        Utils.checkNotNull(object, "object");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.mediaContainerWithDirectory = mediaContainerWithDirectory;
+        this.object = object;
     }
     
     public GetLibrarySectionsFallbackResponse(
@@ -91,8 +90,8 @@ public class GetLibrarySectionsFallbackResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<MediaContainerWithDirectory> mediaContainerWithDirectory() {
-        return (Optional<MediaContainerWithDirectory>) mediaContainerWithDirectory;
+    public Optional<GetLibrarySectionsFallbackResponseBody> object() {
+        return (Optional<GetLibrarySectionsFallbackResponseBody>) object;
     }
 
     public static Builder builder() {
@@ -130,9 +129,9 @@ public class GetLibrarySectionsFallbackResponse implements Response {
     /**
      * OK
      */
-    public GetLibrarySectionsFallbackResponse withMediaContainerWithDirectory(MediaContainerWithDirectory mediaContainerWithDirectory) {
-        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
-        this.mediaContainerWithDirectory = Optional.ofNullable(mediaContainerWithDirectory);
+    public GetLibrarySectionsFallbackResponse withObject(GetLibrarySectionsFallbackResponseBody object) {
+        Utils.checkNotNull(object, "object");
+        this.object = Optional.ofNullable(object);
         return this;
     }
 
@@ -140,9 +139,9 @@ public class GetLibrarySectionsFallbackResponse implements Response {
     /**
      * OK
      */
-    public GetLibrarySectionsFallbackResponse withMediaContainerWithDirectory(Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
-        Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
-        this.mediaContainerWithDirectory = mediaContainerWithDirectory;
+    public GetLibrarySectionsFallbackResponse withObject(Optional<? extends GetLibrarySectionsFallbackResponseBody> object) {
+        Utils.checkNotNull(object, "object");
+        this.object = object;
         return this;
     }
 
@@ -159,14 +158,14 @@ public class GetLibrarySectionsFallbackResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.mediaContainerWithDirectory, other.mediaContainerWithDirectory);
+            Utils.enhancedDeepEquals(this.object, other.object);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            mediaContainerWithDirectory);
+            object);
     }
     
     @Override
@@ -175,7 +174,7 @@ public class GetLibrarySectionsFallbackResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "mediaContainerWithDirectory", mediaContainerWithDirectory);
+                "object", object);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -187,7 +186,7 @@ public class GetLibrarySectionsFallbackResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory = Optional.empty();
+        private Optional<? extends GetLibrarySectionsFallbackResponseBody> object = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -227,18 +226,18 @@ public class GetLibrarySectionsFallbackResponse implements Response {
         /**
          * OK
          */
-        public Builder mediaContainerWithDirectory(MediaContainerWithDirectory mediaContainerWithDirectory) {
-            Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
-            this.mediaContainerWithDirectory = Optional.ofNullable(mediaContainerWithDirectory);
+        public Builder object(GetLibrarySectionsFallbackResponseBody object) {
+            Utils.checkNotNull(object, "object");
+            this.object = Optional.ofNullable(object);
             return this;
         }
 
         /**
          * OK
          */
-        public Builder mediaContainerWithDirectory(Optional<? extends MediaContainerWithDirectory> mediaContainerWithDirectory) {
-            Utils.checkNotNull(mediaContainerWithDirectory, "mediaContainerWithDirectory");
-            this.mediaContainerWithDirectory = mediaContainerWithDirectory;
+        public Builder object(Optional<? extends GetLibrarySectionsFallbackResponseBody> object) {
+            Utils.checkNotNull(object, "object");
+            this.object = object;
             return this;
         }
 
@@ -246,7 +245,7 @@ public class GetLibrarySectionsFallbackResponse implements Response {
 
             return new GetLibrarySectionsFallbackResponse(
                 contentType, statusCode, rawResponse,
-                mediaContainerWithDirectory);
+                object);
         }
 
     }
